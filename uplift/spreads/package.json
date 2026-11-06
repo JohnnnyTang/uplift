@@ -1,0 +1,14 @@
+{
+  "name": "@uplift/spreads",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Uplift spread content: one folder per spread (definition, page text, teacher notes, sources). Content licensed CC BY 4.0.",
+  "license": "CC-BY-4.0",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "dependencies": {
+    "@hachure/runtime": "workspace:*"
+  }
+}

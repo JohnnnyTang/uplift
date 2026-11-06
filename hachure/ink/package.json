@@ -1,0 +1,11 @@
+{
+  "name": "@hachure/ink",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Hachure render layer: ink line and hatching look, contour lift, colour channels for the quantity taught.",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

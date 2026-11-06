@@ -1,0 +1,11 @@
+{
+  "name": "@hachure/terrain",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Hachure terrain and surface-process engine: heightfield, water, sediment; WebGPU solver and CPU reference.",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

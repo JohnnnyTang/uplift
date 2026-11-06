@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+*.local
+.env
+.env.*
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+# Worktrees for parallel sessions live outside the repo (see docs/plan/README.md),
+# but ignore an in-repo location too in case someone uses one.
+.worktrees/
+.claude/worktrees/

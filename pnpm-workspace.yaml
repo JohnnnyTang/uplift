@@ -1,0 +1,5 @@
+packages:
+  - "hachure/*"
+  - "uplift/*"
+  # Throwaway spike prototypes (docs/plan/README.md, rule 7). Not part of the root typecheck.
+  - "spikes/*"

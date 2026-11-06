@@ -1,0 +1,11 @@
+{
+  "name": "@hachure/runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Hachure spread runtime: spread lifecycle, predict/flap/challenge widgets, live probe bindings.",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

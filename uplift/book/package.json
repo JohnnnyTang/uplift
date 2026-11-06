@@ -1,0 +1,19 @@
+{
+  "name": "@uplift/book",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Uplift book shell: the open book on the desk that hosts spreads.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@hachure/ink": "workspace:*",
+    "@hachure/runtime": "workspace:*",
+    "@hachure/terrain": "workspace:*",
+    "@uplift/spreads": "workspace:*"
+  }
+}
