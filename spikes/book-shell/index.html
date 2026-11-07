@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#555c56" />
+    <title>Uplift — book shell study</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#reading">Skip to the spread</a>
+    <header class="desk-bar">
+      <a class="book-title" href="#reading">Uplift</a>
+      <p>Book shell study · layout fixture, no simulation</p>
+      <label for="level"
+        >Reading level
+        <select id="level">
+          <option value="hs">High school</option>
+          <option value="uni">University</option>
+        </select>
+      </label>
+    </header>
+    <main id="reading" tabindex="-1">
+      <article class="book" aria-labelledby="spread-title">
+        <section class="page reading-page" aria-labelledby="spread-title">
+          <p class="running-head">Geomorphology / A river and its valley</p>
+          <h1 id="spread-title">How a river <br />carves a valley</h1>
+          <p id="level-text" class="intro">
+            Begin with a question. Make a prediction, then use the terrain view to explore it.
+          </p>
+          <fieldset>
+            <legend>What would you look for as you compare the valley?</legend>
+            <label><input type="radio" name="prediction" value="depth" /> A change in depth</label>
+            <label><input type="radio" name="prediction" value="width" /> A change in width</label>
+            <label><input type="radio" name="prediction" value="both" /> Changes in both</label>
+          </fieldset>
+          <button id="commit" disabled>Commit prediction</button>
+          <p class="small">This study checks the reading experience. It does not evaluate an answer.</p>
+          <section id="university" hidden aria-labelledby="equation-title">
+            <h2 id="equation-title">Reading an equation</h2>
+            <p>Typesetting specimen: symbols only; no calibrated parameters.</p>
+            <div id="formula"></div>
+            <!-- expert-review -->
+            <!-- Illustrative formula, not this fixture's solver.
+              Source: Whipple and Tucker (1999), doi:10.1029/1999JB900120. -->
+            <p class="small">
+              Draft for expert review.
+              <a href="https://doi.org/10.1029/1999JB900120">Whipple &amp; Tucker, stream-power model</a>.
+              This formula is a reading specimen, not a claim about the drawing.
+            </p>
+          </section>
+          <details id="explanation">
+            <summary>Open the explanation flap</summary>
+            <p>
+              Your committed prediction would appear here beside observations from the running model.
+              Scientific explanations belong to the validated spread, not this shell fixture.
+            </p>
+          </details>
+          <footer class="page-footer">Predict · Test · Explain · Challenge</footer>
+        </section>
+        <section class="page terrain-page" aria-labelledby="terrain-title">
+          <div class="view-heading">
+            <h2 id="terrain-title">Read the terrain</h2>
+            <span class="tier">Layout fixture</span>
+          </div>
+          <figure>
+            <div class="canvas-frame">
+              <canvas
+                id="terrain"
+                role="img"
+                aria-describedby="terrain-description"
+                aria-label="Static contour drawing of a mathematical surface"
+              >
+                A static contour drawing is described below. No simulation runs in this study.
+              </canvas>
+              <p id="canvas-fallback" hidden>Canvas is unavailable. Use the diagram description below.</p>
+            </div>
+            <figcaption id="terrain-description">
+              Nested ink contours surround a high centre on a tilted mathematical surface. The drawing stays
+              fixed when the reading level changes. This is a diagram fixture, not an erosion model.
+            </figcaption>
+          </figure>
+          <div class="legend" aria-label="Colour legend">
+            <span><i class="water"></i> Water</span>
+            <span><i class="sediment"></i> Sediment</span>
+            <span class="small">Reserved colours; no quantities displayed</span>
+          </div>
+          <div class="controls">
+            <button id="inspect" disabled>Inspect drawing</button>
+            <p id="gate-hint">Commit a prediction to unlock the view control.</p>
+          </div>
+          <div class="scale-note">
+            <p>Time scale: not calibrated in this fixture</p>
+            <p>Spatial scale: not assigned in this fixture</p>
+          </div>
+          <details>
+            <summary>What this study leaves out</summary>
+            <p>
+              Water flow, erosion, time calibration, terrain tools and challenge scoring. The production
+              spread supplies its model tier, live scale bar and bound clock here.
+            </p>
+          </details>
+          <footer class="page-footer">Hachure / diagram and model share a page</footer>
+        </section>
+      </article>
+      <p id="status" class="status" role="status" aria-live="polite" aria-atomic="true">
+        Choose a prediction to begin the layout study.
+      </p>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

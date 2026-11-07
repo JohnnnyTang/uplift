@@ -121,6 +121,8 @@ units (4B); the CPU reference and GPU solvers agree (3C, 4A); a README with run,
 **Exit:** contracts on `main`; three spike decision records in `DECISIONS.md`; science brief merged; the
 lead has revised the W2 briefs in this file based on spike results.
 
+**Wave 1 handover (2026-11-07).** Science and contracts agree on field names and the proposed capacity/evaporation defaults. The science files remain expert-review drafts; original M07 full-text inspection, real-solver validation and calibration approval remain open. Fixture evidence does not close AC1 or scientific acceptance. Human screen-reader listening and physical projector checks remain pending; carry them into 2E/4D and 5A. See the three spike reports and D-007, D-008, D-009, D-S1-1B, D-1C and D-010.
+
 ### 1A · Contracts: terrain state, solver interface, spread schema v0 — ENG/RT · M
 
 _Threads:_ determinism, page↔model, separation. _Depends on:_ nothing on `main`. Read 1E's draft branch
@@ -268,7 +270,7 @@ Worker (no DOM).
 
 **Exit criteria.**
 
-- Passes 1A's `contract.test.ts`.
+- Passes 1A's `contract.test.ts`. Enforce the proposed parameter ranges and joint stability guards in `docs/science/parameters.md` and `model.md`; contract sanity bounds alone are insufficient. `morphAccelerationFactor` maps the display clock only and never multiplies hydraulic or erosion updates.
 - `determinism.test.ts`: same seed and the same tool and input log give a bitwise-identical `hash()` after
   N steps.
 - `mass-budget.test.ts`: |Δ(rock + sediment) + exported| / total moved < 1% over a long run (AC4). Water
@@ -291,7 +293,7 @@ both tiers. Brush operations (raise, dig, smooth, harden) on CPU state, with cla
 that report to acknowledge limits (handoff, "Input clamping").
 
 **Exit criteria.** The same seed gives an identical preset. Each tool is conservative where it should be
-(smooth conserves volume). Clamp tests pass.
+(smooth conserves volume). Clamp tests pass. Presets implement `TerrainPreset.create(config)`; the preset id is independent of grid size.
 
 ### 2C · Ink renderer v0 — INK · L
 
@@ -302,7 +304,7 @@ _Threads:_ restraint, page↔model, performance. _Depends on:_ 1A, 1C.
 **Deliverables.**
 
 - `extractContours(heightfield, interval)`: marching squares to polylines, as a pure function with tests,
-  plus `toSvg()` for the flat page drawing (AC5).
+  plus `toSvg()` for the flat page drawing (AC5). Share triangle topology/diagonal and saddle decisions with the mesh, and test agreement at saddles; triangle-consistent contour extraction is acceptable. Share the flat orthographic projection, crossfade at zero exaggeration with overlays/hachures hidden, then lift.
 - The terrain mesh and ink material, using the method chosen in 1C, with an `exaggeration` uniform from 0
   to 1, contours, hachures and paper.
 - Water and sediment colour channels driven by state textures, with legend tokens.
@@ -330,7 +332,7 @@ _Threads:_ page↔model, two levels, separation. _Depends on:_ 1A.
 
 **Exit criteria.** Unit tests for transitions, binding parse and format, and the no-typed-numbers checker
 (including false-positive cases such as "V-shaped" and ordinals). A test that toggling the level never
-calls a solver method.
+calls a solver method. Reuse the schema's `findTypedNumbers` and build the terrain `EngineCatalogue` from public contracts.
 
 ### 2E · Page widgets and book shell v0 — RT · L
 
@@ -347,7 +349,7 @@ labels and units), play, pause and speed, reset. A KaTeX display formula compone
 against a mock spread and the fake solver.
 
 **Exit criteria.** Every widget is keyboard operable and has an accessible name. The shell renders in
-`pnpm dev` with the mock spread. A visual check at projector width is in the PR.
+`pnpm dev` with the mock spread. A visual check at projector width is in the PR. Preserve semantic DOM text and KaTeX MathML, allow vertical scrolling at projector height, and perform a human screen-reader listening smoke check; an accessibility-tree snapshot alone is insufficient. Reconcile the provisional 1C/1D palette tokens into one accessible set with labelled legends.
 
 ### 2F · Probes and analysis — ENG · M
 
@@ -355,7 +357,7 @@ _Threads:_ rigour, page↔model. _Depends on:_ 1A, 1E.
 
 **Owned paths.** `hachure/terrain/src/probes/**`.
 
-**Deliverables.** Pure functions over `StateSnapshot`:
+**Deliverables.** Pure functions `(snapshot, request) => result` over `StateSnapshot`, using the public contract request/result types and the shared metric definitions in `docs/science/validation-spec.md`:
 
 - Channel extraction from the source (steepest descent, D8 flow accumulation as a fallback).
 - Long profile along a polyline.
@@ -386,7 +388,7 @@ _Threads:_ all. _Depends on:_ 2A–2E. **This is the critical integration sessio
 **Deliverables.**
 
 - A sim host: a fixed-step accumulator, pause and speed, and the CPU solver running in a Worker with
-  transferable snapshots, using the probe cadence from 1B.
+  transferable snapshots. Start probes at 2 Hz with at most one asynchronous readback in flight; drop stale samples, keep full-state GPU readback off the frame loop, and measure Worker transfer separately from fallback drawing cadence.
 - `geomorph.v-valley/spread.ts`, which wires the preset, camera, time scale, controls, probes and the page
   text files that 3D writes. The file names are fixed here: `page.hs.md`, `page.uni.md`, `predict.ts`,
   `flap.hs.md`, `flap.uni.md`, `ignores.ts`, `keywords.ts`, `teacher-notes.md` and `sources.md`.
@@ -405,7 +407,7 @@ _Threads:_ rigour. _Depends on:_ 2A, 2B, 2F.
 **Deliverables.** The `validation-spec.md` tests implemented against the CPU solver (AC3): more rain gives
 more incision; a hard band gives a knickpoint upstream and a narrower channel through it; a lower slope
 gives more deposition; plus the predict-answer test (T6). Default parameters tuned within 1E's ranges.
-The time-scale calibration computed and written to the default config (T4). Plots and CSVs for the expert
+The time-scale calibration computed and written to the default config (T4), with machine-readable provenance and approval status as specified in `docs/science/time-scale.md`. Until approval, bind an uncalibrated status and suppress numeric landscape years. Never calibrate from the fake solver. Plots and CSVs for the expert
 packet.
 
 **Exit criteria.** All qualitative tests pass from a fixed seed, and each one also passes on two other
@@ -419,7 +421,7 @@ _Threads:_ performance, determinism. _Depends on:_ 1B, 2A.
 **Owned paths.** `hachure/terrain/src/gpu/**`, `hachure/terrain/src/compare/**`.
 
 **Deliverables.** GPU state buffers and the rain, virtual-pipe and velocity kernels, written in the
-shader language chosen in 1B. A **CPU–GPU comparison harness** that runs in a real browser (Vitest
+shader path chosen in 1B: explicit WGSL arithmetic through three r187 `wgslFn`, with managed `WebGPURenderer` storage and dispatch. Use explicit absolute/relative tolerances and record device/driver metadata. Preserve single-writer pass boundaries and profile the real solver; the spike kernels are engineering fixtures. A **CPU–GPU comparison harness** that runs in a real browser (Vitest
 browser mode with Playwright Chromium and WebGPU flags). It compares water depth, flux and velocity within a
 stated tolerance after N steps.
 
@@ -486,8 +488,7 @@ _Threads:_ performance, determinism, rigour. _Depends on:_ 3C.
 - Kernels for erode or deposit, flux-form sediment transport, slumping and evaporation, plus GPU tools.
 - A budget reduction that is deterministic on the same device (T5).
 - Full-step CPU–GPU comparison and a GPU mass-budget test.
-- Backend selection: WebGPU at 256², then the CPU Worker at 128² with WebGL2 rendering, then flat-drawing
-  only. Grid size degrades before frame rate does (handoff performance budget).
+- Backend selection: WebGPU at 256², then the CPU Worker at 128² with WebGL2 rendering, then CPU 64² if needed, then flat drawing only. Use fixed-tree budget reductions without float atomics. WebGL2 compute failed the spike comparison and is not a fallback solver. Grid size degrades before frame rate does (handoff performance budget).
 
 **Exit criteria.** The comparison and mass tests pass in the browser. The same-device determinism test
 passes. Forcing each fallback tier via a `?backend=` flag works.
@@ -499,8 +500,7 @@ _Threads:_ two levels, page↔model. _Depends on:_ 3A, 3D.
 **Owned paths.** `hachure/runtime/src/widgets/uni/**`.
 
 **Deliverables.** A live long-profile graph (a light SVG chart, no heavy charting library). A sediment
-budget readout: eroded, in transport, deposited, exported. The stream power law in KaTeX with a live
-erodibility K bound to its control. Real units throughout. The expanded "ignores" box. Level-gated
+budget readout: eroded, in transport, deposited, exported. The stream-power relation in KaTeX as comparative theory, distinct from the implemented capacity law. Do not label `erosionRatePerS` as stream-power K; a live K requires a separately defined dimensional mapping and expert review. Real units throughout. The expanded "ignores" box. Level-gated
 controls, and a "parameters changed — reset to defaults" prompt when hidden controls are not at their
 defaults (T7).
 
@@ -514,7 +514,7 @@ _Threads:_ rigour, restraint. _Depends on:_ 3A, 3B.
 **Owned paths.** `hachure/runtime/src/challenge/**`.
 
 **Deliverables.** A `ChallengeCheck` evaluator. "Make a waterfall" passes when a knickpoint that meets
-1E's definition persists on the long profile for the specified simulated time. Stamp award UI. Progress
+1E's definition persists on the long profile for the specified simulated time. Describe this as a persistent slope-break proxy, not resolved falling-water physics. Uncalibrated runs cannot earn a geological-time persistence stamp. Stamp award UI. Progress
 stored locally, with storage access wrapped so failure degrades gracefully. The flap unlock and the
 predict feedback both refer to the reader's own committed answer.
 
@@ -562,7 +562,7 @@ blank after the lift, the predict step gates the key control, and the level togg
 **Owned paths.** `docs/perf/**`, plus tuning changes in `hachure/terrain/src/gpu/**` and
 `hachure/runtime/src/sim-host/**`.
 
-Measure on a mid-range laptop with an integrated GPU, and on a Chromebook if one is available. Tune workgroup
+Repeat measurements in visible Chrome stable, recording driver, power/thermal conditions, complete rendering, steps per frame and frame times; headless spike timings do not close AC1. Measure on a mid-range laptop with an integrated GPU, and on a Chromebook if one is available. Tune workgroup
 sizes, steps per frame and readback cadence. Check first meaningful page under 3 s on a throttled network
 profile. Results go in `docs/perf/stage-1.md` (AC1).
 
@@ -605,4 +605,5 @@ Stage 2. **This is the input for planning Stage 2 in detail.**
 
 ## Changelog
 
+- 2026-11-07: Wave 1 integration: fold science and spike handovers into 2A–2F, 3A–3C, 4A–4C and 5A; retain pending human accessibility, hardware and science approval checks.
 - 2026-11-06: first version (Stage 0 bootstrap).
