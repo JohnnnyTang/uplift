@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>1B GPU compute spike</title>
+    <style>
+      body {
+        background: #f7f3e9;
+        color: #242424;
+        font: 18px system-ui;
+        max-width: 72rem;
+        margin: 3rem auto;
+        padding: 1rem;
+      }
+      button {
+        font: inherit;
+        padding: 0.5rem;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      canvas {
+        border: 1px solid #242424;
+        width: 16rem;
+        height: 16rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>GPU compute and fallback · 1B</h1>
+    <p>
+      Engineering fixture only. Five stencil kernels benchmark dispatch, neighbor reads and ping-pong storage;
+      they do not simulate erosion.
+    </p>
+    <button id="run">Run benchmark</button> <button id="download" disabled>Download JSON</button>
+    <p role="status" id="status">Ready. Results include this browser and adapter.</p>
+    <canvas
+      id="preview"
+      width="128"
+      height="128"
+      aria-label="WebGL2 preview of the CPU Worker water lane"
+    ></canvas>
+    <p>Legend: blue intensity shows the fixture water lane (dimensionless).</p>
+    <pre id="result"></pre>
+    <script type="module" src="/main.mjs"></script>
+  </body>
+</html>

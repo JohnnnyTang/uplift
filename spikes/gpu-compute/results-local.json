@@ -1,0 +1,169 @@
+{
+  "date": "2026-11-07T07:55:19.675Z",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "settings": {
+    "seed": 187,
+    "warmup": 10,
+    "steps": 80,
+    "repeats": 3,
+    "tolerance": 0.00001
+  },
+  "rows": [
+    {
+      "size": 256,
+      "language": "tsl",
+      "backend": "webgpu",
+      "msPerStep": 0.1400000002235174,
+      "samples": [0.1699999999254942, 0.1400000002235174, 0.10250000022351742],
+      "cpuMaxAbs": 1.4156103134155273e-7,
+      "cpuAgreement": true,
+      "reduction": {
+        "sameDeviceBitwise": true,
+        "cpuTreeBitwise": true,
+        "sum": [6855.306640625, -0.0026658959686756134, -0.010395459830760956, 1343.457763671875]
+      },
+      "readback": {
+        "full": {
+          "bytes": 1048576,
+          "medianMs": 3.300000011920929,
+          "samples": [
+            3.2999999821186066, 3.4000000059604645, 2.800000011920929, 3.300000011920929, 3.699999988079071,
+            3.699999988079071, 3
+          ]
+        },
+        "probe": {
+          "bytes": 1024,
+          "medianMs": 3.0999999940395355,
+          "samples": [
+            3.5999999940395355, 3, 3.0999999940395355, 3.699999988079071, 3.9000000059604645,
+            2.5999999940395355, 2.600000023841858
+          ]
+        }
+      },
+      "sameDeviceBitwise": true
+    },
+    {
+      "size": 256,
+      "language": "wgsl",
+      "backend": "webgpu",
+      "msPerStep": 0.1137499999254942,
+      "samples": [0.16875, 0.1137499999254942, 0.1074999999254942],
+      "cpuMaxAbs": 1.4156103134155273e-7,
+      "cpuAgreement": true,
+      "reduction": {
+        "sameDeviceBitwise": true,
+        "cpuTreeBitwise": true,
+        "sum": [6855.306640625, -0.0026658959686756134, -0.010395459830760956, 1343.457763671875]
+      },
+      "readback": {
+        "full": {
+          "bytes": 1048576,
+          "medianMs": 3,
+          "samples": [3.7000000178813934, 3, 3, 3, 2.9000000059604645, 3.5, 3.0999999940395355]
+        },
+        "probe": {
+          "bytes": 1024,
+          "medianMs": 3.4000000059604645,
+          "samples": [
+            2.5999999940395355, 4.300000011920929, 3.699999988079071, 7.0999999940395355, 2.800000011920929,
+            2.5999999940395355, 3.4000000059604645
+          ]
+        }
+      },
+      "sameDeviceBitwise": true
+    },
+    {
+      "size": 512,
+      "language": "tsl",
+      "backend": "webgpu",
+      "msPerStep": 0.3399999998509884,
+      "samples": [0.35, 0.3399999998509884, 0.32874999977648256],
+      "cpuMaxAbs": 1.4156103134155273e-7,
+      "cpuAgreement": true,
+      "reduction": {
+        "sameDeviceBitwise": true,
+        "cpuTreeBitwise": true,
+        "sum": [27423.072265625, 0.0021477146074175835, -0.0030447770841419697, 5374.03125]
+      },
+      "readback": {
+        "full": {
+          "bytes": 4194304,
+          "medianMs": 4.800000011920929,
+          "samples": [
+            6.0999999940395355, 5.5999999940395355, 4.199999988079071, 4, 4.5, 6.9000000059604645,
+            4.800000011920929
+          ]
+        },
+        "probe": {
+          "bytes": 1024,
+          "medianMs": 3.2000000178813934,
+          "samples": [
+            2.2999999821186066, 4.100000023841858, 2.899999976158142, 3.2000000178813934, 2.7999999821186066,
+            3.2000000178813934, 4.0999999940395355
+          ]
+        }
+      },
+      "sameDeviceBitwise": true
+    },
+    {
+      "size": 512,
+      "language": "wgsl",
+      "backend": "webgpu",
+      "msPerStep": 0.31000000014901163,
+      "samples": [0.3199999999254942, 0.3, 0.31000000014901163],
+      "cpuMaxAbs": 1.4156103134155273e-7,
+      "cpuAgreement": true,
+      "reduction": {
+        "sameDeviceBitwise": true,
+        "cpuTreeBitwise": true,
+        "sum": [27423.072265625, 0.0021477146074175835, -0.0030447770841419697, 5374.03125]
+      },
+      "readback": {
+        "full": {
+          "bytes": 4194304,
+          "medianMs": 4.5999999940395355,
+          "samples": [
+            5.799999982118607, 4.300000011920929, 4, 4.800000011920929, 4.799999982118607, 4.5999999940395355,
+            3.9000000059604645
+          ]
+        },
+        "probe": {
+          "bytes": 1024,
+          "medianMs": 3.0999999940395355,
+          "samples": [
+            3.5, 3.0999999940395355, 3.100000023841858, 2.7999999821186066, 3, 3.0999999940395355,
+            2.9000000059604645
+          ]
+        }
+      },
+      "sameDeviceBitwise": true
+    }
+  ],
+  "adapter": {
+    "vendor": "intel",
+    "architecture": "xe-2lpg",
+    "device": "",
+    "description": "",
+    "isFallbackAdapter": false
+  },
+  "webglPreview": {
+    "available": true,
+    "uploadAndDrawMs": 0.30000001192092896
+  },
+  "cpuWorker": {
+    "msPerStep": 0.5037500001490116,
+    "samples": [0.5274999998509884, 0.43125, 0.5037500001490116],
+    "roundTripMs": 171.90000000596046
+  },
+  "webglCompute": {
+    "size": 128,
+    "language": "tsl",
+    "backend": "webgl2",
+    "msPerStep": 0.1050000000745058,
+    "samples": [0.10874999985098839, 0.10375000014901162, 0.1050000000745058],
+    "cpuMaxAbs": 0.005107156932353973,
+    "cpuAgreement": false,
+    "rejected": "Neighbor stencil does not agree with CPU; do not use for solver"
+  },
+  "execution": "Automated headless Chrome; no WebGPU override flags; not the classroom acceptance run"
+}
