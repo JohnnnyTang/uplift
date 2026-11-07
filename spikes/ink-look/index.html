@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Hachure · Ink and lift study</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <p>Hachure / Render study 1C</p>
+        <h1>A drawing, lifted.</h1>
+        <p>Follow the same contour from paper into relief.</p>
+      </header>
+      <section class="study" aria-label="Terrain rendering comparison">
+        <div class="figure">
+          <div id="drawing"></div>
+          <canvas id="terrain" aria-label="Ink terrain, controlled by the exaggeration slider"></canvas>
+        </div>
+        <aside>
+          <h2>Ink and relief</h2>
+          <p>Static analytic test surface. This is a renderer fixture, not an erosion model or a lesson.</p>
+          <label for="lift">Vertical exaggeration <output id="lift-value"></output></label
+          ><input id="lift" type="range" min="0" max="1" step="0.01" value="0" />
+          <label for="contours">Contour method</label
+          ><select id="contours">
+            <option value="geometry">Geometry contours</option>
+            <option value="shader">Shader isolines</option>
+          </select>
+          <label for="hatching">Slope marks</label
+          ><select id="hatching">
+            <option value="hachures">Downslope hachures</option>
+            <option value="parallel">Parallel slope hatching</option>
+            <option value="none">None</option>
+          </select>
+          <label><input id="channels" type="checkbox" /> Show overlay fixtures</label>
+          <label for="vision">Colour vision preview</label
+          ><select id="vision">
+            <option value="normal">Normal</option>
+            <option value="protanopia">Protanopia</option>
+            <option value="deuteranopia">Deuteranopia</option>
+            <option value="tritanopia">Tritanopia</option>
+          </select>
+          <div class="legend">
+            <span><i class="water"></i>Water fixture · blue</span
+            ><span><i class="sediment"></i>Sediment fixture · ochre</span>
+          </div>
+          <button id="crossfade" type="button">Replay flat handoff</button>
+          <p id="status" role="status" aria-live="polite"></p>
+          <p id="metrics"></p>
+        </aside>
+      </section>
+      <footer>
+        <p>
+          Contours share one heightfield and one orthographic projection. Only vertical exaggeration changes.
+        </p>
+        <p>Paper, ink, water, sediment. Colour carries a quantity; strokes carry slope.</p>
+      </footer>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

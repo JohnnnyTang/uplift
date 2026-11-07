@@ -1,0 +1,120 @@
+{
+  "browser": "156.0.8078.80",
+  "errors": [],
+  "reduced": {
+    "lift": "0",
+    "opacity": "1"
+  },
+  "keyboard": "0.01",
+  "mobileOverflow": false,
+  "results": [
+    {
+      "e": 0,
+      "method": "geometry",
+      "hatch": "hachures",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 2.3 ms (not GPU time)"
+    },
+    {
+      "e": 0,
+      "method": "geometry",
+      "hatch": "parallel",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 2.0 ms (not GPU time)"
+    },
+    {
+      "e": 0,
+      "method": "geometry",
+      "hatch": "none",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 2.3 ms (not GPU time)"
+    },
+    {
+      "e": 0,
+      "method": "shader",
+      "hatch": "hachures",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 0.7 ms (not GPU time)"
+    },
+    {
+      "e": 0,
+      "method": "shader",
+      "hatch": "parallel",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 0.6 ms (not GPU time)"
+    },
+    {
+      "e": 0,
+      "method": "shader",
+      "hatch": "none",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 0.2 ms (not GPU time)"
+    },
+    {
+      "e": 0.5,
+      "method": "geometry",
+      "hatch": "hachures",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 3.0 ms (not GPU time)"
+    },
+    {
+      "e": 0.5,
+      "method": "geometry",
+      "hatch": "parallel",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 1.9 ms (not GPU time)"
+    },
+    {
+      "e": 0.5,
+      "method": "geometry",
+      "hatch": "none",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 1.6 ms (not GPU time)"
+    },
+    {
+      "e": 0.5,
+      "method": "shader",
+      "hatch": "hachures",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 0.4 ms (not GPU time)"
+    },
+    {
+      "e": 0.5,
+      "method": "shader",
+      "hatch": "parallel",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 0.4 ms (not GPU time)"
+    },
+    {
+      "e": 0.5,
+      "method": "shader",
+      "hatch": "none",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 0.2 ms (not GPU time)"
+    },
+    {
+      "e": 1,
+      "method": "geometry",
+      "hatch": "hachures",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 1.9 ms (not GPU time)"
+    },
+    {
+      "e": 1,
+      "method": "geometry",
+      "hatch": "parallel",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 2.4 ms (not GPU time)"
+    },
+    {
+      "e": 1,
+      "method": "geometry",
+      "hatch": "none",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 1.6 ms (not GPU time)"
+    },
+    {
+      "e": 1,
+      "method": "shader",
+      "hatch": "hachures",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 0.4 ms (not GPU time)"
+    },
+    {
+      "e": 1,
+      "method": "shader",
+      "hatch": "parallel",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 0.4 ms (not GPU time)"
+    },
+    {
+      "e": 1,
+      "method": "shader",
+      "hatch": "none",
+      "metrics": "2785 contour segments · 8192 triangles · CPU extraction 3.8 ms · redraw submission 0.3 ms (not GPU time)"
+    }
+  ]
+}
