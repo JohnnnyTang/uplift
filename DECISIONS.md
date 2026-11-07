@@ -139,6 +139,31 @@ mechanically, while keeping Hachure's runtime free of engine imports.
 
 **Revisit if.** Stage 2 freezes schema v1, or the language decision makes `LevelText` per-locale.
 
+### D-S1-1B · 2026-11-07 · S1/W1/1B · Managed WGSL compute and CPU fallback
+
+**Decision.** Start 3C with explicit WGSL arithmetic through `wgslFn`, using three
+r187 `WebGPURenderer` for storage and dispatch. Start WebGPU at 256²; 512² remains
+experimental. Keep the fallback chain CPU Worker at 128² plus WebGL2 rendering,
+then 64² if the real solver requires it, then flat drawing only. Begin asynchronous
+probes at 2 Hz, at most one readback in flight; permit 4 Hz after integrated profiling.
+Keep full-state readback off the frame loop. Budget reductions use a fixed binary
+tree with one writer per output and no float atomics; verify production accuracy
+with the mass test.
+
+**Why.** The Intel Arc 140V headless Chrome fixture passes CPU agreement and
+same-device bitwise replay for TSL and WGSL at 256²/512². WGSL measured 0.114/0.310 ms
+per five-kernel step. Probe readback costs about 3 ms even for 1 KiB. A fixed-tree
+GPU sum matches an f32 CPU tree bitwise. The CPU Worker fixture at 128² measured
+0.504 ms/step. Forced WebGL2 compute emulation runs but fails CPU agreement for this
+neighbor stencil, so it cannot replace the CPU fallback. These are fixture results,
+not full solver performance or scientific validation. See
+[1B evidence and proposed brief corrections](docs/spikes/1B-gpu-compute.md).
+
+**Revisit if.** The actual solver exceeds the frame budget, the full-state layout
+hits storage-binding limits, managed dispatch prevents needed control, or a repaired
+WebGL2 path passes comparison. Independent raw-device WGSL and device/buffer interop
+were not benchmarked. Repeat in visible Chrome stable on classroom hardware at 5A.
+
 ## Open questions
 
 Carried from the handoff ("Open decisions for the project lead"). The stage that needs each answer is noted.
