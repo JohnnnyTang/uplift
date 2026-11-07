@@ -164,7 +164,6 @@ hits storage-binding limits, managed dispatch prevents needed control, or a repa
 WebGL2 path passes comparison. Independent raw-device WGSL and device/buffer interop
 were not benchmarked. Repeat in visible Chrome stable on classroom hardware at 5A.
 
-
 ### D-1C · 2026-11-07 · S1/W1/1C · Geometry contours and a shared flat projection
 
 **Decision.** Start 2C with geometry contours and sparse downslope hachures. Generate SVG and 3D contours
@@ -182,6 +181,7 @@ share a tested saddle rule. Evidence and limitations: `docs/spikes/1C-ink-look.m
 **Revisit if.** Larger-grid profiling shows contour extraction or transfer exceeds the frame budget,
 WebGPU integration changes line quality, or projector review needs heavier lines. 1B owns backend choice;
 this dependency-free WebGL2 spike does not decide it.
+
 ## Open questions
 
 Carried from the handoff ("Open decisions for the project lead"). The stage that needs each answer is noted.
