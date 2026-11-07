@@ -421,7 +421,7 @@ _Threads:_ performance, determinism. _Depends on:_ 1B, 2A.
 **Owned paths.** `hachure/terrain/src/gpu/**`, `hachure/terrain/src/compare/**`.
 
 **Deliverables.** GPU state buffers and the rain, virtual-pipe and velocity kernels, written in the
-shader language chosen in 1B. Use explicit absolute/relative tolerances and record device/driver metadata. Preserve single-writer pass boundaries and profile the real solver; the spike kernels are engineering fixtures. A **CPU–GPU comparison harness** that runs in a real browser (Vitest
+shader path chosen in 1B: explicit WGSL arithmetic through three r187 `wgslFn`, with managed `WebGPURenderer` storage and dispatch. Use explicit absolute/relative tolerances and record device/driver metadata. Preserve single-writer pass boundaries and profile the real solver; the spike kernels are engineering fixtures. A **CPU–GPU comparison harness** that runs in a real browser (Vitest
 browser mode with Playwright Chromium and WebGPU flags). It compares water depth, flux and velocity within a
 stated tolerance after N steps.
 
@@ -488,8 +488,7 @@ _Threads:_ performance, determinism, rigour. _Depends on:_ 3C.
 - Kernels for erode or deposit, flux-form sediment transport, slumping and evaporation, plus GPU tools.
 - A budget reduction that is deterministic on the same device (T5).
 - Full-step CPU–GPU comparison and a GPU mass-budget test.
-- Backend selection: WebGPU at 256², then the CPU Worker at 128² with WebGL2 rendering, then flat-drawing
-  only. Grid size degrades before frame rate does (handoff performance budget).
+- Backend selection: WebGPU at 256², then the CPU Worker at 128² with WebGL2 rendering, then CPU 64² if needed, then flat drawing only. Use fixed-tree budget reductions without float atomics. WebGL2 compute failed the spike comparison and is not a fallback solver. Grid size degrades before frame rate does (handoff performance budget).
 
 **Exit criteria.** The comparison and mass tests pass in the browser. The same-device determinism test
 passes. Forcing each fallback tier via a `?backend=` flag works.
@@ -501,8 +500,7 @@ _Threads:_ two levels, page↔model. _Depends on:_ 3A, 3D.
 **Owned paths.** `hachure/runtime/src/widgets/uni/**`.
 
 **Deliverables.** A live long-profile graph (a light SVG chart, no heavy charting library). A sediment
-budget readout: eroded, in transport, deposited, exported. The stream power law in KaTeX with a live
-erodibility K bound to its control. Real units throughout. The expanded "ignores" box. Level-gated
+budget readout: eroded, in transport, deposited, exported. The stream-power relation in KaTeX as comparative theory, distinct from the implemented capacity law. Do not label `erosionRatePerS` as stream-power K; a live K requires a separately defined dimensional mapping and expert review. Real units throughout. The expanded "ignores" box. Level-gated
 controls, and a "parameters changed — reset to defaults" prompt when hidden controls are not at their
 defaults (T7).
 
