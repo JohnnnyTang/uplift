@@ -5,8 +5,8 @@
  * unit say so in their doc comment.
  *
  * Defaults and limits below are PROVISIONAL engineering placeholders, chosen only so the contract, the
- * fake solver and the tests can run. They are not science. Session 1E replaces them with cited values from
- * `docs/science/parameters.md`; every placeholder is tagged `TODO(1E)`.
+ * fake solver and the tests can run. They are not science. Session 2A must enforce the joint stability guards and reader ranges from
+ * `docs/science/parameters.md`; unresolved constraints are tagged `TODO(2A)`.
  */
 
 /** Seconds in a Julian year (365.25 days). Used to convert simulated seconds into simulated years. */
@@ -30,8 +30,8 @@ export interface TerrainConfig {
   readonly dtSimSeconds: number;
   /**
    * Morphological acceleration factor (unit: none). Each hydraulic step stands for
-   * `dtSimSeconds × morphAccelerationFactor` seconds of landscape change. Calibrated by 1E
-   * (`docs/science/time-scale.md`, tension T4); it is what makes the "≈" time label honest.
+   * `dtSimSeconds × morphAccelerationFactor` seconds of landscape change. Clock mapping only: never multiply erosion increments by this factor. Calibrated by 3B
+   * (`docs/science/time-scale.md`, tension T4). Factor 1 is an uncalibrated sentinel; a numeric landscape-time label requires approval metadata.
    */
   readonly morphAccelerationFactor: number;
 
@@ -80,35 +80,35 @@ export interface ConfigLimit {
 }
 
 /**
- * Default configuration. TODO(1E): replace every value with the cited default from
- * `docs/science/parameters.md`. These placeholders are not science.
+ * Provisional defaults aligned with the 1E proposal in
+ * `docs/science/parameters.md`. Expert review and real-solver validation remain pending.
  */
 export const DEFAULT_TERRAIN_CONFIG: TerrainConfig = Object.freeze({
   gridSize: 128,
-  metresPerCell: 10, // TODO(1E)
+  metresPerCell: 10, // TODO(2A)
   seed: 1,
-  rainMmPerHr: 10, // TODO(1E)
+  rainMmPerHr: 10, // TODO(2A)
   gravityMPerS2: 9.81,
-  pipeAreaM2: 20, // TODO(1E)
-  dtSimSeconds: 0.05, // TODO(1E): must satisfy the CFL condition in model.md
-  morphAccelerationFactor: 1, // TODO(1E): calibration, docs/science/time-scale.md
-  capacityCoefficient: 1, // TODO(1E)
-  erosionRatePerS: 0.5, // TODO(1E)
-  depositionRatePerS: 1, // TODO(1E)
-  hardnessRange: Object.freeze([0, 0.9]) as readonly [number, number], // TODO(1E)
-  talusAngleDeg: 33, // TODO(1E)
-  thermalRatePerS: 0.15, // TODO(1E)
-  evaporationFractionPerStep: 0.015, // TODO(1E)
-  brushMaxHeightM: 5, // TODO(1E)
-  brushMaxDepthM: 5, // TODO(1E)
-  brushMaxRadiusM: 200, // TODO(1E)
-  brushMaxSlopeDeg: 60, // TODO(1E)
+  pipeAreaM2: 20, // TODO(2A)
+  dtSimSeconds: 0.05, // TODO(2A): must satisfy the CFL condition in model.md
+  morphAccelerationFactor: 1, // TODO(2A): calibration, docs/science/time-scale.md
+  capacityCoefficient: 0.01, // TODO(2A)
+  erosionRatePerS: 0.5, // TODO(2A)
+  depositionRatePerS: 1, // TODO(2A)
+  hardnessRange: Object.freeze([0, 0.9]) as readonly [number, number], // TODO(2A)
+  talusAngleDeg: 33, // TODO(2A)
+  thermalRatePerS: 0.15, // TODO(2A)
+  evaporationFractionPerStep: 0.00001, // TODO(2A)
+  brushMaxHeightM: 5, // TODO(2A)
+  brushMaxDepthM: 5, // TODO(2A)
+  brushMaxRadiusM: 200, // TODO(2A)
+  brushMaxSlopeDeg: 60, // TODO(2A)
 });
 
 /**
  * Hard limits for each numeric field: values outside them are rejected, not silently changed. These are
  * numerical-sanity bounds, wider than the reader clamps on controls (those live in the spread definition).
- * TODO(1E): tighten to the plausible ranges in `docs/science/parameters.md`.
+ * TODO(2A): tighten to the plausible ranges in `docs/science/parameters.md`.
  */
 export const TERRAIN_CONFIG_LIMITS: Readonly<Record<NumericConfigKey, ConfigLimit>> = Object.freeze({
   gridSize: { min: 8, max: 1024, integer: true },
