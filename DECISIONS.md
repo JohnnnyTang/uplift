@@ -85,3 +85,33 @@ Carried from the handoff ("Open decisions for the project lead"). The stage that
 - [ ] **Publishing Hachure** as shareable components in the group's GIS ecosystem platform. _Stage 2 exit._
 - [ ] **Real DEM source** and default demo region. _Needed by Stage 3._
 - [ ] **Book UI technology:** DOM pages or canvas page texture. _Resolved in Stage 1, wave 1 (session 1D)._
+
+<!-- expert-review -->
+
+### D-009 · 2026-11-07 · S1/W1/1E · Science conventions and pending calibration
+
+**Decision.** Adopt the draft science specification in `docs/science/` for review:
+solid-volume-equivalent sediment stocks; conservative donor face fluxes; hardness
+acting on exposed bedrock; loose-layer slumping; dry-cell sediment deposition.
+Keep 1A's parameter names. Normalise capacity with explicit reference thickness 1 m
+and speed 1 m/s so its coefficient remains dimensionless. Propose capacity 0.01 and
+evaporation fraction 0.00001 per default step, replacing 1A's provisional placeholders
+when 2A implements the real solver. This session changes no parallel contract files.
+
+**Why.** Sediment transport and dry guards must conserve solid material, and units
+must agree with the typed stock layout. Engineering defaults/clamps are distinguished
+from measured quantities. The six documents give executable test definitions rather
+than asserting that an unbuilt solver already produces the desired landforms.
+
+**Revisit if.** 2A stability tests, 3B validation or domain review reject the proposed
+discretisation or parameter envelope. Record the change and rerun paired seed tests.
+
+**Open coordination.** Interpret `morphAccelerationFactor` as a landscape-clock mapping,
+not a second multiplier in hydraulic/erosion updates; reconcile 1A's comment before
+implementation. Its value 1 is uncalibrated metadata, not an approved geological clock.
+3B derives the factor from measured incision and an expert-approved erosion context;
+until then suppress numeric landscape years. The university stream-power relation is
+comparative theory: do not label `erosionRatePerS` as its K. The persistent slope-break
+challenge is a waterfall proxy, not resolved falling-water physics. Original M07
+full-text retrieval remains open; the accessible S08 paper was inspected for the
+pipe/capacity/slippage construction. See the sources register for verification limits.
