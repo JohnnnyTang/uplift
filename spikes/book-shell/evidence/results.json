@@ -1,0 +1,215 @@
+{
+  "browser": "156.0.8078.80",
+  "layouts": [
+    {
+      "name": "laptop",
+      "level": "hs",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "scrollWidth": 1440,
+      "pages": [
+        {
+          "x": 30.905872344970703,
+          "y": 84.09040069580078,
+          "width": 689.0941162109375,
+          "height": 818.1583862304688
+        },
+        {
+          "x": 720,
+          "y": 84.09040069580078,
+          "width": 689.0941162109375,
+          "height": 818.1583862304688
+        }
+      ],
+      "canvasPainted": true,
+      "mathml": true
+    },
+    {
+      "name": "laptop",
+      "level": "uni",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "scrollWidth": 1440,
+      "pages": [
+        {
+          "x": 30.459383010864258,
+          "y": 84.09008026123047,
+          "width": 689.5405883789062,
+          "height": 907.1992797851562
+        },
+        {
+          "x": 720,
+          "y": 84.09008026123047,
+          "width": 689.5406494140625,
+          "height": 907.1992797851562
+        }
+      ],
+      "canvasPainted": true,
+      "mathml": true
+    },
+    {
+      "name": "projector",
+      "level": "hs",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "scrollWidth": 1280,
+      "pages": [
+        {
+          "x": 30.06045150756836,
+          "y": 70.57534790039062,
+          "width": 609.9395751953125,
+          "height": 663.1085205078125
+        },
+        {
+          "x": 640,
+          "y": 70.57534790039062,
+          "width": 609.9395751953125,
+          "height": 663.1085205078125
+        }
+      ],
+      "canvasPainted": true,
+      "mathml": true
+    },
+    {
+      "name": "projector",
+      "level": "uni",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "scrollWidth": 1280,
+      "pages": [
+        {
+          "x": 29.341215133666992,
+          "y": 70.57476043701172,
+          "width": 610.6588134765625,
+          "height": 825.1141357421875
+        },
+        {
+          "x": 640,
+          "y": 70.57476043701172,
+          "width": 610.6588134765625,
+          "height": 825.1141357421875
+        }
+      ],
+      "canvasPainted": true,
+      "mathml": true
+    },
+    {
+      "name": "tablet",
+      "level": "hs",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "pages": [
+        {
+          "x": 18,
+          "y": 106.171875,
+          "width": 732,
+          "height": 594.265625
+        },
+        {
+          "x": 18,
+          "y": 700.4375,
+          "width": 732,
+          "height": 833.984375
+        }
+      ],
+      "canvasPainted": true,
+      "mathml": true
+    },
+    {
+      "name": "tablet",
+      "level": "uni",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "pages": [
+        {
+          "x": 18,
+          "y": 106.171875,
+          "width": 732,
+          "height": 817.5
+        },
+        {
+          "x": 18,
+          "y": 923.671875,
+          "width": 732,
+          "height": 833.984375
+        }
+      ],
+      "canvasPainted": true,
+      "mathml": true
+    },
+    {
+      "name": "mobile",
+      "level": "hs",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "pages": [
+        {
+          "x": 18,
+          "y": 106.171875,
+          "width": 354,
+          "height": 703.390625
+        },
+        {
+          "x": 18,
+          "y": 809.5625,
+          "width": 354,
+          "height": 690.375
+        }
+      ],
+      "canvasPainted": true,
+      "mathml": true
+    },
+    {
+      "name": "mobile",
+      "level": "uni",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "pages": [
+        {
+          "x": 18,
+          "y": 106.171875,
+          "width": 354,
+          "height": 996.734375
+        },
+        {
+          "x": 18,
+          "y": 1102.90625,
+          "width": 354,
+          "height": 690.375
+        }
+      ],
+      "canvasPainted": true,
+      "mathml": true
+    }
+  ],
+  "keyboard": [
+    "Skip link, radio arrows and commit unlock passed",
+    "Native level select preserves committed choice and unlock state",
+    "Flap and inspect control work by keyboard",
+    "Canvas pixels unchanged across the level toggle"
+  ],
+  "errors": [],
+  "reducedMotion": "No autoplay or animations; perspective removed",
+  "forcedColors": "Native controls remain available",
+  "noJavaScript": "Title, question, labels and figure description remain in initial HTML"
+}

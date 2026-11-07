@@ -1,0 +1,51 @@
+- link "Skip to the spread":
+    - /url: "#reading"
+- banner:
+    - link "Uplift":
+        - /url: "#reading"
+    - paragraph: Book shell study · layout fixture, no simulation
+    - text: Reading level
+    - combobox "Reading level":
+        - option "High school"
+        - option "University" [selected]
+- main:
+    - article "How a river carves a valley":
+        - region "How a river carves a valley":
+            - paragraph: Geomorphology / A river and its valley
+            - heading "How a river carves a valley" [level=1]
+            - paragraph: Keep the same terrain in view while reading the symbolic relation. The level changes the explanation, not the drawing.
+            - group "What would you look for as you compare the valley?":
+                - text: What would you look for as you compare the valley?
+                - radio "A change in depth"
+                - text: A change in depth
+                - radio "A change in width" [checked]
+                - text: A change in width
+                - radio "Changes in both"
+                - text: Changes in both
+            - button "Prediction committed"
+            - paragraph: This study checks the reading experience. It does not evaluate an answer.
+            - region "Reading an equation":
+                - heading "Reading an equation" [level=2]
+                - paragraph: "Typesetting specimen: symbols only; no calibrated parameters."
+                - math: E = K A m S n
+                - paragraph:
+                    - text: Draft for expert review.
+                    - link "Whipple & Tucker, stream-power model":
+                        - /url: https://doi.org/10.1029/1999JB900120
+                    - text: . This formula is a reading specimen, not a claim about the drawing.
+            - group: Open the explanation flap
+            - text: Predict · Test · Explain · Challenge
+        - region "Read the terrain":
+            - heading "Read the terrain" [level=2]
+            - text: Layout fixture
+            - figure "Nested ink contours surround a high centre on a tilted mathematical surface. The drawing stays fixed when the reading level changes. This is a diagram fixture, not an erosion model.":
+                - img "Static contour drawing of a mathematical surface": A static contour drawing is described below. No simulation runs in this study.
+                - text: Nested ink contours surround a high centre on a tilted mathematical surface. The drawing stays fixed when the reading level changes. This is a diagram fixture, not an erosion model.
+            - text: Water Sediment Reserved colours; no quantities displayed
+            - button "Inspect drawing"
+            - paragraph: The drawing is ready to inspect.
+            - paragraph: "Time scale: not calibrated in this fixture"
+            - paragraph: "Spatial scale: not assigned in this fixture"
+            - group: What this study leaves out
+            - text: Hachure / diagram and model share a page
+    - status: University reading level. The drawing and committed prediction are unchanged.

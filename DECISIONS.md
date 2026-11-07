@@ -228,3 +228,22 @@ comparative theory: do not label `erosionRatePerS` as its K. The persistent slop
 challenge is a waterfall proxy, not resolved falling-water physics. Original M07
 full-text retrieval remains open; the accessible S08 paper was inspected for the
 pipe/capacity/slippage construction. See the sources register for verification limits.
+
+### D-010 · 2026-11-07 · S1/W1/1D · DOM book pages with an embedded terrain canvas
+
+**Decision.** Close the "Book UI technology" open question in favour of semantic DOM pages.
+Keep reading text, KaTeX HTML/MathML, predictions, disclosures and controls in the DOM; embed the
+terrain canvas inside the right page. Use CSS for paper, gutter and shallow book perspective.
+Stack pages at tablet widths and allow vertical scrolling, including at projector height.
+This entry resolves the earlier unchecked open-question item without rewriting its history.
+
+**Why.** The runnable study at `spikes/book-shell/` meets the open-book visual direction while retaining
+native selection, focus and responsive reflow. Keyboard checks and the browser accessibility tree
+support this choice; a human screen-reader listening check is still pending. Both levels were checked
+at laptop, projector, tablet and mobile sizes. Equation visibility changes leave the drawing and
+committed prediction unchanged. Evidence, limitations and tokens for 2E are in
+`docs/spikes/1D-book-shell.md`. The canvas is explicitly a mathematical fixture, never a process model.
+
+**Revisit if.** Real terrain integration makes CSS perspective unsuitable, or a later page-turn
+interaction needs decorative textures. Keep semantic DOM content even if those decorations change.
+Do not compress university text into a fixed-height projector page.
