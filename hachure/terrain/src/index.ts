@@ -6,3 +6,6 @@
  * See docs/plan/stage-1.md.
  */
 export const packageName = "@hachure/terrain";
+
+// Contracts (session 1A): config, state layout, solver interface, tools, probes.
+export * from "./contract/index";
