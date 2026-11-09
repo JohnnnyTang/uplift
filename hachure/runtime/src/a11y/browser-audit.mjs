@@ -93,6 +93,16 @@ try {
   await page.waitForFunction(
     () => document.querySelector("#rain").value === document.querySelector("#rain").max,
   );
+  await page.evaluate(() => {
+    window.challengeStatusMutations = 0;
+    new window.MutationObserver((records) => {
+      window.challengeStatusMutations += records.length;
+    }).observe(document.querySelector(".challenge-status"), {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    });
+  });
   await tabTo(page, page.getByRole("button", { name: "Play", exact: true }));
   await page.keyboard.press("Enter");
   await page.waitForFunction(() => Number(document.querySelector(".book").dataset.step) > 0);
@@ -114,6 +124,11 @@ try {
   await page.keyboard.press("ArrowDown");
   await page.keyboard.press("Enter");
   assert.equal(await page.locator(".book").getAttribute("data-state-hash"), hash);
+  assert.equal(
+    await page.evaluate(() => window.challengeStatusMutations),
+    0,
+    "Unchanged pending challenge status does not enqueue repeated announcements",
+  );
   await scan(page, "explained university");
   const cdp = await context.newCDPSession(page);
   await page.locator(".paired-replay").scrollIntoViewIfNeeded();

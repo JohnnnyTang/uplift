@@ -28,6 +28,9 @@ export function createChallengeWidget(options: ChallengeWidgetOptions) {
   const status = el("p", undefined, "challenge-status widget-status");
   status.setAttribute("role", "status");
   status.setAttribute("aria-atomic", "true");
+  function updateStatus(text: string) {
+    if (status.textContent !== text) status.textContent = text;
+  }
   const stamp = el("p", undefined, "stamp");
   stamp.hidden = true;
   root.append(title, prompt, answer, status);
@@ -43,7 +46,7 @@ export function createChallengeWidget(options: ChallengeWidgetOptions) {
     const evaluation = observation ? evaluator.observe(observation) : undefined;
     root.dataset.status = evaluation?.status ?? "waiting";
     if (evaluator.pendingReason) {
-      status.textContent = `Challenge not yet available. ${evaluator.pendingReason}`;
+      updateStatus(`Challenge not yet available. ${evaluator.pendingReason}`);
       root.dataset.status = "pending";
       stamp.remove();
       return;
@@ -51,11 +54,12 @@ export function createChallengeWidget(options: ChallengeWidgetOptions) {
     if (!committed || !state.explained) {
       evaluator.reset();
       root.dataset.status = "waiting";
-      status.textContent =
-        "Test your committed prediction and reveal the explanation before attempting this challenge.";
-    } else if (!evaluation) status.textContent = "Waiting for a completed simulation observation.";
+      updateStatus(
+        "Test your committed prediction and reveal the explanation before attempting this challenge.",
+      );
+    } else if (!evaluation) updateStatus("Waiting for a completed simulation observation.");
     else {
-      status.textContent = evaluation.reason;
+      updateStatus(evaluation.reason);
       if (evaluation.passed && observation && !earnedThisRun) {
         earnedThisRun = {
           spreadId: options.spreadId,
