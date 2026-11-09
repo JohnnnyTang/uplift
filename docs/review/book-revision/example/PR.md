@@ -8,7 +8,7 @@ Adds two real playable scene adapters and authored sourced lesson data: contour 
 
 ## Checklist
 
-- [x] Owned paths respected. Lead authorized the single `@hachure/ink` barrel export as minimal integration glue.
+- [x] Owned paths respected. Lead authorized the single `@hachure/ink` barrel export and the e2e TypeScript public worker-subpath mapping as minimal integration glue.
 - [x] `pnpm check` passes locally.
 - [x] Process-based simulation; no scripted water route or landform animation.
 - [x] Geometry and model numbers on the page bind to declared probes.

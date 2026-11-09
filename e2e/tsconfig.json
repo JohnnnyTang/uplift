@@ -2,7 +2,10 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
-    "types": ["vite/client", "node"]
+    "types": ["vite/client", "node"],
+    "paths": {
+      "@hachure/runtime/worker": ["../hachure/runtime/src/sim-host/worker-engine.ts"]
+    }
   },
   "include": ["./**/*.ts", "./check-bundle.mjs", "../playwright.config.ts"]
 }
