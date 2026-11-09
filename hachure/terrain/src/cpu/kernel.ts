@@ -45,6 +45,7 @@ export interface KernelParams {
   rainMmPerHr: number;
   gravityMPerS2: number;
   pipeAreaM2: number;
+  manningNSPerMOneThird: number;
   capacityCoefficient: number;
   erosionRatePerS: number;
   depositionRatePerS: number;
@@ -236,10 +237,13 @@ export class CpuBuffers {
   }
 }
 
-/**
- * Computes one step from the committed buffers into the next buffers and fills `ledger`. Does not commit:
- * the caller commits only when `ledger.invalidIndex === -1` and the guards pass.
- */
+/** Positive implicit resistance root; predictor in m³/s, beta in s/m³. */
+export function resistDischarge(predictorM3PerS: number, betaSPerM3: number): number {
+  // Rationalised positive quadratic root avoids cancellation at small beta.
+  return (2 * predictorM3PerS) / (1 + Math.sqrt(1 + 4 * betaSPerM3 * predictorM3PerS));
+}
+
+/** Computes an uncommitted fixed step; caller commits only after stock and stability guards. */
 export function computeStep(buf: CpuBuffers, p: KernelParams, ledger: StepLedger): void {
   ledger.reset();
   const { n, cells, l, area } = buf;
@@ -286,6 +290,22 @@ export function computeStep(buf: CpuBuffers, p: KernelParams, ledger: StepLedger
       else if (i === outlet && oFace === FACE_NORTH) no = Math.max(0, qN[i]! + pipe * (Hi - base));
       if (y < n - 1) so = Math.max(0, qS[i]! + pipe * (Hi - z[i + n]! - hR[i + n]!));
       else if (i === outlet && oFace === FACE_SOUTH) so = Math.max(0, qS[i]! + pipe * (Hi - base));
+      // Freeze donor geometry, solve q + beta q² = qPredict before donor limiting.
+      // Aflow = l hR, R = Aflow/(l + 2 hR); see hydraulic-resistance.md.
+      const depth = hR[i]!;
+      if (depth <= dry) {
+        w = e = no = so = 0;
+      } else {
+        const flowArea = l * depth;
+        const radius = flowArea / (l + 2 * depth);
+        const beta =
+          (dt * p.pipeAreaM2 * p.gravityMPerS2 * p.manningNSPerMOneThird ** 2) /
+          (flowArea * flowArea * radius ** (4 / 3));
+        w = resistDischarge(w, beta);
+        e = resistDischarge(e, beta);
+        no = resistDischarge(no, beta);
+        so = resistDischarge(so, beta);
+      }
       const sum = w + e + no + so;
       let k = 1;
       if (sum > 0) {
@@ -329,7 +349,7 @@ export function computeStep(buf: CpuBuffers, p: KernelParams, ledger: StepLedger
   ledger.outflowedWaterM3 = dt * outletQ;
 
   // ── 3. Velocity ────────────────────────────────────────────────────────────────────────────────────
-  // u = (Jw + Je) / (2 l hMean), hMean = (hR + hW)/2; zero for hMean ≤ dryDepth.
+  // Average signed donor-area face velocities; zero for mean depth ≤ dryDepth.
   const { nu, nv } = buf;
   const g = p.gravityMPerS2;
   let maxWave = 0;
@@ -343,13 +363,15 @@ export function computeStep(buf: CpuBuffers, p: KernelParams, ledger: StepLedger
         nv[i] = 0;
         continue;
       }
-      const jw = (x > 0 ? nqE[i - 1]! : 0) - nqW[i]!;
-      const je = nqE[i]! - (x < n - 1 ? nqW[i + 1]! : 0);
-      const jn = (y > 0 ? nqS[i - n]! : 0) - nqN[i]!;
-      const js = nqS[i]! - (y < n - 1 ? nqN[i + n]! : 0);
-      const denom = 2 * l * hMean;
-      const ui = (jw + je) / denom;
-      const vi = (jn + js) / denom;
+      // Average face velocities, each evaluated with the same donor area as resistance.
+      // Dividing incoming discharge by a newly wet receiver's tiny depth creates l/dt speeds.
+      const ownArea = l * Math.max(hR[i]!, dry);
+      const jw = (x > 0 ? nqE[i - 1]! / (l * Math.max(hR[i - 1]!, dry)) : 0) - nqW[i]! / ownArea;
+      const je = nqE[i]! / ownArea - (x < n - 1 ? nqW[i + 1]! / (l * Math.max(hR[i + 1]!, dry)) : 0);
+      const jn = (y > 0 ? nqS[i - n]! / (l * Math.max(hR[i - n]!, dry)) : 0) - nqN[i]! / ownArea;
+      const js = nqS[i]! / ownArea - (y < n - 1 ? nqN[i + n]! / (l * Math.max(hR[i + n]!, dry)) : 0);
+      const ui = 0.5 * (jw + je);
+      const vi = 0.5 * (jn + js);
       nu[i] = ui;
       nv[i] = vi;
       const c = Math.sqrt(g * Math.max(hR[i]!, hW[i]!));

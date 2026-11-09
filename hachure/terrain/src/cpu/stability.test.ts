@@ -181,7 +181,10 @@ describe("wave guard (model.md) and D-2A-1", () => {
   };
 
   it('"halt" rejects the first step that exceeds the guard, with a diagnostic', async () => {
-    const solver = createCpuSolver({ gridSize: 32 }, catchmentFixture(), { waveGuard: "halt" });
+    const deep = customFixture("deep", southCentre, (state, _x, _y, i) => {
+      state.layers.waterM[i] = 1000;
+    });
+    const solver = createCpuSolver({ gridSize: 32 }, deep);
     await spring(solver);
     expect(() => solver.step(100)).toThrow(TerrainStabilityError);
     const failure = solver.diagnostics().failure!;
@@ -202,10 +205,9 @@ describe("wave guard (model.md) and D-2A-1", () => {
     expect(solver.diagnostics().peakWaveCourant).toBeLessThan(WAVE_SAFETY_FACTOR);
   });
 
-  // Characterisation of the finding recorded in D-2A-1: a cell the donor limiter drains in one step has
-  // u = l / dt, so its wave Courant number is ≈ 1 whatever the time step. A smaller dt cannot satisfy it.
+  // Regression for D-2A-1: resistance and donor-area face velocities remove l/dt thin-flow speeds.
   for (const dt of [0.05, 0.01, 0.002]) {
-    it(`limiter-drained thin flow gives a wave Courant number ≈ 1 at dt = ${dt}`, async () => {
+    it(`corrected thin flow stays below the wave guard at dt = ${dt}`, async () => {
       const solver = createCpuSolver(
         { gridSize: 32, dtSimSeconds: dt, evaporationFractionPerStep: 0 },
         catchmentFixture(),
@@ -214,9 +216,10 @@ describe("wave guard (model.md) and D-2A-1", () => {
       solver.step(Math.round(5 / dt));
       const d = solver.diagnostics();
       expect(d.failure).toBeUndefined();
-      expect(d.peakWaveCourant).toBeGreaterThan(0.95);
-      expect(d.peakWaveCourant).toBeLessThan(1.1);
-      expect(d.waveGuardViolationSteps).toBeGreaterThan(0);
+      expect(d.peakWaveCourant).toBeGreaterThan(0);
+      expect(d.peakWaveCourant).toBeLessThan(WAVE_SAFETY_FACTOR);
+      expect(d.waveGuardViolationSteps).toBe(0);
+      expect(d.waveGuard).toBe("halt");
       // The donor transport guard holds by construction of the limiter.
       expect(d.maxTransportCourant).toBeLessThanOrEqual(1 + 1e-12);
     });

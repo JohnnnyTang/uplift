@@ -44,6 +44,7 @@ const TUNABLE_KEYS: ReadonlySet<string> = new Set<TunableConfigKey>([
   "rainMmPerHr",
   "gravityMPerS2",
   "pipeAreaM2",
+  "manningNSPerMOneThird",
   "dtSimSeconds",
   "morphAccelerationFactor",
   "capacityCoefficient",
@@ -104,9 +105,8 @@ export interface StepDiagnostics {
 /**
  * What the solver does when the state-dependent wave guard of model.md is exceeded.
  * - `"halt"`: model.md's failure policy. Reject the step, pause, throw `TerrainStabilityError`.
- * - `"report"` (default): accept the step and count it in `diagnostics()`. See DECISIONS.md D-2A-1: with
- *   model.md's frictionless pipes, any cell the donor limiter drains has `dt|u|/l = 1` for every `dt`, so
- *   "halt" stops the default configuration in its first steps and a smaller step cannot help.
+ * - `"report"`: diagnostic experiments only; accept and count violations. Never use for science approval.
+ * The default is "halt" after the hydraulic resistance correction (D-W3-P).
  * Non-finite values and negative stocks always halt, under either policy.
  */
 export type WaveGuardPolicy = "halt" | "report";
@@ -154,12 +154,13 @@ export class CpuTerrainSolver implements TerrainSolver {
   constructor(config: TerrainConfig, preset: TerrainPreset, options: CpuSolverOptions = {}) {
     checkConfig(config);
     this.cfg = config;
-    this.waveGuard = options.waveGuard ?? "report";
+    this.waveGuard = options.waveGuard ?? "halt";
     this.params = {
       dtSimSeconds: 0,
       rainMmPerHr: 0,
       gravityMPerS2: 0,
       pipeAreaM2: 0,
+      manningNSPerMOneThird: 0,
       capacityCoefficient: 0,
       erosionRatePerS: 0,
       depositionRatePerS: 0,
@@ -195,6 +196,7 @@ export class CpuTerrainSolver implements TerrainSolver {
     p.rainMmPerHr = c.rainMmPerHr;
     p.gravityMPerS2 = c.gravityMPerS2;
     p.pipeAreaM2 = c.pipeAreaM2;
+    p.manningNSPerMOneThird = c.manningNSPerMOneThird;
     p.capacityCoefficient = c.capacityCoefficient;
     p.erosionRatePerS = c.erosionRatePerS;
     p.depositionRatePerS = c.depositionRatePerS;

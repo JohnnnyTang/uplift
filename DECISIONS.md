@@ -557,3 +557,24 @@ human screen-reader listening check still open. Structural accessibility and key
 checks do not satisfy it. 4D owns completion, and the stage gate retains the requirement.
 GPU solver comparison is deferred to 3C because no GPU solver exists yet. Foundation
 test success does not close scientific validation, calibration or classroom hardware gates.
+
+### D-W3-P · 2026-11-09 · S1/W3 prerequisite · Resistant pipes and guarded velocity
+
+**Decision.** Subtract Manning friction slope from the virtual-pipe pressure gradient,
+with donor section l h and radius l h/(l+2h). Solve the positive quadratic resistance
+root with geometry frozen per fixed step, then apply the existing donor limiter.
+Average signed donor-area face velocities for capacity and wave diagnostics; dividing
+incoming flow by newly wet receiver depth recreates timestep-driven speeds.
+`manningNSPerMOneThird` defaults to 0.035 within provisional 0.025–0.15 bounds.
+
+**Evidence.** `docs/science/hydraulic-resistance.md` gives dimensional derivation,
+USACE sources, limitations and equal 50-second timestep refinement for the 2A
+counterexample. Speed, incision and export successive differences shrink. Restore
+`halt` as production default; `report` remains explicitly diagnostic, not approved.
+CPU mass-budget, stability and determinism regressions remain required. GPU comparison
+fixtures must be ported and run in 3C before its merge; this prerequisite cannot
+claim GPU parity with an unbuilt solver. No calibrated years or predict answer.
+
+**Plan facts.** Resistance substantially slows drainage and erosion. 3B must measure
+outcomes afresh using the real preset; the old frictionless validation magnitudes
+cannot be reused. Expert review of the geometry, roughness and calibration is open.

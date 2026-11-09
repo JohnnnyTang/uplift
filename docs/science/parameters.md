@@ -75,3 +75,13 @@ and evaporation fraction is 0.00001 rather than 0.015. The latter placeholder wo
 remove shallow rainwater too quickly to treat it as a credible default without tests.
 No qualitative outcome is assumed from these proposals. 2A implements them; 3B tests
 and calibrates them, records all changes and sends out-of-range values for review.
+
+## Wave 3 hydraulic resistance addition
+
+<!-- expert-review -->
+
+`manningNSPerMOneThird`: provisional default 0.035 s/m^(1/3), allowed 0.025–0.15.
+The natural-stream envelope is sourced from USACE HEC-RAS; the cell-wide rectangular
+hydraulic section and its applicability to shallow flow need expert review. See
+[hydraulic-resistance.md](hydraulic-resistance.md) for the citation, derivation and
+fixed-duration convergence evidence. Production runs now halt on the wave guard.

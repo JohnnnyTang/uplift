@@ -7,22 +7,14 @@ This is a proposed discretisation for 2A, not evidence that a solver passes vali
 References use the keys in [sources.md](sources.md). Read [parameters.md](parameters.md),
 [validation-spec.md](validation-spec.md) and [time-scale.md](time-scale.md) together.
 
-## Wave 2 finding: calibration is blocked
+## Wave 3 prerequisite: resistance before calibration
 
-The implemented frictionless pipe update can reach donor-limited velocities proportional to
-`metresPerCell / dtSimSeconds`; changing the fixed step then changes capacity and incision.
-See D-2A-1 and D-W2-001 in `DECISIONS.md`. Conservation and finite-state tests do not establish
-physical rates. The equations below describe the current implementation, not an approved
-calibration baseline.
-
-The lead's implementation direction is a semi-implicit Manning-style resistance term, adapted
-to the pipe discharge and velocity definitions with explicit wet/dry treatment. Its derivation,
-roughness range and hydraulic-radius convention still need expert review. The [USACE HEC-RAS
-discretisation](https://www.hec.usace.army.mil/confluence/rasdocs/ras1dtechref/6.4/theoretical-basis-for-one-dimensional-and-two-dimensional-hydrodynamic-calculations/2d-unsteady-flow-hydrodynamics/numerical-methods/eulerian-shallow-water-equation-solver) is a numerical reference, not validation of this virtual-pipe adaptation.
-A separate prerequisite correction must update this brief, typed config, CPU kernel and tests
-before 3B calibrates or 3C ports the water update. Require equal-duration fixed-step refinement,
-mass closure, bounded shallow-flow behaviour and stable qualitative conclusions. No numeric
-landscape years or validated predict answer may be inferred from the current frictionless runs.
+The frictionless Wave 2 update failed timestep refinement (D-2A-1). The corrected
+implementation adds Manning-style resistance and uses donor-area face velocities.
+[hydraulic-resistance.md](hydraulic-resistance.md) derives the mapping, documents its
+limitations, and reports equal-duration refinement. The default wave policy is now
+`halt`; `report` is diagnostic-only and cannot support scientific acceptance.
+Roughness, quantitative landscape years and qualitative claims remain unapproved.
 
 ## State, units and boundaries
 
@@ -65,7 +57,11 @@ For each face, using `H = z + hR`, propose
 
 `q*_ij = max(0, qOld_ij + dt × pipeAreaM2 × gravityMPerS2 × (H_i-H_j)/l)`.
 
-Let `k_i = min(1, a hR_i / (dt Σ_j q*_ij))`, taking `k_i = 1` when the sum is zero.
+Before limiting, replace each predictor with the positive root of
+`q + beta q² = q*`, using `Aflow = l hR_i`, `R = Aflow/(l+2hR_i)` and
+`beta = dt pipeAreaM2 g n²/(Aflow² R^(4/3))`. Set outgoing flow to zero at
+`hR_i ≤ dryDepthM`. Here `n = manningNSPerMOneThird`; see the linked derivation.
+Then let `k_i = min(1, a hR_i / (dt Σ_j q*_ij))`, taking `k_i = 1` when the sum is zero.
 Set `q_ij = k_i q*_ij`, then gather
 
 `hW_i = hR_i + dt/a × (Σ_j q_ji - Σ_j q_ij)`.
@@ -77,16 +73,17 @@ accuracy or general stability. Reject a nonfinite step rather than hiding it by 
 
 ### 3. Velocity
 
-Let net eastward face flows be `Jw = q_west,east - q_i,west` and
-`Je = q_i,east - q_east,west`. Set
+For each directed face define `v_ij = q_ij/(l max(hR_i,dryDepthM))`, using
+its donor's area, exactly as in the resistance term. Closed faces contribute zero.
+The cell's eastward velocity is half the sum of the net signed west and east face
+velocities; southward velocity analogously averages north/south faces. In uniform
+flow this recovers `q/(lh)`. Use zero velocity when `(hR+hW)/2 ≤ dryDepthM`.
 
-`u_i = (Jw + Je) / (2 l hMean_i)`, with `hMean = (hR+hW)/2`.
-
-Use the analogous north/south expression for southward `v`. For `hMean ≤ dryDepthM`
-set both components to zero. `dryDepthM = 1e-6 m` is a named numerical constant,
-not an observed depth threshold. This is the face-discharge velocity construction
-in [S08 §5.1], with our dry-cell guard. Evaluate derivatives at walls with one-sided
-differences and in the interior with centred differences.
+This is our reconstruction, replacing the former net-discharge/mean-depth ratio:
+that ratio at a newly wet receiver can produce `l/dt` regardless of how slowly
+its donor flows. Face speeds instead share the resistance geometry and remain
+bounded in the refinement regression. It is a process-model velocity, not a full
+momentum-conserving shallow-water reconstruction. `dryDepthM = 1e-6 m` is numerical.
 
 ### 4. Capacity, erosion and deposition
 
