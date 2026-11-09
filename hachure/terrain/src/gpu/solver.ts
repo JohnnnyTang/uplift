@@ -37,6 +37,7 @@ export class GpuTerrainSolver implements TerrainSolver {
   private sources = new Map<string, WaterSource>();
   private offsetSteps = 0;
   private scheduledSteps = 0;
+  private runGeneration = 0;
   private elapsedYears = 0;
   private offsetBudget: MutableBudget = zeroBudget();
   private outlet!: { x: number; y: number };
@@ -111,15 +112,13 @@ export class GpuTerrainSolver implements TerrainSolver {
     this.assertLive();
     if (!Number.isInteger(count) || count < 0 || count > 65536)
       throw new RangeError("Invalid fixed-step batch");
+    const generation = this.runGeneration;
     this.scheduledSteps += count;
     const result = this.queue(
       async () => {
         const before = this.core.stepCount;
         try {
           await this.core.step(count);
-        } catch (error) {
-          this.scheduledSteps = this.offsetSteps + this.core.stepCount;
-          throw error;
         } finally {
           this.elapsedYears += (this.core.stepCount - before) * simYearsPerStep(this.cfg);
         }
@@ -129,11 +128,26 @@ export class GpuTerrainSolver implements TerrainSolver {
       true,
     );
     // Contract permits fire-and-enqueue; reads surface queued errors without unhandled rejections.
-    void result.catch(() => undefined);
+    void result.catch(() => {
+      // Also handles failure at the queue gate before the action starts. A reset owns a new counter.
+      if (generation === this.runGeneration) this.scheduledSteps = this.offsetSteps + this.core.stepCount;
+    });
     return result;
   }
   configure(patch: Partial<TunableConfig>): void {
     this.assertLive();
+    if (
+      patch.dtSimSeconds !== undefined &&
+      patch.dtSimSeconds !== this.requestedConfig.dtSimSeconds &&
+      this.scheduledSteps > 0
+    ) {
+      throw new TerrainConfigError([
+        {
+          field: "dtSimSeconds",
+          message: "dtSimSeconds is fixed per run (model.md); change it only right after reset, at step 0",
+        },
+      ]);
+    }
     const next = resolveTerrainConfig({ ...this.requestedConfig, ...patch });
     const issues = validateCpuSolverConfig(next);
     if (issues.length) throw new TerrainConfigError(issues);
@@ -256,7 +270,9 @@ export class GpuTerrainSolver implements TerrainSolver {
       false,
     );
   }
-  applyTool(op: ToolOp): Promise<ToolResult> {
+  applyTool(operation: ToolOp): Promise<ToolResult> {
+    // Capture the request before any queued work or readback can yield to its caller.
+    const op = structuredClone(operation);
     return this.queue(async () => {
       const raw = await this.core.snapshot(),
         snapshot = this.convert(raw),
@@ -301,6 +317,7 @@ export class GpuTerrainSolver implements TerrainSolver {
     this.assertLive();
     const config = resolveTerrainConfig({ ...this.requestedConfig, seed });
     this.requestedConfig = config;
+    this.runGeneration++;
     this.scheduledSteps = 0;
     void this.queue(
       async () => {

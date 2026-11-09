@@ -1036,7 +1036,7 @@
       }
     }
   ],
-  "utc": "2026-11-09T07:34:19.456Z",
+  "utc": "2026-11-09T07:47:29.102Z",
   "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
   "adapter": {
     "vendor": "intel",
@@ -1181,8 +1181,11 @@
   "fullPerformance": {
     "gridSize": 256,
     "steps": 80,
-    "msPerStep": 0.8700000002980233,
-    "readbackMs": 9.5,
+    "msPerStep": 0.8149999998509884,
+    "readbackMs": 11.5,
     "scope": "Headless real preset + spring, dispatch/guards/completion; excludes rendering, compilation warmup and classroom thermal/power conditions"
-  }
+  },
+  "fixedDtPolicy": true,
+  "queuedToolCapture": true,
+  "queuedResetCounterRecovery": true
 }

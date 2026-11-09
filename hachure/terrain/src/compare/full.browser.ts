@@ -287,6 +287,7 @@ describe("Full GPU conservation, tools and precision [requires-webgpu]", () => {
       expect(await gpu.referenceLayers()).toEqual(reference);
       expect(after.step).toBe(0);
       await expect(gpu.step()).rejects.toThrow(/halt/);
+      expect(gpu.stepCount).toBe(after.step);
       gpu.reset(waterComparisonPreset("wet"), config.seed);
       await gpu.step();
       expect((await gpu.snapshot()).step).toBe(1);
@@ -582,6 +583,123 @@ it("rejects invalid tool input without halting accepted simulation state", async
     expect(await gpu.hash()).toBe(before);
     await gpu.step();
     expect((await gpu.snapshot()).step).toBe(1);
+  } finally {
+    await gpu.dispose();
+  }
+});
+
+it("matches CPU fixed dt policy after accepted and enqueued steps, allowing changes at reset", async (context) => {
+  if (!available) context.skip();
+  const config = resolveTerrainConfig({ ...fullConfig(), evaporationFractionPerStep: 0 }),
+    preset = waterComparisonPreset("wet"),
+    cpu = createCpuSolver(config, preset),
+    gpu = await createGpuTerrainSolver(config, preset);
+  try {
+    cpu.configure({ dtSimSeconds: 0.025 });
+    gpu.configure({ dtSimSeconds: 0.025 });
+    await gpu.snapshot();
+    expect(gpu.config.dtSimSeconds).toBe(cpu.config.dtSimSeconds);
+    cpu.configure({ dtSimSeconds: 0.05 });
+    gpu.configure({ dtSimSeconds: 0.05 });
+    cpu.step();
+    const enqueued = gpu.step();
+    for (const solver of [cpu, gpu])
+      expect(() => solver.configure({ dtSimSeconds: 0.025 })).toThrow(/fixed per run/);
+    expect(gpu.config.dtSimSeconds).toBe(0.05);
+    await enqueued;
+    expect(() => gpu.configure({ dtSimSeconds: 0.025 })).toThrow(/fixed per run/);
+    cpu.reset(preset, config.seed);
+    gpu.reset(preset, config.seed);
+    cpu.configure({ dtSimSeconds: 0.025 });
+    gpu.configure({ dtSimSeconds: 0.025 });
+    cpu.step(20);
+    await gpu.step(20);
+    const a = await cpu.snapshot(),
+      b = await gpu.snapshot();
+    expect(b.step).toBe(20);
+    expect(b.simYears).toBeCloseTo(a.simYears, 12);
+    for (const name of Object.keys(a.layers) as (keyof typeof a.layers)[])
+      expect(
+        compareFields(b.layers[name]!, a.layers[name]!, { absolute: 2e-5, relative: 5e-4 }).failed,
+        name,
+      ).toBe(0);
+    evidence.fixedDtPolicy = true;
+  } finally {
+    cpu.dispose();
+    await gpu.dispose();
+  }
+});
+it("captures queued brush and source requests before callers reuse their objects", async (context) => {
+  if (!available) context.skip();
+  const config = fullConfig(),
+    preset = waterComparisonPreset("wet"),
+    cpu = createCpuSolver(config, preset),
+    gpu = await createGpuTerrainSolver(config, preset);
+  try {
+    cpu.step(20);
+    const advancing = gpu.step(20);
+    const brush = { kind: "raise" as const, at: { xM: 25, yM: 25 }, radiusM: 15, heightM: 0.1 };
+    const a = cpu.applyTool(brush),
+      b = gpu.applyTool(brush);
+    brush.at.xM = 1e6;
+    brush.at.yM = 1e6;
+    brush.radiusM = 100;
+    brush.heightM = 5;
+    await advancing;
+    expect(await b).toEqual(await a);
+    const spring = {
+      kind: "spring" as const,
+      id: "captured-source",
+      at: { xM: 25, yM: 15 },
+      flowM3PerS: 0.05,
+    };
+    const c = cpu.applyTool(spring),
+      d = gpu.applyTool(spring);
+    spring.id = "mutated-source";
+    spring.at.xM = 1e6;
+    spring.flowM3PerS = 5;
+    expect(await d).toEqual(await c);
+    cpu.step(20);
+    await gpu.step(20);
+    const expected = await cpu.snapshot(),
+      actual = await gpu.snapshot();
+    for (const name of Object.keys(expected.layers) as (keyof typeof expected.layers)[])
+      expect(
+        compareFields(actual.layers[name]!, expected.layers[name]!, { absolute: 2e-5, relative: 5e-4 })
+          .failed,
+        name,
+      ).toBe(0);
+    expect(actual.budget.sourcedWaterM3).toBeCloseTo(expected.budget.sourcedWaterM3, 5);
+    evidence.queuedToolCapture = true;
+  } finally {
+    cpu.dispose();
+    await gpu.dispose();
+  }
+});
+
+it("keeps a reset's queued step count when an earlier failed run finishes rejecting", async (context) => {
+  if (!available) context.skip();
+  const config = fullConfig(),
+    bad: TerrainPreset = {
+      id: "queued-recovery-guard",
+      create(c) {
+        const s = waterComparisonPreset("wet").create(c);
+        s.layers.waterM.fill(1e6);
+        return s;
+      },
+    },
+    gpu = await createGpuTerrainSolver(config, bad);
+  try {
+    const failed = gpu.step(4);
+    gpu.reset(waterComparisonPreset("wet"), config.seed);
+    const recovered = gpu.step(2);
+    expect(gpu.stepCount).toBe(2);
+    await expect(failed).rejects.toThrow(/wave/);
+    await recovered;
+    const snapshot = await gpu.snapshot();
+    expect(snapshot.step).toBe(2);
+    expect(gpu.stepCount).toBe(snapshot.step);
+    evidence.queuedResetCounterRecovery = true;
   } finally {
     await gpu.dispose();
   }
