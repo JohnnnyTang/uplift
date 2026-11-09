@@ -28,6 +28,14 @@ parallel. Session merge order remains **3D → 3B → 3E → 3A → 3C**.
 
 ## Unchanged scientific gates
 
+**Later owner clarification (2026-11-09):** the archived findings below retain
+their original interpretation. Future release decisions follow
+[education-first acceptance](../science/education-policy.md): visible causality
+and reliable relative effects take priority over field-scale magnitudes; calibration
+is required only for real-world time/rate claims. The registered diagnostic reruns
+continue unchanged. Wave 3 remains open for a validated, visually legible lesson,
+not merely for satisfying the historical absolute thresholds.
+
 No expert approval is implied by passing engineering tests. Roughness and the
 virtual-pipe adaptation remain expert-review drafts. Landscape years stay hidden
 until calibration approval metadata exists. A failed or inconclusive prediction
@@ -109,3 +117,19 @@ That is the preserved wave gate, not a failed implementation test being hidden.
 Review the evidence, diagnose the process/experiment mismatch, preregister any
 scientifically justified revision and rerun all affected arms/seeds before closure.
 Approval alone cannot substitute for passing the applicable criteria.
+
+## Registered follow-up and revised science priority
+
+[The completed follow-up](../science/validation/followup/README.md) replays all
+eighteen originals exactly and runs eighteen preregistered revised arms. Cover
+shielded the original hardness intervention. Exposed rock shows a small resistance
+effect without the intended slope break/narrowing; the revised transport setup
+shows more deposit in the flatter reach, while rain still does not deepen the
+measured minima. All engineering guards and budgets pass.
+
+The owner now prioritizes visible relationships and relative outcomes over
+quantitative field accuracy. Apply [education-policy.md](../science/education-policy.md):
+retain the old scores as diagnostics, make calibration optional when no real-world
+years/rates are claimed, and prioritize a clearly visible, correctly explained
+paired interaction. The current prediction remains unscored. No visual/lesson gate
+is claimed to pass from numerical diagnostics alone.

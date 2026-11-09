@@ -2,6 +2,14 @@
 
 # Validation specification
 
+**Acceptance interpretation, 2026-11-09:** the owner prioritizes visible causal
+relationships and relative outcomes over field magnitudes. The frozen thresholds
+below remain unchanged for the original and registered follow-up experiments.
+Their pass/fail results are historical diagnostics; they are not the sole release
+gate for a qualitative lesson. Future demonstrations follow
+[education-policy.md](education-policy.md), with stable directional evidence, visual
+legibility and truthful content. Calibration alone is not a qualitative-release gate.
+
 Draft S1/W1/1E, 2026-11-07. These are preregistered **proposed acceptance tests**,
 not results. 2F builds metric functions; 3B runs the real solver. Sources and scope:
 [model.md](model.md), [S08] for process mechanisms, [W99] for incision context,

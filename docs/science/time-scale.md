@@ -2,6 +2,12 @@
 
 # Landscape-time calibration proposal
 
+**Scope update, 2026-11-09:** this is an optional route for lessons claiming
+approximate real-world years/rates. Failed or absent calibration does not block an
+explicitly qualitative lesson; show model time or the uncalibrated status instead.
+Numeric geological-time labels still require the provenance and approval below.
+See [education-policy.md](education-policy.md).
+
 Draft S1/W1/1E, 2026-11-07. **Status: uncalibrated; expert approval pending.**
 [Sources](sources.md): [K01] supplies long-term catchment-denudation context;
 [W99] supplies channel-incision context. Neither directly calibrates this solver.

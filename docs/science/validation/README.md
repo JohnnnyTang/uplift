@@ -2,6 +2,10 @@
 
 # Wave 3 validation packet: scientific exit not met
 
+**Follow-up:** [the registered reruns and diagnosis](followup/README.md) preserve this
+original packet. The owner has since clarified [education-first acceptance](../education-policy.md);
+these historical numeric outcomes are retained, not relabelled.
+
 Run date: 2026-11-09 UTC. The corrected CPU model completed all eighteen preregistered
 experiments without a stability rejection. Every sampled solid/water budget passed.
 **AC3a, AC3b and AC3c nevertheless fail their specified acceptance conditions on every

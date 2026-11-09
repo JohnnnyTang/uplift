@@ -1,4 +1,5 @@
 /** <!-- expert-review --> Reproducible preregistered evidence; failed claims stay failed. */
+import { FOLLOWUP_PROTOCOL_ID, followupPreset } from "./followup-protocol";
 import { createCpuSolver, type ReferenceLayers } from "../cpu/index";
 import type { BudgetCounters, StateSnapshot } from "../contract/index";
 import { createTiltedPlateauPreset } from "../presets/index";
@@ -115,7 +116,7 @@ export interface ValidationRunIO {
   writeFile(name: string, content: string): void;
   log(value: string): void;
 }
-export async function runValidation(seed: number, io: ValidationRunIO): Promise<void> {
+export async function runValidation(seed: number, io: ValidationRunIO, revised = false): Promise<void> {
   if (!(P.seeds as readonly number[]).includes(seed)) throw new Error("Run only preregistered seeds");
   const { solverCommit, sourceHashes } = io;
   const sha = io.sha256;
@@ -123,7 +124,7 @@ export async function runValidation(seed: number, io: ValidationRunIO): Promise<
   for (const arm of VALIDATION_ARMS) {
     const started = performance.now();
     const config = validationConfig(seed, arm),
-      preset = validationPreset(arm),
+      preset = revised ? followupPreset(arm) : validationPreset(arm),
       layout = createTiltedPlateauPreset().layout(config);
     const transport = arm.startsWith("slope-");
     const solver = createCpuSolver(
@@ -169,7 +170,21 @@ export async function runValidation(seed: number, io: ValidationRunIO): Promise<
       const closure = residuals(initial, current, budget);
       const bandWidth = halfDepthWidth(snapshot, { row: 74 });
       const reach = reachStocks(current);
+      let bandMinimumCoverM = Infinity,
+        bandBedrockErodedM3 = 0,
+        wetExposedBandCells = 0;
+      for (let i = 72 * 128; i < 76 * 128; i++) {
+        bandMinimumCoverM = Math.min(bandMinimumCoverM, current.sedimentM[i]!);
+        bandBedrockErodedM3 += (initial.bedrockM[i]! - current.bedrockM[i]!) * 100;
+        if (current.sedimentM[i]! === 0 && current.waterM[i]! > 1e-6) wetExposedBandCells++;
+      }
       const sample = {
+        mechanism: {
+          bedrockErodedM3: -delta(initial.bedrockM, current.bedrockM) * 100,
+          bandBedrockErodedM3,
+          bandMinimumCoverM,
+          wetExposedBandCells,
+        },
         step,
         hydraulicSeconds: step * config.dtSimSeconds,
         incisionM: incision.medianIncisionM,
@@ -276,7 +291,7 @@ export async function runValidation(seed: number, io: ValidationRunIO): Promise<
     const record = {
       arm,
       seed,
-      protocolId: P.id,
+      protocolId: revised ? FOLLOWUP_PROTOCOL_ID : P.id,
       solverCommit,
       sourceHashes,
       config,
