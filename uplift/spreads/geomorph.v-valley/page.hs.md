@@ -1,7 +1,7 @@
 <!-- expert-review -->
 
-How does running water change a valley? Make a prediction, then change the rain and watch the same ground evolve. Water can carry loose material away; material left behind becomes a deposit. This process model explores those exchanges, rather than drawing a valley to a script. (Model; S08)
+Rain supplies water that can lift material from the ground and carry it away. Predict which rainfall will move more, then compare the recorded runs. Each pair starts with the same exposed-rock landscape and spring; only the rain input differs. (Model; Comparison)
 
-Rain input: {{control.rain}}. The measured incision is {{probe.incisionDepth}}; sediment carried out of the landscape is {{probe.sedimentOut}}. Incision compares the valley floor with its starting height at fixed sections. A missing reading means the measurement is not available, not that no change occurred. (Validation)
+Read the ochre bars as the total material lifted from the surface so far. The bars share a scale, so their lengths can be compared directly. Material may settle and move again; the total counts each lift. It does not measure how much deeper the valley becomes. (Comparison; Model)
 
-Clock: {{scene.timeScale}}. Map scale: {{scene.scaleBar}}. Blue shows water and ochre shows sediment; use the legend to read each quantity. The flat contours and raised view come from the same terrain. Switching reading level keeps your experiment running. (Model)
+After the comparison, explore the live terrain below. Its rain input is {{control.rain}} and its exported sediment is {{probe.sedimentOut}}. Those readings belong to your free experiment, not the recorded pair. Clock: {{scene.timeScale}}. Map scale: {{scene.scaleBar}}. (Validation; Calibration)

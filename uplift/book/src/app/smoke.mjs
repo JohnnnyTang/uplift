@@ -28,11 +28,11 @@ try {
   assert.equal(await page.locator(".book").getAttribute("data-step"), "0");
   assert.equal(await page.getByRole("slider", { name: "Rain input" }).isDisabled(), true);
   assert.equal(await page.locator("#valley-tools-tool").isDisabled(), true);
-  assert.match(await page.locator(".widget-predict").textContent(), /No option is marked correct/);
+  assert.match(await page.locator(".widget-predict").textContent(), /lift more material/);
   assert.match(await page.locator(".challenge-status").textContent(), /not yet available/);
   assert.equal(await page.locator(".stamp").count(), 0);
   report.checks.push(
-    "Real preset flat SVG appears before prediction; controls are gated; draft is unscored; pending challenge awards no stamp",
+    "Real preset flat SVG appears before prediction; controls are gated; pending challenge awards no stamp",
   );
   await page.screenshot({ path: fileURLToPath(new URL("flat.png", evidence)), fullPage: true });
   await page.locator('input[name="prediction"]').first().focus();
@@ -47,6 +47,7 @@ try {
   await page.getByRole("button", { name: "Pause", exact: true }).click();
   await page.waitForTimeout(600);
   const before = await page.locator(".book").getAttribute("data-state-hash");
+  await page.getByRole("button", { name: "Show result", exact: true }).click();
   await page.getByRole("button", { name: "Reveal explanation" }).click();
   assert.equal(await page.locator("#explanation").isVisible(), true);
   await page.getByLabel("Reading level").selectOption("uni");

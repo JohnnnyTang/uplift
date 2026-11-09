@@ -18,3 +18,5 @@ export * from "./probes/index";
 // CPU reference solver (session 2A).
 export * from "./cpu/index";
 export * from "./validation/index";
+// Compact, provenance-checked recorded experiment (not the legacy morphology status).
+export { default as RAIN_COMPARISON } from "./validation/rain-comparison-data.json";

@@ -1,7 +1,7 @@
 <!-- expert-review -->
 
-Your current fixed-section incision is {{probe.incisionDepth}}; the cumulative export is {{probe.sedimentOut}}. Compare paired rainfall runs at equal model duration before attributing a difference to rain. A live readout from a single run does not establish a causal comparison. (Validation)
+Higher rainfall yields greater cumulative gross erosion at the matched endpoint on every recorded seed. The comparison isolates rain; it does not establish a universal rainfall-to-incision law. Its counter includes repeated erosion after deposition, rather than measuring a unique volume removed permanently. (Comparison; Model)
 
-Capacity, the available mobile stock and transport between cells jointly affect where erosion or deposition occurs. Cumulative exchanges are not independent stored volumes: material can erode and deposit repeatedly. Inspect the solid budget as well as the section measurements. (Model; FV)
+Capacity, mobile stock and transport jointly determine erosion and deposition. The earlier deeper-or-wider classification remains inconclusive: greater gross erosion does not imply lower section minima, channel widening or an eligible slope break. The historical failures remain in the evidence packet. (Model; FV; Results)
 
-The deeper-or-wider classification was inconclusive across the prescribed seeds. No answer is scored, and no widening, hard-band or landscape-time claim is approved by this draft. A failed or unresolved comparison must stay visible in the review evidence. (Results; Calibration)
+The free experiment currently measures incision {{probe.incisionDepth}} and export {{probe.sedimentOut}}. Keep those live readings separate from the recorded pair. Hydraulic seconds describe the model run; no approved geological-time conversion exists. (Validation; Calibration)

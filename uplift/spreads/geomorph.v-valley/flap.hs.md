@@ -1,5 +1,7 @@
 <!-- expert-review -->
 
-Compare your prediction with the measurements from your run. The measured incision is {{probe.incisionDepth}}, and {{probe.sedimentOut}} of sediment has left the landscape. These describe different changes: lowering the valley floor and carrying material out. (Validation)
+In the recorded comparison, heavier rain lifts more material from the surface over the same model time. Check the longer ochre bar, then replay another landscape seed. Your committed prediction is shown with the result. (Comparison)
 
-The model moves material through erosion, transport and deposition. Your run is an observation; a claim about what more rain reliably does needs matched experiments from the same starting landscape. The tested comparisons did not support a reliable scored answer, so the model requires further validation. We have not marked any choice correct. (Model; Results)
+Rain changes the water available for flow. In this model, flowing water can lift and transport material; it can also leave deposits. More material moved does not necessarily mean a deeper valley: the earlier valley-depth experiment did not support that claim. These are simplified model relationships, not measured rates for a real landscape. (Model; Comparison; Results)
+
+In free exploration, {{probe.sedimentOut}} has left your landscape. That export is a different measurement from the comparison's total lifted material. (Validation)

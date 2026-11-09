@@ -1,17 +1,13 @@
 <!-- expert-review -->
 
-# Teaching with the valley experiment
+Learning goal: compare how rainfall changes the cumulative amount of material lifted from a surface, while distinguishing movement from net valley deepening. (Comparison; Model)
 
-Learning goal: distinguish erosion, sediment transport and deposition, using measurements to test a prediction about changing rainfall. This is a process-model investigation; its tested comparisons did not support a reliable scored answer, and calibration could not be established. The model requires further validation. (Model; Results; Calibration)
+Ask learners to commit a prediction before playing the recorded experiment. The paired runs begin from identical exposed-rock terrain with the same spring; only rain changes. Read the bar lengths on their shared scale. Pause or use the keyboard timeline to compare equal model steps, then select another recorded seed. Ask learners to explain what is held constant and what the counter measures. The result feedback refers to their own committed choice. (Comparison)
 
-Begin with the flat contour drawing. Ask learners to choose deeper, wider, or both before unlocking rain. Have them explain the evidence they would need, then commit. Let the drawing lift, start the run and inspect the incision and export readings. Reveal the flap and compare the observations with the original reasoning. A single run is not evidence that changing rain caused a difference. (Validation)
+The replay is a compact record of real CPU solver samples, not a live response to the terrain controls. Free exploration below uses a separate live landscape with loose cover. Its rain and brush controls never alter the recorded pair. Changing reading level preserves both runs. Reset returns to the prediction. Reduced motion leaves playback paused; Play comparison and Show result remain available. (Comparison; Model)
 
-For a fair comparison, reset to the same preset and seed, repeat the same tool inputs at the same fixed steps, and change only rainfall. Compare equal model durations, rather than equal time watching the screen. Replaying within the same engine and backend is the reproducibility target; different browser engines or GPU drivers need not be bitwise identical. Keep baseline and current channel paths distinct. Missing or incomplete measurements are unresolved, not zero. (Validation; Model)
+Common misconception: more material moved means a deeper valley. The counter counts every lift, including material that settles and is lifted again. It is not net incision, a final sediment stock, or sediment exported. The old valley-depth and narrowing tests failed and must not be taught as demonstrated outcomes. (Results; Comparison)
 
-The validation packet records an inconclusive deeper-or-wider result. Keep the choice as an unscored hypothesis; correctness feedback requires new, supporting evidence. Do not tell the class that a hard band must create an upstream waterfall: the heightfield can identify a steep bed section, not falling-water physics. A geological-time persistence stamp also requires approved calibration. (Results; SW)
+Model steps and hydraulic seconds are not geological years. Units describe the model calculation, not a calibrated real catchment. The clock remains {{scene.timeScale}}. Scientific explanations await expert review; classroom legibility still needs human teaching feedback before Stage release. No waterfall stamp is enabled. (Calibration; Comparison)
 
-Read the clock status and scale together. Landscape time is an indicative mapping only after approval; a short model storm does not represent uninterrupted rain over geological time. Depth and channel width are limited by the grid. Hardness is an experimental erosion resistance, not a laboratory rock property. Repeated legal brush edits can create unrealistic terrain. (Calibration; Parameters; Model)
-
-Switch between high-school and university explanations without resetting the experiment. University readers can compare the stream-power relation with the implemented capacity rule, but must not identify its K with the erosion-rate control. Keyboard users can operate controls and the terrain cursor; reduced motion pauses autoplay so the learner chooses when to run. (W99; Model)
-
-Use the source list to distinguish literature mechanisms from provisional engineering limits. Scientific text, parameter ranges and calibration need domain-expert review before classroom release. (Sources)
+For replay, choose the same recorded seed and timeline position. The evidence packet preserves source configurations and hashes. The teacher can also replay the live model from its fixed seed with the same ordered inputs in the same browser engine. (Comparison; Model)

@@ -4,6 +4,8 @@
 
 The citation keys in page text resolve below. The local science brief is the authority for what this implementation actually does. Literature motivates mechanisms; it does not validate our experiment, approve calibration or supply every interaction clamp.
 
+Comparison — [paired rain evidence and presentation checks](../../../docs/science/validation/rain-comparison/README.md). This is the source for the new gross-erosion question, all recorded values and the shared-scale replay. It does not support an incision, widening or waterfall claim.
+
 ## Process rules
 
 | Rule in this spread                                                   | Evidence and implementation boundary                                                                                                                                                                                          |

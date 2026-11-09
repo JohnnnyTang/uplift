@@ -1,0 +1,74 @@
+{
+  "browser": "156.0.8078.80",
+  "errors": [],
+  "checks": [
+    "1366: prediction gate, all seeds, shared scale, keyboard endpoint, level-state preservation, reduced motion, reset and incorrect-choice feedback",
+    "390: prediction gate, all seeds, shared scale, keyboard endpoint, level-state preservation, reduced motion, reset and incorrect-choice feedback",
+    "Normal-speed recorded playback completes; replay and pause work"
+  ],
+  "measurements": [
+    {
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "seed": 1,
+      "widths": [235.53125, 567.28125],
+      "endpointValues": [405.80026773179577, 977.3240776162359],
+      "ratio": 2.408386970957287
+    },
+    {
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "seed": 17,
+      "widths": [235.40625, 567.171875],
+      "endpointValues": [405.58863586936116, 977.1535353577027],
+      "ratio": 2.4092231609576973
+    },
+    {
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "seed": 101,
+      "widths": [235.484375, 567.21875],
+      "endpointValues": [405.7026702777026, 977.218526516049],
+      "ratio": 2.4087061735313324
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "seed": 1,
+      "widths": [131.609375, 317],
+      "endpointValues": [405.80026773179577, 977.3240776162359],
+      "ratio": 2.408386970957287
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "seed": 17,
+      "widths": [131.546875, 316.9375],
+      "endpointValues": [405.58863586936116, 977.1535353577027],
+      "ratio": 2.4092231609576973
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "seed": 101,
+      "widths": [131.578125, 316.953125],
+      "endpointValues": [405.7026702777026, 977.218526516049],
+      "ratio": 2.4087061735313324
+    },
+    {
+      "elapsedMs": 20026
+    }
+  ]
+}

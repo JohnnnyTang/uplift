@@ -12,8 +12,9 @@ truth for requirements is the handoff's
 [education-policy.md](../science/education-policy.md). Prioritize visible cause and
 effect and robust relative comparisons; accurate field magnitudes and geological
 time calibration are conditional on making those claims. Legacy quantitative
-experiments retain their original classifications. Wave 3 still needs a supported,
-visually legible teaching relationship; a new policy alone is not evidence of one.
+experiments retain their original classifications. The completed
+[rain comparison](../science/validation/rain-comparison/README.md) supplies Wave 3's
+supported, visually legible teaching relationship and matching question.
 This note supersedes conflicting mandatory-calibration and absolute-margin wording
 in the session briefs below. Register model-time challenge persistence before
 implementing it; do not enable the existing pending challenge automatically.
@@ -383,16 +384,22 @@ profile with a known knickpoint position, and a budget fixture.
 
 ## Wave 3 · End to end on the CPU
 
-**Current status (2026-11-09):** implementation and evidence are merged in order.
-The scientific exit is **not met**: AC3a/AC3b/AC3c fail, T6 is inconclusive and
-calibration fails. Wave 3 remains open; Wave 4 has not started.
-See [the evidence and handover](stage-1-wave-3.md) for PRs, checks and required follow-up.
+**Current status (2026-11-09):** Wave 3's implementation and revised educational
+exit are complete. The matched rain replay makes the supported gross-erosion
+relationship visible and supplies the scored question. Legacy AC3a/AC3b/AC3c
+remain failed and the old T6 inconclusive; no geological calibration is claimed.
+See [the evidence and handover](stage-1-wave-3.md). Wave 4 has not started.
 
 **Entry:** the six W2 foundation PRs merged. The hydraulic correction below must merge before
 3B or 3C starts; other independent W3 work may proceed.
 **Merge order:** 3D → 3B → 3E → 3A → 3C.
 **Exit:** a reader can run the whole loop in the book on the CPU solver at 128². Qualitative tests pass on
 the real model. The GPU water stage agrees with the CPU solver.
+
+The revised educational exit applies to the claim actually taught: matched rain
+inputs and cumulative gross erosion, supported on every seed and visibly compared
+on a shared scale. The legacy morphology gates remain diagnostics; Stage 1 expert
+review and any future morphology/challenge claims still need their own evidence.
 
 ### Required prerequisite · Hydraulic resistance correction — ENG/SCI
 
@@ -522,12 +529,34 @@ only. Clamp-hit messages appear.
 
 ---
 
+### 3F · Visible rain comparison and matching question — SCI/RT/QA
+
+**Owned paths.** `hachure/terrain/src/validation/rain-comparison*`,
+`hachure/terrain/src/validation/build-rain-comparison.mjs`,
+`hachure/runtime/src/widgets/paired-replay.ts`, `uplift/book/src/app/**`,
+`uplift/spreads/geomorph.v-valley/**`, related content tests,
+`docs/science/validation/rain-comparison/**`, plan/decision documentation and
+minimal public barrel exports.
+
+**Delivered.** Prospectively registered presentation checks; a compact exact
+extraction of every revised rain sample and seed from the follow-up; a reusable
+shared-scale recorded comparison; keyboard/pause/replay/seed controls; bound text;
+the supported gross-erosion question and matching flaps at both reading levels.
+The live CPU terrain remains separate free exploration. No solver or historical
+scientific classification changes.
+
+**Exit evidence.** All paired endpoints exceed the registered legibility target
+at desktop and mobile sizes; all samples match the source packet; correct and
+incorrect predictions, reset, level preservation and reduced motion pass browser
+checks. See [the complete evidence](../science/validation/rain-comparison/README.md).
+Stage expert sign-off and human teaching/accessibility checks remain pending.
+
 ## Wave 4 · GPU, university layer, challenge
 
-**Entry:** W3 implementation merged **and its scientific exit met**. The initial W3
-packet fails AC3a/AC3b/AC3c and cannot supply a scored prediction or calibration.
-Publishing that evidence does not open W4; first complete a reviewed scientific
-follow-up under the unchanged gates (see [W3 handover](stage-1-wave-3.md)).
+**Entry:** W3 implementation, follow-up and visible educational comparison merged,
+with main green. The new scored prediction concerns gross erosion only. Preserve
+the failed historical morphology results, hidden geological years and pending
+challenge. The comparison supplies no validated waterfall sequence.
 **Before W4 opens:** the project lead decides on learning-outcome instrumentation (see `DECISIONS.md`). If
 the answer is yes, add session 4F (event log and anonymous export) to this wave.
 **Merge order:** 4E → 4A → 4B → 4C → 4D.
@@ -584,7 +613,9 @@ _Threads:_ rigour, restraint. _Depends on:_ 3A, 3B.
 **Deliverables.** A `ChallengeCheck` evaluator. Preserve the explicit pending-challenge
 state introduced by 3A: it cannot award a stamp. The first 3B hard-band experiment
 produced no qualifying knickpoint or narrowing; do not assume its tool sequence is
-validated. Use the reviewed follow-up evidence before enabling a success claim. "Make a waterfall" passes when a knickpoint that meets
+validated. The exposed-rock follow-up also lacks the intended morphology.
+Preregister and validate a new successful sequence before enabling a success claim.
+"Make a waterfall" passes when a knickpoint that meets
 1E's definition persists on the long profile for the specified simulated time. Describe this as a persistent slope-break proxy, not resolved falling-water physics. Uncalibrated runs cannot earn a geological-time persistence stamp. Stamp award UI. Progress
 stored locally, with storage access wrapped so failure degrades gracefully. The flap unlock and the
 predict feedback both refer to the reader's own committed answer.
@@ -623,8 +654,11 @@ blank after the lift, the predict step gates the key control, and the level togg
 `?debug` overlay showing fps, ms per step, grid size, backend and seed.
 
 **Exit criteria.** The end-to-end job runs green on CI. The size budget is enforced.
-Include failed/pending science fixtures: unscored predictions, hidden landscape years
-and no pending-challenge stamp must survive reset and level changes.
+Include failed/pending science fixtures: generic unscored predictions, hidden
+landscape years and no pending-challenge stamp must survive reset and level changes.
+Also test the supported recorded gross-erosion question: endpoint-gated feedback,
+all seeds, exact recorded values, stable shared axes, keyboard scrubbing and reset.
+Keep live and recorded state unchanged across reading-level changes.
 
 ---
 
@@ -681,6 +715,11 @@ Stage 2. **This is the input for planning Stage 2 in detail.**
 | WebGPU is testable in CI                                                                                           | Run GPU tests locally and record the run at each wave close                | 3C          |
 
 ## Changelog
+
+- 2026-11-09: Complete the Wave 3 educational follow-up with a visible paired rain
+  replay and a matching gross-erosion question. Carry exact recorded-data checks
+  into 4E and the still-unvalidated slope-break sequence into 4C. Historical
+  failures and Stage 1 human/expert gates are preserved.
 
 - 2026-11-09: Owner prioritizes visible causal relationships and relative outcomes;
   field calibration is conditional on quantitative claims. Complete the registered

@@ -71,13 +71,12 @@ describe("valley draft content", () => {
     expect(teacherNotesText).not.toContain("<!--");
   });
 
-  it("leaves inconclusive prediction unscored", () => {
-    expect(predictDraft.answer).toBeNull();
-    expect("answerEvidence" in predictDraft).toBe(false);
+  it("scores only the supported material-movement question", () => {
+    expect(predictDraft.answer).toBe(1);
+    expect(predictDraft.answerEvidence).toContain("rain-comparison");
     expect(predictDraft.options).toHaveLength(3);
-    for (const question of Object.values(predictDraft.question))
-      expect(question).toContain("{{scene.duration.predictSpan}}");
-    expect(pageContent.flap.hs).toContain("not marked any choice correct");
+    expect(predictDraft.question.hs).toContain("lift more material");
+    expect(pageContent.flap.hs).toContain("does not necessarily mean a deeper valley");
     expect(pageContent.flap.uni).toContain("inconclusive");
   });
 

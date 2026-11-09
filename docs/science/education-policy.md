@@ -76,3 +76,9 @@ Sources: the product-owner instruction in this session; the tier definitions and
 process-based requirements in [the handoff](../handoff.md#scientific-rigour-policy);
 measurement scope in [validation-spec.md](validation-spec.md). This policy changes
 product acceptance priorities, not the underlying physical process equations.
+
+**Subsequent Wave 3 completion:** the [rain comparison](validation/rain-comparison/README.md)
+now supplies the prospective presentation checks and supported question missing
+at the transition above. The scored answer applies only to gross erosion in the
+recorded matched runs. Earlier unscored morphology status and calibration records
+remain unchanged; Stage 1 expert and human review are still required.

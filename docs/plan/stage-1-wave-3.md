@@ -2,7 +2,35 @@
 
 Run started 2026-11-08 local time; implementation handover 2026-11-09.
 
-**Implementation is merged; the scientific exit is not met. Wave 3 remains open.**
+**Wave 3 closure (2026-11-09):** the implementation, diagnostic follow-up and
+visible educational comparison are complete under the owner's education-first
+policy. The new question teaches supported cumulative gross erosion; it does not
+claim a deeper valley or a waterfall. Stage 1 expert and human review remain open.
+
+## Closure evidence
+
+[PR #20](https://github.com/JohnnnyTang/uplift/pull/20), merged at `0a64e40`,
+preserves all original failures, diagnoses their causes and records the
+owner's revised priorities. Session 3F supplies the previously missing
+[visible comparison and matching lesson](../science/validation/rain-comparison/README.md):
+all recorded seeds on one scale, bound counters, prediction-specific feedback,
+keyboard replay/scrubbing, reduced motion and preserved state across levels.
+The presentation protocol was frozen before extraction and visual inspection.
+
+The final implementation passes `pnpm check` (434 tests), production build, the comparison
+browser suite and the existing CPU lift/tool integration smoke. The evidence
+includes six viewport/seed screenshots and normal-speed playback. GPU equations
+are unchanged; the existing water comparison remains part of CI.
+
+**Handover:** Wave 4 can proceed after merge and green main. Geological calibration
+remains unapproved, the old deeper/wider answer remains null in historical status,
+and the slope-break challenge remains non-executable. Expert scientific review,
+human screen-reader listening, classroom feedback and target-hardware performance
+are Stage 1 release work, not claimed complete here.
+
+The sections below preserve the original implementation handover and why it did
+not close the wave. Historical “open/blocked” statements describe that point in
+time; this closure and the linked education policy supersede them for current work.
 
 ## Gates and ordering
 

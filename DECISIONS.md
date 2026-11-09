@@ -788,3 +788,32 @@ a visible paired interaction and a matching teaching question; field-rate
 calibration is not the next blocker for a qualitative model. The current numerical
 packet does not establish classroom legibility or authorize a scored prediction.
 No further post-result tuning or solver change was made.
+
+## D-W3-R4 · Teach the supported rain comparison with a recorded replay
+
+2026-11-09 · Wave 3 completion follow-up (3F), requested by the owner.
+
+The prospective presentation protocol is committed at a8464b6. Reuse every
+revised rain pair from PR #20, all seeds and samples, and teach cumulative gross
+erosion rather than the unsupported deeper/wider claim. A shared-scale bar and
+time-trace widget is an engine primitive in Hachure runtime; the spread stays data.
+The book wires that primitive to a compact, provenance-checked public terrain
+artifact. No solver equations or initial landforms change. Recorded samples are
+explicitly labelled; the free terrain is separate and cannot change their result.
+
+The supported answer is scoped to this comparison. All failed legacy records,
+calibration approval=false and the pending challenge remain intact. The view
+passes the prospective pixel/readability, keyboard, reduced-motion and state
+preservation checks on every seed. This closes the Wave 3 educational comparison
+under the owner's accepted policy after integration, not the Stage 1 expert,
+human-accessibility or hardware gates.
+
+Ownership: 3F integrates validation, the runtime comparison primitive, book wiring,
+spread text and evidence/plan docs. The two public barrel exports are minimal glue.
+A separate generic paired-live-worker host is unnecessary for this recorded
+experiment and is not claimed. Future interactive comparisons should be another
+engine primitive rather than heavy spread code.
+
+Open for Stage 1 review: expert interpretation of the taught mechanism and human
+classroom usability. Wave 4 must validate a fresh model-time slope-break sequence
+before enabling its challenge; these rain results do not support a waterfall.

@@ -35,13 +35,19 @@ import {
   createSlider,
   createPlayback,
   createDisplayFormula,
+  createPairedReplay,
   el,
   formatBoundNumber,
   type HostSample,
   type Level,
   type Spread,
 } from "@hachure/runtime";
-import { DEFAULT_TERRAIN_CONFIG, V_VALLEY_SCIENCE_STATUS, hashSnapshot } from "@hachure/terrain";
+import {
+  DEFAULT_TERRAIN_CONFIG,
+  V_VALLEY_SCIENCE_STATUS,
+  RAIN_COMPARISON,
+  hashSnapshot,
+} from "@hachure/terrain";
 import { inkCamera, LESSON_VIEW } from "./view-config";
 import "../book.css";
 import "./lesson.css";
@@ -89,11 +95,11 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   header.append(el("p", "Uplift", "book-brand"), label, levels);
   const notice = el(
     "p",
-    "Research draft · The model has not passed all qualitative validation checks. Prediction scoring and landscape years remain unavailable.",
+    "Research draft · Compare the tested rain relationship. Scientific explanations await expert review; landscape years and the waterfall challenge remain unavailable.",
     "fixture-notice",
   );
   const validationLink = el("a", "Read the validation results");
-  validationLink.href = `https://github.com/JohnnnyTang/uplift/blob/main/${V_VALLEY_SCIENCE_STATUS.evidencePath}`;
+  validationLink.href = `https://github.com/JohnnnyTang/uplift/blob/main/${RAIN_COMPARISON.evidencePath}`;
   notice.append(" ", validationLink);
   const book = el("article", undefined, "book");
   book.id = "spread";
@@ -114,9 +120,37 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   for (const equation of spread.page.equations ?? []) equations.append(createDisplayFormula(equation));
   const predict = createPredict("prediction", spread.page.predict, level, (choice) => {
     lifecycle.commitPrediction(choice);
+    comparison.unlock();
     void liftAndRun();
   });
   predict.root.disabled = true;
+  let comparisonAtEnd = false;
+  const feedback = el("p", undefined, "comparison-feedback widget-status");
+  feedback.setAttribute("role", "status");
+  // <!-- expert-review --> Bound recorded gross erosion; sources: Comparison and Model.
+  const comparison = createPairedReplay({
+    id: "rain-comparison",
+    data: RAIN_COMPARISON,
+    title: "Material lifted from the surface",
+    labels: ["Lighter rain", "Heavier rain"],
+    inputUnit: "mm/h",
+    valueUnit: "model m³",
+    description:
+      "Recorded controlled experiment. Identical exposed-rock terrain and spring; only rainfall changes. Each lift counts, including material moved again after settling.",
+    onEndpoint(atEnd) {
+      comparisonAtEnd = atEnd;
+      updateComparisonFeedback();
+    },
+  });
+  function updateComparisonFeedback() {
+    const choice = predict.committed;
+    const text =
+      comparisonAtEnd && choice !== undefined
+        ? `You predicted: ${spread.page.predict.options[choice]![level]}. ${choice === spread.page.predict.answer ? "Your prediction matches this comparison." : "This comparison supports heavier rain."} Heavier rain lifted more material over the same model time. This does not establish a deeper valley.`
+        : "";
+    if (feedback.textContent !== text) feedback.textContent = text;
+    flap.reveal.disabled = !comparisonAtEnd;
+  }
   const time = createTimeScale("Loading model…");
   const figure = el("figure"),
     stage = el("div", undefined, "terrain-stage"),
@@ -212,10 +246,8 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     }
   });
   const notes = el("details");
-  notes.append(
-    el("summary", "Teacher note and sources"),
-    el("div", teacherNotes.replace(/<!--.*?-->/gs, "").trim(), "teacher-note"),
-  );
+  const noteText = el("div", undefined, "teacher-note");
+  notes.append(el("summary", "Teacher note and sources"), noteText);
   const citations = el("ul");
   for (const source of spread.sources) {
     const item = el("li");
@@ -234,9 +266,26 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
       : "Challenge validation is not active in this draft.",
     "challenge-status widget-status",
   );
-  left.append(title, body, predict.root, flap.root, challengeStatus, equations, keywords.root, notes);
+  left.append(
+    title,
+    body,
+    predict.root,
+    feedback,
+    flap.root,
+    challengeStatus,
+    equations,
+    keywords.root,
+    notes,
+  );
   right.append(
     createTierBadge(spread.tier),
+    comparison.root,
+    el("h2", "Free exploration"),
+    el(
+      "p",
+      "A separate live landscape with loose cover. These controls do not change the recorded comparison.",
+      "supporting-text",
+    ),
     time.root,
     figure,
     visualText,
@@ -278,8 +327,10 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     if (sample) publishTerrainSample(bindings, sample, spread.scene, host.speed, !host.playing);
     title.textContent = spread.title[level];
     body.textContent = bindings.render(spread.page.body[level]);
+    noteText.textContent = bindings.render(teacherNotes.replace(/<!--.*?-->/gs, "").trim());
     flap.panel.textContent = bindings.render(spread.page.flap[level]);
     predict.update(level);
+    updateComparisonFeedback();
     const question = predict.root.querySelector("legend");
     if (question) question.textContent = bindings.render(spread.page.predict.question[level]);
     ignores.update(spread.page.ignores[level].map((text) => bindings.render(text)));
@@ -397,7 +448,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     lifecycle.completeLift();
     rain.input.disabled = false;
     speed.input.disabled = false;
-    flap.reveal.disabled = false;
+    flap.reveal.disabled = !comparisonAtEnd;
     caption.textContent = view
       ? "The same contours now follow the raised surface. Blue is water; ochre stripes are sediment in transport."
       : `Live contour fallback. ${viewError}`;
@@ -410,6 +461,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     lifecycle.reset();
     lifecycle.beginPrediction();
     predict.reset();
+    comparison.reset();
     flap.reset();
     rain.input.disabled = true;
     speed.input.disabled = true;
@@ -477,6 +529,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
       palette.dispose();
       brushOverlay.dispose();
       host.dispose();
+      comparison.dispose();
       view?.dispose();
     },
   };

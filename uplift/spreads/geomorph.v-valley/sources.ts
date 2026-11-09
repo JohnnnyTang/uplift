@@ -2,6 +2,7 @@
 import type { Source } from "@hachure/runtime";
 
 export const sourceKeys = [
+  "Comparison",
   "Model",
   "Parameters",
   "Validation",
@@ -20,6 +21,11 @@ export const sourceKeys = [
 ] as const;
 
 export const sources = [
+  {
+    citation:
+      "Comparison — Uplift paired rain experiment: gross erosion, shared-scale replay and presentation evidence",
+    url: "https://github.com/JohnnnyTang/uplift/blob/main/docs/science/validation/rain-comparison/README.md",
+  },
   {
     citation: "Results — Uplift reproducible validation packet: failed criteria and inconclusive prediction",
     url: "https://github.com/JohnnnyTang/uplift/blob/main/docs/science/validation/README.md",
