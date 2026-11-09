@@ -604,3 +604,29 @@ reader prose to avoid being read aloud as markup.
 correction and calibration approval are independent of content completion. All scientific
 copy remains expert-review draft. Existing M07 full-text, field-analogy and domain-review
 gaps remain open. No content test is a scientific validation result.
+
+### D-3B-001 · 2026-11-09 · Validation infrastructure complete; scientific acceptance failed
+
+**Evidence.** All eighteen corrected real-preset runs completed their preregistered
+horizons and all sampled budgets/guards passed. AC3a wet-minus-dry incision is negative,
+about -0.00049 to -0.00072 m versus the required +0.1 m. AC3b has no narrowing or eligible
+knickpoint; approved persistence cannot be established. AC3c has the expected deposition
+direction but only about 21.6 m³ excess against a 64.0 m³ margin. T6 is inconclusive on
+all seeds. All fifteen calibration sections have nonpositive incision. Full results,
+configs, fingerprints, CSVs and the figure are in `docs/science/validation/`.
+
+**Decision.** Publish reusable fixed-section incision and exact accepted-step reach
+sediment-transfer diagnostics, plus the failed evidence. Do not change thresholds,
+horizons, seeds or default parameters to obtain a pass. Keep the prediction null/unscored,
+the clock sentinel unchanged, and scientific approval pending. The lead keeps Wave 3
+open: this infrastructure/result PR does not satisfy session 3B's scientific exit.
+
+**Ownership and retention.** Minimal CPU additions observe stage-five limited faces
+before scratch reuse; they do not change physics. 3A coordinates separate brush edits.
+Public exports let the host use the same metric with an explicit reset baseline.
+A result-driven content follow-up replaces stale “awaiting results” wording with the
+observed inconclusive outcome, retaining expert-review markers. Raw metric samples
+are stored every 200 steps, while full sampled profiles/sections are retained only at
+initial/spin-up/final steps; complete terrain snapshots are not archived. This declared
+retention deviation keeps the failed draft packet reviewable; deterministic replay is
+available from the recorded inputs. The scientific acceptance command exits nonzero.

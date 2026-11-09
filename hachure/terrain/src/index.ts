@@ -17,3 +17,4 @@ export * from "./tools/index";
 export * from "./probes/index";
 // CPU reference solver (session 2A).
 export * from "./cpu/index";
+export * from "./validation/index";

@@ -20,6 +20,8 @@ export {
 } from "./guards";
 export {
   type CpuSolverOptions,
+  type SedimentReach,
+  type SedimentReachBudget,
   CpuTerrainSolver,
   type WaveGuardPolicy,
   type ReferenceLayers,

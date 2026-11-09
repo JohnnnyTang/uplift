@@ -1,0 +1,41 @@
+{
+  "seed": 101,
+  "arms": [
+    {
+      "arm": "rain-low",
+      "completedSteps": 22000,
+      "configHash": "999ed9b891302548be6ea6f9d23de2545af1c6fe7aefc09ada7ff148cef9ac0b",
+      "finalHash": "9b35999dc2c137f6"
+    },
+    {
+      "arm": "rain-high",
+      "completedSteps": 22000,
+      "configHash": "42268d1cf197fed89ab4b26664c3213547dcac813d25456a3e16a4d40a38aa12",
+      "finalHash": "366ad6584da2291b"
+    },
+    {
+      "arm": "uniform",
+      "completedSteps": 22000,
+      "configHash": "e1fa51dccd41ce2287a2dad190657e7980731b5f3b684d76c7c9aec13099cf8a",
+      "finalHash": "704f1b718cd831fa"
+    },
+    {
+      "arm": "hard-band",
+      "completedSteps": 22000,
+      "configHash": "e1fa51dccd41ce2287a2dad190657e7980731b5f3b684d76c7c9aec13099cf8a",
+      "finalHash": "ad080f717cc54dfa"
+    },
+    {
+      "arm": "slope-low",
+      "completedSteps": 10000,
+      "configHash": "a2dd9f8277d538722b5ac63494ef686c9bcc90f698d8b1535492b2b91713594b",
+      "finalHash": "e0431510bf943bab"
+    },
+    {
+      "arm": "slope-high",
+      "completedSteps": 10000,
+      "configHash": "a2dd9f8277d538722b5ac63494ef686c9bcc90f698d8b1535492b2b91713594b",
+      "finalHash": "4959b8733ddba38c"
+    }
+  ]
+}

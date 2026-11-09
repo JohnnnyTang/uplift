@@ -12,7 +12,8 @@ export const predictDraft = {
     { hs: "Wider", uni: "Greater half-depth width only" },
     { hs: "Both deeper and wider", uni: "Greater incision and half-depth width" },
   ],
-  // TODO(3B): replace only from the reproducible T6 result, then supply answerEvidence.
+  // T6 was inconclusive across every prescribed seed: see docs/science/validation/.
+  // Replace only after new supporting validation, then supply answerEvidence.
   // Inconclusive or failed validation is not an answer option.
   answer: null,
 } as const satisfies Omit<PredictSpec, "answer"> & { readonly answer: null };

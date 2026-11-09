@@ -6,6 +6,6 @@ The page and flap markdown are reader prose with live bindings. TypeScript modul
 
 The integrating spread must declare the scalar probes, value controls and duration IDs listed in contentBindings. The content tests check every reader field and markdown label against those declarations; integration must also validate the assembled spread against its real probes and controls.
 
-The prediction deliberately has a null answer and no answer evidence. Pending validation is not a correctness index. Replace it only from the reproducible prediction result, and revise both flaps to match. The draft must remain unscored if the result is inconclusive. Landscape-time approval and scientific sign-off are independent gates.
+The prediction deliberately retains a null answer and no scored-answer evidence: the completed comparisons were inconclusive. The model requires further validation before correctness feedback can be justified. The measured failures and reproducible inputs are recorded in the validation results linked in the source list. Landscape-time approval and scientific sign-off are independent gates.
 
 Citation keys in prose resolve through sources.ts and sources.md. Numeric bibliography identifiers and link destinations are metadata, never live simulation values.
