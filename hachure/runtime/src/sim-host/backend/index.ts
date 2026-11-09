@@ -1,3 +1,5 @@
+import type { AuthoredTerrainInitial } from "../../reader/contracts";
+import { cloneAuthoredInitial } from "../authored";
 import { createCpuSolver, resolveTerrainConfig, type TerrainConfig } from "@hachure/terrain";
 import type { HostCommand, HostReply, HostSample, HostTransport, LandscapeTimeStatus } from "../protocol";
 import { SolverTransport } from "./solver-transport";
@@ -5,7 +7,20 @@ import { SolverTransport } from "./solver-transport";
 export type TerrainBackend = "webgpu" | "cpu-worker" | "cpu-64" | "flat";
 export const TERRAIN_BACKENDS: readonly TerrainBackend[] = ["webgpu", "cpu-worker", "cpu-64", "flat"];
 /** Engineering tiers cover the same domain; these are not calibrated field parameters. */
-export function backendConfig(backend: TerrainBackend, config: Partial<TerrainConfig> = {}): TerrainConfig {
+export function backendConfig(
+  backend: TerrainBackend,
+  config: Partial<TerrainConfig> = {},
+  initial?: AuthoredTerrainInitial,
+): TerrainConfig {
+  if (initial) {
+    const exact = resolveTerrainConfig({
+      ...config,
+      gridSize: initial.gridSize,
+      metresPerCell: initial.metresPerCell,
+    });
+    cloneAuthoredInitial(initial, exact);
+    return exact;
+  }
   const gridSize = backend === "webgpu" ? 256 : backend === "cpu-worker" ? 128 : 64;
   const metresPerCell = 1280 / gridSize;
   return resolveTerrainConfig({ ...config, gridSize, metresPerCell, pipeAreaM2: 0.2 * metresPerCell ** 2 });
@@ -18,6 +33,7 @@ export function forcedBackend(search: string): TerrainBackend | undefined {
 }
 export interface BackendSelectionOptions {
   readonly config?: Partial<TerrainConfig>;
+  readonly initial?: AuthoredTerrainInitial;
   readonly calibration?: LandscapeTimeStatus;
   readonly search?: string;
   readonly createWorkerTransport: () => HostTransport | Promise<HostTransport>;
@@ -55,6 +71,17 @@ export function canRenderWebGL2(): boolean {
 }
 /** Select before running: degrade resolution, never numerical dt or fixed step order. */
 export async function selectTerrainBackend(options: BackendSelectionOptions): Promise<BackendSelection> {
+  options = {
+    ...options,
+    ...(options.initial
+      ? {
+          initial: cloneAuthoredInitial(
+            options.initial,
+            backendConfig("flat", options.config, options.initial),
+          ),
+        }
+      : {}),
+  };
   const forced = forcedBackend(options.search ?? "");
   const failures: { backend: TerrainBackend; reason: string }[] = [];
   const maxStepMs = options.maxStepMs ?? 1000 / 30;
@@ -62,15 +89,15 @@ export async function selectTerrainBackend(options: BackendSelectionOptions): Pr
     throw new RangeError("Step admission budget must be positive and finite");
   const flat = async (): Promise<BackendSelection> => ({
     backend: "flat",
-    config: backendConfig("flat", options.config),
+    config: backendConfig("flat", options.config, options.initial),
     transport: null,
-    initialSample: await createFlatTerrainSample(options.config, options.calibration),
+    initialSample: await createFlatTerrainSample(options.config, options.calibration, options.initial),
     measuredStepMs: null,
     failures,
   });
   for (const backend of forced ? [forced] : TERRAIN_BACKENDS) {
     if (backend === "flat") return flat();
-    const config = backendConfig(backend, options.config);
+    const config = backendConfig(backend, options.config, options.initial);
     let transport: HostTransport | undefined;
     let measuredStepMs: number | null = null;
     try {
@@ -90,6 +117,7 @@ export async function selectTerrainBackend(options: BackendSelectionOptions): Pr
       const init: HostCommand = {
         kind: "init",
         config,
+        ...(options.initial ? { initial: options.initial } : {}),
         ...(options.calibration ? { calibration: options.calibration } : {}),
       };
       let reply = await transport.request(init);
@@ -119,12 +147,20 @@ export async function selectTerrainBackend(options: BackendSelectionOptions): Pr
         transport: {
           request(command) {
             if (command.kind === "init") {
-              const normalized: HostCommand = { ...command, config: backendConfig(backend, command.config) };
+              const normalized: HostCommand = {
+                ...command,
+                config: backendConfig(backend, command.config, command.initial),
+              };
               const sameConfig = JSON.stringify(normalized.config) === JSON.stringify(config);
               const sameCalibration =
                 JSON.stringify(command.calibration ?? { status: "pending" }) ===
                 JSON.stringify(options.calibration ?? { status: "pending" });
-              if (cached && sameConfig && sameCalibration) {
+              if (
+                cached &&
+                sameConfig &&
+                sameCalibration &&
+                JSON.stringify(command.initial) === JSON.stringify(options.initial)
+              ) {
                 const result = cached;
                 cached = undefined;
                 return Promise.resolve(result);
@@ -153,12 +189,14 @@ export { SolverTransport } from "./solver-transport";
 export async function createFlatTerrainSample(
   config: Partial<TerrainConfig> = {},
   calibration?: LandscapeTimeStatus,
+  initial?: AuthoredTerrainInitial,
 ): Promise<HostSample> {
   const transport = new SolverTransport(createCpuSolver);
   try {
     const reply = await transport.request({
       kind: "init",
-      config: backendConfig("flat", config),
+      config: backendConfig("flat", config, initial),
+      ...(initial ? { initial } : {}),
       ...(calibration ? { calibration } : {}),
     });
     return reply.sample!;

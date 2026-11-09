@@ -1,3 +1,4 @@
+import type { AuthoredTerrainInitial } from "../reader/contracts";
 import type { TerrainConfig, ToolOp, ToolResult, TunableConfig } from "@hachure/terrain";
 import { FixedStepClock } from "./clock";
 import type { HostCommand, HostReply, HostSample, HostTransport, LandscapeTimeStatus } from "./protocol";
@@ -16,6 +17,9 @@ export class SimHost {
     lastBatchMs: 0,
   };
   private generation = 0;
+  private pending: Promise<unknown> | undefined;
+  private settling: Promise<void> | undefined;
+  private quiescent = false;
   private busy = false;
   private disposed = false;
   private sampleElapsed = 0;
@@ -30,7 +34,19 @@ export class SimHost {
     if (sampleIntervalSeconds < 0.25 || !Number.isFinite(sampleIntervalSeconds))
       throw new RangeError("View/probe sampling must be bounded");
   }
-  private async request(command: HostCommand, generation = this.generation): Promise<HostReply> {
+  private request(command: HostCommand, generation = this.generation): Promise<HostReply> {
+    if (this.disposed) return Promise.reject(new Error("Host is disposed"));
+    const result = this.pending
+      ? this.pending.then(() => this.performRequest(command, generation))
+      : this.performRequest(command, generation);
+    const tail = result.catch(() => undefined);
+    this.pending = tail;
+    void tail.then(() => {
+      if (this.pending === tail) this.pending = undefined;
+    });
+    return result;
+  }
+  private async performRequest(command: HostCommand, generation = this.generation): Promise<HostReply> {
     const start = performance.now();
     const reply = await this.transport.request(command);
     if (this.disposed || generation !== this.generation) return reply;
@@ -47,15 +63,58 @@ export class SimHost {
     }
     return reply;
   }
-  async initialize(config: Partial<TerrainConfig>, calibration?: LandscapeTimeStatus): Promise<void> {
-    await this.request({ kind: "init", config, ...(calibration ? { calibration } : {}) });
+  async initialize(
+    config: Partial<TerrainConfig>,
+    calibration?: LandscapeTimeStatus,
+    initial?: AuthoredTerrainInitial,
+  ): Promise<void> {
+    this.mutable();
+    await this.request({
+      kind: "init",
+      config: structuredClone(config),
+      ...(calibration ? { calibration } : {}),
+      ...(initial ? { initial: structuredClone(initial) } : {}),
+    });
   }
   play(): void {
+    if (this.disposed || this.settling) return;
+    this.quiescent = false;
     this.playing = true;
+  }
+  /** Reopen a retained host without changing its fixed-step state or requiring autoplay. */
+  resume(playing = false): void {
+    if (this.disposed || this.settling) return;
+    this.quiescent = false;
+    this.playing = playing;
+  }
+  /** Explicit fixed-step action, including the reduced-motion alternative. */
+  async step(steps: number): Promise<void> {
+    this.mutable();
+    if (!Number.isInteger(steps) || steps < 0) throw new RangeError("Steps must be a nonnegative integer");
+    await this.request({ kind: "advance", steps, sample: true });
   }
   pause(): void {
     this.playing = false;
     this.clock.reset();
+  }
+  /** Reject new mutations immediately, drain accepted work, then publish an atomic final sample.
+   * Keeps the solver and fractional fixed-step remainder; the caller resets its rAF timestamp on resume. */
+  pauseAndSettle(): Promise<void> {
+    if (this.disposed) return Promise.resolve();
+    if (this.settling) return this.settling;
+    this.playing = false;
+    this.quiescent = true;
+    const drain = this.pending ?? Promise.resolve();
+    this.settling = drain
+      .then(() => this.request({ kind: "sample" }))
+      .then(() => undefined)
+      .finally(() => {
+        this.settling = undefined;
+      });
+    return this.settling;
+  }
+  private mutable(): void {
+    if (this.disposed || this.quiescent) throw new Error("Host is settled; resume before changing the model");
   }
   setSpeed(speed: number): void {
     if (!Number.isFinite(speed) || speed < 0.25 || speed > 4)
@@ -89,14 +148,18 @@ export class SimHost {
     await this.request({ kind: "sample" });
   }
   async configure(patch: Partial<TunableConfig>): Promise<void> {
-    await this.request({ kind: "configure", patch });
+    this.mutable();
+    await this.request({ kind: "configure", patch: structuredClone(patch) });
   }
   async applyTool(op: ToolOp): Promise<ToolResult> {
-    const reply = await this.request({ kind: "tool", op });
+    this.mutable();
+    const reply = await this.request({ kind: "tool", op: structuredClone(op) });
     if (!reply.toolResult) throw new Error("Worker omitted tool result");
     return reply.toolResult;
   }
   async reset(): Promise<void> {
+    if (this.settling) throw new Error("Host is settling; wait before explicitly resetting");
+    this.quiescent = false;
     this.pause();
     this.speed = 1;
     this.sampleElapsed = 0;
@@ -119,7 +182,8 @@ export class SimHost {
   dispose(): void {
     this.disposed = true;
     this.pause();
-    this.transport.dispose();
+    if (this.pending) void this.pending.finally(() => this.transport.dispose());
+    else this.transport.dispose();
     this.listeners.clear();
     this.errors.clear();
   }

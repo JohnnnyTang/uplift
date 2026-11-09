@@ -145,3 +145,76 @@ describe("real Worker engine", () => {
     engine.dispose();
   });
 });
+
+describe("departure quiescence", () => {
+  it.each(["step", "automatic", "configure", "source"] as const)(
+    "drains an in-flight %s and publishes the final sample",
+    async (action) => {
+      const transport = new Transport();
+      const host = new SimHost(transport, 30);
+      if (action === "automatic") {
+        host.play();
+        host.advance(0.1);
+      }
+      const mutation =
+        action === "automatic"
+          ? undefined
+          : action === "step"
+            ? host.step(2)
+            : action === "configure"
+              ? host.configure({ rainMmPerHr: 20 })
+              : host.applyTool({ kind: "spring", id: "reader", at: { xM: 3, yM: 3 }, flowM3PerS: 1 });
+      const leaving = host.pauseAndSettle();
+      expect(host.pauseAndSettle()).toBe(leaving);
+      await expect(host.configure({ rainMmPerHr: 30 })).rejects.toThrow(/settled/);
+      await expect(host.step(1)).rejects.toThrow(/settled/);
+      await expect(host.reset()).rejects.toThrow(/settling/);
+      host.advance(10);
+      expect(transport.commands).toHaveLength(1);
+      const during = { snapshot: { step: 2 } } as HostSample;
+      transport.reply({
+        processingMs: 0,
+        sample: during,
+        toolResult: { applied: true, clamped: [], volumeChangeM3: 0 },
+      });
+      await mutation;
+      await settled();
+      expect(transport.commands.at(-1)).toEqual({ kind: "sample" });
+      let done = false;
+      void leaving.then(() => {
+        done = true;
+      });
+      await settled();
+      expect(done).toBe(false);
+      const final = { snapshot: { step: 3 } } as HostSample;
+      transport.reply({ processingMs: 0, sample: final });
+      await leaving;
+      expect(host.sample).toBe(final);
+      expect(host.playing).toBe(false);
+      host.advance(600);
+      expect(transport.commands).toHaveLength(2);
+      host.resume();
+      const next = host.step(1);
+      transport.reply();
+      await next;
+      host.dispose();
+    },
+  );
+  it("retains fractional fixed-step time without advancing across departure", async () => {
+    const transport = new Transport();
+    const host = new SimHost(transport, 30);
+    host.play();
+    host.advance(0.01);
+    const leaving = host.pauseAndSettle();
+    await settled();
+    transport.reply();
+    await leaving;
+    host.advance(600);
+    host.resume(true);
+    host.advance(0.025);
+    expect(transport.commands.at(-1)).toEqual({ kind: "advance", steps: 1, sample: false });
+    transport.reply();
+    await settled();
+    host.dispose();
+  });
+});

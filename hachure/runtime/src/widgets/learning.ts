@@ -3,10 +3,23 @@ import { button, el } from "./controls";
 /** Scoring belongs to the runtime: this widget records a committed choice only. */
 export function createPredict(
   id: string,
-  spec: PredictSpec,
+  definition: PredictSpec | undefined,
   level: Level,
   onCommit: (index: number) => void,
 ) {
+  if (!definition) {
+    const root = el("fieldset", undefined, "widget-predict");
+    root.hidden = true;
+    return {
+      root,
+      update(_level: Level) {},
+      reset() {},
+      get committed(): number | undefined {
+        return undefined;
+      },
+    };
+  }
+  const spec = definition;
   if (spec.options.length < 2 || spec.options.length > 4)
     throw new RangeError("Predict needs two to four options");
   const root = el("fieldset", undefined, "widget-predict");
@@ -15,7 +28,11 @@ export function createPredict(
     spec.answer === null
       ? " No option is marked correct; matched model validation is pending or inconclusive."
       : "";
-  const status = el("p", "Choose an answer, then commit to unlock the test." + unscored, "widget-status");
+  const status = el(
+    "p",
+    "Optional: make a prediction, or explore and reveal the explanation." + unscored,
+    "widget-status",
+  );
   status.setAttribute("role", "status");
   const choices = spec.options.map((option, index) => {
     const label = el("label"),
@@ -36,6 +53,8 @@ export function createPredict(
     commit.disabled = true;
     update(level);
     onCommit(index);
+    status.tabIndex = -1;
+    status.focus();
   });
   commit.disabled = true;
   choices.forEach(({ input }) => input.addEventListener("change", () => (commit.disabled = false)));
@@ -45,7 +64,7 @@ export function createPredict(
     legend.textContent = spec.question[level];
     choices.forEach(({ text }, index) => (text.textContent = spec.options[index]![level]));
     if (committed !== undefined)
-      status.textContent = `You predicted: ${spec.options[committed]![level]}. The test is unlocked.${unscored}`;
+      status.textContent = `You predicted: ${spec.options[committed]![level]}. You can keep exploring.${unscored}`;
   }
   function reset() {
     committed = undefined;
@@ -54,7 +73,7 @@ export function createPredict(
       input.disabled = false;
     });
     commit.disabled = true;
-    status.textContent = "Choose an answer, then commit to unlock the test." + unscored;
+    status.textContent = "Optional: make a prediction, or explore and reveal the explanation." + unscored;
   }
   return {
     root,
@@ -77,15 +96,16 @@ export function createFlap(id: string, text: string) {
   });
   reveal.setAttribute("aria-controls", id);
   reveal.setAttribute("aria-expanded", "false");
-  reveal.disabled = true;
+  reveal.disabled = false;
   root.append(reveal, panel);
   return {
     root,
     reveal,
     panel,
     reset() {
+      if (panel.contains(document.activeElement)) reveal.focus();
       panel.hidden = true;
-      reveal.disabled = true;
+      reveal.disabled = false;
       reveal.textContent = "Reveal explanation";
       reveal.setAttribute("aria-expanded", "false");
     },

@@ -4,7 +4,8 @@ export interface LifecycleSnapshot {
   readonly prediction: number | null;
 }
 
-/** Headless guided loop. The host completes the lift only when its view is ready. */
+/** @deprecated Temporary legacy research adapter. 5E migrates callers to ReaderLifecycle.
+ * New scenes never use prediction to authorize readiness or play. */
 export class SpreadLifecycle {
   private current: LifecycleSnapshot = Object.freeze({ state: "flat", prediction: null });
   private readonly listeners = new Set<(snapshot: LifecycleSnapshot) => void>();

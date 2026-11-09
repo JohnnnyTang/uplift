@@ -24,3 +24,43 @@ snapshot/probe calculation, main-thread contour/mesh extraction, and transfer pl
 Development headless-browser measurements do not establish the classroom hardware performance gate.
 
 Incision uses the shared fixed-section scientific metric on copied authoritative float64 stocks, with a separate reset baseline. Float32 snapshots are only the drawing and channel-path interface; they cannot quantize the reported incision signal.
+
+## Playable reader boundary (5B)
+
+`SimHost.pauseAndSettle()` closes the mutation gate immediately, drains every accepted
+advance/configuration/tool command in order, then publishes a final atomic sample.
+Detach only after it resolves. The retained host still owns the actual solver and
+fractional fixed-step remainder. Stop the scene scheduler while hidden and reset its
+wall-clock timestamp on return; never feed the off-page gap into `advance`.
+`resume(playing = false)` reopens mutations without requiring autoplay. `step(steps)`
+is an awaited, sampled fixed-step action for reduced motion and bounded interventions.
+Explicit reset remains paused and restores authored state, configuration and sources.
+
+The optional `AuthoredTerrainInitial` on initialization carries exact grid/cell size,
+edge outlet, terrain layers and unique persistent sources. The selector preserves the
+physical configuration (including pipe area) across all tiers; it never substitutes a
+different landscape. Inputs are validated and cloned, and each backend builds its own
+local preset; functions do not cross the Worker boundary. Worker and main-thread
+CPU/GPU transports share the same initialization/reset/diagnostic implementation.
+
+Authored samples explicitly report `diagnostics.kind === "unavailable"`: their empty
+legacy profile slots and null incision are not observations. Do not display valley
+profile or incision widgets for such samples. Use actual snapshot water for the water
+lesson. Legacy research samples retain their original diagnostics and calibration
+restrictions. A spring outside `[0, gridSize * metresPerCell)` is rejected with
+`off-grid`, leaving an existing stable-id source intact. Publish requested source
+coordinates only after a successful tool result; pointer UI constraints are separate
+from solver rejection. Rain-source radius clamps remain reported in ToolResult.
+
+`ReaderLifecycle` independently stores presentation/readiness; reveal and question
+state do not authorize play. `SpreadLifecycle` is the temporary legacy research
+adapter for removal after the 5E caller migration. Learning widgets accept an absent
+question and explanations are immediately revealable, including after reset.
+
+Verification in the 5B worktree: `pnpm check` (506 tests), `pnpm build`, e2e TypeScript,
+three `e2e/reader-runtime.spec.ts` tests using installed Chrome, and the existing
+terrain GPU browser suite (68 tests) pass. The reader fixture records keyboard reset
+focus in `e2e/fixtures/reader-runtime-keyboard.png`; it is wiring evidence, not a
+scientific lesson or learner/hardware result. Native Chrome with unsafe WebGPU exposes
+an adapter here; forcing ANGLE Swiftshader/Vulkan did not. The GPU-specific regression
+skips only when an adapter is unavailable; shader/runtime/numerical failures still fail.
