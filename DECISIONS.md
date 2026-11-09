@@ -930,3 +930,31 @@ and its forced-tier browser checks are coordinated by the lead; 4A's only owned
 path exception is the required runtime barrel export, plus this append-only log.
 Human accessibility, expert science sign-off and historical failed morphology
 results remain unchanged.
+
+## D-W4-4A-INTEGRATION · Mount the selected solver behind a real initial drawing
+
+2026-11-09 · Lead integration. Paint a genuine step-zero preset before device
+creation, then mount the selected complete solver using the shared SimHost.
+All tiers cover the same configured domain. The flat tier uses a read-only host,
+keeps live controls disabled, and preserves the recorded prediction/comparison.
+Diagnostics report the selected solver separately from the rendering backend.
+CPU-specific regression tests explicitly request that tier. CI removes committed
+local comparison packets before running and uploads only newly generated evidence.
+
+Independent review fixed mid-run timestep changes, mutable queued tool inputs and
+rejected-step counters. Actual unavailable-device tests exposed Three's unwanted
+WebGL compute fallback and a cleanup rejection; the managed compute factory now
+requires WebGPU and owns device cleanup. The fixed APIs pass targeted regressions.
+
+Integrated validation: pnpm check passes 451 tests; 68 actual GPU tests and a fresh
+16-case Chromium suite pass. Installed Chrome selects and renders WebGPU at 256
+cells per side automatically and when forced. The production bundle is below its
+configured budget. One preliminary dev-fixture readiness stall did not reproduce
+in forced-cold, isolated or fresh full runs; preserve that uncertainty in the
+backend evidence handover rather than assigning an unsupported cause.
+
+Minimal book mounting, test-helper and GPU workflow changes are necessary glue
+outside the engine session's owned paths. Headless evidence does not close 5A's
+classroom performance gate. GPU configuration currently rebuilds core resources;
+slider-drag responsiveness still needs that measured review. Challenge science,
+human listening and the other Wave 4 integrations remain open.
