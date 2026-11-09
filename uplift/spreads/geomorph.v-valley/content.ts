@@ -26,5 +26,5 @@ export const teacherNotesText = readerText(teacherNotes);
 export const contentBindings = {
   scalarProbes: ["incisionDepth", "sedimentOut"],
   valueControls: ["rain"],
-  durations: ["predictSpan"],
+  durations: [],
 } as const;

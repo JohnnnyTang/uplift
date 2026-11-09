@@ -14,7 +14,7 @@ validation or a classroom performance sign-off.
 
 The smoke run checks a real CPU model at the fallback grid size: prediction gating, SVG-first drawing,
 3D lift, play/pause, explanation, level-toggle hash preservation, reset, explicit uncalibrated time,
-unscored prediction and no pending challenge stamp. Reduced motion uses a crossfade and stays paused
+the supported comparison's endpoint-gated explanation and no pending challenge stamp. Reduced motion uses a crossfade and stays paused
 until Play. The final integration also exercises the real Worker brush path by keyboard and picking.
 
 Timings are separate: Worker step-batch computation, snapshot/probe calculation, Worker round trip less
@@ -22,8 +22,13 @@ processing (transfer plus event scheduling), and `InkView.setState` extraction. 
 camera/lift animation does not trigger full-state readbacks. Headless Chrome and a short early run are
 not target-classroom-hardware evidence for AC1. Human screen-reader listening remains a Wave 4 check.
 
-The lesson remains a research draft: the Wave 3 qualitative science gate is unmet. Prediction scoring,
-geological years and persistent-slope-break stamps stay unavailable. See the validation evidence under
-`docs/science/validation/` and the stage plan; this browser pass does not override those results.
+The lesson remains a research draft. Its revised gross-erosion question is backed
+by the [recorded comparison](rain-comparison/README.md), while the historical
+deeper/wider question remains inconclusive. Geological years and persistent
+slope-break stamps stay unavailable. This browser pass does not override those
+results or substitute for expert review.
 
-The recorded final run occurred while other wave sessions and validation commands shared the machine. Its last retained eight-step batch was 266.7 ms; snapshot/probe work was 25.7 ms, transfer plus scheduling 5.6 ms, and view extraction 32.6 ms. These are single retained samples, not a warmed steady-throughput benchmark. The results file preserves the raw measurements.
+This evidence was refreshed for the Wave 3 comparison integration. The current
+results file contains one short sample and must not be treated as steady-state
+throughput. Earlier 3A results and recording are preserved in git history; the
+original timing summary remains in the Wave 3 handover.

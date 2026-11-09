@@ -1,10 +1,5 @@
 /** <!-- expert-review --> Composes the draft content with public engine primitives; sources remain attached. */
-import {
-  DEFAULT_TERRAIN_CONFIG,
-  CPU_ADMISSIBLE_RANGES,
-  TILTED_PLATEAU_ID,
-  V_VALLEY_SCIENCE_STATUS,
-} from "@hachure/terrain";
+import { DEFAULT_TERRAIN_CONFIG, CPU_ADMISSIBLE_RANGES, TILTED_PLATEAU_ID } from "@hachure/terrain";
 import { type Spread, createTerrainHostCatalogue, validateSpread } from "@hachure/runtime";
 import { pageContent } from "./content";
 import { predictDraft } from "./predict";
@@ -14,7 +9,7 @@ const both = (text: string) => ({ hs: text, uni: text });
 export const valleySpread: Spread = {
   schemaVersion: 0,
   id: "geomorph.v-valley",
-  title: both("How a river carves a valley"),
+  title: both("More rain, more material moved?"),
   tags: {
     domain: ["geomorphology"],
     courses: ["physical-geography", "geomorphology", "hydrology"],
@@ -27,7 +22,6 @@ export const valleySpread: Spread = {
     seed: DEFAULT_TERRAIN_CONFIG.seed,
     camera: { position: [0, 1.2, 1], target: [0, 0, 0], fovDeg: 45 },
     stepsPerRealSecond: 30,
-    durations: { predictSpan: { simYears: 10_000 } },
   },
   controls: [
     {
@@ -75,7 +69,7 @@ export const valleySpread: Spread = {
       significantFigures: 3,
     },
   ],
-  page: { ...pageContent, predict: { ...predictDraft, answer: V_VALLEY_SCIENCE_STATUS.prediction.answer } },
+  page: { ...pageContent, predict: predictDraft },
   challenge: {
     prompt: both("Investigate the landscape; the persistent slope-break challenge awaits validation."),
     check: {

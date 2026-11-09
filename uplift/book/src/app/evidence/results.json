@@ -1,9 +1,9 @@
 {
   "browser": "156.0.8078.80",
-  "date": "2026-11-09T05:03:23.199Z",
+  "date": "2026-11-09T06:35:51.816Z",
   "errors": [],
   "checks": [
-    "Real preset flat SVG appears before prediction; controls are gated; draft is unscored; pending challenge awards no stamp",
+    "Real preset flat SVG appears before prediction; controls are gated; pending challenge awards no stamp",
     "Predict/lift/run/flap works on CPU128; paused level toggle preserves hash; uncalibrated years remain suppressed",
     "Keyboard dig reaches the real Worker with radius clamp and focus retention; pointer ray picking applies raise to the displayed terrain",
     "Reset returns to flat prediction, default controls, and zero steps",
@@ -11,15 +11,15 @@
   ],
   "measurements": [
     {
-      "step": "49",
-      "stateHash": "b0af47ed5a5ea752",
-      "viewStep": "49",
-      "workerMs": "34.89999997615814",
-      "transferSchedulingMs": "5.600000023841858",
-      "snapshotMs": "25.69999998807907",
-      "batchSteps": "8",
-      "batchMs": "266.69999998807907",
-      "viewUpdateMs": "32.60000002384186"
+      "step": "31",
+      "stateHash": "85043979c6994bf2",
+      "viewStep": "31",
+      "workerMs": "3",
+      "transferSchedulingMs": "0.8999999761581421",
+      "snapshotMs": "2",
+      "batchSteps": "1",
+      "batchMs": "2.299999952316284",
+      "viewUpdateMs": "3.5"
     }
   ]
 }
