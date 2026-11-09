@@ -11,6 +11,10 @@ change anything:
 
 ## Current Wave 5 direction
 
+Use `s1/w5/integration` as the base and PR target for every future Wave 5 session.
+Consume only dependencies already merged there; this owner-authorized exception
+supersedes main-only launch instructions for Wave 5. Other waves retain their default.
+
 For the opening lesson, read docs/plan/stage-1-wave-5-glacial.md and your 5G–5N
 brief. U-shaped valley formation must combine physical-condition changes (UI and
 an equivalent 3D gesture) with watching, inspecting/replaying and comparing formation

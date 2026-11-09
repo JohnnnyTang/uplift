@@ -1415,3 +1415,28 @@ again. Preserve original uploaded references and archived scientific results.
 Planning session continues on s1/w5/current-review. Owned scope: plan/product/handoff/
 review docs, README, append-only decisions; minimal AGENTS entry prevents stale briefs
 from driving future work. No production code, evidence outcomes or lockfile changed.
+
+## D-W5-INTEGRATION — One canonical branch for current and future Wave 5 sessions
+
+2026-11-09. The owner explicitly requests consolidation of all Wave 5 branch work
+and current plans into one branch for future sessions. Create s1/w5/integration by
+fast-forwarding main's 5A baseline to 7bf47d3, which already contains all committed
+Wave 5 tips: revision plan, A, B/C/D, E, F, updated direction, original references
+and G–N planning. Record exact ancestry in docs/review/wave-5-integration/sources.json.
+No cherry-pick duplication, solver rewrite or manual lockfile merge is needed.
+
+The earlier uncommitted scene-direction draft is preserved byte-for-byte as an
+archival patch in the integration handover. Its obsolete strict-transition and
+rain-first wording does not replace the later owner decisions. Leave its source
+worktree intact. Old branches remain traceable; this integration branch is the
+single active base, not an instruction to delete user work.
+
+Future Wave 5 sessions branch from and target PRs to s1/w5/integration, in the
+planned merge order; dependencies must already be merged there and checks green.
+This supersedes the G–N plan's prerequisite to merge everything into main before
+5G. It is a scoped owner-authorized exception, not permission to consume sibling
+WIP. Main remains unchanged. This consolidation does not start 5G or close any
+scientific, product, human or hardware gate. Push the verified branch for reuse.
+
+Integration session owns provenance/archive and minimal workflow/status updates in
+AGENTS, README, current plans and this appended decision; no production code changes.

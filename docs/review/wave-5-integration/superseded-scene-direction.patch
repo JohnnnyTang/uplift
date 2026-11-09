@@ -1,0 +1,427 @@
+diff --git a/DECISIONS.md b/DECISIONS.md
+index 1905abc..1323a02 100644
+--- a/DECISIONS.md
++++ b/DECISIONS.md
+@@ -1263,3 +1263,31 @@ Explicit reset restores authored configuration, terrain and sources, pauses and
+ resets presentation while retaining level. Instrumentation v1 remains confined
+ to the existing research example. Product, science, human accessibility and target
+ hardware acceptance remain separately open. Dependents start only after 5A merge.
++
++## D-W5-SCENE — Complete scene, not contour extrusion (2026-11-09)
++
++Owner clarification after merged 5A (PR #29, 8069a7f): Uplift begins as ink marks
++entirely on paper, transforms coherently, and ends as a complete manipulable 3D
++scene in an illustrative ink style. Surfaces, spatial objects and visible processes
++are required; raised contours or wet-cell overlays alone do not establish this.
++The three book references specify transformation, not a physics lesson to copy.
++The water-cycle reference suggests tangible processes, not whole-cycle scope.
++
++Supersede D-5A's fixed opening sequence and the automatic cartography alternative.
++Preserve its contracts, exploratory trials and outcomes as foundations, without
++claiming they satisfy the corrected product gate. PB3 now explicitly tests all
++three states and the complete endpoint, model invariance during transformation,
++and keyboard/reduced-motion equivalence.
++
++The owner explicitly requests demo discussion before selection and planning. Hold
++dependent 5B–5F execution against the old briefs; do not launch a replacement spike.
++Rainfall → surface accumulation/runoff is a discussion candidate only. Groundwater,
++infiltration and a whole-cycle model are not approved scope. After agreement,
++reconcile scene contracts, ownership and evidence requirements. The eventual
++two-spread/page-turn goal remains, but does not decide either demo lesson.
++
++This documentation session owns README.md, docs/handoff.md, docs/product-story.md,
++docs/plan/** and append-only DECISIONS.md on s1/w5/scene-direction. A minimal status
++notice in docs/review/book-revision/contracts.md is needed outside those paths to
++prevent its frozen/launch wording from contradicting the owner's hold. No production
++code, archived trial evidence, solver or scientific outcome is changed.
+diff --git a/README.md b/README.md
+index b981b71..c803e5b 100644
+--- a/README.md
++++ b/README.md
+@@ -12,7 +12,9 @@ used to show slope, which is the look the engine draws.
+ > example run today; the intended playable book is not yet delivered. The next work is book-sized
+ > composition, immediate 3D play and two interactive spreads with page turning. See the
+ > [product story](docs/product-story.md) and [complete Wave 5 plan](docs/plan/stage-1-wave-5.md).
+-> Wave 5 revises the existing app and delivers the new example; Wave 6 handles hardening.
++> Wave 5A is merged. The latest correction requires complete 3D scenes, not merely raised
++> contours. Demo selection is reopened for discussion before replanning or further
++> implementation. Wave 6 remains hardening.
+ 
+ ## Why this exists
+ 
+diff --git a/docs/handoff.md b/docs/handoff.md
+index 723bea4..a76872e 100644
+--- a/docs/handoff.md
++++ b/docs/handoff.md
+@@ -30,7 +30,7 @@ The reference is [Every Joule](https://iamtechartist.com/every-joule/) by Techar
+ 
+ **What we add for geography.**
+ 
+-- The signature move is often the concept itself: contour lines lifting into terrain, a globe peeling onto a flat page.
++- The signature move brings a printed illustration into a complete playable scene. Its subject is the small geographical phenomenon being explored; the transformation need not become a contour-lifting lesson.
+ - Sandbox processes: readers change water volume and speed, rock hardness and terrain shape (dig, raise, tilt) and watch landforms develop.
+ - Human-involved phenomena: dams, deforestation, paving, river engineering, urban growth, migration, diffusion.
+ - Real data: load a real DEM and watch a real watershed fill. Every Joule cannot do this; our group's GIS background can.
+@@ -55,7 +55,7 @@ This is a flexible reading rhythm, not a lockstep workflow. Correctness still ma
+ - Play, answer reveal and navigation are independent. Advanced depth, research diagnostics and optional assessment are never prerequisites.
+ - Page and model agree. Any number printed on the page (a value, a label, a gauge) is read from the live simulation state, never typed separately.
+ - Colour carries meaning. Ink line art is the default; colour is reserved for the quantity taught (water, sediment, ice, people, heat), with a legend on the page.
+-- The 2D drawing comes first. Each spread starts as flat line art on the page and lifts into 3D. The flat version is a real diagram, readable on its own.
++- The 2D drawing comes first: marks lie entirely on the page. It transforms into a complete spatial scene with actual surfaces, occlusion and manipulable objects. Contours and hatching belong on those surfaces; raised lines or a tilted map alone do not pass. Ink is the style, not a restriction to wireframe geometry. Presentation transitions never fabricate physical evolution; reduced motion reaches the same complete endpoint. The flat version remains readable on its own. See the [representation contract](product-story.md#owner-correction-the-drawing-becomes-the-scene-2026-11-09).
+ - Two levels, one simulation. A level toggle changes text depth, visible controls and overlays, never the underlying model.
+ - Teachers' notes and sources ship with every spread.
+ - Accessible by default: keyboard operable controls, text alternatives for the key visual change, reduced-motion mode, colour-blind-safe palette.
+diff --git a/docs/plan/README.md b/docs/plan/README.md
+index a9d4792..790e989 100644
+--- a/docs/plan/README.md
++++ b/docs/plan/README.md
+@@ -5,6 +5,16 @@ the stage map for the whole project. Only the **current stage** is planned in de
+ ([stage-1.md](stage-1.md)). Each later stage is planned when the previous one closes, using what that stage
+ taught us.
+ 
++## Current status — latest owner correction
++
++Main includes merged Wave 5A (PR #29). Its contour-first selection is superseded:
++a flat printed illustration must become a complete spatial scene, with contours
++as surface marks. Read the [updated product story](../product-story.md#owner-correction-the-drawing-becomes-the-scene-2026-11-09).
++Discuss and agree the small process demo with the owner before replanning it.
++Wave 5 dependent briefs are provisional and held; older launch/selection language
++below does not authorize execution. Preserve foundations and the eventual
++two-spread/page-turn acceptance requirement.
++
+ ## Active priority — product realignment
+ 
+ The owner corrected the direction on 2026-11-09: Uplift is a playable 3D book with
+@@ -219,10 +229,10 @@ records limitations, and selects improvements rather than merely counting featur
+ 
+ ## Status
+ 
+-| Stage                     | State                                          | Plan                     | Retro |
+-| ------------------------- | ---------------------------------------------- | ------------------------ | ----- |
+-| 0 · Bootstrap             | Done                                           | —                        | —     |
+-| 1 · Demo 1                | **Wave 5 revision planned; direction on main** | [stage-1.md](stage-1.md) | —     |
+-| 2 · Book growth and reuse | Outline only                                   | —                        | —     |
+-| 3 · Meaningful comparison | Outline only                                   | —                        | —     |
+-| 4 · Pilot                 | Outline only                                   | —                        | —     |
++| Stage                     | State                                       | Plan                     | Retro |
++| ------------------------- | ------------------------------------------- | ------------------------ | ----- |
++| 0 · Bootstrap             | Done                                        | —                        | —     |
++| 1 · Demo 1                | **5A merged; discussion before replanning** | [stage-1.md](stage-1.md) | —     |
++| 2 · Book growth and reuse | Outline only                                | —                        | —     |
++| 3 · Meaningful comparison | Outline only                                | —                        | —     |
++| 4 · Pilot                 | Outline only                                | —                        | —     |
+diff --git a/docs/plan/product-realignment.md b/docs/plan/product-realignment.md
+index 0db0562..c32d3ec 100644
+--- a/docs/plan/product-realignment.md
++++ b/docs/plan/product-realignment.md
+@@ -9,8 +9,9 @@ into main. Read the [product story](../product-story.md) and
+ The original P0 direction work is delivered. The preliminary P1/P2 outline is
+ **superseded by [Wave 5 sessions 5A–5F](stage-1-wave-5.md)**, covering contracts,
+ runtime revision, book shell/paging, the new example, migration of the built app,
+-and integrated verification. No implementation session has started in this planning
+-change. The next launch is 5A alone.
++and integrated verification. 5A has since merged in PR #29. Its example selection
++is superseded by the complete-scene clarification. Dependent sessions are held for
++demo discussion and subsequent replanning; see the current Wave 5 hold.
+ 
+ The former Wave 5 hardening sessions are now [Wave 6](stage-1.md#wave-6--hardening-and-release-review).
+ Historical evidence keeps its original status; this revision neither closes human/
+@@ -33,16 +34,16 @@ These criteria add a product gate; they do not erase existing numerical correctn
+ science-review, hardware or accessibility obligations. The dimensions below are review
+ viewports, not simulated measurements, and do not belong in lesson copy.
+ 
+-| ID                                      | Required evidence                                                                                                                                                                                                                                                                                      |
+-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+-| PB1 · Recognisable book                 | At 1366×768 and 1440×900 at normal zoom, a full two-page spread and navigation fit without lesson scrolling. The illustration is the primary visual element; the key action and answer reveal are reachable. No clipped content or text shrunk to force a pass.                                        |
+-| PB2 · Readable adaptation               | At a 390 px phone width, pages have an intentional single-page presentation. At 200% zoom and an equivalent 320 CSS px reflow width, content stays readable and reachable, with scrolling permitted and no two-dimensional text scroll requirement.                                                    |
+-| PB3 · Drawing becomes manipulable space | Recording shows the real flat diagram, same-state 3D geometry and direct interaction. Keyboard and reduced-motion alternatives reach equivalent meaningful states.                                                                                                                                     |
+-| PB4 · Immediate play                    | A fresh reader can operate the main scene without choosing an answer, configuring technical parameters, enabling logging or completing a prior spread. Readiness and genuine capability limitations are the only technical gates.                                                                      |
+-| PB5 · One visible lesson                | Each spread has one stated claim and one principal gesture. The visible consequence and any gauge derive from that scene's actual state. Scientific checks and accessible description match the rendered result.                                                                                       |
+-| PB6 · Pressure-free reflection          | Question can be skipped; answer can be revealed immediately; no score, stamp, endpoint or correct-choice requirement blocks reading. Optional challenges cannot block navigation.                                                                                                                      |
+-| PB7 · A book that continues             | Two working interactive spreads, a genuine page turn, previous/next and keyboard navigation, guarded gestures, preserved return state, managed focus and reduced-motion transition.                                                                                                                    |
+-| PB8 · Human review                      | Owner reviews the working sequence against the supplied reference; first-time reader observations report discoverability, understanding and willingness to continue. Human listening, science sign-off and hardware results are explicitly passed, failed or pending, never inferred from screenshots. |
++| ID                                      | Required evidence                                                                                                                                                                                                                                                                                                                                             |
++| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
++| PB1 · Recognisable book                 | At 1366×768 and 1440×900 at normal zoom, a full two-page spread and navigation fit without lesson scrolling. The illustration is the primary visual element; the key action and answer reveal are reachable. No clipped content or text shrunk to force a pass.                                                                                               |
++| PB2 · Readable adaptation               | At a 390 px phone width, pages have an intentional single-page presentation. At 200% zoom and an equivalent 320 CSS px reflow width, content stays readable and reachable, with scrolling permitted and no two-dimensional text scroll requirement.                                                                                                           |
++| PB3 · Drawing becomes manipulable space | Recording shows entirely page-flat ink, coherent transformation, then a complete spatial scene with surfaces, occlusion and direct interaction. Raised contours, a tilted map or wireframe alone fail. Both representations share the same model geometry; transformation does not advance physics. Keyboard and reduced motion reach the same full endpoint. |
++| PB4 · Immediate play                    | A fresh reader can operate the main scene without choosing an answer, configuring technical parameters, enabling logging or completing a prior spread. Readiness and genuine capability limitations are the only technical gates.                                                                                                                             |
++| PB5 · One visible lesson                | Each spread has one stated claim and one principal gesture. The visible consequence and any gauge derive from that scene's actual state. Scientific checks and accessible description match the rendered result.                                                                                                                                              |
++| PB6 · Pressure-free reflection          | Question can be skipped; answer can be revealed immediately; no score, stamp, endpoint or correct-choice requirement blocks reading. Optional challenges cannot block navigation.                                                                                                                                                                             |
++| PB7 · A book that continues             | Two working interactive spreads, a genuine page turn, previous/next and keyboard navigation, guarded gestures, preserved return state, managed focus and reduced-motion transition.                                                                                                                                                                           |
++| PB8 · Human review                      | Owner reviews the working sequence against the supplied reference; first-time reader observations report discoverability, understanding and willingness to continue. Human listening, science sign-off and hardware results are explicitly passed, failed or pending, never inferred from screenshots.                                                        |
+ 
+ For PB1, an opened optional deep explanation may use a further page or accessible
+ disclosure view. It must not silently stretch the normal spread into a long worksheet.
+@@ -60,10 +61,10 @@ A scene that plays beautifully but teaches an unsupported claim also fails.
+ 
+ ## Open choices and honest completion
+ 
+-5A fixes book proportions, the primary contour gesture and the second lesson after
+-a bounded real-renderer trial. 5D supplies sourced draft copy and claim evidence.
+-The owner has already authorized the direction; these are implementation decisions,
+-not reasons to ask for it again.
++The complete-scene direction is decided. The demo subject and scope are not: the
++owner explicitly requested discussion before choosing and planning it. The old 5A
++selection cannot settle that choice. After agreement, revise dependent briefs and
++affected contracts; source and validate the actual claims before acceptance.
+ 
+ 5F and Wave 6 explicitly track product review, human listening, target hardware and
+ expert sign-off. Implementation integration alone cannot close those gates.
+diff --git a/docs/plan/stage-1-wave-5.md b/docs/plan/stage-1-wave-5.md
+index 28749ed..b1eed4e 100644
+--- a/docs/plan/stage-1-wave-5.md
++++ b/docs/plan/stage-1-wave-5.md
+@@ -2,7 +2,7 @@
+ 
+ Planned 2026-11-09 at the owner's request, after product-direction commit
+ `46fefe6` was merged into local and remote `main`.
+-**Status: planned; implementation sessions have not started.**
++**Status: 5A merged; example selection superseded; dependent implementation held for discussion.**
+ This wave replaces the coarse P1/P2 sequence. Original hardening sessions 5A–5D
+ are now **6A–6D**, not completed or cancelled.
+ 
+@@ -11,6 +11,23 @@ Read [the product story](../product-story.md), [handoff principles](../handoff.m
+ [PB1–PB8](product-realignment.md#product-acceptance-gate).
+ The owner requested planning here, not execution of the implementation wave.
+ 
++## Current execution hold — discussion before replanning
++
++5A is merged in PR #29 (8069a7f), including reusable contracts and exploratory
++contour/source trials. The owner subsequently clarified that the endpoint is a
++complete 3D geographical scene, not raised contours or a wet map. Read the
++[representation contract](../product-story.md#owner-correction-the-drawing-becomes-the-scene-2026-11-09).
++
++The contour-first selection and automatic cartography fallback are superseded.
++**Do not launch 5B–5F against the old example selection.** Discuss the new small
++process illustration with the owner first. After agreement, revise affected briefs,
++owned paths, contracts and validation requirements before implementation. No demo
++implementation or new feasibility spike is authorized by this documentation update.
++The session breakdown below is retained as a provisional migration outline, not an
++executable plan for an approved replacement. Lifecycle, accessibility, science and
++default-app migration obligations remain. Exact scene scope is open. The eventual
++two-spread navigation gate remains separate from choosing this example.
++
+ ## Outcome
+ 
+ The default app opens an inviting, bounded book with two small playable discoveries.
+@@ -53,30 +70,15 @@ comparison and revalidation; it is never hidden inside a visual redesign.
+ Paths prefixed with `runtime/`, `ink/` or `terrain/` above are under `hachure/`.
+ This is source inspection, not a fresh usability or scientific validation result.
+ 
+-## New example: two discoveries in one small book
+-
+-The first choice is the following sequence. 5A establishes feasibility with the actual
+-renderer/model; 5D supplies final sourced copy and scientific checks.
+-
+-| Spread                                            | One idea                                                             | Primary gesture                                                            | Visible consequence                                                                                               | Optional reflection                                                                                                         |
+-| ------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+-| Lift a map · `cartography.contours`               | Relate a contour in a flat drawing to that same contour on a surface | Drag a lift handle attached to the illustration; keyboard equivalent       | The actual contour geometry rises with the same heightfield; one selected line connects both views                | A small question about the selected contour, answer available immediately                                                   |
+-| Where will the water go? · `hydrology.water-path` | Relate source location to water routing on this prepared landscape   | Place or move a source marker directly on the terrain; keyboard equivalent | Water from the real solver becomes visible along its route; a small state-derived cue may clarify the destination | A question about the observed destination, without claiming erosion, field rates or a general law unsupported by this model |
+-
+-These are editorial briefs, not approved scientific assertions or ready-to-publish copy.
+-5D must choose the precise claim, source it, mark it `<!-- expert-review -->`, and
+-validate it. No typed simulated measurements or scripted water trails.
+-The contour lift is a presentation transform, never a change to the terrain model.
++## New example: selection reopened
+ 
+-**Bounded alternative:** if 5A cannot make the live water interaction readable with
+-existing mechanisms and a small adapter, record that result and substitute a distinct
+-second cartography spread about contour spacing and slope, using the same geometry.
+-It needs its own gesture, claim, evidence and sources. Do not split one contour lesson
+-into two empty pages, ship an inert second page, or broaden into a solver project.
+-The new example still requires two interactive spreads. The choice is fixed at the
+-5A exit and recorded in the decision log before dependent work starts.
++The previous cartography.contours → hydrology.water-path choice proved limited
++capabilities, not the intended product experience. Preserve its trial and D-5A as
++historical evidence. Neither that sequence nor the slope alternative is the current
++selection. Rainfall/runoff is only a discussion candidate in the product story.
++The owner has not selected it or authorized a replacement implementation plan.
+ 
+-## Scheduling, dependencies and merge order
++## Provisional scheduling, dependencies and merge order (held)
+ 
+ This is one revision wave delivered in **gated groups**, an explicit narrow exception
+ to the framework's usual earlier-wave-contract rule. Sessions only consume contracts
+@@ -391,4 +393,6 @@ It does not edit implementation, archived evidence or scientific experiment outc
+ 
+ The direction commit is on main. This document plans the full revision wave; it does
+ not execute 5A–5F. The former P1/P2 outline is superseded and hardening is renumbered,
+-with its unfinished scope revised rather than discarded. Next launch is **5A alone**.
++with its unfinished scope revised rather than discarded. Subsequently 5A merged;
++the latest correction requires **demo discussion, then replanning** before further
++implementation launches.
+diff --git a/docs/plan/stage-1.md b/docs/plan/stage-1.md
+index 9cbe0ce..c3121b3 100644
+--- a/docs/plan/stage-1.md
++++ b/docs/plan/stage-1.md
+@@ -6,6 +6,16 @@ reasoning and the brief's internal tensions (referred to below as **T1–T9**) a
+ truth for requirements is the handoff's
+ ["Demo 1 spec"](../handoff.md#demo-1-spec-the-erosion-sandbox-spread).
+ 
++## Current status — latest owner correction
++
++Main includes merged Wave 5A (PR #29). Its contour-first selection is superseded:
++a flat printed illustration must become a complete spatial scene, with contours
++as surface marks. Read the [updated product story](../product-story.md#owner-correction-the-drawing-becomes-the-scene-2026-11-09).
++Discuss and agree the small process demo with the owner before replanning it.
++Wave 5 dependent briefs are provisional and held; older launch/selection language
++below does not authorize execution. Preserve foundations and the eventual
++two-spread/page-turn acceptance requirement.
++
+ ## Active correction — product before further engine scope
+ 
+ The owner's 2026-11-09 request changes the next milestone to a bounded, playable book:
+@@ -13,7 +23,8 @@ drawings lift into directly manipulable 3D, questions and answer flaps are optio
+ and page turning connects small discoveries. The direction commit is merged to main.
+ Read [Wave 5](stage-1-wave-5.md) for the complete revision-wave briefs and owned paths;
+ [PB1–PB8](product-realignment.md#product-acceptance-gate) defines product acceptance.
+-The old P1/P2 outline is superseded; implementation is planned, not yet started.
++The old P1/P2 outline is superseded; 5A is merged, and dependent work awaits the
++owner discussion and revised briefs.
+ 
+ The Wave 1–4 briefs below retain the record of how the foundations were built. Their
+ mandatory prediction/endpoint gates, mandatory challenge/stamp flow and page-turn
+@@ -700,7 +711,7 @@ science remains pending and cannot produce a successful challenge event.
+ 
+ ## Wave 5 · Book revision and new playable example
+ 
+-**Status:** planned, not implemented. **Entry:** the product-direction commit is on main;
++**Status:** 5A merged; selection superseded; dependent work held. **Entry:** owner agreement and revised briefs required;
+ W4 engine integrations are retained and their human/scientific limitations remain recorded.
+ **Briefs:** [the complete six-session wave](stage-1-wave-5.md).
+ 
+diff --git a/docs/product-story.md b/docs/product-story.md
+index 8379b85..b71cb8f 100644
+--- a/docs/product-story.md
++++ b/docs/product-story.md
+@@ -5,7 +5,7 @@
+ **Uplift is a book whose drawings come to life.** A reader opens a bounded paper spread,
+ touches an ink illustration, watches it rise into a manipulable 3D scene, discovers one
+ small idea through play, and turns the page because they want to try the next one.
+-The name describes that moment: line art lifting out of a book into a 3D world.
++The name describes a printed illustration becoming a complete 3D scene, still rendered in ink. Raised lines alone are not the endpoint; see the representation contract below.
+ 
+ The owner's request and six supplied Every Joule screenshots are the design reference
+ for this correction. They establish the intended experience; they are not instructions
+@@ -117,37 +117,70 @@ The mismatch is not a reason to throw away the work. Solvers, conservation check
+ CPU/GPU comparison, bindings, contours, picking, accessibility and reproducibility are
+ assets. They must now serve the reader's next gesture and visible discovery.
+ 
+-## The first proof after this correction
+-
+-Build a small sequence of two interactive spreads with a genuine page turn between them.
+-Use **Contours to terrain** as the first candidate: it can demonstrate the name and the
+-flat-to-spatial relationship using existing heightfield and contour capabilities without
+-waiting for a convincing valley to form.
+-
+-Its design prompt is "Lift the drawing; explore the shape." A constrained view/lift action
+-and a selected contour or height marker should connect the paper drawing to the raised
+-surface. The proposed tiny question concerns the same contour in both views. This is a
+-content brief, not approved scientific copy: source the claim and mark the actual copy
+-`<!-- expert-review -->` during implementation.
+-
+-A second candidate is **Where will the water go?** Place a source on a prepared small
+-landscape and observe the model's route. Choose one gesture and one model-supported
+-question. Confirm that the existing host can support the source interaction and that
+-the water consequence is visible before committing to this lesson. If a shared
+-primitive is missing, record it in `DECISIONS.md`; do not script the water route.
+-
+-These are proposed lesson choices, not claims that either spread is complete or validated.
+-The first implementation session must test them against the actual renderer and model.
+-If a candidate cannot show a clear, truthful consequence promptly, narrow or replace
+-the lesson rather than making the reader wait through a numerical experiment.
+-The original erosion work remains a research/example surface until its live illustration
+-can carry its lesson. Its recorded gross-erosion result does not validate a live valley,
+-waterfall or water-routing claim.
+-
+-The acceptance question is: **Can a new reader discover what to touch, see what changed,
+-say one small thing they learned, and reach another playable page without help?**
+-Automated checks can establish mechanics; only observed readers can establish that
+-the invitation is understandable or that they want to continue.
++## Owner correction: the drawing becomes the scene (2026-11-09)
++
++**Uplift changes representation: a printed illustration becomes a complete,
++spatial, playable scene.** Ink is the visual language in both states. Line art
++does not mean that the final scene consists only of floating lines.
++
++The three supplied book images establish three distinct moments:
++
++1. **Printed illustration.** Every mark lies on the page. A perspective drawing
++   may depict a landscape, but the rendered illustration is flat: no raised
++   objects, detached shadows or internal parallax, and no active process yet.
++2. **Transformation.** The depicted objects acquire actual spatial geometry.
++   Preserve recognizable features while surfaces, silhouettes and occlusion emerge.
++   This is a presentation transition, not simulated terrain formation or elapsed
++   physical time. It must not fabricate water transport or a scientific outcome.
++3. **Living scene.** Complete terrain surfaces and relevant objects occupy space
++   above the page. Contours and hatching are marks on those surfaces. The reader
++   manipulates one understandable cause and sees its model-driven consequence.
++   The endpoint must read as a geographical scene even without its contours.
++
++The intended realism is spatial and causal, not photographic: simplified forms,
++ink outlines, hatching, paper-like surfaces and quantity-bearing colour. Depth,
++occlusion and restrained contact shading explain form. Raised contour stacks,
++a tilted map, wireframe or coloured wet-cell plot alone fail this requirement.
++A mesh underneath those effects is insufficient if its complete form is not legible.
++
++The scene stays anchored to the page. Transformation is the entrance to the lesson;
++it need not be the subject or the main ongoing control. Do not select a contour
++lesson merely because contours are an existing engine capability.
++
++Rendering reveals geometry without changing the model. Identify initial terrain as
++an authored/generated initial condition or a process-produced state with provenance;
++the reveal never implies that the landform physically formed during it. Subsequent
++landform evolution remains process-based. Rain marks, if used, derive their rate
++and coverage from the actual rainfall forcing. Water surfaces and flow cues derive
++from the corresponding model fields, not an authored route. Representative rain
++marks do not claim to simulate individual droplets; wetness is not flow velocity.
++
++Reduced motion skips the animation or fades to the same complete 3D endpoint.
++Keyboard users reach equivalent controls. A labelled static fallback remains
++useful but does not establish that the live scene passed acceptance.
++
++## Demo selection is open — discuss before planning
++
++The latest owner request supersedes the contour-first / movable-source sequence
++selected in D-5A. Keep that exploratory work and evidence; it does not authorize
++the next implementation sessions. Wave 5A merged in PR #29 (8069a7f); the older
++status saying implementation had not started was stale.
++
++Discuss one small process illustration with the owner first. Only after agreement
++should its session briefs, scene contracts, scope and evidence plan be revised.
++Do not launch a replacement spike or build the candidate during this correction.
++The eventual two-spread/page-turn gate remains, but must not silently select this
++demo or force its second lesson before the first has been agreed.
++
++**Discussion candidate, not an approved brief:** rainfall onto one small terrain
++patch, visible surface accumulation and runoff toward one outlet. One rainfall
++control would make the input visible in the air and its consequence visible on the
++land. A channel or depression belongs only if it serves that single relationship.
++Groundwater, infiltration, evaporation, vegetation, erosion and an ocean are not
++implied commitments. The water-cycle reference conveys a scene becoming tangible;
++it is not a request to animate the whole diagram. Exact teaching claims, sources,
++terrain provenance, model suitability and validation remain to be settled after
++selection. No new scientific claim is accepted by this candidate description.
+ 
+ ## Threads that run through every stage
+ 
+diff --git a/docs/review/book-revision/contracts.md b/docs/review/book-revision/contracts.md
+index 2385f1d..6310c32 100644
+--- a/docs/review/book-revision/contracts.md
++++ b/docs/review/book-revision/contracts.md
+@@ -1,6 +1,13 @@
+ # Playable book contracts — session 5A
+ 
+-Status: 5A feasibility and executable adapter review complete; frozen for dependent implementation after merge. This specifies
++**Current status:** 5A merged, but the owner superseded its contour-first example
++selection. Dependent implementation is held for demo discussion and revised briefs.
++Reconcile the composition and scene-specific assumptions below with the
++[complete-scene contract](../../product-story.md#owner-correction-the-drawing-becomes-the-scene-2026-11-09)
++after agreement. Reusable lifecycle/state guarantees remain. This notice changes
++no API; the existing spike is not product acceptance.
++
++Original 5A status: feasibility and executable adapter review complete. This specifies
+ shared boundaries for 5B/5C/5D; it does not claim the default app is migrated.
+ The authoritative product gate remains PB1–PB8 in the realignment plan.
+ 

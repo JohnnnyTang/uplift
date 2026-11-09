@@ -68,17 +68,19 @@ actually justified; literature times are not this app's calibration.
 
 ## Dependencies, ownership and merge order
 
-Known starting evidence: main 8069a7f (5A); combined review e7e7f0a (B–F); direction
-and original-image preservation 3c4bb56, followed by this plan. These are recorded
-baselines, not a claim that all work has merged to main. Before launching 5G, the
-lead integrates the reviewed foundation and current direction through normal PRs
-and records the resulting green base SHA. No session starts from a sibling's WIP.
-The earlier local E/F integration exception is not blanket permission to bypass main.
+**Canonical base and PR target: s1/w5/integration.** The owner explicitly requested
+consolidation there for future sessions. It contains main's 5A (8069a7f), B–F review
+(e7e7f0a), direction/references (3c4bb56), and this plan (7bf47d3), with integration
+workflow updates. [Provenance](../review/wave-5-integration/README.md).
+Main need not receive these changes before 5G: the integration branch is the
+owner-authorized Wave 5 exception to the earlier main-only rule. Record its verified
+base SHA at each session launch. Dependents consume only changes already merged to
+this branch, never sibling WIP. The integration request does not launch 5G itself.
 
 **Execution:** 5G → 5H → (5I, 5J, 5K, 5L) → 5M → 5N → Wave 6.
 The middle group may be scheduled concurrently in separate worktrees after 5H merges;
 this planning task does not launch agents. **Merge:** G → H → I → J → K → L → M → N.
-Consumers use only already merged contracts/CPU code; 5M joins their implementations.
+Consumers use only contracts/CPU code already merged to s1/w5/integration; 5M joins their implementations.
 Session sizes below are estimates, revised after feasibility, not performance promises.
 
 | Session | Outcome                                                                          | Depends on                   | Size |

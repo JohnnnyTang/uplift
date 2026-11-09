@@ -8,6 +8,10 @@ model at different depths.
 Underneath the book is **Hachure**, the terrain and ink engine. Hachures are the short ink strokes old maps
 used to show slope, which is the look the engine draws.
 
+> **Wave 5 base:** `s1/w5/integration` contains completed A–F work, references and the
+> current G–N plan. Future Wave 5 sessions branch from and target this branch.
+> [Integration handover](docs/review/wave-5-integration/README.md).
+>
 > **Status:** The local Wave 5 review stack delivers two playable lessons, contour lift and
 > prepared-terrain spring placement, with page turning and a labelled erosion research route.
 > Main remains at 5A. Implementation verification and pending owner, human accessibility,

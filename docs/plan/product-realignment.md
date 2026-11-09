@@ -1,5 +1,13 @@
 # Product realignment: accepted direction and product gate
 
+## Canonical Wave 5 integration branch
+
+The owner consolidated completed work and current plans into **s1/w5/integration**.
+Future Wave 5 sessions branch from and target PRs to this branch, consuming only
+merged dependencies. Main remains unchanged. This explicit Wave 5 exception
+supersedes earlier instructions to merge the reviewed baseline into main before 5G.
+See [integration provenance and workflow](../review/wave-5-integration/README.md).
+
 ## Latest owner review · 2026-11-09
 
 Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A

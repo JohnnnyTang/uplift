@@ -1,5 +1,13 @@
 # Stage 1 · Wave 5: make Uplift a playable book
 
+## Canonical Wave 5 integration branch
+
+The owner consolidated completed work and current plans into **s1/w5/integration**.
+Future Wave 5 sessions branch from and target PRs to this branch, consuming only
+merged dependencies. Main remains unchanged. This explicit Wave 5 exception
+supersedes earlier instructions to merge the reviewed baseline into main before 5G.
+See [integration provenance and workflow](../review/wave-5-integration/README.md).
+
 ## Latest owner review · 2026-11-09
 
 Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
@@ -33,7 +41,8 @@ The full executable briefs and owned paths are in
 [Wave 5 glacial extension](stage-1-wave-5-glacial.md). Current dependency sequence:
 **5G feasibility/contracts → 5H CPU → 5I GPU / 5J runtime / 5K scene / 5L content →
 5M default-book integration → 5N acceptance**. Merge I, J, K, L in that order.
-The reviewed A–F baseline and current direction must reach green main before launch.
+The reviewed A–F baseline and current direction are consolidated on s1/w5/integration;
+use its verified tip for future sessions.
 Wave 6 starts after this extension; F alone no longer closes Wave 5 implementation.
 
 The A–F briefs below are retained as historical delivery instructions. Their fixed
@@ -423,8 +432,7 @@ It does not edit implementation, archived evidence or scientific experiment outc
 The direction commit is on main. This document plans the full revision wave; it does
 not execute 5A–5F. The former P1/P2 outline is superseded and hardening is renumbered,
 with its unfinished scope revised rather than discarded. That historical next launch
-was 5A. The current next session is 5G after the reviewed baseline/direction reaches
-green main; see the extension rather than relaunching A–F.
+was 5A. The current next session is 5G from verified s1/w5/integration; see the extension rather than relaunching A–F.
 
 ## 5F local-review reconciliation · 2026-11-09
 

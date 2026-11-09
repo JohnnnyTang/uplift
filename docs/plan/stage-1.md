@@ -1,5 +1,13 @@
 # Stage 1 · Playable book proof on the Hachure foundations
 
+## Canonical Wave 5 integration branch
+
+The owner consolidated completed work and current plans into **s1/w5/integration**.
+Future Wave 5 sessions branch from and target PRs to this branch, consuming only
+merged dependencies. Main remains unchanged. This explicit Wave 5 exception
+supersedes earlier instructions to merge the reviewed baseline into main before 5G.
+See [integration provenance and workflow](../review/wave-5-integration/README.md).
+
 ## Latest owner review · 2026-11-09
 
 Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
@@ -101,7 +109,7 @@ flowchart LR
     N5 --> W6[Wave 6 Hardening and release review]
 ```
 
-**Current critical path:** integrate reviewed foundations/direction → 5G glacial feasibility/contracts
+**Current critical path:** verified s1/w5/integration → 5G glacial feasibility/contracts
 → 5H CPU → 5I GPU / 5J timeline / 5K scene / 5L content → 5M integration → 5N acceptance
 → Wave 6 hardening/review. [Full briefs](stage-1-wave-5-glacial.md).
 The historical solver chain explains the foundations, not the current product priority.
@@ -739,16 +747,16 @@ W4 engine integrations are retained and their human/scientific limitations remai
 
 The table above records A–F foundations. The current-wave additions are:
 
-| Session                            | Deliverable                                                     | Starts after                                 |
-| ---------------------------------- | --------------------------------------------------------------- | -------------------------------------------- |
-| [5G](stage-1-wave-5-glacial.md#5g) | Glacial mechanism feasibility, selected condition and contracts | Reviewed foundations/direction on green main |
-| [5H](stage-1-wave-5-glacial.md#5h) | Deterministic CPU process and complete state                    | 5G                                           |
-| [5I](stage-1-wave-5-glacial.md#5i) | GPU implementation and CPU/GPU parity                           | 5H                                           |
-| [5J](stage-1-wave-5-glacial.md#5j) | Intervention, timeline, inspection and comparison runtime       | 5H                                           |
-| [5K](stage-1-wave-5-glacial.md#5k) | Complete coloured scene and direct gesture                      | 5H                                           |
-| [5L](stage-1-wave-5-glacial.md#5l) | Focused lesson, sources and claim-linked content                | 5H                                           |
-| [5M](stage-1-wave-5-glacial.md#5m) | Default-book integration and composition                        | 5I–5L merged                                 |
-| [5N](stage-1-wave-5-glacial.md#5n) | Prospective science, integrated acceptance and drift audit      | 5M                                           |
+| Session                            | Deliverable                                                     | Starts after               |
+| ---------------------------------- | --------------------------------------------------------------- | -------------------------- |
+| [5G](stage-1-wave-5-glacial.md#5g) | Glacial mechanism feasibility, selected condition and contracts | Verified s1/w5/integration |
+| [5H](stage-1-wave-5-glacial.md#5h) | Deterministic CPU process and complete state                    | 5G                         |
+| [5I](stage-1-wave-5-glacial.md#5i) | GPU implementation and CPU/GPU parity                           | 5H                         |
+| [5J](stage-1-wave-5-glacial.md#5j) | Intervention, timeline, inspection and comparison runtime       | 5H                         |
+| [5K](stage-1-wave-5-glacial.md#5k) | Complete coloured scene and direct gesture                      | 5H                         |
+| [5L](stage-1-wave-5-glacial.md#5l) | Focused lesson, sources and claim-linked content                | 5H                         |
+| [5M](stage-1-wave-5-glacial.md#5m) | Default-book integration and composition                        | 5I–5L merged               |
+| [5N](stage-1-wave-5-glacial.md#5n) | Prospective science, integrated acceptance and drift audit      | 5M                         |
 
 **Current execution:** 5G → 5H → 5I/5J/5K/5L → 5M → 5N.
 **Current merge order:** G → H → I → J → K → L → M → N.

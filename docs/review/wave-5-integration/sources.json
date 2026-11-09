@@ -1,0 +1,45 @@
+{
+  "base": "7bf47d3",
+  "sources": [
+    {
+      "ref": "origin/main",
+      "commit": "8069a7fa6ec527fa688d63d2fa049b5e840e5445",
+      "included": true
+    },
+    {
+      "ref": "origin/s1/w5/5a-contracts",
+      "commit": "8b3e9980ebbae41e80813db00033aade1860ca84",
+      "included": true
+    },
+    {
+      "ref": "origin/s1/w5/5bcd-lead",
+      "commit": "e7e7f0a7fc664b7b294a0dd7c137210275123b0d",
+      "included": true
+    },
+    {
+      "ref": "origin/s1/w5/5e-migration",
+      "commit": "39ab5fba4ec87f2a49fcfdd6fdf8597aec99e570",
+      "included": true
+    },
+    {
+      "ref": "s1/w5/revision-wave-plan",
+      "commit": "08cc44eb6dcb3bcd21b85d8d8c26661ebc7ade60",
+      "included": true
+    },
+    {
+      "ref": "s1/w5/current-review",
+      "commit": "7bf47d3773b7a3996a6dab2e7a508ed74a42208b",
+      "included": true
+    },
+    {
+      "ref": "s1/w5/scene-direction",
+      "commit": "8069a7fa6ec527fa688d63d2fa049b5e840e5445",
+      "included": true
+    }
+  ],
+  "archivedDraft": {
+    "path": "superseded-scene-direction.patch",
+    "sha256": "ad154da0cbb16e6c6e378a23d6c5ccd0379e82847c18a831fa1fbe33db717f16",
+    "status": "superseded archival data; do not apply"
+  }
+}

@@ -1,5 +1,13 @@
 # Implementation plan: framework
 
+## Canonical Wave 5 integration branch
+
+The owner consolidated completed work and current plans into **s1/w5/integration**.
+Future Wave 5 sessions branch from and target PRs to this branch, consuming only
+merged dependencies. Main remains unchanged. This explicit Wave 5 exception
+supersedes earlier instructions to merge the reviewed baseline into main before 5G.
+See [integration provenance and workflow](../review/wave-5-integration/README.md).
+
 ## Latest owner review · 2026-11-09
 
 Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
@@ -59,7 +67,8 @@ Stage    a group-reviewed milestone with an exit gate                   (sequent
    merge first, then 5B/5C/5D start from main, then 5E integration, then 5F acceptance. This exception
    is scoped in its wave plan. The owner-requested extension adds G → H → I/J/K/L → M → N
    inside this same wave, with contracts/CPU merged before the independent group.
-   In every case a session consumes only dependencies already on `main`,
+   For Wave 5, use the owner-authorized `s1/w5/integration` instead of `main`.
+   In every case a session consumes only dependencies already on its integration base,
    never an unmerged peer branch. Ownership overlap is allowed only across these sequential groups.
 2. **Owned paths.** Every session brief lists the paths it may change. Two sessions in the same wave never own
    the same path. Touching an unowned path is allowed only for minimal glue (a re-export line, a registry
@@ -73,7 +82,7 @@ Stage    a group-reviewed milestone with an exit gate                   (sequent
    - `DECISIONS.md`: append only. On conflict, keep both entries.
    - Package `index.ts` entry points: add your export lines. On conflict, keep both.
 5. **Merge order.** Each wave lists a merge order. When the lead merges a PR, the remaining PRs rebase on
-   `main` and rerun `pnpm check` before they merge.
+   `main` (Wave 5: `s1/w5/integration`) and rerun `pnpm check` before they merge.
 6. **Main is always green.** CI (`typecheck`, `lint`, `format:check`, `test`, `build`) must pass on every PR.
    A session that breaks `main` fixes it before anything else merges.
 7. **Spikes are allowed to be throwaway.** Spike code lives in `spikes/<name>/`. A spike's deliverable is a
@@ -103,6 +112,15 @@ pnpm install                       # fast: pnpm's store is shared between worktr
 # start the agent in this folder with the session prompt below
 ```
 
+For the current Wave 5, use this scoped variant and target PRs to s1/w5/integration:
+
+```sh
+git fetch origin
+git worktree add ../uplift-wt/5g-glacial-contracts -b s1/w5/5g-glacial-contracts origin/s1/w5/integration
+cd ../uplift-wt/5g-glacial-contracts
+pnpm install --frozen-lockfile
+```
+
 Built-in worktree support in your agent tool works too (for example Claude Code's worktree mode), as long
 as the branch name follows the convention.
 
@@ -125,7 +143,7 @@ You are running session {ID} ({title}) of Uplift, Stage {S}, Wave {W}.
    {owned paths}
 3. Read any linked current-wave brief. State the reader action/visible outcome, or the scientific/accessibility guarantee, that this session serves. Build the deliverables and meet every exit criterion in your brief. If the brief is wrong given what is
    now on main, follow the handoff's principles, record the deviation in DECISIONS.md, and say so in the PR.
-4. Run `pnpm check`. Open a PR to main titled "S{S}·W{W}·{ID}: {title}" using the PR template. End the
+4. Run `pnpm check`. Open a PR to main (Wave 5: s1/w5/integration) titled "S{S}·W{W}·{ID}: {title}" using the PR template. End the
    description with a handover note: done / not done / surprises / facts that should change the plan.
 ```
 
