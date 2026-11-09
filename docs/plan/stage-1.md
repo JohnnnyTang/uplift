@@ -373,6 +373,11 @@ profile with a known knickpoint position, and a budget fixture.
 
 ## Wave 3 · End to end on the CPU
 
+**Current status (2026-11-09):** implementation and evidence are merged in order.
+The scientific exit is **not met**: AC3a/AC3b/AC3c fail, T6 is inconclusive and
+calibration fails. Wave 3 remains open; Wave 4 has not started.
+See [the evidence and handover](stage-1-wave-3.md) for PRs, checks and required follow-up.
+
 **Entry:** the six W2 foundation PRs merged. The hydraulic correction below must merge before
 3B or 3C starts; other independent W3 work may proceed.
 **Merge order:** 3D → 3B → 3E → 3A → 3C.
@@ -509,7 +514,10 @@ only. Clamp-hit messages appear.
 
 ## Wave 4 · GPU, university layer, challenge
 
-**Entry:** W3 merged.
+**Entry:** W3 implementation merged **and its scientific exit met**. The initial W3
+packet fails AC3a/AC3b/AC3c and cannot supply a scored prediction or calibration.
+Publishing that evidence does not open W4; first complete a reviewed scientific
+follow-up under the unchanged gates (see [W3 handover](stage-1-wave-3.md)).
 **Before W4 opens:** the project lead decides on learning-outcome instrumentation (see `DECISIONS.md`). If
 the answer is yes, add session 4F (event log and anonymous export) to this wave.
 **Merge order:** 4E → 4A → 4B → 4C → 4D.
@@ -526,6 +534,9 @@ _Threads:_ performance, determinism, rigour. _Depends on:_ 3C.
 **Deliverables.**
 
 - Kernels for erode or deposit, flux-form sediment transport, slumping and evaporation, plus GPU tools.
+  3C exports a deliberately partial water stage through `@hachure/terrain/gpu`; it rejects
+  active omitted processes. Extend it to a complete solver before registering the GPU backend.
+  Preserve resident guard-before-commit, serialized atomic snapshots and its split elevation lanes.
 - A budget reduction that is deterministic on the same device (T5).
 - Full-step CPU–GPU comparison and a GPU mass-budget test, including cumulative tiny erosion
   against the CPU float64 authority. Preserve 3C's split/local-datum elevation representation.
@@ -560,7 +571,10 @@ _Threads:_ rigour, restraint. _Depends on:_ 3A, 3B.
 
 **Owned paths.** `hachure/runtime/src/challenge/**`.
 
-**Deliverables.** A `ChallengeCheck` evaluator. "Make a waterfall" passes when a knickpoint that meets
+**Deliverables.** A `ChallengeCheck` evaluator. Preserve the explicit pending-challenge
+state introduced by 3A: it cannot award a stamp. The first 3B hard-band experiment
+produced no qualifying knickpoint or narrowing; do not assume its tool sequence is
+validated. Use the reviewed follow-up evidence before enabling a success claim. "Make a waterfall" passes when a knickpoint that meets
 1E's definition persists on the long profile for the specified simulated time. Describe this as a persistent slope-break proxy, not resolved falling-water physics. Uncalibrated runs cannot earn a geological-time persistence stamp. Stamp award UI. Progress
 stored locally, with storage access wrapped so failure degrades gracefully. The flap unlock and the
 predict feedback both refer to the reader's own committed answer.
@@ -599,6 +613,8 @@ blank after the lift, the predict step gates the key control, and the level togg
 `?debug` overlay showing fps, ms per step, grid size, backend and seed.
 
 **Exit criteria.** The end-to-end job runs green on CI. The size budget is enforced.
+Include failed/pending science fixtures: unscored predictions, hidden landscape years
+and no pending-challenge stamp must survive reset and level changes.
 
 ---
 
@@ -655,6 +671,11 @@ Stage 2. **This is the input for planning Stage 2 in detail.**
 | WebGPU is testable in CI                                                                                           | Run GPU tests locally and record the run at each wave close                | 3C          |
 
 ## Changelog
+
+- 2026-11-09: Wave 3 implementation and failed science packet: keep the wave open;
+  require a reviewed scientific follow-up before Wave 4. Carry the partial GPU-water
+  API, atomic snapshots, Worker-safe runtime import and pending science/challenge
+  states into integration and later-wave briefs. See the W3 evidence handover.
 
 - 2026-11-08: Wave 2 integration: merge 2B → 2F → 2A → 2C → 2D → 2E; add a serial
   hydraulic-resistance prerequisite before 3B/3C; fold performance, precision, view-readback,
