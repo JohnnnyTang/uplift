@@ -913,3 +913,13 @@ The waterfall challenge remains pending until a prospectively registered
 model-time sequence is validated. Historic failed morphology, hidden geological
 years and outstanding expert, human accessibility and target-hardware gates stay
 unchanged. Starting Wave 4 does not close these Stage 1 requirements.
+
+## 2026-11-09 — Owner accepts 4C infrastructure merge, not challenge success
+
+After reviewing the six-arm failed morphology result and alternatives, the owner
+authorized merging infrastructure and failed evidence with the real challenge
+pending and stamps disabled. Scientific challenge acceptance remains open; no
+threshold, historical outcome, release approval or geological-time claim changes.
+The stage plan records this explicit separation of implementation integration
+from acceptance. The owner requests a human listening preview before merging 4D,
+so 4D and 4F must wait in the prescribed order.
