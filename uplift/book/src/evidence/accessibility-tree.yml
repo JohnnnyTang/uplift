@@ -1,0 +1,71 @@
+- main:
+    - link "Skip to the spread":
+        - /url: "#spread"
+    - paragraph: Uplift
+    - text: Reading level
+    - combobox "Reading level":
+        - option "High school"
+        - option "University" [selected]
+    - paragraph: Widget test fixture — not a geography lesson. The fake solver scripts its surface; no science is demonstrated.
+    - article "Read the page. Try the controls.":
+        - region "Question and explanation":
+            - heading "Read the page. Try the controls." [level=1]
+            - paragraph: The reading level changes this page’s depth while preserving the same fixture state, prediction and controls. The formula below is a typesetting specimen, with semantic MathML.
+            - group "What do you want to inspect first?":
+                - text: What do you want to inspect first?
+                - radio "The water readout" [disabled]
+                - text: The water readout
+                - radio "The surface drawing" [checked] [disabled]
+                - text: The surface drawing
+                - radio "The control labels" [disabled]
+                - text: The control labels
+                - button "Commit prediction" [disabled]
+                - status: "You predicted: The surface drawing. The test is unlocked."
+            - button "Close explanation" [expanded]
+            - text: You committed a choice before testing. This fixture records your choice without marking it right or wrong. A scientific spread must supply model-backed evidence before it can score an answer.
+            - heading "Key words" [level=2]
+            - term: Prediction
+            - definition: A choice you commit before testing.
+            - term: Reading level
+            - definition: The depth of explanation; changing it keeps the same running state.
+            - heading "Formula specimen" [level=2]
+            - paragraph: This equation tests accessible typesetting only; it makes no claim about this fixture.
+            - math: a + b = c
+        - region "Drawing and test controls":
+            - heading "Inspect the fixture" [level=2]
+            - text: "Model tier: Process model"
+            - paragraph: "Tier badge specimen only: the fake solver is not a process model."
+            - paragraph: Uncalibrated fixture · 80 fixed steps per real second
+            - figure "Ink lines trace rows from the fake snapshot. Blue marks water in the fixture channel; sediment is reserved in the legend.":
+                - img "Fake solver row profiles, not scientific terrain"
+                - text: Ink lines trace rows from the fake snapshot. Blue marks water in the fixture channel; sediment is reserved in the legend.
+            - text: 80 m · fixture distance
+            - list "Colour and line legend":
+                - listitem: "Ink lines: fixture surface"
+                - listitem: "Blue, solid: water"
+                - listitem: "Ochre, dashed: sediment"
+            - paragraph: "Fake solver at step 6. Water input total: 0 m³. Surface changes are scripted test data."
+            - region "Test controls":
+                - group "Run controls":
+                    - button "Play"
+                    - button "Pause" [pressed]
+                    - button "Reset"
+                - text: Rain input
+                - status: 0 mm/h
+                - slider "Rain input": "0"
+                - text: Playback speed
+                - status: 4 ×
+                - slider "Playback speed": "4"
+                - checkbox "Show water overlay"
+                - text: Show water overlay
+            - group:
+                - text: What this model ignores
+                - list:
+                    - listitem: All fake-solver magnitudes are arbitrary and unsuitable for scientific interpretation.
+                    - listitem: Calibration, qualitative validation, real terrain rendering and challenge assessment belong to later integration.
+            - group:
+                - text: Teacher note and sources
+                - paragraph: This test fixture is for interface review only.
+                - 'link "KaTeX API: semantic HTML and MathML output"':
+                    - /url: https://katex.org/docs/api.html
+            - status: University reading level. The fixture state is unchanged.

@@ -494,3 +494,25 @@ the existing schema's canonical validated content id remains `scene.timeScale`. 
 **Not implemented here.** Fixed-step scheduling, asynchronous probe evaluation/readbacks, renderer lift,
 challenge evaluation, hidden-parameter reset prompts and calibration science belong to their later
 sessions. The tests use the public fake solver strictly as an engineering fixture, never science.
+
+### S1/W2/2E · 2026-11-08 · Semantic widgets, shared palette and fixture boundary
+
+**Decision.** Implement reusable DOM widgets and a facing-page shell using the 1D layout: native
+controls, selectable text, semantic KaTeX HTML/MathML, stacked pages at tablet width and natural
+vertical scrolling at projector height. Reconcile the palette to paper #faf8f2, ink #242b2a,
+water/focus #0072b2 and sediment #9c6500, with word labels and solid/dashed legend lines. Normal
+text and quantity colours pass a 4.5:1 contrast check on paper; the rule grey is structural only.
+
+**Why.** The darker 1D ochre supports small labels as well as quantity marks, while retaining 1C's
+blue/ochre meaning. Keyboard/browser evidence covers the prediction gate, clamped controls,
+flap, playback, reset, preserved state across levels and MathML. A thin local fake-solver adapter
+keeps 2E independent of unmerged 2D code. The diagnostic drawing is explicitly fake snapshot row
+profiles, not a replacement terrain primitive. There is no scored scientific answer, stamp,
+geological clock or scientific formula claim in the mock page.
+
+**Open acceptance item.** Human screen-reader listening could not be performed without a human
+listener. No NVDA/Narrator process was present. This is an unmet 2E exit criterion; automated
+keyboard events and the accessibility snapshot must not be treated as listening evidence. See
+`uplift/book/src/evidence/README.md` for the manual protocol, screenshots and integration handover.
+3A must replace the fixture route and local adapter with the runtime/renderer integration before
+reader release. View-only checkbox controls use callbacks without extending schema v0.

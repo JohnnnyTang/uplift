@@ -1,0 +1,223 @@
+{
+  "browser": "156.0.8078.80",
+  "keyboard": [
+    "Skip link, native radio arrows and commit unlock the test",
+    "Rain and speed ranges support Home/End clamps with units; overlay checkbox supports Space",
+    "Explanation flap and native model/source disclosures work with Enter",
+    "Play/pause advance fixed state; native level select preserves state hash, committed answer and parameter values; MathML remains present",
+    "Enabling reduced motion pauses playback; no autoplay on initial load",
+    "Reset restores seeded state, defaults, closed flap and prediction gate"
+  ],
+  "layouts": [
+    {
+      "name": "projector",
+      "level": "hs",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "scrollWidth": 1280,
+      "scrollHeight": 1381,
+      "pages": [
+        {
+          "x": 38.390625,
+          "y": 123.796875,
+          "width": 601.609375,
+          "height": 1209.046875
+        },
+        {
+          "x": 640,
+          "y": 123.796875,
+          "width": 601.609375,
+          "height": 1209.046875
+        }
+      ],
+      "inkPixels": 14640,
+      "scaleFraction": 0.20998560582540712
+    },
+    {
+      "name": "projector",
+      "level": "uni",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "scrollWidth": 1280,
+      "scrollHeight": 1405,
+      "pages": [
+        {
+          "x": 38.390625,
+          "y": 123.796875,
+          "width": 601.609375,
+          "height": 1233.046875
+        },
+        {
+          "x": 640,
+          "y": 123.796875,
+          "width": 601.609375,
+          "height": 1233.046875
+        }
+      ],
+      "inkPixels": 14640,
+      "scaleFraction": 0.20998560582540712
+    },
+    {
+      "name": "laptop",
+      "level": "hs",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "scrollWidth": 1440,
+      "scrollHeight": 1449,
+      "pages": [
+        {
+          "x": 43.1875,
+          "y": 123.796875,
+          "width": 676.8125,
+          "height": 1277.265625
+        },
+        {
+          "x": 720,
+          "y": 123.796875,
+          "width": 676.8125,
+          "height": 1277.265625
+        }
+      ],
+      "inkPixels": 14640,
+      "scaleFraction": 0.20998956703182056
+    },
+    {
+      "name": "laptop",
+      "level": "uni",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "scrollWidth": 1440,
+      "scrollHeight": 1475,
+      "pages": [
+        {
+          "x": 43.1875,
+          "y": 123.796875,
+          "width": 676.8125,
+          "height": 1302.765625
+        },
+        {
+          "x": 720,
+          "y": 123.796875,
+          "width": 676.8125,
+          "height": 1302.765625
+        }
+      ],
+      "inkPixels": 14640,
+      "scaleFraction": 0.20998956703182056
+    },
+    {
+      "name": "tablet",
+      "level": "hs",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "scrollHeight": 2292,
+      "pages": [
+        {
+          "x": 23.03125,
+          "y": 146.59375,
+          "width": 721.9375,
+          "height": 813.75
+        },
+        {
+          "x": 23.03125,
+          "y": 960.34375,
+          "width": 721.9375,
+          "height": 1283.296875
+        }
+      ],
+      "inkPixels": 14640,
+      "scaleFraction": 0.20998330705740517
+    },
+    {
+      "name": "tablet",
+      "level": "uni",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "scrollWidth": 768,
+      "scrollHeight": 2432,
+      "pages": [
+        {
+          "x": 23.03125,
+          "y": 146.59375,
+          "width": 721.9375,
+          "height": 954.109375
+        },
+        {
+          "x": 23.03125,
+          "y": 1100.703125,
+          "width": 721.9375,
+          "height": 1283.296875
+        }
+      ],
+      "inkPixels": 14640,
+      "scaleFraction": 0.20998330705740517
+    },
+    {
+      "name": "mobile",
+      "level": "hs",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "scrollHeight": 2488,
+      "pages": [
+        {
+          "x": 12,
+          "y": 169.390625,
+          "width": 366,
+          "height": 915.15625
+        },
+        {
+          "x": 12,
+          "y": 1084.546875,
+          "width": 366,
+          "height": 1355.53125
+        }
+      ],
+      "inkPixels": 14640,
+      "scaleFraction": 0.20995479559748428
+    },
+    {
+      "name": "mobile",
+      "level": "uni",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "scrollHeight": 2730,
+      "pages": [
+        {
+          "x": 12,
+          "y": 169.390625,
+          "width": 366,
+          "height": 1106.515625
+        },
+        {
+          "x": 12,
+          "y": 1275.90625,
+          "width": 366,
+          "height": 1406.53125
+        }
+      ],
+      "inkPixels": 14640,
+      "scaleFraction": 0.20995479559748428
+    }
+  ],
+  "errors": [],
+  "humanScreenReaderListening": "NOT PERFORMED: needs a human listener; structural assertions are not a substitute."
+}

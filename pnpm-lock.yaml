@@ -51,6 +51,9 @@ importers:
       '@hachure/terrain':
         specifier: workspace:*
         version: link:../terrain
+      katex:
+        specifier: 0.19.1
+        version: 0.19.1
 
   hachure/terrain: {}
 
@@ -88,6 +91,10 @@ importers:
       '@uplift/spreads':
         specifier: workspace:*
         version: link:../spreads
+    devDependencies:
+      playwright:
+        specifier: 1.65.0
+        version: 1.65.0
 
   uplift/spreads:
     dependencies:

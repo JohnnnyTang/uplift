@@ -9,6 +9,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@hachure/terrain": "workspace:*"
+    "@hachure/terrain": "workspace:*",
+    "katex": "0.19.1"
   }
 }

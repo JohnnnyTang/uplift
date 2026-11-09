@@ -13,3 +13,6 @@ export * from "./schema/index";
 // Headless lifecycle, view state and host-fed live text (session 2D).
 export * from "./core/index";
 export * from "./bindings/index";
+
+// Accessible DOM widgets (session 2E).
+export * from "./widgets/index";
