@@ -1,5 +1,9 @@
 # GPU water stage and CPU comparison
 
+For the completed Stage 1 solver, fallback selection and 4A evidence, see
+[Full GPU solver and backend selection](full-solver.md). The water-only API and
+its original 3C scope/evidence below are retained as a separate engineering stage.
+
 Session 3C implements water only. Import `createGpuWaterSolver` from `@hachure/terrain/gpu`;
 the normal terrain entry stays Worker-safe and does not load Three.js. The stage is deliberately
 not registered as a complete `TerrainSolver`: erosion, deposition, sediment transport, slumping,

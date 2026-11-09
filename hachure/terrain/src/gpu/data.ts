@@ -2,7 +2,7 @@ import { TerrainConfigError, isEdgeCell, type TerrainConfig, type TerrainState }
 import { validateCpuSolverConfig } from "../cpu/index";
 
 /** This stage is deliberately water-only; it must not masquerade as the full TerrainSolver. */
-export function validateWaterStage(config: TerrainConfig, state: TerrainState): void {
+export function validateWaterStage(config: TerrainConfig, state: TerrainState, fullProcesses = false): void {
   const issues = validateCpuSolverConfig(config);
   if (issues.length) throw new TerrainConfigError(issues);
   if (state.gridSize !== config.gridSize || state.metresPerCell !== config.metresPerCell)
@@ -15,7 +15,7 @@ export function validateWaterStage(config: TerrainConfig, state: TerrainState): 
     "thermalRatePerS",
     "evaporationFractionPerStep",
   ] as const) {
-    if (config[key] !== 0)
+    if (!fullProcesses && config[key] !== 0)
       throw new RangeError(`GPU water stage does not implement ${key}; set it to zero until session 4A`);
   }
   for (const [name, layer] of Object.entries(state.layers)) {

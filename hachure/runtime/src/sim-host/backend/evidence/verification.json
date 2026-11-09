@@ -1,0 +1,19 @@
+{
+  "hardwareBrowser": "Installed Chrome156 with --enable-unsafe-webgpu, headless",
+  "hardwareForcedTiersAndFailures": { "passed": 8, "failed": 0 },
+  "hardwareAutomaticSelection": {
+    "passed": 1,
+    "selectedBackend": "webgpu",
+    "gridSize": 256,
+    "domainM": 1280
+  },
+  "freshCompleteGenericChromiumSuite": { "passed": 16, "failed": 0, "retries": 0, "durationMinutes": 4.3 },
+  "gpuComparisonSuite": { "passed": 68, "failed": 0 },
+  "availabilityUnitTests": { "passed": 3, "failed": 0 },
+  "rootTypecheck": "passed",
+  "e2eTypecheck": "passed",
+  "newTestLint": "passed",
+  "screenshotInspection": "book-webgpu256.png inspected; raised ink terrain and book controls render",
+  "firstFixtureStall": "Preserved as unconfirmed in README; no timeout or glue change; forced-cold diagnostic and fresh complete suite subsequently passed",
+  "scope": "Integration and numerical evidence; no classroom frame-rate, slider-drag latency, human accessibility or expert-science acceptance"
+}

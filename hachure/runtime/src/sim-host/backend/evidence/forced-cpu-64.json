@@ -1,0 +1,42 @@
+{
+  "utc": "2026-11-09T07:58:11.180Z",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "url": "http://127.0.0.1:4173/?backend=cpu-64&debug",
+  "viewport": {
+    "width": 1366,
+    "height": 900
+  },
+  "book": {
+    "backend": "cpu-64",
+    "grid": "64",
+    "backendReady": "true",
+    "step": "28",
+    "stateHash": "a8a761e4054f676f",
+    "viewStep": "28",
+    "workerMs": "0.800000011920929",
+    "transferSchedulingMs": "1.399999976158142",
+    "snapshotMs": "0.800000011920929",
+    "batchSteps": "1",
+    "batchMs": "0.699999988079071",
+    "backendFailures": "[]",
+    "viewUpdateMs": "1.5999999642372131"
+  },
+  "debug": {
+    "fps": "120",
+    "msPerStep": "0.699999988079071",
+    "grid": "64",
+    "backend": "cpu-64",
+    "seed": "1"
+  },
+  "scale": "320 m · east–west terrain distance",
+  "adapter": {
+    "vendor": "intel",
+    "architecture": "xe-2lpg",
+    "device": "",
+    "description": "",
+    "isFallbackAdapter": false
+  },
+  "domainM": 1280,
+  "metresPerCell": 20,
+  "scope": "Actual book integration in headless Chrome; uncontrolled power/thermal conditions, no classroom frame-rate or expert-science acceptance"
+}
