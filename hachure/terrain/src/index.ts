@@ -15,3 +15,5 @@ export * from "./rng/index";
 export * from "./presets/index";
 export * from "./tools/index";
 export * from "./probes/index";
+// CPU reference solver (session 2A).
+export * from "./cpu/index";
