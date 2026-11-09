@@ -302,3 +302,34 @@ the material rules for the tools, or if replay has to be bitwise across JavaScri
 and brushes call `Math.tan`, `Math.cos` and `Math.hypot`, whose last bit the spec does not fix; the
 RNG is pure integer arithmetic. Recommended 1A follow-up: change the `RaiseOp` comment to "adds loose
 sediment", and let the fake raise sediment.
+
+<!-- expert-review -->
+
+### D-2F-001 · 2026-11-08 · S1/W2/2F · Pure metrics and explicit snapshot limits
+
+**Decision.** Implement the draft metrics in `docs/science/validation-spec.md` as
+pure snapshot helpers, exported with one additive terrain entry-point line. Keep
+new helper contracts in the owned `src/probes/` directory. D8 accumulation fallback
+retains the declared spring and reports its method and incomplete path; equal-height
+routing strictly decreases row-major index, and pits are never filled or breached.
+Cell-spaced channel profiles omit a sub-cell terminal remainder. Persistence takes
+explicit approved-calibration status and a scheduled observation history; it never
+infers approval from a numeric snapshot clock.
+
+**Why.** Metrics must be identical for validation, graphs and challenge consumers,
+and incomplete/unresolved cases must not become plausible-looking scientific results.
+The implementation follows the cited draft definitions; tests are synthetic arithmetic
+fixtures, not scientific validation or expert approval. See `src/probes/README.md` in
+`hachure/terrain/` for precise conventions and limitations.
+
+**Contract limitation / follow-up for 3A and 3B.** Point water discharge is outgoing
+pipe throughput. The snapshot lacks actual limited sediment face transfers and the
+pre-transport donor stocks, so the public point sediment field is explicitly an
+instantaneous `Q × suspended/water` estimate. Cumulative export counters remain the
+budget authority. A future exact point/reach-face transport diagnostic needs an
+additive solver contract and must not silently substitute this estimate in AC3c.
+No other session's unmerged solver, preset or renderer is used.
+
+**Not done.** Real-solver validation, calibrated persistence and stamp integration
+remain with 3B/4C. Sediment injection requires its own explicit source term before
+budget residuals can support it. Scientific expert sign-off remains pending.
