@@ -86,3 +86,4 @@ export {
 } from "./lift";
 
 export * from "./picking/index";
+export * from "./interaction";
