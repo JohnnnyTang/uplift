@@ -138,15 +138,30 @@ try {
     "Keyboard: skip, predict, comparison, explanation, rain, playback, brush clamp/apply, level preservation, reset focus; reduced motion starts both scenes paused",
   );
   const motionPage = await context.newPage();
+  motionPage.on("pageerror", (error) => report.errors.push(error.message));
+  let releaseView;
+  let viewRequests = 0;
+  const heldView = new Promise((resolve) => {
+    releaseView = resolve;
+  });
+  await motionPage.route(/\/(?:view\/index\.ts|assets\/view-[^/]+\.js)(?:\?|$)/, async (route) => {
+    viewRequests++;
+    await heldView;
+    await route.continue();
+  });
   await motionPage.emulateMedia({ reducedMotion: "no-preference" });
   await motionPage.goto(base);
   await motionPage.locator('input[name="prediction"]').first().check();
   await motionPage.getByRole("button", { name: "Commit prediction" }).click();
   await motionPage.emulateMedia({ reducedMotion: "reduce" });
+  assert.ok(viewRequests > 0, "Renderer import is held during the preference change");
+  releaseView();
   await motionPage.waitForFunction(() => !document.querySelector("#rain").disabled);
   assert.equal(await motionPage.locator(".book").getAttribute("data-step"), "0");
   assert.equal(await motionPage.locator(".paired-replay").getAttribute("data-playing"), "false");
-  report.checks.push("Enabling reduced motion during lift completes without autoplay or stranded controls");
+  report.checks.push(
+    "Enabling reduced motion while renderer loads completes without autoplay, duplicate lifecycle transitions or stranded controls",
+  );
   await motionPage.close();
   assert.deepEqual(report.errors, []);
 } finally {

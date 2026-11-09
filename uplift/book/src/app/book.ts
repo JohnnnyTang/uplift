@@ -88,7 +88,8 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     frame = 0,
     lastTime = performance.now(),
     drawAt = -Infinity,
-    runGeneration = 0;
+    runGeneration = 0,
+    liftGeneration = 0;
   let view: InkView | undefined, viewFrame: TerrainFrame | undefined, lift: LiftRun | undefined;
   let renderTimer: ReturnType<typeof setTimeout> | undefined;
   let viewError = "";
@@ -499,8 +500,9 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     }
   }
   async function liftAndRun() {
+    const generation = ++liftGeneration;
     await viewPromise;
-    if (disposed || lifecycle.state !== "lifting") return;
+    if (disposed || generation !== liftGeneration || lifecycle.state !== "lifting") return;
     if (view) {
       lift = runLift(
         {
@@ -513,7 +515,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
         },
         reducedMotion.matches ? { crossfadeMs: 200, liftMs: 0 } : {},
       );
-      if (!(await lift.done)) return;
+      if (!(await lift.done) || generation !== liftGeneration) return;
     }
     lifecycle.completeLift();
     rain.input.disabled = selectedBackend === "flat";
@@ -528,6 +530,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     updateText();
   }
   async function reset() {
+    liftGeneration++;
     lift?.cancel();
     host.pause();
     runGeneration++;

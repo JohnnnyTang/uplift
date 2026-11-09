@@ -2,7 +2,7 @@
   "browser": "156.0.8078.80",
   "checks": [
     "Keyboard: skip, predict, comparison, explanation, rain, playback, brush clamp/apply, level preservation, reset focus; reduced motion starts both scenes paused",
-    "Enabling reduced motion during lift completes without autoplay or stranded controls"
+    "Enabling reduced motion while renderer loads completes without autoplay, duplicate lifecycle transitions or stranded controls"
   ],
   "axe": [
     {
