@@ -69,3 +69,10 @@ a comparison pause operation may come from scrubbing, seed changes, reset,
 reduced motion or automatic completion as well as the pause button. There are no
 wall-clock durations in this schema; consumers must not infer time spent learning
 from sequence gaps or event count.
+
+Review hardening: both the input and its parsed JSON clone must pass validation
+before retention or counters change. Numeric pairs must be ordinary dense arrays
+with exactly two own numeric data entries; custom serializers, sparse arrays,
+accessor entries and additional own properties are rejected. Object extra-field
+checks include nonenumerable and symbol keys. This protects the public collector
+when callers supply objects beyond the book's ordinary plain arrays.

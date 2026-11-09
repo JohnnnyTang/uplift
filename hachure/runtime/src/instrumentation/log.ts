@@ -93,7 +93,7 @@ const object = (value: unknown): value is Record<string, unknown> =>
   (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null);
 const keys = (value: unknown, expected: readonly string[]): value is Record<string, unknown> =>
   object(value) &&
-  Object.keys(value).length === expected.length &&
+  Reflect.ownKeys(value).length === expected.length &&
   expected.every((key) => Object.hasOwn(value, key));
 const number = (value: unknown): value is number =>
   typeof value === "number" && Number.isFinite(value) && value >= 0;
@@ -101,7 +101,14 @@ const integer = (value: unknown): value is number => number(value) && Number.isS
 const level = (value: unknown) => value === "hs" || value === "uni";
 const oneOf = (value: unknown, choices: readonly string[]) =>
   typeof value === "string" && choices.includes(value);
-const pair = (value: unknown) => Array.isArray(value) && value.length === 2 && value.every(number);
+const pair = (value: unknown) =>
+  Array.isArray(value) &&
+  Object.getPrototypeOf(value) === Array.prototype &&
+  value.length === 2 &&
+  Reflect.ownKeys(value).length === 3 &&
+  !("toJSON" in value) &&
+  number(Object.getOwnPropertyDescriptor(value, "0")?.value) &&
+  number(Object.getOwnPropertyDescriptor(value, "1")?.value);
 function config(value: unknown): value is TerrainConfig {
   return (
     keys(value, [...CONFIG_NUMBERS, "hardnessRange"]) &&
@@ -258,7 +265,10 @@ export function createLearningLog(readContext: () => LearningContext, capacity =
         action: value,
       };
       if (!isLearningEvent(event)) return false;
-      const copy = JSON.parse(JSON.stringify(event)) as LearningEvent;
+      // Serialization can invoke accessors or custom hooks after the input check.
+      // Retain only the validated JSON representation, before eviction or sequencing.
+      const copy: unknown = JSON.parse(JSON.stringify(event));
+      if (!isLearningEvent(copy)) return false;
       if (events.length === capacity) {
         events.shift();
         dropped++;

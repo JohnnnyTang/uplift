@@ -1112,3 +1112,21 @@ default restoration using the guidance in instrumentation/README.md. Keep 4A's
 selected backend and 4D's motion/focus changes when merging the book glue. Future
 validated challenges or other comparisons need a reviewed event-schema extension;
 v1 cannot emit a successful challenge or impersonate a universal assessment.
+
+## D-W4-4F-R1 · Validate the retained JSON representation
+
+2026-11-09 · Review follow-up for the anonymous event boundary.
+
+Input validation alone is insufficient because JSON serialization can invoke
+custom hooks or accessors. Revalidate the parsed serialized clone before any
+retention, eviction, omission count or sequence update. Reject numeric-pair arrays
+unless they are ordinary dense arrays containing exactly two own numeric data
+entries and the length property, with no custom serialization or extra keys.
+Also include nonenumerable/symbol keys in object extra-field rejection.
+
+Regressions cover the reviewer's array-toJSON injection, hidden serializers,
+sparse/decorated arrays in both recorded rain inputs and live hardness ranges,
+and an accessor that passes the input check then injects free text during JSON
+serialization. Rejected events leave the retained log and sequencing untouched;
+all exported retained events pass the public validator. No book or model behavior
+changes, and normal book arrays remain accepted.

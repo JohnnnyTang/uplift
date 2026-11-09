@@ -192,3 +192,87 @@ describe("anonymous local lesson observations", () => {
     expect(isLearningEvent(null)).toBe(false);
   });
 });
+
+// Regressions for the strict public boundary, including callers outside the book.
+describe("serialized observation privacy boundary", () => {
+  it("rejects custom serialization, sparse and decorated numeric pairs before retention", () => {
+    let serialized = 0;
+    const custom = Object.assign([5, 20], {
+      toJSON() {
+        serialized++;
+        return { unexpectedFreeText: "private-value" };
+      },
+    });
+    const hiddenCustom = Object.defineProperty([5, 20], "toJSON", {
+      value() {
+        serialized++;
+        return { unexpectedFreeText: "private-value" };
+      },
+    });
+    const sparse = new Array<number>(2);
+    sparse[0] = 5;
+    const otherHole = new Array<number>(2);
+    otherHole[1] = 20;
+    const decorated = Object.assign([5, 20], { unexpectedFreeText: "private-value" });
+    const symbol = Object.assign([5, 20], { [Symbol("extra")]: "private-value" });
+    const invalidPairs = [
+      custom,
+      hiddenCustom,
+      sparse,
+      otherHole,
+      new Array<number>(2),
+      decorated,
+      symbol,
+      [5, 20, 30],
+    ];
+    const c = context(),
+      log = createLearningLog(() => c, 1);
+    log.start();
+    const before = log.exportJson(),
+      first = packet(log).events[0]!;
+    for (const values of invalidPairs) {
+      Object.assign(c.recorded, { rainMmPerHr: values });
+      expect(isLearningEvent({ ...first, context: c })).toBe(false);
+      expect(log.record({ kind: "comparison", action: "scrub" })).toBe(false);
+      expect(log.exportJson()).toBe(before);
+      Object.assign(c.recorded, { rainMmPerHr: [5, 20] });
+      Object.assign(c.live!.config, { hardnessRange: values });
+      expect(isLearningEvent({ ...first, context: c })).toBe(false);
+      expect(log.record({ kind: "reset" })).toBe(false);
+      expect(log.exportJson()).toBe(before);
+      Object.assign(c.live!.config, { hardnessRange: [0, 1] });
+    }
+    expect(serialized).toBe(0);
+    expect(log.droppedEvents).toBe(0);
+    expect(log.record({ kind: "reset" })).toBe(true);
+    expect(packet(log).events[0]!.sequence).toBe(1);
+    expect(log.droppedEvents).toBe(1);
+    expect(packet(log).events.every(isLearningEvent)).toBe(true);
+    expect(log.exportJson()).not.toContain("private-value");
+  });
+
+  it("validates the serialized clone when an accessor changes after input validation", () => {
+    const log = createLearningLog(context, 1);
+    log.start();
+    let reads = 0;
+    const changingAction = {
+      kind: "prediction" as const,
+      get choice(): number {
+        reads++;
+        return reads <= 2 ? 1 : ({ unexpectedFreeText: "private-serialized-value" } as unknown as number);
+      },
+    };
+    const first = packet(log).events[0]!;
+    expect(isLearningEvent({ ...first, source: "recorded", action: changingAction })).toBe(true);
+    reads = 0;
+    const before = log.exportJson();
+    expect(log.record(changingAction)).toBe(false);
+    expect(reads).toBeGreaterThan(2);
+    expect(log.exportJson()).toBe(before);
+    expect(log.droppedEvents).toBe(0);
+    expect(log.record({ kind: "prediction", choice: 1 })).toBe(true);
+    expect(packet(log).events[0]!.sequence).toBe(1);
+    expect(packet(log).events.every(isLearningEvent)).toBe(true);
+    expect(log.exportJson()).not.toContain("private-serialized-value");
+  });
+});
