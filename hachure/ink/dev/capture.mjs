@@ -32,7 +32,7 @@ try {
   results.browser = browser.version();
   {
     const page = await browser.newPage();
-    await page.goto(`http://127.0.0.1:${port}/vitest-shim.ts`);
+    await page.goto(`http://127.0.0.1:${port}/?adapter-check`);
     results.adapter = await page.evaluate(async () => {
       const adapter = await globalThis.navigator.gpu?.requestAdapter();
       if (!adapter) return null;

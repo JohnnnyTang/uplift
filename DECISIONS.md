@@ -516,3 +516,44 @@ keyboard events and the accessibility snapshot must not be treated as listening 
 `uplift/book/src/evidence/README.md` for the manual protocol, screenshots and integration handover.
 3A must replace the fixture route and local adapter with the runtime/renderer integration before
 reader release. View-only checkbox controls use callbacks without extending schema v0.
+
+<!-- expert-review -->
+
+### D-W2-001 · 2026-11-08 · Wave 2 integration · Resistance before calibration
+
+**Decision.** Merge the six foundation PRs in the planned order. Choose semi-implicit
+Manning-style hydraulic resistance as the direction for a separate correction before 3B
+calibration and 3C water porting. This is an implementation direction, not an approved
+equation, roughness value or scientific sign-off. The owner must derive the adaptation to
+the pipe variables, source the parameter envelope, test timestep refinement at equal
+hydraulic duration, and resolve the current wave-guard limitation. Keep geological years,
+quantitative erosion claims and the predict answer unapproved until the required evidence
+and expert review exist. See the prerequisite brief in `docs/plan/stage-1.md`.
+
+**Evidence.** D-2A-1 documents donor-limited speeds and timestep-dependent incision even
+with closed budgets. [USACE HEC-RAS, Eulerian shallow-water discretisation](https://www.hec.usace.army.mil/confluence/rasdocs/ras1dtechref/6.4/theoretical-basis-for-one-dimensional-and-two-dimensional-hydrodynamic-calculations/2d-unsteady-flow-hydrodynamics/numerical-methods/eulerian-shallow-water-equation-solver)
+provides a reference for treating resistance implicitly in the velocity update; it does
+not validate our virtual-pipe model. Existing equations remain documented as implemented
+until the correction merges. No production CPU/GPU kernel changes in wave close.
+
+### D-W2-002 · 2026-11-08 · Wave 2 integration · Shared fixtures and handover
+
+**Decision.** Export `@hachure/terrain/fake` directly from the browser-safe fixture module.
+Keep `testing` for the Vitest contract suite and backwards-compatible test imports.
+Move both browser consumers to `fake`, remove the ink dev shim, and make the capture
+adapter check independent of that shim. Align `RaiseOp` and fake raise with the existing
+science brief and real tools: added material is loose sediment. The shared contract test
+now checks that raising preserves bedrock. The fake's added-volume ledger uses stored
+float32 increments. It remains a clearly labelled scripted fixture, never science.
+
+**Handover.** 3A owns real preset/brush wiring, source reset, 2–4 Hz view updates or Worker
+extraction, separate 3D loading and atomic binding samples. 3B needs exact limited sediment
+face diagnostics for AC3c. 3C/4A need split/local-datum GPU elevation and matching contour
+snapshots or GPU contours. The same landscape is 128² × 10 m and 256² × 5 m; CPU bitwise
+replay is scoped to one JavaScript engine. These are explicit subsequent-session requirements.
+
+**Acceptance limit.** The user requested merging all Wave 2 PRs; 2E is merged with its
+human screen-reader listening check still open. Structural accessibility and keyboard
+checks do not satisfy it. 4D owns completion, and the stage gate retains the requirement.
+GPU solver comparison is deferred to 3C because no GPU solver exists yet. Foundation
+test success does not close scientific validation, calibration or classroom hardware gates.

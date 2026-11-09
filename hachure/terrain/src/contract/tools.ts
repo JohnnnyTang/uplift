@@ -11,7 +11,7 @@ interface BrushBase {
   readonly radiusM: number;
 }
 
-/** Adds rock under the brush, peaking at the centre. */
+/** Adds loose sediment under the brush, peaking at the centre. */
 export interface RaiseOp extends BrushBase {
   readonly kind: "raise";
   /** Height added at the centre (unit: metres). Clamped to `brushMaxHeightM`. */

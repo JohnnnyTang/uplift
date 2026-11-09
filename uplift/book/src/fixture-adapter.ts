@@ -1,5 +1,5 @@
 /** Thin local adapter for 1A contracts. Replace at 3A integration, not with unmerged 2D code. */
-import { createFakeSolver, fakeTiltedPlanePreset } from "@hachure/terrain/testing";
+import { createFakeSolver, fakeTiltedPlanePreset } from "@hachure/terrain/fake";
 import type { StateSnapshot } from "@hachure/terrain";
 import { clampRange } from "@hachure/runtime";
 import { mockSpread } from "./mock-spread";

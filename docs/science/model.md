@@ -7,6 +7,23 @@ This is a proposed discretisation for 2A, not evidence that a solver passes vali
 References use the keys in [sources.md](sources.md). Read [parameters.md](parameters.md),
 [validation-spec.md](validation-spec.md) and [time-scale.md](time-scale.md) together.
 
+## Wave 2 finding: calibration is blocked
+
+The implemented frictionless pipe update can reach donor-limited velocities proportional to
+`metresPerCell / dtSimSeconds`; changing the fixed step then changes capacity and incision.
+See D-2A-1 and D-W2-001 in `DECISIONS.md`. Conservation and finite-state tests do not establish
+physical rates. The equations below describe the current implementation, not an approved
+calibration baseline.
+
+The lead's implementation direction is a semi-implicit Manning-style resistance term, adapted
+to the pipe discharge and velocity definitions with explicit wet/dry treatment. Its derivation,
+roughness range and hydraulic-radius convention still need expert review. The [USACE HEC-RAS
+discretisation](https://www.hec.usace.army.mil/confluence/rasdocs/ras1dtechref/6.4/theoretical-basis-for-one-dimensional-and-two-dimensional-hydrodynamic-calculations/2d-unsteady-flow-hydrodynamics/numerical-methods/eulerian-shallow-water-equation-solver) is a numerical reference, not validation of this virtual-pipe adaptation.
+A separate prerequisite correction must update this brief, typed config, CPU kernel and tests
+before 3B calibrates or 3C ports the water update. Require equal-duration fixed-step refinement,
+mass closure, bounded shallow-flow behaviour and stable qualitative conclusions. No numeric
+landscape years or validated predict answer may be inferred from the current frictionless runs.
+
 ## State, units and boundaries
 
 Match 1A's draft `TerrainConfig` and `TerrainState`. Let cell side `l = metresPerCell`,

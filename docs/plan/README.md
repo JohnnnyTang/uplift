@@ -34,7 +34,8 @@ Stage    a group-reviewed milestone with an exit gate                   (sequent
    the same path. Touching an unowned path is allowed only for minimal glue (a re-export line, a registry
    entry), and the PR must say so.
 3. **Fakes for unbuilt neighbours.** A consumer whose producer is built in the same wave codes against a fake
-   from the contract package (for example `@hachure/terrain/testing`). Fakes are test fixtures. They are
+   from the contract package (`@hachure/terrain/fake` for browser fixtures;
+   `@hachure/terrain/testing` also exports the Vitest contract suite). Fakes are test fixtures. They are
    never shown to readers as science.
 4. **Hot files.**
    - `pnpm-lock.yaml`: never hand-merge. Take `main`'s version and rerun `pnpm install`.

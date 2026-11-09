@@ -284,8 +284,9 @@ class FakeSolver implements TerrainSolver {
     for (const { i, d } of cells) {
       const h = amplitude * 0.5 * (1 + Math.cos((Math.PI * d) / radiusM));
       if (sign > 0) {
-        bedrockM[i] = bedrockM[i]! + h;
-        volume += h * area;
+        const before = sedimentM[i]!;
+        sedimentM[i] = before + h;
+        volume += (sedimentM[i]! - before) * area;
       } else {
         const fromSediment = Math.min(sedimentM[i]!, h);
         sedimentM[i] = sedimentM[i]! - fromSediment;
