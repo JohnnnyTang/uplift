@@ -1,0 +1,9 @@
+{
+  "browser": "156.0.8078.80",
+  "checks": [
+    "Tab order reaches tool, radius, amount and cursor; keyboard-only raise applies at the announced location; input and solver slope clamps are visible and live.",
+    "Dig, smooth and harden all select, configure and apply using only keyboard; Enter and Space issue one operation each.",
+    "Edge clamping is announced; disabled state prevents editing; rejected async tools restore a usable cursor and show a failure message."
+  ],
+  "errors": []
+}
