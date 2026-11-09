@@ -57,6 +57,17 @@ test("keyboard opt-in, anonymous export, stop/clear and levels preserve lesson s
   await page.getByRole("button", { name: "Show result", exact: true }).click();
   await unchangedAcrossLevels(page);
   await expect(panel).toHaveAttribute("data-collecting", "true");
+  await page.getByLabel("Reading level").selectOption("uni");
+  const erosion = page.getByRole("slider", { name: "Erosion relaxation rate" });
+  const defaultErosion = await erosion.inputValue();
+  await erosion.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(erosion).not.toHaveValue(defaultErosion);
+  await page.getByLabel("Reading level").selectOption("hs");
+  const beforeRestore = await lessonState(page);
+  await page.getByRole("button", { name: "Reset hidden parameters to defaults" }).click();
+  await expect(page.locator(".university-hidden-parameters")).toBeHidden();
+  expect(await lessonState(page)).toEqual(beforeRestore);
   await page.locator('input[name="learning-post"]').nth(1).focus();
   await page.keyboard.press("Space");
   await page.getByRole("slider", { name: "Rain input", exact: true }).focus();
@@ -103,6 +114,7 @@ test("keyboard opt-in, anonymous export, stop/clear and levels preserve lesson s
     "tool",
     "reset",
     "learning-check",
+    "restore-defaults",
   ])
     expect(kinds).toContain(kind);
   expect(kinds.indexOf("prediction")).toBeLessThan(kinds.indexOf("flap"));
@@ -113,6 +125,13 @@ test("keyboard opt-in, anonymous export, stop/clear and levels preserve lesson s
   expect(
     exported.events.some((e) => e.action.kind === "control" && e.context.live!.config.rainMmPerHr === 11),
   ).toBe(true);
+  const parameterEvent = exported.events.find(
+    (e) => e.action.kind === "control" && e.action.control === "erosionRatePerS",
+  );
+  expect(parameterEvent).toBeDefined();
+  expect(parameterEvent!.context.live!.config.erosionRatePerS).not.toBe(Number(defaultErosion));
+  const restored = exported.events.find((e) => e.action.kind === "restore-defaults");
+  expect(restored!.context.live!.config.erosionRatePerS).toBe(Number(defaultErosion));
   const endpoints = exported.events.filter(
     (e) => e.action.kind === "comparison" && e.action.action === "endpoint",
   );
@@ -153,3 +172,25 @@ test("a failing replay observer cannot interrupt keyboard controls or endpoint g
   await expect(page.locator("body")).toHaveAttribute("data-endpoint", "true");
   expect(errors).toEqual([]);
 });
+
+for (const backend of ["flat", "cpu-64"] as const) {
+  test(
+    "anonymous log reports selected " + backend + " backend without changing model state",
+    async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      const errors = await ready(page, "/?backend=" + backend);
+      const before = await lessonState(page);
+      await page.locator(".learning-log summary").click();
+      await page.getByRole("button", { name: "Start local collection" }).click();
+      const downloadEvent = page.waitForEvent("download");
+      await page.getByRole("button", { name: "Export anonymous JSON" }).click();
+      const download = await downloadEvent;
+      const exported = JSON.parse(await readFile((await download.path())!, "utf8")) as LearningExport;
+      expect(exported.events.every(isLearningEvent)).toBe(true);
+      expect(exported.events[0]!.context.live!.backend).toBe(backend);
+      expect(exported.events[0]!.context.live!.config.gridSize).toBe(64);
+      expect(await lessonState(page)).toEqual(before);
+      expect(errors).toEqual([]);
+    },
+  );
+}

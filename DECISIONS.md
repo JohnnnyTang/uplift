@@ -1130,3 +1130,16 @@ and an accessor that passes the input check then injects free text during JSON
 serialization. Rejected events leave the retained log and sequencing untouched;
 all exported retained events pass the public validator. No book or model behavior
 changes, and normal book arrays remain accepted.
+
+## 2026-11-09 — Owner approves remaining Wave 4 integration
+
+After the integrated 4D preview and packet were delivered, the owner explicitly
+approved merging. This supersedes the pre-merge listening hold; it is not evidence
+that human listening passed. PR #23 merged with all checks green. The final 4F
+integration preserves motion/focus and challenge guards, logs the selected backend
+from live state, and records accepted university parameter changes and explicit
+hidden-default restoration after configure completes. Logging does not reset or
+mutate either lesson state. New browser coverage checks those hooks and flat/CPU64
+export context. Minimal book/e2e and review documentation changes are integration
+glue. Human listening, successful challenge science and Stage 1 hardware/expert
+gates remain open; merging code does not close Wave 4 acceptance.

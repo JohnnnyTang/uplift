@@ -133,6 +133,11 @@
       "label": "Teacher note and sources"
     },
     {
+      "tag": "SUMMARY",
+      "id": "",
+      "label": "Optional anonymous classroom log"
+    },
+    {
       "tag": "SELECT",
       "id": "rain-comparison-seed",
       "label": "Seed 1Seed 17Seed 101"
@@ -233,6 +238,11 @@
       "label": "Teacher note and sources"
     },
     {
+      "tag": "SUMMARY",
+      "id": "",
+      "label": "Optional anonymous classroom log"
+    },
+    {
       "tag": "SELECT",
       "id": "rain-comparison-seed",
       "label": "Seed 1Seed 17Seed 101"
@@ -326,6 +336,11 @@
       "tag": "SUMMARY",
       "id": "",
       "label": "Teacher note and sources"
+    },
+    {
+      "tag": "SUMMARY",
+      "id": "",
+      "label": "Optional anonymous classroom log"
     },
     {
       "tag": "SELECT",

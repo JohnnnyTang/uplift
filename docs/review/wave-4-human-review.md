@@ -68,7 +68,8 @@ confusing/missing speech; focus loss; any blocking issue and reproduction steps.
 A pass requires an actual listener, not an automated accessibility snapshot.
 
 Owner choice (2026-11-09): prepare a listening preview BEFORE merging 4D.
-4D and 4F remain unmerged until this review is resolved. No human pass is claimed.
+The owner subsequently approved merging (2026-11-09). The pre-merge hold is lifted;
+no listening observations were supplied, so no human pass is claimed.
 
 ## Remaining Stage 1 reviews (not requested for merge approval here)
 
@@ -81,7 +82,8 @@ They belong to the Stage 1/Wave 5 gate and are not silently waived by merging co
 
 4A (#27), 4B (#22) and the approved infrastructure-only 4C (#25) are merged.
 This review branch contains their code plus 4D. It deliberately excludes 4F,
-which waits after 4D in merge order. PR #23 remains draft and unmerged.
+which waits after 4D in merge order. PR #23 has since merged with explicit owner approval. This section describes the
+review preview supplied before approval; it is not the final instrumentation build.
 
 Open in Chrome with NVDA or Narrator:
 
@@ -120,3 +122,10 @@ repeats passed without code/timeout changes. Its trace had the initial page but
 no worker request or reported script error; the cause remains unconfirmed. The
 review preview has passed its own integrated audit; report a stuck initial page
 if observed rather than treating the old stall as fixed.
+
+## Merge approval after preview
+
+On 2026-11-09 the owner explicitly approved merging after receiving this packet.
+4D merged as PR #23 with all CI checks green; 4F follows in order. No human
+listening results or screen-reader versions were supplied. Human listening remains
+unverified, and the scientific challenge and Stage 1 release gates remain open.
