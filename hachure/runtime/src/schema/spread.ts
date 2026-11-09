@@ -148,6 +148,7 @@ export type Comparator = (typeof COMPARATORS)[number];
 
 /** A challenge condition, evaluated against live simulation state, never against the page. */
 export type ChallengeCheck =
+  | { readonly kind: "pending"; readonly reason: string }
   | {
       readonly kind: "probe-threshold";
       /** A scalar probe id. */
@@ -165,8 +166,8 @@ export interface PredictSpec {
   readonly question: LevelText;
   /** Two to four choices. */
   readonly options: readonly LevelText[];
-  /** Index of the correct option. */
-  readonly answer: number;
+  /** Index backed by matched validation, or null for an explicitly unscored research draft. */
+  readonly answer: number | null;
   /**
    * Id of the qualitative test whose result backs the answer (tension T6). Required before expert review;
    * optional while content is drafted.

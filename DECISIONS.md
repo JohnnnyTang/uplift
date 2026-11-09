@@ -649,3 +649,37 @@ available from the recorded inputs. The scientific acceptance command exits nonz
 - **Handover:** 3A mounts the palette and cursor against the host and currently displayed view. Human
   screen-reader listening stays with 4D. No solver, science model, configuration default or dependency
   changed. Only public barrel exports are outside the two owned directories.
+
+## D-S1-3A · CPU host, Worker boundary and honest draft learning gates
+
+2026-11-09 · session 3A
+
+The book now uses the real tilted-plateau CPU solver in a module Worker. A bounded fixed-step accumulator
+changes wall-clock throughput, never numerical dt. Normal atomic snapshots/probes publish at two hertz;
+manual updates are coalesced to at most four view refreshes per second. Baseline/current paths and
+calibration status travel with each sample. An incomplete metric replaces its old numeric display with an
+explicit unavailable status. The host uses the shared fixed-section metric from 3B; the reset baseline
+is an observation baseline, separate from the validation protocol's spin-up baseline.
+
+The Worker needs a dedicated public runtime subpath: importing the ordinary runtime entry evaluated DOM
+widget CSS in Vite development and failed with `document is not defined`. `@hachure/runtime/worker`
+exports only the Worker engine. This was found by the actual browser flow, not by the Node unit suite.
+
+CPU brushes now call the shared `applyBrush` on the synchronized float32 mirror. Only changed bedrock or
+sediment components are copied back; all untouched float64 values survive. The tool ledger uses the
+actual authoritative stock change, including rounding of edited components. The real preset's declared
+source is reinstalled on reset and its outlet face/base level are checked.
+
+A pending scientific answer must not become a fabricated option index. Schema v0 therefore permits
+`PredictSpec.answer: null`, visibly unscored, and a `ChallengeCheck` of `pending` with a reason. No draft
+stamp is awarded. These are explicit research states; they do not close the science or release gates.
+The host adds a `fixed-section-incision` probe kind for the baseline/current metric: a single-snapshot
+terrain probe cannot calculate a change relative to reset. Stage 2 should formalize baseline-aware probe
+requests instead of multiplying spread-specific host adapters.
+
+Minimal glue outside the session directories: runtime exports/Worker package subpath; binding strings
+for unavailable numeric probes; pending schema/widget states; the book entry point; and the spread's
+terrain dependency plus generated lockfile. Content remains owned by 3D/3B, and the full challenge and
+university chart layer remain Wave 4 work.
+
+Final integration retains separate float64 reset/current surfaces for the shared 3B metric. A regression matches the authoritative scientific calculation exactly and demonstrates that float32 drawing snapshots would give a different result. Real Chrome evidence covers keyboard and ray-picked brush edits; the recorded loaded-machine timings are samples only and do not approve the classroom performance gate.

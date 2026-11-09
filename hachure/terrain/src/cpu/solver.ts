@@ -35,6 +35,7 @@ import {
   simYearsPerStep,
   zeroBudget,
 } from "../contract/index";
+import { applyBrush, isBrushOp } from "../tools/index";
 import { WAVE_SAFETY_FACTOR } from "./constants";
 import { validateCpuSolverConfig } from "./guards";
 import { CpuBuffers, type KernelParams, StepLedger, computeStep, outletFace } from "./kernel";
@@ -393,9 +394,31 @@ export class CpuTerrainSolver implements TerrainSolver {
 
   async applyTool(op: ToolOp): Promise<ToolResult> {
     this.live();
-    // Sources (spring, rain-source, remove-source) are solver state. Brush ops go to the placeholder in
-    // tools.ts, which 2B's `applyBrush` replaces once both sessions are on main (DECISIONS.md D-2A-1).
-    const result = applyCpuTool({ buf: this.buf, config: this.cfg, sources: this.sources }, op);
+    let result: ToolResult;
+    if (isBrushOp(op)) {
+      this.syncMirror();
+      const layers = this.state.layers;
+      const oldBedrock = layers.bedrockM.slice();
+      const oldSediment = layers.sedimentM.slice();
+      result = applyBrush(this.state, op, this.cfg);
+      let actualChangeM = 0;
+      for (let i = 0; i < oldBedrock.length; i++) {
+        // Do not round untouched authoritative cells (or untouched layers of an edited cell).
+        if (layers.bedrockM[i] !== oldBedrock[i]) {
+          actualChangeM += layers.bedrockM[i]! - this.buf.b[i]!;
+          this.buf.b[i] = layers.bedrockM[i]!;
+        }
+        if (layers.sedimentM[i] !== oldSediment[i]) {
+          actualChangeM += layers.sedimentM[i]! - this.buf.s[i]!;
+          this.buf.s[i] = layers.sedimentM[i]!;
+        }
+      }
+      // Hardness is already shared with the mirror. The ledger records actual float64 stock changes,
+      // including the rounding of edited layers, not the brush's float32-only estimate.
+      result = { ...result, volumeChangeM3: actualChangeM * this.buf.area };
+    } else {
+      result = applyCpuTool({ buf: this.buf, config: this.cfg, sources: this.sources }, op);
+    }
     // Every tool's actual net solid volume enters the budget ledger.
     this.counters.toolNetM3 += result.volumeChangeM3;
     this.mirrorStale = true;

@@ -5,11 +5,14 @@
  */
 import { describe, expect, it } from "vitest";
 
-const sources = import.meta.glob(["./*.ts", "!./*.test.ts", "!./*.bench.ts", "!./test-fixtures.ts"], {
-  query: "?raw",
-  import: "default",
-  eager: true,
-}) as Record<string, string>;
+const sources = import.meta.glob(
+  ["./*.ts", "../tools/*.ts", "!../tools/*.test.ts", "!./*.test.ts", "!./*.bench.ts", "!./test-fixtures.ts"],
+  {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  },
+) as Record<string, string>;
 
 /** Remove comments so documentation may mention the words below. */
 function code(text: string): string {
@@ -33,6 +36,8 @@ describe("worker-safe solver sources", () => {
   it("scans every solver source file", () => {
     expect(Object.keys(sources).sort()).toEqual(
       [
+        "../tools/brush.ts",
+        "../tools/index.ts",
         "./comparison-fixtures.ts",
         "./constants.ts",
         "./guards.ts",
@@ -50,11 +55,13 @@ describe("worker-safe solver sources", () => {
       for (const [name, pattern] of FORBIDDEN) expect(pattern.test(body), `${file} uses ${name}`).toBe(false);
     });
 
-    it(`${file} imports only the contract and sibling solver modules`, () => {
+    it(`${file} imports only the worker-safe contract, tools and sibling modules`, () => {
       const imports = [...code(text).matchAll(/from\s+"([^"]+)"/g)].map((m) => m[1]!);
       for (const specifier of imports) {
         expect(
-          specifier === "../contract/index" || /^\.\/[\w-]+$/.test(specifier),
+          specifier === "../contract/index" ||
+            specifier === "../tools/index" ||
+            /^\.\/[\w-]+$/.test(specifier),
           `${file}: ${specifier}`,
         ).toBe(true);
       }

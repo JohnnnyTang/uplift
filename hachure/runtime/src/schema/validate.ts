@@ -282,7 +282,10 @@ export function validateSpread(input: unknown, catalogue: EngineCatalogue = {}):
           c.issue("page.predict.options", "count", "predict needs 2 to 4 options");
         }
         options.forEach((o, i) => c.levelText(`page.predict.options[${i}]`, o));
-        const answer = c.num("page.predict.answer", predict.answer, { integer: true, min: 0 });
+        const answer =
+          predict.answer === null
+            ? undefined
+            : c.num("page.predict.answer", predict.answer, { integer: true, min: 0 });
         if (answer !== undefined && answer >= options.length) {
           c.issue("page.predict.answer", "range", `answer ${answer} is not an option index`);
         }
@@ -397,8 +400,10 @@ function checkChallenge(
     c.issue(path, "range", `${path}: challenge checks nest too deeply`);
     return;
   }
-  const kind = c.oneOf(`${path}.kind`, check.kind, ["probe-threshold", "all", "any"] as const);
-  if (kind === "probe-threshold") {
+  const kind = c.oneOf(`${path}.kind`, check.kind, ["probe-threshold", "all", "any", "pending"] as const);
+  if (kind === "pending") {
+    c.str(`${path}.reason`, check.reason);
+  } else if (kind === "probe-threshold") {
     const probe = c.str(`${path}.probe`, check.probe);
     if (probe !== undefined) {
       const shape = probeShapes.get(probe);

@@ -8,7 +8,7 @@ import {
 import { formatBoundNumber } from "./format";
 export type BoundValue = number | string;
 export interface BindingSample {
-  readonly probe?: Readonly<Record<string, number>>;
+  readonly probe?: Readonly<Record<string, BoundValue>>;
   readonly scene?: Readonly<Record<string, BoundValue>>;
   readonly control?: Readonly<Record<string, number>>;
 }

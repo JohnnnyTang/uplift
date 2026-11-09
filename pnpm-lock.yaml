@@ -101,6 +101,9 @@ importers:
       '@hachure/runtime':
         specifier: workspace:*
         version: link:../../hachure/runtime
+      '@hachure/terrain':
+        specifier: workspace:*
+        version: link:../../hachure/terrain
 
 packages:
 

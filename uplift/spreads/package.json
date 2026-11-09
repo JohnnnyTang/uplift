@@ -9,6 +9,7 @@
     ".": "./index.ts"
   },
   "dependencies": {
-    "@hachure/runtime": "workspace:*"
+    "@hachure/runtime": "workspace:*",
+    "@hachure/terrain": "workspace:*"
   }
 }
