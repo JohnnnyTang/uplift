@@ -850,3 +850,24 @@ Open handover: 4A must feed the selected solver name into the debug glue and upd
 the CPU128 assertion. Remote CI evidence remains unavailable until publication;
 local `pnpm check`, production build, budget and Chromium evidence are recorded in
 `e2e/HANDOVER.md`. Existing expert/human/hardware gates remain open.
+
+## D-W4-OPEN · Open Wave 4 with anonymous instrumentation
+
+2026-11-09 · Owner requested parallel session worktrees using GPT-6.1 Sol at
+high reasoning and explicitly chose to add learning-outcome instrumentation.
+
+Wave 3's supported recorded rain comparison is merged at `d29d639`; the baseline
+passes `pnpm check` (434 tests). Start 4A–4F in isolated sibling worktrees. Three
+sub-agent slots run at a time; queue the remaining independent sessions. Preserve
+the prescribed merge order, with 4F after 4D. A separate integration worktree owns
+shared book mounting and plan updates to reduce overlapping session edits.
+
+4F provides an opt-in local event log, optional pre/post checks for the supported
+claim, and reader-triggered anonymous export. It adds no server collection,
+accounts or identifiers. Interaction completion is not evidence of learning gain.
+See the new 4F brief for event scope and acceptance checks.
+
+The waterfall challenge remains pending until a prospectively registered
+model-time sequence is validated. Historic failed morphology, hidden geological
+years and outstanding expert, human accessibility and target-hardware gates stay
+unchanged. Starting Wave 4 does not close these Stage 1 requirements.
