@@ -468,3 +468,29 @@ mode), or projector review needs heavier strokes.
   cadence, not every frame, or run extraction in the Worker.
 - The camera pose and `reliefScale` are spread decisions (3A, 3D). If `reliefScale` is not 1, the page
   should state the vertical exaggeration by binding `verticalExaggeration`.
+
+### D-S1-W2-2D · 2026-11-08 · Headless runtime publishes view state and sampled bindings
+
+**Decision.** Keep the guided lifecycle, level store and binding engine independent of the solver.
+A committed prediction starts lifting; the key control unlocks only after the host completes the lift.
+Resetting this lifecycle resets learning progress only: the host owns an explicit model reset. The level
+store accepts no solver and filters visibility without applying defaults or changing hidden parameters.
+The binding engine accepts atomic host samples and notifies only when rendered text changes. It has no
+clock, solver polling or readback; 3A supplies samples at its probe cadence and handles stale readbacks.
+
+**Contracts and glue.** Reuse schema `parseBindings`, `findMalformedBindings` and `findTypedNumbers`.
+Ordinals containing digits remain errors under that shared rule; V-shaped, dimension words and chemical
+notation remain allowed. Build the terrain `EngineCatalogue` from the public config/tool/probe contracts,
+excluding structural config fields. Minimal runtime export lines and a workspace terrain dependency are
+needed outside 2D's owned folders; `pnpm install` regenerates the lockfile for that dependency.
+
+**Time labels.** Derive scene labels from the current config, scheduled playback rate, speed and step
+count. All landscape-year labels, including named durations, stay nonnumeric without explicit calibration
+approval metadata; an acceleration factor alone is never approval. 3B must supply and verify the actual
+calibration record. Support `scene.timeScaleLabel` as a binding-engine alias for the brief's spelling;
+the existing schema's canonical validated content id remains `scene.timeScale`. Use the canonical id in
+3D content until a future schema revision reconciles aliases. No schema files changed in this session.
+
+**Not implemented here.** Fixed-step scheduling, asynchronous probe evaluation/readbacks, renderer lift,
+challenge evaluation, hidden-parameter reset prompts and calibration science belong to their later
+sessions. The tests use the public fake solver strictly as an engineering fixture, never science.

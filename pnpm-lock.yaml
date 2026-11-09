@@ -46,7 +46,11 @@ importers:
         specifier: 1.65.0
         version: 1.65.0
 
-  hachure/runtime: {}
+  hachure/runtime:
+    dependencies:
+      '@hachure/terrain':
+        specifier: workspace:*
+        version: link:../terrain
 
   hachure/terrain: {}
 
