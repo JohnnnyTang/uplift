@@ -53,8 +53,8 @@ coordinates only after a successful tool result; pointer UI constraints are sepa
 from solver rejection. Rain-source radius clamps remain reported in ToolResult.
 
 `ReaderLifecycle` independently stores presentation/readiness; reveal and question
-state do not authorize play. `SpreadLifecycle` is the temporary legacy research
-adapter for removal after the 5E caller migration. Learning widgets accept an absent
+state do not authorize play. The 5E research caller migration removed the temporary
+prediction-gated `SpreadLifecycle` adapter. Learning widgets accept an absent
 question and explanations are immediately revealable, including after reset.
 
 Verification in the 5B worktree: `pnpm check` (506 tests), `pnpm build`, e2e TypeScript,

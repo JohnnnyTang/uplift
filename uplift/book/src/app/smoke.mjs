@@ -21,7 +21,7 @@ try {
   });
   const page = await context.newPage();
   page.on("pageerror", (error) => report.errors.push(error.message));
-  await page.goto(process.env.LESSON_BASE_URL || "http://127.0.0.1:5183");
+  await page.goto(process.env.LESSON_BASE_URL || "http://127.0.0.1:5183/?view=research&backend=cpu-worker");
   await page.waitForFunction(() => document.querySelector(".book")?.dataset.stateHash);
   await page.waitForTimeout(500);
   assert.equal(await page.locator(".terrain-flat svg").count(), 1);
@@ -32,13 +32,14 @@ try {
   assert.match(await page.locator(".challenge-status").textContent(), /not yet available/);
   assert.equal(await page.locator(".stamp").count(), 0);
   report.checks.push(
-    "Real preset flat SVG appears before prediction; controls are gated; pending challenge awards no stamp",
+    "Real preset flat SVG appears before prediction; lift is independent of prediction; pending challenge awards no stamp",
   );
   await page.screenshot({ path: fileURLToPath(new URL("flat.png", evidence)), fullPage: true });
   await page.locator('input[name="prediction"]').first().focus();
   await page.keyboard.press("Space");
   await page.keyboard.press("Tab");
   await page.keyboard.press("Enter");
+  await page.getByRole("button", { name: "Lift the drawing", exact: true }).click();
   await page.waitForFunction(() => !document.querySelector("#rain")?.disabled, { timeout: 30000 });
   await page.waitForFunction(() => Number(document.querySelector(".book")?.dataset.step) >= 30, {
     timeout: 30000,
@@ -56,7 +57,7 @@ try {
   assert.equal(await page.locator("math").count(), 1);
   assert.match(await page.locator(".widget-time").textContent(), /not calibrated/);
   report.checks.push(
-    "Predict/lift/run/flap works on CPU128; paused level toggle preserves hash; uncalibrated years remain suppressed",
+    "Optional prediction/lift/run/flap works on CPU128; paused level toggle preserves hash; uncalibrated years remain suppressed",
   );
   await page.locator("#valley-tools-tool").focus();
   await page.keyboard.press("d");
@@ -93,7 +94,7 @@ try {
   await page.waitForFunction(() => document.querySelector(".book")?.dataset.step === "0");
   assert.equal(await page.getByRole("slider", { name: "Rain input" }).isDisabled(), true);
   assert.equal(await page.locator("#valley-tools-tool").isDisabled(), true);
-  report.checks.push("Reset returns to flat prediction, default controls, and zero steps");
+  report.checks.push("Reset returns to flat drawing, default controls, and zero steps");
   const video = page.video();
   await context.close();
   if (video) {
@@ -106,10 +107,13 @@ try {
   });
   const reducedPage = await reduced.newPage();
   reducedPage.on("pageerror", (error) => report.errors.push(error.message));
-  await reducedPage.goto(process.env.LESSON_BASE_URL || "http://127.0.0.1:5183");
+  await reducedPage.goto(
+    process.env.LESSON_BASE_URL || "http://127.0.0.1:5183/?view=research&backend=cpu-worker",
+  );
   await reducedPage.waitForFunction(() => document.querySelector(".book")?.dataset.stateHash);
   await reducedPage.locator('input[name="prediction"]').first().check();
   await reducedPage.getByRole("button", { name: "Commit prediction" }).click();
+  await reducedPage.getByRole("button", { name: "Lift the drawing", exact: true }).click();
   await reducedPage.waitForFunction(() => !document.querySelector("#rain")?.disabled);
   await reducedPage.waitForTimeout(800);
   assert.equal(await reducedPage.locator(".book").getAttribute("data-step"), "0");

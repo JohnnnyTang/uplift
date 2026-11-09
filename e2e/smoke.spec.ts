@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { ready, commit, scienceGuards, unchangedAcrossLevels } from "./helpers";
 
-test("flat diagram, prediction gate, rendered lift and live state preservation", async ({
+test("flat diagram, independent play/reveal, rendered lift and live state preservation", async ({
   page,
 }, testInfo) => {
   const errors = await ready(page);
@@ -9,8 +9,8 @@ test("flat diagram, prediction gate, rendered lift and live state preservation",
   await expect(page.locator(".terrain-flat svg path").first()).toBeVisible();
   await expect(page.locator("#rain")).toBeDisabled();
   await expect(page.locator("#valley-tools-tool")).toBeDisabled();
-  await expect(page.getByRole("button", { name: "Show result", exact: true })).toBeDisabled();
-  await expect(page.getByRole("button", { name: "Reveal explanation" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Show result", exact: true })).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Reveal explanation" })).toBeEnabled();
   // AC7: scope and the quantity legends stay visible in both reading levels.
   await expect(page.locator(".widget-tier")).toContainText("Process model");
   await expect(page.locator(".widget-scale")).toContainText(/m/);
@@ -91,4 +91,115 @@ test("debug readout is opt-in and uses measured worker batch timings", async ({ 
   expect(batch.ms).toBeGreaterThanOrEqual(0);
   await expect(debug).toContainText(/Page fps.*ms\/step.*grid.*backend.*seed/);
   expect(errors).toEqual([]);
+});
+
+test("default book: unanswered play, settled turns, research return and explicit reset", async ({ page }) => {
+  await page.setViewportSize({ width: 1366, height: 768 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/?backend=cpu-worker");
+  await expect(page.getByRole("heading", { name: "Lift a map", exact: true })).toBeVisible();
+  await expect(page.locator(".learning-log, .challenge-status, .paired-replay")).toHaveCount(0);
+  await page.getByRole("button", { name: "Reveal explanation", exact: true }).click();
+  await expect(page.locator(".reader-answer")).toBeVisible();
+  const lift = page.getByRole("slider", { name: "Lift the drawing" });
+  await expect(lift).toBeEnabled();
+  await lift.focus();
+  await page.keyboard.press("End");
+  await expect(lift).toHaveValue("1");
+  await page.getByRole("button", { name: "Turn to Where will the water go?" }).click();
+  const spring = page.getByRole("button", { name: "Move spring with arrow keys" });
+  await expect(spring).toBeEnabled();
+  await spring.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect.poll(() => page.locator("[data-wet]").getAttribute("d")).not.toBe("");
+  // Wait for a settled response before requiring exact return-state equality.
+  await expect
+    .poll(async () => {
+      const before = await page.locator("[data-wet]").getAttribute("d");
+      await page.waitForTimeout(400);
+      return before === (await page.locator("[data-wet]").getAttribute("d"));
+    })
+    .toBe(true);
+  expect(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight)).toBe(true);
+  await page.screenshot({ path: "output/playwright/5e-default-water.png", fullPage: true });
+  const wet = await page.locator("[data-wet]").getAttribute("d");
+  await page.getByLabel("Reading level").selectOption("uni");
+  await expect(page.locator(".scene-caption")).toContainText("Spring at 19 m, 9 m");
+  await expect(page.locator("[data-wet]")).toHaveAttribute("d", wet!);
+  await page.getByRole("button", { name: "Research example", exact: true }).click();
+  await expect(page.locator(".book")).toHaveAttribute("data-backend-ready", "true");
+  await page.getByRole("button", { name: "Reveal explanation", exact: true }).click();
+  await expect(page.locator("#explanation")).toBeVisible();
+  await expect(page.locator('input[name="prediction"]:checked')).toHaveCount(0);
+  await expect(page.locator(".comparison-feedback")).toBeEmpty();
+  await page.getByRole("button", { name: "Lift the drawing", exact: true }).click();
+  await expect(page.locator("#rain")).toBeEnabled();
+  await page.getByRole("button", { name: "Return to the book", exact: true }).click();
+  await expect(spring).toBeEnabled();
+  await expect(page.locator("[data-wet]")).toHaveAttribute("d", wet!);
+  await page.getByRole("button", { name: "Reset illustration" }).click();
+  await expect(page.locator("[data-wet]")).toHaveAttribute("d", "");
+  await page.getByRole("button", { name: "Turn to Lift a map" }).click();
+  await expect(lift).toHaveValue("1");
+  await expect(page.locator(".reader-answer")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+for (const backend of ["cpu-64", "flat", "webgpu"]) {
+  test(`default ${backend}: source readiness, context loss and free navigation`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto(`/?backend=${backend}&spread=hydrology.water-path&page=spread`);
+    const spring = page.getByRole("button", { name: "Move spring with arrow keys" });
+    await expect(page.locator(".reader-scene-status")).not.toContainText("Preparing");
+    if (backend === "flat" || (await spring.isDisabled())) {
+      await expect(page.locator(".scene-caption")).toContainText("No live water process");
+    } else {
+      await spring.focus();
+      await page.keyboard.press("ArrowRight");
+      await page.keyboard.press("ArrowRight");
+      await expect.poll(() => page.locator("[data-wet]").getAttribute("d")).not.toBe("");
+      await page.getByLabel("Reading level").selectOption("uni");
+      await expect(page.locator(".scene-caption")).toContainText("Spring at 21 m, 9 m");
+      await page.locator(".playable-drawing canvas").dispatchEvent("webglcontextlost");
+      await expect(page.locator(".scene-caption")).toContainText("Flat diagram");
+    }
+    await page.getByRole("button", { name: "Turn to Lift a map" }).click();
+    await expect(page.getByRole("heading", { name: "Lift a map", exact: true })).toBeVisible();
+    await page.getByRole("button", { name: "Reveal explanation", exact: true }).click();
+    await expect(page.locator(".reader-answer")).toBeVisible();
+  });
+}
+
+test("actual phone book has readable pages and a rapid in-flight departure retains the source", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/?backend=cpu-worker&spread=hydrology.water-path&page=illustration");
+  const spring = page.getByRole("button", { name: "Move spring with arrow keys" });
+  await expect(spring).toBeEnabled();
+  await spring.focus();
+  await page.keyboard.press("ArrowRight");
+  await page.getByRole("button", { name: "Read the explanation", exact: true }).click();
+  await expect(page.locator(".reader-shell")).toHaveAttribute("data-page", "text");
+  await page.getByRole("button", { name: "Explore the illustration", exact: true }).click();
+  await expect(spring).toBeEnabled();
+  await page.getByLabel("Reading level").selectOption("uni");
+  await expect(page.locator(".scene-caption")).toContainText("Spring at 19 m, 9 m");
+  await expect.poll(() => page.locator("[data-wet]").getAttribute("d")).not.toBe("");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test("research departure cancels an unfinished lift and return can lift again", async ({ page }) => {
+  await page.goto("/?view=research&backend=cpu-worker");
+  const lift = page.getByRole("button", { name: "Lift the drawing", exact: true });
+  await expect(lift).toBeEnabled();
+  await lift.click();
+  await page.getByRole("button", { name: "Return to the book", exact: true }).click();
+  await page.getByRole("button", { name: "Research example", exact: true }).click();
+  await expect(lift).toBeEnabled();
+  await lift.click();
+  await expect(page.locator("#rain")).toBeEnabled();
+  await expect(page.locator('input[name="prediction"]:checked')).toHaveCount(0);
 });
