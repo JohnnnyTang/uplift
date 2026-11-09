@@ -241,3 +241,5 @@ export function mountBook(host: HTMLElement) {
     },
   };
 }
+export { createReaderShell } from "./reader/shell";
+export type { MountedReaderShell, ReaderShellOptions } from "./reader/shell";
