@@ -18,3 +18,5 @@ export * from "./bindings/index";
 export * from "./widgets/index";
 
 export * from "./tools-ui/index";
+// Fixed-step Worker host (session 3A).
+export * from "./sim-host/index";

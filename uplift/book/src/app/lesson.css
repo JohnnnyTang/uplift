@@ -1,0 +1,58 @@
+.terrain-stage {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  border: 1px solid var(--rule);
+}
+.terrain-stage canvas,
+.terrain-flat {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  border: 0;
+}
+.terrain-flat svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.reading-text,
+.widget-flap > div,
+.teacher-note {
+  white-space: pre-line;
+}
+.terrain-stage + figcaption {
+  min-height: 3em;
+}
+.widget-legend svg {
+  width: 2rem;
+  height: 1.2rem;
+}
+.page .widget-scale-line,
+.page .widget-scale > span:last-child {
+  margin-left: 0;
+}
+@media (max-width: 500px) {
+  .terrain-stage {
+    height: 270px;
+  }
+}
+.tool-palette {
+  margin: 1.25rem 0;
+  padding: 1rem;
+  border: 1px solid var(--secondary);
+}
+.tool-palette input {
+  min-height: 44px;
+  padding: 0.4rem;
+  font: inherit;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--secondary);
+}
+.fixture-notice a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}

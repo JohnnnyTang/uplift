@@ -271,7 +271,7 @@ describe("mass budget (AC4)", () => {
     expect(b.exportedSedimentM3).toBeGreaterThan(0);
   });
 
-  it("tool edits are accounted in toolNetM3, and smooth is volume-neutral", async () => {
+  it("tool edits close the exact ledger, and shared smoothing conserves to float32 storage", async () => {
     const solver = createCpuSolver({ gridSize: 32 }, catchmentFixture());
     const l = solver.config.metresPerCell;
     const r0 = solver.referenceLayers();
@@ -287,13 +287,25 @@ describe("mass budget (AC4)", () => {
       radiusM: 3 * l,
       depthM: 3,
     });
+    const beforeSmooth = solver.referenceLayers();
     const smooth = await solver.applyTool({
       kind: "smooth",
       at: { xM: 16 * l, yM: 16 * l },
       radiusM: 6 * l,
       strength: 1,
     });
-    expect(Math.abs(smooth.volumeChangeM3)).toBeLessThan(1e-9);
+    // The shared 2B brush stores float32, so smoothing's residual is bounded by storage rounding;
+    // it is recorded in toolNetM3, never hidden as zero. Budget closure below remains unchanged.
+    const afterSmooth = solver.referenceLayers();
+    let roundingBoundM3 = 0;
+    for (const name of ["bedrockM", "sedimentM"] as const)
+      for (let i = 0; i < beforeSmooth[name].length; i++)
+        if (beforeSmooth[name][i] !== afterSmooth[name][i])
+          roundingBoundM3 +=
+            Math.max(Math.abs(beforeSmooth[name][i]!), Math.abs(afterSmooth[name][i]!)) *
+            2 ** -23 *
+            area(solver);
+    expect(Math.abs(smooth.volumeChangeM3)).toBeLessThanOrEqual(roundingBoundM3 + 1e-9);
     const b = await solver.budget();
     expect(b.toolNetM3).toBeCloseTo(raise.volumeChangeM3 + dig.volumeChangeM3 + smooth.volumeChangeM3, 9);
     expectClosed(residuals(r0, solver.referenceLayers(), b, area(solver)), "tools");

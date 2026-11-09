@@ -11,7 +11,11 @@ export function createPredict(
     throw new RangeError("Predict needs two to four options");
   const root = el("fieldset", undefined, "widget-predict");
   const legend = el("legend", spec.question[level]);
-  const status = el("p", "Choose an answer, then commit to unlock the test.", "widget-status");
+  const unscored =
+    spec.answer === null
+      ? " No option is marked correct; matched model validation is pending or inconclusive."
+      : "";
+  const status = el("p", "Choose an answer, then commit to unlock the test." + unscored, "widget-status");
   status.setAttribute("role", "status");
   const choices = spec.options.map((option, index) => {
     const label = el("label"),
@@ -41,7 +45,7 @@ export function createPredict(
     legend.textContent = spec.question[level];
     choices.forEach(({ text }, index) => (text.textContent = spec.options[index]![level]));
     if (committed !== undefined)
-      status.textContent = `You predicted: ${spec.options[committed]![level]}. The test is unlocked.`;
+      status.textContent = `You predicted: ${spec.options[committed]![level]}. The test is unlocked.${unscored}`;
   }
   function reset() {
     committed = undefined;
@@ -50,7 +54,7 @@ export function createPredict(
       input.disabled = false;
     });
     commit.disabled = true;
-    status.textContent = "Choose an answer, then commit to unlock the test.";
+    status.textContent = "Choose an answer, then commit to unlock the test." + unscored;
   }
   return {
     root,
