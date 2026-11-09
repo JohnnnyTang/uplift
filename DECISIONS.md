@@ -1143,3 +1143,8 @@ mutate either lesson state. New browser coverage checks those hooks and flat/CPU
 export context. Minimal book/e2e and review documentation changes are integration
 glue. Human listening, successful challenge science and Stage 1 hardware/expert
 gates remain open; merging code does not close Wave 4 acceptance.
+
+The integrated local suite exposed an existing debug-test race: the overlay reads
+completed host timing before the page snapshot has refreshed its data attributes.
+After Pause, the test now waits for the atomic snapshot counters before asserting
+them. No timeout, retry policy or simulation behavior changes.
