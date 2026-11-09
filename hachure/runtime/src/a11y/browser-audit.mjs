@@ -123,7 +123,7 @@ try {
       .locator(".paired-replay")
       .screenshot({ path: fileURLToPath(new URL(type + ".png", evidence)) });
     await page
-      .locator("figure")
+      .locator(".page-right > figure")
       .screenshot({ path: fileURLToPath(new URL("terrain-" + type + ".png", evidence)) });
   }
   await cdp.send("Emulation.setEmulatedVisionDeficiency", { type: "none" });
