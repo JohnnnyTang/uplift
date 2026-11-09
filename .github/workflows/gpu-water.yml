@@ -1,0 +1,32 @@
+name: GPU water comparison
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  water:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Clear committed local evidence before CI setup
+        run: rm -f hachure/terrain/src/compare/results-local.json
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @hachure/terrain exec playwright install --with-deps chromium
+      - run: pnpm --filter @hachure/terrain test:gpu
+        env:
+          GPU_CHROMIUM_BUNDLED: "1"
+          GPU_SOFTWARE: "1"
+      - name: Report GPU capability and comparison evidence
+        if: always()
+        run: |
+          if [ -f hachure/terrain/src/compare/results-local.json ]; then
+            cat hachure/terrain/src/compare/results-local.json
+          fi

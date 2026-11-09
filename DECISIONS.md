@@ -683,3 +683,34 @@ terrain dependency plus generated lockfile. Content remains owned by 3D/3B, and 
 university chart layer remain Wave 4 work.
 
 Final integration retains separate float64 reset/current surfaces for the shared 3B metric. A regression matches the authoritative scientific calculation exactly and demonstrates that float32 drawing snapshots would give a different result. Real Chrome evidence covers keyboard and ray-picked brush edits; the recorded loaded-machine timings are samples only and do not approve the classroom performance gate.
+
+### D-S1-W3-3C · Guarded managed GPU water and split elevation
+
+<!-- expert-review -->
+
+**Decision.** Port the prerequisite's corrected water stages through three r187 WGSL arithmetic and
+managed dispatch. Keep a dedicated `/gpu` export so CPU/Worker consumers do not import Three. The
+partial water stage rejects active omitted process coefficients and is not a full TerrainSolver.
+A fixed-tree max reduction and latched guard precede whole-state commits; later queued work cannot
+advance rejected state. Public CPU constants/guards are reused, including halt semantics.
+
+**Evidence.** The real Chromium/Vitest comparison covers shared dry/wet/front fixtures, roughness
+bounds, fixed timesteps, spring input, odd grid/outlet conventions and brush-edited initial state.
+Step counts, fields, same-device replay, rejection preservation and atomic readback are asserted.
+Separate compensated elevation changes preserve cumulative sub-ulp increments against a float64
+reference; this tests precision storage, not the unbuilt GPU erosion process. Results and local
+OS driver metadata are in `hachure/terrain/src/compare/`.
+
+**Readback and CI.** Serialize mutations with atomic multi-attribute snapshots, coalesce reads and cap
+view sampling at two samples per second. Contours and mesh must consume the same snapshot version.
+The dedicated browser workflow attempts Chromium WebGPU/software support; unavailable adapters are
+explicitly skipped, never counted as parity. The lead runs local GPU comparisons at wave close.
+
+**Handover.** Full erosion/transport/evaporation, budgets, GPU brushes, backend selection and classroom
+performance remain 4A/5A. Expert review of the hydraulic adaptation remains open. Minimal ownership
+exceptions are the terrain package GPU export/dependencies, generated lockfile, and browser CI workflow.
+
+**Final integrated check.** Rebase after 3A preserves the same water kernels and comparison bounds.
+Add the real seeded 128² tilted plateau and its declared spring for an 80-step water-only comparison,
+covering its full elevation range and multiple reduction workgroups. The CI workflow deletes committed
+local results immediately after checkout so failed setup cannot display stale local adapter evidence.

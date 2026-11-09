@@ -8,6 +8,18 @@
   "exports": {
     ".": "./src/index.ts",
     "./testing": "./src/testing/index.ts",
-    "./fake": "./src/testing/fake-solver.ts"
+    "./fake": "./src/testing/fake-solver.ts",
+    "./gpu": "./src/gpu/index.ts"
+  },
+  "dependencies": {
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "@types/three": "0.187.0",
+    "@vitest/browser-playwright": "5.1.0",
+    "playwright": "1.65.0"
+  },
+  "scripts": {
+    "test:gpu": "vitest run --config src/compare/vitest.browser.config.mjs"
   }
 }
