@@ -4,6 +4,12 @@ Reviewed 2026-11-09 on the local Wave 5 review stack, based on `d01f631`
 (5E integrated). Main remains at 5A. This is an implementation/evidence review;
 product acceptance and release remain open. [Review packet](../review/book-revision/acceptance/README.md).
 
+**Owner clarification after this evidence:** the existing PB3 mechanics do not close
+the intended complete-scene experience; the selected opening has changed to glacial
+U-shaped valley formation. Prior test results remain valid for their original scope,
+not evidence of glacial erosion or approval of the old lesson. See the
+[current review](../review/book-revision/current-direction-review.md).
+
 | Criterion                    | Automated / rendered evidence                                                                                                                                        | Status and remaining owner                                                                    |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | PB1 recognisable book        | `e2e/book-acceptance.spec.ts`: full viewport captures at 1366×768 and 1440×900, both real lessons; no lesson scrolling in normal closed-flap view                    | Mechanics checked; owner visual/reference review pending, 6C                                  |

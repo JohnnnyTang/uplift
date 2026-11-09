@@ -22,8 +22,10 @@ change anything:
 - **Determinism.** Fixed time step, seeded randomness (no `Math.random()` in simulation code), reproducible
   runs.
 - **No invented science.** Draft scientific text, mark it `<!-- expert-review -->`, and cite a source.
-- **Restrained art.** Ink line on paper, plus one or two colours that carry a quantity (water blue, sediment
-  ochre), each with a legend. No decorative gradients or glow.
+- **Textbook art and natural scene colours.** Keep the book simple; illustrations and 3D scenes may use
+  natural rock, soil, vegetation, ice and water colours. There is no one-or-two-colour limit. Data colours
+  need legends and non-colour cues; preserve accessible contrast. The 2D-to-3D entrance is an artistic
+  transition, not an exact geometric mapping. Scientific process evolution remains model-driven.
 - **Accessible by default.** Keyboard-operable controls, a text alternative for the key visual change,
   reduced-motion mode, colour-blind-safe palette.
 

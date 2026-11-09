@@ -1347,3 +1347,33 @@ Bounded exception to 5F path ownership: change only app `reader-layout.css` to l
 mobile scene content determine height. Keep renderer/model/physics untouched, and
 add actual-page non-overlap regression checks. Human listening/true browser zoom
 remain 6B work; visual correctness alone does not prove comprehension.
+
+## D-W5-GLACIAL — Review completed branches; simplify transition; natural colours
+
+2026-11-09, latest owner clarification. Fetched remote B/C/D/E; the combined
+s1/w5/5bcd-lead head e7e7f0a also includes F. Main remains 8069a7f. Review these
+completed foundations, not the stale claim that dependent sessions have not begun.
+This session is s1/w5/current-review in its own worktree based on that review head.
+
+The 2D drawing → artistic transition → complete 3D scene pipeline is settled.
+Exact spatial mapping is not required. Contours are incidental, not a product
+identity or mandatory first lesson. This supersedes the excessive mapping constraints
+in the earlier unmerged scene-direction draft, as well as the old contour-first choice.
+Keep the simple book, allow natural and varied scene colours; supersede the two-colour
+rule in AGENTS and the handoff. Model quantities remain honest and accessible.
+
+The preferred opening is U-shaped valley formation, superseding the rain/runoff
+candidate. Discuss its concrete scene/interaction before implementation planning.
+Reopen glacial process scope specifically for this lesson. Existing hydraulics do
+not validate glacial erosion; the transition may be artistic, but formation may
+not be a keyframed V-to-U shape passed off as a process. Missing shared capability
+is glacier flow/erosion, to be scoped and sourced after scene agreement.
+
+Save the four owner-supplied original PNGs with provenance, hashes and third-party
+rights notice under docs/references/owner-2026-11-09. No reference imagery becomes
+a production asset. Preserve prior trials and acceptance evidence unchanged.
+
+Owned scope: direction/plan/review docs, reference assets and append-only decisions.
+Minimal AGENTS wording change is required to remove the directly contradicted colour
+restriction. No production code or solver is changed in this review. The previous
+unmerged scene-direction worktree is retained but superseded by these current edits.

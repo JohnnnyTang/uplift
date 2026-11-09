@@ -1,5 +1,20 @@
 # Product realignment: accepted direction and product gate
 
+## Latest owner review · 2026-11-09
+
+Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
+(8069a7f). Their implementation is real and retained; prior wording saying these
+sessions had not started or could not start is stale. The corrected product is not
+yet accepted: see the [current branch audit](../review/book-revision/current-direction-review.md).
+
+The preferred opening is U-shaped valley formation. Contours are optional. The
+2D-to-3D entrance is an artistic effect, without exact geometric mapping; scenes
+may use natural colours. Discuss the concrete glacier scene before writing the
+replacement implementation plan. Existing contour/water selection and the automatic
+cartography fallback below describe the old wave, not the new lesson choice.
+Glacial process scope is reopened for this lesson; the old no-ice/no-new-physics
+rule cannot silently force a different subject. Do not claim a glacier model exists.
+
 Owner-directed correction, 2026-11-09. Product-direction commit 46fefe6 is merged
 into main. Read the [product story](../product-story.md) and
 [handoff principles](../handoff.md#pedagogical-design-principles).
@@ -36,7 +51,7 @@ viewports, not simulated measurements, and do not belong in lesson copy.
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | PB1 · Recognisable book                 | At 1366×768 and 1440×900 at normal zoom, a full two-page spread and navigation fit without lesson scrolling. The illustration is the primary visual element; the key action and answer reveal are reachable. No clipped content or text shrunk to force a pass.                                        |
 | PB2 · Readable adaptation               | At a 390 px phone width, pages have an intentional single-page presentation. At 200% zoom and an equivalent 320 CSS px reflow width, content stays readable and reachable, with scrolling permitted and no two-dimensional text scroll requirement.                                                    |
-| PB3 · Drawing becomes manipulable space | Recording shows the real flat diagram, same-state 3D geometry and direct interaction. Keyboard and reduced-motion alternatives reach equivalent meaningful states.                                                                                                                                     |
+| PB3 · Drawing becomes manipulable space | Recording shows a textbook drawing, artistic transformation and complete interactive 3D scene. Exact 2D/3D geometric correspondence is not required. Contours are optional. Keyboard and reduced motion reach equivalent usable states; presentation effects do not masquerade as simulated formation. |
 | PB4 · Immediate play                    | A fresh reader can operate the main scene without choosing an answer, configuring technical parameters, enabling logging or completing a prior spread. Readiness and genuine capability limitations are the only technical gates.                                                                      |
 | PB5 · One visible lesson                | Each spread has one stated claim and one principal gesture. The visible consequence and any gauge derive from that scene's actual state. Scientific checks and accessible description match the rendered result.                                                                                       |
 | PB6 · Pressure-free reflection          | Question can be skipped; answer can be revealed immediately; no score, stamp, endpoint or correct-choice requirement blocks reading. Optional challenges cannot block navigation.                                                                                                                      |

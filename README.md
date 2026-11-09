@@ -15,6 +15,12 @@ used to show slope, which is the look the engine draws.
 > and [review packet](docs/review/book-revision/acceptance/README.md). Wave 6 completes those gates;
 > local integration does not establish release readiness.
 
+The latest review branch includes Wave 5B–5F; main remains at 5A. The owner now
+prefers U-shaped valley formation as the first lesson, with a textbook drawing
+transitioning artistically into a naturally coloured 3D scene. The concrete scene
+is for discussion before implementation planning. [Saved references](docs/references/owner-2026-11-09/README.md)
+and [branch audit](docs/review/book-revision/current-direction-review.md).
+
 ## Why this exists
 
 Geography is spatial and slow. Rivers cut valleys over timescales far longer than any lesson, and a page

@@ -4,13 +4,22 @@ Status: 5A feasibility and executable adapter review complete; frozen for depend
 shared boundaries for 5B/5C/5D; it does not claim the default app is migrated.
 The authoritative product gate remains PB1–PB8 in the realignment plan.
 
+## Owner amendment after branch review
+
+The scene-specific choices below describe the original contour/water implementation.
+The next opening lesson is U-shaped valley formation, pending scene discussion.
+The entrance transition is artistic, not a rigorous 2D/3D mapping requirement.
+Natural material colours are allowed. Retain the lifecycle/binding guarantees;
+revisit lesson-specific selection/gesture types only when the new brief needs them.
+See [current direction review](current-direction-review.md).
+
 ## Composition
 
-The characteristic object is the contour drawing rising from a paper page. Keep
-all chrome subordinate to that object. Use the existing Ink palette: paper
-`#FAF8F2`, ink `#292B2C`, water `#0072B2`, sediment `#B57900`. Water and sediment
-appear only when they represent the named quantity, with a legend and non-colour
-cue. Selected contours use heavier ink plus a bound label, not another colour.
+The characteristic object is a textbook illustration becoming a complete scene.
+Keep chrome subordinate. The existing paper/ink palette remains a book default,
+not a scene colour limit. Rock, soil, ice, vegetation and water can use natural
+material colours. Quantity overlays still need legends and non-colour cues.
+Contours and contour-selection controls are optional lesson-specific capabilities.
 A neutral desk and restrained page contact shadow distinguish paper edges;
 no decorative gradients, glow, cards or dashboard framing.
 

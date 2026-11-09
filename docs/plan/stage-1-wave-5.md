@@ -1,5 +1,20 @@
 # Stage 1 · Wave 5: make Uplift a playable book
 
+## Latest owner review · 2026-11-09
+
+Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
+(8069a7f). Their implementation is real and retained; prior wording saying these
+sessions had not started or could not start is stale. The corrected product is not
+yet accepted: see the [current branch audit](../review/book-revision/current-direction-review.md).
+
+The preferred opening is U-shaped valley formation. Contours are optional. The
+2D-to-3D entrance is an artistic effect, without exact geometric mapping; scenes
+may use natural colours. Discuss the concrete glacier scene before writing the
+replacement implementation plan. Existing contour/water selection and the automatic
+cartography fallback below describe the old wave, not the new lesson choice.
+Glacial process scope is reopened for this lesson; the old no-ice/no-new-physics
+rule cannot silently force a different subject. Do not claim a glacier model exists.
+
 Planned 2026-11-09 at the owner's request, after product-direction commit
 `46fefe6` was merged into local and remote `main`.
 **Status: 5A on main; 5B–5F integrated on the local review stack. Product/human release gates remain pending.**
