@@ -1,10 +1,11 @@
-# geomorph.v-valley — "How a river carves a valley"
+<!-- expert-review -->
 
-Demo 1 spread. Planned contents (see `docs/plan/stage-1.md`):
+# How a river carves a valley — draft content
 
-- `spread.ts`: the declarative `Spread` definition (scene, controls, probes, page, challenge).
-- `page.hs.md`, `page.uni.md`: page text per level, with `{{probe.id}}` bindings and no typed numbers.
-- `teacher-notes.md`: the one-page teacher note.
-- `sources.md`: a cited reference for each process rule and parameter range.
+The page and flap markdown are reader prose with live bindings. TypeScript modules expose the prediction draft, ignores, keywords, comparative equation and structured source list. content.ts assembles pageContent and teacherNotesText without showing review comments in reader text.
 
-All scientific text here is a draft until a domain expert signs it off.
+The integrating spread must declare the scalar probes, value controls and duration IDs listed in contentBindings. The content tests check every reader field and markdown label against those declarations; integration must also validate the assembled spread against its real probes and controls.
+
+The prediction deliberately has a null answer and no answer evidence. Pending validation is not a correctness index. Replace it only from the reproducible prediction result, and revise both flaps to match. The draft must remain unscored if the result is inconclusive. Landscape-time approval and scientific sign-off are independent gates.
+
+Citation keys in prose resolve through sources.ts and sources.md. Numeric bibliography identifiers and link destinations are metadata, never live simulation values.
