@@ -6,6 +6,20 @@
   "description": "Hachure render layer: ink line and hatching look, contour lift, colour channels for the quantity taught.",
   "license": "MIT",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./view": "./src/view/index.ts"
+  },
+  "scripts": {
+    "dev": "vite dev --config dev/vite.config.ts",
+    "typecheck:dev": "tsc -p dev/tsconfig.json",
+    "capture": "node dev/capture.mjs && pnpm -w exec prettier --write hachure/ink/dev/evidence/results.json"
+  },
+  "dependencies": {
+    "@hachure/terrain": "workspace:*",
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "@types/three": "0.187.0",
+    "playwright": "1.65.0"
   }
 }

@@ -400,3 +400,71 @@ default, and probably restore `"halt"`), 3B finds the magnitudes usable after re
 **Fact for 3C/4A.** A GPU solver storing absolute bedrock elevation in plain float32 will lose per-step
 erosion to rounding (see above). It needs a split representation (for example the initial elevation plus a
 float32 change layer, or a local datum). The CPU–GPU comparison should expect differences from this.
+
+### D-2C-1 · 2026-11-08 · S1/W2/2C · Ink renderer v0: shared triangulation, one projection, one lift uniform
+
+**Decision.**
+
+- **Contours are marching triangles over the mesh's own triangulation** (`hachure/ink/src/topology.ts`).
+  Each grid square splits along the diagonal whose end samples differ least in height (a tie takes the
+  north-west to south-east diagonal). The mesh index buffer, contour extraction, hachure placement and
+  surface sampling all call the same function on the same float32 heights, so saddles are resolved
+  identically everywhere. Tests check that every contour segment lies on the uploaded mesh at its level
+  across a saddle-filled field, and that a contour from the other diagonal would fail that check.
+  Segments join into polylines through the mesh edge they cross (topological, not by coordinate matching).
+- **Two entry points.** `@hachure/ink` (contours, `toSvg`, projection, hachures, palette, lift sequence)
+  imports no three.js, so the page can paint the flat SVG first (T8). `@hachure/ink/view` holds
+  `createInkView` (three r187 `WebGPURenderer`, TSL, automatic WebGL2 fallback, or forced by option).
+- **One projection, fixed during the lift.** `createProjection(frame, pose, viewport, reliefScale)` drives
+  both the SVG and the 3D camera (tested against three's `OrthographicCamera`). The frame (datum and relief
+  headroom) is taken from the first state and fitted to the fully lifted terrain, so the camera never
+  moves while exaggeration changes and the SVG lands on the canvas's pixels.
+- **One `exaggeration` uniform.** Every layer (fill, contours, hachures, edge) lifts its points through the
+  same shader function and uniform, so layers cannot drift apart. `reliefScale` is a display multiplier
+  for full lift; `InkView.verticalExaggeration` exposes the scale shown so the page can bind it.
+- **Strokes** are instanced screen-space quads with mitred joints and analytic anti-aliasing whose coverage
+  is converted so a stroke over paper matches the browser's sRGB-blended SVG stroke. Vertices closer than
+  0.05 cell are dropped from both the SVG and the 3D strokes (`drawnPoints`). Four-sample MSAA alone
+  rendered 0.9 px contours as visible dashes.
+- **Quantity channels** read per-sample vertex attributes (water depth, and suspended sediment by default)
+  with linear opacity ramps over paper. Sediment also carries interrupted screen-space stripes. Ramp
+  limits are display settings, exposed through `legendTokens()` so a page binds them.
+
+**Evidence** (headless Chrome 156, integrated Intel GPU reporting `xe-2lpg`, fake solver at 256²; a renderer fixture, not a
+benchmark): both backends render at exaggeration 0, 0.5 and 1 with no console errors; 100% of ink pixels
+in the flat SVG lie within 1 px of canvas ink at exaggeration 0 and vice versa, mean absolute difference
+0.8 of 255 per channel, identical paper colour; `setState` at 256² takes about 25–50 ms of CPU (contours,
+hachures and buffer packing). See `hachure/ink/dev/evidence/results.json`.
+
+**Why.** D-1C asked 2C to contour the exact mesh or share a tested saddle rule, and to share the flat
+projection for the crossfade. Process-faithful drawing: the flat drawing, the 3D surface and the lift are
+one surface seen three ways.
+
+**Revisit if.** Real-solver profiling shows the CPU update cost at the needed cadence is too high (then
+move extraction into the solver Worker, since it is pure, or add shader isolines as D-1C's comparison
+mode), or projector review needs heavier strokes.
+
+### D-2C-2 · 2026-11-08 · S1/W2/2C · Ink renderer deviations and open items
+
+**Deviations from the 2C brief.**
+
+- **`setState(gpuBuffers)` is not implemented; v0 takes a `StateSnapshot` (or a bare heightfield).**
+  Geometry contours (D-1C) need heights on the CPU. Driving the mesh from GPU buffers while contours come
+  from a slower readback would let the 3D contours disagree with the surface between readbacks, which
+  breaks "the 2D diagram and 3D model can never disagree". Proposal for 3C/4A: feed the view snapshots at
+  the probe cadence (2 Hz, D-S1-1B), or add a GPU-side isoline path and record which one in 4A.
+- **Channels use vertex attributes, not state textures.** The values are still per-sample state; attributes
+  interpolate on the same triangles as the contours and behave identically on WebGPU and WebGL2.
+
+**Open items for the lead.**
+
+- `@hachure/terrain/testing` re-exports the Vitest contract suite next to the fake solver, so importing
+  the fake solver in a browser pulls in Vitest. The ink dev page aliases `vitest` to a no-op shim inside
+  `hachure/ink/dev/`. 2E will hit the same problem. Suggest a separate `@hachure/terrain/fake` entry point
+  (outside 2C's owned paths).
+- The fake solver produces no sediment. The dev page offers a labelled sediment test pattern derived from
+  the fixture's water, so the ochre channel can be inspected. It is a renderer fixture, never science.
+- `setState` runs on the main thread at about 25–50 ms for 256². 3A should update the view at the probe
+  cadence, not every frame, or run extraction in the Worker.
+- The camera pose and `reliefScale` are spread decisions (3A, 3D). If `reliefScale` is not 1, the page
+  should state the vertical exaggeration by binding `verticalExaggeration`.

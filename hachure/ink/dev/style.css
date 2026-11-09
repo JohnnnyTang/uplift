@@ -1,0 +1,139 @@
+:root {
+  --paper: #faf8f2;
+  --ink: #292b2c;
+  --rule: #d9d4c7;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 16px;
+  background: var(--paper);
+  color: var(--ink);
+  font:
+    15px/1.45 "Segoe UI",
+    system-ui,
+    sans-serif;
+}
+
+h1,
+h2 {
+  font-family: Georgia, serif;
+  font-weight: normal;
+}
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+}
+
+h1 span {
+  font-size: 15px;
+  opacity: 0.7;
+}
+
+h2 {
+  font-size: 17px;
+  margin: 16px 0 6px;
+}
+
+.fixture {
+  margin: 0 0 12px;
+  max-width: 70ch;
+}
+
+#stage {
+  position: relative;
+  margin: 0;
+  width: min(960px, 100%);
+  aspect-ratio: 3 / 2;
+  border: 1px solid var(--rule);
+}
+
+#flat,
+#terrain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#flat svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#terrain {
+  opacity: 0;
+}
+
+.controls .row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin: 8px 0;
+}
+
+fieldset {
+  border: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  max-width: 960px;
+}
+
+button {
+  font: inherit;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.legend ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 2px 16px;
+  margin: 0;
+}
+
+dt {
+  opacity: 0.75;
+}
+
+dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
