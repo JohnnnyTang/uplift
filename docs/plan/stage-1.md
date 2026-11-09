@@ -607,6 +607,13 @@ defaults (T7).
 
 ### 4C · Challenge, stamps and the guided loop — RT · M
 
+**Owner decision, 2026-11-09:** merge the challenge infrastructure and retained
+failed prospective experiment with the real challenge pending and stamps disabled.
+This permits implementation integration in the prescribed order; it does not
+close the challenge acceptance criterion or Wave 4. A successful prospectively
+validated sequence, or a separately approved replacement challenge, remains
+required. Preserve the scientific registration anchor in merge history.
+
 _Threads:_ rigour, restraint. _Depends on:_ 3A, 3B.
 
 **Owned paths.** `hachure/runtime/src/challenge/**`.

@@ -818,6 +818,48 @@ Open for Stage 1 review: expert interpretation of the taught mechanism and human
 classroom usability. Wave 4 must validate a fresh model-time slope-break sequence
 before enabling its challenge; these rain results do not support a waterfall.
 
+## 2026-11-09 — S1 W4 4C: challenge infrastructure and failed prospective proxy
+
+Ship a fail-closed ChallengeCheck evaluator, an explicit model-step slope-break
+tracker, a keyboard-accessible stamp widget and best-effort local progress. Any
+pending check, even nested in an alternative, blocks stamp awards and suppresses
+saved stamps. Geological-time persistence requires approved calibration metadata;
+invalid/missing probes, gaps, new runs and inconsistent clocks cannot silently
+satisfy it. Reading-level updates at the same step add no persistence time.
+Local progress is versioned and definition-specific; blocked storage or quota
+failure preserves the current in-memory achievement without breaking the book.
+
+The new protocol s1-w4-model-step-slope-break-v1 was committed before executing
+all six real CPU arms (three seeds, uniform/sham and hard-band). A pre-execution
+module-resolution repair changed tooling only and was also committed before any
+solver run. All arms reached the fixed 22000-step endpoint with valid stocks,
+conservation and stability checks. No arm produced a qualifying candidate. Thus
+its numerical morphology gate FAILED; no renderer-legibility or scientific
+success is claimed, and no real-book stamp is enabled. The existing failed
+experiments, geological-time approval and pending book definition stay unchanged.
+The new model-step criterion does not rewrite historical persistence thresholds.
+
+The harden tool uses binary disk support, including radius-boundary cells; its
+raised-cosine weight applies to height edits, not hardness. A mechanical tool test
+confirms the registered rows73/74 radius-one-cell strokes cover exactly rows72–75
+and alter no ground height. This is software geometry verification, not evidence
+of slope-break formation. Retained source/config/state hashes, tool logs and all
+scheduled profiles/budgets live in docs/science/validation/challenge/.
+
+Synthetic stamp/detector fixtures are labelled software-only and never appear in
+the reader's spread. The book's flap now names the learner's committed choice,
+and minimal approved book wiring updates/reset the reusable challenge widget.
+Future release needs a new successful prospective sequence plus renderer legibility
+and expert/human review. Sustained checks also need an explicit fixed-step host
+observation schedule; ordinary view readback cannot prove a missed interval.
+
+Provenance handover exception, agreed with the lead: keep preregistration commit
+931285ecafa6d0592f2106e5c1158d6a919ccb9d reachable in this branch's ancestry.
+Integrate current main by merging it into 4C, preserving that history in the draft
+PR, rather than rebasing/cherry-picking away the immutable pre-execution anchor.
+This is a documented exception to the routine session rebase rule. The PR remains
+a draft while the real challenge's scientific exit gate is failed/pending.
+
 ## D-W4-4E · Enforce production browser and size regressions
 
 2026-11-09 · Stage 1 / Wave 4 / Session 4E.
@@ -871,6 +913,16 @@ The waterfall challenge remains pending until a prospectively registered
 model-time sequence is validated. Historic failed morphology, hidden geological
 years and outstanding expert, human accessibility and target-hardware gates stay
 unchanged. Starting Wave 4 does not close these Stage 1 requirements.
+
+## 2026-11-09 — Owner accepts 4C infrastructure merge, not challenge success
+
+After reviewing the six-arm failed morphology result and alternatives, the owner
+authorized merging infrastructure and failed evidence with the real challenge
+pending and stamps disabled. Scientific challenge acceptance remains open; no
+threshold, historical outcome, release approval or geological-time claim changes.
+The stage plan records this explicit separation of implementation integration
+from acceptance. The owner requests a human listening preview before merging 4D,
+so 4D and 4F must wait in the prescribed order.
 
 ### D-S1-W4-4A · 2026-11-09 · Complete guarded GPU solver and equal-domain fallback tiers
 
