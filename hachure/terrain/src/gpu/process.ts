@@ -1,5 +1,5 @@
 /** Full process stages, in the same pass order as cpu/kernel.ts. <!-- expert-review --> */
-import type { ComputeNode, Node, StorageBufferAttribute, WebGPURenderer } from "three/webgpu";
+import type { ComputeNode, Node, StorageBufferAttribute, Renderer } from "three/webgpu";
 import { Fn, storage, instanceIndex, uint, float, vec4, max, wgslFn } from "three/tsl";
 import type { TerrainConfig, TerrainState } from "../contract/index";
 import {
@@ -55,7 +55,7 @@ export class FullProcess {
   private readonly reductions: ComputeNode[] = [];
   private readonly reduced: StorageBufferAttribute[] = [];
   constructor(
-    private readonly renderer: WebGPURenderer,
+    private readonly renderer: Renderer,
     readonly config: TerrainConfig,
     private readonly state: TerrainState,
     private readonly allocate: (data: Float32Array | number) => StorageBufferAttribute,

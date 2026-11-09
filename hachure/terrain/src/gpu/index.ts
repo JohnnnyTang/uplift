@@ -1,4 +1,11 @@
-import { WebGPURenderer, StorageBufferAttribute, type ComputeNode, type Node } from "three/webgpu";
+import {
+  Renderer,
+  WebGPUBackend,
+  StandardNodeLibrary,
+  StorageBufferAttribute,
+  type ComputeNode,
+  type Node,
+} from "three/webgpu";
 import { Fn, storage, instanceIndex, uint, float, vec4, max, wgslFn } from "three/tsl";
 import { type TerrainConfig, type TerrainState, resolveTerrainConfig } from "../contract/index";
 import { FullProcess } from "./process";
@@ -79,7 +86,7 @@ export class GpuWaterSolver {
   private readSequence = -1;
 
   constructor(
-    private readonly renderer: WebGPURenderer,
+    private readonly renderer: Renderer,
     readonly config: TerrainConfig,
     state: TerrainState,
     options: GpuWaterOptions = {},
@@ -470,7 +477,11 @@ export class GpuWaterSolver {
     this.full?.dispose();
     this.attributes.forEach((attribute) => attribute.dispose());
     this.device.removeEventListener("uncapturederror", this.onGpuError);
-    this.renderer.dispose();
+    try {
+      await this.renderer.dispose();
+    } finally {
+      this.device.destroy();
+    }
   }
 }
 
@@ -480,14 +491,28 @@ export async function createGpuWaterSolver(
   options: GpuWaterOptions = {},
 ): Promise<GpuWaterSolver> {
   validateWaterStage(config, state, options.fullProcesses);
-  const renderer = new WebGPURenderer();
+  // The convenience WebGPURenderer silently installs a WebGL fallback. Compute
+  // must reject before that path (including devices with no graphics context).
+  if (typeof navigator === "undefined" || !navigator.gpu)
+    throw new Error("WebGPU unavailable; select a CPU or flat backend");
+  const adapter = await navigator.gpu.requestAdapter({ powerPreference: "high-performance" });
+  if (!adapter) throw new Error("WebGPU adapter unavailable; select a CPU or flat backend");
+  const device = await adapter.requestDevice();
+  const renderer = new Renderer(new WebGPUBackend({ device }), { getFallback: null });
+  renderer.library = new StandardNodeLibrary();
+  let initialized = false;
   try {
     await renderer.init();
-    if (!(renderer.backend as unknown as { isWebGPUBackend?: boolean }).isWebGPUBackend)
-      throw new Error("GPU water requires WebGPU; use CPU fallback instead of WebGL2 compute");
+    initialized = true;
     return new GpuWaterSolver(renderer, resolveTerrainConfig(config), state, options);
   } catch (error) {
-    renderer.dispose();
+    // Renderer.dispose() re-awaits init; calling it after failed init would reject
+    // again. Destroying our explicitly owned device releases partial GPU resources.
+    try {
+      if (initialized) await renderer.dispose();
+    } finally {
+      device.destroy();
+    }
     throw error;
   }
 }
