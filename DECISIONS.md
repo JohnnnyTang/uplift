@@ -1080,3 +1080,35 @@ brushing and level changes. Keyboard, reduced motion and both axe scans pass.
 Human listening remains NOT PERFORMED. The owner requested a preview before merge;
 PR #23 remains draft and 4F waits in order. The checklist and local preview are in
 docs/review/wave-4-human-review.md. This does not close challenge or release gates.
+
+## D-W4-4F · Explicitly opt-in local classroom observations
+
+2026-11-09 · Stage 1 / Wave 4 / Session 4F, authorized by the owner.
+
+Implement schema v1 specifically for Demo 1 and its validated recorded gross-
+erosion question. Use strict typed actions and numeric model context, sequence-
+only order and a bounded memory tail. Start off on every mount. No identity/free-
+text fields, device identifiers, clocks, storage or network transmission. Export
+is a reader-triggered local JSON download. Stop retains data; clear erases it and
+optional answers while preserving the chosen on/off setting. Disclose omissions
+and contain context/observer/export failures without affecting the lesson.
+
+All retained event fields are cloned. Capture both the live host's full numeric
+config/seed/model step and nonidentifying solver-backend enum and the recorded comparison's own version/seed/sample step/
+inputs; label the action's source explicitly. Keep pending challenge events pending
+and reject invented success. Optional pre/post answers reuse the supported question
+and its source; neither completion nor answer changes are claimed as learning gains.
+
+The runtime owns the collector/panel and event validation. Minimal shared glue:
+a public export, typed exception-contained paired-replay observation callback,
+book action/context hooks, and production browser tests/fixture under `e2e/`.
+The work branch is based on 4E's checked test harness. No solver, authored spread,
+package dependency or lockfile changes are needed for 4F.
+
+Integration: the event schema already supports 4B's capacityCoefficient,
+erosionRatePerS and depositionRatePerS controls plus a distinct restore-defaults
+action. The lead should hook successful university configurations and hidden-
+default restoration using the guidance in instrumentation/README.md. Keep 4A's
+selected backend and 4D's motion/focus changes when merging the book glue. Future
+validated challenges or other comparisons need a reviewed event-schema extension;
+v1 cannot emit a successful challenge or impersonate a universal assessment.
