@@ -40,7 +40,14 @@ checks below; that is not a guarantee that no defect remains.
 - F: regression coverage, viewport evidence, explicit pending human/science/hardware
   gates. Reassess product criteria for the chosen lesson; preserve historical results.
 
-## First-lesson discussion, not an implementation plan
+## Follow-up: combined interaction selected
+
+After this review the owner chose both intervention and time-based observation and
+requested planning. [Wave 5 sessions 5G–5N](../../plan/stage-1-wave-5-glacial.md) are
+now the active plan. The discussion-only wording below records this review's original
+state, not a current hold. Its findings and baseline test outcomes are unchanged.
+
+## First-lesson discussion at review time
 
 Preferred subject: formation of a U-shaped valley. A textbook line illustration
 transitions into a compact, naturally coloured mountain valley with a glacier.

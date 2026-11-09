@@ -7,13 +7,14 @@ Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
 sessions had not started or could not start is stale. The corrected product is not
 yet accepted: see the [current branch audit](../review/book-revision/current-direction-review.md).
 
-The preferred opening is U-shaped valley formation. Contours are optional. The
-2D-to-3D entrance is an artistic effect, without exact geometric mapping; scenes
-may use natural colours. Discuss the concrete glacier scene before writing the
-replacement implementation plan. Existing contour/water selection and the automatic
-cartography fallback below describe the old wave, not the new lesson choice.
-Glacial process scope is reopened for this lesson; the old no-ice/no-new-physics
-rule cannot silently force a different subject. Do not claim a glacier model exists.
+The opening is U-shaped valley formation. The owner has now selected both
+condition changes (UI and equivalent 3D interaction) and watching/inspecting different
+formations over time. [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md) implement
+that combined loop. They are planned, not started. The earlier discussion-only hold
+is superseded for planning; this update does not launch implementation. Contours are
+optional, the entrance is artistic, and scenes may use natural colours. The old
+contour/source selection and no-new-physics rule do not govern the glacial opening.
+A–F remain foundations; their evidence is not glacial lesson acceptance.
 
 Owner-directed correction, 2026-11-09. Product-direction commit 46fefe6 is merged
 into main. Read the [product story](../product-story.md) and
@@ -58,6 +59,17 @@ viewports, not simulated measurements, and do not belong in lesson copy.
 | PB7 · A book that continues             | Two working interactive spreads, a genuine page turn, previous/next and keyboard navigation, guarded gestures, preserved return state, managed focus and reduced-motion transition.                                                                                                                    |
 | PB8 · Human review                      | Owner reviews the working sequence against the supplied reference; first-time reader observations report discoverability, understanding and willingness to continue. Human listening, science sign-off and hardware results are explicitly passed, failed or pending, never inferred from screenshots. |
 
+### PB9 · Intervene and observe formation over time
+
+The default U-shaped-valley lesson lets the reader change one scientifically supported
+condition through UI and equivalent 3D input, watch real evolution, pause/step, inspect
+past states without losing the live head and compare condition runs at matched times.
+Input changes never silently reset or rewrite history. Section, ice visibility, camera
+and level are view-only. All displayed values identify the actual run/time/configuration.
+Keyboard and reduced-motion paths preserve meaningful participation. The glacial
+[GV1–GV8 matrix](stage-1-wave-5-glacial.md#traceability-and-drift-gate) assigns evidence
+and owners. A passive animation or input-only demonstration fails this criterion.
+
 For PB1, an opened optional deep explanation may use a further page or accessible
 disclosure view. It must not silently stretch the normal spread into a long worksheet.
 For PB5, a cosmetic animation on top of an unreadable numerical change is a failure.
@@ -74,10 +86,10 @@ A scene that plays beautifully but teaches an unsupported claim also fails.
 
 ## Open choices and honest completion
 
-5A fixes book proportions, the primary contour gesture and the second lesson after
-a bounded real-renderer trial. 5D supplies sourced draft copy and claim evidence.
-The owner has already authorized the direction; these are implementation decisions,
-not reasons to ask for it again.
+The owner has settled the first subject and combined interaction/observation loop.
+5G chooses the supported physical control and model inside that contract; 5H–5N
+implement and verify it. Do not reask whether interaction or watching should win.
+The prior contour/source sequence is retained evidence, not the opening selection.
 
-5F and Wave 6 explicitly track product review, human listening, target hardware and
+5N and Wave 6 explicitly track product review, human listening, target hardware and
 expert sign-off. Implementation integration alone cannot close those gates.

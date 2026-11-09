@@ -7,13 +7,14 @@ Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
 sessions had not started or could not start is stale. The corrected product is not
 yet accepted: see the [current branch audit](../review/book-revision/current-direction-review.md).
 
-The preferred opening is U-shaped valley formation. Contours are optional. The
-2D-to-3D entrance is an artistic effect, without exact geometric mapping; scenes
-may use natural colours. Discuss the concrete glacier scene before writing the
-replacement implementation plan. Existing contour/water selection and the automatic
-cartography fallback below describe the old wave, not the new lesson choice.
-Glacial process scope is reopened for this lesson; the old no-ice/no-new-physics
-rule cannot silently force a different subject. Do not claim a glacier model exists.
+The opening is U-shaped valley formation. The owner has now selected both
+condition changes (UI and equivalent 3D interaction) and watching/inspecting different
+formations over time. [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md) implement
+that combined loop. They are planned, not started. The earlier discussion-only hold
+is superseded for planning; this update does not launch implementation. Contours are
+optional, the entrance is artistic, and scenes may use natural colours. The old
+contour/source selection and no-new-physics rule do not govern the glacial opening.
+A–F remain foundations; their evidence is not glacial lesson acceptance.
 
 How Uplift and Hachure get built: the work model, the rules that keep parallel agents from colliding, and
 the stage map for the whole project. Only the **current stage** is planned in detail
@@ -25,7 +26,7 @@ taught us.
 The owner corrected the direction on 2026-11-09: Uplift is a playable 3D book with
 bounded pages, immediate interaction, optional questions/reveals and page turning.
 [Wave 5](stage-1-wave-5.md) revises the built app and delivers a new two-spread example;
-[PB1–PB8](product-realignment.md#product-acceptance-gate) defines product acceptance.
+[PB1–PB9](product-realignment.md#product-acceptance-gate) defines product acceptance.
 Hardening moves to Wave 6. Existing engine work and evidence remain foundations;
 implementation integration does not establish product acceptance. 5B–5F are now locally integrated on the review stack; main remains at 5A. See the [acceptance ledger](stage-1-acceptance.md) and [drift audit](../review/book-revision/acceptance/README.md#drift-audit-and-handover).
 Read the updated [product story](../product-story.md) before starting a new session.
@@ -41,7 +42,7 @@ Stage    a group-reviewed milestone with an exit gate                   (sequent
 | Unit        | Runs                             | Size                                           | Closed by                                                                                        |
 | ----------- | -------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | **Stage**   | One after another                | Weeks; one roadmap phase                       | **Gate:** the group reviews the exit criteria, a retro is written, and the next stage is planned |
-| **Wave**    | One after another inside a stage | 3–6 sessions                                   | **Wave close:** all PRs merged in order, main green, plan revised                                |
+| **Wave**    | One after another inside a stage | Normally 3–6 sessions; W5 extends through 5N   | **Wave close:** all PRs merged in order, main green, plan revised                                |
 | **Session** | In parallel inside a wave        | S ≤ ½ day, M ≈ 1 day, L ≈ 2 days of agent work | **PR merged:** exit criteria met, handover note written                                          |
 
 ### Why this shape
@@ -56,7 +57,9 @@ Stage    a group-reviewed milestone with an exit gate                   (sequent
 1. **Contracts before consumers.** Normally, if sessions in a wave need a shared interface, it is merged
    in an _earlier_ wave. The owner-requested Wave 5 revision uses explicitly gated groups: 5A contracts
    merge first, then 5B/5C/5D start from main, then 5E integration, then 5F acceptance. This exception
-   is scoped in its wave plan. In every case a session consumes only dependencies already on `main`,
+   is scoped in its wave plan. The owner-requested extension adds G → H → I/J/K/L → M → N
+   inside this same wave, with contracts/CPU merged before the independent group.
+   In every case a session consumes only dependencies already on `main`,
    never an unmerged peer branch. Ownership overlap is allowed only across these sequential groups.
 2. **Owned paths.** Every session brief lists the paths it may change. Two sessions in the same wave never own
    the same path. Touching an unowned path is allowed only for minimal glue (a re-export line, a registry
@@ -182,11 +185,12 @@ CI, agent rules, decision log, product story, this plan.
 
 **Goal.** Use the existing Hachure foundation to prove two small interactive discoveries in a
 recognisable book, with direct manipulation and page turning.
-**Exit gate.** Product criteria PB1–PB8, applicable scientific and technical checks, expert review of
+**Exit gate.** Product criteria PB1–PB9, applicable scientific and technical checks, expert review of
 the shipped lessons, and an honest record of pending human/hardware checks.
 **Detailed plan:** [stage-1.md](stage-1.md). Waves 1–4 record the engine and research-example work.
 The active [Wave 5 revision](stage-1-wave-5.md) replaces the coarse P1/P2 outline.
-Wave 6 hardens the resulting book; it does not harden the old worksheet as the product.
+Wave 5 now includes [G–N](stage-1-wave-5-glacial.md) for the glacial opening.
+Wave 6 follows 5N and hardens that book, preserving the existing research surface.
 
 ### Stage 2 · Grow the book and extract proven reuse (provisional)
 
@@ -234,13 +238,13 @@ records limitations, and selects improvements rather than merely counting featur
 
 ## Status
 
-| Stage                     | State                                                       | Plan                     | Retro |
-| ------------------------- | ----------------------------------------------------------- | ------------------------ | ----- |
-| 0 · Bootstrap             | Done                                                        | —                        | —     |
-| 1 · Demo 1                | **W5 local review integrated; human/release gates pending** | [stage-1.md](stage-1.md) | —     |
-| 2 · Book growth and reuse | Outline only                                                | —                        | —     |
-| 3 · Meaningful comparison | Outline only                                                | —                        | —     |
-| 4 · Pilot                 | Outline only                                                | —                        | —     |
+| Stage                     | State                                                   | Plan                     | Retro |
+| ------------------------- | ------------------------------------------------------- | ------------------------ | ----- |
+| 0 · Bootstrap             | Done                                                    | —                        | —     |
+| 1 · Demo 1                | **W5 A–F reviewed; G–N planned; release gates pending** | [stage-1.md](stage-1.md) | —     |
+| 2 · Book growth and reuse | Outline only                                            | —                        | —     |
+| 3 · Meaningful comparison | Outline only                                            | —                        | —     |
+| 4 · Pilot                 | Outline only                                            | —                        | —     |
 
 ### Next-stage selection after 5F
 

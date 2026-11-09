@@ -10,6 +10,15 @@ U-shaped valley formation. Prior test results remain valid for their original sc
 not evidence of glacial erosion or approval of the old lesson. See the
 [current review](../review/book-revision/current-direction-review.md).
 
+## Planned extension acceptance — not yet run
+
+5G–5N must supply PB9 and GV1–GV8 evidence: physical-condition changes through UI/3D,
+formation over time, pause/step/history, matched-time comparison, glacial process/parity,
+natural scene, provenance and accessible default-book integration. Every extension
+criterion is **pending**. 5N owns the integrated packet; 5G/5H/5I own mechanism and
+backend evidence. The table below remains the historical A–F baseline, not a glacial pass.
+See [session ownership and criteria](stage-1-wave-5-glacial.md#traceability-and-drift-gate).
+
 | Criterion                    | Automated / rendered evidence                                                                                                                                        | Status and remaining owner                                                                    |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | PB1 recognisable book        | `e2e/book-acceptance.spec.ts`: full viewport captures at 1366×768 and 1440×900, both real lessons; no lesson scrolling in normal closed-flap view                    | Mechanics checked; owner visual/reference review pending, 6C                                  |

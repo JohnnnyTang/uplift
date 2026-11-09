@@ -1377,3 +1377,41 @@ Owned scope: direction/plan/review docs, reference assets and append-only decisi
 Minimal AGENTS wording change is required to remove the directly contradicted colour
 restriction. No production code or solver is changed in this review. The previous
 unmerged scene-direction worktree is retained but superseded by these current edits.
+
+## D-W5-INTERACT-TIME — Condition changes and temporal observation belong together
+
+2026-11-09. The owner explicitly chooses both: change a physical condition through
+UI/direct 3D interaction and watch/inspect different valley formations over time.
+This supersedes the earlier discussion-only hold and either/or question. U-shaped
+valley formation, artistic drawing-to-scene entrance, optional contours and natural
+scene colours remain settled. Planning is authorized; this session launches no build.
+
+Add 5G–5N inside current Wave 5: G scientific feasibility/contracts and condition choice;
+H CPU glacial process; I GPU parity; J intervention/timeline/comparison runtime;
+K coloured scene and direct gesture; L focused content; M actual-book integration;
+N prospective evidence and acceptance. Preserve A–F. Execution G → H → I/J/K/L →
+M → N; merge G,H,I,J,K,L,M,N. Wave 6 follows N. Integrate reviewed foundations and
+this direction into green main before dependent launches; no silent peer-WIP reliance.
+
+The interaction contract is change → evolve → pause/inspect/replay → compare.
+UI and 3D inputs share the accepted command path. Live condition changes apply at
+fixed-step boundaries without resetting terrain. Past inspection preserves the live
+head and cannot silently branch; comparison starts a named second run from the same
+initial state except the declared intervention, with matched-time/shared-scale views.
+Playback speed is not physics. Levels, camera, section and ice visibility are view-only.
+Bound history and comparison resources; keep research instrumentation unchanged.
+
+5G owns the bounded scientific choice of condition/law and must demonstrate a viable
+process route. Do not default to water physics, target-shape tweening or a numerical
+control without a physical meaning. Sources and budgets/ranges remain required;
+new glacial CPU/GPU behavior needs explicit comparison. Failed feasibility stays failed.
+A source's U-valley result does not validate ours or calibrate geological years.
+
+PB9 plus GV1–GV8 record durable acceptance and session ownership. Every session names
+its reader action, visible outcome and evidence. Product-contract changes require an
+explicit owner decision; ordinary technical choices within it do not require asking
+again. Preserve original uploaded references and archived scientific results.
+
+Planning session continues on s1/w5/current-review. Owned scope: plan/product/handoff/
+review docs, README, append-only decisions; minimal AGENTS entry prevents stale briefs
+from driving future work. No production code, evidence outcomes or lockfile changed.

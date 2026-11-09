@@ -20,10 +20,12 @@ water need not share paper colour. The old one-or-two-quantity-colours restricti
 is superseded. Data colours still need a legend and non-colour cues; natural material
 colour need not pretend to encode a measured quantity. Preserve accessible contrast.
 
-The owner's preferred first lesson is **formation of U-shaped valleys**. Rain/runoff
-is no longer the proposed opening. Discuss the glacier scene and interaction before
-writing its implementation plan or starting a demo. The prior contour/source lessons
-are useful implementation examples, not the chosen opening sequence.
+The first lesson is **formation of U-shaped valleys**. The owner has selected both
+condition changes and observation over time: **change → evolve → inspect/replay →
+compare**. UI and equivalent 3D gestures change the same physical condition; camera,
+section and ice visibility inspect it without changing the model. The implementation
+plan is [Wave 5 sessions 5G–5N](plan/stage-1-wave-5-glacial.md), not yet started.
+Rain/runoff and contours remain useful examples, not the chosen opening.
 
 [Saved owner references](references/owner-2026-11-09/README.md) establish the intended
 experience. The exact transformation is not an unresolved science requirement.
@@ -44,7 +46,7 @@ This clarification is reflected in the [handoff](handoff.md#pedagogical-design-p
 and supersedes the earlier mandatory prediction gate, required challenge/stamp loop,
 and deferral of page turning. The complete [Wave 5 revision](plan/stage-1-wave-5.md)
 revises existing implementations and delivers the new example before Wave 6 hardening.
-[PB1–PB8](plan/product-realignment.md#product-acceptance-gate) remains the product contract.
+[PB1–PB9](plan/product-realignment.md#product-acceptance-gate) remains the product contract.
 Existing scientific evidence keeps its actual status.
 
 ## What the reference teaches us
@@ -128,7 +130,7 @@ useful reader context. A list of unfinished research tasks is not lesson content
 pending waterfall challenge stays out of the ordinary book until it has a supported
 outcome; its failed experiments remain available to researchers.
 
-## Where the current implementation drifted
+## Historical drift before A–F (foundations since revised)
 
 This assessment is grounded in source and the committed rain-comparison screenshot,
 not a claim to have conducted a new user study.
@@ -147,8 +149,8 @@ assets. They must now serve the reader's next gesture and visible discovery.
 
 ## The first lesson after this correction
 
-U-shaped valley formation is the preferred subject. The illustrative scene and
-interaction are still for discussion, not an approved implementation brief.
+U-shaped valley formation and the combined intervention/time-inspection loop are
+settled. The owner requested the current-wave implementation plan; see 5G–5N.
 
 <!-- expert-review -->
 
@@ -157,12 +159,14 @@ See [NPS: U-shaped valleys](https://www.nps.gov/articles/ushapedvalleysfjordshan
 and [Yosemite geology](https://www.nps.gov/yose/learn/nature/geology.htm).
 These sources support the teaching topic; they do not validate a numerical model.
 
-A discussion sketch: a textbook drawing becomes a naturally coloured valley with
+The scene: a textbook drawing becomes a naturally coloured valley with
 ice moving through it. The reader can inspect how the valley profile changes and
 reveal the land beneath the ice. An ice-visibility control is presentation only;
 it must not imply instantaneous melting or reset the evolving terrain. Keep the
 lesson on glacial valley reshaping rather than expanding to a whole glacial system.
-The physical intervention/control and model law require a later agreed brief.
+5G selects and freezes the supported condition, range and model law before consumers
+start. One condition with two input methods, playback and inspection still serve
+one idea; the one-idea rule must not delete either interaction or observation.
 
 The current engine implements surface-water/hydraulic erosion, not glacier flow
 and glacial erosion. Existing book/runtime work remains useful. A shared glacial

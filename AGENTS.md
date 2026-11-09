@@ -9,6 +9,15 @@ change anything:
 3. `docs/plan/README.md`: how work is split into stages, waves and sessions.
 4. The current stage plan (`docs/plan/stage-1.md`), and **your session's brief** in it.
 
+## Current Wave 5 direction
+
+For the opening lesson, read docs/plan/stage-1-wave-5-glacial.md and your 5G–5N
+brief. U-shaped valley formation must combine physical-condition changes (UI and
+an equivalent 3D gesture) with watching, inspecting/replaying and comparing formation
+over time. Neither part is optional. A–F are retained foundations, not glacial acceptance.
+The transition is artistic, contours optional, scene colours natural. Quote the relevant
+GV acceptance row in the session handover; record deviations before dependent work.
+
 ## Non-negotiables
 
 - **Process-based simulation only.** Landforms emerge from simulated flow, transport and deposition. Never

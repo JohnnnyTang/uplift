@@ -7,13 +7,14 @@ Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
 sessions had not started or could not start is stale. The corrected product is not
 yet accepted: see the [current branch audit](../review/book-revision/current-direction-review.md).
 
-The preferred opening is U-shaped valley formation. Contours are optional. The
-2D-to-3D entrance is an artistic effect, without exact geometric mapping; scenes
-may use natural colours. Discuss the concrete glacier scene before writing the
-replacement implementation plan. Existing contour/water selection and the automatic
-cartography fallback below describe the old wave, not the new lesson choice.
-Glacial process scope is reopened for this lesson; the old no-ice/no-new-physics
-rule cannot silently force a different subject. Do not claim a glacier model exists.
+The opening is U-shaped valley formation. The owner has now selected both
+condition changes (UI and equivalent 3D interaction) and watching/inspecting different
+formations over time. [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md) implement
+that combined loop. They are planned, not started. The earlier discussion-only hold
+is superseded for planning; this update does not launch implementation. Contours are
+optional, the entrance is artistic, and scenes may use natural colours. The old
+contour/source selection and no-new-physics rule do not govern the glacial opening.
+A–F remain foundations; their evidence is not glacial lesson acceptance.
 
 Detailed plan for the current stage. The work model and rules are in [README.md](README.md). The product
 reasoning and the brief's internal tensions (referred to below as **T1–T9**) are in
@@ -27,7 +28,7 @@ The owner's 2026-11-09 request changes the next milestone to a bounded, playable
 drawings lift into directly manipulable 3D, questions and answer flaps are optional,
 and page turning connects small discoveries. The direction commit is merged to main.
 Read [Wave 5](stage-1-wave-5.md) for the complete revision-wave briefs and owned paths;
-[PB1–PB8](product-realignment.md#product-acceptance-gate) defines product acceptance.
+[PB1–PB9](product-realignment.md#product-acceptance-gate) defines product acceptance.
 The old P1/P2 outline is superseded. 5B–5F are integrated on the local review stack; main remains at 5A. See the [acceptance ledger](stage-1-acceptance.md) for evidence and pending release gates.
 
 The Wave 1–4 briefs below retain the record of how the foundations were built. Their
@@ -52,9 +53,11 @@ in the session briefs below. Register model-time challenge persistence before
 implementing it; do not enable the existing pending challenge automatically.
 
 **Goal.** Two small interactive spreads in a recognisable book. Prove immediate play, a readable
-same-scene consequence, optional reflection and a genuine page turn, using the existing engine.
+same-scene consequence, optional reflection and a genuine page turn. The opening now
+requires glacial formation with condition changes and temporal inspection/comparison;
+reuse the engine foundations and add only the bounded glacial capability needed.
 
-**Exit gate.** PB1–PB8 and applicable foundation checks have linked evidence. The shipped lessons have
+**Exit gate.** PB1–PB9 and applicable foundation checks have linked evidence. The shipped lessons have
 domain-expert review. Human reader/listening and hardware checks are reported honestly; missing checks
 remain open. The group reviews the working book and a short recording; the stage retro is written.
 Historical AC3 morphology and waterfall success are not prerequisites for an unrelated replacement
@@ -68,14 +71,14 @@ catalogue and accounts. Page turning between two interactive spreads is now requ
 Waves 1–4 below record the foundation work. Wave 5 is the next implementation wave;
 Wave 6 is revised hardening. Historical technical dependencies remain in their briefs.
 
-| Wave   | Theme                                         | Sessions                                                                             | Status / purpose                                                         |
-| ------ | --------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
-| W1     | Contracts and spikes                          | 1A–1E                                                                                | Foundation history; contracts and initial risks                          |
-| W2     | Foundations                                   | 2A–2F                                                                                | CPU, rendering, runtime, shell and probes                                |
-| W3     | Integration and science                       | 3A–3F                                                                                | CPU integration, actual science results and recorded comparison          |
-| W4     | GPU, depth and supporting capabilities        | 4A–4F                                                                                | Implementations integrated; human/science acceptance accurately retained |
-| **W5** | **Revise the book and build the new example** | **5A contracts → 5B runtime / 5C shell / 5D example → 5E migration → 5F acceptance** | **Next; complete playable default app and revised research route**       |
-| W6     | Hardening and review                          | 6A performance → 6B audit → 6C review → 6D retro                                     | Finish current book's release gates and lesson-led next plan             |
+| Wave   | Theme                                         | Sessions                                                  | Status / purpose                                                         |
+| ------ | --------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------ |
+| W1     | Contracts and spikes                          | 1A–1E                                                     | Foundation history; contracts and initial risks                          |
+| W2     | Foundations                                   | 2A–2F                                                     | CPU, rendering, runtime, shell and probes                                |
+| W3     | Integration and science                       | 3A–3F                                                     | CPU integration, actual science results and recorded comparison          |
+| W4     | GPU, depth and supporting capabilities        | 4A–4F                                                     | Implementations integrated; human/science acceptance accurately retained |
+| **W5** | **Revise the book and build the new example** | **A–F foundations retained; G–N glacial opening planned** | **Current; condition changes plus formation over time**                  |
+| W6     | Hardening and review                          | 6A performance → 6B audit → 6C review → 6D retro          | Finish current book's release gates and lesson-led next plan             |
 
 ```mermaid
 flowchart LR
@@ -90,18 +93,24 @@ flowchart LR
     C5 --> E5
     D5 --> E5
     E5 --> F5[5F Integrated acceptance]
-    F5 --> W6[Wave 6 Hardening and release review]
+    F5 --> G5[5G Glacial feasibility and contracts]
+    G5 --> H5[5H CPU process]
+    H5 --> P5[5I GPU / 5J Timeline / 5K Scene / 5L Content]
+    P5 --> M5[5M Integrate first lesson]
+    M5 --> N5[5N Glacial acceptance]
+    N5 --> W6[Wave 6 Hardening and release review]
 ```
 
-**Current critical path:** direction on main → 5A feasibility/contracts → 5B/5C/5D runtime,
-shell and example → 5E migrate the built app → 5F integrated acceptance → Wave 6 hardening/review.
+**Current critical path:** integrate reviewed foundations/direction → 5G glacial feasibility/contracts
+→ 5H CPU → 5I GPU / 5J timeline / 5K scene / 5L content → 5M integration → 5N acceptance
+→ Wave 6 hardening/review. [Full briefs](stage-1-wave-5-glacial.md).
 The historical solver chain explains the foundations, not the current product priority.
 Historical references to the former hardening sessions 5A–5D now map to 6A–6D.
 
 ## Acceptance traceability
 
 The table below preserves the original erosion-demo criteria and their delivery sessions.
-The current product gate is [PB1–PB8](product-realignment.md#product-acceptance-gate).
+The current product gate is [PB1–PB9](product-realignment.md#product-acceptance-gate).
 AC1/2/4/6/8/9 remain applicable foundation checks. AC5 applies to each new diagram/scene;
 AC7 follows the updated compact scope/scale/time and limitation disclosure policy;
 AC10 applies to each shipped lesson. AC3 is historical morphology evidence, not a claim
@@ -715,7 +724,7 @@ science remains pending and cannot produce a successful challenge event.
 
 ## Wave 5 · Book revision and new playable example
 
-**Status:** implemented and verified on the local review stack; main integration and human/product review remain open. **Entry:** the product-direction commit is on main;
+**Status:** A–F implemented on the review stack; G–N planned in [the glacial extension](stage-1-wave-5-glacial.md). Main integration and human/product review remain open. **Entry:** the product-direction commit is on main;
 W4 engine integrations are retained and their human/scientific limitations remain recorded.
 **Briefs:** [the complete six-session wave](stage-1-wave-5.md).
 
@@ -728,7 +737,24 @@ W4 engine integrations are retained and their human/scientific limitations remai
 | [5E](stage-1-wave-5.md#5e) | Default app migration and revision of the existing research example/tests                       | 5B, 5C, 5D merged |
 | [5F](stage-1-wave-5.md#5f) | Integrated acceptance, review packet and unfinished-plan reconciliation                         | 5E merged         |
 
-**Execution:** 5A alone → 5B/5C/5D in parallel → 5E alone → 5F alone.
+The table above records A–F foundations. The current-wave additions are:
+
+| Session                            | Deliverable                                                     | Starts after                                 |
+| ---------------------------------- | --------------------------------------------------------------- | -------------------------------------------- |
+| [5G](stage-1-wave-5-glacial.md#5g) | Glacial mechanism feasibility, selected condition and contracts | Reviewed foundations/direction on green main |
+| [5H](stage-1-wave-5-glacial.md#5h) | Deterministic CPU process and complete state                    | 5G                                           |
+| [5I](stage-1-wave-5-glacial.md#5i) | GPU implementation and CPU/GPU parity                           | 5H                                           |
+| [5J](stage-1-wave-5-glacial.md#5j) | Intervention, timeline, inspection and comparison runtime       | 5H                                           |
+| [5K](stage-1-wave-5-glacial.md#5k) | Complete coloured scene and direct gesture                      | 5H                                           |
+| [5L](stage-1-wave-5-glacial.md#5l) | Focused lesson, sources and claim-linked content                | 5H                                           |
+| [5M](stage-1-wave-5-glacial.md#5m) | Default-book integration and composition                        | 5I–5L merged                                 |
+| [5N](stage-1-wave-5-glacial.md#5n) | Prospective science, integrated acceptance and drift audit      | 5M                                           |
+
+**Current execution:** 5G → 5H → 5I/5J/5K/5L → 5M → 5N.
+**Current merge order:** G → H → I → J → K → L → M → N.
+All additions are planned, not launched. Read the linked briefs for owned paths and gates.
+
+**Historical A–F execution:** 5A alone → 5B/5C/5D in parallel → 5E alone → 5F alone.
 **Merge order:** 5A → 5B → 5C → 5D → 5E → 5F.
 This gated sequence is the documented exception to earlier-wave contracts; dependents
 start only from merged main. Ownership is disjoint within the parallel group.
@@ -741,7 +767,7 @@ These are the unfinished former 5A–5D, renumbered **6A–6D**. Historical refe
 to "5A performance" or "5C review" in W1–W4 handovers mean these sessions; historical
 documents and scientific records are not rewritten.
 
-**Entry:** use the [5F evidence and carry-over owners](../review/book-revision/acceptance/README.md); W5 locally integrated does not imply main or human acceptance. Actual book sequence reviewed, unresolved product defects
+**Entry:** 5G–5N integrated with no unresolved glacial code/science/product defect. Use the new 5N packet and retain the [5F evidence and carry-over owners](../review/book-revision/acceptance/README.md); W5 locally integrated does not imply main or human acceptance. Actual book sequence reviewed, unresolved product defects
 assigned and resolved before claiming readiness. Human/hardware evidence can remain
 pending for completion here, with no inferred pass.
 **Merge order:** 6A → 6B → 6C → 6D.
@@ -754,6 +780,11 @@ the original waterfall outcome.
 `hachure/ink/src/view/**`, `hachure/runtime/src/sim-host/**`,
 `uplift/book/src/reader/**`. Solver tuning only for a demonstrated bottleneck,
 with separate justification and CPU/GPU comparison.
+
+Carry the 5N glacial journey into hardening: measure condition-to-visible-response,
+playback, timeline reconstruction/cancellation, reference comparison, checkpoint memory
+and page departure on both supported CPU and GPU paths. Preserve fixed-step results
+while tuning scheduling. The old contour/source measurements alone do not close 6A.
 
 Measure visible Chrome on target integrated-GPU hardware, recording device, driver,
 power/thermal conditions and the exact commit. Cover initial readable drawing,
@@ -772,7 +803,7 @@ Missing target hardware is recorded as pending, not replaced by headless CI resu
 **Owned paths:** `docs/plan/stage-1-acceptance.md`,
 `docs/review/book-revision/accessibility/**`; bounded fixes with listed paths.
 
-Walk PB1–PB8 and applicable original foundation checks. Verify normal/phone/zoom layouts,
+Walk PB1–PB9 and applicable original foundation checks. Verify normal/phone/zoom layouts,
 direct object action, immediate reveal, page-turn focus/gesture behavior, return state,
 all supported fallback paths and truthful research disclosure. Run the revised keyboard,
 reduced-motion and axe checks on the shipped routes. Complete actual screen-reader
@@ -843,6 +874,10 @@ for traceability rather than reopened as the current priority:
 | WebGPU is testable in CI                                                                                           | Run GPU tests locally and record the run at each wave close                | 3C          |
 
 ## Changelog
+
+- 2026-11-09: Owner chooses condition intervention AND temporal observation. Add
+  5G–5N inside Wave 5, with glacial feasibility, CPU/GPU, timeline, scene/content,
+  default-book integration and acceptance; move Wave 6 entry after 5N.
 
 - 2026-11-09: 5F verifies the local review stack, fixes phone caption overlap, links the acceptance ledger and assigns pending true zoom/listening, owner/expert review and visible hardware checks to 6A–6D. Main remains at 5A; no release pass inferred.
 

@@ -2,12 +2,15 @@
 
 Status: 5A feasibility and executable adapter review complete; frozen for dependent implementation after merge. This specifies
 shared boundaries for 5B/5C/5D; it does not claim the default app is migrated.
-The authoritative product gate remains PB1–PB8 in the realignment plan.
+The authoritative product gate is now PB1–PB9 in the realignment plan.
 
 ## Owner amendment after branch review
 
 The scene-specific choices below describe the original contour/water implementation.
-The next opening lesson is U-shaped valley formation, pending scene discussion.
+The next opening is U-shaped valley formation with intervention and temporal
+inspection/comparison. [5G–5N](../../plan/stage-1-wave-5-glacial.md) is now planned;
+5G freezes the glacial contracts. Existing contour-specific types are not a mandate
+to build the next scene around contours.
 The entrance transition is artistic, not a rigorous 2D/3D mapping requirement.
 Natural material colours are allowed. Retain the lifecycle/binding guarantees;
 revisit lesson-specific selection/gesture types only when the new brief needs them.
