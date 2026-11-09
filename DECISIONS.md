@@ -991,3 +991,13 @@ Evidence: widgets/uni/data.test.ts and widgets/uni/smoke.mjs; the latter saves
 1366px and 390px screenshots and a browser report beside the widget. Existing
 science/challenge pending states remain pending. Expert sign-off and human
 screen-reader/teaching review are still stage gates, not claimed by these checks.
+
+## 2026-11-09 — 4B integration after GPU backend selection
+
+University controls now share the backend readiness/live-control gate. The flat
+fallback exposes measurements but cannot configure live parameters. Full reset
+restores university defaults only on mutable backends. Both decision-log sides
+are retained during rebase. The additional e2e/university.spec.ts is lead-owned
+integration coverage for state-preserving restore, full reset and flat gating.
+Desktop/mobile installed-Chrome smoke passes after integration; human and expert
+acceptance remain open.
