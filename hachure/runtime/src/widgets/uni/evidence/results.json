@@ -1,0 +1,8 @@
+{
+  "browser": "156.0.8078.80",
+  "errors": [],
+  "checks": [
+    "1366px: SVG profile, live budget, KaTeX, prediction gating, keyboard parameter change, live-state preservation across levels, hidden-parameter restoration without landscape reset, full reset and no horizontal overflow",
+    "390px: SVG profile, live budget, KaTeX, prediction gating, keyboard parameter change, live-state preservation across levels, hidden-parameter restoration without landscape reset, full reset and no horizontal overflow"
+  ]
+}
