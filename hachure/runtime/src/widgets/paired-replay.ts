@@ -165,7 +165,7 @@ export function createPairedReplay(options: PairedReplayOptions) {
         ? "Replay comparison"
         : "Play comparison";
     for (const control of [seed, timeline, play, end]) control.disabled = !unlocked;
-    if (unlocked && (announce || performance.now() - lastAnnounced >= 1000)) {
+    if (unlocked && (announce || performance.now() - lastAnnounced >= 5000)) {
       status.textContent = `At model step ${sample.step}, ${labels[0].toLowerCase()}: ${formatBoundNumber(sample.values[0]!, options.valueUnit)}; ${labels[1].toLowerCase()}: ${formatBoundNumber(sample.values[1]!, options.valueUnit)}.`;
       lastAnnounced = performance.now();
     }

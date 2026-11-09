@@ -139,7 +139,7 @@ export function createToolPalette(options: ToolPaletteOptions) {
   function render() {
     const range = brushRadiusRangeM(config, config);
     root.disabled = !enabled || range.maxM < range.minM || disposed;
-    cursor.setAttribute("aria-disabled", String(busy));
+    cursor.setAttribute("aria-disabled", String(root.disabled || busy));
     root.setAttribute("aria-busy", String(busy));
     select.value = kind;
     radius.input.min = String(range.minM);
