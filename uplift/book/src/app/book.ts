@@ -41,6 +41,8 @@ import {
   createPlayback,
   createDisplayFormula,
   createPairedReplay,
+  createUniversityLayer,
+  universityDefaults,
   el,
   formatBoundNumber,
   type HostSample,
@@ -207,6 +209,13 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   const rainSpec = spread.controls.find((control) => control.kind === "slider" && control.id === "rain");
   if (!rainSpec || rainSpec.kind !== "slider") throw new Error("The valley spread needs a rain control");
   const rainDefault = rainSpec.default;
+  const university = createUniversityLayer({
+    id: "valley-university",
+    defaults: { ...DEFAULT_TERRAIN_CONFIG, ...spread.scene.params },
+    configure: (patch) => host.configure(patch),
+    onError: showError,
+  });
+  equations.append(university.theory);
   const rain = createSlider({ ...rainSpec, label: rainSpec.label[level] }, rainSpec.default, (value) => {
     void host.configure({ rainMmPerHr: value }).catch(showError);
   });
@@ -302,6 +311,8 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     visualText,
     errorText,
     controls,
+    university.root,
+    university.hiddenNotice,
     ignores.root,
   );
   book.append(left, right);
@@ -360,6 +371,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     equations.hidden = level !== "uni";
     time.update(bindings.render("{{scene.timeScale}}"));
     const liveEnabled = backendReady && selectedBackend !== "flat" && lifecycle.isControlEnabled("rain");
+    university.update(sample, level, liveEnabled);
     playback.update(host.playing, !liveEnabled);
     palette.setEnabled(liveEnabled);
     if (sample) {
@@ -495,7 +507,12 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     rain.input.disabled = true;
     speed.input.disabled = true;
     await host.reset();
-    if (selectedBackend !== "flat") await host.configure({ rainMmPerHr: rainDefault });
+    if (selectedBackend !== "flat") {
+      await host.configure({
+        rainMmPerHr: rainDefault,
+        ...universityDefaults({ ...DEFAULT_TERRAIN_CONFIG, ...spread.scene.params }),
+      });
+    }
     rain.update(rainDefault);
     speed.update(1);
     view?.applyLiftState(FLAT_STATE);

@@ -958,3 +958,46 @@ outside the engine session's owned paths. Headless evidence does not close 5A's
 classroom performance gate. GPU configuration currently rebuilds core resources;
 slider-drag responsiveness still needs that measured review. Challenge science,
 human listening and the other Wave 4 integrations remain open.
+
+## 2026-11-09 — S1 W4 4B: university diagnostics and hidden parameters
+
+The university layer reads one completed HostSample for its long profile and
+sediment budget. The profile samples the fixed reset route, not the newly routed
+channel: changing the traced route must not masquerade as incision. It labels
+incomplete routes, omitted terminal remainders, model datum and independently
+rescaled axes. A subcell route is unavailable rather than fabricated.
+
+Erosion, deposition and export are cumulative counters; suspension is a current
+stock recomputed from the sampled layer. The page distinguishes these and includes
+the external reader-tool ledger instead of presenting their sum as a closed budget.
+All displayed measurements and parameter values derive from the sampled state,
+effective scene defaults or public admissible ranges. Volumes retain model-m³
+scope; no field calibration or geological clock approval was added.
+
+The existing spread-authored KaTeX stream-power comparison and expanded university
+ignores are preserved. Added expert-review-marked context defines the symbols and
+explicitly distinguishes the capacity solver's relaxation rate from stream-power K.
+There is no live K or claimed dimensional mapping.
+
+Capacity coefficient, erosion relaxation and deposition relaxation are university
+controls using existing provisional CPU reader ranges. Reading-level changes only
+change visibility. High school shows bound current/default values when these hidden
+controls differ. Its explicit restore action configures only those parameters,
+keeping the terrain, model step and rain setting. Full experiment reset restores
+effective university defaults as well. Minimal approved book.ts wiring and a public
+widget barrel export are the only implementation changes outside the owned uni path.
+
+Evidence: widgets/uni/data.test.ts and widgets/uni/smoke.mjs; the latter saves
+1366px and 390px screenshots and a browser report beside the widget. Existing
+science/challenge pending states remain pending. Expert sign-off and human
+screen-reader/teaching review are still stage gates, not claimed by these checks.
+
+## 2026-11-09 — 4B integration after GPU backend selection
+
+University controls now share the backend readiness/live-control gate. The flat
+fallback exposes measurements but cannot configure live parameters. Full reset
+restores university defaults only on mutable backends. Both decision-log sides
+are retained during rebase. The additional e2e/university.spec.ts is lead-owned
+integration coverage for state-preserving restore, full reset and flat gating.
+Desktop/mobile installed-Chrome smoke passes after integration; human and expert
+acceptance remain open.
