@@ -71,14 +71,14 @@ describe("valley draft content", () => {
     expect(teacherNotesText).not.toContain("<!--");
   });
 
-  it("leaves prediction correctness pending real-model evidence", () => {
+  it("leaves inconclusive prediction unscored", () => {
     expect(predictDraft.answer).toBeNull();
     expect("answerEvidence" in predictDraft).toBe(false);
     expect(predictDraft.options).toHaveLength(3);
     for (const question of Object.values(predictDraft.question))
       expect(question).toContain("{{scene.duration.predictSpan}}");
     expect(pageContent.flap.hs).toContain("not marked any choice correct");
-    expect(pageContent.flap.uni).toContain("pending model validation");
+    expect(pageContent.flap.uni).toContain("inconclusive");
   });
 
   it("keeps clock approval and the comparative equation explicit", () => {

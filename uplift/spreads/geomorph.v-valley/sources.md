@@ -52,6 +52,8 @@ Parameters lists every typed field, unit, proposed range and evidence category. 
 - [A — USACE HEC-RAS, Selecting an Angle of Repose in Cohesionless Sediment](https://www.hec.usace.army.mil/confluence/cwmsdocs/rasum/latest/selecting-an-angle-of-repose-in-cohesionless-sediment-271613986.html)
 - [Resistance — USACE HEC-RAS, Eulerian shallow-water equation solver: numerical resistance reference](https://www.hec.usace.army.mil/confluence/rasdocs/ras1dtechref/6.4/theoretical-basis-for-one-dimensional-and-two-dimensional-hydrodynamic-calculations/2d-unsteady-flow-hydrodynamics/numerical-methods/eulerian-shallow-water-equation-solver)
 
+- [Results — Uplift reproducible validation packet: failed criteria and inconclusive prediction](https://github.com/JohnnnyTang/uplift/blob/main/docs/science/validation/README.md)
+
 ## Verification and review
 
 The S08 paper, FV conservation introduction, SW assumptions and G official declaration were inspected for this content draft. M07's author-lab record verifies its bibliographic identity; original full-text equation checking remains open. W99's identity was corroborated in the author's university profile, while the linked paper/DOI was unavailable during this run; the existing science register records its earlier paper inspection. R and A retain the verification limits documented in Sources. No new numeric value was taken from an inaccessible reference.

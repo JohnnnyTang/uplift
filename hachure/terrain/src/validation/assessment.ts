@@ -79,22 +79,29 @@ function matchedWidths(low: EvidenceSample, high: EvidenceSample) {
     ? { count: dry.length, dryM: validationMedian(dry), wetM: validationMedian(wet) }
     : null;
 }
+function incisionComparison(low: EvidenceSample, high: EvidenceSample) {
+  if (low.step !== high.step || low.incisionM === null || high.incisionM === null)
+    return { incisionDifferenceM: null, incisionMarginM: null };
+  return {
+    incisionDifferenceM: high.incisionM - low.incisionM,
+    incisionMarginM: Math.max(P.incisionMinimumM, P.incisionRelativeMargin * Math.abs(low.incisionM)),
+  };
+}
 function predictionSample(low: EvidenceSample, high: EvidenceSample, l: number) {
   const widths = matchedWidths(low, high);
-  if (low.step !== high.step || low.incisionM === null || high.incisionM === null || !widths)
+  const incision = incisionComparison(low, high);
+  const { incisionDifferenceM, incisionMarginM } = incision;
+  if (incisionDifferenceM === null || incisionMarginM === null || !widths)
     return {
       classification: null,
-      incisionDifferenceM: null,
-      incisionMarginM: null,
+      ...incision,
       widthDifferenceM: null,
       widthMarginM: null,
       resolvedSections: widths?.count ?? 0,
     };
-  const incisionDifferenceM = high.incisionM - low.incisionM;
-  const incisionMarginM = Math.max(P.incisionMinimumM, P.incisionRelativeMargin * Math.abs(low.incisionM));
   const widthDifferenceM = widths.wetM - widths.dryM;
   const widthMarginM = Math.max(P.widthMinimumCells * l, P.widthRelativeMargin * widths.dryM);
-  const deeper = incisionDifferenceM >= incisionMarginM && high.incisionM > 0;
+  const deeper = incisionDifferenceM >= incisionMarginM && high.incisionM! > 0;
   const wider = widthDifferenceM >= widthMarginM;
   const decreased = incisionDifferenceM < -incisionMarginM || widthDifferenceM < -widthMarginM;
   const classification = decreased ? null : deeper ? (wider ? "both" : "deeper") : wider ? "wider" : null;

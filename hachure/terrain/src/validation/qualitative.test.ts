@@ -65,6 +65,26 @@ describe("preregistered qualitative evidence", () => {
     );
     expect(assessSeed(mismatched).ac3a.passed).toBe(false);
   });
+  it("accepts resolved incision independently of unresolved prediction widths", () => {
+    const patched = runs
+      .filter((r) => r.seed === 1)
+      .map((r) =>
+        r.arm === "rain-low" || r.arm === "rain-high"
+          ? {
+              ...r,
+              samples: r.samples.map((s) => ({
+                ...s,
+                incisionM: r.arm === "rain-low" ? 1 : 1.2,
+                widths: s.widths.map((w) => ({ row: w.row, resolved: false as const })),
+              })),
+            }
+          : r,
+      );
+    const result = assessSeed(patched);
+    expect(result.ac3a.passed).toBe(true);
+    expect(result.prediction.answer).toBeNull();
+    expect(result.prediction.status).toBe("inconclusive");
+  });
   it("requires delivered sediment and exact reach closure before accepting deposition", () => {
     const original = runs.filter((r) => r.seed === 1);
     const noDelivery = original.map((r) =>

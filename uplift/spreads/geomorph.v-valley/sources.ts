@@ -5,6 +5,7 @@ export const sourceKeys = [
   "Model",
   "Parameters",
   "Validation",
+  "Results",
   "Calibration",
   "Sources",
   "S08",
@@ -19,6 +20,10 @@ export const sourceKeys = [
 ] as const;
 
 export const sources = [
+  {
+    citation: "Results — Uplift reproducible validation packet: failed criteria and inconclusive prediction",
+    url: "https://github.com/JohnnnyTang/uplift/blob/main/docs/science/validation/README.md",
+  },
   {
     citation: "Model — Uplift terrain process model: implemented rules and explicit adaptations",
     url: "https://github.com/JohnnnyTang/uplift/blob/main/docs/science/model.md",
