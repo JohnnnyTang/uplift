@@ -333,3 +333,70 @@ No other session's unmerged solver, preset or renderer is used.
 **Not done.** Real-solver validation, calibrated persistence and stamp integration
 remain with 3B/4C. Sediment injection requires its own explicit source term before
 budget residuals can support it. Scientific expert sign-off remains pending.
+
+<!-- expert-review -->
+
+### D-2A-1 · 2026-11-08 · S1/W2/2A · CPU reference solver: float64 state, enforced guards, wave-guard finding
+
+**Decision.**
+
+- `createCpuSolver(config, preset, options?)` (`hachure/terrain/src/cpu/`) implements `docs/science/model.md`
+  stage by stage. Its **authoritative state is float64**; the contract's float32 layers are a mirror,
+  refreshed before `snapshot()` and `hash()`. Per-step erosion at the default parameters is about
+  10⁻⁶–10⁻⁵ m, below half a float32 ulp at 128–256 m elevation (7.6×10⁻⁶ m): stored in float32 it is
+  rounded away and the solid budget stops closing. `hash()` still digests the float32 mirror, so AC2 holds
+  bitwise. A step is computed into separate buffers and committed only when every value is finite and every
+  stock non-negative; otherwise the state is untouched and the solver pauses with a diagnostic.
+- The solver enforces the admissible ranges of `parameters.md` (`CPU_ADMISSIBLE_RANGES`) on top of the
+  contract's sanity limits, plus the joint guards: reaction, slump, evaporation in [0,1) with its upper
+  bound rescaled for other time steps, a brush radius of at least one cell, and a config-level **pipe-wave
+  guard** `dt × 2 sqrt(g A / l) / l ≤ 0.5`. The last one is ours: linearised, the virtual-pipe update is a
+  symplectic-Euler wave scheme with celerity `sqrt(g A / l)` (from `dq/dt = A g ΔH / l`, `dh/dt = −Σq / a`),
+  so `A / l` acts as an effective depth in model.md's wave guard [FV, SW]. A kernel test shows sloshing
+  growing at A = 100 m², l = 1 m (Courant 3.1) and staying bounded at A = 0.2 m². Defaults pass at 10 m and
+  5 m cells (2B runs 256² at 5 m), and the candidate scaling `A = 0.2 l²` passes at every admissible cell
+  size. `gridSize` admits 8–512 (the fixture allowance in parameters.md). `dtSimSeconds` may change only at
+  step 0 ("fixed per run"). The constants and guards are exported from `@hachure/terrain` so the GPU
+  solver uses the same ones.
+- **Wave guard deviation.** model.md says to pause when
+  `dt[(|u|+√(gh))/l + (|v|+√(gh))/l] > 0.5`. The default `waveGuard: "report"` policy instead counts each
+  violation in `diagnostics()` and keeps running; `"halt"` implements model.md literally and is tested.
+  Reason: the pipes have no friction, so on a slope thin flow accelerates until the donor limiter drains a
+  cell in one step. For such a cell model.md's velocity is exactly `u = l / dt`, so its Courant number is 1
+  **whatever `dt` is**. Under `"halt"` the validation-spec catchment with its 0.1 m³/s spring stops at
+  step 1. A smaller step cannot help, so model.md's "rerun at a smaller fixed step" remedy does not apply.
+  Non-finite values and negative stocks always halt.
+- **Scientific consequence (open, needs 1E/expert and 3B).** Capacity is proportional to that limiter speed.
+  On the 64² catchment at default parameters, 1000 steps (50 s of hydraulic time) gave peak speeds of 200 m/s
+  (`l/dt`), suspended stocks up to 1.2 m while the deepest water anywhere was 2.6 cm, 5.4 m of bedrock cut,
+  and 27 400 m³ of exported
+  sediment from 62 m³ of water input. At `dt = 0.01` the same 50 s gave 1000 m/s and 19 m of cut, so results
+  depend on `dt` and do not converge. The budgets close and nothing goes non-finite, but magnitudes from
+  this discretisation are not meaningful, and calibration (time-scale.md) would inherit the `dt` dependence.
+  Options for the science owners: a momentum sink in the pipe update (for example Manning friction; the
+  handoff lists Manning's equation as physical law), or a different velocity or capacity definition. 2A
+  does not add one, because that would be new science.
+- **Raise adds loose sediment**, following parameters.md. 2B's brush tools do the same. 1A's `RaiseOp`
+  comment ("Adds rock") and the fake solver (adds bedrock) disagree; their owner should align them.
+- The brush ops in `cpu/tools.ts` are a **swappable placeholder** for 2B's `applyBrush(state, op, limits)`
+  (PR #8). To swap: run `applyBrush` on the synced float32 mirror, copy back only the cells it changed, and
+  add `volumeChangeM3` to `toolNetM3` (the solver already does this for every tool). Copying back every cell
+  would round the whole float64 state to float32. Source ops (spring, rain-source, remove-source) stay in the
+  solver.
+- The outlet's receiving water surface is the outlet cell's ground at reset (`outletBaseLevelM`), on the face
+  chosen by model.md's south/east/north/west priority. When 2B's optional `TerrainPreset.layout()` lands, read
+  `baseLevelM` from it and assert its face matches.
+- The test fixture `cpu/test-fixtures.ts` builds the validation-spec catchment only because 2B's preset and
+  RNG are not on main. 3B must use 2B's preset.
+
+**Why.** Brief 2A requires model.md's process model with enforced ranges and guards, bitwise determinism,
+budget closure and no NaN. Implementing it literally showed the wave guard cannot be met. The principles say
+to report that honestly rather than hide it or invent a fix.
+
+**Revisit if.** 1E or a domain expert revises the pipe update or velocity (then re-decide the wave-guard
+default, and probably restore `"halt"`), 3B finds the magnitudes usable after recalibration, or 2B's
+`applyBrush` and `layout()` land on main.
+
+**Fact for 3C/4A.** A GPU solver storing absolute bedrock elevation in plain float32 will lose per-step
+erosion to rounding (see above). It needs a split representation (for example the initial elevation plus a
+float32 change layer, or a local datum). The CPU–GPU comparison should expect differences from this.
