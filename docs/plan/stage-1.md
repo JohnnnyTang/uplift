@@ -30,13 +30,13 @@ catalogue, accounts, page turning between spreads.
 
 ## Shape of the stage
 
-| Wave   | Theme                            | Sessions (parallel)                                                                                                                                     | Why it comes here                                                                            |
-| ------ | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| **W1** | Contracts and spikes             | 1A contracts · 1B GPU compute spike · 1C ink-look spike · 1D book-shell spike · 1E science brief                                                        | Retire the biggest unknowns, and agree the thin interfaces that let W2 run in parallel       |
-| **W2** | Foundations                      | 2A CPU solver · 2B presets, tools and RNG · 2C ink renderer · 2D runtime core · 2E page widgets and shell · 2F probes                                   | Each building block built against the contracts, with fakes for its neighbours               |
-| **W3** | End to end on the CPU            | 3A integration · 3B validation and calibration · 3C GPU solver, part 1 · 3D spread content · 3E 3D interaction tools                                    | First complete spread a reader can use (CPU at 128²). Science checked against the real model |
-| **W4** | GPU, university layer, challenge | 4A GPU solver, part 2, and backend selection · 4B university layer · 4C challenge and stamps · 4D accessibility and motion · 4E end-to-end tests and CI | Reach 256² on WebGPU, and finish the two levels and the guided-sandbox loop                  |
-| **W5** | Hardening and review             | 5A performance on target hardware · 5B acceptance audit · 5C review packet · 5D retro and Stage 2 inputs                                                | Close the gate with evidence                                                                 |
+| Wave   | Theme                            | Sessions (parallel)                                                                                                                                                                    | Why it comes here                                                                            |
+| ------ | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| **W1** | Contracts and spikes             | 1A contracts · 1B GPU compute spike · 1C ink-look spike · 1D book-shell spike · 1E science brief                                                                                       | Retire the biggest unknowns, and agree the thin interfaces that let W2 run in parallel       |
+| **W2** | Foundations                      | 2A CPU solver · 2B presets, tools and RNG · 2C ink renderer · 2D runtime core · 2E page widgets and shell · 2F probes                                                                  | Each building block built against the contracts, with fakes for its neighbours               |
+| **W3** | End to end on the CPU            | 3A integration · 3B validation and calibration · 3C GPU solver, part 1 · 3D spread content · 3E 3D interaction tools                                                                   | First complete spread a reader can use (CPU at 128²). Science checked against the real model |
+| **W4** | GPU, university layer, challenge | 4A GPU solver, part 2, and backend selection · 4B university layer · 4C challenge and stamps · 4D accessibility and motion · 4E end-to-end tests and CI · 4F anonymous instrumentation | Reach 256² on WebGPU, and finish the two levels and the guided-sandbox loop                  |
+| **W5** | Hardening and review             | 5A performance on target hardware · 5B acceptance audit · 5C review packet · 5D retro and Stage 2 inputs                                                                               | Close the gate with evidence                                                                 |
 
 ```mermaid
 flowchart LR
@@ -557,9 +557,10 @@ Stage expert sign-off and human teaching/accessibility checks remain pending.
 with main green. The new scored prediction concerns gross erosion only. Preserve
 the failed historical morphology results, hidden geological years and pending
 challenge. The comparison supplies no validated waterfall sequence.
-**Before W4 opens:** the project lead decides on learning-outcome instrumentation (see `DECISIONS.md`). If
-the answer is yes, add session 4F (event log and anonymous export) to this wave.
-**Merge order:** 4E → 4A → 4B → 4C → 4D.
+**Wave opened (2026-11-09):** main at `d29d639` includes the completed Wave 3
+comparison; `pnpm check` passes (434 tests). The owner opted into learning-outcome
+instrumentation, so session 4F is included (D-W4-OPEN).
+**Merge order:** 4E → 4A → 4B → 4C → 4D → 4F.
 **Exit:** the spread runs at 256² on WebGPU with the fallback chain working. The university layer,
 challenge, accessibility and end-to-end tests are complete.
 
@@ -662,6 +663,38 @@ Keep live and recorded state unchanged across reading-level changes.
 
 ---
 
+### 4F · Anonymous learning-outcome instrumentation — RT/QA · M
+
+_Threads:_ pedagogy, determinism, two levels, accessibility. _Depends on:_ 3A, 3F.
+Added by the owner's explicit Wave 4 opening decision on 2026-11-09.
+
+**Owned paths.** `hachure/runtime/src/instrumentation/**`. Minimal public exports
+and book mounting/event hooks are shared integration glue coordinated by the lead.
+
+**Deliverables.** A typed, versioned local event log and reader-triggered anonymous
+JSON export for classroom review. Record prediction commitment, comparison endpoint
+inspection, explanation reveal, challenge outcome/status, reading-level changes,
+control/tool changes, reset and replay operations. Clearly distinguish recorded
+comparison events from live model events; capture relevant model step/seed/config
+rather than implying the recorded result came from the live terrain. Include an
+optional pre/post learning check scoped to the supported gross-erosion claim.
+
+Collection is explicitly opt-in, off by default, and bounded in memory. Exclude
+names, accounts, free text, device identifiers, absolute timestamps and network
+transmission. Provide accessible start/stop, clear and export controls with a plain
+explanation of what is recorded. Storage/export failures degrade gracefully. The
+log observes the lesson; it never mutates model state, changes prediction gating,
+or claims learning gains merely from completion. Preserve collection across a
+reading-level view change without resetting the simulation.
+
+**Exit criteria.** Unit tests cover event validation, opt-in/off behavior, bounded
+retention, clear/export, failures, and deterministic event ordering. Browser tests
+verify both opt-out and opt-in lesson flows, valid anonymous export, keyboard use,
+and unchanged live/recorded state when logging or changing reading level. Pending
+science remains pending and cannot produce a successful challenge event.
+
+---
+
 ## Wave 5 · Hardening and review
 
 **Entry:** W4 merged.
@@ -715,6 +748,9 @@ Stage 2. **This is the input for planning Stage 2 in detail.**
 | WebGPU is testable in CI                                                                                           | Run GPU tests locally and record the run at each wave close                | 3C          |
 
 ## Changelog
+
+- 2026-11-09: Open Wave 4 from the completed Wave 3 comparison; add owner-requested
+  anonymous learning-outcome instrumentation as session 4F.
 
 - 2026-11-09: Complete the Wave 3 educational follow-up with a visible paired rain
   replay and a matching gross-erosion question. Carry exact recorded-data checks
