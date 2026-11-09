@@ -20,3 +20,6 @@ export * from "./widgets/index";
 export * from "./tools-ui/index";
 // Fixed-step Worker host (session 3A).
 export * from "./sim-host/index";
+
+// Evidence-gated challenge evaluation and local progress (session 4C).
+export * from "./challenge/index";

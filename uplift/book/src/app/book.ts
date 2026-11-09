@@ -36,6 +36,8 @@ import {
   createPlayback,
   createDisplayFormula,
   createPairedReplay,
+  createChallengeWidget,
+  committedExplanation,
   el,
   formatBoundNumber,
   type HostSample,
@@ -72,7 +74,8 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     disposed = false,
     frame = 0,
     lastTime = performance.now(),
-    drawAt = -Infinity;
+    drawAt = -Infinity,
+    runGeneration = 0;
   let view: InkView | undefined, viewFrame: TerrainFrame | undefined, lift: LiftRun | undefined;
   let renderTimer: ReturnType<typeof setTimeout> | undefined;
   let viewError = "";
@@ -259,20 +262,23 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     citations.append(item);
   }
   notes.append(citations);
-  const challengeStatus = el(
-    "p",
-    spread.challenge.check.kind === "pending"
-      ? `Challenge not yet available. ${spread.challenge.check.reason}`
-      : "Challenge validation is not active in this draft.",
-    "challenge-status widget-status",
-  );
+  const challenge = createChallengeWidget({
+    spreadId: spread.id,
+    definitionId: spread.id + ":" + JSON.stringify(spread.challenge.check),
+    spec: spread.challenge,
+    predictionOptions: spread.page.predict.options,
+    observationIntervalSteps: 1,
+    onAward: () => {
+      if (lifecycle.state === "explained") lifecycle.challenge();
+    },
+  });
   left.append(
     title,
     body,
     predict.root,
     feedback,
     flap.root,
-    challengeStatus,
+    challenge.root,
     equations,
     keywords.root,
     notes,
@@ -328,7 +334,28 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     title.textContent = spread.title[level];
     body.textContent = bindings.render(spread.page.body[level]);
     noteText.textContent = bindings.render(teacherNotes.replace(/<!--.*?-->/gs, "").trim());
-    flap.panel.textContent = bindings.render(spread.page.flap[level]);
+    flap.panel.textContent = committedExplanation(
+      spread.page.predict.options,
+      lifecycle.prediction,
+      level,
+      bindings.render(spread.page.flap[level]),
+    );
+    challenge.update(
+      sample
+        ? {
+            runId: spread.id + ":" + runGeneration,
+            step: sample.snapshot.step,
+            simYears: sample.snapshot.simYears,
+            ...(sample.calibration.status === "approved" ? { calibration: sample.calibration } : {}),
+            probes: sample.probes,
+          }
+        : undefined,
+      {
+        level,
+        prediction: lifecycle.prediction,
+        explained: lifecycle.state === "explained" || lifecycle.state === "challenged",
+      },
+    );
     predict.update(level);
     updateComparisonFeedback();
     const question = predict.root.querySelector("legend");
@@ -458,6 +485,8 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   async function reset() {
     lift?.cancel();
     host.pause();
+    runGeneration++;
+    challenge.reset();
     lifecycle.reset();
     lifecycle.beginPrediction();
     predict.reset();
@@ -482,6 +511,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   });
   flap.reveal.addEventListener("click", () => {
     if (lifecycle.state === "interactive") lifecycle.explain();
+    updateText();
   });
   const motionChanged = () => {
     if (reducedMotion.matches) {

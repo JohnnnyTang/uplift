@@ -1,0 +1,8 @@
+{
+  "browser": "156.0.8078.80",
+  "errors": [],
+  "checks": [
+    "Engineering fixture only: keyboard guided loop, stamp display, reload progress, level preservation, nested pending overrides saved stamp, storage denial/quota fallback",
+    "Real book: committed-choice flap at both levels, unchanged state hash, reset retains pending challenge/no stamp/hidden geological years"
+  ]
+}
