@@ -59,8 +59,9 @@ export const guardWgsl = `fn guard(old:vec4<f32>, candidate:vec4<f32>)->vec4<f32
   return vec4<f32>(candidate.x,failure,step,candidate.y);
 }`;
 /** Separate compensated change lane: absolute base elevation never rounds each erosion increment away. */
-export const changeWgsl = `fn change(old:vec4<f32>, delta:f32)->vec4<f32> {
+export const changeWgsl = `fn change(old:vec4<f32>, delta:f32, loose:f32)->vec4<f32> {
   let corrected = delta-old.y;
   let next = old.x+corrected;
-  return vec4<f32>(next,(next-old.x)-corrected,0.0,0.0);
+  let looseCorrected=loose-old.w; let looseNext=old.z+looseCorrected;
+  return vec4<f32>(next,(next-old.x)-corrected,looseNext,(looseNext-old.z)-looseCorrected);
 }`;

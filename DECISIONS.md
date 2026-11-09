@@ -871,3 +871,62 @@ The waterfall challenge remains pending until a prospectively registered
 model-time sequence is validated. Historic failed morphology, hidden geological
 years and outstanding expert, human accessibility and target-hardware gates stay
 unchanged. Starting Wave 4 does not close these Stage 1 requirements.
+
+### D-S1-W4-4A · 2026-11-09 · Complete guarded GPU solver and equal-domain fallback tiers
+
+<!-- expert-review -->
+
+**Decision.** Extend the managed water pipeline with the CPU model's capacity
+exchange, flux-form suspension transport, thermal slumping, evaporation and
+stranding. Full-process candidates and every ledger pass share the resident
+latched guard before commit. Split passes fit the portable eight-storage-buffer
+limit; no float atomics or increased adapter limits are required. Keep the
+water-only API and original evidence separate from the complete `/gpu` factory.
+No process equation, science default, historical experiment result, calibration
+approval or pending challenge is changed. Sources are the existing
+[model](docs/science/model.md) and
+[hydraulic derivation](docs/science/hydraulic-resistance.md).
+
+**Precision and budgets.** Preserve compensated bedrock changes and add a
+compensated loose-material change lane: even ordinary loose thickness can swallow
+small erosion under absolute Float32 updates. Per-cell direct-transfer counters
+use compensated additions and deterministic fixed-tree reductions. Authoritative
+Float64 reconstruction serves baseline-aware probes and conservation tests; the
+contract's Float32 drawing snapshot cannot resolve every tiny stock difference
+at a high absolute datum. The shared contract uses the identical CPU catchment
+fixture, while independent high-datum tests check actual sub-ULP erosion and
+precision across configuration/tool events. No shared threshold was relaxed.
+
+**Ordering and tools.** All mutations and full reads serialize. Snapshot
+coalescing keys on the queued mutation sequence, so reads after queued operations
+cannot return an earlier state. Automatic readback remains capped at two hertz;
+mesh and contours consume the same host sample. Shared CPU brush evaluation
+preserves clamps/smoothing semantics, followed by managed GPU uploads and
+compensated resident commits; there is no CPU shadow stepping. Configuration
+changes preserve both elevation residuals, source rates, outlet level, counters
+and elapsed model time while rebuilding managed pipelines. These are event
+operations; embedding controls should coalesce repeated slider events.
+
+**Fallback.** Public runtime selection tries WebGPU256 at 5 m cells, CPU Worker128
+at 10 m with WebGL2 rendering, CPU64 at 20 m, then a genuine static preset drawing.
+Every tier covers 1280 m. Pipe area scales as `0.2 × cellSide²`, within existing
+CFL/roughness guards; this is engineering scaling, not field calibration. Auto
+selection warms/measures fixed steps against a compute-only 30 fps admission
+budget, then resets before publishing its initial sample. It degrades grid size
+without changing fixed dt. Diagnostic `?backend=` flags force each tier; failed
+forced tiers report why they returned flat. WebGL2 compute remains excluded.
+Calibration metadata and changed init arguments cannot be hidden by cached reads.
+The read-only flat transport keeps the genuine step-zero sample and rejects live
+controls; it can paint before GPU/Worker initialization.
+
+**Evidence and boundaries.** Actual installed headless Chrome runs on Intel Arc
+140V driver 32.0.101.8860. The shared contract, full CPU/GPU comparison, conservation,
+real cumulative erosion precision, hidden-lane/budget replay, atomic rejection,
+mutation ordering, tools/config/reset and every real forced backend transport
+pass. Full results and driver metadata are in `hachure/terrain/src/compare/`.
+Headless compute/readback timings exclude rendered frame cost and uncontrolled
+power/thermal conditions: visible Chrome classroom AC1 remains 5A. Book mounting
+and its forced-tier browser checks are coordinated by the lead; 4A's only owned
+path exception is the required runtime barrel export, plus this append-only log.
+Human accessibility, expert science sign-off and historical failed morphology
+results remain unchanged.
