@@ -188,10 +188,10 @@ progress). Teacher mode. If chosen, learning-outcome instrumentation. A classroo
 
 ## Status
 
-| Stage                 | State                         | Plan                     | Retro |
-| --------------------- | ----------------------------- | ------------------------ | ----- |
-| 0 · Bootstrap         | Done                          | —                        | —     |
-| 1 · Demo 1            | **Planned, ready for wave 1** | [stage-1.md](stage-1.md) | —     |
-| 2 · Engine extraction | Outline only                  | —                        | —     |
-| 3 · Human coupling    | Outline only                  | —                        | —     |
-| 4 · Pilot             | Outline only                  | —                        | —     |
+| Stage                 | State                                               | Plan                     | Retro |
+| --------------------- | --------------------------------------------------- | ------------------------ | ----- |
+| 0 · Bootstrap         | Done                                                | —                        | —     |
+| 1 · Demo 1            | **Wave 3 implementation landed; science gate open** | [stage-1.md](stage-1.md) | —     |
+| 2 · Engine extraction | Outline only                                        | —                        | —     |
+| 3 · Human coupling    | Outline only                                        | —                        | —     |
+| 4 · Pilot             | Outline only                                        | —                        | —     |

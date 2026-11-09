@@ -714,3 +714,23 @@ exceptions are the terrain package GPU export/dependencies, generated lockfile, 
 Add the real seeded 128² tilted plateau and its declared spring for an 80-step water-only comparison,
 covering its full elevation range and multiple reduction workgroups. The CI workflow deletes committed
 local results immediately after checkout so failed setup cannot display stale local adapter evidence.
+
+### D-W3-L · 2026-11-09 · Wave 3 integration · Publish failed evidence, preserve the science gate
+
+**Finding.** The corrected solver's preregistered rain experiments fail AC3a for
+all three seeds; uniform calibration runs lack positive median incision. Numeric
+landscape years and a scored prediction would therefore misrepresent the evidence.
+See the full 3B packet and `docs/plan/stage-1-wave-3.md` for exact results.
+
+**Decision.** Publish tested validation infrastructure and the unsuccessful evidence
+in the planned session order, so the real Worker host can reuse the same public
+metrics. This is an implementation handover, not acceptance of 3B's scientific
+exit criteria. Keep the spread explicitly unscored and uncalibrated; no waterfall
+stamp. Wave 3 remains open. Wave 4 cannot begin until the original exit criteria, or a
+scientifically justified and explicitly reviewed replacement, are actually met.
+
+**Required follow-up.** Review the measured deposition/incision behaviour and the
+experiment design before changing model parameters, horizons or the question.
+Record any preregistered revision before rerunning all arms and seeds. Expert
+approval remains separate from successful numerical tests. Never adjust thresholds
+or select seeds after seeing results merely to make the gate green.
