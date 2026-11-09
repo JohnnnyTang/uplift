@@ -1,0 +1,6 @@
+{
+  // Typecheck for the dev page, which the root typecheck does not include:
+  // `pnpm --filter @hachure/ink typecheck:dev`.
+  "extends": "../../../tsconfig.json",
+  "include": ["./main.ts", "./vitest-shim.ts"]
+}

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hachure ink renderer · dev page</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Hachure ink renderer <span>dev page</span></h1>
+      <p class="fixture">
+        Fixture: driven by the fake solver from <code>@hachure/terrain/testing</code>. Its channel is
+        scripted, not simulated. Nothing here is science.
+      </p>
+    </header>
+    <main>
+      <figure id="stage" aria-describedby="status">
+        <div id="flat"></div>
+        <canvas id="terrain" aria-hidden="true"></canvas>
+      </figure>
+      <p id="status" role="status" aria-live="polite"></p>
+      <section class="controls" aria-label="Renderer controls">
+        <div class="row">
+          <label for="exaggeration">Vertical exaggeration</label>
+          <input id="exaggeration" type="range" min="0" max="1" step="0.01" value="0" />
+          <output id="exaggeration-value" for="exaggeration"></output>
+        </div>
+        <div class="row">
+          <button id="lift" type="button">Crossfade and lift</button>
+          <button id="flatten" type="button">Back to the flat drawing</button>
+          <button id="play" type="button" aria-pressed="false">Run fake solver</button>
+        </div>
+        <fieldset>
+          <legend>Layers</legend>
+          <label><input type="checkbox" id="layer-contours" checked /> Contours</label>
+          <label><input type="checkbox" id="layer-hachures" checked /> Hachures</label>
+          <label><input type="checkbox" id="layer-water" checked /> Water</label>
+          <label><input type="checkbox" id="layer-sediment" checked /> Sediment</label>
+          <label
+            ><input type="checkbox" id="fixture-sediment" checked /> Sediment test pattern (renderer fixture,
+            not simulated)</label
+          >
+        </fieldset>
+        <div class="row">
+          <label for="azimuth">Camera bearing</label>
+          <input id="azimuth" type="range" min="0" max="359" step="1" value="30" />
+          <label for="elevation">Camera elevation</label>
+          <input id="elevation" type="range" min="15" max="89" step="1" value="40" />
+        </div>
+      </section>
+      <section aria-label="Legend" class="legend">
+        <h2>Legend</h2>
+        <ul id="legend"></ul>
+      </section>
+      <section aria-label="Readout">
+        <h2>Readout</h2>
+        <dl id="readout"></dl>
+      </section>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

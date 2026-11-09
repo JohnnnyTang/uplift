@@ -1,0 +1,230 @@
+{
+  "runs": [
+    {
+      "backend": "webgpu",
+      "requested": "webgpu",
+      "reported": "webgpu",
+      "exaggeration": 0,
+      "file": "webgpu-e0.png",
+      "stats": {
+        "gridSize": 256,
+        "contourLines": 36,
+        "contourSegments": 16340,
+        "hachures": 577,
+        "lastUpdateMs": 28
+      },
+      "timings": {
+        "preStepMs": 545.7000000476837,
+        "mountMs": 67.5,
+        "firstRenderMs": 174.10000002384186
+      }
+    },
+    {
+      "backend": "webgpu",
+      "requested": "webgpu",
+      "reported": "webgpu",
+      "exaggeration": 0.5,
+      "file": "webgpu-e0.5.png",
+      "stats": {
+        "gridSize": 256,
+        "contourLines": 36,
+        "contourSegments": 16340,
+        "hachures": 577,
+        "lastUpdateMs": 25.399999976158142
+      },
+      "timings": {
+        "preStepMs": 495.5,
+        "mountMs": 60.799999952316284,
+        "firstRenderMs": 40.5
+      }
+    },
+    {
+      "backend": "webgpu",
+      "requested": "webgpu",
+      "reported": "webgpu",
+      "exaggeration": 1,
+      "file": "webgpu-e1.png",
+      "stats": {
+        "gridSize": 256,
+        "contourLines": 36,
+        "contourSegments": 16340,
+        "hachures": 577,
+        "lastUpdateMs": 23.19999998807907
+      },
+      "timings": {
+        "preStepMs": 464.69999998807907,
+        "mountMs": 70.40000003576279,
+        "firstRenderMs": 90.80000001192093
+      }
+    },
+    {
+      "backend": "webgl2",
+      "requested": "webgl2",
+      "reported": "webgl2",
+      "exaggeration": 0,
+      "file": "webgl2-e0.png",
+      "stats": {
+        "gridSize": 256,
+        "contourLines": 36,
+        "contourSegments": 16340,
+        "hachures": 577,
+        "lastUpdateMs": 25.900000035762787
+      },
+      "timings": {
+        "preStepMs": 471.0999999642372,
+        "mountMs": 18.299999952316284,
+        "firstRenderMs": 153.69999998807907
+      }
+    },
+    {
+      "backend": "webgl2",
+      "requested": "webgl2",
+      "reported": "webgl2",
+      "exaggeration": 0.5,
+      "file": "webgl2-e0.5.png",
+      "stats": {
+        "gridSize": 256,
+        "contourLines": 36,
+        "contourSegments": 16340,
+        "hachures": 577,
+        "lastUpdateMs": 25.099999964237213
+      },
+      "timings": {
+        "preStepMs": 449.69999998807907,
+        "mountMs": 15.200000047683716,
+        "firstRenderMs": 55.30000001192093
+      }
+    },
+    {
+      "backend": "webgl2",
+      "requested": "webgl2",
+      "reported": "webgl2",
+      "exaggeration": 1,
+      "file": "webgl2-e1.png",
+      "stats": {
+        "gridSize": 256,
+        "contourLines": 36,
+        "contourSegments": 16340,
+        "hachures": 577,
+        "lastUpdateMs": 31.100000023841858
+      },
+      "timings": {
+        "preStepMs": 473.5,
+        "mountMs": 22.80000001192093,
+        "firstRenderMs": 55.89999997615814
+      }
+    }
+  ],
+  "crossfade": {
+    "webgpu": {
+      "size": [960, 641],
+      "meanAbsDiffPerChannel": 0.8043643829086496,
+      "svgInkWithin1px": {
+        "inkPixels": 34871,
+        "matchedFraction": 1
+      },
+      "canvasInkWithin1px": {
+        "inkPixels": 32629,
+        "matchedFraction": 1
+      },
+      "svgInkWithin2px": {
+        "inkPixels": 34871,
+        "matchedFraction": 1
+      },
+      "canvasInkWithin2px": {
+        "inkPixels": 32629,
+        "matchedFraction": 1
+      },
+      "paperSampleSvg": [250, 248, 242],
+      "paperSampleCanvas": [250, 248, 242]
+    },
+    "webgl2": {
+      "size": [960, 641],
+      "meanAbsDiffPerChannel": 0.809377708441671,
+      "svgInkWithin1px": {
+        "inkPixels": 34871,
+        "matchedFraction": 1
+      },
+      "canvasInkWithin1px": {
+        "inkPixels": 32524,
+        "matchedFraction": 1
+      },
+      "svgInkWithin2px": {
+        "inkPixels": 34871,
+        "matchedFraction": 1
+      },
+      "canvasInkWithin2px": {
+        "inkPixels": 32524,
+        "matchedFraction": 1
+      },
+      "paperSampleSvg": [250, 248, 242],
+      "paperSampleCanvas": [250, 248, 242]
+    }
+  },
+  "errors": [],
+  "browser": "156.0.8078.80",
+  "adapter": {
+    "vendor": "intel",
+    "architecture": "xe-2lpg",
+    "device": "",
+    "description": ""
+  },
+  "interaction": {
+    "webgpu": {
+      "liveUpdates": {
+        "stepBefore": 800,
+        "stepAfter": 1162
+      },
+      "midLift": {
+        "exaggeration": 0,
+        "canvasOpacity": 0.506333
+      },
+      "afterLift": {
+        "exaggeration": 1,
+        "layers": {
+          "contours": true,
+          "hachures": true,
+          "boundary": true,
+          "water": true,
+          "sediment": true
+        },
+        "canvasOpacity": 1,
+        "flatOpacity": 0,
+        "status": "Relief lifted: vertical scale ×3.00. No terrain values changed."
+      },
+      "keyboard": 0.01,
+      "reducedMotionImmediately": {
+        "exaggeration": 1,
+        "canvasOpacity": 1
+      }
+    },
+    "webgl2": {
+      "liveUpdates": {
+        "stepBefore": 800,
+        "stepAfter": 1160
+      },
+      "midLift": {
+        "exaggeration": 0,
+        "canvasOpacity": 0.518167
+      },
+      "afterLift": {
+        "exaggeration": 1,
+        "layers": {
+          "contours": true,
+          "hachures": true,
+          "boundary": true,
+          "water": true,
+          "sediment": true
+        },
+        "canvasOpacity": 1,
+        "flatOpacity": 0,
+        "status": "Relief lifted: vertical scale ×3.00. No terrain values changed."
+      },
+      "keyboard": 0.01,
+      "reducedMotionImmediately": {
+        "exaggeration": 1,
+        "canvasOpacity": 1
+      }
+    }
+  }
+}
