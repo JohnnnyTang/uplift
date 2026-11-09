@@ -1,5 +1,5 @@
 /** <!-- expert-review --> Frozen before execution; preregistration.md defines scope and gates. */
-import { DEFAULT_TERRAIN_CONFIG, type TerrainConfig } from "@hachure/terrain";
+import { DEFAULT_TERRAIN_CONFIG, type TerrainConfig } from "../../../../hachure/terrain/src/index";
 export const CHALLENGE_PROTOCOL = {
   id: "s1-w4-model-step-slope-break-v1",
   seeds: [1, 17, 101],

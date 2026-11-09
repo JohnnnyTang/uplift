@@ -8,7 +8,7 @@ import {
   type ReferenceLayers,
   type BudgetCounters,
   type ChannelResult,
-} from "@hachure/terrain";
+} from "../../../../hachure/terrain/src/index";
 import { ModelStepSlopeBreakTracker } from "../../../../hachure/runtime/src/challenge/model-steps";
 import { CHALLENGE_PROTOCOL as P, challengeConfig } from "./protocol";
 const delta = (a: ArrayLike<number>, b: ArrayLike<number>) => {

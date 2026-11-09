@@ -73,3 +73,9 @@ profile/candidate/budget/residual observation. Full terrain snapshots are not re
 the fixed seed, config and tool log reproduce them. Run all six arms exactly once
 for this protocol. A numerical failure is a failed scientific gate, independent of
 passing software tests.
+
+Pre-execution tooling correction: the first launch failed at module resolution,
+before creating a solver or executing an arm. The standalone docs runner now
+imports the existing terrain public entry point by a relative path; no config,
+criterion, seed, horizon or process rule changed. This correction was committed
+before the first actual run; source hashes record the corrected files.
