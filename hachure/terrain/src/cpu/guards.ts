@@ -44,6 +44,7 @@ export const CPU_ADMISSIBLE_RANGES: Readonly<Record<NumericConfigKey, Admissible
   rainMmPerHr: { min: 0, max: 50 },
   gravityMPerS2: { min: 9.81, max: 9.81 },
   pipeAreaM2: { min: 0.01, max: 100 },
+  manningNSPerMOneThird: { min: 0.025, max: 0.15 },
   dtSimSeconds: { min: 0.0001, max: 0.05 },
   morphAccelerationFactor: { min: 1, max: 1e9 },
   capacityCoefficient: { min: 0, max: 0.1 },

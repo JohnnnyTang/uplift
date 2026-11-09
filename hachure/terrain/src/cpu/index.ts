@@ -29,3 +29,4 @@ export {
   TerrainStabilityError,
   createCpuSolver,
 } from "./solver";
+export { WATER_COMPARISON_CONFIG, waterComparisonPreset } from "./comparison-fixtures";

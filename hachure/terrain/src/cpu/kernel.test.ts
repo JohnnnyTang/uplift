@@ -138,6 +138,7 @@ describe("pipe wave guard", () => {
       rainMmPerHr: 0,
       gravityMPerS2: 9.81,
       pipeAreaM2,
+      manningNSPerMOneThird: 0.035,
       capacityCoefficient: 0,
       erosionRatePerS: 0,
       depositionRatePerS: 0,

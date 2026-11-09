@@ -26,6 +26,8 @@ export interface TerrainConfig {
   readonly gravityMPerS2: number;
   /** Cross-sectional area of each virtual pipe (unit: square metres). */
   readonly pipeAreaM2: number;
+  /** Manning roughness n (seconds per metre to the one-third power). Provisional; expert review pending. */
+  readonly manningNSPerMOneThird: number;
   /** Fixed numerical time step of the hydraulic model (unit: simulated seconds). */
   readonly dtSimSeconds: number;
   /**
@@ -89,6 +91,7 @@ export const DEFAULT_TERRAIN_CONFIG: TerrainConfig = Object.freeze({
   seed: 1,
   rainMmPerHr: 10, // TODO(2A)
   gravityMPerS2: 9.81,
+  manningNSPerMOneThird: 0.035,
   pipeAreaM2: 20, // TODO(2A)
   dtSimSeconds: 0.05, // TODO(2A): must satisfy the CFL condition in model.md
   morphAccelerationFactor: 1, // TODO(2A): calibration, docs/science/time-scale.md
@@ -117,6 +120,7 @@ export const TERRAIN_CONFIG_LIMITS: Readonly<Record<NumericConfigKey, ConfigLimi
   rainMmPerHr: { min: 0, max: 500 },
   gravityMPerS2: { min: 1, max: 30 },
   pipeAreaM2: { min: 0.01, max: 10_000 },
+  manningNSPerMOneThird: { min: 0.025, max: 0.15 },
   dtSimSeconds: { min: 1e-4, max: 10 },
   morphAccelerationFactor: { min: 1, max: 1e9 },
   capacityCoefficient: { min: 0, max: 100 },

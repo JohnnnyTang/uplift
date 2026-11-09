@@ -32,7 +32,15 @@ const FORBIDDEN: [string, RegExp][] = [
 describe("worker-safe solver sources", () => {
   it("scans every solver source file", () => {
     expect(Object.keys(sources).sort()).toEqual(
-      ["./constants.ts", "./guards.ts", "./index.ts", "./kernel.ts", "./solver.ts", "./tools.ts"].sort(),
+      [
+        "./comparison-fixtures.ts",
+        "./constants.ts",
+        "./guards.ts",
+        "./index.ts",
+        "./kernel.ts",
+        "./solver.ts",
+        "./tools.ts",
+      ].sort(),
     );
   });
 
