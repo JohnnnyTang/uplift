@@ -1,0 +1,10 @@
+{
+  "utc": "2026-11-09T07:31:24.8273540Z",
+  "source": "PowerShell Get-CimInstance Win32_VideoController and Win32_Processor",
+  "cpu": "Intel(R) Core(TM) Ultra 7 258V",
+  "gpu": "Intel(R) Arc(TM) 140V GPU (16GB)",
+  "driverVersion": "32.0.101.8860",
+  "driverDate": "2026-06-24",
+  "execution": "Headless installed Chrome, WebGPU enabled; power/thermal state uncontrolled; engineering comparison, not classroom performance acceptance",
+  "baseCommit": "d29d639"
+}

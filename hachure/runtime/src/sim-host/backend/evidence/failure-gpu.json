@@ -1,0 +1,34 @@
+{
+  "utc": "2026-11-09T07:58:16.933Z",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "url": "http://127.0.0.1:4173/?backend=auto&debug",
+  "viewport": {
+    "width": 1366,
+    "height": 900
+  },
+  "book": {
+    "backend": "cpu-worker",
+    "grid": "128",
+    "backendReady": "true",
+    "step": "0",
+    "stateHash": "55fa29e96a44fd62",
+    "viewStep": "0",
+    "workerMs": "10.300000011920929",
+    "transferSchedulingMs": "0",
+    "snapshotMs": "4.100000023841858",
+    "batchSteps": "0",
+    "batchMs": "0",
+    "backendFailures": "[{\"backend\":\"webgpu\",\"reason\":\"WebGPU unavailable; select a CPU or flat backend\"}]"
+  },
+  "debug": {
+    "fps": "111",
+    "msPerStep": "pending",
+    "grid": "128",
+    "backend": "cpu-worker",
+    "seed": "1"
+  },
+  "scale": "320 m · east–west terrain distance",
+  "adapter": null,
+  "mockedUnavailable": "gpu",
+  "scope": "Actual book integration in headless Chrome; uncontrolled power/thermal conditions, no classroom frame-rate or expert-science acceptance"
+}

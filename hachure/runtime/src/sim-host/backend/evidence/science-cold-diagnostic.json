@@ -1,0 +1,20 @@
+{
+  "scope": "First page load against an isolated Vite fixture started with --force after an earlier unconfirmed full-suite stall",
+  "command": "pnpm exec vite --force --config e2e/fixture.config.ts --host 127.0.0.1 --port 4185 --strictPort",
+  "url": "http://127.0.0.1:4185/e2e/fixtures/science.html?backend=cpu-worker",
+  "browser": "Bundled Playwright Chromium; --use-angle=swiftshader --enable-unsafe-swiftshader; reduced motion",
+  "elapsedGotoToPredictionEnabledMs": 951,
+  "workerUrl": "http://127.0.0.1:4185/uplift/book/src/app/terrain.worker.ts?worker_file&type=module",
+  "pageErrors": [],
+  "consoleErrorsOrWarnings": [],
+  "failedRequestsOrHttpErrors": [],
+  "book": {
+    "backend": "cpu-worker",
+    "grid": "128",
+    "backendReady": "true",
+    "step": "0",
+    "stateHash": "55fa29e96a44fd62",
+    "backendFailures": "[]"
+  },
+  "interpretation": "The earlier disabled prediction gate did not reproduce. Optimizer/load timing remains an unconfirmed inference, not a diagnosis. No timeout or glue change was made."
+}

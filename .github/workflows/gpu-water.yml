@@ -1,4 +1,4 @@
-name: GPU water comparison
+name: GPU solver comparisons
 
 on:
   pull_request:
@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Clear committed local evidence before CI setup
-        run: rm -f hachure/terrain/src/compare/results-local.json
+        run: rm -f hachure/terrain/src/compare/results-local.json hachure/terrain/src/compare/full-results-local.json
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
@@ -30,3 +30,13 @@ jobs:
           if [ -f hachure/terrain/src/compare/results-local.json ]; then
             cat hachure/terrain/src/compare/results-local.json
           fi
+
+      - name: Upload actual comparison evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gpu-solver-evidence
+          path: |
+            hachure/terrain/src/compare/results-local.json
+            hachure/terrain/src/compare/full-results-local.json
+          if-no-files-found: warn

@@ -22,6 +22,10 @@ import {
   BOOK_PALETTE,
   SimHost,
   WorkerTransport,
+  createFlatTerrainSample,
+  createFlatTerrainTransport,
+  selectTerrainBackend,
+  type TerrainBackend,
   createSpreadLifecycle,
   publishTerrainSample,
   createPredict,
@@ -39,6 +43,8 @@ import {
   createPairedReplay,
   createChallengeWidget,
   committedExplanation,
+  createUniversityLayer,
+  universityDefaults,
   el,
   formatBoundNumber,
   type HostSample,
@@ -58,10 +64,15 @@ import "./lesson.css";
 /** The book wires public engine primitives; authored spread files remain declarative data. */
 export async function mountLesson(root: HTMLElement, spread: Spread, teacherNotes: string) {
   for (const [key, value] of Object.entries(BOOK_PALETTE)) root.style.setProperty(`--${key}`, value);
-  const host = new SimHost(
-    new WorkerTransport(new Worker(new URL("./terrain.worker.ts", import.meta.url), { type: "module" })),
-    spread.scene.stepsPerRealSecond,
-  );
+  const initialConfig = { ...DEFAULT_TERRAIN_CONFIG, ...spread.scene.params, seed: spread.scene.seed };
+  const calibration = {
+    status: V_VALLEY_SCIENCE_STATUS.calibration.status,
+    recordId: V_VALLEY_SCIENCE_STATUS.recordId,
+  };
+  const initialSample = await createFlatTerrainSample(initialConfig, calibration);
+  let selectedBackend: TerrainBackend = "flat";
+  let backendReady = false;
+  let host = new SimHost(createFlatTerrainTransport(initialSample), spread.scene.stepsPerRealSecond);
   const bindings = new BindingEngine({
     controls: spread.controls,
     probes: spread.probes,
@@ -201,6 +212,13 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   const rainSpec = spread.controls.find((control) => control.kind === "slider" && control.id === "rain");
   if (!rainSpec || rainSpec.kind !== "slider") throw new Error("The valley spread needs a rain control");
   const rainDefault = rainSpec.default;
+  const university = createUniversityLayer({
+    id: "valley-university",
+    defaults: { ...DEFAULT_TERRAIN_CONFIG, ...spread.scene.params },
+    configure: (patch) => host.configure(patch),
+    onError: showError,
+  });
+  equations.append(university.theory);
   const rain = createSlider({ ...rainSpec, label: rainSpec.label[level] }, rainSpec.default, (value) => {
     void host.configure({ rainMmPerHr: value }).catch(showError);
   });
@@ -228,6 +246,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
       void reset().catch(showError);
     },
   );
+  playback.reset.disabled = true;
   let paletteConfigKey = "";
   const palette = createToolPalette({
     id: "valley-tools",
@@ -298,6 +317,8 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     visualText,
     errorText,
     controls,
+    university.root,
+    university.hiddenNotice,
     ignores.root,
   );
   book.append(left, right);
@@ -307,7 +328,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     ? createDebugOverlay(root, () => ({
         gridSize: host.sample?.snapshot.gridSize,
         seed: host.sample?.config.seed,
-        backend: "cpu-worker",
+        backend: selectedBackend,
         renderer: view?.backend ?? "flat",
         batchSteps: host.timings.lastBatchSteps,
         batchMs: host.timings.lastBatchMs,
@@ -376,8 +397,10 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     keywords.update(level);
     equations.hidden = level !== "uni";
     time.update(bindings.render("{{scene.timeScale}}"));
-    playback.update(host.playing, !lifecycle.isControlEnabled("rain"));
-    palette.setEnabled(lifecycle.isControlEnabled("rain"));
+    const liveEnabled = backendReady && selectedBackend !== "flat" && lifecycle.isControlEnabled("rain");
+    university.update(sample, level, liveEnabled);
+    playback.update(host.playing, !liveEnabled);
+    palette.setEnabled(liveEnabled);
     if (sample) {
       visualText.textContent = `Fixed-section incision since reset: ${bindings.render("{{probe.incisionDepth}}")}. Sediment exported: ${bindings.render("{{probe.sedimentOut}}")}. ${sample.paths.current.complete ? "The current channel reaches the outlet." : "The current channel is incomplete; full-reach claims are unavailable."}`;
       const barM = (sample.snapshot.gridSize * sample.snapshot.metresPerCell) / 4;
@@ -406,6 +429,9 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
       paletteConfigKey = configKey;
       palette.refreshConfig(sample.config);
     }
+    book.dataset.backend = selectedBackend;
+    book.dataset.grid = String(sample.snapshot.gridSize);
+    book.dataset.backendReady = String(backendReady);
     book.dataset.step = String(sample.snapshot.step);
     book.dataset.stateHash = hashSnapshot(sample.snapshot);
     updateText();
@@ -442,6 +468,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
       if (disposed || !host.sample || !viewFrame) return;
       const candidate = createInkView({
         ...LESSON_VIEW,
+        backend: selectedBackend === "webgpu" ? "webgpu" : "webgl2",
         frame: viewFrame,
         camera: inkCamera(spread.scene.camera),
         onContextLost: (message) => {
@@ -485,13 +512,15 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
       if (!(await lift.done)) return;
     }
     lifecycle.completeLift();
-    rain.input.disabled = false;
-    speed.input.disabled = false;
+    rain.input.disabled = selectedBackend === "flat";
+    speed.input.disabled = selectedBackend === "flat";
     flap.reveal.disabled = !comparisonAtEnd;
     caption.textContent = view
       ? "The same contours now follow the raised surface. Blue is water; ochre stripes are sediment in transport."
-      : `Live contour fallback. ${viewError}`;
-    if (!reducedMotion.matches) host.play();
+      : selectedBackend === "flat"
+        ? "This device is showing the starting contour drawing. The recorded comparison remains available."
+        : `Live contour fallback. ${viewError}`;
+    if (!reducedMotion.matches && selectedBackend !== "flat") host.play();
     updateText();
   }
   async function reset() {
@@ -507,7 +536,12 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     rain.input.disabled = true;
     speed.input.disabled = true;
     await host.reset();
-    await host.configure({ rainMmPerHr: rainDefault });
+    if (selectedBackend !== "flat") {
+      await host.configure({
+        rainMmPerHr: rainDefault,
+        ...universityDefaults({ ...DEFAULT_TERRAIN_CONFIG, ...spread.scene.params }),
+      });
+    }
     rain.update(rainDefault);
     speed.update(1);
     view?.applyLiftState(FLAT_STATE);
@@ -540,17 +574,30 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   host.subscribe(renderSample);
   host.onError(showError);
   lifecycle.beginPrediction();
-  await host.initialize(
-    {
-      ...DEFAULT_TERRAIN_CONFIG,
-      ...spread.scene.params,
-      gridSize: 128,
-      metresPerCell: 10,
-      seed: spread.scene.seed,
-    },
-    { status: V_VALLEY_SCIENCE_STATUS.calibration.status, recordId: V_VALLEY_SCIENCE_STATUS.recordId },
+  await host.initialize(initialSample.config, calibration);
+  // Paint the process-derived flat diagram before device creation and shader compilation.
+  await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+  const selected = await selectTerrainBackend({
+    config: initialConfig,
+    calibration,
+    search: location.search,
+    createWorkerTransport: () =>
+      new WorkerTransport(new Worker(new URL("./terrain.worker.ts", import.meta.url), { type: "module" })),
+  });
+  host.dispose();
+  selectedBackend = selected.backend;
+  backendReady = true;
+  host = new SimHost(
+    selected.transport ?? createFlatTerrainTransport(selected.initialSample),
+    spread.scene.stepsPerRealSecond,
   );
-  const viewPromise = prepareView();
+  viewFrame = undefined;
+  host.subscribe(renderSample);
+  host.onError(showError);
+  book.dataset.backendFailures = JSON.stringify(selected.failures);
+  await host.initialize(selected.config, calibration);
+  const viewPromise = selectedBackend === "flat" ? Promise.resolve() : prepareView();
+  playback.reset.disabled = false;
   predict.root.disabled = false;
   function tick(now: number) {
     debug?.frame(now);

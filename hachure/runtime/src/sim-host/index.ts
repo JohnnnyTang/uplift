@@ -5,3 +5,4 @@ export * from "./transport";
 export * from "./worker-engine";
 export * from "./bindings";
 export * from "./catalogue";
+export * from "./backend/index";

@@ -1,0 +1,10 @@
+{
+  "utc": "2026-11-09T08:01:18.6160447Z",
+  "source": "PowerShell Win32_VideoController / Win32_Processor",
+  "gpu": "Intel(R) Arc(TM) 140V GPU (16GB)",
+  "driverVersion": "32.0.101.8860",
+  "driverDate": "2026-06-25T00:00:00.0000000Z",
+  "cpu": "Intel(R) Core(TM) Ultra 7 258V",
+  "browser": "Installed Chrome with --enable-unsafe-webgpu; headless",
+  "execution": "Uncontrolled power/thermal conditions; not AC1 classroom acceptance"
+}

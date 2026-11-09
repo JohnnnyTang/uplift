@@ -1,6 +1,14 @@
-import { WebGPURenderer, StorageBufferAttribute, type ComputeNode, type Node } from "three/webgpu";
+import {
+  Renderer,
+  WebGPUBackend,
+  StandardNodeLibrary,
+  StorageBufferAttribute,
+  type ComputeNode,
+  type Node,
+} from "three/webgpu";
 import { Fn, storage, instanceIndex, uint, float, vec4, max, wgslFn } from "three/tsl";
 import { type TerrainConfig, type TerrainState, resolveTerrainConfig } from "../contract/index";
+import { FullProcess } from "./process";
 import { splitElevation, validateWaterStage } from "./data";
 import { rainWgsl, pipeWgsl, limitWgsl, gatherWgsl, diagnosticWgsl, guardWgsl, changeWgsl } from "./shaders";
 
@@ -17,6 +25,10 @@ export interface WaterSnapshot {
   readonly gridSize: number;
   readonly metresPerCell: number;
   readonly waterM: Float32Array;
+  readonly material?: Float32Array;
+  readonly totals?: Float32Array[];
+  readonly bedrockM: Float64Array;
+  readonly sedimentM: Float64Array;
   /** West, east, north, south, interleaved per cell, in m³/s. */
   readonly fluxM3PerS: Float32Array;
   readonly velocityXMPerS: Float32Array;
@@ -31,16 +43,20 @@ export interface WaterSnapshot {
 export interface GpuWaterOptions {
   /** Fixed extra depth input, m/s per cell (e.g. a spring divided by cell area). */
   readonly sourceRateMPerS?: Float32Array;
+  /** Internal full-process mode; createGpuTerrainSolver exposes the complete contract. */
+  readonly fullProcesses?: boolean;
   /** Fixed outlet receiving elevation, metres. Defaults to initial outlet ground. */
   readonly outletBaseLevelM?: number;
 }
 
 /**
- * Managed WebGPU water stage. Deliberately not TerrainSolver: erosion/transport/budgets belong to 4A.
+ * Managed water core, optionally assembled with full process passes by GpuTerrainSolver.
+ * The default water-only entry still rejects active omitted processes.
  * Configuration is immutable per run; every kernel reads old buffers and has one writer per output.
  */
 export class GpuWaterSolver {
   readonly backend = "webgpu-water";
+  private readonly full: FullProcess | undefined;
   private readonly attributes: StorageBufferAttribute[] = [];
   private readonly initialKernels: ComputeNode[];
   private readonly device: GPUDevice;
@@ -56,6 +72,7 @@ export class GpuWaterSolver {
   private readonly flux: StorageBufferAttribute[];
   private readonly status: StorageBufferAttribute;
   private readonly base: Float32Array;
+  private readonly baseAttribute: StorageBufferAttribute;
   private readonly datumM: number;
   private parity = 0;
   private chain: Promise<unknown> = Promise.resolve();
@@ -65,16 +82,18 @@ export class GpuWaterSolver {
   private steps = 0;
   private version = 0;
   private lastSampleMs = -Infinity;
+  private mutationSequence = 0;
+  private readSequence = -1;
 
   constructor(
-    private readonly renderer: WebGPURenderer,
+    private readonly renderer: Renderer,
     readonly config: TerrainConfig,
     state: TerrainState,
     options: GpuWaterOptions = {},
   ) {
     config = resolveTerrainConfig(config);
     this.config = config;
-    validateWaterStage(config, state);
+    validateWaterStage(config, state, options.fullProcesses);
     const split = splitElevation(state, options.sourceRateMPerS);
     const outlet = state.outlet.y * config.gridSize + state.outlet.x;
     const outletBase =
@@ -99,7 +118,9 @@ export class GpuWaterSolver {
       return attr;
     };
     const buffer = (attr: StorageBufferAttribute) => storage(attr, "vec4", attr.count);
-    const base = buffer(allocate(this.base));
+    this.baseAttribute = allocate(this.base);
+    const base = buffer(this.baseAttribute);
+    this.full = options.fullProcesses ? new FullProcess(renderer, config, state, allocate) : undefined;
     this.changes = allocate(cells);
     const changes = buffer(this.changes);
     this.delta = allocate(cells);
@@ -155,7 +176,9 @@ export class GpuWaterSolver {
     const changeFn = wgslFn(changeWgsl);
     this.changeKernel = Fn(() => {
       const i = instanceIndex;
-      changes.element(i).assign(changeFn({ old: changes.element(i), delta: delta.element(i).x }));
+      changes
+        .element(i)
+        .assign(changeFn({ old: changes.element(i), delta: delta.element(i).x, loose: delta.element(i).y }));
     })().compute(cells, [64]);
     const reductionKernels: ComputeNode[] = [];
     let reductionParity = 0;
@@ -189,7 +212,9 @@ export class GpuWaterSolver {
           rainFn({
             a: oldWater.element(i),
             base: base.element(i),
-            change: changes.element(i),
+            change: this.full
+              ? vec4(changes.element(i).x.add(changes.element(i).z), 0, 0, 0)
+              : changes.element(i),
             dt: float(dt),
             rain: float(config.rainMmPerHr),
           }),
@@ -266,14 +291,33 @@ export class GpuWaterSolver {
         nextWater.element(i).assign(accepted.select(candidateWater.element(i), oldWater.element(i)));
         nextFlux.element(i).assign(accepted.select(candidateFlux.element(i), oldFlux.element(i)));
       })().compute(cells, [64]);
-      return [rainKernel, fluxKernel, gatherKernel, ...reductionKernels, guardKernel, commitKernel];
+      const full = this.full?.build(
+        base,
+        changes,
+        rain,
+        candidateWater,
+        candidateFlux,
+        reductions[0],
+        status,
+      );
+      return [
+        rainKernel,
+        fluxKernel,
+        gatherKernel,
+        ...(full?.before ?? []),
+        ...reductionKernels,
+        guardKernel,
+        commitKernel,
+        ...(full?.commit ?? []),
+      ];
     });
   }
   get stepCount() {
     return this.steps;
   }
-  private enqueue<T>(action: () => Promise<T>): Promise<T> {
+  private enqueue<T>(action: () => Promise<T>, mutation = true): Promise<T> {
     if (this.disposed) return Promise.reject(new Error("GPU water solver is disposed"));
+    if (mutation) this.mutationSequence++;
     const result = this.chain.then(action);
     this.chain = result.catch(() => undefined);
     return result;
@@ -301,9 +345,11 @@ export class GpuWaterSolver {
     });
   }
   /** Diagnostic/4A primitive: add bedrock increments in a separate compensated GPU lane. */
-  addElevationChange(deltaM: Float32Array, repetitions = 1): Promise<void> {
+  addElevationChange(deltaM: Float32Array, repetitions = 1, looseDeltaM?: Float32Array): Promise<void> {
     if (
       deltaM.length !== this.config.gridSize ** 2 ||
+      (looseDeltaM !== undefined &&
+        (looseDeltaM.length !== deltaM.length || !Array.from(looseDeltaM).every(Number.isFinite))) ||
       !Array.from(deltaM).every(Number.isFinite) ||
       !Number.isInteger(repetitions) ||
       repetitions < 1 ||
@@ -316,7 +362,10 @@ export class GpuWaterSolver {
     return this.enqueue(async () => {
       if (this.failure) throw new Error(`GPU water halted: ${this.failure}`);
       const array = this.delta.array as Float32Array;
-      for (let i = 0; i < copy.length; i++) array[i * 4] = copy[i];
+      for (let i = 0; i < copy.length; i++) {
+        array[i * 4] = copy[i];
+        array[i * 4 + 1] = looseDeltaM?.[i] ?? 0;
+      }
       this.delta.needsUpdate = true;
       for (let i = 0; i < repetitions; i++) this.renderer.compute(this.changeKernel);
       // Synchronise only this explicit diagnostic operation; future erosion writes the resident lane.
@@ -325,15 +374,46 @@ export class GpuWaterSolver {
       this.version++;
     });
   }
+  /** Serialized tool upload; untouched split elevation lanes remain resident. */
+  updateMaterial(material: Float32Array, sources: Float32Array): Promise<void> {
+    return this.enqueue(async () => {
+      if (!this.full || this.failure) throw new Error("Full GPU solver must be live for tools");
+      const uploaded = new StorageBufferAttribute(material.slice(), 4);
+      const sourceData = this.base.slice();
+      for (let i = 0; i < sources.length; i++) sourceData[i * 4 + 3] = sources[i];
+      const sourceUpload = new StorageBufferAttribute(sourceData, 4);
+      const a = storage(uploaded, "vec4", uploaded.count),
+        b = storage(this.full.material, "vec4", uploaded.count);
+      const c = storage(sourceUpload, "vec4", uploaded.count),
+        d = storage(this.baseAttribute, "vec4", uploaded.count);
+      const kernel = Fn(() => {
+        const i = instanceIndex;
+        b.element(i).assign(a.element(i));
+        d.element(i).assign(c.element(i));
+      })().compute(uploaded.count, [64]);
+      try {
+        this.renderer.compute(kernel);
+        await this.renderer.getArrayBufferAsync(this.full.material, null, 0, 16);
+        this.version++;
+      } finally {
+        kernel.dispose();
+        uploaded.dispose();
+        sourceUpload.dispose();
+      }
+    });
+  }
   /** Atomic diagnostic snapshot. Calls coalesce and mutations wait until all fields have been copied. */
   snapshot(): Promise<WaterSnapshot> {
-    if (this.readInFlight) return this.readInFlight;
-    this.readInFlight = this.enqueue(async () => {
-      const [waterBytes, fluxBytes, changeBytes, statusBytes] = await Promise.all([
+    if (this.disposed) return Promise.reject(new Error("GPU water solver is disposed"));
+    if (this.readInFlight && this.readSequence === this.mutationSequence) return this.readInFlight;
+    const sequence = this.mutationSequence;
+    const read = this.enqueue(async () => {
+      const [waterBytes, fluxBytes, changeBytes, statusBytes, full] = await Promise.all([
         this.renderer.getArrayBufferAsync(this.water[this.parity]),
         this.renderer.getArrayBufferAsync(this.flux[this.parity]),
         this.renderer.getArrayBufferAsync(this.changes),
         this.renderer.getArrayBufferAsync(this.status),
+        this.full?.snapshot(),
       ]);
       if (this.gpuError) throw this.gpuError;
       const water = new Float32Array(waterBytes),
@@ -345,13 +425,17 @@ export class GpuWaterSolver {
         u = new Float32Array(cells),
         v = new Float32Array(cells),
         groundM = new Float64Array(cells),
+        bedrockM = new Float64Array(cells),
+        sedimentM = new Float64Array(cells),
         elevationChangeM = new Float32Array(cells);
       for (let i = 0; i < cells; i++) {
         waterM[i] = water[i * 4];
         u[i] = water[i * 4 + 1];
         v[i] = water[i * 4 + 2];
         elevationChangeM[i] = changes[i * 4];
-        groundM[i] = this.datumM + this.base[i * 4] + this.base[i * 4 + 1] + changes[i * 4];
+        bedrockM[i] = this.datumM + this.base[i * 4] + changes[i * 4];
+        sedimentM[i] = this.base[i * 4 + 1] + changes[i * 4 + 2];
+        groundM[i] = bedrockM[i] + sedimentM[i];
       }
       return {
         step: status[2],
@@ -359,6 +443,9 @@ export class GpuWaterSolver {
         gridSize: this.config.gridSize,
         metresPerCell: this.config.metresPerCell,
         waterM,
+        bedrockM,
+        sedimentM,
+        ...(full ? { material: full.material, totals: full.totals } : {}),
         fluxM3PerS: flux,
         velocityXMPerS: u,
         velocityYMPerS: v,
@@ -368,10 +455,12 @@ export class GpuWaterSolver {
         transportCourant: status[3],
         failure: this.failure,
       };
-    }).finally(() => {
-      this.readInFlight = null;
+    }, false).finally(() => {
+      if (this.readInFlight === read) this.readInFlight = null;
     });
-    return this.readInFlight;
+    this.readSequence = sequence;
+    this.readInFlight = read;
+    return read;
   }
   /** View/probe sampling: at most 2 Hz and one atomic read in flight; skipped samples do not queue. */
   sample(nowMs: number): Promise<WaterSnapshot> | null {
@@ -385,9 +474,14 @@ export class GpuWaterSolver {
     await this.chain;
     for (const kernel of new Set([...this.kernels.flat(), ...this.initialKernels, this.changeKernel]))
       kernel.dispose();
+    this.full?.dispose();
     this.attributes.forEach((attribute) => attribute.dispose());
     this.device.removeEventListener("uncapturederror", this.onGpuError);
-    this.renderer.dispose();
+    try {
+      await this.renderer.dispose();
+    } finally {
+      this.device.destroy();
+    }
   }
 }
 
@@ -396,15 +490,31 @@ export async function createGpuWaterSolver(
   state: TerrainState,
   options: GpuWaterOptions = {},
 ): Promise<GpuWaterSolver> {
-  validateWaterStage(config, state);
-  const renderer = new WebGPURenderer();
+  validateWaterStage(config, state, options.fullProcesses);
+  // The convenience WebGPURenderer silently installs a WebGL fallback. Compute
+  // must reject before that path (including devices with no graphics context).
+  if (typeof navigator === "undefined" || !navigator.gpu)
+    throw new Error("WebGPU unavailable; select a CPU or flat backend");
+  const adapter = await navigator.gpu.requestAdapter({ powerPreference: "high-performance" });
+  if (!adapter) throw new Error("WebGPU adapter unavailable; select a CPU or flat backend");
+  const device = await adapter.requestDevice();
+  const renderer = new Renderer(new WebGPUBackend({ device }), { getFallback: null });
+  renderer.library = new StandardNodeLibrary();
+  let initialized = false;
   try {
     await renderer.init();
-    if (!(renderer.backend as unknown as { isWebGPUBackend?: boolean }).isWebGPUBackend)
-      throw new Error("GPU water requires WebGPU; use CPU fallback instead of WebGL2 compute");
+    initialized = true;
     return new GpuWaterSolver(renderer, resolveTerrainConfig(config), state, options);
   } catch (error) {
-    renderer.dispose();
+    // Renderer.dispose() re-awaits init; calling it after failed init would reject
+    // again. Destroying our explicitly owned device releases partial GPU resources.
+    try {
+      if (initialized) await renderer.dispose();
+    } finally {
+      device.destroy();
+    }
     throw error;
   }
 }
+
+export { GpuTerrainSolver, createGpuTerrainSolver } from "./solver";

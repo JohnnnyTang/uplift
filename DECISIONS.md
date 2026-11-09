@@ -923,3 +923,133 @@ threshold, historical outcome, release approval or geological-time claim changes
 The stage plan records this explicit separation of implementation integration
 from acceptance. The owner requests a human listening preview before merging 4D,
 so 4D and 4F must wait in the prescribed order.
+
+### D-S1-W4-4A · 2026-11-09 · Complete guarded GPU solver and equal-domain fallback tiers
+
+<!-- expert-review -->
+
+**Decision.** Extend the managed water pipeline with the CPU model's capacity
+exchange, flux-form suspension transport, thermal slumping, evaporation and
+stranding. Full-process candidates and every ledger pass share the resident
+latched guard before commit. Split passes fit the portable eight-storage-buffer
+limit; no float atomics or increased adapter limits are required. Keep the
+water-only API and original evidence separate from the complete `/gpu` factory.
+No process equation, science default, historical experiment result, calibration
+approval or pending challenge is changed. Sources are the existing
+[model](docs/science/model.md) and
+[hydraulic derivation](docs/science/hydraulic-resistance.md).
+
+**Precision and budgets.** Preserve compensated bedrock changes and add a
+compensated loose-material change lane: even ordinary loose thickness can swallow
+small erosion under absolute Float32 updates. Per-cell direct-transfer counters
+use compensated additions and deterministic fixed-tree reductions. Authoritative
+Float64 reconstruction serves baseline-aware probes and conservation tests; the
+contract's Float32 drawing snapshot cannot resolve every tiny stock difference
+at a high absolute datum. The shared contract uses the identical CPU catchment
+fixture, while independent high-datum tests check actual sub-ULP erosion and
+precision across configuration/tool events. No shared threshold was relaxed.
+
+**Ordering and tools.** All mutations and full reads serialize. Snapshot
+coalescing keys on the queued mutation sequence, so reads after queued operations
+cannot return an earlier state. Automatic readback remains capped at two hertz;
+mesh and contours consume the same host sample. Shared CPU brush evaluation
+preserves clamps/smoothing semantics, followed by managed GPU uploads and
+compensated resident commits; there is no CPU shadow stepping. Configuration
+changes preserve both elevation residuals, source rates, outlet level, counters
+and elapsed model time while rebuilding managed pipelines. These are event
+operations; embedding controls should coalesce repeated slider events.
+
+**Fallback.** Public runtime selection tries WebGPU256 at 5 m cells, CPU Worker128
+at 10 m with WebGL2 rendering, CPU64 at 20 m, then a genuine static preset drawing.
+Every tier covers 1280 m. Pipe area scales as `0.2 × cellSide²`, within existing
+CFL/roughness guards; this is engineering scaling, not field calibration. Auto
+selection warms/measures fixed steps against a compute-only 30 fps admission
+budget, then resets before publishing its initial sample. It degrades grid size
+without changing fixed dt. Diagnostic `?backend=` flags force each tier; failed
+forced tiers report why they returned flat. WebGL2 compute remains excluded.
+Calibration metadata and changed init arguments cannot be hidden by cached reads.
+The read-only flat transport keeps the genuine step-zero sample and rejects live
+controls; it can paint before GPU/Worker initialization.
+
+**Evidence and boundaries.** Actual installed headless Chrome runs on Intel Arc
+140V driver 32.0.101.8860. The shared contract, full CPU/GPU comparison, conservation,
+real cumulative erosion precision, hidden-lane/budget replay, atomic rejection,
+mutation ordering, tools/config/reset and every real forced backend transport
+pass. Full results and driver metadata are in `hachure/terrain/src/compare/`.
+Headless compute/readback timings exclude rendered frame cost and uncontrolled
+power/thermal conditions: visible Chrome classroom AC1 remains 5A. Book mounting
+and its forced-tier browser checks are coordinated by the lead; 4A's only owned
+path exception is the required runtime barrel export, plus this append-only log.
+Human accessibility, expert science sign-off and historical failed morphology
+results remain unchanged.
+
+## D-W4-4A-INTEGRATION · Mount the selected solver behind a real initial drawing
+
+2026-11-09 · Lead integration. Paint a genuine step-zero preset before device
+creation, then mount the selected complete solver using the shared SimHost.
+All tiers cover the same configured domain. The flat tier uses a read-only host,
+keeps live controls disabled, and preserves the recorded prediction/comparison.
+Diagnostics report the selected solver separately from the rendering backend.
+CPU-specific regression tests explicitly request that tier. CI removes committed
+local comparison packets before running and uploads only newly generated evidence.
+
+Independent review fixed mid-run timestep changes, mutable queued tool inputs and
+rejected-step counters. Actual unavailable-device tests exposed Three's unwanted
+WebGL compute fallback and a cleanup rejection; the managed compute factory now
+requires WebGPU and owns device cleanup. The fixed APIs pass targeted regressions.
+
+Integrated validation: pnpm check passes 451 tests; 68 actual GPU tests and a fresh
+16-case Chromium suite pass. Installed Chrome selects and renders WebGPU at 256
+cells per side automatically and when forced. The production bundle is below its
+configured budget. One preliminary dev-fixture readiness stall did not reproduce
+in forced-cold, isolated or fresh full runs; preserve that uncertainty in the
+backend evidence handover rather than assigning an unsupported cause.
+
+Minimal book mounting, test-helper and GPU workflow changes are necessary glue
+outside the engine session's owned paths. Headless evidence does not close 5A's
+classroom performance gate. GPU configuration currently rebuilds core resources;
+slider-drag responsiveness still needs that measured review. Challenge science,
+human listening and the other Wave 4 integrations remain open.
+
+## 2026-11-09 — S1 W4 4B: university diagnostics and hidden parameters
+
+The university layer reads one completed HostSample for its long profile and
+sediment budget. The profile samples the fixed reset route, not the newly routed
+channel: changing the traced route must not masquerade as incision. It labels
+incomplete routes, omitted terminal remainders, model datum and independently
+rescaled axes. A subcell route is unavailable rather than fabricated.
+
+Erosion, deposition and export are cumulative counters; suspension is a current
+stock recomputed from the sampled layer. The page distinguishes these and includes
+the external reader-tool ledger instead of presenting their sum as a closed budget.
+All displayed measurements and parameter values derive from the sampled state,
+effective scene defaults or public admissible ranges. Volumes retain model-m³
+scope; no field calibration or geological clock approval was added.
+
+The existing spread-authored KaTeX stream-power comparison and expanded university
+ignores are preserved. Added expert-review-marked context defines the symbols and
+explicitly distinguishes the capacity solver's relaxation rate from stream-power K.
+There is no live K or claimed dimensional mapping.
+
+Capacity coefficient, erosion relaxation and deposition relaxation are university
+controls using existing provisional CPU reader ranges. Reading-level changes only
+change visibility. High school shows bound current/default values when these hidden
+controls differ. Its explicit restore action configures only those parameters,
+keeping the terrain, model step and rain setting. Full experiment reset restores
+effective university defaults as well. Minimal approved book.ts wiring and a public
+widget barrel export are the only implementation changes outside the owned uni path.
+
+Evidence: widgets/uni/data.test.ts and widgets/uni/smoke.mjs; the latter saves
+1366px and 390px screenshots and a browser report beside the widget. Existing
+science/challenge pending states remain pending. Expert sign-off and human
+screen-reader/teaching review are still stage gates, not claimed by these checks.
+
+## 2026-11-09 — 4B integration after GPU backend selection
+
+University controls now share the backend readiness/live-control gate. The flat
+fallback exposes measurements but cannot configure live parameters. Full reset
+restores university defaults only on mutable backends. Both decision-log sides
+are retained during rebase. The additional e2e/university.spec.ts is lead-owned
+integration coverage for state-preserving restore, full reset and flat gating.
+Desktop/mobile installed-Chrome smoke passes after integration; human and expert
+acceptance remain open.

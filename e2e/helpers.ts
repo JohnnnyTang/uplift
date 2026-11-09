@@ -4,7 +4,9 @@ import data from "../hachure/terrain/src/validation/rain-comparison-data.json" w
 export async function ready(page: Page, url = "/") {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto(url);
+  const target = new URL(url, "http://127.0.0.1:4173");
+  if (!target.searchParams.has("backend")) target.searchParams.set("backend", "cpu-worker");
+  await page.goto(target.href);
   await expect(page.locator(".book")).toHaveAttribute("data-state-hash", /.+/);
   await expect(page.locator('input[name="prediction"]').first()).toBeEnabled();
   return errors;
