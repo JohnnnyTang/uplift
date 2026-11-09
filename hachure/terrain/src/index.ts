@@ -9,3 +9,8 @@ export const packageName = "@hachure/terrain";
 
 // Contracts (session 1A): config, state layout, solver interface, tools, probes.
 export * from "./contract/index";
+
+// Seeded RNG, presets and brush tools (session 2B).
+export * from "./rng/index";
+export * from "./presets/index";
+export * from "./tools/index";

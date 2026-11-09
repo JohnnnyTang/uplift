@@ -247,3 +247,58 @@ committed prediction unchanged. Evidence, limitations and tokens for 2E are in
 **Revisit if.** Real terrain integration makes CSS perspective unsuitable, or a later page-turn
 interaction needs decorative textures. Keep semantic DOM content even if those decorations change.
 Do not compress university text into a fixed-height projector page.
+
+<!-- expert-review -->
+
+### D-2B · 2026-11-08 · S1/W2/2B · Seeded RNG, the tilted-plateau preset and brush tools
+
+**Decision.**
+
+- **RNG.** `createRng(seed)` is xoshiro128\*\* seeded through SplitMix32 (`hachure/terrain/src/rng`).
+  `deriveSeed(seed, label)` gives an independent stream for each use, so a new draw in one place never
+  shifts another. ESLint bans `Math.random` in `hachure/terrain/**` (`no-restricted-properties`), and a
+  test lints a probe file to prove the rule fires.
+- **Preset metadata.** `TerrainPreset.create` returns only a state, but model.md needs the outlet's base
+  level "in the preset metadata" and the probes need the declared river source. So presets may add
+  `layout(config): PresetLayout` (outlet, open face, `baseLevelM`, the source as a ready-to-apply
+  `SpringOp`, and its cell). The 1A contract is unchanged; `PresetWithLayout extends TerrainPreset`.
+- **Geometry.** `tilted-plateau` implements the common protocol of `docs/science/validation-spec.md`
+  (5° south-falling plane, cross curvature 0.0002 /m, 1 m loose layer, hardness 0.2, a 0.1 m³/s spring at
+  the reference grid's row 8, south-centre outlet). Slope is the typed preset option `slopeDeg`, limited to
+  1–10° (parameters.md). Optional east–west `hardBands` give the AC3b geometry without a second preset.
+  The 0.01 m perturbation is bilinear noise on a fixed lattice of 128 intervals per side. That keeps it
+  resolution-independent, but it is smooth over two cells at 128² rather than independent per cell.
+  It has zero mean over lattice nodes and is bounded by the amplitude.
+- **Grid-size independence.** Everything is a function of position as a fraction of
+  `L = gridSize × metresPerCell`. **The same landscape at 128² and 256² therefore needs the same L:**
+  128² × 10 m and 256² × 5 m are two samplings of one 1280 m catchment (tested: 2×2 block means agree to
+  within 2 mm). 256² × 10 m would be a different, larger landscape. The id is `tilted-plateau` for every
+  grid and option set; options are readable on `preset.options`, and calibration metadata should record them.
+- **Raise adds loose sediment, not rock.** This follows parameters.md ("Add loose sediment"). It differs from
+  the `RaiseOp` doc comment ("Adds rock") and from the fake solver, which raises bedrock. Both are 1A-owned
+  and left unchanged. Dig and smooth remove sediment before bedrock. Smooth deposits as sediment, and harden
+  writes hardness only. Water and suspended sediment are never touched.
+- **Slope clamp.** The whole edit is scaled by one factor so that no cardinal neighbour pair of ground cells
+  ends steeper than `brushMaxSlopeDeg`. A pair that is already steeper may be eased but not steepened.
+  The factor scales the full brush profile, so the brush keeps its shape and smoothing stays conservative.
+- **Radius.** The radius is clamped to `[metresPerCell, min(brushMaxRadiusM, L/4)]` (parameters.md).
+  Clamping up to one cell also reports `"radius"`, although the `ClampReason` comment says only "above".
+  An empty range disables the brush (`applied: false`, `"radius"`). `brushRadiusRangeM` exposes the
+  range so that controls can bind to it.
+- **Bad inputs throw.** NaN or infinite values, negative height or depth, a radius ≤ 0 and smooth strength
+  outside [0, 1] throw `RangeError` rather than clamping silently: no control produces them, and
+  `ClampReason` has no code for strength.
+- **Volume.** `volumeChangeM3` is measured from the stored float32 values, summed in float64. A solver that
+  adds it to `toolNetM3` keeps its solid budget exactly closed. Smooth conserves volume up to float32 storage
+  rounding, and its report carries that residue.
+
+**Why.** Determinism (AC2), input clamping with an acknowledgeable report (AC9), and one implementation of
+the validation setup that 2A, 2F, 3A and 3B reuse. The API is small because 2A and 3A consume it next.
+
+**Revisit if.** The lead chooses a larger domain for the 256² tier. In that case the "same landscape"
+requirement changes, and 4A must recheck `pipeAreaM2` (candidate `0.2 × metresPerCell²`) and the CFL
+guards at 5 m cells for this design. Also revisit if expert review changes the protocol geometry or
+the material rules for the tools, or if replay has to be bitwise across JavaScript engines. The preset
+and brushes call `Math.tan`, `Math.cos` and `Math.hypot`, whose last bit the spec does not fix; the
+RNG is pure integer arithmetic. Recommended 1A follow-up: change the `RaiseOp` comment to "adds loose
+sediment", and let the fake raise sediment.
