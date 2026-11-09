@@ -1263,3 +1263,56 @@ Explicit reset restores authored configuration, terrain and sources, pauses and
 resets presentation while retaining level. Instrumentation v1 remains confined
 to the existing research example. Product, science, human accessibility and target
 hardware acceptance remain separately open. Dependents start only after 5A merge.
+
+## D-5BCD — Parallel implementation decisions (2026-11-09)
+
+The owner authorized sessions 5B, 5C and 5D in parallel with GPT-6.1 Sol at high
+reasoning, with the lead responsible for shared decisions. All start from merged
+5A commit 8069a7f in isolated session worktrees. Keep the frozen contour/water
+sequence and composition: the real ink illustration dominates, Georgia carries
+the book text, and meaningful blue water plus non-colour marks explain quantities.
+The installed frontend-design skill guides frontend work; the Playwright skill
+was downloaded through the installer Git fallback for browser verification.
+
+Approve additive shell suspend/resume methods for 5E research navigation. They
+preserve retained scene instances without revising the frozen base contract or
+migrating the default app ahead of its assigned session. No new animation library
+is required for the restrained page turn.
+
+For authored terrain, make valley-specific diagnostics explicitly unavailable.
+Do not present empty legacy compatibility values as observations of a moved source.
+The existing solver rejects off-grid source operations; UI constraints may bound
+input before submission, but source markers update only after accepted operations.
+This keeps presentation and model aligned without changing solver semantics.
+
+Approve 5D's prospective source-location comparison on three authored slope
+variants (0.03, 0.04, 0.05), since changing a seed does not vary explicitly authored
+geometry. Register the complete configuration, source-only intervention, fixed
+horizon, display threshold and directional wet-cell comparison before acceptance
+runs; retain all outcomes. The intended claim concerns wet extent on these prepared
+surfaces, not symmetric outlets, general catchment laws or field rates. Geometry
+and rendered checks independently support the contour identity claim. Expert,
+human usability/accessibility and hardware review remain pending.
+
+Approve additive `SimHost.step(steps): Promise<void>` and `resume(playing=false)`
+for the new scene adapter. Explicit fixed-step response must share host mutation
+ordering and quiescence rather than bypassing it with raw transport requests.
+Reopening a settled host without autoplay lets reduced-motion readers continue
+editing a source. Preserve the retained fractional fixed-step state and omit
+wall-clock catch-up on return. These are bounded runtime APIs, not new physics.
+
+Approve placing the quiet research link in the existing book header and reducing
+navigation's vertical padding. The first desktop capture's separate research row
+pushed the full composition beyond 1366x768. Reuse existing chrome space while
+retaining 18px text, 44px targets and the dominant illustration; phone headers
+wrap naturally. This addresses viewport fit without shrinking the lesson.
+
+Approve hiding the redundant lift slider on the water lesson: source placement
+is its primary gesture; the contour lesson retains its accessible lift control.
+The rendered evidence showed readable depth and retained old water, so UI scope
+can be simplified without inventing another control or changing the model.
+
+GPU checks distinguish unavailable adapters from implementation failures. The
+forced software-rendering setup had no WebGPU adapter; native Chrome subsequently
+passed authored CPU/Worker/GPU comparison and the existing GPU suite. This is
+browser correctness evidence, not target-device performance acceptance.
