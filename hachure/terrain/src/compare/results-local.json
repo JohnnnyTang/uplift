@@ -1,0 +1,773 @@
+{
+  "scope": "Real water stage; not full erosion or classroom performance acceptance",
+  "tolerances": {
+    "waterM": {
+      "absolute": 2e-7,
+      "relative": 0.0005
+    },
+    "fluxM3PerS": {
+      "absolute": 0.000002,
+      "relative": 0.0005
+    },
+    "velocityMPerS": {
+      "absolute": 0.00002,
+      "relative": 0.0005
+    }
+  },
+  "cases": [
+    {
+      "name": "dry/0.025/0.05",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.025,
+      "water": {
+        "maxAbsolute": 4.297189919844719e-12,
+        "maxScaled": 0.000020905248517185547,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 2.8421709430404007e-13,
+        "maxScaled": 1.4209096872560404e-7,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 5.576588635314295e-10,
+        "maxScaled": 0.000027882942787842216,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 1.862645149230957e-9,
+        "maxScaled": 0.00008380351125717147,
+        "failed": 0
+      },
+      "wave": 0.0001266713225049898,
+      "transport": 0.000022268253815127537
+    },
+    {
+      "name": "dry/0.025/0.0125",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.0125,
+      "roughness": 0.025,
+      "water": {
+        "maxAbsolute": 1.1568703957682235e-12,
+        "maxScaled": 0.000005744457399096951,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 4.033619345109561e-14,
+        "maxScaled": 2.016809672534443e-8,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 7.267207946526355e-10,
+        "maxScaled": 0.00003633603907247789,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 2.3283064365386963e-10,
+        "maxScaled": 0.00001138990609223117,
+        "failed": 0
+      },
+      "wave": 0.000015259678548318334,
+      "transport": 0.0000022092926883487962
+    },
+    {
+      "name": "dry/0.035/0.05",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 4.377486349479206e-12,
+        "maxScaled": 0.000021296158150022677,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 3.410605131648481e-13,
+        "maxScaled": 1.705152005823842e-7,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 2.377717467361151e-10,
+        "maxScaled": 0.000011888587266136501,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 1.3969838619232178e-9,
+        "maxScaled": 0.00006470336985638627,
+        "failed": 0
+      },
+      "wave": 0.00012030898506054655,
+      "transport": 0.000015905898180790246
+    },
+    {
+      "name": "dry/0.035/0.0125",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.0125,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 9.326209306236878e-13,
+        "maxScaled": 0.000004630943872766126,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 2.435786896617595e-14,
+        "maxScaled": 1.2178934483013811e-8,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 4.3864312182506637e-10,
+        "maxScaled": 0.000021932155850743585,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 3.4924596548080444e-10,
+        "maxScaled": 0.000016928027431464887,
+        "failed": 0
+      },
+      "wave": 0.000014628451026510447,
+      "transport": 0.0000015780663034092868
+    },
+    {
+      "name": "dry/0.15/0.05",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.15,
+      "water": {
+        "maxAbsolute": 8.286912229696223e-12,
+        "maxScaled": 0.00004031458550972652,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 2.551344552292889e-13,
+        "maxScaled": 1.2756722760650775e-7,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 1.1910795683078845e-9,
+        "maxScaled": 0.0000595539766420561,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 1.7462298274040222e-10,
+        "maxScaled": 0.000008572078183596477,
+        "failed": 0
+      },
+      "wave": 0.00010811445827130228,
+      "transport": 0.000003711375484272139
+    },
+    {
+      "name": "dry/0.15/0.0125",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.0125,
+      "roughness": 0.15,
+      "water": {
+        "maxAbsolute": 8.50082215042439e-13,
+        "maxScaled": 0.000004221098201826937,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 4.440892098500626e-15,
+        "maxScaled": 2.2204415070241505e-9,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 5.2425001839662144e-11,
+        "maxScaled": 0.000002621250088547631,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 5.820766091346741e-11,
+        "maxScaled": 0.000002889106775312733,
+        "failed": 0
+      },
+      "wave": 0.000013418600246950518,
+      "transport": 3.682154954276484e-7
+    },
+    {
+      "name": "wet/0.025/0.05",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.025,
+      "water": {
+        "maxAbsolute": 8.588044744101131e-8,
+        "maxScaled": 0.007147644674312773,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 7.748603820800781e-7,
+        "maxScaled": 0.06908122449769188,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 4.0617305785417557e-7,
+        "maxScaled": 0.01992254926649064,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 0.000001430511474609375,
+        "maxScaled": 0.004377970844582109,
+        "failed": 0
+      },
+      "wave": 0.007718163076788187,
+      "transport": 0.003287515603005886
+    },
+    {
+      "name": "wet/0.025/0.0125",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.0125,
+      "roughness": 0.025,
+      "water": {
+        "maxAbsolute": 6.7209428279702e-8,
+        "maxScaled": 0.006265204696819593,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 6.556510925292969e-7,
+        "maxScaled": 0.026952682367461994,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 2.2014137357473373e-7,
+        "maxScaled": 0.010986092657759626,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 0.0000012516975402832031,
+        "maxScaled": 0.0036653149787903407,
+        "failed": 0
+      },
+      "wave": 0.0019291006028652191,
+      "transport": 0.0008216608548536897
+    },
+    {
+      "name": "wet/0.035/0.05",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 8.13106981814582e-8,
+        "maxScaled": 0.0067983024671951775,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 5.364418029785156e-7,
+        "maxScaled": 0.0982623536436352,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 5.445772330858745e-7,
+        "maxScaled": 0.027220322760911974,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 0.000001043081283569336,
+        "maxScaled": 0.004096373080169799,
+        "failed": 0
+      },
+      "wave": 0.006778923328965902,
+      "transport": 0.002348241163417697
+    },
+    {
+      "name": "wet/0.035/0.0125",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.0125,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 8.159810141808443e-8,
+        "maxScaled": 0.007650463640148071,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 4.3958425521850586e-7,
+        "maxScaled": 0.035797045220762075,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 3.038403519894928e-7,
+        "maxScaled": 0.015170629739262531,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 8.642673492431641e-7,
+        "maxScaled": 0.0033942411810655923,
+        "failed": 0
+      },
+      "wave": 0.0016943408409133554,
+      "transport": 0.0005869009182788432
+    },
+    {
+      "name": "wet/0.15/0.05",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.15,
+      "water": {
+        "maxAbsolute": 8.089672852082397e-8,
+        "maxScaled": 0.007926607765517043,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 4.1415793816668156e-7,
+        "maxScaled": 0.20706703813231217,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 0.000001505039449511969,
+        "maxScaled": 0.07525077975800593,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 2.60770320892334e-7,
+        "maxScaled": 0.003508933680586393,
+        "failed": 0
+      },
+      "wave": 0.004978610668331385,
+      "transport": 0.0005479263490997255
+    },
+    {
+      "name": "wet/0.15/0.0125",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.0125,
+      "roughness": 0.15,
+      "water": {
+        "maxAbsolute": 1.0619346358861637e-7,
+        "maxScaled": 0.010410705873973056,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 1.8998980522155762e-7,
+        "maxScaled": 0.042870683287741504,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 2.1088635548949242e-7,
+        "maxScaled": 0.01042275247374207,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 2.7567148208618164e-7,
+        "maxScaled": 0.0036965540501351394,
+        "failed": 0
+      },
+      "wave": 0.001244383747689426,
+      "transport": 0.00013694365043193102
+    },
+    {
+      "name": "front/0.025/0.05",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.025,
+      "water": {
+        "maxAbsolute": 1.5940948446674374e-8,
+        "maxScaled": 0.0035655020013959453,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 1.0803341865539551e-7,
+        "maxScaled": 0.005965618807451109,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 5.276932779629817e-10,
+        "maxScaled": 0.000026384663550073842,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 3.5762786865234375e-7,
+        "maxScaled": 0.002507020629232344,
+        "failed": 0
+      },
+      "wave": 0.0038496949709951878,
+      "transport": 0.0018823958234861493
+    },
+    {
+      "name": "front/0.025/0.0125",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.0125,
+      "roughness": 0.025,
+      "water": {
+        "maxAbsolute": 2.0542639258061546e-8,
+        "maxScaled": 0.004108978437452059,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 1.4528632164001465e-7,
+        "maxScaled": 0.00673850615493217,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 7.26720683630333e-10,
+        "maxScaled": 0.00003633603352136297,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 3.5762786865234375e-7,
+        "maxScaled": 0.0028029046398415722,
+        "failed": 0
+      },
+      "wave": 0.0010230418993160129,
+      "transport": 0.0005091889179311693
+    },
+    {
+      "name": "front/0.035/0.05",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 1.6789213264437053e-8,
+        "maxScaled": 0.003601689895256971,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 8.381903171539307e-8,
+        "maxScaled": 0.005831797489721796,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 2.333550297439757e-10,
+        "maxScaled": 0.000011667751419130572,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 2.5331974029541016e-7,
+        "maxScaled": 0.0023893667736438642,
+        "failed": 0
+      },
+      "wave": 0.0036608974914997816,
+      "transport": 0.0013846979709342122
+    },
+    {
+      "name": "front/0.035/0.0125",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.0125,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 2.106251475661458e-8,
+        "maxScaled": 0.004166126344658883,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 1.0617077350616455e-7,
+        "maxScaled": 0.0065359040018271985,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 4.3864312182506637e-10,
+        "maxScaled": 0.000021932155850743585,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 2.5331974029541016e-7,
+        "maxScaled": 0.0025465546883330767,
+        "failed": 0
+      },
+      "wave": 0.0009558383608236909,
+      "transport": 0.00036655666190199554
+    },
+    {
+      "name": "front/0.15/0.05",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.15,
+      "water": {
+        "maxAbsolute": 1.2608747828810052e-8,
+        "maxScaled": 0.002487405381785569,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 1.5366822481155396e-8,
+        "maxScaled": 0.0028783914177178114,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 1.1910792352409771e-9,
+        "maxScaled": 0.00005955395998871172,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 3.725290298461914e-8,
+        "maxScaled": 0.0009617611813840406,
+        "failed": 0
+      },
+      "wave": 0.0032645314931869507,
+      "transport": 0.00034273069468326867
+    },
+    {
+      "name": "front/0.15/0.0125",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.0125,
+      "roughness": 0.15,
+      "water": {
+        "maxAbsolute": 2.0790256955241504e-8,
+        "maxScaled": 0.004023894635649143,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 2.60770320892334e-8,
+        "maxScaled": 0.004784036301261987,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 5.2425001839662144e-11,
+        "maxScaled": 0.000002621250088547631,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 5.960464477539063e-8,
+        "maxScaled": 0.0015681656692384865,
+        "failed": 0
+      },
+      "wave": 0.0008240475435741246,
+      "transport": 0.00008684181375429034
+    },
+    {
+      "name": "spring/odd-grid",
+      "steps": 80,
+      "gridSize": 9,
+      "dt": 0.05,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 7.0686462325803e-11,
+        "maxScaled": 0.00019966425171236965,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 4.656612873077393e-10,
+        "maxScaled": 0.00009126983663101562,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 1.2303189578233287e-9,
+        "maxScaled": 0.00006151479488865782,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 7.450580596923828e-9,
+        "maxScaled": 0.00015308219432922103,
+        "failed": 0
+      },
+      "wave": 0.002362240105867386,
+      "transport": 0.0009338539093732834
+    },
+    {
+      "name": "outlet/0/4",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 8.40027805475152e-8,
+        "maxScaled": 0.006954538466204296,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 5.364418029785156e-7,
+        "maxScaled": 0.1605765801300349,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 8.984206942841411e-7,
+        "maxScaled": 0.04483438442987021,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 0.0000010728836059570312,
+        "maxScaled": 0.004243106105289396,
+        "failed": 0
+      },
+      "wave": 0.006960027851164341,
+      "transport": 0.0027591970283538103
+    },
+    {
+      "name": "outlet/7/4",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 8.40027805475152e-8,
+        "maxScaled": 0.006954538466204296,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 5.364418029785156e-7,
+        "maxScaled": 0.1605765801300349,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 8.984206942841411e-7,
+        "maxScaled": 0.04483438442987021,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 0.0000010728836059570312,
+        "maxScaled": 0.004243106105289396,
+        "failed": 0
+      },
+      "wave": 0.006960027851164341,
+      "transport": 0.0027591970283538103
+    },
+    {
+      "name": "outlet/4/0",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 7.414996145913011e-8,
+        "maxScaled": 0.007193326637533201,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 5.438923835754395e-7,
+        "maxScaled": 0.089126559330539,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 8.785427780821919e-7,
+        "maxScaled": 0.04366941251782131,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 0.000001043081283569336,
+        "maxScaled": 0.004099543047043062,
+        "failed": 0
+      },
+      "wave": 0.006778922863304615,
+      "transport": 0.002423696918413043
+    },
+    {
+      "name": "outlet/7/7",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 8.096720501005183e-8,
+        "maxScaled": 0.006798302484195946,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 5.364418029785156e-7,
+        "maxScaled": 0.07714902570405802,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 4.058192644151859e-7,
+        "maxScaled": 0.02028402942831037,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 0.000001043081283569336,
+        "maxScaled": 0.004096373080169799,
+        "failed": 0
+      },
+      "wave": 0.0067789251916110516,
+      "transport": 0.002348241861909628
+    },
+    {
+      "name": "brush-edited-water",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 8.186655253011876e-8,
+        "maxScaled": 0.0076598523368962895,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 9.08970832824707e-7,
+        "maxScaled": 0.10785219363911937,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 0.0000011862721294164658,
+        "maxScaled": 0.058554823651590024,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 0.0000013113021850585938,
+        "maxScaled": 0.005878324491957469,
+        "failed": 0
+      },
+      "wave": 0.009389974176883698,
+      "transport": 0.005675997585058212
+    },
+    {
+      "name": "determinism-first",
+      "steps": 80,
+      "gridSize": 8,
+      "dt": 0.05,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 8.13106981814582e-8,
+        "maxScaled": 0.0067983024671951775,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 5.364418029785156e-7,
+        "maxScaled": 0.0982623536436352,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 5.445772330858745e-7,
+        "maxScaled": 0.027220322760911974,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 0.000001043081283569336,
+        "maxScaled": 0.004096373080169799,
+        "failed": 0
+      },
+      "wave": 0.006778923328965902,
+      "transport": 0.002348241163417697
+    }
+  ],
+  "utc": "2026-11-09T04:42:31.034Z",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "adapter": {
+    "vendor": "intel",
+    "architecture": "xe-2lpg",
+    "device": "",
+    "description": "",
+    "isFallbackAdapter": false,
+    "driver": "Not exposed by WebGPU; obtain OS driver version for classroom acceptance"
+  },
+  "capability": "WebGPU adapter available",
+  "sameDeviceBitwise": true,
+  "atomicBoundedReadback": true,
+  "guardRejectsWithoutCommit": true,
+  "precision": {
+    "increments": 4096,
+    "incrementM": -1.0000000116860974e-7,
+    "cpuFloat64M": 99999.99959039688,
+    "gpuReconstructedM": 99999.9995904,
+    "gpuChangeM": -0.0004096000047866255,
+    "limitation": "Tests the elevation accumulator, not the full erosion process (4A)"
+  },
+  "performance": {
+    "gridSize": 128,
+    "steps": 80,
+    "msPerStep": 0.20874999985098838,
+    "readbackMs": 5.400000035762787,
+    "includes": "dispatch, fixed-tree guards, GPU completion and one small status read; excludes compilation warmup"
+  }
+}
