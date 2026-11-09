@@ -52,7 +52,7 @@ for (const width of [1366, 390]) {
         }
         if (sampleIndex < pair.samples.length - 1) {
           await expect(page.locator(".comparison-feedback")).toBeEmpty();
-          await expect(page.getByRole("button", { name: "Reveal explanation" })).toBeDisabled();
+          await expect(page.getByRole("button", { name: "Reveal explanation" })).toBeEnabled();
         }
       }
       await expect(page.locator(".comparison-feedback")).toContainText(
@@ -74,7 +74,7 @@ for (const width of [1366, 390]) {
     await scienceGuards(page);
     await page.getByRole("button", { name: "Reset", exact: true }).click();
     await expect(page.locator(".book")).toHaveAttribute("data-step", "0");
-    await expect(timeline).toBeDisabled();
+    await expect(timeline).toBeEnabled();
     await expect(replay).toHaveAttribute("data-seed", String(data.pairs[0]!.seed));
     await expect(replay).toHaveAttribute("data-values", "[0,0]");
     await expect(page.locator(".comparison-feedback")).toBeEmpty();

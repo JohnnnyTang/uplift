@@ -1,10 +1,15 @@
+import process from "node:process";
 import { expect, type Page } from "@playwright/test";
 import data from "../hachure/terrain/src/validation/rain-comparison-data.json" with { type: "json" };
+
+export const appOrigin = `http://127.0.0.1:${process.env.UPLIFT_E2E_PORT ?? "4173"}`;
+export const fixtureOrigin = `http://127.0.0.1:${process.env.UPLIFT_FIXTURE_PORT ?? "4174"}`;
 
 export async function ready(page: Page, url = "/") {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  const target = new URL(url, "http://127.0.0.1:4173");
+  const target = new URL(url, appOrigin);
+  target.searchParams.set("view", "research");
   if (!target.searchParams.has("backend")) target.searchParams.set("backend", "cpu-worker");
   await page.goto(target.href);
   await expect(page.locator(".book")).toHaveAttribute("data-state-hash", /.+/);
@@ -18,7 +23,16 @@ export async function commit(page: Page, index = data.answer) {
   await page.keyboard.press("Space");
   await page.keyboard.press("Tab");
   await page.keyboard.press("Enter");
-  await expect(page.locator("#rain")).toBeEnabled();
+  const lift = page.getByRole("button", { name: "Lift the drawing", exact: true });
+  if (await lift.isEnabled()) await lift.click();
+  if ((await page.locator(".book").getAttribute("data-backend")) !== "flat")
+    await expect(page.locator("#rain")).toBeEnabled();
+  const play = page.getByRole("button", { name: "Play comparison", exact: true });
+  if (
+    (await play.isVisible()) &&
+    !(await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches))
+  )
+    await play.click();
 }
 
 export async function scienceGuards(page: Page) {

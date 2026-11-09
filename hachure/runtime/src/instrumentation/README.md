@@ -76,3 +76,12 @@ with exactly two own numeric data entries; custom serializers, sparse arrays,
 accessor entries and additional own properties are rejected. Object extra-field
 checks include nonenumerable and symbol keys. This protects the public collector
 when callers supply objects beyond the book's ordinary plain arrays.
+
+## Wave 5 research routing
+
+Schema v1 remains exclusively on `?view=research`. The default contour and water
+lessons do not create a collector or emit rain events. Opening the research
+explanation without a prediction emits only an explanation event when opted in;
+it never fabricates a commitment or an endpoint. Leaving research settles the
+live host and pauses recorded playback. The retained local log stays in memory
+until clear/reload/disposal; it does not observe the other book lessons.

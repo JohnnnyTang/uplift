@@ -1,0 +1,12 @@
+/* Compose the real scene within the shared shell; keep font size and natural reflow. */
+#app[data-view="reader"] {
+  padding-bottom: 1rem;
+}
+@media (min-width: 60.001rem) and (min-height: 740px) {
+  #app[data-view="reader"] .playable-drawing {
+    height: clamp(250px, calc(100svh - 520px), 400px);
+  }
+  #app[data-view="reader"] .reader-illustration {
+    padding-top: 1rem;
+  }
+}

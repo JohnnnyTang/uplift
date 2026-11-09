@@ -15,7 +15,7 @@ const data = JSON.parse(
 await mkdir(evidence, { recursive: true });
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 const report = { browser: browser.version(), errors: [], checks: [], measurements: [] };
-const url = process.env.LESSON_BASE_URL || "http://127.0.0.1:5183";
+const url = process.env.LESSON_BASE_URL || "http://127.0.0.1:5183/?view=research&backend=cpu-worker";
 try {
   for (const viewport of [
     { width: 1366, height: 900 },
@@ -27,17 +27,18 @@ try {
     await page.goto(url);
     await page.waitForFunction(() => document.querySelector(".book")?.dataset.stateHash);
     const replay = page.locator(".paired-replay");
-    assert.equal(await page.getByRole("button", { name: "Show result", exact: true }).isDisabled(), true);
-    assert.equal(await page.getByRole("slider", { name: "Recorded model step" }).isDisabled(), true);
+    assert.equal(await page.getByRole("button", { name: "Show result", exact: true }).isDisabled(), false);
+    assert.equal(await page.getByRole("slider", { name: "Recorded model step" }).isDisabled(), false);
     await page.locator('input[name="prediction"]').nth(1).focus();
     await page.keyboard.press("Space");
     await page.keyboard.press("Tab");
     await page.keyboard.press("Enter");
+    await page.getByRole("button", { name: "Lift the drawing", exact: true }).click();
     await page.waitForFunction(() => !document.querySelector("#rain")?.disabled);
     assert.equal(await replay.getAttribute("data-step"), "0");
     assert.equal(await replay.getAttribute("data-playing"), "false");
     assert.equal(await page.locator(".book").getAttribute("data-step"), "0");
-    assert.equal(await page.getByRole("button", { name: "Reveal explanation" }).isDisabled(), true);
+    assert.equal(await page.getByRole("button", { name: "Reveal explanation" }).isDisabled(), false);
     for (const [i, pair] of data.pairs.entries()) {
       await page.getByLabel("Recorded landscape", { exact: true }).selectOption(String(i));
       const timeline = page.getByRole("slider", { name: "Recorded model step" });
@@ -90,7 +91,7 @@ try {
         document.querySelector("#rain")?.disabled && document.querySelector(".book")?.dataset.step === "0",
     );
     assert.equal(await replay.getAttribute("data-step"), "0");
-    assert.equal(await page.getByRole("button", { name: "Show result", exact: true }).isDisabled(), true);
+    assert.equal(await page.getByRole("button", { name: "Show result", exact: true }).isDisabled(), false);
     assert.equal(await page.locator(".comparison-feedback").textContent(), "");
     await page.locator('input[name="prediction"]').first().check();
     await page.getByRole("button", { name: "Commit prediction" }).click();
@@ -100,7 +101,7 @@ try {
       /You predicted: Lighter rain.*supports heavier rain/,
     );
     report.checks.push(
-      `${viewport.width}: prediction gate, all seeds, shared scale, keyboard endpoint, level-state preservation, reduced motion, reset and incorrect-choice feedback`,
+      `${viewport.width}: independent replay, all seeds, shared scale, keyboard endpoint, level-state preservation, reduced motion, reset and incorrect-choice feedback`,
     );
     await context.close();
   }
@@ -115,6 +116,7 @@ try {
   await page.locator('input[name="prediction"]').nth(1).check();
   const started = Date.now();
   await page.getByRole("button", { name: "Commit prediction" }).click();
+  await page.getByRole("button", { name: "Play comparison", exact: true }).click();
   await page.locator(".paired-replay").scrollIntoViewIfNeeded();
   await page.waitForFunction(
     () =>

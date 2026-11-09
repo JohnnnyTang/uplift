@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import { isLearningEvent, type LearningExport } from "../hachure/runtime/src/instrumentation/log";
-import { commit, ready, unchangedAcrossLevels, scienceGuards } from "./helpers";
+import { fixtureOrigin, appOrigin, commit, ready, unchangedAcrossLevels, scienceGuards } from "./helpers";
 
 async function lessonState(page: Page) {
   return page.evaluate(() => ({
@@ -142,9 +142,7 @@ test("keyboard opt-in, anonymous export, stop/clear and levels preserve lesson s
     { kind: "challenge", status: "pending" },
   ]);
   expect(await lessonState(page)).toEqual(beforeExport);
-  expect(requests.every((url) => url.startsWith("http://127.0.0.1:4173/") || url.startsWith("blob:"))).toBe(
-    true,
-  );
+  expect(requests.every((url) => url.startsWith(appOrigin + "/") || url.startsWith("blob:"))).toBe(true);
   await page.getByRole("button", { name: "Clear local log" }).focus();
   await page.keyboard.press("Enter");
   await expect(panel).toHaveAttribute("data-events", "0");
@@ -159,7 +157,7 @@ test("a failing replay observer cannot interrupt keyboard controls or endpoint g
   await page.emulateMedia({ reducedMotion: "reduce" });
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("http://127.0.0.1:4174/e2e/fixtures/observer.html");
+  await page.goto(`${fixtureOrigin}/e2e/fixtures/observer.html`);
   const timeline = page.getByRole("slider", { name: "Recorded model step" });
   await timeline.focus();
   await page.keyboard.press("End");

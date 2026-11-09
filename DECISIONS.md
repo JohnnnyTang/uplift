@@ -1316,3 +1316,20 @@ GPU checks distinguish unavailable adapters from implementation failures. The
 forced software-rendering setup had no WebGPU adapter; native Chrome subsequently
 passed authored CPU/Worker/GPU comparison and the existing GPU suite. This is
 browser correctness evidence, not target-device performance acceptance.
+
+## D-5E — Integrate the default book on the local review stack (2026-11-09)
+
+The owner requested 5E work, commit and merge into the review branch. Local main
+is still `8069a7f` (5A); `s1/w5/5bcd-lead` at `d74ecc0` contains the combined
+5B–5D review stack. This explicit destination overrides the wave's main-first
+launch rule for this session only. Use an isolated `s1/w5/5e-migration` worktree,
+verify it, and merge back to that review branch. Do not merge main or imply remote
+publication/product acceptance.
+
+Make the new contour/water reader the default; retain the valley research route
+and its evidence. Replace its last prediction-gated lifecycle caller and remove
+the temporary adapter/export/tests. Preserve recorded endpoint-conditioned
+feedback without locking live play, replay or general explanation. Keep schema v1
+instrumentation exclusively in research and retain a settled model on route return.
+See `docs/review/book-revision/migration.md` for bounded compatibility changes,
+verification and the unchanged human/scientific review limits.

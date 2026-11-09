@@ -22,6 +22,7 @@ async function predict(page: Page) {
   await page.keyboard.press("Space");
   await page.keyboard.press("Tab");
   await page.keyboard.press("Enter");
+  await page.getByRole("button", { name: "Lift the drawing", exact: true }).click();
   await expect(page.getByRole("button", { name: "Show result", exact: true })).toBeEnabled();
 }
 async function checkDomain(page: Page, grid: number) {
@@ -169,7 +170,7 @@ for (const [backend, grid] of [
     await expect(book).toHaveAttribute("data-state-hash", initialHash!);
     await expect(book).toHaveAttribute("data-backend", backend);
     await checkDomain(page, grid);
-    await expect(page.locator("#rain-comparison-timeline")).toBeDisabled();
+    await expect(page.locator("#rain-comparison-timeline")).toBeEnabled();
     await expect(page.locator(".paired-replay")).toHaveAttribute("data-values", "[0,0]");
     await unchangedAcrossLevels(page);
     if (backend === "flat") {
