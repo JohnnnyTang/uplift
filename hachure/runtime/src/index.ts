@@ -27,3 +27,6 @@ export * from "./challenge/index";
 // Opt-in runtime diagnostics (session 4E).
 export * from "./debug/index";
 export * from "./a11y/index";
+
+// Anonymous, explicitly opt-in local classroom observation (session 4F).
+export * from "./instrumentation/index";

@@ -561,6 +561,14 @@ challenge. The comparison supplies no validated waterfall sequence.
 comparison; `pnpm check` passes (434 tests). The owner opted into learning-outcome
 instrumentation, so session 4F is included (D-W4-OPEN).
 **Merge order:** 4E → 4A → 4B → 4C → 4D → 4F.
+
+**Integration status (2026-11-09):** 4E (#24), 4A (#27), 4B (#22),
+4C (#25) and 4D (#23) merged in order; 4F (#26) is the final implementation
+integration. The owner approved the pending-safe challenge infrastructure and,
+after receiving the preview, the accessibility merge. Neither approval is a
+science or human-listening pass. Wave 4 acceptance remains open for the successful
+challenge and human listening; Stage 1 expert/hardware gates remain open.
+See `docs/review/wave-4-human-review.md` for the decisions and protocol.
 **Exit:** the spread runs at 256² on WebGPU with the fallback chain working. The university layer,
 challenge, accessibility and end-to-end tests are complete.
 

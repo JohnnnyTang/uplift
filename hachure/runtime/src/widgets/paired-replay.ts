@@ -12,6 +12,13 @@ export interface PairedReplayData {
     readonly samples: readonly { readonly step: number; readonly values: readonly number[] }[];
   }[];
 }
+export interface PairedReplayObservation {
+  readonly action: "state" | "play" | "pause" | "scrub" | "seed" | "endpoint" | "reset";
+  readonly seed: number;
+  readonly modelStep: number;
+  readonly dtSimSeconds: number;
+  readonly inputs: readonly number[];
+}
 export interface PairedReplayOptions {
   readonly id: string;
   readonly data: PairedReplayData;
@@ -21,6 +28,8 @@ export interface PairedReplayOptions {
   readonly valueUnit: string;
   readonly description: string;
   readonly onEndpoint: (atEndpoint: boolean) => void;
+  /** Read-only instrumentation; observer failures cannot interrupt playback or gating. */
+  readonly onObserve?: (observation: PairedReplayObservation) => void;
 }
 
 /** Shared zero/scale for both arms, all frames and every seed. */
@@ -131,6 +140,20 @@ export function createPairedReplay(options: PairedReplayOptions) {
     status,
   );
   const pair = () => data.pairs[pairIndex]!;
+  let wasAtEndpoint = false;
+  function observe(action: PairedReplayObservation["action"]) {
+    try {
+      options.onObserve?.({
+        action,
+        seed: pair().seed,
+        modelStep: pair().samples[index]!.step,
+        dtSimSeconds: data.dtSimSeconds,
+        inputs: [...pair().inputs],
+      });
+    } catch {
+      /* Optional observers never change the replay. */
+    }
+  }
   function render(announce = false) {
     const p = pair(),
       sample = p.samples[index]!,
@@ -169,13 +192,18 @@ export function createPairedReplay(options: PairedReplayOptions) {
       status.textContent = `At model step ${sample.step}, ${labels[0].toLowerCase()}: ${formatBoundNumber(sample.values[0]!, options.valueUnit)}; ${labels[1].toLowerCase()}: ${formatBoundNumber(sample.values[1]!, options.valueUnit)}.`;
       lastAnnounced = performance.now();
     }
-    options.onEndpoint(unlocked && index === p.samples.length - 1);
+    const atEndpoint = unlocked && index === p.samples.length - 1;
+    observe("state");
+    options.onEndpoint(atEndpoint);
+    if (atEndpoint && !wasAtEndpoint) observe("endpoint");
+    wasAtEndpoint = atEndpoint;
   }
   function pause() {
     playing = false;
     if (timer !== undefined) clearInterval(timer);
     timer = undefined;
     render(true);
+    observe("pause");
   }
   function start() {
     if (!unlocked || playing) return;
@@ -184,6 +212,7 @@ export function createPairedReplay(options: PairedReplayOptions) {
     from = index;
     started = performance.now();
     render();
+    observe("play");
     timer = setInterval(() => {
       const count = pair().samples.length - 1;
       index = Math.min(
@@ -199,12 +228,14 @@ export function createPairedReplay(options: PairedReplayOptions) {
     pairIndex = Number(seed.value);
     index = 0;
     render(true);
+    observe("seed");
   });
   timeline.addEventListener("input", () => {
     const next = Number(timeline.value);
     pause();
     index = next;
     render(true);
+    observe("scrub");
   });
   const motionChanged = () => {
     if (motion.matches) pause();
@@ -226,6 +257,7 @@ export function createPairedReplay(options: PairedReplayOptions) {
       index = 0;
       status.textContent = "Commit your prediction to compare the recorded runs.";
       render();
+      observe("reset");
     },
     dispose() {
       if (timer !== undefined) clearInterval(timer);

@@ -1080,3 +1080,71 @@ brushing and level changes. Keyboard, reduced motion and both axe scans pass.
 Human listening remains NOT PERFORMED. The owner requested a preview before merge;
 PR #23 remains draft and 4F waits in order. The checklist and local preview are in
 docs/review/wave-4-human-review.md. This does not close challenge or release gates.
+
+## D-W4-4F · Explicitly opt-in local classroom observations
+
+2026-11-09 · Stage 1 / Wave 4 / Session 4F, authorized by the owner.
+
+Implement schema v1 specifically for Demo 1 and its validated recorded gross-
+erosion question. Use strict typed actions and numeric model context, sequence-
+only order and a bounded memory tail. Start off on every mount. No identity/free-
+text fields, device identifiers, clocks, storage or network transmission. Export
+is a reader-triggered local JSON download. Stop retains data; clear erases it and
+optional answers while preserving the chosen on/off setting. Disclose omissions
+and contain context/observer/export failures without affecting the lesson.
+
+All retained event fields are cloned. Capture both the live host's full numeric
+config/seed/model step and nonidentifying solver-backend enum and the recorded comparison's own version/seed/sample step/
+inputs; label the action's source explicitly. Keep pending challenge events pending
+and reject invented success. Optional pre/post answers reuse the supported question
+and its source; neither completion nor answer changes are claimed as learning gains.
+
+The runtime owns the collector/panel and event validation. Minimal shared glue:
+a public export, typed exception-contained paired-replay observation callback,
+book action/context hooks, and production browser tests/fixture under `e2e/`.
+The work branch is based on 4E's checked test harness. No solver, authored spread,
+package dependency or lockfile changes are needed for 4F.
+
+Integration: the event schema already supports 4B's capacityCoefficient,
+erosionRatePerS and depositionRatePerS controls plus a distinct restore-defaults
+action. The lead should hook successful university configurations and hidden-
+default restoration using the guidance in instrumentation/README.md. Keep 4A's
+selected backend and 4D's motion/focus changes when merging the book glue. Future
+validated challenges or other comparisons need a reviewed event-schema extension;
+v1 cannot emit a successful challenge or impersonate a universal assessment.
+
+## D-W4-4F-R1 · Validate the retained JSON representation
+
+2026-11-09 · Review follow-up for the anonymous event boundary.
+
+Input validation alone is insufficient because JSON serialization can invoke
+custom hooks or accessors. Revalidate the parsed serialized clone before any
+retention, eviction, omission count or sequence update. Reject numeric-pair arrays
+unless they are ordinary dense arrays containing exactly two own numeric data
+entries and the length property, with no custom serialization or extra keys.
+Also include nonenumerable/symbol keys in object extra-field rejection.
+
+Regressions cover the reviewer's array-toJSON injection, hidden serializers,
+sparse/decorated arrays in both recorded rain inputs and live hardness ranges,
+and an accessor that passes the input check then injects free text during JSON
+serialization. Rejected events leave the retained log and sequencing untouched;
+all exported retained events pass the public validator. No book or model behavior
+changes, and normal book arrays remain accepted.
+
+## 2026-11-09 — Owner approves remaining Wave 4 integration
+
+After the integrated 4D preview and packet were delivered, the owner explicitly
+approved merging. This supersedes the pre-merge listening hold; it is not evidence
+that human listening passed. PR #23 merged with all checks green. The final 4F
+integration preserves motion/focus and challenge guards, logs the selected backend
+from live state, and records accepted university parameter changes and explicit
+hidden-default restoration after configure completes. Logging does not reset or
+mutate either lesson state. New browser coverage checks those hooks and flat/CPU64
+export context. Minimal book/e2e and review documentation changes are integration
+glue. Human listening, successful challenge science and Stage 1 hardware/expert
+gates remain open; merging code does not close Wave 4 acceptance.
+
+The integrated local suite exposed an existing debug-test race: the overlay reads
+completed host timing before the page snapshot has refreshed its data attributes.
+After Pause, the test now waits for the atomic snapshot counters before asserting
+them. No timeout, retry policy or simulation behavior changes.

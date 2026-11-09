@@ -19,6 +19,12 @@ import type { InkView } from "@hachure/ink/view";
 import {
   BindingEngine,
   createDebugOverlay,
+  createLearningLog,
+  createLearningPanel,
+  captureLearningConfig,
+  type LearningLog,
+  type LearningAction,
+  type LearningContext,
   BOOK_PALETTE,
   SimHost,
   WorkerTransport,
@@ -135,8 +141,14 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   const equations = el("section");
   equations.append(el("h2", "Comparative theory"));
   for (const equation of spread.page.equations ?? []) equations.append(createDisplayFormula(equation));
+  let learningLog: LearningLog | undefined = undefined;
+  let recordedContext: LearningContext["recorded"];
+  function recordLesson(action: LearningAction) {
+    learningLog?.record(action);
+  }
   const predict = createPredict("prediction", spread.page.predict, level, (choice) => {
     lifecycle.commitPrediction(choice);
+    recordLesson({ kind: "prediction", choice });
     comparison.unlock();
     comparison.root.tabIndex = -1;
     comparison.root.focus();
@@ -156,6 +168,17 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     valueUnit: "model m³",
     description:
       "Recorded controlled experiment. Identical exposed-rock terrain and spring; only rainfall changes. Each lift counts, including material moved again after settling.",
+    onObserve(observation) {
+      if (RAIN_COMPARISON.id !== "rain-gross-erosion-v1") return;
+      recordedContext = {
+        comparison: RAIN_COMPARISON.id,
+        seed: observation.seed,
+        modelStep: observation.modelStep,
+        dtSimSeconds: observation.dtSimSeconds,
+        rainMmPerHr: [observation.inputs[0]!, observation.inputs[1]!],
+      };
+      if (observation.action !== "state") recordLesson({ kind: "comparison", action: observation.action });
+    },
     onEndpoint(atEnd) {
       comparisonAtEnd = atEnd;
       updateComparisonFeedback();
@@ -217,12 +240,27 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   const university = createUniversityLayer({
     id: "valley-university",
     defaults: { ...DEFAULT_TERRAIN_CONFIG, ...spread.scene.params },
-    configure: (patch) => host.configure(patch),
+    configure: async (patch) => {
+      const result = await host.configure(patch);
+      const controls = ["capacityCoefficient", "erosionRatePerS", "depositionRatePerS"] as const;
+      if (controls.every((control) => patch[control] !== undefined)) {
+        recordLesson({ kind: "restore-defaults" });
+      } else {
+        for (const control of controls) {
+          if (patch[control] !== undefined && host.sample)
+            recordLesson({ kind: "control", control, value: host.sample.config[control] });
+        }
+      }
+      return result;
+    },
     onError: showError,
   });
   equations.append(university.theory);
   const rain = createSlider({ ...rainSpec, label: rainSpec.label[level] }, rainSpec.default, (value) => {
-    void host.configure({ rainMmPerHr: value }).catch(showError);
+    void host
+      .configure({ rainMmPerHr: value })
+      .then(() => recordLesson({ kind: "control", control: "rain", value }))
+      .catch(showError);
   });
   rain.input.disabled = true;
   const speed = createSlider(
@@ -230,6 +268,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     1,
     (value) => {
       host.setSpeed(value);
+      recordLesson({ kind: "control", control: "speed", value });
       updateText();
     },
   );
@@ -237,10 +276,12 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   const playback = createPlayback(
     () => {
       host.play();
+      recordLesson({ kind: "playback", action: "play" });
       updateText();
     },
     () => {
       host.pause();
+      recordLesson({ kind: "playback", action: "pause" });
       void host.refresh().catch(showError);
       updateText();
     },
@@ -253,10 +294,38 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   const palette = createToolPalette({
     id: "valley-tools",
     config: DEFAULT_TERRAIN_CONFIG,
-    applyTool: (op) => host.applyTool(op),
+    async applyTool(op) {
+      const result = await host.applyTool(op);
+      recordLesson({
+        kind: "tool",
+        settings: {
+          tool: op.kind,
+          radiusM: op.radiusM,
+          amount:
+            op.kind === "raise"
+              ? op.heightM
+              : op.kind === "dig"
+                ? op.depthM
+                : op.kind === "smooth"
+                  ? op.strength
+                  : op.hardness,
+        },
+        at: { ...op.at },
+        clamped: result.clamped.length > 0,
+        applied: result.applied,
+      });
+      return result;
+    },
     onCursorChange: (cursor) => refreshCursor(cursor),
   });
   palette.setEnabled(false);
+  palette.root.addEventListener("change", () => {
+    const cursor = palette.state();
+    recordLesson({
+      kind: "brush-settings",
+      settings: { tool: cursor.kind, radiusM: cursor.radiusM, amount: cursor.amount },
+    });
+  });
   controls.append(playback.root, rain.root, speed.root, palette.root);
   canvas.addEventListener("pointerdown", (event) => {
     if (!view?.heightfield || !lifecycle.isControlEnabled("rain")) return;
@@ -325,6 +394,31 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   );
   book.append(left, right);
   root.replaceChildren(skip, header, notice, book);
+  learningLog = createLearningLog(() => ({
+    level,
+    live: host.sample
+      ? {
+          seed: host.sample.config.seed,
+          backend: selectedBackend,
+          modelStep: host.sample.snapshot.step,
+          config: captureLearningConfig(host.sample.config),
+        }
+      : null,
+    recorded: recordedContext,
+  }));
+  const learningPanel = createLearningPanel(learningLog);
+  left.append(learningPanel.root);
+  let wasCollecting = false;
+  const unsubscribeCollection = learningLog.subscribe(() => {
+    const collecting = learningLog!.enabled;
+    if (collecting && !wasCollecting) {
+      wasCollecting = true;
+      recordLesson({
+        kind: "challenge",
+        status: spread.challenge.check.kind === "pending" ? "pending" : "unavailable",
+      });
+    } else wasCollecting = collecting;
+  });
 
   const debug = new URLSearchParams(location.search).has("debug")
     ? createDebugOverlay(root, () => ({
@@ -549,6 +643,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
         ...universityDefaults({ ...DEFAULT_TERRAIN_CONFIG, ...spread.scene.params }),
       });
     }
+    recordLesson({ kind: "reset" });
     rain.update(rainDefault);
     speed.update(1);
     view?.applyLiftState(FLAT_STATE);
@@ -562,11 +657,13 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   }
   levels.addEventListener("change", () => {
     level = levels.value as Level;
+    recordLesson({ kind: "level", level });
     updateText();
   });
   flap.reveal.addEventListener("click", () => {
     if (lifecycle.state === "interactive") lifecycle.explain();
     updateText();
+    recordLesson({ kind: "flap", open: !flap.panel.hidden });
   });
   const motionChanged = () => {
     if (reducedMotion.matches) {
@@ -634,6 +731,9 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
       host.dispose();
       comparison.dispose();
       debug?.dispose();
+      learningLog?.stop();
+      unsubscribeCollection();
+      learningPanel.dispose();
       view?.dispose();
     },
   };

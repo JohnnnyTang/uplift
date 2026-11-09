@@ -78,6 +78,11 @@ test("debug readout is opt-in and uses measured worker batch timings", async ({ 
   await commit(page);
   await expect(debug).toHaveAttribute("data-ms-per-step", /^\d+(\.\d+)?$/);
   await page.getByRole("button", { name: "Pause", exact: true }).click();
+  // Diagnostics can observe an unsampled batch before the page snapshot catches up.
+  // Pause requests an async atomic refresh; wait for that snapshot before reading its counters.
+  await expect
+    .poll(async () => Number(await page.locator(".book").getAttribute("data-batch-steps")))
+    .toBeGreaterThan(0);
   const batch = await page.locator(".book").evaluate((node) => ({
     ms: Number(node.dataset.batchMs),
     steps: Number(node.dataset.batchSteps),
