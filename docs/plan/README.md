@@ -12,7 +12,7 @@ bounded pages, immediate interaction, optional questions/reveals and page turnin
 [Wave 5](stage-1-wave-5.md) revises the built app and delivers a new two-spread example;
 [PB1–PB8](product-realignment.md#product-acceptance-gate) defines product acceptance.
 Hardening moves to Wave 6. Existing engine work and evidence remain foundations;
-implementation integration does not establish product acceptance.
+implementation integration does not establish product acceptance. 5B–5F are now locally integrated on the review stack; main remains at 5A. See the [acceptance ledger](stage-1-acceptance.md) and [drift audit](../review/book-revision/acceptance/README.md#drift-audit-and-handover).
 Read the updated [product story](../product-story.md) before starting a new session.
 
 ## The work model: stages → waves → sessions
@@ -219,10 +219,19 @@ records limitations, and selects improvements rather than merely counting featur
 
 ## Status
 
-| Stage                     | State                                          | Plan                     | Retro |
-| ------------------------- | ---------------------------------------------- | ------------------------ | ----- |
-| 0 · Bootstrap             | Done                                           | —                        | —     |
-| 1 · Demo 1                | **Wave 5 revision planned; direction on main** | [stage-1.md](stage-1.md) | —     |
-| 2 · Book growth and reuse | Outline only                                   | —                        | —     |
-| 3 · Meaningful comparison | Outline only                                   | —                        | —     |
-| 4 · Pilot                 | Outline only                                   | —                        | —     |
+| Stage                     | State                                                       | Plan                     | Retro |
+| ------------------------- | ----------------------------------------------------------- | ------------------------ | ----- |
+| 0 · Bootstrap             | Done                                                        | —                        | —     |
+| 1 · Demo 1                | **W5 local review integrated; human/release gates pending** | [stage-1.md](stage-1.md) | —     |
+| 2 · Book growth and reuse | Outline only                                                | —                        | —     |
+| 3 · Meaningful comparison | Outline only                                                | —                        | —     |
+| 4 · Pilot                 | Outline only                                                | —                        | —     |
+
+### Next-stage selection after 5F
+
+The [5F drift audit](../review/book-revision/acceptance/README.md#drift-audit-and-handover)
+requires each candidate to name action, visible consequence, evidence and shared
+primitive. Stage 2 chooses one further discovery after reader observations; Stage 3
+chooses one intervention/place comparison before data or engine expansion; Stage 4
+pilots the reviewed book without silently expanding the rain-only event schema.
+No later-stage capability list authorizes implementation before that choice.

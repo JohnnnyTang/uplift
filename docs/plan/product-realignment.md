@@ -9,8 +9,7 @@ into main. Read the [product story](../product-story.md) and
 The original P0 direction work is delivered. The preliminary P1/P2 outline is
 **superseded by [Wave 5 sessions 5A–5F](stage-1-wave-5.md)**, covering contracts,
 runtime revision, book shell/paging, the new example, migration of the built app,
-and integrated verification. No implementation session has started in this planning
-change. The next launch is 5A alone.
+and integrated verification. 5A is on main; 5B–5F are integrated on the local review branch. See the [acceptance ledger](stage-1-acceptance.md); owner, human, expert and hardware gates remain pending.
 
 The former Wave 5 hardening sessions are now [Wave 6](stage-1.md#wave-6--hardening-and-release-review).
 Historical evidence keeps its original status; this revision neither closes human/

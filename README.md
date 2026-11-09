@@ -8,11 +8,12 @@ model at different depths.
 Underneath the book is **Hachure**, the terrain and ink engine. Hachures are the short ink strokes old maps
 used to show slope, which is the look the engine draws.
 
-> **Status:** Stage 1 product realignment. Hachure foundations and an integrated erosion research
-> example run today; the intended playable book is not yet delivered. The next work is book-sized
-> composition, immediate 3D play and two interactive spreads with page turning. See the
-> [product story](docs/product-story.md) and [complete Wave 5 plan](docs/plan/stage-1-wave-5.md).
-> Wave 5 revises the existing app and delivers the new example; Wave 6 handles hardening.
+> **Status:** The local Wave 5 review stack delivers two playable lessons, contour lift and
+> prepared-terrain spring placement, with page turning and a labelled erosion research route.
+> Main remains at 5A. Implementation verification and pending owner, human accessibility,
+> expert and hardware review are tracked in the [acceptance ledger](docs/plan/stage-1-acceptance.md)
+> and [review packet](docs/review/book-revision/acceptance/README.md). Wave 6 completes those gates;
+> local integration does not establish release readiness.
 
 ## Why this exists
 
