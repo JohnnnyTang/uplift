@@ -17,6 +17,8 @@
   "cases": [
     {
       "name": "dry/0.025/0.05",
+      "presetId": "water-comparison-dry",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -46,6 +48,8 @@
     },
     {
       "name": "dry/0.025/0.0125",
+      "presetId": "water-comparison-dry",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.0125,
@@ -75,6 +79,8 @@
     },
     {
       "name": "dry/0.035/0.05",
+      "presetId": "water-comparison-dry",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -104,6 +110,8 @@
     },
     {
       "name": "dry/0.035/0.0125",
+      "presetId": "water-comparison-dry",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.0125,
@@ -133,6 +141,8 @@
     },
     {
       "name": "dry/0.15/0.05",
+      "presetId": "water-comparison-dry",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -162,6 +172,8 @@
     },
     {
       "name": "dry/0.15/0.0125",
+      "presetId": "water-comparison-dry",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.0125,
@@ -191,6 +203,8 @@
     },
     {
       "name": "wet/0.025/0.05",
+      "presetId": "water-comparison-wet",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -220,6 +234,8 @@
     },
     {
       "name": "wet/0.025/0.0125",
+      "presetId": "water-comparison-wet",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.0125,
@@ -249,6 +265,8 @@
     },
     {
       "name": "wet/0.035/0.05",
+      "presetId": "water-comparison-wet",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -278,6 +296,8 @@
     },
     {
       "name": "wet/0.035/0.0125",
+      "presetId": "water-comparison-wet",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.0125,
@@ -307,6 +327,8 @@
     },
     {
       "name": "wet/0.15/0.05",
+      "presetId": "water-comparison-wet",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -336,6 +358,8 @@
     },
     {
       "name": "wet/0.15/0.0125",
+      "presetId": "water-comparison-wet",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.0125,
@@ -365,6 +389,8 @@
     },
     {
       "name": "front/0.025/0.05",
+      "presetId": "water-comparison-front",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -394,6 +420,8 @@
     },
     {
       "name": "front/0.025/0.0125",
+      "presetId": "water-comparison-front",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.0125,
@@ -423,6 +451,8 @@
     },
     {
       "name": "front/0.035/0.05",
+      "presetId": "water-comparison-front",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -452,6 +482,8 @@
     },
     {
       "name": "front/0.035/0.0125",
+      "presetId": "water-comparison-front",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.0125,
@@ -481,6 +513,8 @@
     },
     {
       "name": "front/0.15/0.05",
+      "presetId": "water-comparison-front",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -510,6 +544,8 @@
     },
     {
       "name": "front/0.15/0.0125",
+      "presetId": "water-comparison-front",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.0125,
@@ -539,6 +575,8 @@
     },
     {
       "name": "spring/odd-grid",
+      "presetId": "water-comparison-dry",
+      "seed": 1,
       "steps": 80,
       "gridSize": 9,
       "dt": 0.05,
@@ -568,6 +606,8 @@
     },
     {
       "name": "outlet/0/4",
+      "presetId": "outlet-face",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -597,6 +637,8 @@
     },
     {
       "name": "outlet/7/4",
+      "presetId": "outlet-face",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -626,6 +668,8 @@
     },
     {
       "name": "outlet/4/0",
+      "presetId": "outlet-face",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -655,6 +699,8 @@
     },
     {
       "name": "outlet/7/7",
+      "presetId": "outlet-face",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -684,6 +730,8 @@
     },
     {
       "name": "brush-edited-water",
+      "presetId": "brush-edited-water",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -712,7 +760,40 @@
       "transport": 0.005675997585058212
     },
     {
+      "name": "tilted-plateau/128/spring",
+      "presetId": "tilted-plateau",
+      "seed": 1,
+      "steps": 80,
+      "gridSize": 128,
+      "dt": 0.05,
+      "roughness": 0.035,
+      "water": {
+        "maxAbsolute": 6.068896982180938e-10,
+        "maxScaled": 0.000283869252722998,
+        "failed": 0
+      },
+      "flux": {
+        "maxAbsolute": 5.820766091346741e-11,
+        "maxScaled": 0.00002503506105975336,
+        "failed": 0
+      },
+      "u": {
+        "maxAbsolute": 5.587935447692871e-9,
+        "maxScaled": 0.00023778298063584216,
+        "failed": 0
+      },
+      "v": {
+        "maxAbsolute": 2.2351741790771484e-8,
+        "maxScaled": 0.00028761641468525465,
+        "failed": 0
+      },
+      "wave": 0.0025273507926613092,
+      "transport": 0.0011276641162112355
+    },
+    {
       "name": "determinism-first",
+      "presetId": "water-comparison-wet",
+      "seed": 1,
       "steps": 80,
       "gridSize": 8,
       "dt": 0.05,
@@ -741,7 +822,7 @@
       "transport": 0.002348241163417697
     }
   ],
-  "utc": "2026-11-09T04:42:31.034Z",
+  "utc": "2026-11-09T05:12:59.037Z",
   "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
   "adapter": {
     "vendor": "intel",
@@ -766,8 +847,8 @@
   "performance": {
     "gridSize": 128,
     "steps": 80,
-    "msPerStep": 0.20874999985098838,
-    "readbackMs": 5.400000035762787,
+    "msPerStep": 0.16875,
+    "readbackMs": 3.100000023841858,
     "includes": "dispatch, fixed-tree guards, GPU completion and one small status read; excludes compilation warmup"
   }
 }

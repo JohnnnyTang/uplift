@@ -2,6 +2,9 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { server } from "vitest/browser";
 import {
   applyBrush,
+  cellAt,
+  tiltedPlateauPreset,
+  type SpringOp,
   createCpuSolver,
   resolveTerrainConfig,
   waterComparisonPreset,
@@ -47,18 +50,23 @@ async function compare(
   config: TerrainConfig,
   preset: TerrainPreset,
   steps = 80,
-  spring = false,
+  spring: boolean | SpringOp = false,
 ) {
   const cpu = createCpuSolver(config, preset);
   const sourceRate = new Float32Array(config.gridSize ** 2);
   if (spring) {
-    sourceRate[2 * config.gridSize + 3] = 0.1 / config.metresPerCell ** 2;
-    await cpu.applyTool({
-      kind: "spring",
-      id: "comparison",
-      at: { xM: 3.5 * config.metresPerCell, yM: 2.5 * config.metresPerCell },
-      flowM3PerS: 0.1,
-    });
+    const op: SpringOp =
+      typeof spring === "boolean"
+        ? {
+            kind: "spring",
+            id: "comparison",
+            at: { xM: 3.5 * config.metresPerCell, yM: 2.5 * config.metresPerCell },
+            flowM3PerS: 0.1,
+          }
+        : spring;
+    const cell = cellAt(config.gridSize, config.metresPerCell, op.at)!;
+    sourceRate[cell.y * config.gridSize + cell.x] = op.flowM3PerS / config.metresPerCell ** 2;
+    await cpu.applyTool(op);
   }
   const gpu = await createGpuWaterSolver(config, preset.create(config), { sourceRateMPerS: sourceRate });
   try {
@@ -79,6 +87,8 @@ async function compare(
     };
     cases.push({
       name,
+      presetId: preset.id,
+      seed: config.seed,
       steps,
       gridSize: config.gridSize,
       dt: config.dtSimSeconds,
@@ -155,6 +165,17 @@ describe("GPU water [requires-webgpu]", () => {
       },
     };
     await compare(preset.id, config, preset);
+  });
+  it("agrees on the real 128 squared plateau with its declared spring", async (context) => {
+    if (!available) context.skip();
+    const config = resolveTerrainConfig({ ...WATER_COMPARISON_CONFIG, gridSize: 128 });
+    await compare(
+      "tilted-plateau/128/spring",
+      config,
+      tiltedPlateauPreset,
+      80,
+      tiltedPlateauPreset.layout(config).source,
+    );
   });
   it("replays bitwise on one device and coalesces bounded same-version snapshots", async (context) => {
     if (!available) context.skip();

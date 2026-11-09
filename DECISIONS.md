@@ -709,3 +709,8 @@ explicitly skipped, never counted as parity. The lead runs local GPU comparisons
 **Handover.** Full erosion/transport/evaporation, budgets, GPU brushes, backend selection and classroom
 performance remain 4A/5A. Expert review of the hydraulic adaptation remains open. Minimal ownership
 exceptions are the terrain package GPU export/dependencies, generated lockfile, and browser CI workflow.
+
+**Final integrated check.** Rebase after 3A preserves the same water kernels and comparison bounds.
+Add the real seeded 128² tilted plateau and its declared spring for an 80-step water-only comparison,
+covering its full elevation range and multiple reduction workgroups. The CI workflow deletes committed
+local results immediately after checkout so failed setup cannot display stale local adapter evidence.

@@ -53,7 +53,7 @@ pnpm build
 The browser suite uses Vitest browser mode with Playwright Chromium, installed Chrome by default and
 `--enable-unsafe-webgpu`. Set `GPU_CHROMIUM_BUNDLED=1` after installing Playwright Chromium to use its
 bundled browser. `GPU_SOFTWARE=1` requests a software/Vulkan attempt for CI. The dedicated workflow runs
-on PRs and main, prints the capability and result JSON, and explicitly skips tagged browser tests only
+on PRs and main, removes committed local evidence before setup, prints the capability and result JSON, and explicitly skips tagged browser tests only
 when `navigator.gpu.requestAdapter` returns no adapter. A skip is not CPU–GPU agreement: the lead must
 run the suite on a GPU machine at wave close. Shader/dispatch failures on an available adapter fail.
 
@@ -69,7 +69,8 @@ snapshot. Each value must meet `absolute + relative × abs(reference)`:
 These bounds are declared in `fields.ts`, not inferred from each test result. Cases cover the shared dry,
 wet and wet-front fixtures, both timestep refinements and all roughness endpoints/default, a persistent
 spring, an odd grid, all outlet directions/corner priority and a preset edited by the real raise, dig
-and harden brushes. Accepted step counts prevent a no-op GPU dispatch from passing a still fixture.
+and harden brushes. The real seeded tilted-plateau preset at 128² with its declared spring is compared
+for 80 water-only steps under the same tolerances, independently of performance timing. Accepted step counts prevent a no-op GPU dispatch from passing a still fixture.
 Same-device bitwise replay, guarded rejection without commit, compensated precision and atomic sampling
 are independent tests.
 

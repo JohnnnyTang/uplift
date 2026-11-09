@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - name: Clear committed local evidence before CI setup
+        run: rm -f hachure/terrain/src/compare/results-local.json
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
