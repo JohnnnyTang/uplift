@@ -28,6 +28,21 @@ export default tseslint.config(
     },
   },
   {
+    // Determinism: every random choice in the terrain engine goes through the seeded RNG
+    // (hachure/terrain/src/rng). Math.random() would make runs unreproducible.
+    files: ["hachure/terrain/**/*.ts"],
+    rules: {
+      "no-restricted-properties": [
+        "error",
+        {
+          object: "Math",
+          property: "random",
+          message: "Use the seeded RNG from hachure/terrain/src/rng (createRng), never Math.random().",
+        },
+      ],
+    },
+  },
+  {
     // Spreads use Hachure's public API only: no deep imports into package internals.
     files: ["uplift/**/*.ts"],
     rules: {
