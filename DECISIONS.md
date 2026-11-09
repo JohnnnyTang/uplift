@@ -1148,3 +1148,42 @@ The integrated local suite exposed an existing debug-test race: the overlay read
 completed host timing before the page snapshot has refreshed its data attributes.
 After Pause, the test now waits for the atomic snapshot counters before asserting
 them. No timeout, retry policy or simulation behavior changes.
+
+## D-PRODUCT-PLAYABLE-BOOK · Restore the book and learning-through-play priority
+
+2026-11-09 · Explicit product-owner direction, supplied with six Every Joule screenshots.
+
+Uplift means ink drawings lifting off a book into a manipulable 3D world. The owner
+identified the current examples and planning as drifting toward calculation and
+complicated front-facing interactions. Adopt immediate play, one visible lesson per
+spread, optional low-pressure questions with freely available answer flaps, bounded
+book composition and page turning as the product contract. Preserve Hachure as the
+scientific/rendering foundation.
+
+This supersedes mandatory prediction-before-play, endpoint-gated answer reveal,
+required challenge/stamp progression and Stage 1's page-turn exclusion. It changes
+pedagogical requirements in the handoff, not just styling. The next product proof is
+two playable spreads; Contours to terrain and a small water-routing lesson are
+candidates to verify, not completed or scientifically approved lessons.
+
+Code/evidence inspection found a prediction-gated lift, an endpoint-gated explanation,
+a recorded chart before a separate live scene, content-height pages, and technical
+controls in the ordinary reading surface. The committed rain-comparison screenshot
+confirms the long worksheet composition. No new browser or learner study is claimed.
+
+P0 owns the product story, governing handoff, active plan/framework, README and this
+append-only record. P1/P2 implement the experience before Wave 5 hardening.
+See docs/plan/product-realignment.md for scoped paths and PB1–PB8. Existing tests that
+encode old gates must be updated with the new lifecycle, while state preservation,
+scientific honesty and numerical safeguards remain required.
+
+No solver, rendering implementation or evidence classification changes in P0.
+Recorded comparisons remain labelled and separate from live results. Failed valley/
+waterfall science is preserved and cannot be promoted to a successful lesson.
+Those outcomes are not prerequisites for shipping a different supported concept.
+Numeric field rates/years require calibration only when claimed.
+
+Open implementation choices: book proportions, the direct contour gesture, and
+feasibility of source placement/readable water motion for the second lesson.
+Expert assignment, human listening and target-hardware checks remain open.
+These are follow-through work; the owner's product direction needs no reconfirmation.

@@ -4,7 +4,7 @@ Oct 28, 2026 · @Frankie Miller
 
 ## How to use this handoff
 
-We are building a web-based interactive 3D geography book: textbook-style spreads where line-art diagrams lift off the page into simulations readers can manipulate. The project is at idea stage; this document is the brief for the first demos. The book is called Uplift; the terrain and ink engine underneath is called Hachure.
+We are building a web-based interactive 3D geography book: bounded spreads where line-art diagrams lift off the page into simulations readers can manipulate. Engine foundations and an integrated research example exist; the current priority is correcting the reader experience. This document is the governing brief, amended by the owner's product clarification below. The book is called Uplift; the terrain and ink engine underneath is called Hachure.
 
 **Audience.** Coding agents building demos, and the research group reviewing them. Agents should treat the principles and rigour policy as requirements, and the architecture as a strong default they may refine with a written reason.
 
@@ -12,10 +12,10 @@ We are building a web-based interactive 3D geography book: textbook-style spread
 
 1. Pedagogical design principles and Scientific rigour policy: the non-negotiables.
 2. System architecture and Spread specification format: how the code is organised.
-3. Demo 1 spec: the first thing to build, with acceptance criteria.
+3. Current Demo 1 spec and product realignment sessions: the next product proof and acceptance criteria.
 4. Tech stack and rules for agents: conventions and limits.
 
-**Current goal.** Prove three things with one working spread: the shared terrain engine, the ink-line-to-3D look, and the two-level page (high school and university on the same simulation).
+**Current goal (owner correction, 2026-11-09).** Prove a short playable book: ink drawings lift into directly manipulable 3D illustrations, each spread teaches one small idea, and readers can turn to another discovery. Hachure's engine and scientific checks support this experience. The active [product story](product-story.md) and [realignment sessions](plan/product-realignment.md) replace the earlier engine-led delivery order. This correction changes requirements; it does not claim that the current app has been redesigned.
 
 ## Vision and inspiration
 
@@ -24,8 +24,8 @@ The reference is [Every Joule](https://iamtechartist.com/every-joule/) by Techar
 **What we take from it.**
 
 - The page and the model show the same numbers. In its lesson 2, the margin computes Ep = mgh = 3.6 J and the 3D gauge reads 3.6 J.
-- Predict before you see: a committed guess, then the experiment, then the explanation under a flap.
-- The book frame: one idea per spread, one model, one challenge. Restraint is why it feels finished.
+- Play and reflect: an immediately usable illustration, an optional guess, and a freely revealable explanation under a flap. Prediction never gates the scene or navigation.
+- The book frame: one idea per spread, one model, an optional small challenge. Restraint is why it feels finished.
 - Ink-line aesthetic: hatched line art that becomes 3D, with colour reserved for the quantity being taught.
 
 **What we add for geography.**
@@ -39,16 +39,20 @@ The reference is [Every Joule](https://iamtechartist.com/every-joule/) by Techar
 
 ## Pedagogical design principles
 
-Every spread follows a guided-sandbox loop: a question first, then free play, then a challenge. Free play without a question is fun but teaches little.
+**Owner correction, 2026-11-09 — learning through play.** Uplift means drawings lifting out of a book into a 3D world. The illustration and its understandable response lead the lesson. This replaces the earlier mandatory predict/test/challenge sequence.
 
-1. **Predict.** The spread opens with a question and 2–4 choices ("Slow the river down. Where does the sediment go?"). The reader must commit before the simulation unlocks its key control.
-2. **Test.** The reader runs the simulation and manipulates it freely: sliders, brushes, presets.
-3. **Explain.** A flap reveals the answer, tied to what the reader just saw. University level adds the governing relations.
-4. **Challenge.** A goal checked by the simulation itself ("Make the river build a delta with two mouths"). Success earns a stamp.
+1. **Invite.** A short prompt and readable ink drawing suggest one action.
+2. **Play.** The reader can immediately lift or manipulate the illustration once ready. One primary gesture and at most one optional condition control introduce the idea; technical parameters are disclosed on request.
+3. **Notice and explain.** The same scene shows a clear consequence. A small optional question invites reflection, and a flap reveals a short explanation whenever requested. Neither a prediction nor a simulation endpoint is required to open it.
+4. **Continue.** Try again, optionally attempt a small challenge, or turn the page. No answer, score or stamp gates navigation.
+
+This is a flexible reading rhythm, not a lockstep workflow. Correctness still matters in every explanation; curiosity does not require an assessment. Challenges and stamps are optional and may ship only with supported outcomes.
 
 **Rules every spread obeys.**
 
-- One idea per spread. If a spread needs two ideas, it is two spreads.
+- One idea, one primary gesture and one visible consequence per spread. If a spread needs two ideas, it is two spreads.
+- The book is the interface: bounded page-shaped spreads, a dominant 3D illustration, and page turning in the first product proof. Use readable single pages on narrow screens; zoom/reflow takes precedence over fixed dimensions.
+- Play, answer reveal and navigation are independent. Advanced depth, research diagnostics and optional assessment are never prerequisites.
 - Page and model agree. Any number printed on the page (a value, a label, a gauge) is read from the live simulation state, never typed separately.
 - Colour carries meaning. Ink line art is the default; colour is reserved for the quantity taught (water, sediment, ice, people, heat), with a legend on the page.
 - The 2D drawing comes first. Each spread starts as flat line art on the page and lifts into 3D. The flat version is a real diagram, readable on its own.
@@ -72,7 +76,7 @@ for the evidence and transition rules.
 
 Showing no equations does not mean not rigorous. Every simulation must be process-based underneath: landforms emerge from simulated flow, transport and deposition, never from scripted animation. Readers then build correct intuitions for the right reasons.
 
-**Every model declares its tier, shown as a badge on the page.**
+**Every model declares its tier, shown as a compact label on the page.** Reader-facing honesty stays visible; detailed validation history and unfinished research tasks belong in explicit research/teacher views. Simplify presentation without hiding a limitation needed to interpret the scene.
 
 | Tier | Meaning | Examples |
 | --- | --- | --- |
@@ -83,8 +87,8 @@ Showing no equations does not mean not rigorous. Every simulation must be proces
 
 **Required on every spread.**
 
-- A "What this model ignores" box listing the main simplifications in plain words.
-- Time compression shown on screen at all times ("1 s ≈ 1,000 years"), and spatial scale (a scale bar). Students otherwise assume canyons form in an afternoon.
+- An accessible "What this model ignores" disclosure listing the main simplifications in plain words. Keep any limitation necessary to interpret the visible result beside it; the full account may expand on request.
+- Honest time and spatial context beside the scene. Show applicable scale from the model. A process model without field calibration says so and must not print invented geological years; calibrated time compression is displayed when claimed. A static geometry lesson need not invent a clock.
 - Input clamping: controls limited to physically plausible ranges. Where a reader can still create something unphysical (a 2 km pit), the page acknowledges it rather than letting the model behave strangely in silence.
 - Sources: a cited reference for each process rule and parameter range.
 
@@ -98,7 +102,7 @@ Content is organised on three axes: topic domain, level, and course. Each spread
 
 **Levels.**
 
-- **High school:** the phenomenon, simple controls (rain, slope, rock type), predict-then-watch, vocabulary box, plain-language explanation.
+- **High school:** the phenomenon, one direct gesture, a small optional condition control, optional question and answer flap, plain-language explanation and vocabulary when needed.
 - **University:** the same model with the hood open: governing relations (for example stream power law, Hjulström curve), parameters in real units, live graphs (long profile, sediment budget), the "What this model ignores" box expanded, optional real DEM input.
 
 **Course tags (initial set).** Physical geography, geomorphology, hydrology, climatology, human geography, urban geography, economic geography, environmental science, GIS and cartography.
@@ -187,7 +191,7 @@ It exposes tools (raise, dig, smooth, harden brush; rain and spring sources; dam
 
 ## Spread specification format
 
-Every spread is a declarative definition plus, only where needed, a small amount of spread-specific code. If a new spread needs heavy custom code, that is a signal the engine is missing a primitive; raise it rather than hard-coding it. Draft schema (TypeScript; refine during Demo 1):
+Every spread is a declarative definition plus, only where needed, a small amount of spread-specific code. If a new spread needs heavy custom code, that is a signal the engine is missing a primitive; raise it rather than hard-coding it. Historical draft schema (TypeScript). Current code contracts live in Hachure; P1 must revise the lifecycle/schema for optional prediction and challenge, unanswered state and independent answer reveal. The required fields in this old sketch are not a mandate to gate the new reader flow:
 
 ```ts
 interface Spread {
@@ -222,36 +226,40 @@ Page text never contains a typed number that the simulation also computes; it us
 
 ## Demo 1 spec: the erosion sandbox spread
 
-One working spread, "How a river carves a valley", that proves the terrain engine, the ink look and the two-level page together. Scope is a single spread inside a minimal book shell; no catalogue, no accounts.
+**Revised scope, 2026-11-09.** This heading retains existing links. The original erosion
+sandbox is implemented as a research example, not accepted as the reader experience.
+The active Demo 1 is a short playable book using Hachure's existing foundations;
+[P0–P2](plan/product-realignment.md) specifies the work and acceptance criteria.
 
 **The experience.**
 
-1. The book opens on the spread. The right page shows a hatched contour drawing of a tilted plateau with a river source marked.
-2. The left page asks the predict question (high school): "If it rains harder for 10,000 years, will the valley get deeper, wider, or both?" The reader picks an answer.
-3. The contours rise into a 3D ink-drawn terrain. Rain begins; water flows in a colour channel (blue), sediment in a second (ochre).
-4. A V-shaped valley incises over compressed time. The clock reads simulated years; the scale bar reads metres.
-5. The reader experiments: rain intensity slider, rock-hardness brush (paint a hard band across the valley), dig and raise brushes, reset, pause, speed.
-6. The flap explains the answer, referring to what they saw. A hard band should produce a knickpoint or waterfall and a narrower gorge.
-7. Challenge: "Make a waterfall" (checked when a slope break above a threshold persists on the river's long profile). A stamp is awarded.
+1. Open a bounded book spread. A readable ink illustration and short invitation lead.
+2. Lift or manipulate the real illustration without answering a question first.
+3. See one clear consequence in that same 3D scene, with any quantity indicator bound
+   to the model. The scene is large enough to understand through sight and touch.
+4. Optionally guess, open an answer flap immediately, or ask for deeper explanation.
+5. Turn the page to a second interactive discovery. Return without silently resetting
+   the model. Reduced-motion and keyboard routes offer equivalent access.
 
-**University level (same simulation).** Adds: the stream power law shown as a TeX display formula with a live erodibility parameter; a live long-profile graph along the river; a sediment budget readout (eroded, in transport, deposited, exported); parameters in real units; the expanded "What this model ignores" box.
+**First candidates.** Contours to terrain, followed by a small water-routing lesson,
+subject to actual interaction/visibility trials and sourced scientific content.
+These are design briefs, not validated claims. Do not fabricate a successful valley
+or waterfall to make the old example fit.
 
-**Model scope.** Water routing by virtual pipes, capacity-based erosion and deposition, sediment advection, thermal slumping, evaporation, spatially variable hardness. Out of scope for Demo 1: ice, waves, vegetation, real DEM input, the human engine.
+**Reader depth.** The opening view is concise and playful at both reading levels.
+University details, equations, extra controls and graphs are explicit disclosures.
+Level changes preserve the same simulation. Sources and teacher notes remain reachable.
 
-**Acceptance criteria.**
+**Acceptance.** Product criteria PB1–PB8 in the active plan are required alongside
+applicable scientific and engineering checks: determinism, conservation, CPU/GPU
+agreement, bindings, accessibility, fallback and hardware performance. Each shipped
+lesson needs evidence for its own teaching claim and expert review.
+The original erosion-demo acceptance trace is retained in [Stage 1](plan/stage-1.md);
+failed morphology and pending challenge/calibration records are not rewritten.
 
-- [ ] Runs at 30 fps or better at 256² on a mid-range laptop integrated GPU, Chrome stable, WebGPU; WebGL2 fallback at 128² is acceptable.
-- [ ] Same seed and same inputs give the same terrain after N steps (determinism test passes).
-- [ ] Qualitative tests pass: more rain → more incision; a hard band → a knickpoint upstream of it and a narrower channel through it; lower slope → more deposition.
-- [ ] Mass is conserved: total rock + sediment change equals exported sediment within 1% over a run (closed boundaries except the outlet).
-- [ ] The flat page drawing is generated from the heightfield (contours), and the lift animates from it.
-- [ ] Every number on the page comes from a probe binding; none are typed.
-- [ ] Time-scale label, scale bar, tier badge and "What this model ignores" box are visible.
-- [ ] The level toggle switches text and visible controls without resetting or changing the simulation.
-- [ ] Controls are clamped to plausible ranges and keyboard operable; reduced-motion mode pauses auto-play.
-- [ ] Source links and a one-page teacher note are present.
-
-**Deliverables.** A repository with the running demo, a short README (run, build, test), the CPU reference solver with its tests, and a 1–2 minute screen recording for the group review.
+**Deliverables.** A working two-spread book, its scientific and engineering evidence,
+a short reader-journey recording, and explicit human/expert review status.
+The present documentation correction does not claim these implementation deliverables.
 
 ## Roadmap
 
@@ -259,8 +267,8 @@ Four sequential phases, each closed by a gate the group reviews before the next 
 
 | Phase | Focus | Scope | Exit gate |
 | --- | --- | --- | --- |
-| 1 (current) | Demo 1 | Erosion sandbox spread; terrain engine v0; ink renderer; minimal book shell | Acceptance criteria met; expert sign-off |
-| 2 | Engine extraction | Contours to terrain; deltas and fans; spread schema v1; spreads as data | A new spread built mostly as data |
+| 1 (current) | Playable book proof | Existing Hachure foundations; two small interactive spreads; book composition and page turning | Product gate PB1–PB8; applicable technical checks; science review |
+| 2 | Engine extraction | Extend the playable book; deltas and fans candidate; spread schema v1; spreads as data | A new spread built mostly as data |
 | 3 | Human coupling | Dam a river spread; runoff on a real DEM; map projections scene; university overlays | Real DEM runs end to end |
 | 4 | Pilot | Human/agent engine; Von Thünen spread; catalogue shell; classroom pilot | Pilot results reviewed by the group |
 
@@ -304,12 +312,12 @@ Phase 2 is the real test of the architecture: if a new terrain spread cannot be 
 | Risk | Why it matters | Mitigation |
 | --- | --- | --- |
 | Production cost per spread | Every Joule-quality spreads are hand-crafted; without reuse the book stays a few demos | Shared engines; spreads as data; extract primitives from Demo 1 rather than designing them up front |
-| Free play loses the lesson | Digging holes is fun but not learning | Predict → test → explain → challenge on every spread |
+| Play loses the lesson | An action without a readable consequence leaves the idea unclear | One gesture and visible consequence; optional question and immediate explanation |
 | Unphysical results from extreme inputs | A 2 km pit or vertical cliff makes the model look broken and teaches wrong ideas | Clamp controls; acknowledge limits on the page |
 | Time and scale misconceptions | Compressed time suggests landforms form fast | Time-scale label and scale bar always visible |
 | Stylised models read as laws | Human geography models are idealised | Tier badge; "What this model ignores" box; model framed as a model |
 | Weak classroom hardware | Chromebooks and old laptops struggle with WebGPU | WebGL2 fallback; smaller grids; the spread still teaches from the flat drawing |
-| Engine-first drift | A framework with no content | Build one complete spread first |
+| Engine-first drift | A framework whose capabilities dominate the reading experience | Prove a short playable book sequence before expanding the engine |
 | Scientific errors in page text | Credibility with teachers and reviewers | Expert sign-off per spread; cited sources |
 | Duplicating existing work | Reviewers will compare with known tools | Cite the UC Davis Augmented Reality Sandbox as precedent; our difference is web delivery, erosion and deposition, time, curriculum structure and levels |
 

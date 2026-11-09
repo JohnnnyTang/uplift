@@ -1,10 +1,26 @@
-# Stage 1 · Demo 1: "How a river carves a valley"
+# Stage 1 · Playable book proof on the Hachure foundations
 
 Detailed plan for the current stage. The work model and rules are in [README.md](README.md). The product
 reasoning and the brief's internal tensions (referred to below as **T1–T9**) are in
 [product-story.md](../product-story.md#tensions-in-the-brief-and-how-the-plan-resolves-them). The source of
 truth for requirements is the handoff's
 ["Demo 1 spec"](../handoff.md#demo-1-spec-the-erosion-sandbox-spread).
+
+## Active correction — product before further engine scope
+
+The owner's 2026-11-09 request changes the next milestone to a bounded, playable book:
+drawings lift into directly manipulable 3D, questions and answer flaps are optional,
+and page turning connects small discoveries. Read [P0–P2](product-realignment.md)
+for the current session briefs, owned paths and product criteria PB1–PB8.
+P0 is the documentation session; P1 and P2 are subsequent implementation work.
+
+The wave briefs below retain the record of how the foundations were built. Their
+mandatory prediction/endpoint gates, mandatory challenge/stamp flow and page-turn
+exclusion are superseded for the ordinary reader experience. Rewrite affected
+behavior tests during P1/P2 while preserving scientific safeguards and model state.
+Failed morphology experiments remain failed; pending challenge science remains pending.
+Those particular lessons cannot be shipped as successful outcomes. They do not require
+an unrelated contour lesson to wait for a waterfall result.
 
 ## Goal and exit gate
 
@@ -19,14 +35,17 @@ This note supersedes conflicting mandatory-calibration and absolute-margin wordi
 in the session briefs below. Register model-time challenge persistence before
 implementing it; do not enable the existing pending challenge automatically.
 
-**Goal.** One working spread inside a minimal book shell. It proves the shared terrain engine, the
-ink-line-to-3D look, and the two-level page.
+**Goal.** Two small interactive spreads in a recognisable book. Prove immediate play, a readable
+same-scene consequence, optional reflection and a genuine page turn, using the existing engine.
 
-**Exit gate.** Every acceptance criterion below has linked evidence. A domain expert has signed off the
-science. The group has reviewed a 1–2 minute screen recording. The stage retro is written.
+**Exit gate.** PB1–PB8 and applicable foundation checks have linked evidence. The shipped lessons have
+domain-expert review. Human reader/listening and hardware checks are reported honestly; missing checks
+remain open. The group reviews the working book and a short recording; the stage retro is written.
+Historical AC3 morphology and waterfall success are not prerequisites for an unrelated replacement
+lesson, and are never relabelled as passes. Each new lesson must validate its own taught claim.
 
 **Out of scope** (from the handoff). Ice, waves, vegetation, real DEM input, the human/agent engine,
-catalogue, accounts, page turning between spreads.
+catalogue and accounts. Page turning between two interactive spreads is now required.
 
 ## Shape of the stage
 
@@ -98,12 +117,18 @@ flowchart LR
     classDef qa fill:none,stroke:#9b2c2c;
 ```
 
-**Critical path:** 1A → 2A → 3C → 4A → 5A, the solver chain. The GPU solver is the largest technical risk,
-so it is split across two waves, and spike 1B goes first.
+**Current critical path:** P0 direction → P1 first playable spread → P2 second discovery and page turn
+→ Wave 5 hardening/review. The historical solver chain (1A → 2A → 3C → 4A → 5A) explains the
+foundation work; it no longer determines the product priority.
 
 ## Acceptance traceability
 
-Each criterion from the handoff, the sessions that deliver it, and the evidence the gate expects.
+The table below preserves the original erosion-demo criteria and their delivery sessions.
+The current product gate is [PB1–PB8](product-realignment.md#product-acceptance-gate).
+AC1/2/4/6/8/9 remain applicable foundation checks. AC5 applies to each new diagram/scene;
+AC7 follows the updated compact scope/scale/time and limitation disclosure policy;
+AC10 applies to each shipped lesson. AC3 is historical morphology evidence, not a claim
+supported by the recorded gross-erosion comparison or a requirement to teach that outcome.
 
 | #    | Acceptance criterion                                                                                                              | Built by           | Evidence at the gate                                                                        |
 | ---- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------- |
@@ -118,10 +143,11 @@ Each criterion from the handoff, the sessions that deliver it, and the evidence 
 | AC9  | Controls clamped and keyboard operable; reduced motion pauses autoplay                                                            | 1E, 2B, 2E, 3E, 4D | Clamp unit tests; keyboard-only end-to-end run; reduced-motion end-to-end run               |
 | AC10 | Source links and a one-page teacher note                                                                                          | 1E, 3D, 5C         | `teacher-notes.md`, `sources.md`, rendered in the book                                      |
 
-Also required by the handoff and checked at the gate: the challenge works and awards a stamp (4C); the
-university level shows the stream power law with live K, the long profile, the sediment budget and real
-units (4B); the CPU reference and GPU solvers agree (3C, 4A); a README with run, build and test (5C); a
-1–2 minute recording (5C).
+Also required at the current gate: CPU/GPU agreement (3C, 4A), run/build/test instructions (5C),
+and a short recording of the playable sequence. Advanced theory and diagnostics are optional
+reader disclosures. The former required waterfall stamp and live stream-power K are not product
+requirements: the challenge remains unvalidated, and no dimensional mapping to that K is established.
+Preserve these research limitations rather than promising them in the new book.
 
 ---
 
@@ -712,7 +738,8 @@ science remains pending and cannot produce a successful challenge event.
 
 ## Wave 5 · Hardening and review
 
-**Entry:** W4 merged.
+**Entry:** W4 integration retained; P1/P2 product sequence implemented and reviewed.
+Do not start hardening the long research worksheet as if it were the intended book.
 **Merge order:** 5A → 5B → 5C → 5D.
 **Exit:** the stage gate.
 
@@ -729,8 +756,9 @@ profile. Results go in `docs/perf/stage-1.md` (AC1).
 
 **Owned paths.** `docs/plan/stage-1-acceptance.md`, plus small fixes.
 
-Walk AC1–AC10 and the other gate items. Link evidence for each. Fix small gaps, and file anything larger
-as an issue for the lead.
+Walk PB1–PB8 and the applicable foundation checks described in Acceptance traceability. Link evidence
+for each. Retain original AC1–AC10 outcomes as historical records, including failed or pending items;
+do not substitute the new product gate for scientific evidence. Fix small gaps and file larger ones.
 
 ### 5C · Review packet — SCI · S–M (partly needs a person)
 
@@ -763,6 +791,10 @@ Stage 2. **This is the input for planning Stage 2 in detail.**
 | WebGPU is testable in CI                                                                                           | Run GPU tests locally and record the run at each wave close                | 3C          |
 
 ## Changelog
+
+- 2026-11-09: Owner redirects the product to a playful 3D book. Add P0–P2 before Wave 5,
+  require bounded book composition and page turning, make prediction/flaps optional,
+  and separate product acceptance from retained erosion research outcomes.
 
 - 2026-11-09: Open Wave 4 from the completed Wave 3 comparison; add owner-requested
   anonymous learning-outcome instrumentation as session 4F.

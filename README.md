@@ -1,23 +1,26 @@
 # Uplift
 
-**An interactive 3D geography book.** Textbook-style spreads where line-art diagrams lift off the page into
-simulations readers can manipulate: contour lines rise into terrain, rain carves a valley, a dam starves a
-delta. High-school and university readers use the same simulation at different depths.
+**A geography book whose drawings come to life.** Ink illustrations lift off bounded paper pages into
+3D scenes readers can touch and explore. Each spread offers one small discovery, an optional question
+and answer flap, and a reason to turn the page. High-school and university readers explore the same
+model at different depths.
 
 Underneath the book is **Hachure**, the terrain and ink engine. Hachures are the short ink strokes old maps
 used to show slope, which is the look the engine draws.
 
-> **Status:** idea stage → Stage 1 (Demo 1: "How a river carves a valley"). Nothing runs yet beyond the
-> scaffold. See the [plan](docs/plan/README.md).
+> **Status:** Stage 1 product realignment. Hachure foundations and an integrated erosion research
+> example run today; the intended playable book is not yet delivered. The next work is book-sized
+> composition, immediate 3D play and two interactive spreads with page turning. See the
+> [product story](docs/product-story.md) and [active plan](docs/plan/product-realignment.md).
 
 ## Why this exists
 
 Geography is spatial and slow. Rivers cut valleys over timescales far longer than any lesson, and a page
 shows one frozen moment.
-Uplift lets a reader commit to a prediction, run the process, see the landform emerge from simulated flow,
-transport and deposition, and then read the explanation of what they just saw. Every simulation is
-process-based, declares its scientific tier, shows its time compression and scale, and lists what it
-ignores.
+Uplift invites readers to play first, see a consequence and uncover an explanation when curious.
+Scientific depth supports that invitation: landscape changes emerge from simulated processes,
+quantities agree with the scene, and model limits and applicable time/scale are stated honestly.
+Questions, challenges and advanced controls never stand between a reader and the next page.
 
 ## Repository layout
 

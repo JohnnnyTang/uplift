@@ -1,124 +1,194 @@
 # Product story and threads
 
-A reading of `docs/handoff.md` for builders: what Uplift is, why each rule exists, the threads that run
-through every stage, and the tensions inside the brief that the plan has to resolve. Where this document
-and the handoff disagree, the handoff wins. Raise the disagreement in `DECISIONS.md`.
+## Product direction — owner clarification, 2026-11-09
 
-## The story in one paragraph
+**Uplift is a book whose drawings come to life.** A reader opens a bounded paper spread,
+touches an ink illustration, watches it rise into a manipulable 3D scene, discovers one
+small idea through play, and turns the page because they want to try the next one.
+The name describes that moment: line art lifting out of a book into a 3D world.
 
-A student opens a book on a desk. The right-hand page shows a hatched contour drawing of a plateau, and it
-is a real map they could read on its own. The left-hand page asks them a question and makes them commit to
-an answer. Then the contours lift off the paper and become terrain. Rain falls, blue water finds the low
-ground, ochre sediment moves, and a valley cuts down over simulated millennia while a clock and a scale bar
-keep time and distance honest. The student can paint a band of hard rock and watch a waterfall form. They
-lift a flap to read why, tied to what they just saw, and then the book sets a challenge that the simulation
-itself checks. A university student opens the same page, flips a toggle, and the same running model shows
-the stream power law with a live parameter, a long profile and a sediment budget. Nothing about the model
-changed; they now see more of it.
+The owner's request and six supplied Every Joule screenshots are the design reference
+for this correction. They establish the intended experience; they are not instructions
+to copy assets, reproduce its physics lesson, or claim that our current app does this.
+Geography remains the subject. Hachure remains the scientific and rendering foundation.
 
-## Who it is for
+This clarification is reflected in the [handoff](handoff.md#pedagogical-design-principles)
+and supersedes the earlier mandatory prediction gate, required challenge/stamp loop,
+and deferral of page turning. The [realignment plan](plan/product-realignment.md) is the
+next work, before Stage 1 hardening. Existing scientific evidence keeps its actual status.
 
-| Reader                     | What they need                                       | What the spread gives them                                                                        |
-| -------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| High-school student        | The phenomenon, vocabulary, one clear cause → effect | Predict → watch → flap; simple controls (rain, rock, slope)                                       |
-| University student         | Mechanism, governing relations, real units           | Same model, the hood open: equations, live graphs, expanded "ignores" box, later real DEMs        |
-| Teacher                    | Something reliable to project and replay in class    | Teacher note, sources, seeded replay, keyboard control, works on school laptops                   |
-| Research group / reviewers | Credibility and a publishable engine                 | Tier badges, qualitative tests, mass conservation, expert sign-off, a standalone engine (Hachure) |
+## What the reference teaches us
 
-## The three bets of Demo 1
+In the supplied example, the reader drags a ball up a track and lets go. Its motion and
+the changing energy bottles tell the same story at the same time. A friction switch
+changes one understandable condition. A short question and an answer under a flap
+invite reflection. The paper, gutter, page edges, illustration and small navigation bar
+keep the experience recognizably a book.
 
-**Science priority (owner clarification, 2026-11-09):** teach visible causal
-relationships and reliable relative outcomes. Process-model lessons do not need
-field-accurate erosion rates or calibrated geological years unless they claim them.
-Use [the education-first science policy](science/education-policy.md) when interpreting
-the calibration and validation tensions below.
+The important design relationship is **gesture → visible consequence → understandable
+meaning**. The bottles make an otherwise invisible quantity tangible. Uplift should find
+equally readable visual representations for each lesson, rather than putting its engine
+parameters in front of the reader. A sediment gauge, for example, must represent a
+specific measured stock or flow; it cannot become a decorative jar with a scripted fill.
 
-The current goal is to prove three things with one spread. Each is a bet that could fail, and each stage-1
-wave is arranged to find out early.
+The reference also shows restraint: the illustration occupies a page, and the controls
+belong to that illustration. Its equations are not a requirement for our opening view.
+We take the book, spatial interaction and visual explanation as the reference, with
+less text and optional depth.
 
-1. **One shared terrain engine.** A process model (virtual-pipe water, capacity-based erosion and
-   deposition, slumping) that is fast enough on a school laptop, correct enough to pass qualitative tests,
-   and general enough that the next spreads (deltas, dams, knickpoints) are mostly data.
-2. **The ink-line-to-3D look.** Contours and hatching generated from the heightfield, so the flat drawing
-   and the 3D model cannot disagree. The lift is the signature moment.
-3. **The two-level page.** High school and university on one simulation, switched without a reset.
+## The reader's experience
+
+1. **Notice.** A beautiful, readable drawing and a short invitation make the action obvious.
+2. **Touch and play.** Lift, drag, place or turn something in the illustration. The scene is
+   available without answering a question first.
+3. **See.** The same scene visibly responds. One visual cue makes the consequence readable.
+4. **Wonder and reveal.** An optional small prediction or question sits beside an answer
+   flap. Reveal the answer immediately if wanted; explain kindly, without scoring pressure.
+5. **Try again or turn the page.** Change one setting, repeat the action, or move on freely.
+
+This is an editorial rhythm, not a sequence of locked states. A reader can open the
+explanation before playing, skip a question, or revisit a spread. No quiz, correct answer,
+simulation endpoint, stamp or assessment export is a prerequisite for play or navigation.
+
+Every spread has one idea, one primary gesture and one visible outcome. An optional
+"Try this" invitation can extend that same idea. A second concept needs another spread.
+A free sandbox is a later invitation, not the reader's entrance exam.
+
+## The book is the interface
+
+On a normal desktop or landscape tablet, the whole open spread fits in the reading area:
+two page-shaped surfaces, a gutter, outer edges, page numbers and a quiet navigation bar.
+Text, the main illustration, its primary control and the answer flap belong to the pages.
+The illustration is the visual centre of gravity; it must not sit below a dashboard.
+
+Page turning is part of the first product proof. Use a restrained page-turn effect with
+visible previous/next controls and keyboard access. A wheel or touch gesture may request
+one turn at a time, but must not capture a drag intended for the scene or trap scrolling.
+Reduced motion uses an immediate change or brief fade, with no forced lift animation.
+A transition never changes simulated terrain or fabricates a scientific outcome.
+
+Book size is a composition constraint, not permission to shrink text until it fits.
+On a narrow screen, show one readable page at a time with explicit navigation between
+the explanation and illustration and onward to the next spread. At large text sizes or
+browser zoom, reflow and vertical scrolling take precedence over fixed dimensions.
+No clipped content, nested scroll traps or tiny replica of a desktop book.
+
+Use ink, hatching, paper and restrained depth. Coloured marks carry a named quantity,
+with a legend and a redundant non-colour cue. Paper edges, contact shadows and a
+controlled camera establish depth; decorative glow and gradients do not teach anything.
+Keep text as accessible DOM content even when the page surface and scene use 3D rendering.
+
+## What is visible, and when
+
+| Surface                          | Reader sees                                                                                                                                                              |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Opening spread                   | Short title, a brief invitation, dominant illustration, one primary action, at most one optional condition control, quiet pause/reset, optional question and answer flap |
+| Beside the illustration          | Compact quantity legend, applicable scale and honest model-time/tier label; a concise limitation wherever omission would mislead                                         |
+| "Go deeper" / university view    | Optional equations, live graphs, measured values, additional controls and expanded explanation, on the same model state                                                  |
+| Sources and teacher notes        | Scientific references, fuller simplifications, replay guidance and teaching context, reachable from each spread                                                          |
+| Explicit research/developer view | Validation packets, backend/grid/seed details, pending experiments, instrumentation controls and diagnostic budgets                                                      |
+
+These are progressive levels of disclosure, not separate simulations. A level or detail
+toggle must preserve model state. If a hidden advanced setting has changed, show a brief
+plain-language notice and an explicit restore action; never reset behind the reader's back.
+Instrumentation remains opt-in and off by default; ordinary reading does not require it.
+
+Honesty stays close to the relevant claim. "Simplified model; time is not calibrated" is
+useful reader context. A list of unfinished research tasks is not lesson content. A
+pending waterfall challenge stays out of the ordinary book until it has a supported
+outcome; its failed experiments remain available to researchers.
+
+## Where the current implementation drifted
+
+This assessment is grounded in source and the committed rain-comparison screenshot,
+not a claim to have conducted a new user study.
+
+| Current evidence                                                                                            | Effect on the experience                                                   | Direction                                                                                              |
+| ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `uplift/book/src/app/book.ts` commits prediction before lifting and unlocks the flap at a recorded endpoint | Exploration and explanation require prior compliance                       | Make play and answer reveal independently available                                                    |
+| The right page mounts a recorded bar/trace comparison before a separate live terrain                        | The taught outcome and the reader's action belong to different experiments | One primary live scene and its own consequence; retain recorded evidence as labelled optional material |
+| `book.css` uses content-height columns and `lesson.css` fixes a small terrain viewport                      | The saved spread is a long worksheet with a small illustration             | Compose within a book spread; make the illustration dominant                                           |
+| Brush settings, numerical captions and pending research status occupy the normal lesson                     | Readers must learn the tool before discovering the idea                    | Put one understandable action on the page; disclose technical depth on request                         |
+| Stage 1 excludes page turning and treats the solver chain as the critical path                              | The book experience can be deferred indefinitely                           | Require a short playable book sequence before hardening or adding engine scope                         |
+
+The mismatch is not a reason to throw away the work. Solvers, conservation checks,
+CPU/GPU comparison, bindings, contours, picking, accessibility and reproducibility are
+assets. They must now serve the reader's next gesture and visible discovery.
+
+## The first proof after this correction
+
+Build a small sequence of two interactive spreads with a genuine page turn between them.
+Use **Contours to terrain** as the first candidate: it can demonstrate the name and the
+flat-to-spatial relationship using existing heightfield and contour capabilities without
+waiting for a convincing valley to form.
+
+Its design prompt is "Lift the drawing; explore the shape." A constrained view/lift action
+and a selected contour or height marker should connect the paper drawing to the raised
+surface. The proposed tiny question concerns the same contour in both views. This is a
+content brief, not approved scientific copy: source the claim and mark the actual copy
+`<!-- expert-review -->` during implementation.
+
+A second candidate is **Where will the water go?** Place a source on a prepared small
+landscape and observe the model's route. Choose one gesture and one model-supported
+question. Confirm that the existing host can support the source interaction and that
+the water consequence is visible before committing to this lesson. If a shared
+primitive is missing, record it in `DECISIONS.md`; do not script the water route.
+
+These are proposed lesson choices, not claims that either spread is complete or validated.
+The first implementation session must test them against the actual renderer and model.
+If a candidate cannot show a clear, truthful consequence promptly, narrow or replace
+the lesson rather than making the reader wait through a numerical experiment.
+The original erosion work remains a research/example surface until its live illustration
+can carry its lesson. Its recorded gross-erosion result does not validate a live valley,
+waterfall or water-routing claim.
+
+The acceptance question is: **Can a new reader discover what to touch, see what changed,
+say one small thing they learned, and reach another playable page without help?**
+Automated checks can establish mechanics; only observed readers can establish that
+the invitation is understandable or that they want to continue.
 
 ## Threads that run through every stage
 
-These cross-cutting concerns don't belong to one session. Every session brief names the threads it touches,
-and every stage gate checks them.
-
-1. **Rigour.** Process-based, never scripted. Tier badge, "What this model ignores", clamps, sources,
-   qualitative tests, expert sign-off. _Every predict answer and every flap claim must be backed by a
-   qualitative test that shows the model actually behaves that way._ Otherwise the page can claim something
-   the simulation does not show.
-2. **Page ↔ model agreement.** Every number on the page comes from a binding. This includes the time-scale
-   label, the scale bar and durations in question text (see tension 3 below). It needs a mechanical check
-   (a lint or test that scans page text for bare digits), not reviewer vigilance.
-3. **Two levels, one model.** The toggle is a view change. A test asserts that the simulation state hash is
-   unchanged across toggles.
-4. **Determinism and replay.** Fixed step, seeded RNG, reproducible runs, so a teacher can replay a run in
-   class. Later this can include shareable replay links (seed plus input log).
-5. **Classroom performance.** Integrated GPUs and Chromebooks. Degrade grid size before frame rate. The flat
-   drawing is the fallback that still teaches.
-6. **Accessibility.** Keyboard, text alternatives for the key visual change, reduced motion, colour-blind
-   palette. This is designed in, not audited in at the end.
-7. **Engine ↔ book separation.** Hachure never imports Uplift. Spreads are data. Heavy spread code is a
-   signal that the engine lacks a primitive.
-8. **Restraint.** One idea, one model, one challenge per spread. Ink and paper plus one or two
-   meaning-bearing colours. This restraint is why Every Joule feels finished.
+1. **Learning through play.** One idea, primary gesture and visible consequence. Optional
+   questions and explanations support curiosity; they never unlock the product.
+2. **Scientific honesty.** Process-based landforms, truthful model scope, cited claims and
+   expert review. A polished scene does not turn a failed experiment into a pass.
+3. **Page ↔ model agreement.** Measurements, quantities, scale and time labels bind to the
+   actual state/configuration. Visual gauges share that state. No independently authored
+   animation or number may imply a result the model did not produce.
+4. **Two levels, one model.** More depth changes presentation, not model state. University
+   readers also deserve a legible book rather than a wall of diagnostics.
+5. **Determinism and performance.** Fixed steps, seeded randomness, CPU/GPU comparison,
+   responsive manipulation and appropriate fallbacks. A static fallback is identified
+   honestly and still offers a readable explanation.
+6. **Accessibility.** Keyboard equivalents to gestures, text alternatives to visual change,
+   reduced motion, sufficient contrast, non-colour encodings and zoom/reflow.
+7. **Engine ↔ book separation.** Hachure never imports Uplift; spreads use public primitives.
+   Build a primitive because a lesson needs it, and prove it inside that lesson.
+8. **Book craft.** Bounded composition, readable typography, meaningful ink and colour,
+   real navigation, and a deliberate page-to-page rhythm.
 
 ## Tensions in the brief, and how the plan resolves them
 
-These are places where two parts of the handoff pull against each other, or where a stated method won't meet
-a stated criterion as written. Each one is assigned to a session in `docs/plan/stage-1.md`.
+Earlier T1–T9 references remain in historical Stage 1 briefs. Their technical decisions
+are retained in the decision log and evidence; they are not the product's reading order.
 
-1. **The cited advection scheme versus the mass-conservation criterion.** Mei et al. (2007) advect suspended
-   sediment semi-Lagrangianly (back-tracing), which does not conserve mass. The acceptance criterion
-   requires rock plus sediment change to match exported sediment within 1%. _Resolution:_ use a
-   conservative flux-form (upwind, finite-volume) sediment transport. Make evaporation deposit the sediment
-   it strands rather than delete it, and keep explicit budget counters (eroded, suspended, deposited,
-   exported). Session 2A owns this; the mass test is its exit criterion.
-2. **"WebGL2 fallback at 128²" versus compute shaders.** WebGL2 has no real compute stage, so the WebGPU
-   solver cannot simply run on the fallback. _Hypothesis to test (spike 1B):_ the fallback runs the CPU
-   reference solver in a Web Worker at 128² and renders with WebGL2. That makes the CPU reference a shipped
-   product feature, which raises the stakes on keeping it fast and in agreement with the GPU solver.
-3. **Typed numbers inside question text.** The Demo 1 predict question says "for 10,000 years". That is a
-   duration the time-scale config controls, so under the binding rule it should be
-   `{{scene.durationLabel}}` or similar. _Resolution:_ scene and config values are bindable, not only probes
-   (session 1A contract). The no-typed-numbers check treats question text like any other page text.
-4. **A quantitative time label on a qualitative model.** "1 s ≈ 1,000 years" reads as a measurement, but the
-   tier is _process model_ (magnitudes indicative). _Resolution:_ derive the label from a documented
-   calibration (an erosion-rate range from the literature mapped to simulated incision). Keep the "≈". Have
-   the "ignores" box say that rates are indicative. Session 1E drafts the calibration, and the expert signs
-   it off.
-5. **GPU determinism.** Bitwise reproducibility holds for the same device and driver only if the solver
-   avoids order-dependent float reductions (atomics). _Resolution:_ the determinism criterion is bitwise on
-   the CPU within one JavaScript engine and bitwise on the same device/driver for the GPU. Preset and
-   brush transcendental functions do not promise cross-engine bitwise replay. Budget reductions use a fixed-order tree reduction or
-   integer atomics on fixed-point values. CPU–GPU agreement is checked within a tolerance, not bitwise.
-6. **The predict answer depends on the model.** "Deeper, wider, or both?" Whether harder rain widens the
-   valley depends on slumping and the angle of repose in _our_ model. _Resolution:_ write the predict
-   answer only after the qualitative test shows the behaviour (session 3B). The content session drafts
-   options, and the answer is bound to the test result before expert review.
-7. **Level toggle versus university-only parameters.** If a university reader changes erodibility K and then
-   switches to high school, the model keeps the new K (the toggle must not change the model). The
-   high-school page then has to stay truthful with a non-default parameter. _Resolution:_ high-school text
-   binds to live values, and a "parameters changed — reset to defaults" affordance appears when hidden
-   controls differ from their defaults.
-8. **First meaningful page in 3 s versus WebGPU start-up.** Device creation and shader compilation take
-   time. _Resolution:_ the flat contour drawing is computed on the CPU from the preset heightfield and
-   painted first, as SVG or a canvas on the DOM page. The 3D renderer initialises behind it, and the lift
-   starts only when it is ready. The 2D-first rule and the performance budget point the same way.
-9. **"Build the spread first, extract the engine later" versus parallel sessions.** Parallel work needs
-   agreed contracts. Agreeing contracts up front risks engine-first design. _Resolution:_ contracts in wave 1
-   are deliberately thin. They are the state layout, the step/tool/probe interface and spread schema v0,
-   all written _from the Demo 1 spread's needs_. Stage 2 is where the engine is properly extracted and the
-   schema reaches v1.
+- **T1 / T2 / T5:** conservative transport, CPU fallback and scoped determinism remain
+  engineering obligations. This pivot does not change either solver.
+- **T3 / T4:** bind displayed quantities; use the
+  [education-first science policy](science/education-policy.md). Geological time or field
+  rates require calibration only when those claims are made.
+- **T6:** teach only what the model and its visual evidence support. Optional guesses may
+  be informal, but revealed answers must still be justified.
+- **T7:** changing reading depth preserves state and discloses non-default hidden settings.
+- **T8:** a genuine flat diagram appears before the renderer is ready. Readiness may delay
+  an unavailable action; prediction commitment may not.
+- **T9:** thin contracts serve a complete playable spread. Engine completeness alone does
+  not satisfy the product gate.
 
-## What "done" looks like for the project, not just Demo 1
+## What success means
 
-By the end of roadmap phase 4: a catalogue of spreads filterable by course × level; three engines (terrain,
-human/agent, special scenes) sharing one render layer and runtime; at least one spread on a real DEM; and a
-classroom pilot with results reviewed by the group. The architecture test comes in Stage 2: a new terrain
-spread built mostly as data.
+The next milestone is a recognisable, inviting book with two small playable discoveries.
+Later breadth—deltas, human geography, real data, more engine families and classroom
+research—earns priority only after this experience works. Hachure's technical quality
+supports Uplift's purpose: a reader plays, understands a little more, and turns the page.

@@ -5,6 +5,14 @@ the stage map for the whole project. Only the **current stage** is planned in de
 ([stage-1.md](stage-1.md)). Each later stage is planned when the previous one closes, using what that stage
 taught us.
 
+## Active priority — product realignment
+
+The owner corrected the direction on 2026-11-09: Uplift is a playable 3D book with
+bounded pages, immediate interaction, optional questions/reveals and page turning.
+[P0–P2](product-realignment.md) now precede Wave 5. Existing engine work and evidence
+remain foundations; implementation integration does not establish product acceptance.
+Read the updated [product story](../product-story.md) before starting a new session.
+
 ## The work model: stages → waves → sessions
 
 ```
@@ -137,7 +145,7 @@ bootstrap. Stages 2–4 are **provisional outlines**. Each is planned in detail 
 
 ```mermaid
 flowchart LR
-    S0["<b>Stage 0</b><br/>Bootstrap<br/><i>done</i>"] --> S1["<b>Stage 1</b><br/>Demo 1: erosion sandbox<br/><i>current</i>"]
+    S0["<b>Stage 0</b><br/>Bootstrap<br/><i>done</i>"] --> S1["<b>Stage 1</b><br/>Playable book proof<br/><i>current</i>"]
     S1 --> S2["<b>Stage 2</b><br/>Engine extraction<br/>spreads as data"]
     S2 --> S3["<b>Stage 3</b><br/>Human coupling<br/>real DEMs, scenes"]
     S3 --> S4["<b>Stage 4</b><br/>Pilot<br/>agents, catalogue, classroom"]
@@ -148,21 +156,23 @@ flowchart LR
 Public repository, monorepo skeleton (`hachure/*`, `uplift/*`), licences (MIT code, CC BY 4.0 content),
 CI, agent rules, decision log, product story, this plan.
 
-### Stage 1 · Demo 1: "How a river carves a valley" (current)
+### Stage 1 · Playable book proof (current)
 
-**Goal.** Prove the three bets with one spread: a shared terrain engine, the ink-line-to-3D look, and the
-two-level page.
-**Exit gate.** Every Demo 1 acceptance criterion in the handoff is met with evidence, a domain expert has
-signed off, and the group has reviewed the screen recording.
-**Detailed plan:** [stage-1.md](stage-1.md). There are five waves: contracts and spikes → foundations →
-end to end on the CPU → GPU, university layer and challenge → hardening and review.
+**Goal.** Use the existing Hachure foundation to prove two small interactive discoveries in a
+recognisable book, with direct manipulation and page turning.
+**Exit gate.** Product criteria PB1–PB8, applicable scientific and technical checks, expert review of
+the shipped lessons, and an honest record of pending human/hardware checks.
+**Detailed plan:** [stage-1.md](stage-1.md). Waves 1–4 record the engine and research-example work.
+The active [P0–P2 correction](product-realignment.md) comes before Wave 5 hardening and review.
 
 ### Stage 2 · Engine extraction (provisional)
 
 **Goal.** Show that a new terrain spread can be built mostly as data.
-**Likely scope.** Spread schema v1. Extract the primitives Demo 1 hard-coded. Build _Contours to terrain_
-(GIS and cartography, physical law) and _Deltas and alluvial fans_ (process model) as data-first spreads.
-Add a spread authoring guide and a minimal two-spread book with page turning.
+**Likely scope.** Spread schema v1. Extract primitives proved by the Stage 1 playable sequence.
+Build a further data-first spread, with _Deltas and alluvial fans_ as a candidate process model
+subject to visible scientific validation.
+Add a spread authoring guide and extend the playable book established in Stage 1.
+Contours to terrain and page turning have moved into the Stage 1 product proof; do not defer them here.
 **Exit gate.** A new spread whose spread-specific code stays under an agreed budget. If it can't, fix the
 engine before adding content (handoff, Roadmap).
 **Needs from the project lead.** Curriculum alignment, the language decision (before schema v1 freezes),
@@ -188,10 +198,10 @@ progress). Teacher mode. If chosen, learning-outcome instrumentation. A classroo
 
 ## Status
 
-| Stage                 | State                                             | Plan                     | Retro |
-| --------------------- | ------------------------------------------------- | ------------------------ | ----- |
-| 0 · Bootstrap         | Done                                              | —                        | —     |
-| 1 · Demo 1            | **Wave 4 in progress, including instrumentation** | [stage-1.md](stage-1.md) | —     |
-| 2 · Engine extraction | Outline only                                      | —                        | —     |
-| 3 · Human coupling    | Outline only                                      | —                        | —     |
-| 4 · Pilot             | Outline only                                      | —                        | —     |
+| Stage                 | State                                                  | Plan                     | Retro |
+| --------------------- | ------------------------------------------------------ | ------------------------ | ----- |
+| 0 · Bootstrap         | Done                                                   | —                        | —     |
+| 1 · Demo 1            | **Product realignment P0–P2; carried acceptance open** | [stage-1.md](stage-1.md) | —     |
+| 2 · Engine extraction | Outline only                                           | —                        | —     |
+| 3 · Human coupling    | Outline only                                           | —                        | —     |
+| 4 · Pilot             | Outline only                                           | —                        | —     |
