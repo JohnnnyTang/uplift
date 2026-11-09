@@ -14,3 +14,4 @@ export * from "./contract/index";
 export * from "./rng/index";
 export * from "./presets/index";
 export * from "./tools/index";
+export * from "./probes/index";
