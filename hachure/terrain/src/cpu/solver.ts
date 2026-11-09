@@ -113,6 +113,17 @@ export type WaveGuardPolicy = "halt" | "report";
 
 export interface CpuSolverOptions {
   readonly waveGuard?: WaveGuardPolicy;
+  /** Optional exact stage-5 transfer diagnostic over a full-width row reach. */
+  readonly sedimentReach?: SedimentReach;
+}
+export interface SedimentReach {
+  readonly firstRow: number;
+  readonly lastRowExclusive: number;
+}
+export interface SedimentReachBudget extends SedimentReach {
+  readonly incomingM3: number;
+  readonly outgoingM3: number;
+  readonly acceptedSteps: number;
 }
 
 /** Float64 copies of the conserved stocks, for budget tests that need more than float32 precision. */
@@ -150,11 +161,25 @@ export class CpuTerrainSolver implements TerrainSolver {
   private violationSteps = 0;
   private readonly waveGuard: WaveGuardPolicy;
   private disposed = false;
+  private readonly sedimentReach: SedimentReach | undefined;
+  private reachIncomingM3 = 0;
+  private reachOutgoingM3 = 0;
 
   constructor(config: TerrainConfig, preset: TerrainPreset, options: CpuSolverOptions = {}) {
     checkConfig(config);
     this.cfg = config;
     this.waveGuard = options.waveGuard ?? "halt";
+    const reach = options.sedimentReach;
+    if (
+      reach &&
+      (!Number.isInteger(reach.firstRow) ||
+        !Number.isInteger(reach.lastRowExclusive) ||
+        reach.firstRow < 0 ||
+        reach.firstRow >= reach.lastRowExclusive ||
+        reach.lastRowExclusive > config.gridSize)
+    )
+      throw new RangeError("Invalid sediment reach rows");
+    this.sedimentReach = reach ? Object.freeze({ ...reach }) : undefined;
     this.params = {
       dtSimSeconds: 0,
       rainMmPerHr: 0,
@@ -238,6 +263,9 @@ export class CpuTerrainSolver implements TerrainSolver {
       baseLevel,
       L.hardness,
     );
+    buf.sedimentReach = this.sedimentReach;
+    this.reachIncomingM3 = 0;
+    this.reachOutgoingM3 = 0;
     buf.b.set(L.bedrockM);
     buf.s.set(L.sedimentM);
     buf.m.set(L.suspendedSedimentM);
@@ -305,6 +333,8 @@ export class CpuTerrainSolver implements TerrainSolver {
         this.violationSteps++;
       }
       buf.commit();
+      this.reachIncomingM3 += ledger.reachSedimentInM3;
+      this.reachOutgoingM3 += ledger.reachSedimentOutM3;
       c.rainedWaterM3 += ledger.rainedWaterM3;
       c.sourcedWaterM3 += ledger.sourcedWaterM3;
       c.evaporatedWaterM3 += ledger.evaporatedWaterM3;
@@ -333,6 +363,19 @@ export class CpuTerrainSolver implements TerrainSolver {
     this.failure = { reason, step: this.steps + 1, cell, message, waveCourant: wave };
     this.mirrorStale = true;
     throw new TerrainStabilityError(this.failure);
+  }
+
+  /** Exact accepted-step sediment transfers, not post-step Q × concentration. */
+  sedimentReachBudget(): SedimentReachBudget | undefined {
+    this.live();
+    return this.sedimentReach
+      ? {
+          ...this.sedimentReach,
+          incomingM3: this.reachIncomingM3,
+          outgoingM3: this.reachOutgoingM3,
+          acceptedSteps: this.steps,
+        }
+      : undefined;
   }
 
   /** Numerical health of the run (no copy of the state). */

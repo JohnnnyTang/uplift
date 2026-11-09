@@ -67,6 +67,9 @@ export class StepLedger {
   depositedM3 = 0;
   exportedSedimentM3 = 0;
   suspendedM3 = 0;
+  /** Actual limited suspended-sediment transfers across a configured full-width row reach (m³). */
+  reachSedimentInM3 = 0;
+  reachSedimentOutM3 = 0;
   /** Largest wave Courant number `dt[(|u|+√(gh))/l + (|v|+√(gh))/l]` this step (unit: none). */
   maxWaveCourant = 0;
   /** Cell index of `maxWaveCourant`, or −1. */
@@ -87,6 +90,8 @@ export class StepLedger {
     this.depositedM3 = 0;
     this.exportedSedimentM3 = 0;
     this.suspendedM3 = 0;
+    this.reachSedimentInM3 = 0;
+    this.reachSedimentOutM3 = 0;
     this.maxWaveCourant = 0;
     this.maxWaveCourantIndex = -1;
     this.maxTransportCourant = 0;
@@ -102,6 +107,8 @@ export class StepLedger {
 export class CpuBuffers {
   readonly n: number;
   readonly cells: number;
+  /** Optional diagnostic row range, half-open; no effect on the numerical update. */
+  sedimentReach: { readonly firstRow: number; readonly lastRowExclusive: number } | undefined;
   /** Cell side (unit: m) and area (unit: m²). */
   readonly l: number;
   readonly area: number;
@@ -496,6 +503,24 @@ export function computeStep(buf: CpuBuffers, p: KernelParams, ledger: StepLedger
           ? fN[outlet]!
           : fS[outlet]!;
   ledger.exportedSedimentM3 = dt * outletF;
+
+  // Capture stage-5 limited transfers BEFORE slumping reuses these face arrays.
+  // Full-width reach: north/south interfaces plus any west/east exterior outlet.
+  if (buf.sedimentReach) {
+    const { firstRow, lastRowExclusive } = buf.sedimentReach;
+    let incoming = 0,
+      outgoing = 0;
+    for (let x = 0; x < n; x++) {
+      const north = firstRow * n + x,
+        south = (lastRowExclusive - 1) * n + x;
+      outgoing += fN[north]! + fS[south]!;
+      if (firstRow > 0) incoming += fS[north - n]!;
+      if (lastRowExclusive < n) incoming += fN[south + n]!;
+    }
+    for (let y = firstRow; y < lastRowExclusive; y++) outgoing += fW[y * n]! + fE[y * n + n - 1]!;
+    ledger.reachSedimentInM3 = dt * incoming;
+    ledger.reachSedimentOutM3 = dt * outgoing;
+  }
 
   // ── 6. Thermal slumping of loose material ──────────────────────────────────────────────────────────
   // e_ij = max(0, z_i − z_j − l tan(talus)); t* = rate dt e / 2; outgoing transfers scaled to ≤ s_i.
