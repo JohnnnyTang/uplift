@@ -189,6 +189,7 @@ export function describeTerrainSolverContract(
       const c = centre(config);
       const r = config.metresPerCell * 3;
 
+      const beforeRaise = await solver.snapshot();
       const ok = await solver.applyTool({
         kind: "raise",
         at: c,
@@ -198,6 +199,9 @@ export function describeTerrainSolverContract(
       expect(ok.applied).toBe(true);
       expect(ok.clamped).toEqual([]);
       expect(ok.volumeChangeM3).toBeGreaterThan(0);
+      const afterRaise = await solver.snapshot();
+      expect(afterRaise.layers.bedrockM).toEqual(beforeRaise.layers.bedrockM);
+      expect(volumeM3(afterRaise, "sedimentM")).toBeGreaterThan(volumeM3(beforeRaise, "sedimentM"));
 
       const deep = await solver.applyTool({
         kind: "dig",

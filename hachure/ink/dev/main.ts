@@ -12,7 +12,7 @@
 import { type LiftState, legendSwatchSvg, runLift, toSvg } from "@hachure/ink";
 import { type InkBackendRequest, type InkView, INK_VIEW_LAYERS, createInkView } from "@hachure/ink/view";
 import type { StateSnapshot } from "@hachure/terrain";
-import { createFakeSolver } from "@hachure/terrain/testing";
+import { createFakeSolver } from "@hachure/terrain/fake";
 
 type StateSnapshotLike = StateSnapshot;
 

@@ -94,18 +94,18 @@ so it is split across two waves, and spike 1B goes first.
 
 Each criterion from the handoff, the sessions that deliver it, and the evidence the gate expects.
 
-| #    | Acceptance criterion                                                                                                              | Built by           | Evidence at the gate                                                                       |
-| ---- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------ |
-| AC1  | 30 fps at 256² on an integrated GPU with WebGPU; WebGL2 fallback at 128²                                                          | 1B, 3C, 4A, 5A     | `docs/perf/stage-1.md` with device, browser, fps and ms per step; debug overlay screenshot |
-| AC2  | Same seed and inputs give the same terrain after N steps                                                                          | 1A, 2A, 2B, 4A     | `determinism.test.ts` (CPU, bitwise); same-device GPU test in browser                      |
-| AC3  | Qualitative tests: more rain → more incision; hard band → knickpoint upstream and narrower channel; lower slope → more deposition | 1E, 2F, 3B         | `qualitative/*.test.ts` passing; plots in `docs/science/validation/`                       |
-| AC4  | Mass conserved within 1% (closed boundaries except outlet)                                                                        | 2A, 4A             | `mass-budget.test.ts` on CPU and GPU                                                       |
-| AC5  | Flat drawing generated from the heightfield; lift animates from it                                                                | 1C, 2C, 3A         | Contour extraction tests; recording of the lift                                            |
-| AC6  | Every number on the page comes from a binding                                                                                     | 1A, 2D, 3D         | `no-typed-numbers.test.ts` over all page text, including question text (T3)                |
-| AC7  | Time-scale label, scale bar, tier badge and "ignores" box visible                                                                 | 2E, 3D             | End-to-end visibility assertions (4E)                                                      |
-| AC8  | Level toggle switches text and controls without resetting or changing the simulation                                              | 2D, 4B, 4E         | End-to-end test: state hash equal before and after toggling (T7)                           |
-| AC9  | Controls clamped and keyboard operable; reduced motion pauses autoplay                                                            | 1E, 2B, 2E, 3E, 4D | Clamp unit tests; keyboard-only end-to-end run; reduced-motion end-to-end run              |
-| AC10 | Source links and a one-page teacher note                                                                                          | 1E, 3D, 5C         | `teacher-notes.md`, `sources.md`, rendered in the book                                     |
+| #    | Acceptance criterion                                                                                                              | Built by           | Evidence at the gate                                                                        |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------- |
+| AC1  | 30 fps at 256² on an integrated GPU with WebGPU; WebGL2 fallback at 128²                                                          | 1B, 3C, 4A, 5A     | `docs/perf/stage-1.md` with device, browser, fps and ms per step; debug overlay screenshot  |
+| AC2  | Same seed and inputs give the same terrain after N steps                                                                          | 1A, 2A, 2B, 4A     | `determinism.test.ts` (CPU, same JavaScript engine); same-device/driver GPU test in browser |
+| AC3  | Qualitative tests: more rain → more incision; hard band → knickpoint upstream and narrower channel; lower slope → more deposition | 1E, 2F, 3B         | `qualitative/*.test.ts` passing; plots in `docs/science/validation/`                        |
+| AC4  | Mass conserved within 1% (closed boundaries except outlet)                                                                        | 2A, 4A             | `mass-budget.test.ts` on CPU and GPU                                                        |
+| AC5  | Flat drawing generated from the heightfield; lift animates from it                                                                | 1C, 2C, 3A         | Contour extraction tests; recording of the lift                                             |
+| AC6  | Every number on the page comes from a binding                                                                                     | 1A, 2D, 3D         | `no-typed-numbers.test.ts` over all page text, including question text (T3)                 |
+| AC7  | Time-scale label, scale bar, tier badge and "ignores" box visible                                                                 | 2E, 3D             | End-to-end visibility assertions (4E)                                                       |
+| AC8  | Level toggle switches text and controls without resetting or changing the simulation                                              | 2D, 4B, 4E         | End-to-end test: state hash equal before and after toggling (T7)                            |
+| AC9  | Controls clamped and keyboard operable; reduced motion pauses autoplay                                                            | 1E, 2B, 2E, 3E, 4D | Clamp unit tests; keyboard-only end-to-end run; reduced-motion end-to-end run               |
+| AC10 | Source links and a one-page teacher note                                                                                          | 1E, 3D, 5C         | `teacher-notes.md`, `sources.md`, rendered in the book                                      |
 
 Also required by the handoff and checked at the gate: the challenge works and awards a stamp (4C); the
 university level shows the stream power law with live K, the long profile, the sediment budget and real
@@ -373,25 +373,59 @@ profile with a known knickpoint position, and a budget fixture.
 
 ## Wave 3 · End to end on the CPU
 
-**Entry:** W2 merged.
+**Entry:** the six W2 foundation PRs merged. The hydraulic correction below must merge before
+3B or 3C starts; other independent W3 work may proceed.
 **Merge order:** 3D → 3B → 3E → 3A → 3C.
 **Exit:** a reader can run the whole loop in the book on the CPU solver at 128². Qualitative tests pass on
 the real model. The GPU water stage agrees with the CPU solver.
+
+### Required prerequisite · Hydraulic resistance correction — ENG/SCI
+
+Separate serial PR before 3B/3C, owned by the lead's solver/science session. Owned paths:
+`hachure/terrain/src/contract/**`, `hachure/terrain/src/cpu/**`, `docs/science/**`, plus
+minimal public exports and the append-only decision log. This is follow-up implementation,
+not part of the completed six foundation PRs.
+
+Implement and document the Manning-style resistance direction in D-W2-001. Derive the
+pipe-discharge update, velocity and hydraulic-radius convention consistently; add a typed
+roughness parameter with units and sourced provisional bounds. Do not transplant a shallow-water
+formula without deriving its mapping to these pipes. Preserve fixed steps, donor limiting,
+mass budgets and dry guards. Test equal hydraulic durations at successively refined fixed steps,
+including the 2A counterexample, and report velocity, incision and export convergence. Resolve
+the wave-guard policy from evidence; do not silently make `report` an accepted scientific guard.
+Record expert-review status. Update the CPU comparison fixtures; 3C must implement the same
+corrected update and run the browser CPU–GPU comparisons before its merge.
 
 ### 3A · Integration: sim host and first complete spread — RT · L
 
 _Threads:_ all. _Depends on:_ 2A–2E. **This is the critical integration session.**
 
 **Owned paths.** `hachure/runtime/src/sim-host/**`, `uplift/book/src/app/**`,
-`uplift/spreads/geomorph.v-valley/spread.ts`, and `uplift/spreads/index.ts` (registry).
+`uplift/spreads/geomorph.v-valley/spread.ts`, and `uplift/spreads/index.ts` (registry). Minimal CPU
+brush/preset wiring and its integration tests in `hachure/terrain/src/cpu/**` are also owned by 3A;
+coordinate after the serial hydraulic correction to avoid overlapping solver edits.
 
 **Deliverables.**
 
 - A sim host: a fixed-step accumulator, pause and speed, and the CPU solver running in a Worker with
-  transferable snapshots. Start probes at 2 Hz with at most one asynchronous readback in flight; drop stale samples, keep full-state GPU readback off the frame loop, and measure Worker transfer separately from fallback drawing cadence.
+  transferable snapshots. The measured 128² full solver is about 2 ms/step on the development
+  machine, not the 0.5 ms spike fixture; budget and measure Worker batches on target hardware.
+  `InkView.setState` costs about 25–50 ms CPU at 256²: publish view snapshots at 2–4 Hz,
+  or move pure contour/hachure extraction into the Worker. Keep camera/lift animation separate
+  from state extraction. Start probes at 2 Hz with at most one asynchronous readback in flight; drop stale samples, keep full-state GPU readback off the frame loop, and measure Worker transfer separately from fallback drawing cadence.
 - `geomorph.v-valley/spread.ts`, which wires the preset, camera, time scale, controls, probes and the page
   text files that 3D writes. The file names are fixed here: `page.hs.md`, `page.uni.md`, `predict.ts`,
   `flap.hs.md`, `flap.uni.md`, `ignores.ts`, `keywords.ts`, `teacher-notes.md` and `sources.md`.
+- Use the real 2B preset and replace 2A's placeholder brushes with `applyBrush`. Synchronise
+  the float32 tool mirror, copy only edited cells back to authoritative float64 state, and preserve
+  the exact tool-volume ledger. Use `layout()` for the outlet/base level, verify its face convention,
+  and reapply `layout().source` after reset. Add integration tests for this wiring.
+- Keep baseline/current channel paths distinct. Feed bindings complete atomic host samples and
+  explicit path-completeness/calibration metadata; do not infer approval from `simYears`.
+  Use canonical `scene.timeScale` in authored spreads; `timeScaleLabel` is a runtime alias only.
+- Import flat drawing helpers from `@hachure/ink` and lazy-load `@hachure/ink/view` separately.
+  Bind relief exaggeration and legend limits to the view's configuration, and reconcile the
+  shell's darker sediment token with the renderer so colours and labels agree.
 - The lift sequence: the SVG flat drawing, then the 3D view crossfades in at exaggeration 0, then animates
   to 1, then rain begins (AC5).
 
@@ -400,7 +434,7 @@ on the CPU solver at 128². A short recording is attached to the PR.
 
 ### 3B · Qualitative validation and calibration — SCI/ENG · M
 
-_Threads:_ rigour. _Depends on:_ 2A, 2B, 2F.
+_Threads:_ rigour. _Depends on:_ 2A, 2B, 2F and the hydraulic resistance prerequisite.
 
 **Owned paths.** `hachure/terrain/src/validation/**`, `docs/science/validation/**`.
 
@@ -408,7 +442,9 @@ _Threads:_ rigour. _Depends on:_ 2A, 2B, 2F.
 more incision; a hard band gives a knickpoint upstream and a narrower channel through it; a lower slope
 gives more deposition; plus the predict-answer test (T6). Default parameters tuned within 1E's ranges.
 The time-scale calibration computed and written to the default config (T4), with machine-readable provenance and approval status as specified in `docs/science/time-scale.md`. Until approval, bind an uncalibrated status and suppress numeric landscape years. Never calibrate from the fake solver. Plots and CSVs for the expert
-packet.
+packet. Use the real 2B preset. Before AC3c, define an additive diagnostic for actual limited
+reach-face sediment transfers; 2F's point `Q × concentration` estimate is not that diagnostic.
+Keep baseline/current paths distinct and reject incomplete paths for claims requiring a full reach.
 
 **Exit criteria.** All qualitative tests pass from a fixed seed, and each one also passes on two other
 seeds, so a pass is not luck. **The predict question's correct answer is recorded from the test result.**
@@ -416,14 +452,18 @@ seeds, so a pass is not luck. **The predict question's correct answer is recorde
 
 ### 3C · GPU solver, part 1: water — ENG · L
 
-_Threads:_ performance, determinism. _Depends on:_ 1B, 2A.
+_Threads:_ performance, determinism. _Depends on:_ 1B, 2A and the hydraulic resistance prerequisite.
 
 **Owned paths.** `hachure/terrain/src/gpu/**`, `hachure/terrain/src/compare/**`.
 
-**Deliverables.** GPU state buffers and the rain, virtual-pipe and velocity kernels, written in the
+**Deliverables.** GPU state buffers and the rain, corrected virtual-pipe/resistance and velocity kernels, written in the
 shader path chosen in 1B: explicit WGSL arithmetic through three r187 `wgslFn`, with managed `WebGPURenderer` storage and dispatch. Use explicit absolute/relative tolerances and record device/driver metadata. Preserve single-writer pass boundaries and profile the real solver; the spike kernels are engineering fixtures. A **CPU–GPU comparison harness** that runs in a real browser (Vitest
 browser mode with Playwright Chromium and WebGPU flags). It compares water depth, flux and velocity within a
-stated tolerance after N steps.
+stated tolerance after N steps. Absolute elevation in one float32 buffer loses small erosion
+increments: design initial elevation plus a change layer, or a local datum, and test preservation
+of sub-ulp cumulative changes against CPU float64 state. Reuse the public CPU constants/guards.
+The current InkView takes CPU snapshots: use bounded readback at the view cadence, or implement
+GPU contour drawing. Never display contours and a terrain mesh from different state versions.
 
 **Exit criteria.** The comparison passes locally on a GPU machine. On CI it runs if a WebGPU-capable runner
 or software adapter is available; otherwise it is tagged and the lead runs it at wave close. The
@@ -487,7 +527,14 @@ _Threads:_ performance, determinism, rigour. _Depends on:_ 3C.
 
 - Kernels for erode or deposit, flux-form sediment transport, slumping and evaporation, plus GPU tools.
 - A budget reduction that is deterministic on the same device (T5).
-- Full-step CPU–GPU comparison and a GPU mass-budget test.
+- Full-step CPU–GPU comparison and a GPU mass-budget test, including cumulative tiny erosion
+  against the CPU float64 authority. Preserve 3C's split/local-datum elevation representation.
+- Use 256² at 5 m per cell and 128² at 10 m per cell for the same 1280 m landscape.
+  Scale the 64² fallback to the same domain too. Recheck pipe area (the 2B candidate is
+  `0.2 × metresPerCell²`) and CFL/roughness guards after the hydraulic correction; this is
+  engineering scaling, not a calibrated field parameter.
+- Feed same-version snapshots to terrain and contours at a bounded cadence, or supply GPU
+  contours; GPU buffers alone cannot drive the current geometry-contour view.
 - Backend selection: WebGPU at 256², then the CPU Worker at 128² with WebGL2 rendering, then CPU 64² if needed, then flat drawing only. Use fixed-tree budget reductions without float atomics. WebGL2 compute failed the spike comparison and is not a fallback solver. Grid size degrades before frame rate does (handoff performance budget).
 
 **Exit criteria.** The comparison and mass tests pass in the browser. The same-device determinism test
@@ -526,6 +573,10 @@ does not. The stamp appears end to end.
 _Threads:_ accessibility. _Depends on:_ 3A.
 
 **Owned paths.** `hachure/runtime/src/a11y/**`, plus small fixes across widgets with a note in the PR.
+
+**Carried acceptance item.** Complete 2E's human screen-reader listening protocol in
+`uplift/book/src/evidence/README.md`. Its structural snapshot and keyboard smoke passed,
+but a human listening check was not performed; the merge does not mark that item passed.
 
 **Deliverables.** A text alternative for the key visual change: a polite live region with _bound_ values,
 such as the valley deepening by `{{probe.incisionDepth}}`. Reduced-motion mode pauses autoplay and turns
@@ -604,6 +655,11 @@ Stage 2. **This is the input for planning Stage 2 in detail.**
 | WebGPU is testable in CI                                                                                           | Run GPU tests locally and record the run at each wave close                | 3C          |
 
 ## Changelog
+
+- 2026-11-08: Wave 2 integration: merge 2B → 2F → 2A → 2C → 2D → 2E; add a serial
+  hydraulic-resistance prerequisite before 3B/3C; fold performance, precision, view-readback,
+  brush/preset wiring, exact sediment diagnostics and same-engine replay limits into later briefs.
+  Resolve browser fake imports and raise semantics; carry the human listening check to 4D.
 
 - 2026-11-07: Wave 1 integration: fold science and spike handovers into 2A–2F, 3A–3C, 4A–4C and 5A; retain pending human accessibility, hardware and science approval checks.
 - 2026-11-06: first version (Stage 0 bootstrap).

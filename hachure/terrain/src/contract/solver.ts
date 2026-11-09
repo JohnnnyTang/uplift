@@ -13,7 +13,7 @@ export interface TerrainPreset {
   readonly id: string;
   /**
    * Builds the initial state for this grid size, cell size and seed. Must be deterministic: the same
-   * inputs give a bitwise-identical state. Must not use `Math.random()`.
+   * inputs give a bitwise-identical state within the same JavaScript engine. Must not use `Math.random()`.
    */
   create(config: Pick<TerrainConfig, "gridSize" | "metresPerCell" | "seed" | "hardnessRange">): TerrainState;
 }
@@ -59,7 +59,7 @@ export interface TerrainSolver {
   budget(): Promise<BudgetCounters>;
   /**
    * A digest of the full state and step count. Same config, preset, seed and op log ⇒ same hash: bitwise
-   * on the CPU, and on the same device for the GPU (tension T5). Computed with `hashSnapshot`.
+   * on the CPU within the same JavaScript engine, and on the same device/driver for the GPU (tension T5). Computed with `hashSnapshot`.
    */
   hash(): Promise<string>;
   /** Rebuilds the state from a preset with this seed, zeroes the step count and budget, removes sources. */

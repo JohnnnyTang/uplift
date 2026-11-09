@@ -88,7 +88,8 @@ a stated criterion as written. Each one is assigned to a session in `docs/plan/s
    it off.
 5. **GPU determinism.** Bitwise reproducibility holds for the same device and driver only if the solver
    avoids order-dependent float reductions (atomics). _Resolution:_ the determinism criterion is bitwise on
-   the CPU and bitwise on the same device for the GPU. Budget reductions use a fixed-order tree reduction or
+   the CPU within one JavaScript engine and bitwise on the same device/driver for the GPU. Preset and
+   brush transcendental functions do not promise cross-engine bitwise replay. Budget reductions use a fixed-order tree reduction or
    integer atomics on fixed-point values. CPU–GPU agreement is checked within a tolerance, not bitwise.
 6. **The predict answer depends on the model.** "Deeper, wider, or both?" Whether harder rain widens the
    valley depends on slumping and the angle of repose in _our_ model. _Resolution:_ write the predict
