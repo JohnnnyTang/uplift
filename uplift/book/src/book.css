@@ -1,0 +1,343 @@
+:root {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  color-scheme: light;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+#app {
+  background: var(--desk);
+  color: var(--ink);
+  min-height: 100vh;
+  padding: 1.25rem clamp(0.75rem, 3vw, 3rem) 3rem;
+}
+.book-header {
+  max-width: 1450px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+  color: var(--paper);
+  font-family: "Segoe UI", sans-serif;
+}
+.book-brand {
+  font:
+    2.25rem "Palatino Linotype",
+    Palatino,
+    serif;
+  margin: 0 auto 0 0;
+}
+.fixture-notice {
+  max-width: 1450px;
+  margin: 1rem auto;
+  color: var(--paper);
+  font:
+    0.95rem/1.5 "Segoe UI",
+    sans-serif;
+}
+.book {
+  max-width: 1450px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  background: var(--paper);
+  box-shadow: 0 8px 0 #333b36;
+}
+.page {
+  min-width: 0;
+  padding: clamp(1.25rem, 2.7vw, 2.75rem);
+  font-size: 17px;
+  line-height: 1.5;
+}
+.page-left {
+  border-right: 2px solid var(--rule);
+}
+h1 {
+  font-size: clamp(1.9rem, 2.9vw, 2.7rem);
+  line-height: 1.12;
+  font-weight: 400;
+  margin: 0 0 1.2rem;
+  max-width: 20ch;
+}
+h2 {
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin: 0 0 0.75rem;
+}
+p {
+  margin: 0.75rem 0;
+}
+.reading-text {
+  max-width: 63ch;
+}
+button,
+input,
+select,
+output,
+summary,
+.widget-tier,
+.widget-time,
+.supporting-text,
+figcaption,
+.widget-legend,
+.widget-scale,
+.snapshot-description {
+  font:
+    1rem/1.4 "Segoe UI",
+    sans-serif;
+}
+button,
+select {
+  min-height: 44px;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--secondary);
+  border-radius: 3px;
+  color: var(--ink);
+  background: var(--paper);
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+button[aria-pressed="true"] {
+  border-width: 2px;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+:focus-visible {
+  outline: 3px solid var(--water);
+  outline-offset: 4px;
+}
+input[type="range"] {
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  accent-color: var(--water);
+}
+input[type="radio"],
+input[type="checkbox"] {
+  accent-color: var(--water);
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: 0 0 auto;
+}
+.widget-predict {
+  border: 1px solid var(--secondary);
+  margin: 1.6rem 0;
+  padding: 1rem;
+}
+.widget-predict legend {
+  font-size: 1.15rem;
+  padding: 0 0.35rem;
+}
+.widget-predict label,
+.widget-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 44px;
+  cursor: pointer;
+}
+.widget-predict button {
+  margin-top: 0.6rem;
+}
+.widget-status {
+  color: var(--secondary);
+  font:
+    0.95rem/1.5 "Segoe UI",
+    sans-serif;
+}
+.widget-flap {
+  margin: 1.5rem 0;
+}
+.widget-flap > div {
+  border-left: 3px solid var(--ink);
+  padding: 0.8rem 1rem;
+  margin-top: 0.75rem;
+}
+.widget-keywords {
+  margin-top: 1.75rem;
+}
+dl {
+  margin-bottom: 0;
+}
+dt {
+  font-weight: bold;
+}
+dd {
+  margin: 0.25rem 0 0.8rem;
+}
+.widget-tier {
+  display: inline-block;
+  border: 1px solid var(--ink);
+  padding: 0.2rem 0.55rem;
+}
+.supporting-text {
+  color: var(--secondary);
+  font-size: 0.9rem;
+}
+.widget-time {
+  margin: 1rem 0 0.4rem;
+}
+figure {
+  margin: 0.5rem 0;
+}
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+}
+figcaption {
+  font-size: 0.9rem;
+  color: var(--secondary);
+  margin: 0.5rem 0;
+}
+.widget-scale {
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+.widget-scale-line {
+  display: block;
+  height: 0.5rem;
+  border: 2px solid var(--ink);
+  border-top: 0;
+}
+.widget-legend {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: 0.5rem 1rem;
+  padding: 0;
+  font-size: 0.9rem;
+}
+.widget-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.legend-swatch {
+  width: 1.4rem;
+  border-top: 3px solid var(--ink);
+}
+.legend-water {
+  border-color: var(--water);
+}
+.legend-sediment {
+  border-color: var(--sediment);
+  border-top-style: dashed;
+}
+.snapshot-description {
+  font-size: 0.95rem;
+}
+.test-controls {
+  border-top: 1px solid var(--rule);
+  margin: 1.25rem 0;
+  padding-top: 1rem;
+}
+.widget-playback {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.widget-slider {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.15rem 0.5rem;
+  margin: 0.6rem 0;
+  font-family: "Segoe UI", sans-serif;
+}
+.widget-slider input {
+  grid-column: 1 / -1;
+}
+summary {
+  min-height: 44px;
+  cursor: pointer;
+  padding: 0.6rem 0;
+}
+details {
+  border-top: 1px solid var(--rule);
+}
+.widget-formula {
+  overflow-x: auto;
+}
+[hidden] {
+  display: none !important;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  padding: 0.75rem;
+  background: var(--paper);
+  color: var(--ink);
+  z-index: 2;
+}
+.skip-link:focus {
+  top: 0.5rem;
+}
+@media (max-width: 900px) {
+  .book {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .page {
+    padding: 1.5rem;
+  }
+  .page-left {
+    border-right: 0;
+    border-bottom: 2px solid var(--rule);
+  }
+}
+@media (min-width: 901px) and (max-height: 800px) {
+  .page {
+    padding: 1.5rem;
+    font-size: 16px;
+  }
+  canvas {
+    max-height: 240px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@media (forced-colors: active) {
+  .legend-swatch,
+  .widget-scale-line {
+    border-color: CanvasText;
+  }
+}
+
+/* Bar spans a quarter of the terrain width, which occupies 84% of the canvas. */
+.widget-scale-line,
+.widget-scale > span:last-child {
+  margin-left: 8%;
+}
+.widget-scale > span:last-child {
+  display: block;
+}
