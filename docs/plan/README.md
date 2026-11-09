@@ -9,8 +9,10 @@ taught us.
 
 The owner corrected the direction on 2026-11-09: Uplift is a playable 3D book with
 bounded pages, immediate interaction, optional questions/reveals and page turning.
-[P0–P2](product-realignment.md) now precede Wave 5. Existing engine work and evidence
-remain foundations; implementation integration does not establish product acceptance.
+[Wave 5](stage-1-wave-5.md) revises the built app and delivers a new two-spread example;
+[PB1–PB8](product-realignment.md#product-acceptance-gate) defines product acceptance.
+Hardening moves to Wave 6. Existing engine work and evidence remain foundations;
+implementation integration does not establish product acceptance.
 Read the updated [product story](../product-story.md) before starting a new session.
 
 ## The work model: stages → waves → sessions
@@ -36,8 +38,11 @@ Stage    a group-reviewed milestone with an exit gate                   (sequent
 
 ## Rules that make parallel sessions safe
 
-1. **Contracts before consumers.** If two sessions in a wave need a shared interface, it is merged in an
-   _earlier_ wave. Within a wave, sessions depend only on what is already on `main`.
+1. **Contracts before consumers.** Normally, if sessions in a wave need a shared interface, it is merged
+   in an _earlier_ wave. The owner-requested Wave 5 revision uses explicitly gated groups: 5A contracts
+   merge first, then 5B/5C/5D start from main, then 5E integration, then 5F acceptance. This exception
+   is scoped in its wave plan. In every case a session consumes only dependencies already on `main`,
+   never an unmerged peer branch. Ownership overlap is allowed only across these sequential groups.
 2. **Owned paths.** Every session brief lists the paths it may change. Two sessions in the same wave never own
    the same path. Touching an unowned path is allowed only for minimal glue (a re-export line, a registry
    entry), and the PR must say so.
@@ -100,7 +105,7 @@ You are running session {ID} ({title}) of Uplift, Stage {S}, Wave {W}.
 1. Read AGENTS.md, docs/product-story.md, and docs/plan/stage-{S}.md, especially "Session {ID}".
 2. You are on branch {branch} in your own worktree. Change only your owned paths:
    {owned paths}
-3. Build the deliverables and meet every exit criterion in your brief. If the brief is wrong given what is
+3. Read any linked current-wave brief. State the reader action/visible outcome, or the scientific/accessibility guarantee, that this session serves. Build the deliverables and meet every exit criterion in your brief. If the brief is wrong given what is
    now on main, follow the handoff's principles, record the deviation in DECISIONS.md, and say so in the PR.
 4. Run `pnpm check`. Open a PR to main titled "S{S}·W{W}·{ID}: {title}" using the PR template. End the
    description with a handover note: done / not done / surprises / facts that should change the plan.
@@ -112,6 +117,8 @@ You are running session {ID} ({title}) of Uplift, Stage {S}, Wave {W}.
 - [ ] Each session's exit criteria checked against what merged, not against what the PR claims.
 - [ ] Handover notes read. Plan-changing facts folded into the briefs of later waves (edit `stage-N.md`
       and note the change in its changelog).
+- [ ] The integrated default reader journey is demonstrated; isolated fixtures and green tests alone do not close product criteria.
+- [ ] Every unfinished task names the playable lesson or correctness/accessibility guarantee it serves; deferred capability lists are not automatic implementation commitments.
 - [ ] New decisions and open questions in `DECISIONS.md` are reviewed.
 - [ ] Worktrees and merged branches cleaned up.
 
@@ -146,9 +153,9 @@ bootstrap. Stages 2–4 are **provisional outlines**. Each is planned in detail 
 ```mermaid
 flowchart LR
     S0["<b>Stage 0</b><br/>Bootstrap<br/><i>done</i>"] --> S1["<b>Stage 1</b><br/>Playable book proof<br/><i>current</i>"]
-    S1 --> S2["<b>Stage 2</b><br/>Engine extraction<br/>spreads as data"]
-    S2 --> S3["<b>Stage 3</b><br/>Human coupling<br/>real DEMs, scenes"]
-    S3 --> S4["<b>Stage 4</b><br/>Pilot<br/>agents, catalogue, classroom"]
+    S1 --> S2["<b>Stage 2</b><br/>Another discovery<br/>proven reuse"]
+    S2 --> S3["<b>Stage 3</b><br/>Meaningful comparison<br/>people or real places"]
+    S3 --> S4["<b>Stage 4</b><br/>Classroom pilot<br/>observe and refine"]
 ```
 
 ### Stage 0 · Bootstrap (done, 2026-11-06)
@@ -163,45 +170,59 @@ recognisable book, with direct manipulation and page turning.
 **Exit gate.** Product criteria PB1–PB8, applicable scientific and technical checks, expert review of
 the shipped lessons, and an honest record of pending human/hardware checks.
 **Detailed plan:** [stage-1.md](stage-1.md). Waves 1–4 record the engine and research-example work.
-The active [P0–P2 correction](product-realignment.md) comes before Wave 5 hardening and review.
+The active [Wave 5 revision](stage-1-wave-5.md) replaces the coarse P1/P2 outline.
+Wave 6 hardens the resulting book; it does not harden the old worksheet as the product.
 
-### Stage 2 · Engine extraction (provisional)
+### Stage 2 · Grow the book and extract proven reuse (provisional)
 
-**Goal.** Show that a new terrain spread can be built mostly as data.
-**Likely scope.** Spread schema v1. Extract primitives proved by the Stage 1 playable sequence.
-Build a further data-first spread, with _Deltas and alluvial fans_ as a candidate process model
-subject to visible scientific validation.
-Add a spread authoring guide and extend the playable book established in Stage 1.
-Contours to terrain and page turning have moved into the Stage 1 product proof; do not defer them here.
-**Exit gate.** A new spread whose spread-specific code stays under an agreed budget. If it can't, fix the
-engine before adding content (handoff, Roadmap).
-**Needs from the project lead.** Curriculum alignment, the language decision (before schema v1 freezes),
-and a decision on publishing Hachure.
+**Goal.** Add one further small discovery that readers can play and understand, using
+shared capabilities demonstrated by the first two spreads.
+**Likely scope.** Refine the schema from authored examples; extract a primitive only
+where a real next lesson repeats or needs it; write a short authoring guide. Deltas/fans
+remain candidates, conditional on a prompt, visible and supported process outcome.
+Contours and page turning are already Stage 1 obligations.
+**Exit gate.** A new spread passes the same product/science/accessibility criteria, works
+inside the existing book and reuses the engine without heavy bespoke spread code.
+Engine modularity alone cannot close the stage.
+**Needs from the lead.** Lesson selection from Stage 1 observations, curriculum/language
+decisions only where required for that lesson, and any independently justified engine
+publication choice. No catalogue or general schema programme before another lesson works.
 
-### Stage 3 · Human coupling and real data (provisional)
+### Stage 3 · A meaningful human or real-place comparison (provisional)
 
-**Goal.** Bring people and real places into the terrain engine.
-**Likely scope.** _Dam a river: the shrinking delta_ (dam tool, sediment trapping). _Runoff and flow
-accumulation on a real DEM_ (Cloud-Optimised GeoTIFF reader, resampling to the grid). The _Map projections:
-peeling the globe_ scene (first special scene on the shared render layer). University overlays generalised
-across spreads.
-**Exit gate.** A real DEM runs end to end.
-**Needs from the project lead.** The DEM source and default region.
+**Goal.** Let a reader discover one meaningful relationship involving a human intervention
+or a real place, through direct interaction in the same book.
+**Candidate scope.** Choose one validated lesson: a dam intervention, a real-watershed
+experiment or a projection scene. These are alternatives to evaluate, not three automatic
+parallel projects. Add data loading or model coupling only when the selected interaction
+needs it; preserve sources, data rights, stated resolution/limits and accessible fallback.
+**Exit gate.** The selected action produces a visible, scientifically supported comparison
+inside a readable spread. A DEM loading successfully or a new engine running is necessary
+in some candidates, but never sufficient product evidence.
+**Needs from the lead.** A selected claim and scope; if real data is used, its source,
+licence and region. No data pipeline without a lesson it enables.
 
-### Stage 4 · Pilot (provisional)
+### Stage 4 · Classroom pilot of the working book (provisional)
 
-**Goal.** Put the book in a classroom.
-**Likely scope.** `@hachure/human` (land-use grid, agents, seeded rule modules, terrain coupling). The _Von
-Thünen land-use rings_ spread (stylised theory). A catalogue shell (course × level filter, contents,
-progress). Teacher mode. If chosen, learning-outcome instrumentation. A classroom pilot.
-**Exit gate.** The group has reviewed the pilot results.
+**Goal.** Learn whether readers discover the controls, understand the small ideas and
+want to continue, and whether teachers can use the book accessibly and reliably.
+**Likely scope.** Pilot the supported sequence; refine onboarding, reading rhythm,
+teacher notes and accessibility from observed problems. Add contents/course navigation
+only when book size warrants it. A human/agent engine and Von Thünen lesson are optional
+future candidates, not pilot prerequisites.
+**Evidence.** A reviewed protocol and genuine observations. Existing local instrumentation
+is limited to its recorded-rain scope; a broader study needs an explicit versioned design,
+consent/privacy review and validation. Do not rebuild or silently extend analytics already
+delivered in Wave 4, or equate page completion with learning.
+**Exit gate.** The group reviews usability/accessibility and any actual learning evidence,
+records limitations, and selects improvements rather than merely counting features.
 
 ## Status
 
-| Stage                 | State                                                  | Plan                     | Retro |
-| --------------------- | ------------------------------------------------------ | ------------------------ | ----- |
-| 0 · Bootstrap         | Done                                                   | —                        | —     |
-| 1 · Demo 1            | **Product realignment P0–P2; carried acceptance open** | [stage-1.md](stage-1.md) | —     |
-| 2 · Engine extraction | Outline only                                           | —                        | —     |
-| 3 · Human coupling    | Outline only                                           | —                        | —     |
-| 4 · Pilot             | Outline only                                           | —                        | —     |
+| Stage                     | State                                          | Plan                     | Retro |
+| ------------------------- | ---------------------------------------------- | ------------------------ | ----- |
+| 0 · Bootstrap             | Done                                           | —                        | —     |
+| 1 · Demo 1                | **Wave 5 revision planned; direction on main** | [stage-1.md](stage-1.md) | —     |
+| 2 · Book growth and reuse | Outline only                                   | —                        | —     |
+| 3 · Meaningful comparison | Outline only                                   | —                        | —     |
+| 4 · Pilot                 | Outline only                                   | —                        | —     |

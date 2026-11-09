@@ -1187,3 +1187,43 @@ Open implementation choices: book proportions, the direct contour gesture, and
 feasibility of source placement/readable water motion for the second lesson.
 Expert assignment, human listening and target-hardware checks remain open.
 These are follow-through work; the owner's product direction needs no reconfirmation.
+
+## D-W5-BOOK-REVISION · Complete revision wave and downstream scope correction
+
+2026-11-09 · Explicit owner request: merge the direction commit first, then plan a
+complete wave for revising existing implementations, making a new example and
+removing drift from unfinished plans.
+
+Commit 46fefe6 was fast-forwarded into local main and pushed to origin/main.
+PR #28 records its checklist and handover. GitHub API status reads became unavailable
+after PR creation; the git push succeeded. Do not infer remote CI status from that
+push; local pnpm check (479 tests) and production build passed before integration.
+
+Replace the coarse P1/P2 execution outline with Stage 1 Wave 5:
+5A feasibility/contracts; 5B runtime; 5C book shell/paging; 5D new two-spread example;
+5E migration of the default app and existing research implementation; 5F integrated
+verification, review evidence and plan reconciliation. Preserve PB1–PB8 as the
+product contract. Plan-only work in this session; no implementation session launched.
+
+Use gated groups: 5A merges first; 5B/5C/5D may run concurrently against merged
+contracts; 5E follows all three; 5F follows integration. This is a narrow exception
+to the earlier-wave-contract convention, not permission to depend on peer branches.
+Concurrent ownership is disjoint. Deterministic merge order is 5A through 5F.
+
+The first candidate is Contours to terrain plus a small live water-routing spread.
+Source tools already exist; the remaining risks include host setup/reset semantics,
+readability and safe quiescence across page changes. If a bounded feasibility spike
+cannot support the water lesson, select a distinct contour-spacing/slope lesson and
+record the choice before dependent sessions. No scripted process or solver expansion
+to rescue a weak introductory example.
+
+Renumber unfinished hardening 5A–5D to 6A–6D and revise it around the complete reader
+journey. Rewrite Stage 2–4 outlines so a visible supported lesson, reuse motivated by
+that lesson, and actual pilot observations govern expansion. Engine extraction,
+DEM loading and new model families are capabilities, not standalone product exits.
+
+Historical failed/pending morphology, human listening, target hardware and expert
+review remain accurately recorded. The new research entry must preserve science,
+backend and privacy regressions. Event schema v1 is not extended to new lessons
+or populated with fake prediction events. Product acceptance is separate from
+implementation integration; human observations cannot be inferred from automation.

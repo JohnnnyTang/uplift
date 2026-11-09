@@ -14,8 +14,10 @@ Geography remains the subject. Hachure remains the scientific and rendering foun
 
 This clarification is reflected in the [handoff](handoff.md#pedagogical-design-principles)
 and supersedes the earlier mandatory prediction gate, required challenge/stamp loop,
-and deferral of page turning. The [realignment plan](plan/product-realignment.md) is the
-next work, before Stage 1 hardening. Existing scientific evidence keeps its actual status.
+and deferral of page turning. The complete [Wave 5 revision](plan/stage-1-wave-5.md)
+revises existing implementations and delivers the new example before Wave 6 hardening.
+[PB1–PB8](plan/product-realignment.md#product-acceptance-gate) remains the product contract.
+Existing scientific evidence keeps its actual status.
 
 ## What the reference teaches us
 

@@ -11,7 +11,8 @@ used to show slope, which is the look the engine draws.
 > **Status:** Stage 1 product realignment. Hachure foundations and an integrated erosion research
 > example run today; the intended playable book is not yet delivered. The next work is book-sized
 > composition, immediate 3D play and two interactive spreads with page turning. See the
-> [product story](docs/product-story.md) and [active plan](docs/plan/product-realignment.md).
+> [product story](docs/product-story.md) and [complete Wave 5 plan](docs/plan/stage-1-wave-5.md).
+> Wave 5 revises the existing app and delivers the new example; Wave 6 handles hardening.
 
 ## Why this exists
 

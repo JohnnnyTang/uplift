@@ -10,14 +10,15 @@ truth for requirements is the handoff's
 
 The owner's 2026-11-09 request changes the next milestone to a bounded, playable book:
 drawings lift into directly manipulable 3D, questions and answer flaps are optional,
-and page turning connects small discoveries. Read [P0–P2](product-realignment.md)
-for the current session briefs, owned paths and product criteria PB1–PB8.
-P0 is the documentation session; P1 and P2 are subsequent implementation work.
+and page turning connects small discoveries. The direction commit is merged to main.
+Read [Wave 5](stage-1-wave-5.md) for the complete revision-wave briefs and owned paths;
+[PB1–PB8](product-realignment.md#product-acceptance-gate) defines product acceptance.
+The old P1/P2 outline is superseded; implementation is planned, not yet started.
 
-The wave briefs below retain the record of how the foundations were built. Their
+The Wave 1–4 briefs below retain the record of how the foundations were built. Their
 mandatory prediction/endpoint gates, mandatory challenge/stamp flow and page-turn
 exclusion are superseded for the ordinary reader experience. Rewrite affected
-behavior tests during P1/P2 while preserving scientific safeguards and model state.
+behavior tests during Wave 5 while preserving scientific safeguards and model state.
 Failed morphology experiments remain failed; pending challenge science remains pending.
 Those particular lessons cannot be shipped as successful outcomes. They do not require
 an unrelated contour lesson to wait for a waterfall result.
@@ -49,77 +50,38 @@ catalogue and accounts. Page turning between two interactive spreads is now requ
 
 ## Shape of the stage
 
-| Wave   | Theme                            | Sessions (parallel)                                                                                                                                                                    | Why it comes here                                                                            |
-| ------ | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| **W1** | Contracts and spikes             | 1A contracts · 1B GPU compute spike · 1C ink-look spike · 1D book-shell spike · 1E science brief                                                                                       | Retire the biggest unknowns, and agree the thin interfaces that let W2 run in parallel       |
-| **W2** | Foundations                      | 2A CPU solver · 2B presets, tools and RNG · 2C ink renderer · 2D runtime core · 2E page widgets and shell · 2F probes                                                                  | Each building block built against the contracts, with fakes for its neighbours               |
-| **W3** | End to end on the CPU            | 3A integration · 3B validation and calibration · 3C GPU solver, part 1 · 3D spread content · 3E 3D interaction tools                                                                   | First complete spread a reader can use (CPU at 128²). Science checked against the real model |
-| **W4** | GPU, university layer, challenge | 4A GPU solver, part 2, and backend selection · 4B university layer · 4C challenge and stamps · 4D accessibility and motion · 4E end-to-end tests and CI · 4F anonymous instrumentation | Reach 256² on WebGPU, and finish the two levels and the guided-sandbox loop                  |
-| **W5** | Hardening and review             | 5A performance on target hardware · 5B acceptance audit · 5C review packet · 5D retro and Stage 2 inputs                                                                               | Close the gate with evidence                                                                 |
+Waves 1–4 below record the foundation work. Wave 5 is the next implementation wave;
+Wave 6 is revised hardening. Historical technical dependencies remain in their briefs.
+
+| Wave   | Theme                                         | Sessions                                                                             | Status / purpose                                                         |
+| ------ | --------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| W1     | Contracts and spikes                          | 1A–1E                                                                                | Foundation history; contracts and initial risks                          |
+| W2     | Foundations                                   | 2A–2F                                                                                | CPU, rendering, runtime, shell and probes                                |
+| W3     | Integration and science                       | 3A–3F                                                                                | CPU integration, actual science results and recorded comparison          |
+| W4     | GPU, depth and supporting capabilities        | 4A–4F                                                                                | Implementations integrated; human/science acceptance accurately retained |
+| **W5** | **Revise the book and build the new example** | **5A contracts → 5B runtime / 5C shell / 5D example → 5E migration → 5F acceptance** | **Next; complete playable default app and revised research route**       |
+| W6     | Hardening and review                          | 6A performance → 6B audit → 6C review → 6D retro                                     | Finish current book's release gates and lesson-led next plan             |
 
 ```mermaid
 flowchart LR
-    subgraph W1[Wave 1 · contracts and spikes]
-      A1[1A contracts]:::eng
-      B1[1B GPU spike]:::eng
-      C1[1C ink spike]:::ink
-      D1[1D shell spike]:::rt
-      E1[1E science brief]:::sci
-    end
-    subgraph W2[Wave 2 · foundations]
-      A2[2A CPU solver]:::eng
-      B2[2B presets, tools]:::eng
-      C2[2C ink renderer]:::ink
-      D2[2D runtime core]:::rt
-      E2[2E widgets, shell]:::rt
-      F2[2F probes]:::eng
-    end
-    subgraph W3[Wave 3 · end to end on CPU]
-      A3[3A integration]:::rt
-      B3[3B validation]:::sci
-      C3[3C GPU part 1]:::eng
-      D3[3D content]:::sci
-      E3[3E 3D tools]:::ink
-    end
-    subgraph W4[Wave 4 · GPU, uni, challenge]
-      A4[4A GPU part 2]:::eng
-      B4[4B university layer]:::rt
-      C4[4C challenge]:::rt
-      D4[4D accessibility]:::qa
-      E4[4E e2e and CI]:::qa
-    end
-    subgraph W5[Wave 5 · hardening]
-      A5[5A performance]:::qa
-      B5[5B acceptance audit]:::qa
-      C5[5C review packet]:::sci
-      D5[5D retro]:::qa
-    end
-    A1 --> A2 & B2 & C2 & D2 & E2 & F2
-    B1 --> C3
-    C1 --> C2
-    D1 --> E2
-    E1 --> A2 & B2 & F2
-    A2 --> A3 & B3 & C3
-    B2 --> A3 & E3
-    C2 --> A3 & E3
-    D2 --> A3 & D3
-    E2 --> A3 & E3
-    F2 --> B3
-    C3 --> A4
-    A3 --> B4 & C4 & D4 & E4
-    B3 --> C4
-    D3 --> B4
-    W4 --> W5
-    classDef eng fill:none,stroke:#2b6cb0;
-    classDef ink fill:none,stroke:#555;
-    classDef rt fill:none,stroke:#b7791f;
-    classDef sci fill:none,stroke:#2f855a;
-    classDef qa fill:none,stroke:#9b2c2c;
+    W1[Foundation contracts] --> W2[Foundation implementations]
+    W2 --> W3[Integration and evidence]
+    W3 --> W4[Integrated GPU and supporting capabilities]
+    W4 --> A5[5A Feasibility and contracts]
+    A5 --> B5[5B Runtime]
+    A5 --> C5[5C Book shell]
+    A5 --> D5[5D New example]
+    B5 --> E5[5E Migrate actual app]
+    C5 --> E5
+    D5 --> E5
+    E5 --> F5[5F Integrated acceptance]
+    F5 --> W6[Wave 6 Hardening and release review]
 ```
 
-**Current critical path:** P0 direction → P1 first playable spread → P2 second discovery and page turn
-→ Wave 5 hardening/review. The historical solver chain (1A → 2A → 3C → 4A → 5A) explains the
-foundation work; it no longer determines the product priority.
+**Current critical path:** direction on main → 5A feasibility/contracts → 5B/5C/5D runtime,
+shell and example → 5E migrate the built app → 5F integrated acceptance → Wave 6 hardening/review.
+The historical solver chain explains the foundations, not the current product priority.
+Historical references to the former hardening sessions 5A–5D now map to 6A–6D.
 
 ## Acceptance traceability
 
@@ -132,7 +94,7 @@ supported by the recorded gross-erosion comparison or a requirement to teach tha
 
 | #    | Acceptance criterion                                                                                                              | Built by           | Evidence at the gate                                                                        |
 | ---- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------- |
-| AC1  | 30 fps at 256² on an integrated GPU with WebGPU; WebGL2 fallback at 128²                                                          | 1B, 3C, 4A, 5A     | `docs/perf/stage-1.md` with device, browser, fps and ms per step; debug overlay screenshot  |
+| AC1  | 30 fps at 256² on an integrated GPU with WebGPU; WebGL2 fallback at 128²                                                          | 1B, 3C, 4A, 6A     | `docs/perf/stage-1.md` with device, browser, fps and ms per step; debug overlay screenshot  |
 | AC2  | Same seed and inputs give the same terrain after N steps                                                                          | 1A, 2A, 2B, 4A     | `determinism.test.ts` (CPU, same JavaScript engine); same-device/driver GPU test in browser |
 | AC3  | Qualitative tests: more rain → more incision; hard band → knickpoint upstream and narrower channel; lower slope → more deposition | 1E, 2F, 3B         | `qualitative/*.test.ts` passing; plots in `docs/science/validation/`                        |
 | AC4  | Mass conserved within 1% (closed boundaries except outlet)                                                                        | 2A, 4A             | `mass-budget.test.ts` on CPU and GPU                                                        |
@@ -141,9 +103,9 @@ supported by the recorded gross-erosion comparison or a requirement to teach tha
 | AC7  | Time-scale label, scale bar, tier badge and "ignores" box visible                                                                 | 2E, 3D             | End-to-end visibility assertions (4E)                                                       |
 | AC8  | Level toggle switches text and controls without resetting or changing the simulation                                              | 2D, 4B, 4E         | End-to-end test: state hash equal before and after toggling (T7)                            |
 | AC9  | Controls clamped and keyboard operable; reduced motion pauses autoplay                                                            | 1E, 2B, 2E, 3E, 4D | Clamp unit tests; keyboard-only end-to-end run; reduced-motion end-to-end run               |
-| AC10 | Source links and a one-page teacher note                                                                                          | 1E, 3D, 5C         | `teacher-notes.md`, `sources.md`, rendered in the book                                      |
+| AC10 | Source links and a one-page teacher note                                                                                          | 1E, 3D, 6C         | `teacher-notes.md`, `sources.md`, rendered in the book                                      |
 
-Also required at the current gate: CPU/GPU agreement (3C, 4A), run/build/test instructions (5C),
+Also required at the current gate: CPU/GPU agreement (3C, 4A), run/build/test instructions (6C),
 and a short recording of the playable sequence. Advanced theory and diagnostics are optional
 reader disclosures. The former required waterfall stamp and live stream-power K are not product
 requirements: the challenge remains unvalidated, and no dimensional mapping to that K is established.
@@ -589,8 +551,8 @@ instrumentation, so session 4F is included (D-W4-OPEN).
 **Merge order:** 4E → 4A → 4B → 4C → 4D → 4F.
 
 **Integration status (2026-11-09):** 4E (#24), 4A (#27), 4B (#22),
-4C (#25) and 4D (#23) merged in order; 4F (#26) is the final implementation
-integration. The owner approved the pending-safe challenge infrastructure and,
+4C (#25), 4D (#23) and 4F (#26) merged in order; Wave 4 implementation
+integration is complete. The owner approved the pending-safe challenge infrastructure and,
 after receiving the preview, the accessibility merge. Neither approval is a
 science or human-listening pass. Wave 4 acceptance remains open for the successful
 challenge and human listening; Stage 1 expert/hardware gates remain open.
@@ -736,50 +698,125 @@ science remains pending and cannot produce a successful challenge event.
 
 ---
 
-## Wave 5 · Hardening and review
+## Wave 5 · Book revision and new playable example
 
-**Entry:** W4 integration retained; P1/P2 product sequence implemented and reviewed.
-Do not start hardening the long research worksheet as if it were the intended book.
-**Merge order:** 5A → 5B → 5C → 5D.
-**Exit:** the stage gate.
+**Status:** planned, not implemented. **Entry:** the product-direction commit is on main;
+W4 engine integrations are retained and their human/scientific limitations remain recorded.
+**Briefs:** [the complete six-session wave](stage-1-wave-5.md).
 
-### 5A · Performance on target hardware — QA · M (needs a person with hardware)
+| Session                    | Deliverable                                                                                     | Starts after      |
+| -------------------------- | ----------------------------------------------------------------------------------------------- | ----------------- |
+| [5A](stage-1-wave-5.md#5a) | Real-scene feasibility, fixed lesson choice, reader/scene contracts and composition constraints | Direction on main |
+| [5B](stage-1-wave-5.md#5b) | Independent play/reveal, optional questions, quiescence and shared runtime migration            | 5A merged         |
+| [5C](stage-1-wave-5.md#5c) | Bounded book, page turning, mobile pages and zoom/reflow                                        | 5A merged         |
+| [5D](stage-1-wave-5.md#5d) | New two-spread example with real interactions, sourced draft content and evidence               | 5A merged         |
+| [5E](stage-1-wave-5.md#5e) | Default app migration and revision of the existing research example/tests                       | 5B, 5C, 5D merged |
+| [5F](stage-1-wave-5.md#5f) | Integrated acceptance, review packet and unfinished-plan reconciliation                         | 5E merged         |
 
-**Owned paths.** `docs/perf/**`, plus tuning changes in `hachure/terrain/src/gpu/**` and
-`hachure/runtime/src/sim-host/**`.
+**Execution:** 5A alone → 5B/5C/5D in parallel → 5E alone → 5F alone.
+**Merge order:** 5A → 5B → 5C → 5D → 5E → 5F.
+This gated sequence is the documented exception to earlier-wave contracts; dependents
+start only from merged main. Ownership is disjoint within the parallel group.
+**Exit:** implementation integration and product/human acceptance are tracked separately,
+as specified in the wave. No standalone demo or unchanged default app can close it.
 
-Repeat measurements in visible Chrome stable, recording driver, power/thermal conditions, complete rendering, steps per frame and frame times; headless spike timings do not close AC1. Measure on a mid-range laptop with an integrated GPU, and on a Chromebook if one is available. Tune workgroup
-sizes, steps per frame and readback cadence. Check first meaningful page under 3 s on a throttled network
-profile. Results go in `docs/perf/stage-1.md` (AC1).
+## Wave 6 · Hardening and release review
 
-### 5B · Acceptance audit — QA · M
+These are the unfinished former 5A–5D, renumbered **6A–6D**. Historical references
+to "5A performance" or "5C review" in W1–W4 handovers mean these sessions; historical
+documents and scientific records are not rewritten.
 
-**Owned paths.** `docs/plan/stage-1-acceptance.md`, plus small fixes.
+**Entry:** W5 integrated, actual book sequence reviewed, unresolved product defects
+assigned and resolved before claiming readiness. Human/hardware evidence can remain
+pending for completion here, with no inferred pass.
+**Merge order:** 6A → 6B → 6C → 6D.
+**Exit:** the current Stage 1 product and scientific/accessibility release gate, not
+the original waterfall outcome.
 
-Walk PB1–PB8 and the applicable foundation checks described in Acceptance traceability. Link evidence
-for each. Retain original AC1–AC10 outcomes as historical records, including failed or pending items;
-do not substitute the new product gate for scientific evidence. Fix small gaps and file larger ones.
+### 6A · Performance of the complete reader journey — QA · M
 
-### 5C · Review packet — SCI · S–M (partly needs a person)
+**Owned paths:** `docs/perf/**`; measured tuning in
+`hachure/ink/src/view/**`, `hachure/runtime/src/sim-host/**`,
+`uplift/book/src/reader/**`. Solver tuning only for a demonstrated bottleneck,
+with separate justification and CPU/GPU comparison.
 
-**Owned paths.** `README.md`, `docs/review/**`, `uplift/spreads/geomorph.v-valley/teacher-notes.md`.
+Measure visible Chrome on target integrated-GPU hardware, recording device, driver,
+power/thermal conditions and the exact commit. Cover initial readable drawing,
+first usable interaction, response to direct manipulation/source movement, page-turn
+frames, repeated navigation, resource use and the actual new scenes plus the retained
+terrain backend. Check network startup and bundle budget. Do not optimize only compute
+throughput while page turns stutter or the main gesture waits on rebuilding resources.
+Maintain existing terrain performance targets where that scene uses the solver.
+Do not force a static contour lesson to launch a 256² hydraulic simulation.
 
-Update the README (run, build, test). Build the expert review packet: the science brief, validation
-plots, every `expert-review` block, and calibration notes. Final draft of the teacher note. A script for the
-1–2 minute recording, and the recording itself.
+**Exit:** reproducible measurements and any bounded fixes; no unsupported hardware pass.
+Missing target hardware is recorded as pending, not replaced by headless CI results.
 
-### 5D · Retro and Stage 2 inputs — QA · S
+### 6B · Acceptance and accessibility audit — QA · M
 
-**Owned paths.** `docs/plan/stage-1-retro.md`.
+**Owned paths:** `docs/plan/stage-1-acceptance.md`,
+`docs/review/book-revision/accessibility/**`; bounded fixes with listed paths.
 
-Inventory the `@hachure/*` public API. Mark what in the spread is spread-specific and what should be an
-engine primitive. List the gaps between schema v0 and v1. Record the measured facts (performance,
-determinism, fallback behaviour) and which plan assumptions turned out wrong. Draft an outline for
-Stage 2. **This is the input for planning Stage 2 in detail.**
+Walk PB1–PB8 and applicable original foundation checks. Verify normal/phone/zoom layouts,
+direct object action, immediate reveal, page-turn focus/gesture behavior, return state,
+all supported fallback paths and truthful research disclosure. Run the revised keyboard,
+reduced-motion and axe checks on the shipped routes. Complete actual screen-reader
+listening and projector/classroom legibility with a person; record exact setup/results.
+The archived prediction-gated W4 listening script cannot pass the new reader flow.
+Retain failed/pending morphology evidence; do not make a waterfall a new release gate.
+
+**Exit:** linked pass/fail/pending for every current criterion, all known blocking code
+defects resolved and all unfinished human checks explicitly assigned.
+
+### 6C · Scientific and product review packet — SCI/lead · M
+
+**Owned paths:** `README.md`, `docs/review/book-revision/**`,
+teacher notes/sources for the new selected spreads and the research example.
+Scientific model/evidence changes require explicit review scope.
+
+Provide the actual short book journey, comparison to the owner's reference intent,
+source/claim/evidence register for each shipped lesson, all expert-review drafts,
+model limitations, fallback behavior and current human/hardware results. Gather expert
+review of the claims actually taught and owner review of the experience. Record
+first-time reader observations without implying learning gains from completion.
+Include the existing erosion research honestly but do not let its unresolved morphology
+dictate the teaching claims of the new book. Calibration is required only for claimed
+field magnitudes/rates/years.
+
+**Exit:** applicable expert and product decisions recorded, publication status explicit,
+and a short recording/teacher guide matching the final app. Pending sign-off remains
+pending; code integration is not permission to claim reviewed science.
+
+### 6D · Retro and a lesson-led Stage 2 plan — lead · S
+
+**Owned paths:** `docs/plan/stage-1-retro.md`, `docs/plan/stage-2.md`,
+minimal framework/status updates.
+
+Record actual reader/visual findings, performance, access issues and what was reused.
+Inventory only the primitives proved by the working spreads. Select the next small
+lesson based on its action, visible outcome and evidence; specify any required shared
+primitive, owned paths and bounded scope. Defer unmotivated engine extraction, new model
+families or real-data pipelines. Reconcile every unresolved ledger item with an owner.
+
+**Exit:** a Stage 2 plan grounded in the book experience, without assuming a new engine,
+catalogue, mandatory assessment or unsupported landform is automatically next.
 
 ---
 
 ## Assumptions to verify (and who verifies them)
+
+Current revision-wave questions:
+
+| Question                                                                     | Response if the trial fails                                                                                            | Owner  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------ |
+| Can the first gesture and consequence be understood at the actual page size? | Simplify the scene/copy/gesture and repeat the rendered trial; do not promote a numerical difference to visual success | 5A, 5D |
+| Is live source placement legible with current mechanisms?                    | Record the trial and select the distinct cartography alternative before dependent work starts                          | 5A     |
+| Can off-page state remain exact without running hidden work?                 | Fix quiescence/instance retention and its race tests; do not restore from an incomplete display snapshot               | 5B, 5E |
+| Can the full book remain readable on desktop, phone and zoom?                | Recompose or use single pages/reflow; never shrink or clip content to meet the screenshot                              | 5C, 5F |
+| Do new readers understand the invitation and want to continue?               | Record actual observations and revise the experience; completion logs do not answer this                               | 5F, 6C |
+
+The following table is the historical W1–W4 technical hypothesis register, retained
+for traceability rather than reopened as the current priority:
 
 | Assumption                                                                                                         | If wrong                                                                   | Verified by |
 | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- | ----------- |
@@ -791,6 +828,11 @@ Stage 2. **This is the input for planning Stage 2 in detail.**
 | WebGPU is testable in CI                                                                                           | Run GPU tests locally and record the run at each wave close                | 3C          |
 
 ## Changelog
+
+- 2026-11-09: After the direction merge, replace P1/P2 with complete Wave 5 sessions
+  5A–5F for contracts, runtime, shell, example, migration and acceptance. Renumber
+  unfinished hardening to 6A–6D; revise later-stage exits around playable lessons.
+  Preserve historical W1–W4 evidence and carried human/scientific limitations.
 
 - 2026-11-09: Owner redirects the product to a playful 3D book. Add P0–P2 before Wave 5,
   require bounded book composition and page turning, make prediction/flaps optional,

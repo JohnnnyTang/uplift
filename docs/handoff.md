@@ -134,11 +134,11 @@ Content is organised on three axes: topic domain, level, and course. Each spread
 | Spatial diffusion (SIR over a map) | Human, health geography | H | Agent / stochastic | HS, Uni | 4 |
 | Urban growth and land-use change | Urban geography | H | Agent / stochastic | Uni | 4 |
 
-The list is a starting point; the group adds and re-prioritises rows.
+This table is a historical candidate backlog, not an automatic build order or a claim that its lessons are validated. Wave 5 selects the first playable sequence; later lessons need one reader action, a visible supported outcome and a clear reason to add a capability. The group revises the backlog from those results.
 
 ## System architecture
 
-The key decision: build a few shared simulation engines, not a bespoke model per lesson. A chapter is then mostly data (starting terrain, controls, camera, text), so the book can grow cheaply. Build the first spread end to end, and extract the engine from it as it stabilises; do not build the engine in isolation first.
+Reuse the Hachure foundations to build complete playable spreads. A chapter should be mostly data (starting terrain, controls, camera, text); extract a new primitive when a working next lesson demonstrates the need. The architecture below describes possible long-term capabilities, not a commitment to build every engine before the book is useful.
 
 ```mermaid
 flowchart TD
@@ -191,7 +191,7 @@ It exposes tools (raise, dig, smooth, harden brush; rain and spring sources; dam
 
 ## Spread specification format
 
-Every spread is a declarative definition plus, only where needed, a small amount of spread-specific code. If a new spread needs heavy custom code, that is a signal the engine is missing a primitive; raise it rather than hard-coding it. Historical draft schema (TypeScript). Current code contracts live in Hachure; P1 must revise the lifecycle/schema for optional prediction and challenge, unanswered state and independent answer reveal. The required fields in this old sketch are not a mandate to gate the new reader flow:
+Every spread is a declarative definition plus, only where needed, a small amount of spread-specific code. If a new spread needs heavy custom code, that is a signal the engine is missing a primitive; raise it rather than hard-coding it. Historical draft schema (TypeScript). Current code contracts live in Hachure; Wave 5 sessions 5A/5B revise the lifecycle/schema for optional prediction and challenge, unanswered state and independent answer reveal. The required fields in this old sketch are not a mandate to gate the new reader flow:
 
 ```ts
 interface Spread {
@@ -229,7 +229,8 @@ Page text never contains a typed number that the simulation also computes; it us
 **Revised scope, 2026-11-09.** This heading retains existing links. The original erosion
 sandbox is implemented as a research example, not accepted as the reader experience.
 The active Demo 1 is a short playable book using Hachure's existing foundations;
-[P0–P2](plan/product-realignment.md) specifies the work and acceptance criteria.
+[Wave 5](plan/stage-1-wave-5.md) specifies the complete revision, new example and migration work;
+[PB1–PB8](plan/product-realignment.md#product-acceptance-gate) defines product acceptance.
 
 **The experience.**
 
@@ -268,11 +269,11 @@ Four sequential phases, each closed by a gate the group reviews before the next 
 | Phase | Focus | Scope | Exit gate |
 | --- | --- | --- | --- |
 | 1 (current) | Playable book proof | Existing Hachure foundations; two small interactive spreads; book composition and page turning | Product gate PB1–PB8; applicable technical checks; science review |
-| 2 | Engine extraction | Extend the playable book; deltas and fans candidate; spread schema v1; spreads as data | A new spread built mostly as data |
-| 3 | Human coupling | Dam a river spread; runoff on a real DEM; map projections scene; university overlays | Real DEM runs end to end |
-| 4 | Pilot | Human/agent engine; Von Thünen spread; catalogue shell; classroom pilot | Pilot results reviewed by the group |
+| 2 | Grow the book and prove reuse | One further supported discovery; extract only needed primitives and refine authoring | A readable playable spread with evidence and reuse, not modularity alone |
+| 3 | A meaningful comparison | Select one human-intervention or real-place lesson; add data/coupling only when needed | A visible supported comparison inside the book, not data loading alone |
+| 4 | Classroom pilot | Observe the working sequence and improve reading, teaching and access; extra engines/catalogue are conditional | Genuine usability and learning evidence reviewed with limitations |
 
-Phase 2 is the real test of the architecture: if a new terrain spread cannot be built mostly as data, fix the engine before adding content.
+Phase 2 tests the book and reuse together. If a selected lesson needs heavy bespoke code, identify the smallest shared primitive it needs and prove it in the lesson. Do not pause useful content for an unrelated engine extraction programme.
 
 ## Tech stack and rules for agents
 
