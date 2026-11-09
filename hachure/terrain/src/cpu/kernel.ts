@@ -244,6 +244,8 @@ export function computeStep(buf: CpuBuffers, p: KernelParams, ledger: StepLedger
   ledger.reset();
   const { n, cells, l, area } = buf;
   const dt = p.dtSimSeconds;
+  // Imported constants copied to locals: module-runner export getters must stay out of the hot loops.
+  const dry = DRY_DEPTH_M;
   const { b, s, m, h, hR, hW, z, limited, hardness } = buf;
   const src = buf.sourceRateMPerS;
   const outlet = buf.outletIndex;
@@ -295,7 +297,7 @@ export function computeStep(buf: CpuBuffers, p: KernelParams, ledger: StepLedger
       nqE[i] = k * e;
       nqN[i] = k * no;
       nqS[i] = k * so;
-      const transport = (dt * k * sum) / (area * Math.max(hR[i]!, DRY_DEPTH_M));
+      const transport = (dt * k * sum) / (area * Math.max(hR[i]!, dry));
       if (transport > maxTransport) maxTransport = transport;
     }
   }
@@ -336,7 +338,7 @@ export function computeStep(buf: CpuBuffers, p: KernelParams, ledger: StepLedger
     for (let x = 0; x < n; x++) {
       const i = y * n + x;
       const hMean = 0.5 * (hR[i]! + hW[i]!);
-      if (hMean <= DRY_DEPTH_M) {
+      if (hMean <= dry) {
         nu[i] = 0;
         nv[i] = 0;
         continue;
@@ -379,7 +381,7 @@ export function computeStep(buf: CpuBuffers, p: KernelParams, ledger: StepLedger
       const si = s[i]!;
       const mi = m[i]!;
       let capacity = 0;
-      if (hW[i]! > DRY_DEPTH_M) {
+      if (hW[i]! > dry) {
         // Centred differences inside, one-sided at walls.
         const dzdx =
           x === 0
@@ -433,7 +435,7 @@ export function computeStep(buf: CpuBuffers, p: KernelParams, ledger: StepLedger
       limited[i] = 0;
       continue;
     }
-    const conc = mi / Math.max(hR[i]!, hW[i]!, DRY_DEPTH_M);
+    const conc = mi / Math.max(hR[i]!, hW[i]!, dry);
     const w = nqW[i]! * conc;
     const e = nqE[i]! * conc;
     const no = nqN[i]! * conc;
@@ -539,7 +541,7 @@ export function computeStep(buf: CpuBuffers, p: KernelParams, ledger: StepLedger
     evaporated += wi - hNew;
     nh[i] = hNew;
     const mi = mT[i]!;
-    if (hNew <= DRY_DEPTH_M) {
+    if (hNew <= dry) {
       nm[i] = 0;
       if (mi > 0) {
         ns[i] = ns[i]! + mi;
