@@ -230,3 +230,33 @@ export interface Spread {
   readonly teacherNotes: string;
   readonly sources: readonly Source[];
 }
+
+/** Explicit scientific time scope for the playable reader. Static diagrams have no clock. */
+export type ReaderModelScope =
+  | { readonly kind: "static-geometry" }
+  | { readonly kind: "live-process"; readonly time: "uncalibrated" | "calibrated" };
+
+export type ReaderSceneSpec = Omit<SceneSpec, "stepsPerRealSecond" | "durations"> &
+  (
+    | {
+        readonly modelScope: { readonly kind: "static-geometry" };
+        readonly stepsPerRealSecond?: never;
+        readonly durations?: never;
+      }
+    | {
+        readonly modelScope: { readonly kind: "live-process"; readonly time: "uncalibrated" | "calibrated" };
+        readonly stepsPerRealSecond: number;
+        /** Geological-year durations require calibrated time. */
+        readonly durations?: Readonly<Record<string, SceneDuration>>;
+      }
+  );
+
+/**
+ * Additive migration contract. Spread remains the legacy shape until 5E removes its consumers.
+ * Missing reflection/challenge means absent, never an invented answer or successful challenge.
+ */
+export interface ReaderSpread extends Omit<Spread, "page" | "challenge" | "scene"> {
+  readonly scene: ReaderSceneSpec;
+  readonly page: Omit<PageSpec, "predict"> & { readonly predict?: PredictSpec };
+  readonly challenge?: ChallengeSpec;
+}

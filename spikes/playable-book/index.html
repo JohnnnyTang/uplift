@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>
+    5A exploratory renderer trial
+  </title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      color: #292721;
+      background: #e4e0d6;
+      font:
+        18px/1.5 Georgia,
+        serif;
+    }
+    main {
+      width: 1080px;
+      height: 620px;
+      max-width: 96vw;
+      margin: 55px auto;
+      background: #faf7ee;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid #b5ac98;
+      box-shadow: 0 5px 12px #0002;
+    }
+    section {
+      padding: 30px;
+    }
+    section + section {
+      border-left: 1px solid #b5ac98;
+    }
+    h1 {
+      font-size: 36px;
+      line-height: 1.15;
+      margin: 12px 0 22px;
+    }
+    p {
+      margin: 12px 0;
+    }
+    small {
+      font:
+        14px/1.4 system-ui,
+        sans-serif;
+    }
+    button,
+    input {
+      font:
+        16px system-ui,
+        sans-serif;
+    }
+    button {
+      background: #faf7ee;
+      color: #292721;
+      border: 1px solid #827a69;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #245c83;
+      outline-offset: 4px;
+    }
+    .stage {
+      width: 480px;
+      height: 420px;
+      position: relative;
+      max-width: 100%;
+    }
+    canvas,
+    #flat,
+    #overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #overlay {
+      pointer-events: none;
+      overflow: visible;
+    }
+    #handle {
+      pointer-events: auto;
+      cursor: ns-resize;
+      touch-action: none;
+    }
+    #flat {
+      pointer-events: none;
+    }
+    label {
+      display: block;
+    }
+    input[type="range"] {
+      width: 100%;
+    }
+    #status {
+      font:
+        15px/1.4 system-ui,
+        sans-serif;
+      min-height: 70px;
+    }
+    nav {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    #source-controls {
+      display: none;
+    }
+    body.water #source-controls {
+      display: block;
+    }
+    body.water #lift-controls {
+      display: none;
+    }
+    details {
+      font-size: 16px;
+    }
+    footer {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    @media (max-width: 760px) {
+      main {
+        display: block;
+        width: 96vw;
+        height: auto;
+        margin: 15px auto;
+      }
+      section + section {
+        border-left: 0;
+        border-top: 1px solid;
+      }
+      .stage {
+        width: 100%;
+        height: 420px;
+      }
+      section {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 30px;
+      }
+    }
+  </style>
+  <main>
+    <section>
+      <small>UPLIFT · EXPLORATORY 5A TRIAL</small>
+      <h1 id="title">Lift a map</h1>
+      <p id="invite">Drag the ring upward. Watch the same contour rise.</p>
+      <p id="scope">Static geometry; lift changes the view only.</p>
+      <div id="lift-controls">
+        <label for="lift">Lift the drawing</label
+        ><input id="lift" type="range" min="0" max="1" step="0.05" value="0" />
+      </div>
+      <div id="source-controls">
+        <p>Click the surface to move the spring. Arrow keys move it by a cell.</p>
+        <button id="source" aria-label="Spring location; use arrow keys to move">
+          Move spring with arrow keys
+        </button>
+        <button id="advance">Advance fixed steps</button>
+      </div>
+      <p id="status" role="status" aria-live="polite">Starting renderer…</p>
+      <details>
+        <summary>Exploratory scope</summary>
+        This is a real renderer and real CPU solver trial. It is not science acceptance, a learner study, or
+        the production book. Water stays on the surface when a source moves. No scripted water route.
+      </details>
+      <nav>
+        <button id="contour">Contour trial</button><button id="water">Water trial</button
+        ><button id="reset">Reset</button>
+      </nav>
+      <footer id="legend"></footer>
+    </section>
+    <section>
+      <div class="stage" id="stage">
+        <canvas id="terrain" aria-label="Terrain with contours and water-depth encoding"></canvas>
+        <div id="flat"></div>
+        <svg id="overlay" aria-hidden="true">
+          <path id="wet" fill="none" stroke="#292721" stroke-linecap="round" stroke-width="2" />
+          <path id="selected" fill="none" stroke="#292721" stroke-width="3" stroke-dasharray="6 3" />
+          <circle id="handle" r="10" fill="#faf7ee" stroke="#292721" stroke-width="3" />
+        </svg>
+      </div>
+      <small id="caption"></small>
+    </section>
+  </main>
+  <script type="module" src="./main.ts"></script>
+</html>

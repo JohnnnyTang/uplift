@@ -1,0 +1,326 @@
+{
+  "status": "exploratory; not science acceptance or learner evidence",
+  "browser": "156.0.8078.80",
+  "runs": [
+    {
+      "name": "pointer-lift",
+      "before": {
+        "mode": "contour",
+        "step": 0,
+        "source": {
+          "xM": 17,
+          "yM": 9
+        },
+        "config": {
+          "gridSize": 32,
+          "metresPerCell": 2,
+          "seed": 5,
+          "rainMmPerHr": 0,
+          "gravityMPerS2": 9.81,
+          "manningNSPerMOneThird": 0.035,
+          "pipeAreaM2": 1,
+          "dtSimSeconds": 0.02,
+          "morphAccelerationFactor": 1,
+          "capacityCoefficient": 0,
+          "erosionRatePerS": 0,
+          "depositionRatePerS": 0,
+          "hardnessRange": [0, 0.9],
+          "talusAngleDeg": 33,
+          "thermalRatePerS": 0,
+          "evaporationFractionPerStep": 0,
+          "brushMaxHeightM": 5,
+          "brushMaxDepthM": 5,
+          "brushMaxRadiusM": 200,
+          "brushMaxSlopeDeg": 60
+        },
+        "sourceConfig": {
+          "flowM3PerS": 0.4,
+          "batchSteps": 250,
+          "initial": {
+            "xM": 17,
+            "yM": 9
+          }
+        },
+        "diagnostics": {
+          "maxWaveCourant": 0,
+          "maxTransportCourant": 0,
+          "peakWaveCourant": 0,
+          "waveGuardViolationSteps": 0,
+          "waveGuard": "halt"
+        },
+        "water": null,
+        "contourCount": 18,
+        "verticalExaggeration": 0
+      },
+      "after": {
+        "mode": "contour",
+        "step": 0,
+        "source": {
+          "xM": 17,
+          "yM": 9
+        },
+        "config": {
+          "gridSize": 32,
+          "metresPerCell": 2,
+          "seed": 5,
+          "rainMmPerHr": 0,
+          "gravityMPerS2": 9.81,
+          "manningNSPerMOneThird": 0.035,
+          "pipeAreaM2": 1,
+          "dtSimSeconds": 0.02,
+          "morphAccelerationFactor": 1,
+          "capacityCoefficient": 0,
+          "erosionRatePerS": 0,
+          "depositionRatePerS": 0,
+          "hardnessRange": [0, 0.9],
+          "talusAngleDeg": 33,
+          "thermalRatePerS": 0,
+          "evaporationFractionPerStep": 0,
+          "brushMaxHeightM": 5,
+          "brushMaxDepthM": 5,
+          "brushMaxRadiusM": 200,
+          "brushMaxSlopeDeg": 60
+        },
+        "sourceConfig": {
+          "flowM3PerS": 0.4,
+          "batchSteps": 250,
+          "initial": {
+            "xM": 17,
+            "yM": 9
+          }
+        },
+        "diagnostics": {
+          "maxWaveCourant": 0,
+          "maxTransportCourant": 0,
+          "peakWaveCourant": 0,
+          "waveGuardViolationSteps": 0,
+          "waveGuard": "halt"
+        },
+        "water": null,
+        "contourCount": 18,
+        "verticalExaggeration": 3
+      }
+    },
+    {
+      "name": "left-source-2000",
+      "batchesWallMs": [63, 43, 37, 36, 35, 30, 33, 33],
+      "state": {
+        "mode": "water",
+        "step": 2000,
+        "source": {
+          "xM": 17,
+          "yM": 9
+        },
+        "config": {
+          "gridSize": 32,
+          "metresPerCell": 2,
+          "seed": 5,
+          "rainMmPerHr": 0,
+          "gravityMPerS2": 9.81,
+          "manningNSPerMOneThird": 0.035,
+          "pipeAreaM2": 1,
+          "dtSimSeconds": 0.02,
+          "morphAccelerationFactor": 1,
+          "capacityCoefficient": 0,
+          "erosionRatePerS": 0,
+          "depositionRatePerS": 0,
+          "hardnessRange": [0, 0.9],
+          "talusAngleDeg": 33,
+          "thermalRatePerS": 0,
+          "evaporationFractionPerStep": 0,
+          "brushMaxHeightM": 5,
+          "brushMaxDepthM": 5,
+          "brushMaxRadiusM": 200,
+          "brushMaxSlopeDeg": 60
+        },
+        "sourceConfig": {
+          "flowM3PerS": 0.4,
+          "batchSteps": 250,
+          "initial": {
+            "xM": 17,
+            "yM": 9
+          }
+        },
+        "diagnostics": {
+          "maxWaveCourant": 0.02966607983792982,
+          "maxTransportCourant": 0.021097717625594894,
+          "peakWaveCourant": 0.02966607983792982,
+          "waveGuardViolationSteps": 0,
+          "waveGuard": "halt"
+        },
+        "water": {
+          "wetCells": 65,
+          "southernmostWetRow": 25,
+          "leftM3": 16.00000004838281,
+          "rightM3": 0
+        },
+        "contourCount": 15,
+        "verticalExaggeration": 3
+      }
+    },
+    {
+      "name": "source-moved-right-4000",
+      "state": {
+        "mode": "water",
+        "step": 4000,
+        "source": {
+          "xM": 46.86370268871137,
+          "yM": 8.854032404079845
+        },
+        "config": {
+          "gridSize": 32,
+          "metresPerCell": 2,
+          "seed": 5,
+          "rainMmPerHr": 0,
+          "gravityMPerS2": 9.81,
+          "manningNSPerMOneThird": 0.035,
+          "pipeAreaM2": 1,
+          "dtSimSeconds": 0.02,
+          "morphAccelerationFactor": 1,
+          "capacityCoefficient": 0,
+          "erosionRatePerS": 0,
+          "depositionRatePerS": 0,
+          "hardnessRange": [0, 0.9],
+          "talusAngleDeg": 33,
+          "thermalRatePerS": 0,
+          "evaporationFractionPerStep": 0,
+          "brushMaxHeightM": 5,
+          "brushMaxDepthM": 5,
+          "brushMaxRadiusM": 200,
+          "brushMaxSlopeDeg": 60
+        },
+        "sourceConfig": {
+          "flowM3PerS": 0.4,
+          "batchSteps": 250,
+          "initial": {
+            "xM": 17,
+            "yM": 9
+          }
+        },
+        "diagnostics": {
+          "maxWaveCourant": 0.03110751900422188,
+          "maxTransportCourant": 0.021097717625594894,
+          "peakWaveCourant": 0.033102901847709656,
+          "waveGuardViolationSteps": 0,
+          "waveGuard": "halt"
+        },
+        "water": {
+          "wetCells": 145,
+          "southernmostWetRow": 31,
+          "leftM3": 9.526569824665785,
+          "rightM3": 16.00000004838281
+        },
+        "contourCount": 15,
+        "verticalExaggeration": 3
+      }
+    },
+    {
+      "name": "reduced-motion-keyboard-lift",
+      "state": {
+        "mode": "contour",
+        "step": 0,
+        "source": {
+          "xM": 17,
+          "yM": 9
+        },
+        "config": {
+          "gridSize": 32,
+          "metresPerCell": 2,
+          "seed": 5,
+          "rainMmPerHr": 0,
+          "gravityMPerS2": 9.81,
+          "manningNSPerMOneThird": 0.035,
+          "pipeAreaM2": 1,
+          "dtSimSeconds": 0.02,
+          "morphAccelerationFactor": 1,
+          "capacityCoefficient": 0,
+          "erosionRatePerS": 0,
+          "depositionRatePerS": 0,
+          "hardnessRange": [0, 0.9],
+          "talusAngleDeg": 33,
+          "thermalRatePerS": 0,
+          "evaporationFractionPerStep": 0,
+          "brushMaxHeightM": 5,
+          "brushMaxDepthM": 5,
+          "brushMaxRadiusM": 200,
+          "brushMaxSlopeDeg": 60
+        },
+        "sourceConfig": {
+          "flowM3PerS": 0.4,
+          "batchSteps": 250,
+          "initial": {
+            "xM": 17,
+            "yM": 9
+          }
+        },
+        "diagnostics": {
+          "maxWaveCourant": 0,
+          "maxTransportCourant": 0,
+          "peakWaveCourant": 0,
+          "waveGuardViolationSteps": 0,
+          "waveGuard": "halt"
+        },
+        "water": null,
+        "contourCount": 18,
+        "verticalExaggeration": 3
+      }
+    },
+    {
+      "name": "reduced-motion-keyboard-source",
+      "state": {
+        "mode": "water",
+        "step": 250,
+        "source": {
+          "xM": 19,
+          "yM": 11
+        },
+        "config": {
+          "gridSize": 32,
+          "metresPerCell": 2,
+          "seed": 5,
+          "rainMmPerHr": 0,
+          "gravityMPerS2": 9.81,
+          "manningNSPerMOneThird": 0.035,
+          "pipeAreaM2": 1,
+          "dtSimSeconds": 0.02,
+          "morphAccelerationFactor": 1,
+          "capacityCoefficient": 0,
+          "erosionRatePerS": 0,
+          "depositionRatePerS": 0,
+          "hardnessRange": [0, 0.9],
+          "talusAngleDeg": 33,
+          "thermalRatePerS": 0,
+          "evaporationFractionPerStep": 0,
+          "brushMaxHeightM": 5,
+          "brushMaxDepthM": 5,
+          "brushMaxRadiusM": 200,
+          "brushMaxSlopeDeg": 60
+        },
+        "sourceConfig": {
+          "flowM3PerS": 0.4,
+          "batchSteps": 250,
+          "initial": {
+            "xM": 17,
+            "yM": 9
+          }
+        },
+        "diagnostics": {
+          "maxWaveCourant": 0.03014562951248821,
+          "maxTransportCourant": 0.02230793391593883,
+          "peakWaveCourant": 0.03014562951248821,
+          "waveGuardViolationSteps": 0,
+          "waveGuard": "halt"
+        },
+        "water": {
+          "wetCells": 16,
+          "southernmostWetRow": 9,
+          "leftM3": 1.9999999960870747,
+          "rightM3": 0
+        },
+        "contourCount": 15,
+        "verticalExaggeration": 3
+      }
+    }
+  ],
+  "errors": []
+}

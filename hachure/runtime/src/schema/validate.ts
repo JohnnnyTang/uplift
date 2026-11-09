@@ -9,7 +9,16 @@ import {
   findTypedNumbers,
   parseBindings,
 } from "./bindings";
-import { ACTIONS, COMPARATORS, ENGINES, LEVELS, SCHEMA_VERSION, TIERS, type Spread } from "./spread";
+import {
+  ACTIONS,
+  COMPARATORS,
+  ENGINES,
+  LEVELS,
+  SCHEMA_VERSION,
+  TIERS,
+  type Spread,
+  type ReaderSpread,
+} from "./spread";
 
 /** Names the spread may refer to in its engine. Omit a list to skip that check. */
 export interface EngineCatalogue {
@@ -45,8 +54,8 @@ export interface ValidationIssue {
   readonly message: string;
 }
 
-export type ValidationResult =
-  | { readonly ok: true; readonly spread: Spread; readonly issues: readonly [] }
+export type ValidationResult<T = Spread> =
+  | { readonly ok: true; readonly spread: T; readonly issues: readonly [] }
   | { readonly ok: false; readonly issues: readonly ValidationIssue[] };
 
 type Obj = Record<string, unknown>;
@@ -147,6 +156,22 @@ class Checker {
 
 /** Validates an unknown value as a v0 spread. */
 export function validateSpread(input: unknown, catalogue: EngineCatalogue = {}): ValidationResult {
+  return validateDefinition<Spread>(input, catalogue, false);
+}
+
+/** Optional reflection/challenge, explicit geometry/process scope, same strict text checks. */
+export function validateReaderSpread(
+  input: unknown,
+  catalogue: EngineCatalogue = {},
+): ValidationResult<ReaderSpread> {
+  return validateDefinition<ReaderSpread>(input, catalogue, true);
+}
+
+function validateDefinition<T extends Spread | ReaderSpread>(
+  input: unknown,
+  catalogue: EngineCatalogue,
+  reader: boolean,
+): ValidationResult<T> {
   const c = new Checker();
   const s = c.obj("spread", input);
   if (!s) return { ok: false, issues: c.issues };
@@ -171,10 +196,27 @@ export function validateSpread(input: unknown, catalogue: EngineCatalogue = {}):
   // Scene.
   const durationIds = new Set<string>();
   const scene = c.obj("scene", s.scene);
+  let staticGeometry = false;
+  let uncalibrated = false;
   if (scene) {
+    if (reader) {
+      const scope = c.obj("scene.modelScope", scene.modelScope);
+      if (scope) {
+        const kind = c.oneOf("scene.modelScope.kind", scope.kind, ["static-geometry", "live-process"]);
+        staticGeometry = kind === "static-geometry";
+        if (kind === "live-process") {
+          uncalibrated =
+            c.oneOf("scene.modelScope.time", scope.time, ["uncalibrated", "calibrated"]) === "uncalibrated";
+        } else if (scope.time !== undefined)
+          c.issue("scene.modelScope.time", "type", "Static geometry has no clock");
+      }
+    }
     c.str("scene.preset", scene.preset);
     c.num("scene.seed", scene.seed, { integer: true, min: 0 });
-    c.num("scene.stepsPerRealSecond", scene.stepsPerRealSecond, { positive: true });
+    if (staticGeometry) {
+      if (scene.stepsPerRealSecond !== undefined)
+        c.issue("scene.stepsPerRealSecond", "type", "Static geometry has no solver clock");
+    } else c.num("scene.stepsPerRealSecond", scene.stepsPerRealSecond, { positive: true });
     const camera = c.obj("scene.camera", scene.camera);
     if (camera) {
       for (const key of ["position", "target"] as const) {
@@ -195,6 +237,8 @@ export function validateSpread(input: unknown, catalogue: EngineCatalogue = {}):
       }
     }
     if (scene.durations !== undefined) {
+      if (staticGeometry || uncalibrated)
+        c.issue("scene.durations", "type", "Year durations require calibrated process time");
       const durations = c.obj("scene.durations", scene.durations);
       for (const [name, value] of Object.entries(durations ?? {})) {
         if (!LOCAL_ID.test(name))
@@ -226,6 +270,12 @@ export function validateSpread(input: unknown, catalogue: EngineCatalogue = {}):
     c.levelText(`${p}.label`, ctl.label);
     c.levels(`${p}.levels`, ctl.levels);
     const kind = c.oneOf(`${p}.kind`, ctl.kind, ["slider", "brush", "speed", "action"] as const);
+    if (
+      staticGeometry &&
+      (kind === "speed" || (kind === "action" && (ctl.action === "step" || ctl.action === "play-pause")))
+    ) {
+      c.issue(p, "type", "Static geometry has no playback controls");
+    }
     if (kind === "slider") {
       const param = c.str(`${p}.param`, ctl.param);
       c.inCatalogue(`${p}.param`, param, catalogue.params, "unknown-param");
@@ -273,7 +323,7 @@ export function validateSpread(input: unknown, catalogue: EngineCatalogue = {}):
   const page = c.obj("page", s.page);
   if (page) {
     c.levelText("page.body", page.body);
-    const predict = c.obj("page.predict", page.predict);
+    const predict = reader && page.predict === undefined ? undefined : c.obj("page.predict", page.predict);
     if (predict) {
       c.levelText("page.predict.question", predict.question);
       const options = c.arr("page.predict.options", predict.options);
@@ -317,10 +367,10 @@ export function validateSpread(input: unknown, catalogue: EngineCatalogue = {}):
   }
 
   // Challenge.
-  const challenge = c.obj("challenge", s.challenge);
+  const challenge = reader && s.challenge === undefined ? undefined : c.obj("challenge", s.challenge);
   if (challenge) {
     c.levelText("challenge.prompt", challenge.prompt);
-    checkChallenge(c, "challenge.check", challenge.check, probeShapes);
+    checkChallenge(c, "challenge.check", challenge.check, probeShapes, 0, staticGeometry || uncalibrated);
     const stamp = c.obj("challenge.stamp", challenge.stamp);
     if (stamp) {
       c.str("challenge.stamp.id", stamp.id);
@@ -344,15 +394,24 @@ export function validateSpread(input: unknown, catalogue: EngineCatalogue = {}):
     for (const bad of findMalformedBindings(text)) {
       c.issue(path, "malformed-binding", `${path}: "${bad}" is not a binding; use {{namespace.key}}`);
     }
-    for (const b of parseBindings(text))
+    for (const b of parseBindings(text)) {
+      if (
+        b.namespace === "scene" &&
+        ((staticGeometry && b.key === "timeScale") ||
+          ((staticGeometry || uncalibrated) &&
+            (b.key.startsWith("simYears") || b.key.startsWith("duration."))))
+      ) {
+        c.issue(path, "unknown-binding", `${path}: ${b.raw} is unavailable in this model's time scope`);
+      }
       checkBinding(c, path, b.namespace, b.key, { probeShapes, valueControls, durationIds });
+    }
     for (const n of findTypedNumbers(text)) {
       c.issue(path, "typed-number", `${path}: typed number "${n}"; bind it instead (page and model agree)`);
     }
   }
 
   return c.issues.length === 0
-    ? { ok: true, spread: input as Spread, issues: [] }
+    ? { ok: true, spread: input as T, issues: [] }
     : { ok: false, issues: c.issues };
 }
 
@@ -393,6 +452,7 @@ function checkChallenge(
   v: unknown,
   probeShapes: Map<string, string>,
   depth = 0,
+  noYearClock = false,
 ): void {
   const check = c.obj(path, v);
   if (!check) return;
@@ -404,6 +464,8 @@ function checkChallenge(
   if (kind === "pending") {
     c.str(`${path}.reason`, check.reason);
   } else if (kind === "probe-threshold") {
+    if (noYearClock && check.sustainSimYears !== 0)
+      c.issue(`${path}.sustainSimYears`, "range", "Year persistence requires calibrated time");
     const probe = c.str(`${path}.probe`, check.probe);
     if (probe !== undefined) {
       const shape = probeShapes.get(probe);
@@ -418,6 +480,8 @@ function checkChallenge(
     const checks = c.arr(`${path}.checks`, check.checks);
     if (checks && checks.length === 0)
       c.issue(`${path}.checks`, "count", `${path}: needs at least one check`);
-    checks?.forEach((sub, i) => checkChallenge(c, `${path}.checks[${i}]`, sub, probeShapes, depth + 1));
+    checks?.forEach((sub, i) =>
+      checkChallenge(c, `${path}.checks[${i}]`, sub, probeShapes, depth + 1, noYearClock),
+    );
   }
 }
