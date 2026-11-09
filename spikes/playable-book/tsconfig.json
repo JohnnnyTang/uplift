@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "../..",
+    "paths": {
+      "@hachure/ink": ["hachure/ink/src/index.ts"],
+      "@hachure/ink/view": ["hachure/ink/src/view/index.ts"],
+      "@hachure/terrain": ["hachure/terrain/src/index.ts"]
+    },
+    "ignoreDeprecations": "6.0"
+  },
+  "include": ["./main.ts"]
+}

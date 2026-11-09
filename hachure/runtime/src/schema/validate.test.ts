@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { findMalformedBindings, findTypedNumbers, parseBindings } from "./bindings";
 import type { Spread } from "./spread";
-import { type EngineCatalogue, type IssueCode, validateSpread } from "./validate";
+import { type EngineCatalogue, type IssueCode, validateSpread, validateReaderSpread } from "./validate";
 
 /** Schema test fixture. Its text is placeholder wording, not page content and not science. */
 function fixture(): Spread {
@@ -117,6 +117,87 @@ const catalogue: EngineCatalogue = {
   tools: ["raise", "dig", "smooth", "harden"],
   probeKinds: ["point-flux", "long-profile", "cross-section", "budget"],
 };
+
+describe("validateReaderSpread migration", () => {
+  function reader(): Loose {
+    const legacy = structuredClone(fixture()) as Loose;
+    legacy.scene.modelScope = { kind: "live-process", time: "calibrated" };
+    delete legacy.page.predict;
+    delete legacy.challenge;
+    return legacy;
+  }
+
+  it("accepts absent questions/challenges, while legacy validation remains strict", () => {
+    expect(validateReaderSpread(reader(), catalogue).ok).toBe(true);
+    expect(validateSpread(reader(), catalogue).ok).toBe(false);
+    const withReflection = fixture() as unknown as Loose;
+    withReflection.scene.modelScope = { kind: "live-process", time: "calibrated" };
+    expect(validateReaderSpread(withReflection, catalogue).ok).toBe(true);
+  });
+
+  it("checks optional question and challenge text/references when present", () => {
+    const s = reader();
+    s.page.predict = fixture().page.predict;
+    s.page.predict.question.hs = "{{probe.missing}}";
+    s.challenge = structuredClone(fixture().challenge);
+    s.challenge.prompt.hs = "Try 123";
+    const result = validateReaderSpread(s, catalogue);
+    expect(result.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ path: "page.predict.question.hs", code: "unknown-binding" }),
+        expect.objectContaining({ path: "challenge.prompt.hs", code: "typed-number" }),
+      ]),
+    );
+  });
+
+  it.each([null, {}, { question: { hs: "Question" } }])(
+    "rejects malformed present questions: %j",
+    (question) => {
+      const s = reader();
+      s.page.predict = question;
+      expect(validateReaderSpread(s).ok).toBe(false);
+    },
+  );
+
+  it("retains all body binding checks even when reflection is absent", () => {
+    const s = reader();
+    s.page.body.hs = "{{probe.profile}} {{probe.missing}} {{control.reset}} {{probe}} 123";
+    const result = validateReaderSpread(s, catalogue);
+    expect(result.issues.map((i) => i.code)).toEqual(
+      expect.arrayContaining(["series-binding", "unknown-binding", "malformed-binding", "typed-number"]),
+    );
+  });
+
+  it("accepts static geometry without a fabricated clock and rejects time/playback", () => {
+    const s = reader();
+    s.scene.modelScope = { kind: "static-geometry" };
+    delete s.scene.stepsPerRealSecond;
+    delete s.scene.durations;
+    s.controls = [];
+    s.page.body = { hs: "{{scene.scaleBar}}", uni: "{{scene.terrainWidthM}}" };
+    expect(validateReaderSpread(s, catalogue).ok).toBe(true);
+    s.page.body.hs = "{{scene.timeScale}}";
+    expect(validateReaderSpread(s).ok).toBe(false);
+    s.page.body.hs = "Fixture";
+    s.scene.stepsPerRealSecond = 60;
+    expect(validateReaderSpread(s).ok).toBe(false);
+    delete s.scene.stepsPerRealSecond;
+    s.controls = [fixture().controls.find((control) => control.kind === "speed")];
+    expect(validateReaderSpread(s).ok).toBe(false);
+  });
+
+  it("requires explicit scope and forbids geological-year claims without calibration", () => {
+    const s = reader();
+    delete s.scene.modelScope;
+    expect(validateReaderSpread(s).ok).toBe(false);
+    s.scene.modelScope = { kind: "live-process", time: "uncalibrated" };
+    expect(validateReaderSpread(s).ok).toBe(false); // inherited year durations
+    delete s.scene.durations;
+    expect(validateReaderSpread(s).ok).toBe(true);
+    s.page.body.hs = "{{scene.simYearsElapsed}}";
+    expect(validateReaderSpread(s).ok).toBe(false);
+  });
+});
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- tests bend the fixture into invalid shapes.
 type Loose = Record<string, any>;

@@ -1227,3 +1227,39 @@ review remain accurately recorded. The new research entry must preserve science,
 backend and privacy regressions. Event schema v1 is not extended to new lessons
 or populated with fake prediction events. Product acceptance is separate from
 implementation integration; human observations cannot be inferred from automation.
+
+## D-5A — Playable reader contracts and fixed opening sequence (2026-11-09)
+
+Session 5A selects cartography.contours followed by hydrology.water-path from the
+actual InkView/CPU-solver exploratory trial recorded under
+`docs/review/book-revision/feasibility/`. The initial pale water encoding is retained;
+a tighter, explicitly labelled depth ramp makes the solver's wet routes legible
+at the target illustration size. These are feasibility observations, not a
+prospective science validation, human study or GPU/classroom hardware pass.
+
+Contour lift changes presentation of the same extracted geometry. Moving the
+stable-id spring changes water routing on the prepared fixed terrain; residual
+water remains. No erosion, waterfall, field-year or general outlet claim is made.
+The bounded contour-spacing alternative is therefore not selected.
+
+Add a backward-compatible ReaderSpread validator with optional question/challenge
+and explicit static/live scope; keep legacy consumers runnable through 5E. Freeze
+scene lifecycle, binding, navigation and authored-initialization types plus wiring
+fixtures. Specifications live in `docs/review/book-revision/contracts.md`.
+
+Missing shared primitives have concrete owners: 5B drains in-flight mutations and
+publishes a final sample before departure, and accepts validated/cloned authored
+initial terrain with exact domain/configuration and sources on each backend.
+Existing valley-specific baselines must not describe a newly placed source. 5D
+extracts reusable selected-contour/lift/source interaction from the spike using
+public APIs and supplies sourced claims and prospective evidence. These are small
+host/view additions, not new solver physics or spread-local simulation code.
+5C owns bounded composition, gesture arbitration, focus, history and responsive
+pages. 5E migrates the actual default route; this spike does not replace that work.
+
+Retain actual paused model instances across turns, never restore from HostSample.
+Presentation/reveal/level changes remain independent of readiness and model state.
+Explicit reset restores authored configuration, terrain and sources, pauses and
+resets presentation while retaining level. Instrumentation v1 remains confined
+to the existing research example. Product, science, human accessibility and target
+hardware acceptance remain separately open. Dependents start only after 5A merge.
