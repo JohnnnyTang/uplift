@@ -2,14 +2,14 @@
 
 Planned 2026-11-09 at the owner's request, after product-direction commit
 `46fefe6` was merged into local and remote `main`.
-**Status: planned; implementation sessions have not started.**
+**Status: 5A merged; 5B/5C/5D implemented and verified locally, awaiting PR integration.**
 This wave replaces the coarse P1/P2 sequence. Original hardening sessions 5A–5D
 are now **6A–6D**, not completed or cancelled.
 
 Read [the product story](../product-story.md), [handoff principles](../handoff.md#pedagogical-design-principles),
 [science policy](../science/education-policy.md) and
 [PB1–PB8](product-realignment.md#product-acceptance-gate).
-The owner requested planning here, not execution of the implementation wave.
+The owner subsequently authorized parallel 5B/5C/5D execution. See [the local handover](../review/book-revision/parallel-handover.md). 5E/5F remain pending.
 
 ## Outcome
 
