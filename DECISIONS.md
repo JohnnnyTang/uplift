@@ -578,3 +578,29 @@ claim GPU parity with an unbuilt solver. No calibrated years or predict answer.
 **Plan facts.** Resistance substantially slows drainage and erosion. 3B must measure
 outcomes afresh using the real preset; the old frictionless validation magnitudes
 cannot be reused. Expert review of the geometry, roughness and calibration is open.
+
+<!-- expert-review -->
+
+### D-3D-001 · 2026-11-09 · Draft content cannot invent a scored prediction
+
+**Decision.** Author the valley page at both levels with canonical scene bindings and a
+typed `predictDraft.answer: null`. Its absence deliberately prevents using the draft as
+a scored `PredictSpec`. Keep the answer and both flaps pending the reproducible T6 result;
+an inconclusive comparison cannot be silently assigned to a choice. Content sources
+separate literature mechanisms from the implementation's engineering parameter ranges.
+The stream-power formula is comparative theory, never the implemented capacity law or
+a mapping from `erosionRatePerS` to K.
+
+**Integration.** The content exports require scalar probes `incisionDepth` and
+`sedimentOut`, value control `rain`, and duration `predictSpan`, agreed with 3A.
+The clock uses `scene.timeScale`; the duration binding reports uncalibrated status until
+approved. Tests scan every reader field and authored markdown label for typed numbers,
+unknown bindings and unresolved citation keys. Bibliographic link destinations are metadata.
+The integrating spread must additionally validate these declarations against its actual
+probe/control definitions. Review markers remain in source but are removed from plain
+reader prose to avoid being read aloud as markup.
+
+**Open gates.** 3B must provide the answer evidence and matching final flap claim; hydraulic
+correction and calibration approval are independent of content completion. All scientific
+copy remains expert-review draft. Existing M07 full-text, field-analogy and domain-review
+gaps remain open. No content test is a scientific validation result.
