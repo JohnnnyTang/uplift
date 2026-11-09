@@ -817,3 +817,57 @@ engine primitive rather than heavy spread code.
 Open for Stage 1 review: expert interpretation of the taught mechanism and human
 classroom usability. Wave 4 must validate a fresh model-time slope-break sequence
 before enabling its challenge; these rain results do not support a waterfall.
+
+## D-W4-4E · Enforce production browser and size regressions
+
+2026-11-09 · Stage 1 / Wave 4 / Session 4E.
+
+Use the pinned Playwright Chromium runner against the production build, with an
+isolated source-server entry for explicitly unscored science fixtures. No fixture
+or test hook ships in the book. CPU Worker and software WebGL2 establish repeatable
+browser smoke coverage; WebGPU agreement and hardware performance are separate.
+
+The recorded comparison tests every registered seed and exact sample, fixed shared
+bar/trace axes, endpoint-gated committed-answer feedback, keyboard scrub, replay,
+reset and reduced motion. Paused live hashes and recorded replay state survive
+reading-level switches. Preserve hidden uncalibrated years and pending challenge
+without stamp; null-answer predictions must never receive scored wording. Testing
+that fixture revealed a book feedback path missing the null-answer guard; the
+minimal guard is included.
+
+Interpret the demo's <10 MB ceiling conservatively as <10,000,000 raw generated
+bytes, recursively including Worker and lazy assets. Enforce it in both CI jobs;
+negative boundary coverage prevents a budget check that always passes.
+
+The opt-in debug primitive reports page rAF fps (explicitly not a completed-draw
+benchmark), batch compute milliseconds divided by steps, atomic-sample grid/seed,
+and separate solver/renderer labels. No new model state or scientific claim is
+introduced. Book lifecycle hooks, a public runtime barrel export and root scripts/
+pinned dev dependencies are minimal cross-ownership glue. axe-core is included at
+the integrator's request for 4D; 4E does not claim a human accessibility audit.
+
+Open handover: 4A must feed the selected solver name into the debug glue and update
+the CPU128 assertion. Remote CI evidence remains unavailable until publication;
+local `pnpm check`, production build, budget and Chromium evidence are recorded in
+`e2e/HANDOVER.md`. Existing expert/human/hardware gates remain open.
+
+## D-W4-OPEN · Open Wave 4 with anonymous instrumentation
+
+2026-11-09 · Owner requested parallel session worktrees using GPT-6.1 Sol at
+high reasoning and explicitly chose to add learning-outcome instrumentation.
+
+Wave 3's supported recorded rain comparison is merged at `d29d639`; the baseline
+passes `pnpm check` (434 tests). Start 4A–4F in isolated sibling worktrees. Three
+sub-agent slots run at a time; queue the remaining independent sessions. Preserve
+the prescribed merge order, with 4F after 4D. A separate integration worktree owns
+shared book mounting and plan updates to reduce overlapping session edits.
+
+4F provides an opt-in local event log, optional pre/post checks for the supported
+claim, and reader-triggered anonymous export. It adds no server collection,
+accounts or identifiers. Interaction completion is not evidence of learning gain.
+See the new 4F brief for event scope and acceptance checks.
+
+The waterfall challenge remains pending until a prospectively registered
+model-time sequence is validated. Historic failed morphology, hidden geological
+years and outstanding expert, human accessibility and target-hardware gates stay
+unchanged. Starting Wave 4 does not close these Stage 1 requirements.
