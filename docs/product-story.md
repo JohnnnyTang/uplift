@@ -27,6 +27,12 @@ changed; they now see more of it.
 
 ## The three bets of Demo 1
 
+**Science priority (owner clarification, 2026-11-09):** teach visible causal
+relationships and reliable relative outcomes. Process-model lessons do not need
+field-accurate erosion rates or calibrated geological years unless they claim them.
+Use [the education-first science policy](science/education-policy.md) when interpreting
+the calibration and validation tensions below.
+
 The current goal is to prove three things with one spread. Each is a bet that could fail, and each stage-1
 wave is arranged to find out early.
 

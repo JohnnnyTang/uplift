@@ -749,3 +749,42 @@ for hypotheses, controls, stopping rules, evidence retention and interpretation.
 This diagnostic revision is not an approved replacement for the original gate;
 public science status and release claims remain unchanged pending results/review.
 Owned paths are 3B validation code/evidence plus this required append-only log.
+
+### D-W3-R2 · 2026-11-09 · Owner prioritizes educational relationships
+
+The owner clarified during the registered follow-up that visible outcomes, causal
+relationships and relative comparisons matter more than quantitative field accuracy.
+Adopt [education-policy.md](docs/science/education-policy.md): process-model releases
+need robust qualitative and visual evidence; geological calibration is conditional
+on claiming real-world time/rates. Preserve numerical correctness, deterministic
+paired comparisons, truthful content and process-generated change.
+
+Finish the frozen R1 experiments unchanged and preserve their historical outcomes.
+A policy clarification does not itself validate a lesson or authorize a scored
+answer. Future educational protocols must explicitly assess legibility and use
+model-time persistence if a geological clock is not claimed. No solver, calibration
+approval or reader-visible answer changes are made by this decision.
+
+Minimal ownership expansion is necessary to reconcile the handoff, product story,
+stage/handover, validation specification and time-scale proposal with this explicit
+user direction. Those edits are policy cross-references, not rewritten experiment
+records.
+
+### D-W3-R3 · 2026-11-09 · Completed mechanism-isolation evidence
+
+<!-- expert-review -->
+
+All 36 arms completed with passing guards/budgets; all eighteen originals replay
+exactly. Original cover shielded the hardness intervention. Exposed bedrock makes
+hardness active (about 1.57% less band bedrock loss), but gives no consistent
+narrowing or eligible slope break. Adjacent pulse placement increases reach entry
+and preserves greater deposition in the flatter arm (about 24% more), but reduces
+the absolute between-arm contrast. Higher rain mobilizes about 2.4 times as much
+material without deepening the fixed section minima. See the
+[complete packet](docs/science/validation/followup/README.md).
+
+Legacy numerical criteria still fail and are preserved. Under D-W3-R2, prioritize
+a visible paired interaction and a matching teaching question; field-rate
+calibration is not the next blocker for a qualitative model. The current numerical
+packet does not establish classroom legibility or authorize a scored prediction.
+No further post-result tuning or solver change was made.

@@ -58,6 +58,18 @@ Every spread follows a guided-sandbox loop: a question first, then free play, th
 
 ## Scientific rigour policy
 
+**Owner clarification, 2026-11-09 — education-first acceptance.** For process-model
+spreads, prioritize visible cause and effect, relative comparisons and explanatory
+clarity over accurate field magnitudes/rates. Quantitative landscape calibration is
+required only when claiming real-world years or rates; an explicitly uncalibrated
+model is a valid educational product. Arbitrary absolute effect-size thresholds do
+not replace evidence that a relationship is stable and visually understandable.
+This clarification supersedes conflicting calibration/quantitative gate wording
+below; process-based simulation, truthful claims, numerical correctness and the
+physical-law tier remain required. See [the science scope policy](science/education-policy.md)
+for the evidence and transition rules.
+
+
 Showing no equations does not mean not rigorous. Every simulation must be process-based underneath: landforms emerge from simulated flow, transport and deposition, never from scripted animation. Readers then build correct intuitions for the right reasons.
 
 **Every model declares its tier, shown as a badge on the page.**

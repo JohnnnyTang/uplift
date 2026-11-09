@@ -8,6 +8,16 @@ truth for requirements is the handoff's
 
 ## Goal and exit gate
 
+**Owner clarification, 2026-11-09:** interpret the process-model science gates under
+[education-policy.md](../science/education-policy.md). Prioritize visible cause and
+effect and robust relative comparisons; accurate field magnitudes and geological
+time calibration are conditional on making those claims. Legacy quantitative
+experiments retain their original classifications. Wave 3 still needs a supported,
+visually legible teaching relationship; a new policy alone is not evidence of one.
+This note supersedes conflicting mandatory-calibration and absolute-margin wording
+in the session briefs below. Register model-time challenge persistence before
+implementing it; do not enable the existing pending challenge automatically.
+
 **Goal.** One working spread inside a minimal book shell. It proves the shared terrain engine, the
 ink-line-to-3D look, and the two-level page.
 
@@ -671,6 +681,11 @@ Stage 2. **This is the input for planning Stage 2 in detail.**
 | WebGPU is testable in CI                                                                                           | Run GPU tests locally and record the run at each wave close                | 3C          |
 
 ## Changelog
+
+- 2026-11-09: Owner prioritizes visible causal relationships and relative outcomes;
+  field calibration is conditional on quantitative claims. Complete the registered
+  36-arm follow-up without rewriting historical outcomes; prioritize a visually
+  legible teaching comparison as the remaining Wave 3 science work.
 
 - 2026-11-09: Wave 3 implementation and failed science packet: keep the wave open;
   require a reviewed scientific follow-up before Wave 4. Carry the partial GPU-water

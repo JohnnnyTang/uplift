@@ -1,0 +1,1777 @@
+{
+  "protocolId": "s1-w3-mechanism-isolation-v1",
+  "preregistrationCommits": ["0835b51e03eab3582a2d5c65ff78fb43c4379c47"],
+  "expertReview": "pending",
+  "thresholds": {
+    "hardBandWidthRatio": 0.9,
+    "widthMinimumCells": 0.5,
+    "metresPerCell": 10
+  },
+  "historicalPredicatesChanged": false,
+  "educationalAcceptance": {
+    "status": "pending-visual-and-lesson-evidence",
+    "policyPath": "docs/science/education-policy.md",
+    "fieldCalibrationRequiredForQualitativeLesson": false
+  },
+  "reproducibilityPassed": true,
+  "reproducibility": [
+    {
+      "seed": 1,
+      "arm": "rain-low",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 1,
+      "arm": "rain-high",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 1,
+      "arm": "uniform",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 1,
+      "arm": "hard-band",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 1,
+      "arm": "slope-low",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 1,
+      "arm": "slope-high",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 17,
+      "arm": "rain-low",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 17,
+      "arm": "rain-high",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 17,
+      "arm": "uniform",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 17,
+      "arm": "hard-band",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 17,
+      "arm": "slope-low",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 17,
+      "arm": "slope-high",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 101,
+      "arm": "rain-low",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 101,
+      "arm": "rain-high",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 101,
+      "arm": "uniform",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 101,
+      "arm": "hard-band",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 101,
+      "arm": "slope-low",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    },
+    {
+      "seed": 101,
+      "arm": "slope-high",
+      "configMatches": true,
+      "finalHashMatches": true,
+      "samplesMatch": true,
+      "calibrationMatches": true
+    }
+  ],
+  "baseline": {
+    "protocolId": "s1-w3-validation-v1",
+    "expertReview": "pending",
+    "seeds": [
+      {
+        "seed": 1,
+        "engineeringHealthy": true,
+        "ac3a": {
+          "passed": false,
+          "status": "failed",
+          "finalSamples": [
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.00046134635132943913,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.005248858905019915,
+              "widthMarginM": 22.630194980413524,
+              "resolvedSections": 5
+            },
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.000476764217296477,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.005378480896979454,
+              "widthMarginM": 22.63019596137932,
+              "resolvedSections": 5
+            },
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.0004927665433740458,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.005513598356515104,
+              "widthMarginM": 22.63019697054947,
+              "resolvedSections": 5
+            }
+          ]
+        },
+        "ac3b": {
+          "passed": false,
+          "status": "failed",
+          "widthPassed": false,
+          "uniformWidthM": 452.67086630697435,
+          "bandWidthM": 452.67086630697435,
+          "approvedCalibration": false,
+          "bandPersistence": {
+            "passed": false,
+            "elapsedYears": 0,
+            "initialDistanceM": null
+          },
+          "uniformPersistence": {
+            "passed": false,
+            "elapsedYears": 0,
+            "initialDistanceM": null
+          },
+          "completeBaselinePaths": true,
+          "bandEligibleCandidates": 0
+        },
+        "ac3c": {
+          "passed": false,
+          "status": "failed",
+          "depositionDifferenceM3": 21.60510469379369,
+          "depositionMarginM3": 64.00000095367432,
+          "delivered": true,
+          "reachClosed": true,
+          "flat": {
+            "depositedM3": 716821.6051046938,
+            "suspendedM3": 3.996162916595548,
+            "depositedChangeM3": 21.60510469379369,
+            "transfers": {
+              "firstRow": 64,
+              "lastRowExclusive": 120,
+              "incomingM3": 28.05508615910319,
+              "outgoingM3": 2.4538185486799775,
+              "acceptedSteps": 10000
+            }
+          },
+          "steep": {
+            "depositedM3": 716800,
+            "suspendedM3": 14.049744367387055,
+            "depositedChangeM3": 0,
+            "transfers": {
+              "firstRow": 64,
+              "lastRowExclusive": 120,
+              "incomingM3": 57.54562886281028,
+              "outgoingM3": 43.49588449542365,
+              "acceptedSteps": 10000
+            }
+          }
+        },
+        "prediction": {
+          "status": "inconclusive",
+          "classification": null,
+          "answer": null,
+          "expertApproved": false
+        },
+        "calibration": {
+          "status": "failed",
+          "approval": {
+            "status": "pending",
+            "approver": null,
+            "approvedAt": null
+          },
+          "sectionBaselineStep": 2000,
+          "measuredSteps": 20000,
+          "sections": [
+            {
+              "row": 32,
+              "baselineMinimumM": 233.55638159956047,
+              "currentMinimumM": 233.55671223781852,
+              "incisionM": -0.0003306382580490208,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 48,
+              "baselineMinimumM": 219.56184401195426,
+              "currentMinimumM": 219.56201451338367,
+              "incisionM": -0.0001705014294088869,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 64,
+              "baselineMinimumM": 205.56124885828154,
+              "currentMinimumM": 205.56131372688546,
+              "incisionM": -0.00006486860391419214,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 80,
+              "baselineMinimumM": 191.5616611631116,
+              "currentMinimumM": 191.5618195388979,
+              "incisionM": -0.00015837578629884774,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 96,
+              "baselineMinimumM": 177.56224095401677,
+              "currentMinimumM": 177.56237915875897,
+              "incisionM": -0.00013820474219983225,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            }
+          ],
+          "medianPositiveIncisionM": null,
+          "targetMPerYear": 0.00005,
+          "targetRangeMPerYear": [0.00001, 0.0001],
+          "targetSource": "docs/science/time-scale.md; provisional K01 catchment-denudation analogy, not local incision data",
+          "candidateMorphAccelerationFactor": null,
+          "candidateWithinStorageBounds": false,
+          "installedMorphAccelerationFactor": 1,
+          "displayLabel": "Landscape time not calibrated"
+        },
+        "runs": [
+          {
+            "arm": "rain-low",
+            "configHash": "fd0b7880841be1d31c9866525617d81695f20fe04f942a8d41aec6b98c805d10",
+            "finalHash": "1e01c27ded0e1d86",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "rain-high",
+            "configHash": "57d2b73c8cf478a5b5cd051eda578951bbe5d132f9cffe095eebdc6155073e05",
+            "finalHash": "175525f935e3c912",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "uniform",
+            "configHash": "f9d525bca423b9b919c868943a745ce3871a88d746c27655826d8731024a792b",
+            "finalHash": "eae81fd51641db82",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "hard-band",
+            "configHash": "f9d525bca423b9b919c868943a745ce3871a88d746c27655826d8731024a792b",
+            "finalHash": "ea3d13d52046f782",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "slope-low",
+            "configHash": "5e0f661f502b1bd3c1810c603169a4c009ba41b939eefe37f76a51965724fd9c",
+            "finalHash": "7976c6dd346407ba",
+            "completedSteps": 10000,
+            "healthy": true
+          },
+          {
+            "arm": "slope-high",
+            "configHash": "5e0f661f502b1bd3c1810c603169a4c009ba41b939eefe37f76a51965724fd9c",
+            "finalHash": "106a303a35921ef5",
+            "completedSteps": 10000,
+            "healthy": true
+          }
+        ]
+      },
+      {
+        "seed": 17,
+        "engineeringHealthy": true,
+        "ac3a": {
+          "passed": false,
+          "status": "failed",
+          "finalSamples": [
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.000596043496443599,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.0032677066902806473,
+              "widthMarginM": 22.630427355691282,
+              "resolvedSections": 5
+            },
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.0006169954303629765,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.0033055179408734148,
+              "widthMarginM": 22.630429438336307,
+              "resolvedSections": 5
+            },
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.0006381307138383363,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.00334445033377051,
+              "widthMarginM": 22.63043142049642,
+              "resolvedSections": 5
+            }
+          ]
+        },
+        "ac3b": {
+          "passed": false,
+          "status": "failed",
+          "widthPassed": false,
+          "uniformWidthM": 452.51404724094346,
+          "bandWidthM": 452.51404724094346,
+          "approvedCalibration": false,
+          "bandPersistence": {
+            "passed": false,
+            "elapsedYears": 0,
+            "initialDistanceM": null
+          },
+          "uniformPersistence": {
+            "passed": false,
+            "elapsedYears": 0,
+            "initialDistanceM": null
+          },
+          "completeBaselinePaths": true,
+          "bandEligibleCandidates": 0
+        },
+        "ac3c": {
+          "passed": false,
+          "status": "failed",
+          "depositionDifferenceM3": 21.608556276303716,
+          "depositionMarginM3": 64.00000095367432,
+          "delivered": true,
+          "reachClosed": true,
+          "flat": {
+            "depositedM3": 716821.6085562763,
+            "suspendedM3": 3.9970686361443333,
+            "depositedChangeM3": 21.608556276303716,
+            "transfers": {
+              "firstRow": 64,
+              "lastRowExclusive": 120,
+              "incomingM3": 28.068571983911863,
+              "outgoingM3": 2.4629470713657136,
+              "acceptedSteps": 10000
+            }
+          },
+          "steep": {
+            "depositedM3": 716800,
+            "suspendedM3": 14.02269969559247,
+            "depositedChangeM3": 0,
+            "transfers": {
+              "firstRow": 64,
+              "lastRowExclusive": 120,
+              "incomingM3": 57.54547826578566,
+              "outgoingM3": 43.522778570193225,
+              "acceptedSteps": 10000
+            }
+          }
+        },
+        "prediction": {
+          "status": "inconclusive",
+          "classification": null,
+          "answer": null,
+          "expertApproved": false
+        },
+        "calibration": {
+          "status": "failed",
+          "approval": {
+            "status": "pending",
+            "approver": null,
+            "approvedAt": null
+          },
+          "sectionBaselineStep": 2000,
+          "measuredSteps": 20000,
+          "sections": [
+            {
+              "row": 32,
+              "baselineMinimumM": 233.55273477047498,
+              "currentMinimumM": 233.55304737830684,
+              "incisionM": -0.0003126078318587133,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 48,
+              "baselineMinimumM": 219.5547791308652,
+              "currentMinimumM": 219.55507096113794,
+              "incisionM": -0.00029183027274370943,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 64,
+              "baselineMinimumM": 205.55686995558648,
+              "currentMinimumM": 205.55712154851398,
+              "incisionM": -0.00025159292749776796,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 80,
+              "baselineMinimumM": 191.55851773520695,
+              "currentMinimumM": 191.55866243304337,
+              "incisionM": -0.00014469783641857248,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 96,
+              "baselineMinimumM": 177.56526181749553,
+              "currentMinimumM": 177.56540132833283,
+              "incisionM": -0.00013951083730034952,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            }
+          ],
+          "medianPositiveIncisionM": null,
+          "targetMPerYear": 0.00005,
+          "targetRangeMPerYear": [0.00001, 0.0001],
+          "targetSource": "docs/science/time-scale.md; provisional K01 catchment-denudation analogy, not local incision data",
+          "candidateMorphAccelerationFactor": null,
+          "candidateWithinStorageBounds": false,
+          "installedMorphAccelerationFactor": 1,
+          "displayLabel": "Landscape time not calibrated"
+        },
+        "runs": [
+          {
+            "arm": "rain-low",
+            "configHash": "ffcb9fb3a5ba5d620b6619fcf2fb3d631b669fad2db0a4f109e49d6fdd00f8f3",
+            "finalHash": "b1646c7a786364ed",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "rain-high",
+            "configHash": "2a72e5f269a7379dcc26c453bd71f0f691badbfca60a74d113c9f78f8c3e51bc",
+            "finalHash": "40a229d15f129676",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "uniform",
+            "configHash": "8c785689a11c3b3768369a7716281640b32c3211946ca60e4045e5419b375b8e",
+            "finalHash": "f8bd59a9105ee4ee",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "hard-band",
+            "configHash": "8c785689a11c3b3768369a7716281640b32c3211946ca60e4045e5419b375b8e",
+            "finalHash": "913a85a9990fc8ee",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "slope-low",
+            "configHash": "91136aa7f7db0250263f7343402587a1a7bd6c46213723cdbf684fdfbf836acb",
+            "finalHash": "d226b1afd0bd2354",
+            "completedSteps": 10000,
+            "healthy": true
+          },
+          {
+            "arm": "slope-high",
+            "configHash": "91136aa7f7db0250263f7343402587a1a7bd6c46213723cdbf684fdfbf836acb",
+            "finalHash": "099c97b516d749d2",
+            "completedSteps": 10000,
+            "healthy": true
+          }
+        ]
+      },
+      {
+        "seed": 101,
+        "engineeringHealthy": true,
+        "ac3a": {
+          "passed": false,
+          "status": "failed",
+          "finalSamples": [
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.0006755566331833052,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.005444527188728898,
+              "widthMarginM": 22.62736991025758,
+              "resolvedSections": 5
+            },
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.0006991843067680747,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.005526535164619872,
+              "widthMarginM": 22.62737339415622,
+              "resolvedSections": 5
+            },
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.0007237143432234916,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.005607978394323254,
+              "widthMarginM": 22.627376918514308,
+              "resolvedSections": 5
+            }
+          ]
+        },
+        "ac3b": {
+          "passed": false,
+          "status": "failed",
+          "widthPassed": false,
+          "uniformWidthM": 452.5886959939951,
+          "bandWidthM": 452.5886959939951,
+          "approvedCalibration": false,
+          "bandPersistence": {
+            "passed": false,
+            "elapsedYears": 0,
+            "initialDistanceM": null
+          },
+          "uniformPersistence": {
+            "passed": false,
+            "elapsedYears": 0,
+            "initialDistanceM": null
+          },
+          "completeBaselinePaths": true,
+          "bandEligibleCandidates": 0
+        },
+        "ac3c": {
+          "passed": false,
+          "status": "failed",
+          "depositionDifferenceM3": 21.575206315959804,
+          "depositionMarginM3": 64.00000095367432,
+          "delivered": true,
+          "reachClosed": true,
+          "flat": {
+            "depositedM3": 716821.575206316,
+            "suspendedM3": 3.9892250818841686,
+            "depositedChangeM3": 21.575206315959804,
+            "transfers": {
+              "firstRow": 64,
+              "lastRowExclusive": 120,
+              "incomingM3": 28.012148892504076,
+              "outgoingM3": 2.44771749469336,
+              "acceptedSteps": 10000
+            }
+          },
+          "steep": {
+            "depositedM3": 716800,
+            "suspendedM3": 14.052174858408396,
+            "depositedChangeM3": 0,
+            "transfers": {
+              "firstRow": 64,
+              "lastRowExclusive": 120,
+              "incomingM3": 57.5513442096973,
+              "outgoingM3": 43.49916935128898,
+              "acceptedSteps": 10000
+            }
+          }
+        },
+        "prediction": {
+          "status": "inconclusive",
+          "classification": null,
+          "answer": null,
+          "expertApproved": false
+        },
+        "calibration": {
+          "status": "failed",
+          "approval": {
+            "status": "pending",
+            "approver": null,
+            "approvedAt": null
+          },
+          "sectionBaselineStep": 2000,
+          "measuredSteps": 20000,
+          "sections": [
+            {
+              "row": 32,
+              "baselineMinimumM": 233.55213959734664,
+              "currentMinimumM": 233.55263987034425,
+              "incisionM": -0.000500272997612683,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 48,
+              "baselineMinimumM": 219.5588383014402,
+              "currentMinimumM": 219.5592657357712,
+              "incisionM": -0.00042743433098735295,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 64,
+              "baselineMinimumM": 205.5581059114628,
+              "currentMinimumM": 205.5583282788556,
+              "incisionM": -0.00022236739280856455,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 80,
+              "baselineMinimumM": 191.56600965071559,
+              "currentMinimumM": 191.56609356273808,
+              "incisionM": -0.00008391202248958507,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 96,
+              "baselineMinimumM": 177.5561070127839,
+              "currentMinimumM": 177.5563117582651,
+              "incisionM": -0.00020474548119864266,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            }
+          ],
+          "medianPositiveIncisionM": null,
+          "targetMPerYear": 0.00005,
+          "targetRangeMPerYear": [0.00001, 0.0001],
+          "targetSource": "docs/science/time-scale.md; provisional K01 catchment-denudation analogy, not local incision data",
+          "candidateMorphAccelerationFactor": null,
+          "candidateWithinStorageBounds": false,
+          "installedMorphAccelerationFactor": 1,
+          "displayLabel": "Landscape time not calibrated"
+        },
+        "runs": [
+          {
+            "arm": "rain-low",
+            "configHash": "999ed9b891302548be6ea6f9d23de2545af1c6fe7aefc09ada7ff148cef9ac0b",
+            "finalHash": "9b35999dc2c137f6",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "rain-high",
+            "configHash": "42268d1cf197fed89ab4b26664c3213547dcac813d25456a3e16a4d40a38aa12",
+            "finalHash": "366ad6584da2291b",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "uniform",
+            "configHash": "e1fa51dccd41ce2287a2dad190657e7980731b5f3b684d76c7c9aec13099cf8a",
+            "finalHash": "704f1b718cd831fa",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "hard-band",
+            "configHash": "e1fa51dccd41ce2287a2dad190657e7980731b5f3b684d76c7c9aec13099cf8a",
+            "finalHash": "ad080f717cc54dfa",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "slope-low",
+            "configHash": "a2dd9f8277d538722b5ac63494ef686c9bcc90f698d8b1535492b2b91713594b",
+            "finalHash": "e0431510bf943bab",
+            "completedSteps": 10000,
+            "healthy": true
+          },
+          {
+            "arm": "slope-high",
+            "configHash": "a2dd9f8277d538722b5ac63494ef686c9bcc90f698d8b1535492b2b91713594b",
+            "finalHash": "4959b8733ddba38c",
+            "completedSteps": 10000,
+            "healthy": true
+          }
+        ]
+      }
+    ],
+    "allEngineeringChecksPassed": true,
+    "allQualitativeClaimsPassed": false,
+    "prediction": {
+      "answer": null,
+      "status": "inconclusive",
+      "expertApproved": false
+    },
+    "landscapeTime": {
+      "status": "uncalibrated",
+      "displayLabel": "Landscape time not calibrated",
+      "approved": false
+    }
+  },
+  "conditional": {
+    "protocolId": "s1-w3-mechanism-isolation-v1",
+    "expertReview": "pending",
+    "seeds": [
+      {
+        "seed": 1,
+        "engineeringHealthy": true,
+        "ac3a": {
+          "passed": false,
+          "status": "failed",
+          "finalSamples": [
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.00046127774714932457,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.005216679320881212,
+              "widthMarginM": 22.630198574826654,
+              "resolvedSections": 5
+            },
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.0004766957514164005,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.005347744658536158,
+              "widthMarginM": 22.630199427505687,
+              "resolvedSections": 5
+            },
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.0004926981659423291,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.0054849543923864985,
+              "widthMarginM": 22.630200301322454,
+              "resolvedSections": 5
+            }
+          ]
+        },
+        "ac3b": {
+          "passed": false,
+          "status": "failed",
+          "widthPassed": false,
+          "uniformWidthM": 452.67093144788043,
+          "bandWidthM": 452.6709333238093,
+          "approvedCalibration": false,
+          "bandPersistence": {
+            "passed": false,
+            "elapsedYears": 0,
+            "initialDistanceM": null
+          },
+          "uniformPersistence": {
+            "passed": false,
+            "elapsedYears": 0,
+            "initialDistanceM": null
+          },
+          "completeBaselinePaths": true,
+          "bandEligibleCandidates": 0
+        },
+        "ac3c": {
+          "passed": false,
+          "status": "failed",
+          "depositionDifferenceM3": 10.690951443859376,
+          "depositionMarginM3": 64.00000095367432,
+          "delivered": true,
+          "reachClosed": true,
+          "flat": {
+            "depositedM3": 716854.6088818458,
+            "suspendedM3": 2.6177369487931044,
+            "depositedChangeM3": 54.60888184583746,
+            "transfers": {
+              "firstRow": 64,
+              "lastRowExclusive": 120,
+              "incomingM3": 61.21434725846451,
+              "outgoingM3": 3.9877284638016275,
+              "acceptedSteps": 10000
+            }
+          },
+          "steep": {
+            "depositedM3": 716843.917930402,
+            "suspendedM3": 8.037642270756374,
+            "depositedChangeM3": 43.91793040197808,
+            "transfers": {
+              "firstRow": 64,
+              "lastRowExclusive": 120,
+              "incomingM3": 104.99196694133207,
+              "outgoingM3": 53.036394268630374,
+              "acceptedSteps": 10000
+            }
+          }
+        },
+        "prediction": {
+          "status": "inconclusive",
+          "classification": null,
+          "answer": null,
+          "expertApproved": false
+        },
+        "calibration": {
+          "status": "failed",
+          "approval": {
+            "status": "pending",
+            "approver": null,
+            "approvedAt": null
+          },
+          "sectionBaselineStep": 2000,
+          "measuredSteps": 20000,
+          "sections": [
+            {
+              "row": 32,
+              "baselineMinimumM": 232.5563816899255,
+              "currentMinimumM": 232.5567121925066,
+              "incisionM": -0.0003305025811073392,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 48,
+              "baselineMinimumM": 218.56184410346847,
+              "currentMinimumM": 218.5620144580786,
+              "incisionM": -0.00017035461013392705,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 64,
+              "baselineMinimumM": 204.56124895228294,
+              "currentMinimumM": 204.5613137057388,
+              "incisionM": -0.00006475345585954528,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 80,
+              "baselineMinimumM": 190.56166125271528,
+              "currentMinimumM": 190.56181948321444,
+              "incisionM": -0.00015823049915297815,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 96,
+              "baselineMinimumM": 176.56224104418135,
+              "currentMinimumM": 176.5623791018013,
+              "incisionM": -0.00013805761994944987,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            }
+          ],
+          "medianPositiveIncisionM": null,
+          "targetMPerYear": 0.00005,
+          "targetRangeMPerYear": [0.00001, 0.0001],
+          "targetSource": "docs/science/time-scale.md; provisional K01 catchment-denudation analogy, not local incision data",
+          "candidateMorphAccelerationFactor": null,
+          "candidateWithinStorageBounds": false,
+          "installedMorphAccelerationFactor": 1,
+          "displayLabel": "Landscape time not calibrated"
+        },
+        "runs": [
+          {
+            "arm": "rain-low",
+            "configHash": "fd0b7880841be1d31c9866525617d81695f20fe04f942a8d41aec6b98c805d10",
+            "finalHash": "a2b5fe1c5e97e55f",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "rain-high",
+            "configHash": "57d2b73c8cf478a5b5cd051eda578951bbe5d132f9cffe095eebdc6155073e05",
+            "finalHash": "627c96da08b8ddd9",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "uniform",
+            "configHash": "f9d525bca423b9b919c868943a745ce3871a88d746c27655826d8731024a792b",
+            "finalHash": "cd413a4c0a4e8307",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "hard-band",
+            "configHash": "f9d525bca423b9b919c868943a745ce3871a88d746c27655826d8731024a792b",
+            "finalHash": "8073cd152bdb104a",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "slope-low",
+            "configHash": "5e0f661f502b1bd3c1810c603169a4c009ba41b939eefe37f76a51965724fd9c",
+            "finalHash": "39668690465cd923",
+            "completedSteps": 10000,
+            "healthy": true
+          },
+          {
+            "arm": "slope-high",
+            "configHash": "5e0f661f502b1bd3c1810c603169a4c009ba41b939eefe37f76a51965724fd9c",
+            "finalHash": "db44e6ccf1fa8937",
+            "completedSteps": 10000,
+            "healthy": true
+          }
+        ]
+      },
+      {
+        "seed": 17,
+        "engineeringHealthy": true,
+        "ac3a": {
+          "passed": false,
+          "status": "failed",
+          "finalSamples": [
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.0005959581872048147,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.003204223225509395,
+              "widthMarginM": 22.63043171379215,
+              "resolvedSections": 5
+            },
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.0006169095969994487,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.0032420856368844397,
+              "widthMarginM": 22.630433768961367,
+              "resolvedSections": 5
+            },
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.0006380442615352422,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.0032801275013412123,
+              "widthMarginM": 22.63043583522606,
+              "resolvedSections": 5
+            }
+          ]
+        },
+        "ac3b": {
+          "passed": false,
+          "status": "failed",
+          "widthPassed": false,
+          "uniformWidthM": 452.51392554024324,
+          "bandWidthM": 452.51387547491584,
+          "approvedCalibration": false,
+          "bandPersistence": {
+            "passed": false,
+            "elapsedYears": 0,
+            "initialDistanceM": null
+          },
+          "uniformPersistence": {
+            "passed": false,
+            "elapsedYears": 0,
+            "initialDistanceM": null
+          },
+          "completeBaselinePaths": true,
+          "bandEligibleCandidates": 0
+        },
+        "ac3c": {
+          "passed": false,
+          "status": "failed",
+          "depositionDifferenceM3": 10.699510177248158,
+          "depositionMarginM3": 64.00000095367432,
+          "delivered": true,
+          "reachClosed": true,
+          "flat": {
+            "depositedM3": 716854.6259900535,
+            "suspendedM3": 2.6166845983132925,
+            "depositedChangeM3": 54.6259900535224,
+            "transfers": {
+              "firstRow": 64,
+              "lastRowExclusive": 120,
+              "incomingM3": 61.233938798813725,
+              "outgoingM3": 3.9912641469091352,
+              "acceptedSteps": 10000
+            }
+          },
+          "steep": {
+            "depositedM3": 716843.9264798763,
+            "suspendedM3": 8.03362311985255,
+            "depositedChangeM3": 43.92647987627424,
+            "transfers": {
+              "firstRow": 64,
+              "lastRowExclusive": 120,
+              "incomingM3": 105.02975625689993,
+              "outgoingM3": 53.06965326080341,
+              "acceptedSteps": 10000
+            }
+          }
+        },
+        "prediction": {
+          "status": "inconclusive",
+          "classification": null,
+          "answer": null,
+          "expertApproved": false
+        },
+        "calibration": {
+          "status": "failed",
+          "approval": {
+            "status": "pending",
+            "approver": null,
+            "approvedAt": null
+          },
+          "sectionBaselineStep": 2000,
+          "measuredSteps": 20000,
+          "sections": [
+            {
+              "row": 32,
+              "baselineMinimumM": 232.55273485942914,
+              "currentMinimumM": 232.5530473149554,
+              "incisionM": -0.000312455526255917,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 48,
+              "baselineMinimumM": 218.55477922178048,
+              "currentMinimumM": 218.5550707868167,
+              "incisionM": -0.0002915650362353972,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 64,
+              "baselineMinimumM": 204.55687004404177,
+              "currentMinimumM": 204.55712147486318,
+              "incisionM": -0.000251430821407439,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 80,
+              "baselineMinimumM": 190.55851782467454,
+              "currentMinimumM": 190.55866236879294,
+              "incisionM": -0.000144544118398926,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 96,
+              "baselineMinimumM": 176.56526190944308,
+              "currentMinimumM": 176.56540115256777,
+              "incisionM": -0.00013924312469271172,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            }
+          ],
+          "medianPositiveIncisionM": null,
+          "targetMPerYear": 0.00005,
+          "targetRangeMPerYear": [0.00001, 0.0001],
+          "targetSource": "docs/science/time-scale.md; provisional K01 catchment-denudation analogy, not local incision data",
+          "candidateMorphAccelerationFactor": null,
+          "candidateWithinStorageBounds": false,
+          "installedMorphAccelerationFactor": 1,
+          "displayLabel": "Landscape time not calibrated"
+        },
+        "runs": [
+          {
+            "arm": "rain-low",
+            "configHash": "ffcb9fb3a5ba5d620b6619fcf2fb3d631b669fad2db0a4f109e49d6fdd00f8f3",
+            "finalHash": "08446651e0db8246",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "rain-high",
+            "configHash": "2a72e5f269a7379dcc26c453bd71f0f691badbfca60a74d113c9f78f8c3e51bc",
+            "finalHash": "5ce1906588a9ca56",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "uniform",
+            "configHash": "8c785689a11c3b3768369a7716281640b32c3211946ca60e4045e5419b375b8e",
+            "finalHash": "1408d8a91372d156",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "hard-band",
+            "configHash": "8c785689a11c3b3768369a7716281640b32c3211946ca60e4045e5419b375b8e",
+            "finalHash": "c39ae06e2da8e695",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "slope-low",
+            "configHash": "91136aa7f7db0250263f7343402587a1a7bd6c46213723cdbf684fdfbf836acb",
+            "finalHash": "bb905d4dd784cb1a",
+            "completedSteps": 10000,
+            "healthy": true
+          },
+          {
+            "arm": "slope-high",
+            "configHash": "91136aa7f7db0250263f7343402587a1a7bd6c46213723cdbf684fdfbf836acb",
+            "finalHash": "0c8a4b9a1734f9a9",
+            "completedSteps": 10000,
+            "healthy": true
+          }
+        ]
+      },
+      {
+        "seed": 101,
+        "engineeringHealthy": true,
+        "ac3a": {
+          "passed": false,
+          "status": "failed",
+          "finalSamples": [
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.0006754497537997395,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.005479181943599087,
+              "widthMarginM": 22.627372266169402,
+              "resolvedSections": 5
+            },
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.00069907761411514,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.005561286632314477,
+              "widthMarginM": 22.62737573268887,
+              "resolvedSections": 5
+            },
+            {
+              "classification": null,
+              "incisionDifferenceM": -0.0007236078076289232,
+              "incisionMarginM": 0.1,
+              "widthDifferenceM": 0.0056434643242937454,
+              "widthMarginM": 22.627379207190156,
+              "resolvedSections": 5
+            }
+          ]
+        },
+        "ac3b": {
+          "passed": false,
+          "status": "failed",
+          "widthPassed": false,
+          "uniformWidthM": 452.5885483266873,
+          "bandWidthM": 452.58862580898756,
+          "approvedCalibration": false,
+          "bandPersistence": {
+            "passed": false,
+            "elapsedYears": 0,
+            "initialDistanceM": null
+          },
+          "uniformPersistence": {
+            "passed": false,
+            "elapsedYears": 0,
+            "initialDistanceM": null
+          },
+          "completeBaselinePaths": true,
+          "bandEligibleCandidates": 0
+        },
+        "ac3c": {
+          "passed": false,
+          "status": "failed",
+          "depositionDifferenceM3": 10.701170305488631,
+          "depositionMarginM3": 64.00000095367432,
+          "delivered": true,
+          "reachClosed": true,
+          "flat": {
+            "depositedM3": 716854.6346800379,
+            "suspendedM3": 2.618155918815816,
+            "depositedChangeM3": 54.63468003785238,
+            "transfers": {
+              "firstRow": 64,
+              "lastRowExclusive": 120,
+              "incomingM3": 61.2338236148366,
+              "outgoingM3": 3.9809876582753616,
+              "acceptedSteps": 10000
+            }
+          },
+          "steep": {
+            "depositedM3": 716843.9335097324,
+            "suspendedM3": 8.041136411627837,
+            "depositedChangeM3": 43.933509732363746,
+            "transfers": {
+              "firstRow": 64,
+              "lastRowExclusive": 120,
+              "incomingM3": 105.025736637195,
+              "outgoingM3": 53.05109049328984,
+              "acceptedSteps": 10000
+            }
+          }
+        },
+        "prediction": {
+          "status": "inconclusive",
+          "classification": null,
+          "answer": null,
+          "expertApproved": false
+        },
+        "calibration": {
+          "status": "failed",
+          "approval": {
+            "status": "pending",
+            "approver": null,
+            "approvedAt": null
+          },
+          "sectionBaselineStep": 2000,
+          "measuredSteps": 20000,
+          "sections": [
+            {
+              "row": 32,
+              "baselineMinimumM": 232.55213968627808,
+              "currentMinimumM": 232.55263968764874,
+              "incisionM": -0.0005000013706535356,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 48,
+              "baselineMinimumM": 218.5588383894336,
+              "currentMinimumM": 218.55926557389486,
+              "incisionM": -0.00042718446127310017,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 64,
+              "baselineMinimumM": 204.55810600002565,
+              "currentMinimumM": 204.55832820901765,
+              "incisionM": -0.0002222089919996506,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 80,
+              "baselineMinimumM": 190.56600974312113,
+              "currentMinimumM": 190.56609351927972,
+              "incisionM": -0.00008377615858989884,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            },
+            {
+              "row": 96,
+              "baselineMinimumM": 176.5561071002371,
+              "currentMinimumM": 176.55631166627256,
+              "incisionM": -0.00020456603544971586,
+              "valid": false,
+              "reasons": ["nonpositive-incision"]
+            }
+          ],
+          "medianPositiveIncisionM": null,
+          "targetMPerYear": 0.00005,
+          "targetRangeMPerYear": [0.00001, 0.0001],
+          "targetSource": "docs/science/time-scale.md; provisional K01 catchment-denudation analogy, not local incision data",
+          "candidateMorphAccelerationFactor": null,
+          "candidateWithinStorageBounds": false,
+          "installedMorphAccelerationFactor": 1,
+          "displayLabel": "Landscape time not calibrated"
+        },
+        "runs": [
+          {
+            "arm": "rain-low",
+            "configHash": "999ed9b891302548be6ea6f9d23de2545af1c6fe7aefc09ada7ff148cef9ac0b",
+            "finalHash": "7af4b240b213b713",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "rain-high",
+            "configHash": "42268d1cf197fed89ab4b26664c3213547dcac813d25456a3e16a4d40a38aa12",
+            "finalHash": "618f3581632cc5c2",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "uniform",
+            "configHash": "e1fa51dccd41ce2287a2dad190657e7980731b5f3b684d76c7c9aec13099cf8a",
+            "finalHash": "c2112589b9f808ea",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "hard-band",
+            "configHash": "e1fa51dccd41ce2287a2dad190657e7980731b5f3b684d76c7c9aec13099cf8a",
+            "finalHash": "0c8b04440f82addf",
+            "completedSteps": 22000,
+            "healthy": true
+          },
+          {
+            "arm": "slope-low",
+            "configHash": "a2dd9f8277d538722b5ac63494ef686c9bcc90f698d8b1535492b2b91713594b",
+            "finalHash": "e66f79744a9fdda3",
+            "completedSteps": 10000,
+            "healthy": true
+          },
+          {
+            "arm": "slope-high",
+            "configHash": "a2dd9f8277d538722b5ac63494ef686c9bcc90f698d8b1535492b2b91713594b",
+            "finalHash": "4e8851f6fede4cb5",
+            "completedSteps": 10000,
+            "healthy": true
+          }
+        ]
+      }
+    ],
+    "allEngineeringChecksPassed": true,
+    "allQualitativeClaimsPassed": false,
+    "prediction": {
+      "answer": null,
+      "status": "inconclusive",
+      "expertApproved": false
+    },
+    "landscapeTime": {
+      "status": "uncalibrated",
+      "displayLabel": "Landscape time not calibrated",
+      "approved": false
+    }
+  },
+  "mechanism": {
+    "baseline": [
+      {
+        "seed": 1,
+        "arm": "rain-low",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 0.9990781574440681,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 0.9990781574440681,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": -173.54045186273288
+      },
+      {
+        "seed": 1,
+        "arm": "rain-high",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 0.9971992409594507,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 0.9971992409594507,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": -379.47378871182445
+      },
+      {
+        "seed": 1,
+        "arm": "uniform",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 0.9983922858046625,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 0.9983922858046625,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": -259.98276270285714
+      },
+      {
+        "seed": 1,
+        "arm": "hard-band",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 0.9983922858046625,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 0.9983922858046625,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": -259.98276270285714
+      },
+      {
+        "seed": 1,
+        "arm": "slope-low",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 1,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 1,
+        "reachIncomingFractionOfInitial": 0.021918035735195185,
+        "netReachDepositM3": 21.60510469379369
+      },
+      {
+        "seed": 1,
+        "arm": "slope-high",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 1,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 1,
+        "reachIncomingFractionOfInitial": 0.04495752187915125,
+        "netReachDepositM3": 0
+      },
+      {
+        "seed": 17,
+        "arm": "rain-low",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 0.9990796035655122,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 0.9990796035655122,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": -173.52912632015068
+      },
+      {
+        "seed": 17,
+        "arm": "rain-high",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 0.9972038179551809,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 0.9972038179551809,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": -379.4170418821741
+      },
+      {
+        "seed": 17,
+        "arm": "uniform",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 0.9983948710172786,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 0.9983948710172786,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": -259.9557758838637
+      },
+      {
+        "seed": 17,
+        "arm": "hard-band",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 0.9983948710172786,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 0.9983948710172786,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": -259.9557758838637
+      },
+      {
+        "seed": 17,
+        "arm": "slope-low",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 1,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 1,
+        "reachIncomingFractionOfInitial": 0.021928571535669964,
+        "netReachDepositM3": 21.608556276303716
+      },
+      {
+        "seed": 17,
+        "arm": "slope-high",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 1,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 1,
+        "reachIncomingFractionOfInitial": 0.044957404225227524,
+        "netReachDepositM3": 0
+      },
+      {
+        "seed": 101,
+        "arm": "rain-low",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 0.9990803173169557,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 0.9990803173169557,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": -173.55658928328194
+      },
+      {
+        "seed": 101,
+        "arm": "rain-high",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 0.997205893292295,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 0.997205893292295,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": -379.5740550897317
+      },
+      {
+        "seed": 101,
+        "arm": "uniform",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 0.9983960843912915,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 0.9983960843912915,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": -260.0235477463575
+      },
+      {
+        "seed": 101,
+        "arm": "hard-band",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 0.9983960843912915,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 0.9983960843912915,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": -260.0235477463575
+      },
+      {
+        "seed": 101,
+        "arm": "slope-low",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 1,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 1,
+        "reachIncomingFractionOfInitial": 0.02188449099616448,
+        "netReachDepositM3": 21.575206315959804
+      },
+      {
+        "seed": 101,
+        "arm": "slope-high",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 1,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 1,
+        "reachIncomingFractionOfInitial": 0.0449619869938402,
+        "netReachDepositM3": 0
+      }
+    ],
+    "revised": [
+      {
+        "seed": 1,
+        "arm": "rain-low",
+        "bedrockErodedM3": 405.7026154787053,
+        "bandBedrockErodedM3": 12.424149419427977,
+        "bandMinimumCoverM": 0,
+        "wetExposedBandCells": 411,
+        "minimumBandCoverOverSamplesM": 0,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": 0.33605727063341967
+      },
+      {
+        "seed": 1,
+        "arm": "rain-high",
+        "bedrockErodedM3": 977.2821439159657,
+        "bandBedrockErodedM3": 29.495668708310063,
+        "bandMinimumCoverM": 0,
+        "wetExposedBandCells": 204,
+        "minimumBandCoverOverSamplesM": 0,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": 33.331683566209485
+      },
+      {
+        "seed": 1,
+        "arm": "uniform",
+        "bedrockErodedM3": 623.6246536963364,
+        "bandBedrockErodedM3": 18.975092651024283,
+        "bandMinimumCoverM": 0,
+        "wetExposedBandCells": 205,
+        "minimumBandCoverOverSamplesM": 0,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": 5.55067221243698
+      },
+      {
+        "seed": 1,
+        "arm": "hard-band",
+        "bedrockErodedM3": 623.5543461683818,
+        "bandBedrockErodedM3": 18.677517499313012,
+        "bandMinimumCoverM": 0,
+        "wetExposedBandCells": 208,
+        "minimumBandCoverOverSamplesM": 0,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": 5.5443447478305705
+      },
+      {
+        "seed": 1,
+        "arm": "slope-low",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 1,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 1,
+        "reachIncomingFractionOfInitial": 0.04782370808304661,
+        "netReachDepositM3": 54.60888184583746
+      },
+      {
+        "seed": 1,
+        "arm": "slope-high",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 1,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 1,
+        "reachIncomingFractionOfInitial": 0.08202497295064834,
+        "netReachDepositM3": 43.91793040197808
+      },
+      {
+        "seed": 17,
+        "arm": "rain-low",
+        "bedrockErodedM3": 405.49960511208667,
+        "bandBedrockErodedM3": 12.427430338743761,
+        "bandMinimumCoverM": 0,
+        "wetExposedBandCells": 421,
+        "minimumBandCoverOverSamplesM": 0,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": 0.33503165840454874
+      },
+      {
+        "seed": 17,
+        "arm": "rain-high",
+        "bedrockErodedM3": 977.1227457329445,
+        "bandBedrockErodedM3": 29.506635295877004,
+        "bandMinimumCoverM": 0,
+        "wetExposedBandCells": 204,
+        "minimumBandCoverOverSamplesM": 0,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": 33.36778497070053
+      },
+      {
+        "seed": 17,
+        "arm": "uniform",
+        "bedrockErodedM3": 623.4451166825238,
+        "bandBedrockErodedM3": 18.977699138719117,
+        "bandMinimumCoverM": 0,
+        "wetExposedBandCells": 204,
+        "minimumBandCoverOverSamplesM": 0,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": 5.563185257310556
+      },
+      {
+        "seed": 17,
+        "arm": "hard-band",
+        "bedrockErodedM3": 623.3749707008485,
+        "bandBedrockErodedM3": 18.68088156390968,
+        "bandMinimumCoverM": 0,
+        "wetExposedBandCells": 207,
+        "minimumBandCoverOverSamplesM": 0,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": 5.557086800437396
+      },
+      {
+        "seed": 17,
+        "arm": "slope-low",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 1,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 1,
+        "reachIncomingFractionOfInitial": 0.047839013973716364,
+        "netReachDepositM3": 54.6259900535224
+      },
+      {
+        "seed": 17,
+        "arm": "slope-high",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 1,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 1,
+        "reachIncomingFractionOfInitial": 0.0820544958529958,
+        "netReachDepositM3": 43.92647987627424
+      },
+      {
+        "seed": 101,
+        "arm": "rain-low",
+        "bedrockErodedM3": 405.60364832392395,
+        "bandBedrockErodedM3": 12.425463374174228,
+        "bandMinimumCoverM": 0,
+        "wetExposedBandCells": 410,
+        "minimumBandCoverOverSamplesM": 0,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": 0.3401453340415199
+      },
+      {
+        "seed": 101,
+        "arm": "rain-high",
+        "bedrockErodedM3": 977.1766407979868,
+        "bandBedrockErodedM3": 29.50184354508565,
+        "bandMinimumCoverM": 0,
+        "wetExposedBandCells": 207,
+        "minimumBandCoverOverSamplesM": 0,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": 33.307186665157154
+      },
+      {
+        "seed": 101,
+        "arm": "uniform",
+        "bedrockErodedM3": 623.5156616096106,
+        "bandBedrockErodedM3": 18.976069471290202,
+        "bandMinimumCoverM": 0,
+        "wetExposedBandCells": 204,
+        "minimumBandCoverOverSamplesM": 0,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": 5.5521583659835025
+      },
+      {
+        "seed": 101,
+        "arm": "hard-band",
+        "bedrockErodedM3": 623.445842036088,
+        "bandBedrockErodedM3": 18.678879783885804,
+        "bandMinimumCoverM": 0,
+        "wetExposedBandCells": 206,
+        "minimumBandCoverOverSamplesM": 0,
+        "reachIncomingFractionOfInitial": null,
+        "netReachDepositM3": 5.546375153901695
+      },
+      {
+        "seed": 101,
+        "arm": "slope-low",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 1,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 1,
+        "reachIncomingFractionOfInitial": 0.04783892398623558,
+        "netReachDepositM3": 54.63468003785238
+      },
+      {
+        "seed": 101,
+        "arm": "slope-high",
+        "bedrockErodedM3": 0,
+        "bandBedrockErodedM3": 0,
+        "bandMinimumCoverM": 1,
+        "wetExposedBandCells": 0,
+        "minimumBandCoverOverSamplesM": 1,
+        "reachIncomingFractionOfInitial": 0.08205135552514811,
+        "netReachDepositM3": 43.933509732363746
+      }
+    ]
+  }
+}
