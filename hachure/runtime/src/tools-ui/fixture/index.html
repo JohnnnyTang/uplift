@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Brush interaction fixture</title>
+    <style>
+      body {
+        max-width: 48rem;
+        margin: 2rem auto;
+        padding: 1rem;
+        background: #faf8f2;
+        color: #292b2c;
+        font:
+          1rem/1.5 Georgia,
+          serif;
+      }
+      fieldset {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      input,
+      select,
+      button {
+        font: inherit;
+        padding: 0.5rem;
+        color: inherit;
+      }
+      :focus-visible {
+        outline: 3px solid #0072b2;
+        outline-offset: 3px;
+      }
+      #terrain {
+        position: relative;
+        height: 25rem;
+      }
+      #terrain > svg {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Brush interaction fixture</h1>
+    <p>Synthetic surface for interface testing; this is not a scientific simulation.</p>
+    <div id="terrain"></div>
+    <script type="module">
+      import { createToolPalette } from "../index.ts";
+      import { applyBrush, createTerrainState, resolveTerrainConfig } from "../../../../terrain/src/index.ts";
+      import {
+        createBrushCursorOverlay,
+        createProjection,
+        heightfieldFromSnapshot,
+        terrainFrameFromHeightfield,
+        extractContours,
+        toSvg,
+      } from "../../../../ink/src/index.ts";
+      const config = resolveTerrainConfig({ gridSize: 8, metresPerCell: 10, brushMaxSlopeDeg: 1 });
+      const terrain = createTerrainState(config.gridSize, config.metresPerCell, { x: 4, y: 7 });
+      const container = document.querySelector("#terrain");
+      let field = heightfieldFromSnapshot(terrain);
+      const frame = { ...terrainFrameFromHeightfield(field), reliefM: 5 };
+      const p = createProjection(frame, {}, { widthPx: 720, heightPx: 400 });
+      const overlay = createBrushCursorOverlay();
+      let cursorState;
+      function draw() {
+        field = heightfieldFromSnapshot(terrain);
+        container.innerHTML = toSvg(extractContours(field, 0.05), { projection: p });
+        container.append(overlay.root);
+        if (cursorState) overlay.update(field, p, 0, cursorState.at, cursorState.radiusM);
+      }
+      const calls = [];
+      let failNext = false;
+      const palette = createToolPalette({
+        id: "fixture",
+        config,
+        applyTool: async (op) => {
+          calls.push(op);
+          await new Promise((resolve) => setTimeout(resolve, 20));
+          if (failNext) {
+            failNext = false;
+            throw new Error("test failure");
+          }
+          const result = applyBrush(terrain, op, config);
+          draw();
+          return result;
+        },
+        onCursorChange: (state) => {
+          cursorState = state;
+          overlay.update(field, p, 0, state.at, state.radiusM);
+        },
+      });
+      document.body.append(palette.root);
+      draw();
+      window.fixture = {
+        palette,
+        calls,
+        terrain,
+        fail: () => {
+          failNext = true;
+        },
+      };
+    </script>
+  </body>
+</html>

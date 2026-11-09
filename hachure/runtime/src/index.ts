@@ -16,3 +16,5 @@ export * from "./bindings/index";
 
 // Accessible DOM widgets (session 2E).
 export * from "./widgets/index";
+
+export * from "./tools-ui/index";

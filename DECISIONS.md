@@ -630,3 +630,22 @@ are stored every 200 steps, while full sampled profiles/sections are retained on
 initial/spin-up/final steps; complete terrain snapshots are not archived. This declared
 retention deviation keeps the failed draft packet reviewable; deterministic replay is
 available from the recorded inputs. The scientific acceptance command exits nonzero.
+
+## D-S1-W3-3E · Shared-surface picking and keyboard brushes
+
+- **Decision:** keep picking in the dependency-free ink entry point. Rays invert the shared orthographic
+  projection; nearest triangle intersections use the same saddle rule as mesh, contours and surface
+  sampling. The cursor is a projected ink SVG ring from the displayed heightfield and lift, with no
+  simulation mutation or animation loop. The host must refresh it after displayed-state, camera and size
+  changes; a newer Worker snapshot must not be used ahead of the visible view.
+- **Interface:** `createToolPalette` consumes public brush operations/results and current configuration.
+  Config-derived radius and tool-specific amount limits apply to mouse, keyboard and programmatic input.
+  A dedicated terrain-cursor button owns arrow movement and Enter/Space application; native form
+  controls retain their standard key behaviour. Async edits retain focus and suppress overlapping calls.
+  Visible live text reports actual positions, tool volumes and both input/solver clamps.
+- **Evidence:** exact-cell/lift and saddle tests; Chromium keyboard smoke with real `applyBrush` for all
+  tools, clamping, async error recovery and disabled gating. See `hachure/runtime/src/tools-ui/README.md`
+  and its fixture evidence. This tests interaction, not geomorphological validity.
+- **Handover:** 3A mounts the palette and cursor against the host and currently displayed view. Human
+  screen-reader listening stays with 4D. No solver, science model, configuration default or dependency
+  changed. Only public barrel exports are outside the two owned directories.
