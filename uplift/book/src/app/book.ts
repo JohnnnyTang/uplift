@@ -18,6 +18,7 @@ import {
 import type { InkView } from "@hachure/ink/view";
 import {
   BindingEngine,
+  createDebugOverlay,
   BOOK_PALETTE,
   SimHost,
   WorkerTransport,
@@ -145,7 +146,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   function updateComparisonFeedback() {
     const choice = predict.committed;
     const text =
-      comparisonAtEnd && choice !== undefined
+      comparisonAtEnd && choice !== undefined && spread.page.predict.answer !== null
         ? `You predicted: ${spread.page.predict.options[choice]![level]}. ${choice === spread.page.predict.answer ? "Your prediction matches this comparison." : "This comparison supports heavier rain."} Heavier rain lifted more material over the same model time. This does not establish a deeper valley.`
         : "";
     if (feedback.textContent !== text) feedback.textContent = text;
@@ -295,6 +296,17 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   );
   book.append(left, right);
   root.replaceChildren(skip, header, notice, book);
+
+  const debug = new URLSearchParams(location.search).has("debug")
+    ? createDebugOverlay(root, () => ({
+        gridSize: host.sample?.snapshot.gridSize,
+        seed: host.sample?.config.seed,
+        backend: "cpu-worker",
+        renderer: view?.backend ?? "flat",
+        batchSteps: host.timings.lastBatchSteps,
+        batchMs: host.timings.lastBatchMs,
+      }))
+    : undefined;
 
   function refreshCursor(cursor: BrushCursorState = palette.state()) {
     const projection = view?.projection();
@@ -511,6 +523,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   const viewPromise = prepareView();
   predict.root.disabled = false;
   function tick(now: number) {
+    debug?.frame(now);
     host.advance(Math.max(0, (now - lastTime) / 1000));
     lastTime = now;
     if (!disposed) frame = requestAnimationFrame(tick);
@@ -530,6 +543,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
       brushOverlay.dispose();
       host.dispose();
       comparison.dispose();
+      debug?.dispose();
       view?.dispose();
     },
   };
