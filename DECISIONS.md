@@ -1053,3 +1053,30 @@ are retained during rebase. The additional e2e/university.spec.ts is lead-owned
 integration coverage for state-preserving restore, full reset and flat gating.
 Desktop/mobile installed-Chrome smoke passes after integration; human and expert
 acceptance remain open.
+
+## D-W4-4D · Coalesce spoken measurements and preserve keyboard context
+
+2026-11-09 · Accessibility session. Keep every visible bound snapshot, but announce
+running measurements at a five-second cadence and paused changes promptly. Move
+focus from the committed prediction to the unlocked comparison and back to the
+prediction on reset. A motion preference change during lift cancels the animated
+rise and finishes through a crossfade without autoplay. Correct the brush cursor's
+aria-disabled state to include its disabled parent fieldset.
+
+Actual Chrome keyboard and axe checks pass in the high-school and university
+states. Colour-vision emulation preserves labels and shape encodings. Evidence
+and reproduction live in hachure/runtime/src/a11y/README.md. Human screen-reader
+listening remains NOT PERFORMED; this session cannot close that carried gate.
+Minimal book/widget/export/dependency edits apply the primitive to the real lesson.
+
+## 2026-11-09 — Integrated 4D preview before human listening
+
+Rebase preserves GPU/fallback gating, university controls and both challenge-run
+and lift generations. Take main's lockfile and rerun pnpm install; no hand merge.
+The integrated challenge widget now avoids rewriting an unchanged live-region
+status on every sample. This minimal cross-widget fix prevents redundant speech
+mutations; the accessibility browser audit observes that status during play,
+brushing and level changes. Keyboard, reduced motion and both axe scans pass.
+Human listening remains NOT PERFORMED. The owner requested a preview before merge;
+PR #23 remains draft and 4F waits in order. The checklist and local preview are in
+docs/review/wave-4-human-review.md. This does not close challenge or release gates.

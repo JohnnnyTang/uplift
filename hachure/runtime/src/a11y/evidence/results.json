@@ -1,0 +1,368 @@
+{
+  "browser": "156.0.8078.80",
+  "checks": [
+    "Keyboard: skip, predict, comparison, explanation, rain, playback, brush clamp/apply, level preservation, reset focus; reduced motion starts both scenes paused",
+    "Enabling reduced motion while renderer loads completes without autoplay, duplicate lifecycle transitions or stranded controls"
+  ],
+  "axe": [
+    {
+      "stage": "flat high school",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "stage": "explained university",
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "focusOrder": [
+    {
+      "tag": "A",
+      "id": "",
+      "label": "Skip to the spread"
+    },
+    {
+      "tag": "INPUT",
+      "id": "",
+      "label": ""
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Commit prediction"
+    },
+    {
+      "tag": "SELECT",
+      "id": "rain-comparison-seed",
+      "label": "Seed 1Seed 17Seed 101"
+    },
+    {
+      "tag": "INPUT",
+      "id": "rain-comparison-timeline",
+      "label": ""
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Replay comparison"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Show result"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Play"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Pause"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Reset"
+    },
+    {
+      "tag": "INPUT",
+      "id": "rain",
+      "label": ""
+    },
+    {
+      "tag": "INPUT",
+      "id": "speed",
+      "label": ""
+    },
+    {
+      "tag": "SELECT",
+      "id": "valley-tools-tool",
+      "label": "RaiseDigSmoothHarden"
+    },
+    {
+      "tag": "INPUT",
+      "id": "valley-tools-radius",
+      "label": ""
+    },
+    {
+      "tag": "INPUT",
+      "id": "valley-tools-amount",
+      "label": ""
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Terrain brush cursor. Cursor east 645 m, south 645 m. Raise."
+    },
+    {
+      "tag": "SUMMARY",
+      "id": "",
+      "label": "What this model ignores"
+    },
+    {
+      "tag": "BODY",
+      "id": "",
+      "label": "Skip to the spreadUpliftReading levelHigh schoolUniversityResearch draft · Compa"
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "label": "Skip to the spread"
+    },
+    {
+      "tag": "SELECT",
+      "id": "reading-level",
+      "label": "High schoolUniversity"
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "label": "Read the validation results"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Reveal explanation"
+    },
+    {
+      "tag": "SUMMARY",
+      "id": "",
+      "label": "Teacher note and sources"
+    },
+    {
+      "tag": "SELECT",
+      "id": "rain-comparison-seed",
+      "label": "Seed 1Seed 17Seed 101"
+    },
+    {
+      "tag": "INPUT",
+      "id": "rain-comparison-timeline",
+      "label": ""
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Replay comparison"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Show result"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Play"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Pause"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Reset"
+    },
+    {
+      "tag": "INPUT",
+      "id": "rain",
+      "label": ""
+    },
+    {
+      "tag": "INPUT",
+      "id": "speed",
+      "label": ""
+    },
+    {
+      "tag": "SELECT",
+      "id": "valley-tools-tool",
+      "label": "RaiseDigSmoothHarden"
+    },
+    {
+      "tag": "INPUT",
+      "id": "valley-tools-radius",
+      "label": ""
+    },
+    {
+      "tag": "INPUT",
+      "id": "valley-tools-amount",
+      "label": ""
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Terrain brush cursor. Cursor east 645 m, south 645 m. Raise."
+    },
+    {
+      "tag": "SUMMARY",
+      "id": "",
+      "label": "What this model ignores"
+    },
+    {
+      "tag": "BODY",
+      "id": "",
+      "label": "Skip to the spreadUpliftReading levelHigh schoolUniversityResearch draft · Compa"
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "label": "Skip to the spread"
+    },
+    {
+      "tag": "SELECT",
+      "id": "reading-level",
+      "label": "High schoolUniversity"
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "label": "Read the validation results"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Close explanation"
+    },
+    {
+      "tag": "SUMMARY",
+      "id": "",
+      "label": "Teacher note and sources"
+    },
+    {
+      "tag": "SELECT",
+      "id": "rain-comparison-seed",
+      "label": "Seed 1Seed 17Seed 101"
+    },
+    {
+      "tag": "INPUT",
+      "id": "rain-comparison-timeline",
+      "label": ""
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Replay comparison"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Show result"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Play"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Pause"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Reset"
+    },
+    {
+      "tag": "INPUT",
+      "id": "rain",
+      "label": ""
+    },
+    {
+      "tag": "INPUT",
+      "id": "speed",
+      "label": ""
+    },
+    {
+      "tag": "SELECT",
+      "id": "valley-tools-tool",
+      "label": "RaiseDigSmoothHarden"
+    },
+    {
+      "tag": "INPUT",
+      "id": "valley-tools-radius",
+      "label": ""
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Terrain brush cursor. Cursor east 645 m, south 645 m. Raise."
+    },
+    {
+      "tag": "SUMMARY",
+      "id": "",
+      "label": "What this model ignores"
+    },
+    {
+      "tag": "BODY",
+      "id": "",
+      "label": "Skip to the spreadUpliftReading levelHigh schoolUniversityResearch draft · Compa"
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "label": "Skip to the spread"
+    },
+    {
+      "tag": "SELECT",
+      "id": "reading-level",
+      "label": "High schoolUniversity"
+    },
+    {
+      "tag": "A",
+      "id": "",
+      "label": "Read the validation results"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Close explanation"
+    },
+    {
+      "tag": "SUMMARY",
+      "id": "",
+      "label": "Teacher note and sources"
+    },
+    {
+      "tag": "SELECT",
+      "id": "rain-comparison-seed",
+      "label": "Seed 1Seed 17Seed 101"
+    },
+    {
+      "tag": "INPUT",
+      "id": "rain-comparison-timeline",
+      "label": ""
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Replay comparison"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Show result"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Play"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Pause"
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "label": "Reset"
+    }
+  ],
+  "errors": [],
+  "humanListening": "not performed"
+}

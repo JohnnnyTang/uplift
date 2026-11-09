@@ -45,6 +45,7 @@ import {
   committedExplanation,
   createUniversityLayer,
   universityDefaults,
+  createVisualDescription,
   el,
   formatBoundNumber,
   type HostSample,
@@ -87,7 +88,8 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     frame = 0,
     lastTime = performance.now(),
     drawAt = -Infinity,
-    runGeneration = 0;
+    runGeneration = 0,
+    liftGeneration = 0;
   let view: InkView | undefined, viewFrame: TerrainFrame | undefined, lift: LiftRun | undefined;
   let renderTimer: ReturnType<typeof setTimeout> | undefined;
   let viewError = "";
@@ -136,6 +138,8 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   const predict = createPredict("prediction", spread.page.predict, level, (choice) => {
     lifecycle.commitPrediction(choice);
     comparison.unlock();
+    comparison.root.tabIndex = -1;
+    comparison.root.focus();
     void liftAndRun();
   });
   predict.root.disabled = true;
@@ -202,9 +206,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     "supporting-text",
   );
   figure.append(stage, caption, scale.root, relief, legend);
-  const visualText = el("p", "Model initializing…", "snapshot-description");
-  visualText.setAttribute("aria-live", "polite");
-  visualText.setAttribute("aria-atomic", "true");
+  const visualText = createVisualDescription("Model initializing…");
   const errorText = el("p", undefined, "widget-status");
   errorText.setAttribute("role", "alert");
   const controls = el("section", undefined, "test-controls");
@@ -314,7 +316,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     ),
     time.root,
     figure,
-    visualText,
+    visualText.root,
     errorText,
     controls,
     university.root,
@@ -402,7 +404,10 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     playback.update(host.playing, !liveEnabled);
     palette.setEnabled(liveEnabled);
     if (sample) {
-      visualText.textContent = `Fixed-section incision since reset: ${bindings.render("{{probe.incisionDepth}}")}. Sediment exported: ${bindings.render("{{probe.sedimentOut}}")}. ${sample.paths.current.complete ? "The current channel reaches the outlet." : "The current channel is incomplete; full-reach claims are unavailable."}`;
+      visualText.update(
+        `Fixed-section incision since reset: ${bindings.render("{{probe.incisionDepth}}")}. Sediment exported: ${bindings.render("{{probe.sedimentOut}}")}. ${sample.paths.current.complete ? "The current channel reaches the outlet." : "The current channel is incomplete; full-reach claims are unavailable."}`,
+        !host.playing,
+      );
       const barM = (sample.snapshot.gridSize * sample.snapshot.metresPerCell) / 4;
       const projection =
         view?.projection() ??
@@ -495,8 +500,9 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     }
   }
   async function liftAndRun() {
+    const generation = ++liftGeneration;
     await viewPromise;
-    if (disposed || lifecycle.state !== "lifting") return;
+    if (disposed || generation !== liftGeneration || lifecycle.state !== "lifting") return;
     if (view) {
       lift = runLift(
         {
@@ -509,7 +515,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
         },
         reducedMotion.matches ? { crossfadeMs: 200, liftMs: 0 } : {},
       );
-      if (!(await lift.done)) return;
+      if (!(await lift.done) || generation !== liftGeneration) return;
     }
     lifecycle.completeLift();
     rain.input.disabled = selectedBackend === "flat";
@@ -524,6 +530,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     updateText();
   }
   async function reset() {
+    liftGeneration++;
     lift?.cancel();
     host.pause();
     runGeneration++;
@@ -550,6 +557,8 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     if (host.sample) renderFlat(host.sample);
     errorText.textContent = "";
     updateText();
+    predict.root.tabIndex = -1;
+    predict.root.focus();
   }
   levels.addEventListener("change", () => {
     level = levels.value as Level;
@@ -562,6 +571,10 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   const motionChanged = () => {
     if (reducedMotion.matches) {
       host.pause();
+      if (lifecycle.state === "lifting") {
+        lift?.cancel();
+        void liftAndRun();
+      }
       updateText();
     }
   };
