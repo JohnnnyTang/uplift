@@ -10,3 +10,11 @@
     padding-top: 1rem;
   }
 }
+/* At phone/reflow widths the complete scene includes controls, caption and legend.
+   Let these contribute to page height instead of overflowing a square container. */
+@media (max-width: 60rem) {
+  #app[data-view="reader"] .reader-scene {
+    aspect-ratio: auto;
+    flex: none;
+  }
+}

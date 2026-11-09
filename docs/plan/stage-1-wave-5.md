@@ -2,14 +2,14 @@
 
 Planned 2026-11-09 at the owner's request, after product-direction commit
 `46fefe6` was merged into local and remote `main`.
-**Status: 5A merged; 5B/5C/5D implemented and verified locally, awaiting PR integration.**
+**Status: 5A on main; 5B–5F integrated on the local review stack. Product/human release gates remain pending.**
 This wave replaces the coarse P1/P2 sequence. Original hardening sessions 5A–5D
 are now **6A–6D**, not completed or cancelled.
 
 Read [the product story](../product-story.md), [handoff principles](../handoff.md#pedagogical-design-principles),
 [science policy](../science/education-policy.md) and
 [PB1–PB8](product-realignment.md#product-acceptance-gate).
-The owner subsequently authorized parallel 5B/5C/5D execution. See [the local handover](../review/book-revision/parallel-handover.md). 5E/5F remain pending.
+The owner subsequently authorized parallel 5B/5C/5D execution. See [the local handover](../review/book-revision/parallel-handover.md). 5E is integrated as `d01f631`; 5F evidence is in the [acceptance packet](../review/book-revision/acceptance/README.md).
 
 ## Outcome
 
@@ -392,3 +392,19 @@ It does not edit implementation, archived evidence or scientific experiment outc
 The direction commit is on main. This document plans the full revision wave; it does
 not execute 5A–5F. The former P1/P2 outline is superseded and hardening is renumbered,
 with its unfinished scope revised rather than discarded. Next launch is **5A alone**.
+
+## 5F local-review reconciliation · 2026-11-09
+
+The owner authorized 5E then 5F on `s1/w5/5bcd-lead`, bypassing the main-only
+start rule for this local review stack. Main remains at 5A; no remote PR/main
+integration is implied. The actual sequence is contours → prepared water, not
+the unused slope alternative. [Acceptance ledger](stage-1-acceptance.md) separates
+code/visual evidence from owner, human, expert and hardware gates.
+
+5F found that a square scene container let phone/reflow captions overlap scope and
+navigation. A bounded app layout fix restores content height, with integrated
+viewport regression coverage. No solver changes or new primitives were needed.
+Wave 6 must review these actual scenes and retained research route. 6B owns true
+browser zoom and human listening, 6C owner/reader/expert review, 6A visible hardware
+measurement, and 6D selects later lessons from observations. Earlier planning and
+session handovers above remain historical, not current launch instructions.

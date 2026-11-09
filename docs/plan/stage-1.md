@@ -13,7 +13,7 @@ drawings lift into directly manipulable 3D, questions and answer flaps are optio
 and page turning connects small discoveries. The direction commit is merged to main.
 Read [Wave 5](stage-1-wave-5.md) for the complete revision-wave briefs and owned paths;
 [PB1–PB8](product-realignment.md#product-acceptance-gate) defines product acceptance.
-The old P1/P2 outline is superseded; implementation is planned, not yet started.
+The old P1/P2 outline is superseded. 5B–5F are integrated on the local review stack; main remains at 5A. See the [acceptance ledger](stage-1-acceptance.md) for evidence and pending release gates.
 
 The Wave 1–4 briefs below retain the record of how the foundations were built. Their
 mandatory prediction/endpoint gates, mandatory challenge/stamp flow and page-turn
@@ -700,7 +700,7 @@ science remains pending and cannot produce a successful challenge event.
 
 ## Wave 5 · Book revision and new playable example
 
-**Status:** planned, not implemented. **Entry:** the product-direction commit is on main;
+**Status:** implemented and verified on the local review stack; main integration and human/product review remain open. **Entry:** the product-direction commit is on main;
 W4 engine integrations are retained and their human/scientific limitations remain recorded.
 **Briefs:** [the complete six-session wave](stage-1-wave-5.md).
 
@@ -726,7 +726,7 @@ These are the unfinished former 5A–5D, renumbered **6A–6D**. Historical refe
 to "5A performance" or "5C review" in W1–W4 handovers mean these sessions; historical
 documents and scientific records are not rewritten.
 
-**Entry:** W5 integrated, actual book sequence reviewed, unresolved product defects
+**Entry:** use the [5F evidence and carry-over owners](../review/book-revision/acceptance/README.md); W5 locally integrated does not imply main or human acceptance. Actual book sequence reviewed, unresolved product defects
 assigned and resolved before claiming readiness. Human/hardware evidence can remain
 pending for completion here, with no inferred pass.
 **Merge order:** 6A → 6B → 6C → 6D.
@@ -828,6 +828,8 @@ for traceability rather than reopened as the current priority:
 | WebGPU is testable in CI                                                                                           | Run GPU tests locally and record the run at each wave close                | 3C          |
 
 ## Changelog
+
+- 2026-11-09: 5F verifies the local review stack, fixes phone caption overlap, links the acceptance ledger and assigns pending true zoom/listening, owner/expert review and visible hardware checks to 6A–6D. Main remains at 5A; no release pass inferred.
 
 - 2026-11-09: After the direction merge, replace P1/P2 with complete Wave 5 sessions
   5A–5F for contracts, runtime, shell, example, migration and acceptance. Renumber

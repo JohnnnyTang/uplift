@@ -1333,3 +1333,17 @@ feedback without locking live play, replay or general explanation. Keep schema v
 instrumentation exclusively in research and retain a settled model on route return.
 See `docs/review/book-revision/migration.md` for bounded compatibility changes,
 verification and the unchanged human/scientific review limits.
+
+## 2026-11-09 · 5F local review and responsive content height
+
+The owner requests 5F and merge into the review branch. Continue from `d01f631`
+on `s1/w5/5bcd-lead`, using an isolated `s1/w5/5f-acceptance` worktree. This extends
+5E's explicitly authorized local-review exception; main remains at 5A and pending
+human/expert/hardware gates cannot be closed by merging.
+
+Actual 320 CSS px captures show scene captions/legends overlapping scope/footer:
+the shell's square mobile scene box ignores the real adapter's content height.
+Bounded exception to 5F path ownership: change only app `reader-layout.css` to let
+mobile scene content determine height. Keep renderer/model/physics untouched, and
+add actual-page non-overlap regression checks. Human listening/true browser zoom
+remain 6B work; visual correctness alone does not prove comprehension.
