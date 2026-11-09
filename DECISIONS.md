@@ -734,3 +734,18 @@ experiment design before changing model parameters, horizons or the question.
 Record any preregistered revision before rerunning all arms and seeds. Expert
 approval remains separate from successful numerical tests. Never adjust thresholds
 or select seeds after seeing results merely to make the gate green.
+
+### D-W3-R1 · 2026-11-09 · Preregister mechanism-isolation follow-up
+
+<!-- expert-review -->
+
+Review finds two experimental confounds: loose cover may shield the hardness
+intervention, and upstream deposition leaves too little supply to satisfy AC3c's
+absolute margin. Preregister exposed-rock landscape arms and a pulse immediately
+upstream of the slope transition; preserve all solver equations, thresholds,
+horizons and seeds. Replay all eighteen originals plus all eighteen revised arms.
+See [the frozen registration](docs/science/validation/followup/preregistration.md)
+for hypotheses, controls, stopping rules, evidence retention and interpretation.
+This diagnostic revision is not an approved replacement for the original gate;
+public science status and release claims remain unchanged pending results/review.
+Owned paths are 3B validation code/evidence plus this required append-only log.
