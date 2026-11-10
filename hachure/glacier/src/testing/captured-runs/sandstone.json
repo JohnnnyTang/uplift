@@ -1,0 +1,343 @@
+{
+  "format": "hachure-glacier-capture",
+  "version": 1,
+  "rockId": "sandstone",
+  "config": {
+    "nx": 128,
+    "ny": 96,
+    "metresPerCell": 40,
+    "seed": 1,
+    "dtYears": 0.0025,
+    "rockId": "sandstone",
+    "iceEnabled": true,
+    "erosionEnabled": true,
+    "lateralDragEnabled": true,
+    "glenRateFactorPerPa3PerYear": 7.573824e-17,
+    "iceDensityKgPerM3": 917,
+    "gravityMPerS2": 9.81,
+    "slidingMPerYearAtReferenceStress": 40,
+    "referenceBasalStressPa": 100000,
+    "slidingStressExponent": 2,
+    "maxSlidingStressPa": 200000,
+    "slidingOnsetIceThicknessM": 40,
+    "fullSlidingIceThicknessM": 120,
+    "snowlineAltitudeM": 1830,
+    "massBalanceGradientPerYear": 0.01,
+    "maxAccumulationMPerYear": 3,
+    "massBalanceAltitude": "starting-bed",
+    "erosionMPerYearAtReferenceSliding": 0.01,
+    "referenceSlidingMPerYear": 100,
+    "erosionSlidingExponent": 2,
+    "erosionSpeedup": 120,
+    "wallFailureRatePerYear": 5,
+    "minIceThicknessM": 1,
+    "shapeFactorIntervalSteps": 40,
+    "lateralDragSearchCells": 14
+  },
+  "start": {
+    "preset": "v-valley/1",
+    "options": {
+      "floorAtMouthM": 1300,
+      "floorRiseM": 150,
+      "longProfileExponent": 1,
+      "headwallRiseM": 400,
+      "headwallFraction": 0.32,
+      "wallSlopeDeg": 26,
+      "ridgeAtMouthM": 1550,
+      "ridgeRiseM": 1000,
+      "ridgeProfileExponent": 2.5,
+      "ridgeRoundingM": 80,
+      "outerFlankSlopeDeg": 8,
+      "roughnessM": 2
+    }
+  },
+  "grid": {
+    "nx": 128,
+    "ny": 96,
+    "metresPerCell": 40
+  },
+  "layers": [
+    {
+      "layer": "bedM",
+      "offset": 1210,
+      "scale": 0.05
+    },
+    {
+      "layer": "iceThicknessM",
+      "offset": 0,
+      "scale": 0.01
+    },
+    {
+      "layer": "surfaceVelocityXMPerYear",
+      "offset": -1638.4,
+      "scale": 0.05
+    },
+    {
+      "layer": "surfaceVelocityYMPerYear",
+      "offset": -1638.4,
+      "scale": 0.05
+    }
+  ],
+  "snapshotIntervalYears": 20,
+  "bytesPerSnapshot": 98304,
+  "binFile": "sandstone.bin",
+  "finalStateHash": "d9243707e0e6d551",
+  "snapshots": [
+    {
+      "index": 0,
+      "step": 0,
+      "modelYears": 0,
+      "byteOffset": 0,
+      "probes": {
+        "step": 0,
+        "modelYears": 0,
+        "iceVolumeM3": 0,
+        "iceAreaM2": 0,
+        "erodedVolumeM3": 0,
+        "maxSlidingSpeedMPerYear": 0,
+        "maxSurfaceSpeedMPerYear": 0,
+        "snoutXM": null
+      }
+    },
+    {
+      "index": 1,
+      "step": 8000,
+      "modelYears": 20,
+      "byteOffset": 98304,
+      "probes": {
+        "step": 8000,
+        "modelYears": 20,
+        "iceVolumeM3": 170195192.05936837,
+        "iceAreaM2": 4555200,
+        "erodedVolumeM3": 209839.87053602978,
+        "maxSlidingSpeedMPerYear": 34.301210586643506,
+        "maxSurfaceSpeedMPerYear": 211.81298947789,
+        "snoutXM": 3160
+      }
+    },
+    {
+      "index": 2,
+      "step": 16000,
+      "modelYears": 40,
+      "byteOffset": 196608,
+      "probes": {
+        "step": 16000,
+        "modelYears": 40,
+        "iceVolumeM3": 279227508.7405776,
+        "iceAreaM2": 5964800,
+        "erodedVolumeM3": 3437168.791557048,
+        "maxSlidingSpeedMPerYear": 103.20353078567,
+        "maxSurfaceSpeedMPerYear": 233.42949902482906,
+        "snoutXM": 3160
+      }
+    },
+    {
+      "index": 3,
+      "step": 24000,
+      "modelYears": 60,
+      "byteOffset": 294912,
+      "probes": {
+        "step": 24000,
+        "modelYears": 60,
+        "iceVolumeM3": 335151073.5885998,
+        "iceAreaM2": 6636800,
+        "erodedVolumeM3": 9375899.15096949,
+        "maxSlidingSpeedMPerYear": 94.6900245538818,
+        "maxSurfaceSpeedMPerYear": 241.3624854538915,
+        "snoutXM": 2600
+      }
+    },
+    {
+      "index": 4,
+      "step": 32000,
+      "modelYears": 80,
+      "byteOffset": 393216,
+      "probes": {
+        "step": 32000,
+        "modelYears": 80,
+        "iceVolumeM3": 364914503.7613134,
+        "iceAreaM2": 6968000,
+        "erodedVolumeM3": 15956656.162552599,
+        "maxSlidingSpeedMPerYear": 92.38353783171833,
+        "maxSurfaceSpeedMPerYear": 252.91214093474701,
+        "snoutXM": 2240
+      }
+    },
+    {
+      "index": 5,
+      "step": 40000,
+      "modelYears": 100,
+      "byteOffset": 491520,
+      "probes": {
+        "step": 40000,
+        "modelYears": 100,
+        "iceVolumeM3": 380960046.3082282,
+        "iceAreaM2": 7158400,
+        "erodedVolumeM3": 22898439.668575015,
+        "maxSlidingSpeedMPerYear": 92.03450396615582,
+        "maxSurfaceSpeedMPerYear": 270.30616314898526,
+        "snoutXM": 2040
+      }
+    },
+    {
+      "index": 6,
+      "step": 48000,
+      "modelYears": 120,
+      "byteOffset": 589824,
+      "probes": {
+        "step": 48000,
+        "modelYears": 120,
+        "iceVolumeM3": 389781919.490954,
+        "iceAreaM2": 7262400,
+        "erodedVolumeM3": 30336971.577837575,
+        "maxSlidingSpeedMPerYear": 107.42253398560885,
+        "maxSurfaceSpeedMPerYear": 297.1121170398325,
+        "snoutXM": 1920
+      }
+    },
+    {
+      "index": 7,
+      "step": 56000,
+      "modelYears": 140,
+      "byteOffset": 688128,
+      "probes": {
+        "step": 56000,
+        "modelYears": 140,
+        "iceVolumeM3": 394721313.1176031,
+        "iceAreaM2": 7326400,
+        "erodedVolumeM3": 38339133.48468698,
+        "maxSlidingSpeedMPerYear": 78.39616149521868,
+        "maxSurfaceSpeedMPerYear": 340.8176353292143,
+        "snoutXM": 1840
+      }
+    },
+    {
+      "index": 8,
+      "step": 64000,
+      "modelYears": 160,
+      "byteOffset": 786432,
+      "probes": {
+        "step": 64000,
+        "modelYears": 160,
+        "iceVolumeM3": 397739446.0805942,
+        "iceAreaM2": 7352000,
+        "erodedVolumeM3": 46434290.20952416,
+        "maxSlidingSpeedMPerYear": 110.13139485256647,
+        "maxSurfaceSpeedMPerYear": 378.66151496110587,
+        "snoutXM": 1800
+      }
+    },
+    {
+      "index": 9,
+      "step": 72000,
+      "modelYears": 180,
+      "byteOffset": 884736,
+      "probes": {
+        "step": 72000,
+        "modelYears": 180,
+        "iceVolumeM3": 399737998.59205264,
+        "iceAreaM2": 7356800,
+        "erodedVolumeM3": 55092920.21003533,
+        "maxSlidingSpeedMPerYear": 146.0662411921669,
+        "maxSurfaceSpeedMPerYear": 636.4859300769425,
+        "snoutXM": 1800
+      }
+    },
+    {
+      "index": 10,
+      "step": 80000,
+      "modelYears": 200,
+      "byteOffset": 983040,
+      "probes": {
+        "step": 80000,
+        "modelYears": 200,
+        "iceVolumeM3": 400419964.2218919,
+        "iceAreaM2": 7356800,
+        "erodedVolumeM3": 65744428.86326884,
+        "maxSlidingSpeedMPerYear": 137.30796459299282,
+        "maxSurfaceSpeedMPerYear": 1174.7934806166097,
+        "snoutXM": 1800
+      }
+    },
+    {
+      "index": 11,
+      "step": 88000,
+      "modelYears": 220,
+      "byteOffset": 1081344,
+      "probes": {
+        "step": 88000,
+        "modelYears": 220,
+        "iceVolumeM3": 400167362.0248392,
+        "iceAreaM2": 7353600,
+        "erodedVolumeM3": 79555235.17958891,
+        "maxSlidingSpeedMPerYear": 160,
+        "maxSurfaceSpeedMPerYear": 1182.1782653563782,
+        "snoutXM": 1760
+      }
+    },
+    {
+      "index": 12,
+      "step": 96000,
+      "modelYears": 240,
+      "byteOffset": 1179648,
+      "probes": {
+        "step": 96000,
+        "modelYears": 240,
+        "iceVolumeM3": 399137254.410416,
+        "iceAreaM2": 7352000,
+        "erodedVolumeM3": 96567051.0406883,
+        "maxSlidingSpeedMPerYear": 131.85863907771778,
+        "maxSurfaceSpeedMPerYear": 1214.910593669368,
+        "snoutXM": 1760
+      }
+    },
+    {
+      "index": 13,
+      "step": 104000,
+      "modelYears": 260,
+      "byteOffset": 1277952,
+      "probes": {
+        "step": 104000,
+        "modelYears": 260,
+        "iceVolumeM3": 398216110.39486486,
+        "iceAreaM2": 7340800,
+        "erodedVolumeM3": 117500897.50637548,
+        "maxSlidingSpeedMPerYear": 138.13266831609567,
+        "maxSurfaceSpeedMPerYear": 1232.2331760392965,
+        "snoutXM": 1760
+      }
+    },
+    {
+      "index": 14,
+      "step": 112000,
+      "modelYears": 280,
+      "byteOffset": 1376256,
+      "probes": {
+        "step": 112000,
+        "modelYears": 280,
+        "iceVolumeM3": 396780127.78287536,
+        "iceAreaM2": 7332800,
+        "erodedVolumeM3": 144537809.153615,
+        "maxSlidingSpeedMPerYear": 148.10675904100714,
+        "maxSurfaceSpeedMPerYear": 1246.016135750278,
+        "snoutXM": 1760
+      }
+    },
+    {
+      "index": 15,
+      "step": 120000,
+      "modelYears": 300,
+      "byteOffset": 1474560,
+      "probes": {
+        "step": 120000,
+        "modelYears": 300,
+        "iceVolumeM3": 394265848.3572903,
+        "iceAreaM2": 7313600,
+        "erodedVolumeM3": 181588256.89421484,
+        "maxSlidingSpeedMPerYear": 152.65219880324565,
+        "maxSurfaceSpeedMPerYear": 1294.1949322048238,
+        "snoutXM": 1760
+      }
+    }
+  ]
+}
