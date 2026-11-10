@@ -1587,3 +1587,43 @@ retreated), T2 shale seeds 2–3 (growing glacier reached the control section), 
 the manifest. (b) The full-T1 claim is not supported in any single horizon; the page should teach the
 S1/E-R3 shape claim and the V → trough change by shape, or adopt a per-rock horizon. (c) The 30 m
 lowering threshold should go to expert review. (d) Shale's growing glacier can reach the control reach.
+
+## D-5H-STAGE — Book stage, scene look and transition (session 5H, draft on the authored fixture)
+
+2026-11-09. Session 5H, branch s1/w5/5h-book-stage from s1/w5/integration (ee4959d). Technical
+choices inside the plan; R1 may change any of the look values.
+
+1. **Camera match, not a 3D book model.** The book stays DOM under CSS `perspective` +
+   `rotateX(tilt)` about its centre; one canvas covers the stage and a perspective camera at the
+   CSS perspective distance (vertical FOV spanning the stage height) projects page points exactly
+   where the browser draws them (unit-tested against the CSS formula). The diorama lives in a
+   page-local frame (X right, Y up off the paper, Z down the page), so shadows land on the right
+   words and the block may rise past the figure frame. Text stays DOM and selectable.
+2. **Tilt 46°, block yawed −24° on the page.** At the 24–34° first tried, the block was seen almost
+   from above and read as a map; 46° (close to the reference) plus a three-quarter yaw makes it read
+   as an object standing on the page. Cost: the left page's text is foreshortened. R1 question.
+3. **Flat fallback** when `(max-width: 60rem), (max-height: 34rem), (prefers-reduced-motion: reduce),
+(forced-colors: active)` matches, when the root font size is ≥ 24 px, or when the tilted book would
+   not fit the stage. The canvas then sits inside the figure frame (slightly larger, so the cast
+   shadow is not clipped). No WebGL/WebGPU → the drawing is the figure.
+4. **Natural look:** banded (three-tone) unlit node materials with their own light term and a shared
+   paper → colour wash uniform; real shadow map only for the paper shadow-catcher. Exposed rock on
+   the land surface is a weathered grey tinted by the rock; the full lithology colour and pattern
+   show on the block's sides, where the rock is seen in section. Lithology tiles follow FGDC-STD-013
+   conventions and render from one definition to canvas (3D) and SVG (page swatches).
+5. **Dressing is presentation read from state** (snow above the snowline on gentle ground; meadow and
+   trees low and gentle; river by steepest descent below the snout, never back up-valley or onto
+   ice; flow marks along ice velocity or, without it, down the ice-surface slope). Deterministic
+   integer hash, no `Math.random()`. 5K owns the production dressing in `ink/src/glacial`.
+6. **Fig. 1 drawing** is generated deterministically from the authored landform (floating-horizon
+   profile lines), not from model output; an illustrator's SVG can replace `glacialDrawingSvg()`.
+7. **Fixture honesty:** two independent authored frames (V start; U trough with glacier), no tween,
+   no model time, labelled "Authored fixture — not a model run" on every view. Removed from the review
+   path once 5G's captured runs are merged.
+
+Open questions for R1: tilt angle vs. text legibility; whether cutting the block should re-centre it
+(today the remaining block stays put, so it shrinks towards the frame top); the provisional rock set
+and colours (5G decides the set); whether labels belong on Fig. 1; the desk/board colours.
+
+Cross-owned edits: `hachure/ink/package.json` (two export lines: `./stage`, `./transition`);
+`uplift/book/src/app/routes.ts` (one bounded `?review=glacial-stage` route entry).

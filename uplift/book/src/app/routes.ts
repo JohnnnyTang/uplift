@@ -9,6 +9,11 @@ import waterNotes from "../../../spreads/hydrology.water-path/teacher.md?raw";
 
 /** Retain both model owners while only the visible route is attached and active. */
 export async function mountApp(root: HTMLElement) {
+  // Bounded review route (5H, R1 owner review): the glacial book stage on fixture or captured runs.
+  if (new URLSearchParams(location.search).get("review") === "glacial-stage") {
+    const { mountGlacialStageReview } = await import("../scenes/glacial/review");
+    return mountGlacialStageReview(root, location.search);
+  }
   for (const [key, value] of Object.entries(BOOK_PALETTE)) root.style.setProperty(`--${key}`, value);
   const readerRoot = document.createElement("div");
   const researchRoot = document.createElement("div");

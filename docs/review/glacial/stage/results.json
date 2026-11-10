@@ -1,0 +1,191 @@
+{
+  "base": "http://127.0.0.1:5190/?review=glacial-stage",
+  "captures": [
+    {
+      "name": "desktop-1440-1-drawing.png",
+      "query": "",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "mode": "tilted",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+    },
+    {
+      "name": "desktop-1440-2-ink.png",
+      "query": "",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "mode": "tilted",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+    },
+    {
+      "name": "desktop-1440-3-colour.png",
+      "query": "",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "mode": "tilted",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+    },
+    {
+      "name": "desktop-1366.png",
+      "query": "",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "mode": "tilted",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+    },
+    {
+      "name": "desktop-1440-flat.png",
+      "query": "&mode=flat",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "mode": "flat",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+    },
+    {
+      "name": "reduced-motion-1440.png",
+      "query": "&motion=reduce",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "mode": "flat",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+    },
+    {
+      "name": "zoom-200-equivalent.png",
+      "query": "",
+      "viewport": {
+        "width": 720,
+        "height": 450
+      },
+      "mode": "flat",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+    },
+    {
+      "name": "phone-390.png",
+      "query": "",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "mode": "flat",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+    },
+    {
+      "name": "static-fallback-1440.png",
+      "query": "&static=1",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "mode": "flat",
+      "backend": null,
+      "textAlternative": "Fig. 1: Line drawing of a block of mountains cut open at the front. A glacier fills the upper valley from a bowl-shaped cirque below the peaks down to its snout. Under the glacier the valley is a broad U with steep sides. Below the snout a meltwater river runs on through a narrower V-shaped valley with conifers on its lower slopes. The front face shows the rock in section."
+    },
+    {
+      "name": "front-face-v-below-snout.png",
+      "query": "&mode=flat&cut=1",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "mode": "flat",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+    },
+    {
+      "name": "front-face-u-under-ice.png",
+      "query": "&mode=flat&cut=0.4",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "mode": "flat",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut through the glacier."
+    },
+    {
+      "name": "tilted-u-under-ice.png",
+      "query": "&cut=0.4",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "mode": "tilted",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut through the glacier."
+    },
+    {
+      "name": "under-the-ice.png",
+      "query": "&mode=flat&cut=0.4",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "mode": "flat",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut through the glacier; the ice is hidden to show the rock under it."
+    },
+    {
+      "name": "rock-granite.png",
+      "query": "&mode=flat&cut=0.4",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "mode": "flat",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut through the glacier."
+    },
+    {
+      "name": "rock-limestone.png",
+      "query": "&mode=flat&cut=0.4",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "mode": "flat",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in limestone. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut through the glacier."
+    },
+    {
+      "name": "rock-shale.png",
+      "query": "&mode=flat&cut=0.4",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "mode": "flat",
+      "backend": "webgpu",
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in shale. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut through the glacier."
+    },
+    {
+      "name": "transition-and-cut.webm",
+      "query": "",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    }
+  ],
+  "errors": [],
+  "browser": "157.0.8103.39"
+}
