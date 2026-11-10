@@ -90,12 +90,15 @@ its results stay in the record ([feasibility.md](feasibility.md);
 - **Changed: the start and the grid.** `v-valley/2` on 160 × 64 cells replaces `v-valley/1` on 128 × 96.
   Over the first 5080 m (columns 0–127) the floor and V walls are those of 5G; the crest is up to 200 m
   lower; the walls, crest and outer flank wrap round the valley end so the head basin is enclosed on
-  three sides; the outer flanks are steeper (20°) and fall to a quarter of the way from floor to crest,
+  three sides; the outer flanks are steeper (14°) and fall to a quarter of the way from floor to crest,
   so ground outside the crest carries only thin ice. Reason: in 5G, soft rock lost its glacier through
   the open border, and the ice caps on the outer plateaus eroded basins outside the valley.
 - **Unchanged:** the physics and every `GlacierConfig` value except `nx`, `ny`; the erosion time
   compression (120); the horizon (300 model years), snapshot interval and matched times; seeds; the
   section columns (their start shapes are those of 5G to within 3 m of depth); every threshold.
+- **Corrected before the final run** (feasibility.md, "2Δx ripple"): the cell sliding speed now uses the
+  edge-mean thickness (a numerical fix for a grid-scale artefact), and the outer flanks are 14° (a start
+  cell pair exceeded shale's critical slope at 20°). The first 5G2 run (P5) is kept.
 - **Added:** the matched-erosion readings E-T1 and E-R1–E-R4 (reported beside the matched-time
   verdicts, never instead of them), and the two 5G open-head arms as recorded attempts.
 - **Chosen after pilots** (feasibility.md, pilots P1–P4): the enclosed start, the grid and the decision

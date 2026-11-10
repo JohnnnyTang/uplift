@@ -22,7 +22,7 @@ capture still satisfies the registered claim.
 
 | Needed                      | Where                                                                                                                       |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| columns, rows               | `snapshot.nx` (128, along the valley), `snapshot.ny` (96, across); also `manifest.grid`                                     |
+| columns, rows               | `snapshot.nx` (160, along the valley), `snapshot.ny` (64, across); also `manifest.grid`                                     |
 | metresPerCell               | `snapshot.metresPerCell` (40)                                                                                               |
 | bed elevation (m)           | `snapshot.bedM` (Float32Array, row-major `j * nx + i`)                                                                      |
 | ice thickness (m)           | `snapshot.iceThicknessM`                                                                                                    |
@@ -42,14 +42,14 @@ Types and codec: `hachure/glacier/src/contract/capture.ts` (`CapturedRunManifest
 
 - `format`, `version`: `"hachure-glacier-capture"`, `1`.
 - `rockId`, `config`: the full `GlacierConfig` of the run (units in field names).
-- `start`: `{ preset: "v-valley/1", options }`, the authored start and its options.
-- `grid`: `{ nx: 128, ny: 96, metresPerCell: 40 }`. Field index `k = j * nx + i`; `i` runs **along** the
+- `start`: `{ preset: "v-valley/2", options }`, the authored start and its options.
+- `grid`: `{ nx: 160, ny: 64, metresPerCell: 40 }` (5G2; the 5G captures were 128 × 96). Field index `k = j * nx + i`; `i` runs **along** the
   valley (i = 0 is the downstream edge, the mouth; i = nx − 1 the valley head), `j` runs **across** it.
   World position of cell centre: x = i · metresPerCell, y = j · metresPerCell; elevations in metres.
 - `layers`: quantization per layer, in snapshot order: `bedM`, `iceThicknessM`,
   `surfaceVelocityXMPerYear`, `surfaceVelocityYMPerYear`. Value = `offset + scale × u16`.
   Bed: 0.05 m steps; ice: 0.01 m; velocity: 0.05 m/yr over ±1638 m/yr. Error ≤ scale / 2.
-- `snapshotIntervalYears` (20), `bytesPerSnapshot` (4 layers × nx × ny × 2 bytes = 98 304),
+- `snapshotIntervalYears` (20), `bytesPerSnapshot` (4 layers × nx × ny × 2 bytes = 81 920),
   `binFile`, `finalStateHash` (Float64 state hash at the last snapshot).
 - `snapshots[]`: `{ index, step, modelYears, byteOffset, probes }`. `probes` are the whole-run
   `GlacierProbes` (ice volume and area, eroded volume, max sliding and surface speed, snout position),
@@ -68,7 +68,7 @@ import manifestUrl from "@hachure/glacier/captures/granite.json?url";
 const run = await loadCapturedRun(manifestUrl); // fetches granite.json and granite.bin
 const snap = run.snapshot(run.nearestIndex(300)); // GlacierSnapshot: Float32 bed, ice, velocity
 const start = run.snapshot(0); // the starting V (dashed line on the front face)
-const cut = measureSection(snap.bedM, snap.iceThicknessM, run.manifest.grid, 70);
+const cut = measureSection(snap.bedM, snap.iceThicknessM, run.manifest.grid, 74);
 // cut.floorWidthM, cut.depthM, cut.wallSlopeDeg … are the bound numbers for the margin notes.
 ```
 
@@ -79,7 +79,7 @@ glacier physics belongs in Ink or the book.
 
 ## Memory budget (proposal for 5J)
 
-A recorded snapshot in this format is 98 KB (Float32 in memory: 197 KB). At one snapshot per 20 model
-years over 300 years, a run is 16 snapshots: about 1.6 MB quantized or 3.1 MB as Float32. The live run plus
-two kept runs therefore fit in about 4.7 MB quantized (9.4 MB Float32), inside the ~32 MB budget of the
+A recorded snapshot in this format is 82 KB (Float32 in memory: 164 KB). At one snapshot per 20 model
+years over 300 years, a run is 16 snapshots: about 1.31 MB quantized or 2.6 MB as Float32. The live run plus
+two kept runs therefore fit in about 3.9 MB quantized (7.9 MB Float32), inside the ~32 MB budget of the
 wave plan §4. Proposal: keep the 20-model-year interval; 5J enforces the budget.

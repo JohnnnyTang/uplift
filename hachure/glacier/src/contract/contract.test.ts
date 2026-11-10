@@ -8,7 +8,7 @@ import {
   resolveGlacierConfig,
   validateGlacierConfig,
 } from "./index";
-import { DEFAULT_V_VALLEY } from "../presets/index";
+import { DEFAULT_V_VALLEY, OPEN_HEAD_V_VALLEY, createVValleyBed, maxCellSlopeDeg } from "../presets/index";
 
 describe("GlacierConfig", () => {
   it("defaults are valid and every numeric field has a limit", () => {
@@ -44,6 +44,22 @@ describe("rock types", () => {
   it("every rock holds the authored start's walls, so the start is the same V for every rock", () => {
     for (const id of ROCK_IDS)
       expect(ROCK_TYPES[id].criticalWallSlopeDeg).toBeGreaterThan(DEFAULT_V_VALLEY.wallSlopeDeg + 2);
+  });
+
+  it("no cell pair of the registered start (enclosed head, crest corners included) is steeper than any rock holds", () => {
+    const c = DEFAULT_GLACIER_CONFIG;
+    const slope = maxCellSlopeDeg(createVValleyBed(c), c.nx, c.ny, c.metresPerCell);
+    const weakest = Math.min(...ROCK_IDS.map((id) => ROCK_TYPES[id].criticalWallSlopeDeg));
+    expect(slope).toBeLessThan(weakest - 2);
+  });
+
+  it("the open-head 5G start stays reproducible: it differs from the registered start only beyond the valley", () => {
+    const grid = { nx: 128, ny: 96, metresPerCell: 40, seed: 1 };
+    const open = createVValleyBed(grid, OPEN_HEAD_V_VALLEY);
+    // Floor on the axis is the same in both starts for the shared 5080 m of valley.
+    const enclosed = createVValleyBed(grid, { ...OPEN_HEAD_V_VALLEY, valleyLengthM: 127 * 40 });
+    const axis = 48 * 128;
+    for (let i = 0; i < 128; i++) expect(enclosed[axis + i]).toBeCloseTo(open[axis + i]!, 6);
   });
 });
 

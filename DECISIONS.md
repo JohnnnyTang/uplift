@@ -1546,7 +1546,7 @@ results and evidence stay in the record (`docs/review/glacial/model/5g-open-head
 1. **Start `v-valley/2`** (`DEFAULT_V_VALLEY`): the 5G valley over its first 5080 m (same floor and
    26° V walls, so the registered sections keep their start shape), ending in a head basin enclosed on
    three sides by a crest that wraps round the valley end; crest rise 800 m (was 1000 m, to fit the grid);
-   outer flanks 20° (was 8°) falling to a quarter of the way from floor to crest (was half), so the ground
+   outer flanks 14° (was 8°) falling to a quarter of the way from floor to crest (was half), so the ground
    outside the crest carries only thin, cold-based ice. The 5G start is kept as `OPEN_HEAD_V_VALLEY`;
    two new preset options (`valleyLengthM`, `outerFlankFloorFraction`) reproduce it bitwise.
 2. **Grid 160 × 64 cells at 40 m** (was 128 × 96): `DEFAULT_GLACIER_CONFIG.nx/ny` changed. Captures
@@ -1558,3 +1558,32 @@ results and evidence stay in the record (`docs/review/glacial/model/5g-open-head
    matched-time verdicts; the 5G open-head start re-run as two recorded attempt arms.
 5. **Chosen after four pilot variants** (feasibility.md, P1–P4), which already showed that no tested
    start or compression gives every rock a T1 trough at one common time (erodibility differs 5×).
+
+**Numerical fix (physics code), recorded before the final registered run.** 5H found an odd/even
+(2Δx) ripple in the eroded shale bed. Confirmed (odd/even share of bed lowering 0.31–0.44 in the first
+5G2 registered run, P5, kept). Cause: the cell sliding speed that drives erosion used a centred surface
+gradient and the cell's own thickness, blind to an odd/even surface mode, so thicker ice over a low cell
+eroded faster and the ripple fed itself. Fix: the cell stress is the mean of its edge stresses (gradient
+components weighted by the edge-mean thickness (2H + H₋ + H₊)/4). Share after the fix 0.12–0.21; a
+residual ±10 m alternation remains on the axis in the head basin, where the flux stability cap is active.
+Guards: `cpu/solver.test.ts` (odd/even bed under a smooth surface gives no odd/even sliding) and
+`captures.test.ts` (odd/even share of bed lowering < 0.3). No GPU solver exists yet (5I); the 5I
+comparison must use this discretisation. The 5G registered numbers were computed with the artefact.
+
+**Start correction, before the final registered run.** A new test found one cell pair at the head-basin
+crest corner at 34.9°, above shale's 34° (shale would fail with no ice). Outer flanks 20° → 14°
+(steepest pair 31.4°).
+
+**Registered result (300 model years).** Pass: R1, R4, S1 (granite 46° vs shale 35° at equal erosion),
+E-R1, E-R3, K1, K2, N1; T2 except shale seeds 2–3; T1 sandstone seed 1. Fail: T1 in 8 of 9 arms (granite
+lowered 18 m < 30 m while floor +83 m, b +0.3, wall +19°; shale and sandstone seeds 2–3: b fell as walls
+retreated), T2 shale seeds 2–3 (growing glacier reached the control section), R2, R3, E-T1 (lowering
+18–27 m at the matched area), E-R2, E-R4. The shale glacier no longer leaks (0.57 → 1.10 km³).
+
+**Captures** regenerated at the same paths on 160 × 64: 16 snapshots × 81 920 B = 1.31 MB each,
+3.93 MB in total (was 4.72 MB), inside the 5H bundle budget without reducing snapshots or resolution.
+
+**Plan-changing facts.** (a) The grid is now 160 × 64 (6.4 × 2.56 km): 5H/5K framing must read it from
+the manifest. (b) The full-T1 claim is not supported in any single horizon; the page should teach the
+S1/E-R3 shape claim and the V → trough change by shape, or adopt a per-rock horizon. (c) The 30 m
+lowering threshold should go to expert review. (d) Shale's growing glacier can reach the control reach.

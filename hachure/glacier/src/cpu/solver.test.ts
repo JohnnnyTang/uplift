@@ -4,6 +4,7 @@
 import { describe, expect, it } from "vitest";
 import type { GlacierConfig } from "../contract/index";
 import { ROCK_TYPES } from "../contract/index";
+import { gridScaleShare } from "../testing/ripple";
 import { createCpuGlacier } from "./index";
 
 /** A 40 × 32 version of the authored valley; same physics, fewer cells. */
@@ -135,5 +136,29 @@ describe("CPU glacier", () => {
   it("rejects a bed of the wrong size and negative step counts", () => {
     expect(() => createCpuGlacier(SMALL, { bedM: new Float64Array(10) })).toThrow(/cells/);
     expect(() => createCpuGlacier(SMALL).advance(-1)).toThrow(RangeError);
+  });
+
+  it("an odd/even bed ripple under a smooth ice surface does not make an odd/even sliding (erosion) pattern", () => {
+    // Session 5G2 found a grid-scale (2Δx) mode: with a centred gradient and the cell's own thickness,
+    // a low cell (thicker ice) slid and eroded faster than its neighbours and the ripple fed itself.
+    const nx = 40;
+    const ny = 16;
+    const dx = 40;
+    const bed = new Float64Array(nx * ny);
+    const ice = new Float64Array(nx * ny);
+    for (let j = 0; j < ny; j++)
+      for (let i = 0; i < nx; i++) {
+        const h = 200 + 20 * (i % 2 === 0 ? 1 : -1);
+        ice[j * nx + i] = h;
+        bed[j * nx + i] = 2000 - 0.05 * i * dx - h; // smooth surface, rippled bed
+      }
+    const g = createCpuGlacier(
+      { nx, ny, metresPerCell: dx, lateralDragEnabled: false },
+      { bedM: bed, iceThicknessM: ice },
+    );
+    const row = Array.from(g.fields.slidingSpeedMPerYear.subarray(8 * nx, 9 * nx));
+    expect(Math.min(...row.slice(2, nx - 2))).toBeGreaterThan(0);
+    // Without the edge-mean thickness this share is ≈ 1 (sliding ∝ H² alternates by ±20 %).
+    expect(gridScaleShare(row, 2, nx - 2)).toBeLessThan(1e-6);
   });
 });

@@ -87,7 +87,7 @@ export const OPEN_HEAD_V_VALLEY: VValleyOptions = Object.freeze({
 export const DEFAULT_V_VALLEY: VValleyOptions = Object.freeze({
   ...OPEN_HEAD_V_VALLEY,
   ridgeRiseM: 800,
-  outerFlankSlopeDeg: 20,
+  outerFlankSlopeDeg: 14,
   valleyLengthM: 5080,
   outerFlankFloorFraction: 0.25,
 });
