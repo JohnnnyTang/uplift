@@ -1480,3 +1480,57 @@ paragraph in four plan files is replaced by one pointer.
 
 Owned scope: plan/product/handoff/README/AGENTS wording, the reference swap and this entry.
 No production code, evidence or lockfile changed. Nothing is launched.
+
+## D-W5-5G — Glacier model: plan-view shallow ice with a lateral-drag shape factor; contracts frozen
+
+2026-11-10. Session 5G (`s1/w5/5g-glacier-model`, from s1/w5/integration ee4959d).
+
+**Decisions (technical, inside the plan).**
+
+1. **Model.** `@hachure/glacier` (new package): vertically integrated shallow-ice flow (Glen n = 3,
+   temperate A) with Weertman sliding (m = 2), a fixed authored snowline mass balance, erosion
+   ė ∝ u_b² scaled by rock erodibility and an explicit time compression (S = 120), and threshold
+   rock-wall failure per rock. Fixed step 0.0025 model years (the converged step; at 0.01 the stability
+   cap fired on 8–12 % of edges and doubled erosion); seeded start; Jacobi-ordered passes for the
+   GPU port. Feasible with the full valley reach (owner decision 7); the idealised-reach fallback was not
+   needed. Record: `docs/science/glacial/feasibility.md`.
+2. **The U needs a lateral-drag correction.** Plain shallow ice keeps a V (attempt A0, as Seddik et al.
+   2009). A per-column shape factor from the channel "area method" shields the V bottom and moves the
+   erosion maxima onto the lower walls (Harbor et al. 1988 pattern). It is a geometric estimate, not a
+   higher-order stress solution — flagged for expert review.
+3. **Mass balance on the starting bed.** Every rock gets the same ice supply, so a rock comparison
+   compares rocks. The omitted feedback (a deepening valley lowers and shrinks its glacier) confounded
+   the comparison when switched on (attempt A2a, kept as an arm).
+4. **Regularisations, each recorded as a failed attempt first:** sliding/erosion stress capped at
+   200 kPa (runaway at steep thin fronts, A2b); thin ice (< 40 m, ramp to 120 m) is cold-based and does
+   not slide (ridges eroded away, A2c); a 3-cell ice-free, non-eroding frame at the grid border; a
+   non-finite guard that throws.
+5. **Rock set proposal:** shale (soft), sandstone (medium), granite (hard); erodibility 2 / 1 / 0.4,
+   critical wall 34° / 42° / 55°. Ordering sourced; numbers are teaching choices. Names, colours and
+   patterns are for R1.
+6. **Frozen contracts** (exported from `@hachure/glacier`): `GlacierConfig` (+ `DEFAULT_GLACIER_CONFIG`,
+   limits, `resolveGlacierConfig`), `ROCK_TYPES`, `GlacierSnapshot`/`GLACIER_LAYERS`, `GlacierSolver`,
+   `GlacierProbes`, `measureSection`/`SectionMeasure`, and the captured-run format
+   `hachure-glacier-capture` v1 (`encodeCapturedRun`/`decodeCapturedRun`). Grid orientation: index
+   `j * nx + i`, the valley runs along i, downstream = decreasing i (i = 0 the mouth).
+7. **Time label.** Model years with erosion compressed 120×; never geological years. Horizon 300 model
+   years; snapshot interval 20 model years; a 16-snapshot run is ~1.6 MB quantized; live + 2 kept runs
+   ≈ 4.7 MB (proposal for 5J).
+8. **Section probes measure the lower valley** (wall slope 10–60 % of depth, shape fit 5–60 %) and the
+   registered rock comparison uses the steepest wall and floor lowering, because the upper V above the
+   ice is untouched and dilutes whole-profile averages.
+
+**Deviations from the 5G brief.** The brief's claim "softer rock is wider and deeper" is tested with
+depth read as _floor lowering_; rim-to-floor depth is not ordered because soft rock also lowers its rims
+(walls retreat). Registration thresholds were set after pilot runs (pilots recorded in feasibility.md).
+
+**Cross-owned edits.** `eslint.config.js`: the `Math.random` ban now also covers `hachure/glacier/**`.
+`pnpm-lock.yaml`: the new workspace package entry, as produced by `pnpm install`.
+
+**Open questions.** (a) Expert review of the area-method shape factor and of the cold-based ramp.
+(b) Whether R1 wants the "deeper" claim on the page at all, or only "wider in soft rock, steeper walls in
+hard rock". (c) Overdeepening: the under-ice floor ends below the floor down-valley; a drawn river below
+the snout must not assume a bed that drains down-valley (5H/5K). (d) CPU cost at the converged step ≈ 0.3 s
+per model year on the reference grid in Node (one core, measured under load): a 300-year run is ~1.5 min
+of worker time at full speed. Faster playback needs the GPU (5I) or a coarser grid; the fixed step must
+not grow.

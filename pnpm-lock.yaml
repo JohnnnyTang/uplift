@@ -39,6 +39,12 @@ importers:
         specifier: 5.1.0
         version: 5.1.0(@types/node@24.10.0)(@vitest/browser-playwright@5.1.0)(@vitest/ui@5.1.0)(vite@8.3.6(@types/node@24.10.0))
 
+  hachure/glacier:
+    dependencies:
+      '@hachure/terrain':
+        specifier: workspace:*
+        version: link:../terrain
+
   hachure/ink:
     dependencies:
       '@hachure/terrain':
