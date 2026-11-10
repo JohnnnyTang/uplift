@@ -34,26 +34,11 @@ export interface LithologyLook {
 }
 
 /**
- * Provisional look set for development and the R1 review. The rock set, names and number of types are a
- * 5G model decision; R1 approves the look. Replace these entries, do not add model meaning to them.
+ * Look set for the R1 review, matching the rock set of `@hachure/glacier` (`ROCK_TYPES`: shale, sandstone,
+ * granite), listed in teaching order, soft to hard. Ids are presentation ids (the book maps the model's rock
+ * id string to one); names and colours are provisional until R1. Do not add model meaning to these entries.
  */
 export const PROVISIONAL_LITHOLOGIES: readonly LithologyLook[] = Object.freeze([
-  {
-    id: 0,
-    key: "granite",
-    name: "Granite",
-    colour: "#C7B9AE",
-    markColour: "#6E5A55",
-    pattern: "crosses",
-  },
-  {
-    id: 1,
-    key: "limestone",
-    name: "Limestone",
-    colour: "#D6D0B4",
-    markColour: "#77704F",
-    pattern: "brick",
-  },
   {
     id: 2,
     key: "shale",
@@ -61,6 +46,22 @@ export const PROVISIONAL_LITHOLOGIES: readonly LithologyLook[] = Object.freeze([
     colour: "#8E9597",
     markColour: "#3F4648",
     pattern: "dashes",
+  },
+  {
+    id: 1,
+    key: "sandstone",
+    name: "Sandstone",
+    colour: "#D9C49C",
+    markColour: "#7A6340",
+    pattern: "stipple",
+  },
+  {
+    id: 0,
+    key: "granite",
+    name: "Granite",
+    colour: "#C7B9AE",
+    markColour: "#6E5A55",
+    pattern: "crosses",
   },
 ]);
 

@@ -30,6 +30,7 @@ export {
   elevationRange,
   toBlockGrid,
   validateSnapshot,
+  valleyGridIndex,
 } from "./snapshot";
 export { type DressingConfig, DEFAULT_DRESSING } from "./dressing";
 export {

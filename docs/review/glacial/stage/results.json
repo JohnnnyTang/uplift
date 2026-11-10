@@ -1,189 +1,432 @@
 {
-  "base": "http://127.0.0.1:5190/?review=glacial-stage",
+  "base": "/?review=glacial-stage",
+  "server": "local",
   "captures": [
     {
       "name": "desktop-1440-1-drawing.png",
       "query": "",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 1,
       "mode": "tilted",
       "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, sandstone. Simplified model; time is compressed.",
+      "marginNotes": [
+        "300 model years in sandstone",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in sandstone, after 300 model years. A glacier fills the valley from the head down to its snout, 66 percent of the way along. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
     },
     {
       "name": "desktop-1440-2-ink.png",
       "query": "",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 1,
       "mode": "tilted",
       "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, sandstone. Simplified model; time is compressed.",
+      "marginNotes": [
+        "300 model years in sandstone",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in sandstone, after 300 model years. A glacier fills the valley from the head down to its snout, 66 percent of the way along. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
     },
     {
       "name": "desktop-1440-3-colour.png",
       "query": "",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 1,
       "mode": "tilted",
       "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, sandstone. Simplified model; time is compressed.",
+      "marginNotes": [
+        "300 model years in sandstone",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in sandstone, after 300 model years. A glacier fills the valley from the head down to its snout, 66 percent of the way along. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
     },
     {
       "name": "desktop-1366.png",
       "query": "",
-      "viewport": {
-        "width": 1366,
-        "height": 768
-      },
+      "viewport": { "width": 1366, "height": 768 },
+      "scale": 1,
       "mode": "tilted",
       "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, sandstone. Simplified model; time is compressed.",
+      "marginNotes": [
+        "300 model years in sandstone",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in sandstone, after 300 model years. A glacier fills the valley from the head down to its snout, 66 percent of the way along. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
     },
     {
       "name": "desktop-1440-flat.png",
       "query": "&mode=flat",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 1,
       "mode": "flat",
       "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, sandstone. Simplified model; time is compressed.",
+      "marginNotes": [
+        "300 model years in sandstone",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in sandstone, after 300 model years. A glacier fills the valley from the head down to its snout, 66 percent of the way along. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
     },
     {
       "name": "reduced-motion-1440.png",
-      "query": "&motion=reduce",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
+      "query": "",
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 1,
       "mode": "flat",
       "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, sandstone. Simplified model; time is compressed.",
+      "marginNotes": [
+        "300 model years in sandstone",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in sandstone, after 300 model years. A glacier fills the valley from the head down to its snout, 66 percent of the way along. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
     },
     {
       "name": "zoom-200-equivalent.png",
       "query": "",
-      "viewport": {
-        "width": 720,
-        "height": 450
-      },
+      "viewport": { "width": 720, "height": 450 },
+      "scale": 1,
       "mode": "flat",
       "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, sandstone. Simplified model; time is compressed.",
+      "marginNotes": [
+        "300 model years in sandstone",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in sandstone, after 300 model years. A glacier fills the valley from the head down to its snout, 66 percent of the way along. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
     },
     {
       "name": "phone-390.png",
       "query": "",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
+      "viewport": { "width": 390, "height": 844 },
+      "scale": 2,
       "mode": "flat",
       "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, sandstone. Simplified model; time is compressed.",
+      "marginNotes": [
+        "300 model years in sandstone",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in sandstone, after 300 model years. A glacier fills the valley from the head down to its snout, 66 percent of the way along. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
+    },
+    {
+      "name": "phone-390-full.png",
+      "query": "",
+      "viewport": { "width": 390, "height": 844 },
+      "scale": 1,
+      "mode": "flat",
+      "backend": "webgpu",
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, sandstone. Simplified model; time is compressed.",
+      "marginNotes": [
+        "300 model years in sandstone",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in sandstone, after 300 model years. A glacier fills the valley from the head down to its snout, 66 percent of the way along. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
     },
     {
       "name": "static-fallback-1440.png",
       "query": "&static=1",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 1,
       "mode": "flat",
       "backend": null,
+      "source": null,
+      "provenance": "Recorded run of the glacier model, sandstone. Simplified model; time is compressed.",
+      "marginNotes": ["300 model years in sandstone", "erosion sped up ×120"],
       "textAlternative": "Fig. 1: Line drawing of a block of mountains cut open at the front. A glacier fills the upper valley from a bowl-shaped cirque below the peaks down to its snout. Under the glacier the valley is a broad U with steep sides. Below the snout a meltwater river runs on through a narrower V-shaped valley with conifers on its lower slopes. The front face shows the rock in section."
     },
     {
-      "name": "front-face-v-below-snout.png",
-      "query": "&mode=flat&cut=1",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
-      "mode": "flat",
+      "name": "fixture-1440.png",
+      "query": "&fixture=1",
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 1,
+      "mode": "tilted",
       "backend": "webgpu",
+      "source": "fixture",
+      "provenance": "Authored fixture — not a model run. Authored glaciated valley (fixture).",
+      "marginNotes": [
+        "authored fixture: no model time",
+        "front face 6.3 km down the valley, below the snout",
+        "floor width and depth: from a model run only"
+      ],
       "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut below the glacier's snout."
     },
     {
-      "name": "front-face-u-under-ice.png",
-      "query": "&mode=flat&cut=0.4",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
+      "name": "run-shale-frame-00.png",
+      "query": "&mode=flat&rock=shale&frame=0",
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 2,
       "mode": "flat",
       "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut through the glacier."
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, shale. Simplified model; time is compressed.",
+      "marginNotes": [
+        "0 model years in shale",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in shale, after 0 model years. There is no ice in this view. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
+    },
+    {
+      "name": "run-shale-frame-05.png",
+      "query": "&mode=flat&rock=shale&frame=5",
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 2,
+      "mode": "flat",
+      "backend": "webgpu",
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, shale. Simplified model; time is compressed.",
+      "marginNotes": [
+        "100 model years in shale",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in shale, after 100 model years. A glacier fills the valley from the head down to its snout, 60 percent of the way along. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
+    },
+    {
+      "name": "run-shale-frame-10.png",
+      "query": "&mode=flat&rock=shale&frame=10",
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 2,
+      "mode": "flat",
+      "backend": "webgpu",
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, shale. Simplified model; time is compressed.",
+      "marginNotes": [
+        "200 model years in shale",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in shale, after 200 model years. A glacier fills the valley from the head down to its snout, 64 percent of the way along. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
+    },
+    {
+      "name": "run-shale-frame-15.png",
+      "query": "&mode=flat&rock=shale&frame=15",
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 2,
+      "mode": "flat",
+      "backend": "webgpu",
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, shale. Simplified model; time is compressed.",
+      "marginNotes": [
+        "300 model years in shale",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in shale, after 300 model years. A glacier fills the valley from the head down to its snout, 54 percent of the way along. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
+    },
+    {
+      "name": "front-face-v-below-snout.png",
+      "query": "&mode=flat&rock=shale&frame=10&cut=1",
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 2,
+      "mode": "flat",
+      "backend": "webgpu",
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, shale. Simplified model; time is compressed.",
+      "marginNotes": [
+        "200 model years in shale",
+        "erosion sped up ×120",
+        "front face 5.1 km down the valley, below the snout",
+        "floor 140 m wide, 230 m deep",
+        "floor lowered 0 m since the start",
+        "steepest wall 27°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in shale, after 200 model years. A glacier fills the valley from the head down to its snout, 64 percent of the way along. The front face is cut below the glacier's snout. There the floor is 140 m wide and 230 m deep, lowered 0 m below the dashed starting V; the steepest wall is 27 degrees."
+    },
+    {
+      "name": "front-face-u-under-ice.png",
+      "query": "&mode=flat&rock=shale&frame=10&cut=0.16535433070866143",
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 2,
+      "mode": "flat",
+      "backend": "webgpu",
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, shale. Simplified model; time is compressed.",
+      "marginNotes": [
+        "200 model years in shale",
+        "erosion sped up ×120",
+        "front face 0.8 km down the valley, through the ice",
+        "floor 310 m wide, 570 m deep",
+        "floor lowered 130 m since the start",
+        "steepest wall 35°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in shale, after 200 model years. A glacier fills the valley from the head down to its snout, 64 percent of the way along. The front face is cut through the glacier. There the floor is 310 m wide and 570 m deep, lowered 130 m below the dashed starting V; the steepest wall is 35 degrees."
     },
     {
       "name": "tilted-u-under-ice.png",
-      "query": "&cut=0.4",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
+      "query": "&rock=shale&frame=10&cut=0.16535433070866143",
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 1,
       "mode": "tilted",
       "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut through the glacier."
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, shale. Simplified model; time is compressed.",
+      "marginNotes": [
+        "200 model years in shale",
+        "erosion sped up ×120",
+        "front face 0.8 km down the valley, through the ice",
+        "floor 310 m wide, 570 m deep",
+        "floor lowered 130 m since the start",
+        "steepest wall 35°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in shale, after 200 model years. A glacier fills the valley from the head down to its snout, 64 percent of the way along. The front face is cut through the glacier. There the floor is 310 m wide and 570 m deep, lowered 130 m below the dashed starting V; the steepest wall is 35 degrees."
     },
     {
       "name": "under-the-ice.png",
-      "query": "&mode=flat&cut=0.4",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
+      "query": "&mode=flat&rock=shale&frame=10&cut=0.16535433070866143",
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 2,
       "mode": "flat",
       "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut through the glacier; the ice is hidden to show the rock under it."
-    },
-    {
-      "name": "rock-granite.png",
-      "query": "&mode=flat&cut=0.4",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
-      "mode": "flat",
-      "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut through the glacier."
-    },
-    {
-      "name": "rock-limestone.png",
-      "query": "&mode=flat&cut=0.4",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
-      "mode": "flat",
-      "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in limestone. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut through the glacier."
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, shale. Simplified model; time is compressed.",
+      "marginNotes": [
+        "200 model years in shale",
+        "erosion sped up ×120",
+        "front face 0.8 km down the valley, through the ice",
+        "floor 310 m wide, 570 m deep",
+        "floor lowered 130 m since the start",
+        "steepest wall 35°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in shale, after 200 model years. A glacier fills the valley from the head down to its snout, 64 percent of the way along. The front face is cut through the glacier; the ice is hidden to show the rock under it. There the floor is 310 m wide and 570 m deep, lowered 130 m below the dashed starting V; the steepest wall is 35 degrees."
     },
     {
       "name": "rock-shale.png",
-      "query": "&mode=flat&cut=0.4",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
+      "query": "&mode=flat&rock=shale&frame=10&cut=0.16535433070866143",
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 2,
       "mode": "flat",
       "backend": "webgpu",
-      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in shale. A glacier fills the valley from the head down to its snout, 59 percent of the way along. The front face is cut through the glacier."
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, shale. Simplified model; time is compressed.",
+      "marginNotes": [
+        "200 model years in shale",
+        "erosion sped up ×120",
+        "front face 0.8 km down the valley, through the ice",
+        "floor 310 m wide, 570 m deep",
+        "floor lowered 130 m since the start",
+        "steepest wall 35°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in shale, after 200 model years. A glacier fills the valley from the head down to its snout, 64 percent of the way along. The front face is cut through the glacier; the ice is hidden to show the rock under it. There the floor is 310 m wide and 570 m deep, lowered 130 m below the dashed starting V; the steepest wall is 35 degrees."
     },
     {
-      "name": "transition-and-cut.webm",
-      "query": "",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      }
+      "name": "rock-sandstone.png",
+      "query": "&mode=flat&rock=sandstone&frame=10&cut=0.16535433070866143",
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 2,
+      "mode": "flat",
+      "backend": "webgpu",
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, sandstone. Simplified model; time is compressed.",
+      "marginNotes": [
+        "200 model years in sandstone",
+        "erosion sped up ×120",
+        "front face 0.8 km down the valley, through the ice",
+        "floor 130 m wide, 600 m deep",
+        "floor lowered 80 m since the start",
+        "steepest wall 42°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in sandstone, after 200 model years. A glacier fills the valley from the head down to its snout, 65 percent of the way along. The front face is cut through the glacier; the ice is hidden to show the rock under it. There the floor is 130 m wide and 600 m deep, lowered 80 m below the dashed starting V; the steepest wall is 42 degrees."
+    },
+    {
+      "name": "rock-granite.png",
+      "query": "&mode=flat&rock=granite&frame=10&cut=0.16535433070866143",
+      "viewport": { "width": 1440, "height": 900 },
+      "scale": 2,
+      "mode": "flat",
+      "backend": "webgpu",
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, granite. Simplified model; time is compressed.",
+      "marginNotes": [
+        "200 model years in granite",
+        "erosion sped up ×120",
+        "front face 0.8 km down the valley, through the ice",
+        "floor 70 m wide, 580 m deep",
+        "floor lowered 60 m since the start",
+        "steepest wall 55°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite, after 200 model years. A glacier fills the valley from the head down to its snout, 66 percent of the way along. The front face is cut through the glacier; the ice is hidden to show the rock under it. There the floor is 70 m wide and 580 m deep, lowered 60 m below the dashed starting V; the steepest wall is 55 degrees."
+    },
+    {
+      "name": "open-transition-run-front-face.webm",
+      "query": "&rock=shale",
+      "viewport": { "width": 1440, "height": 900 },
+      "mode": "tilted",
+      "backend": "webgpu",
+      "source": "recorded",
+      "provenance": "Recorded run of the glacier model, granite. Simplified model; time is compressed.",
+      "marginNotes": [
+        "200 model years in granite",
+        "erosion sped up ×120",
+        "front face 0.8 km down the valley, through the ice",
+        "floor 70 m wide, 580 m deep",
+        "floor lowered 60 m since the start",
+        "steepest wall 55°"
+      ],
+      "textAlternative": "Fig. 1 is now a 3D block of the valley standing on the page, in granite, after 200 model years. A glacier fills the valley from the head down to its snout, 66 percent of the way along. The front face is cut through the glacier. There the floor is 70 m wide and 580 m deep, lowered 60 m below the dashed starting V; the steepest wall is 55 degrees."
     }
   ],
   "errors": [],

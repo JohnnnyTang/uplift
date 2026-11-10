@@ -141,3 +141,17 @@ export function elevationRange(g: BlockGrid): { minM: number; maxM: number } {
   }
   return { minM, maxM };
 }
+
+/**
+ * Index along the valley axis of the model grid (a column index for `valleyAxis: "columns"`, a row index
+ * for `"rows"`) of block row `alongFromHead`, counted from the valley head as in `BlockGrid`. Lets a page
+ * measure the model's own section at the block's front face.
+ */
+export function valleyGridIndex(
+  orientation: ValleyOrientation,
+  along: number,
+  alongFromHead: number,
+): number {
+  const l = Math.min(along - 1, Math.max(0, Math.round(alongFromHead)));
+  return orientation.downstream === "decreasing" ? along - 1 - l : l;
+}

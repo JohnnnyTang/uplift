@@ -20,7 +20,13 @@ import {
   dashedProfile,
 } from "./block-geometry";
 import { surfaceCover } from "./dressing";
-import { type LandscapeSnapshot, elevationRange, toBlockGrid, validateSnapshot } from "./snapshot";
+import {
+  type LandscapeSnapshot,
+  elevationRange,
+  toBlockGrid,
+  validateSnapshot,
+  valleyGridIndex,
+} from "./snapshot";
 
 function snapshot(): LandscapeSnapshot {
   const columns = 9;
@@ -67,6 +73,15 @@ describe("snapshot seam", () => {
       Math.min(...Array.from(grid.bedM.subarray(l * 9, l * 9 + 9)));
     expect(floor(h, 0)).toBeCloseTo(floor(g, 0), 6);
     expect(floor(h, 11)).toBeCloseTo(floor(g, 11), 6);
+  });
+
+  it("maps a block row back to the model's index along the valley", () => {
+    const columns = { valleyAxis: "columns", downstream: "decreasing" } as const;
+    // Head at the back (block row 0) is the last grid column; the front row is the mouth, i = 0.
+    expect(valleyGridIndex(columns, 128, 0)).toBe(127);
+    expect(valleyGridIndex(columns, 128, 127)).toBe(0);
+    expect(valleyGridIndex(columns, 128, 200)).toBe(0);
+    expect(valleyGridIndex({ valleyAxis: "rows", downstream: "increasing" }, 12, 4)).toBe(4);
   });
 });
 

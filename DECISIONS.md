@@ -1627,3 +1627,40 @@ and colours (5G decides the set); whether labels belong on Fig. 1; the desk/boar
 
 Cross-owned edits: `hachure/ink/package.json` (two export lines: `./stage`, `./transition`);
 `uplift/book/src/app/routes.ts` (one bounded `?review=glacial-stage` route entry).
+
+## D-5H-RUNS — Review build on 5G's captured runs (session 5H, continued)
+
+2026-11-10. Session 5H, rebased onto s1/w5/integration (9da4fad, 5G merged). Technical choices inside the
+plan.
+
+1. **Captures load as assets.** `runs.ts` imports each capture's manifest and payload with `?url` from
+   `@hachure/glacier/captures/*` and decodes with `decodeCapturedRun`. Grid size, metres per cell, snapshot
+   count, rock, snowline, erosion speed-up and model time come from each manifest; nothing is hardcoded, so
+   5G2's regenerated captures drop in. The grid orientation (valley along columns, downstream = decreasing
+   i) is the capture format's, held once as `CAPTURE_ORIENTATION`. Cost: about 4.7 MB of `.bin` assets in
+   the build (fetched only by the review route).
+2. **Margin notes bind to the model's probe.** Floor width, depth, floor lowering since the start and the
+   steepest wall at the front face are `measureSection` results at the grid column under the cut
+   (`describe().cutAlongIndex` → `valleyGridIndex`). Shown rounded to 10 m (the grid is 40 m).
+3. **One vertical frame for all runs** (`ValleyDiorama.setElevationRange`): shale lowers its bed far below
+   the starting minimum, and a per-snapshot frame made the block jump when the rock or time changed.
+4. **Rock choice switches run** (same model time); the rock-look preview stays only for the fixture. The
+   look set now matches the model's rocks (shale dashes, sandstone stipple, granite crosses).
+5. **Time ruler**: a native range input over recorded snapshots (one tick each), Play/Pause at a fixed
+   presentation rate (650 ms per snapshot). Playback only shows recorded snapshots; it never simulates.
+6. **Treeline** stays illustrative: 300 m below the model's snowline (the model has no vegetation).
+7. **Science on the page**: "soft rock wears away faster and deeper; hard rock keeps steeper walls"
+   (marked expert-review; checked against the captures in `runs.test.ts`). Not "softer rock gives a wider
+   floor": the runs do not order floor width by rock.
+
+**Facts for the plan.** In the current captures the ice covers almost the whole upper basin, so the U only
+reads clearly in shale near the head at mid-run (shape exponent ≈ 1.9 at 200 model years); by 300 model
+years shale has worn down its rims as well, and granite barely changes (floor ≈ 20 m lower). Sandstone and
+granite sections stay close to V by the model's own shape fit. Shale's eroded bed has an odd/even ripple
+along the valley (floor width ≈ 75 m and ≈ 300 m in neighbouring columns near the head at 200 model years),
+which looks like a grid-scale (2Δx) mode in the erosion or wall-failure update; flagged for 5G2/5I. 5G2's enclosed head may change this; the
+capture positions `U_FRAME`/`U_CUT` in `docs/review/glacial/stage/capture.mjs` must be rechecked then.
+
+**Cross-owned edits.** `uplift/book/package.json`: one dependency line (`@hachure/glacier`), so the book
+imports the captures and `measureSection` through public entry points. `pnpm-lock.yaml`: the matching
+importer entry, as produced by `pnpm install`.

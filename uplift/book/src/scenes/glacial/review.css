@@ -371,6 +371,7 @@
   .gs-desk[data-stage-mode="flat"] .gs-lesson,
   .gs-desk[data-stage-mode="flat"] .gs-tray,
   .gs-desk[data-stage-mode="flat"] .gs-controls,
+  .gs-desk[data-stage-mode="flat"] .gs-timeline,
   .gs-desk[data-stage-mode="flat"] .gs-figure figcaption,
   .gs-desk[data-stage-mode="flat"] .gs-margin {
     font-size: 16px;
@@ -436,4 +437,130 @@
 .gs-review input[type="range"] {
   width: 9em;
   min-height: 36px;
+}
+
+/* Time ruler: a ruled line with one tick per recorded snapshot (count from the run, via --gs-ticks).
+ * Ink on paper like the rest of the page; the thumb is a small ink ring, not a coloured knob. */
+.gs-timeline {
+  margin: 0.9cqi 0 0;
+  border: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: auto auto minmax(8em, 1fr) auto;
+  align-items: center;
+  gap: 0 1.2cqi;
+  font-size: max(12px, 1cqi);
+}
+.gs-timeline[hidden] {
+  display: none;
+}
+.gs-timeline legend {
+  float: left;
+  padding: 0;
+  font-style: italic;
+  color: var(--gs-ink-soft);
+}
+.gs-play {
+  min-height: 36px;
+  min-width: 5em;
+  white-space: nowrap;
+  font: inherit;
+  color: var(--gs-ink);
+  background: transparent;
+  border: 1px solid var(--gs-ink-soft);
+  border-radius: 18px;
+  padding: 0 0.9em;
+  cursor: pointer;
+}
+.gs-play:hover {
+  background: #efece2;
+}
+.gs-play[aria-pressed="true"] {
+  border-color: var(--gs-ink);
+  border-width: 2px;
+}
+.gs-ruler {
+  --gs-thumb: 16px;
+  position: relative;
+  padding-bottom: 1.15em;
+}
+.gs-ruler::before {
+  /* Ticks, inset by half a thumb so tick k sits under the thumb at value k. */
+  content: "";
+  position: absolute;
+  left: calc(var(--gs-thumb) / 2);
+  right: calc(var(--gs-thumb) / 2);
+  top: 11px;
+  height: 14px;
+  background: repeating-linear-gradient(
+      to right,
+      var(--gs-ink-soft) 0 1px,
+      transparent 1px calc((100% - 1px) / var(--gs-ticks, 15))
+    )
+    0 0 / 100% 100% no-repeat;
+  pointer-events: none;
+}
+.gs-review .gs-ruler input[type="range"] {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  min-height: 36px;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+.gs-ruler input[type="range"]::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--gs-ink);
+}
+.gs-ruler input[type="range"]::-moz-range-track {
+  height: 1px;
+  background: var(--gs-ink);
+}
+.gs-ruler input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: var(--gs-thumb);
+  height: var(--gs-thumb);
+  margin-top: calc(var(--gs-thumb) / -2);
+  border: 2px solid var(--gs-ink);
+  border-radius: 50%;
+  background: var(--gs-paper);
+}
+.gs-ruler input[type="range"]::-moz-range-thumb {
+  width: var(--gs-thumb);
+  height: var(--gs-thumb);
+  box-sizing: border-box;
+  border: 2px solid var(--gs-ink);
+  border-radius: 50%;
+  background: var(--gs-paper);
+}
+.gs-ruler-ends {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85em;
+  color: var(--gs-ink-soft);
+  font-variant-numeric: oldstyle-nums;
+}
+.gs-time-now {
+  min-width: 8.5em;
+  font-style: italic;
+  font-variant-numeric: tabular-nums;
+}
+@media (forced-colors: active) {
+  .gs-ruler::before {
+    background: none;
+  }
+}
+@media (max-width: 30rem) {
+  .gs-timeline {
+    grid-template-columns: auto auto 1fr;
+    row-gap: 4px;
+  }
+  .gs-ruler {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
 }

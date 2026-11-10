@@ -101,6 +101,8 @@ export interface DioramaDescription {
   readonly iceReachFraction: number;
   /** Cut position as a fraction of the valley length from the head (unit: none). */
   readonly cutFraction: number;
+  /** Block row of the front face, counted from the valley head (unit: cells). */
+  readonly cutAlongIndex: number;
   readonly rockName: string;
   readonly modelTimeYr: number | null;
   readonly iceShown: boolean;
@@ -202,6 +204,7 @@ export class ValleyDiorama {
   private rockOverride: number | null = null;
   private reveal: DioramaReveal = { rise: 1, ink: 1, hachure: 0.22, colour: 1 };
   private range: { minM: number; maxM: number } | null = null;
+  private fixedRange: { minM: number; maxM: number } | null = null;
   /** Called after any change that needs a new frame. */
   onChange: () => void = () => undefined;
 
@@ -264,15 +267,25 @@ export class ValleyDiorama {
     // does not jump as the valley deepens over a run.
     if (!this.range || !this.grid || this.grid.across !== grid.across || this.grid.along !== grid.along) {
       const r = elevationRange(grid);
-      if (this.reference) {
-        const rr = elevationRange(this.reference);
-        r.minM = Math.min(r.minM, rr.minM);
-        r.maxM = Math.max(r.maxM, rr.maxM);
+      for (const extra of [this.reference && elevationRange(this.reference), this.fixedRange]) {
+        if (!extra) continue;
+        r.minM = Math.min(r.minM, extra.minM);
+        r.maxM = Math.max(r.maxM, extra.maxM);
       }
       this.range = r;
     }
     this.grid = grid;
     this.rebuild();
+  }
+
+  /**
+   * Fixes the block's vertical frame to cover `range` (unit: metres): for example every snapshot of every
+   * run a reader can switch between, so the block keeps its size and base when the run or time changes.
+   * Applies from the next `setSnapshot`. `null` frames each new grid by its first snapshot again.
+   */
+  setElevationRange(range: { readonly minM: number; readonly maxM: number } | null): void {
+    this.fixedRange = range ? { minM: range.minM, maxM: range.maxM } : null;
+    this.range = null;
   }
 
   /** Moves the front face. `fraction` of the valley length from the head (unit: none, 0–1). View-only. */
@@ -351,6 +364,7 @@ export class ValleyDiorama {
       frontFaceCutsIce: cutsIce,
       iceReachFraction: iceRows / g.along,
       cutFraction: f.cutRow / (g.along - 1),
+      cutAlongIndex: f.cutRow,
       rockName: this.look.name,
       modelTimeYr: g.modelTimeYr,
       iceShown: this.iceShown,
