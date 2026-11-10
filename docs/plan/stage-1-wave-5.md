@@ -15,13 +15,11 @@ Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
 sessions had not started or could not start is stale. The corrected product is not
 yet accepted: see the [current branch audit](../review/book-revision/current-direction-review.md).
 
-The opening is U-shaped valley formation. The owner has now selected both
-condition changes (UI and equivalent 3D interaction) and watching/inspecting different
-formations over time. [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md) implement
-that combined loop. They are planned, not started. The earlier discussion-only hold
-is superseded for planning; this update does not launch implementation. Contours are
-optional, the entrance is artistic, and scenes may use natural colours. The old
-contour/source selection and no-new-physics rule do not govern the glacial opening.
+The opening lesson is **From V to U** (U-shaped valley formation). Its single source
+of truth is [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md), rewritten 2026-11-09:
+the reader picks a rock type (page selector or a specimen dropped on the 3D block), each
+choice is a separate run, kept runs are compared at matched model time, the scene stands
+on a tilted 3D book, and the GPU glacier ships where it passes parity. Planned, not started.
 A–F remain foundations; their evidence is not glacial lesson acceptance.
 
 Planned 2026-11-09 at the owner's request, after product-direction commit
@@ -39,8 +37,9 @@ The owner subsequently authorized parallel 5B/5C/5D execution. See [the local ha
 
 The full executable briefs and owned paths are in
 [Wave 5 glacial extension](stage-1-wave-5-glacial.md). Current dependency sequence:
-**5G feasibility/contracts → 5H CPU → 5I GPU / 5J runtime / 5K scene / 5L content →
-5M default-book integration → 5N acceptance**. Merge I, J, K, L in that order.
+**5G glacier model + CPU ∥ 5H book stage and look → R1 owner review → 5I GPU (after 5G) /
+5J runs and timeline / 5K scene interaction / 5L content → 5M default-book integration →
+5N acceptance**. Merge I, J, K, L as they become ready.
 The reviewed A–F baseline and current direction are consolidated on s1/w5/integration;
 use its verified tip for future sessions.
 Wave 6 starts after this extension; F alone no longer closes Wave 5 implementation.
@@ -52,9 +51,10 @@ water spread for independent paging while the glacial scene becomes the opening.
 
 ## Outcome
 
-The default app opens with U-shaped valley formation: change a physical condition,
-watch evolution, inspect/replay and compare at matched model times. A textbook drawing
-transitions into a complete naturally coloured scene. Retain the water spread for a
+The default app opens with U-shaped valley formation: pick a rock type, watch the
+glacier reshape the valley, scrub back through the run and compare with kept runs of
+other rocks at matched model times. A textbook drawing transitions into a complete,
+naturally coloured scene standing on a tilted book page. Retain the water spread for a
 second discovery and page turn; questions/explanations remain optional.
 The existing erosion work is revised and retained as an explicitly labelled research
 example. Hachure's numerical integrity and historical evidence are preserved.
@@ -453,5 +453,5 @@ session handovers above remain historical, not current launch instructions.
 ## Current wave closure amendment
 
 Wave 5 implementation requires 5G–5N as well as retained A–F foundations. Use
-PB1–PB9 and GV1–GV8, not the former contour/water-only checklist. Keep scientific,
+PB1–PB9 and GV1–GV9, not the former contour/water-only checklist. Keep scientific,
 owner, human and hardware gates separate. See [extension closure](stage-1-wave-5-glacial.md#5n).

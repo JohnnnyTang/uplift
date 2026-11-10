@@ -1440,3 +1440,43 @@ scientific, product, human or hardware gate. Push the verified branch for reuse.
 
 Integration session owns provenance/archive and minimal workflow/status updates in
 AGENTS, README, current plans and this appended decision; no production code changes.
+
+## D-W5-GLACIAL-REFINE — Rock-type runs, separate comparison, tilted book, GPU; plan rewritten
+
+2026-11-09. Owner answers after the plan discussion, on s1/w5/glacial-plan-refine from
+s1/w5/integration (d62bb19):
+
+1. **Condition = rock type** (hardness/composition): two or three rock types with natural
+   colours and lithology patterns, chosen on the page or by dropping a specimen on the 3D
+   block. This supersedes the open "ice supply / rock resistance / sliding" choice in 5G.
+   Rock cannot change under a moving glacier, so a choice applies to a whole run; choosing
+   while a run exists starts a new run and keeps the earlier one. Mid-run condition commands
+   are removed.
+2. **Scene:** a full valley reach with a glacier and its snout (V below, U under the ice) is
+   approved. An idealised uniform reach is only the feasibility fallback.
+3. **Comparison uses separate runs, not paired runs.** Kept earlier runs are looked up at
+   matched model time (ghost profile on the front face, margin-note numbers, optional
+   flip). Lockstep A/B, checkpoint replay-to-any-time and command logs are dropped.
+   Interpretation recorded here so the owner can correct it.
+4. **Tilted 3D book**, with the diorama standing on and above the right page; flat fallback
+   on phones, reduced motion and large zoom.
+5. **GPU ships too**, as far as it actually gets: 5I starts after 5G and is used where the
+   registered CPU/GPU comparison passes; CPU is always the fallback; gaps are recorded.
+6. The reference `04-geography-scene.png` is removed and replaced by the owner's
+   `Water-cycle-illustration.png` as `04-water-cycle-illustration.png` (hash in manifest).
+
+Plan change: `docs/plan/stage-1-wave-5-glacial.md` is rewritten as the single source for
+the first lesson, leading with a storyboard of the page, and the guardrails become a
+checklist. The session structure is now:
+
+- 5G glacier model and CPU, running in parallel with 5H book stage, look and transition
+  (finishing on 5G captures);
+- **R1 owner review gate**, where presentation contracts freeze;
+- 5I GPU (from 5G), then 5J runs/timeline, 5K scene interaction and 5L content;
+- 5M integration and chrome restyle, then 5N acceptance.
+
+GV1–GV9 replace GV1–GV8 (GV9 = GPU parity or recorded gap). The duplicated status
+paragraph in four plan files is replaced by one pointer.
+
+Owned scope: plan/product/handoff/README/AGENTS wording, the reference swap and this entry.
+No production code, evidence or lockfile changed. Nothing is launched.

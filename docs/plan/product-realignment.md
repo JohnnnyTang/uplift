@@ -15,13 +15,11 @@ Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
 sessions had not started or could not start is stale. The corrected product is not
 yet accepted: see the [current branch audit](../review/book-revision/current-direction-review.md).
 
-The opening is U-shaped valley formation. The owner has now selected both
-condition changes (UI and equivalent 3D interaction) and watching/inspecting different
-formations over time. [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md) implement
-that combined loop. They are planned, not started. The earlier discussion-only hold
-is superseded for planning; this update does not launch implementation. Contours are
-optional, the entrance is artistic, and scenes may use natural colours. The old
-contour/source selection and no-new-physics rule do not govern the glacial opening.
+The opening lesson is **From V to U** (U-shaped valley formation). Its single source
+of truth is [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md), rewritten 2026-11-09:
+the reader picks a rock type (page selector or a specimen dropped on the 3D block), each
+choice is a separate run, kept runs are compared at matched model time, the scene stands
+on a tilted 3D book, and the GPU glacier ships where it passes parity. Planned, not started.
 A–F remain foundations; their evidence is not glacial lesson acceptance.
 
 Owner-directed correction, 2026-11-09. Product-direction commit 46fefe6 is merged
@@ -69,13 +67,15 @@ viewports, not simulated measurements, and do not belong in lesson copy.
 
 ### PB9 · Intervene and observe formation over time
 
-The default U-shaped-valley lesson lets the reader change one scientifically supported
-condition through UI and equivalent 3D input, watch real evolution, pause/step, inspect
-past states without losing the live head and compare condition runs at matched times.
-Input changes never silently reset or rewrite history. Section, ice visibility, camera
-and level are view-only. All displayed values identify the actual run/time/configuration.
-Keyboard and reduced-motion paths preserve meaningful participation. The glacial
-[GV1–GV8 matrix](stage-1-wave-5-glacial.md#traceability-and-drift-gate) assigns evidence
+The default U-shaped-valley lesson lets the reader choose a rock type through the page
+selector or by dropping a specimen on the 3D block. Each choice starts a separate run from
+the same starting valley, and earlier runs are kept. The reader watches real evolution,
+pauses/steps, scrubs recorded past states without losing the live run, and compares with
+kept runs at matched model times (separate runs, not paired). A rock choice never edits an
+existing run. Section, ice visibility, camera and level are view-only. All displayed values
+identify the actual run/time/configuration. Keyboard and reduced-motion paths preserve
+meaningful participation. The glacial
+[GV1–GV9 matrix](stage-1-wave-5-glacial.md#traceability-and-drift-gate) assigns evidence
 and owners. A passive animation or input-only demonstration fails this criterion.
 
 For PB1, an opened optional deep explanation may use a further page or accessible
@@ -94,9 +94,10 @@ A scene that plays beautifully but teaches an unsupported claim also fails.
 
 ## Open choices and honest completion
 
-The owner has settled the first subject and combined interaction/observation loop.
-5G chooses the supported physical control and model inside that contract; 5H–5N
-implement and verify it. Do not reask whether interaction or watching should win.
+The owner has settled the first subject, the condition (rock type), separate-run
+comparison, the tilted-book presentation and shipping GPU where parity passes.
+5G chooses the model and rock set inside that contract; R1 is the owner's look review;
+5I–5N implement and verify it. Do not reask these choices.
 The prior contour/source sequence is retained evidence, not the opening selection.
 
 5N and Wave 6 explicitly track product review, human listening, target hardware and

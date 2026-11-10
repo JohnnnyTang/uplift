@@ -12,11 +12,12 @@ not evidence of glacial erosion or approval of the old lesson. See the
 
 ## Planned extension acceptance — not yet run
 
-5G–5N must supply PB9 and GV1–GV8 evidence: physical-condition changes through UI/3D,
-formation over time, pause/step/history, matched-time comparison, glacial process/parity,
-natural scene, provenance and accessible default-book integration. Every extension
-criterion is **pending**. 5N owns the integrated packet; 5G/5H/5I own mechanism and
-backend evidence. The table below remains the historical A–F baseline, not a glacial pass.
+5G–5N must supply PB9 and GV1–GV9 evidence: rock-type choice through UI/3D starting
+separate runs, formation over time, pause/step/scrubbing, matched-time comparison with
+kept runs, glacial process and CPU/GPU parity, a naturally coloured scene on a tilted
+book page, provenance and accessible default-book integration. Every extension
+criterion is **pending**. 5N owns the integrated packet; 5G/5I own mechanism and
+backend evidence; R1 records the owner's scene review. The table below remains the historical A–F baseline, not a glacial pass.
 See [session ownership and criteria](stage-1-wave-5-glacial.md#traceability-and-drift-gate).
 
 | Criterion                    | Automated / rendered evidence                                                                                                                                        | Status and remaining owner                                                                    |

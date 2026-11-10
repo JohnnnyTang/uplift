@@ -9,7 +9,7 @@ The authoritative product gate is now PB1–PB9 in the realignment plan.
 The scene-specific choices below describe the original contour/water implementation.
 The next opening is U-shaped valley formation with intervention and temporal
 inspection/comparison. [5G–5N](../../plan/stage-1-wave-5-glacial.md) is now planned;
-5G freezes the glacial contracts. Existing contour-specific types are not a mandate
+5G freezes the model contracts and presentation contracts freeze at the R1 owner review. Existing contour-specific types are not a mandate
 to build the next scene around contours.
 The entrance transition is artistic, not a rigorous 2D/3D mapping requirement.
 Natural material colours are allowed. Retain the lifecycle/binding guarantees;

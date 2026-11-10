@@ -15,12 +15,13 @@ Use `s1/w5/integration` as the base and PR target for every future Wave 5 sessio
 Consume only dependencies already merged there; this owner-authorized exception
 supersedes main-only launch instructions for Wave 5. Other waves retain their default.
 
-For the opening lesson, read docs/plan/stage-1-wave-5-glacial.md and your 5G–5N
-brief. U-shaped valley formation must combine physical-condition changes (UI and
-an equivalent 3D gesture) with watching, inspecting/replaying and comparing formation
-over time. Neither part is optional. A–F are retained foundations, not glacial acceptance.
-The transition is artistic, contours optional, scene colours natural. Quote the relevant
-GV acceptance row in the session handover; record deviations before dependent work.
+For the opening lesson, read docs/plan/stage-1-wave-5-glacial.md (the single source)
+and your 5G–5N brief. Start with its storyboard ("The page we are building"). The reader
+picks a rock type (page selector or a specimen dropped on the 3D block); each choice is a
+separate run, compared with kept runs at matched model time. The scene stands on a tilted
+3D book page; the transition is artistic, contours optional, scene colours natural; GPU
+ships where it passes parity. A–F are retained foundations, not glacial acceptance.
+Quote the relevant GV row in the session handover; record deviations before dependent work.
 
 ## Non-negotiables
 

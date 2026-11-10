@@ -15,13 +15,11 @@ Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
 sessions had not started or could not start is stale. The corrected product is not
 yet accepted: see the [current branch audit](../review/book-revision/current-direction-review.md).
 
-The opening is U-shaped valley formation. The owner has now selected both
-condition changes (UI and equivalent 3D interaction) and watching/inspecting different
-formations over time. [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md) implement
-that combined loop. They are planned, not started. The earlier discussion-only hold
-is superseded for planning; this update does not launch implementation. Contours are
-optional, the entrance is artistic, and scenes may use natural colours. The old
-contour/source selection and no-new-physics rule do not govern the glacial opening.
+The opening lesson is **From V to U** (U-shaped valley formation). Its single source
+of truth is [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md), rewritten 2026-11-09:
+the reader picks a rock type (page selector or a specimen dropped on the 3D block), each
+choice is a separate run, kept runs are compared at matched model time, the scene stands
+on a tilted 3D book, and the GPU glacier ships where it passes parity. Planned, not started.
 A–F remain foundations; their evidence is not glacial lesson acceptance.
 
 How Uplift and Hachure get built: the work model, the rules that keep parallel agents from colliding, and
@@ -116,8 +114,8 @@ For the current Wave 5, use this scoped variant and target PRs to s1/w5/integrat
 
 ```sh
 git fetch origin
-git worktree add ../uplift-wt/5g-glacial-contracts -b s1/w5/5g-glacial-contracts origin/s1/w5/integration
-cd ../uplift-wt/5g-glacial-contracts
+git worktree add ../uplift-wt/5g-glacier-model -b s1/w5/5g-glacier-model origin/s1/w5/integration
+cd ../uplift-wt/5g-glacier-model
 pnpm install --frozen-lockfile
 ```
 

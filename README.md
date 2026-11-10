@@ -19,10 +19,10 @@ used to show slope, which is the look the engine draws.
 > and [review packet](docs/review/book-revision/acceptance/README.md). Wave 6 completes those gates;
 > local integration does not establish release readiness.
 
-The latest review branch includes Wave 5B–5F; main remains at 5A. The owner now
-prefers U-shaped valley formation as the first lesson, with a textbook drawing
-transitioning artistically into a naturally coloured 3D scene. The owner selected
-condition changes plus watching, inspecting and comparing formation over time.
+The latest review branch includes Wave 5B–5F; main remains at 5A. The first lesson is
+**From V to U**: a textbook drawing of a glaciated valley turns into a naturally coloured
+3D diorama standing on a tilted book page. The reader picks a rock type, watches the
+glacier reshape the valley, scrubs back through the run and compares separate runs.
 [Wave 5 sessions 5G–5N](docs/plan/stage-1-wave-5-glacial.md) are planned, not started. [Saved references](docs/references/owner-2026-11-09/README.md)
 and [branch audit](docs/review/book-revision/current-direction-review.md).
 

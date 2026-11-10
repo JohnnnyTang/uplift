@@ -39,11 +39,11 @@ The reference is [Every Joule](https://iamtechartist.com/every-joule/) by Techar
 
 ## Latest lesson choice
 
-The owner selects U-shaped valley formation for the opening lesson, with both
-condition changes (UI and equivalent 3D gesture) and watching/inspecting formation
-over time. The authorized plan is [Wave 5 sessions 5G–5N](plan/stage-1-wave-5-glacial.md);
-implementation has not started. One physical condition plus playback/inspection
-serve one teaching idea. Ice scope is reopened specifically for this lesson; the
+The owner selects U-shaped valley formation (**From V to U**) for the opening lesson.
+The condition is rock type, chosen on the page or by dropping a specimen on the 3D block;
+each choice is a separate run, and kept runs are compared at matched model time. The
+authorized plan is [Wave 5 sessions 5G–5N](plan/stage-1-wave-5-glacial.md); implementation
+has not started. One condition plus playback/inspection serve one teaching idea. Ice scope is reopened specifically for this lesson; the
 hydraulic solver does not thereby become a glacier model.
 See the [current product direction](product-story.md#current-owner-direction--2026-11-09)
 and [saved reference images](references/owner-2026-11-09/README.md).

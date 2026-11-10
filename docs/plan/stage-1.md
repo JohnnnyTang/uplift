@@ -15,13 +15,11 @@ Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
 sessions had not started or could not start is stale. The corrected product is not
 yet accepted: see the [current branch audit](../review/book-revision/current-direction-review.md).
 
-The opening is U-shaped valley formation. The owner has now selected both
-condition changes (UI and equivalent 3D interaction) and watching/inspecting different
-formations over time. [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md) implement
-that combined loop. They are planned, not started. The earlier discussion-only hold
-is superseded for planning; this update does not launch implementation. Contours are
-optional, the entrance is artistic, and scenes may use natural colours. The old
-contour/source selection and no-new-physics rule do not govern the glacial opening.
+The opening lesson is **From V to U** (U-shaped valley formation). Its single source
+of truth is [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md), rewritten 2026-11-09:
+the reader picks a rock type (page selector or a specimen dropped on the 3D block), each
+choice is a separate run, kept runs are compared at matched model time, the scene stands
+on a tilted 3D book, and the GPU glacier ships where it passes parity. Planned, not started.
 A–F remain foundations; their evidence is not glacial lesson acceptance.
 
 Detailed plan for the current stage. The work model and rules are in [README.md](README.md). The product
@@ -85,7 +83,7 @@ Wave 6 is revised hardening. Historical technical dependencies remain in their b
 | W2     | Foundations                                   | 2A–2F                                                     | CPU, rendering, runtime, shell and probes                                |
 | W3     | Integration and science                       | 3A–3F                                                     | CPU integration, actual science results and recorded comparison          |
 | W4     | GPU, depth and supporting capabilities        | 4A–4F                                                     | Implementations integrated; human/science acceptance accurately retained |
-| **W5** | **Revise the book and build the new example** | **A–F foundations retained; G–N glacial opening planned** | **Current; condition changes plus formation over time**                  |
+| **W5** | **Revise the book and build the new example** | **A–F foundations retained; G–N glacial opening planned** | **Current; rock-type runs plus formation over time**                     |
 | W6     | Hardening and review                          | 6A performance → 6B audit → 6C review → 6D retro          | Finish current book's release gates and lesson-led next plan             |
 
 ```mermaid
@@ -101,16 +99,20 @@ flowchart LR
     C5 --> E5
     D5 --> E5
     E5 --> F5[5F Integrated acceptance]
-    F5 --> G5[5G Glacial feasibility and contracts]
-    G5 --> H5[5H CPU process]
-    H5 --> P5[5I GPU / 5J Timeline / 5K Scene / 5L Content]
-    P5 --> M5[5M Integrate first lesson]
+    F5 --> G5[5G Glacier model and CPU]
+    F5 --> H5[5H Book stage and look]
+    G5 --> H5
+    H5 --> R5{{R1 Owner review}}
+    G5 --> I5[5I GPU glacier]
+    R5 --> P5[5J Runs / 5K Scene / 5L Content]
+    I5 --> M5[5M Integrate first lesson]
+    P5 --> M5
     M5 --> N5[5N Glacial acceptance]
     N5 --> W6[Wave 6 Hardening and release review]
 ```
 
-**Current critical path:** verified s1/w5/integration → 5G glacial feasibility/contracts
-→ 5H CPU → 5I GPU / 5J timeline / 5K scene / 5L content → 5M integration → 5N acceptance
+**Current critical path:** verified s1/w5/integration → 5G glacier model ∥ 5H book stage
+→ R1 owner review → 5I GPU / 5J runs / 5K scene / 5L content → 5M integration → 5N acceptance
 → Wave 6 hardening/review. [Full briefs](stage-1-wave-5-glacial.md).
 The historical solver chain explains the foundations, not the current product priority.
 Historical references to the former hardening sessions 5A–5D now map to 6A–6D.
@@ -747,19 +749,20 @@ W4 engine integrations are retained and their human/scientific limitations remai
 
 The table above records A–F foundations. The current-wave additions are:
 
-| Session                            | Deliverable                                                     | Starts after               |
-| ---------------------------------- | --------------------------------------------------------------- | -------------------------- |
-| [5G](stage-1-wave-5-glacial.md#5g) | Glacial mechanism feasibility, selected condition and contracts | Verified s1/w5/integration |
-| [5H](stage-1-wave-5-glacial.md#5h) | Deterministic CPU process and complete state                    | 5G                         |
-| [5I](stage-1-wave-5-glacial.md#5i) | GPU implementation and CPU/GPU parity                           | 5H                         |
-| [5J](stage-1-wave-5-glacial.md#5j) | Intervention, timeline, inspection and comparison runtime       | 5H                         |
-| [5K](stage-1-wave-5-glacial.md#5k) | Complete coloured scene and direct gesture                      | 5H                         |
-| [5L](stage-1-wave-5-glacial.md#5l) | Focused lesson, sources and claim-linked content                | 5H                         |
-| [5M](stage-1-wave-5-glacial.md#5m) | Default-book integration and composition                        | 5I–5L merged               |
-| [5N](stage-1-wave-5-glacial.md#5n) | Prospective science, integrated acceptance and drift audit      | 5M                         |
+| Session                            | Deliverable                                                          | Starts after               |
+| ---------------------------------- | -------------------------------------------------------------------- | -------------------------- |
+| [5G](stage-1-wave-5-glacial.md#5g) | Glacier model and CPU module: rock types, feasibility, captured runs | Verified s1/w5/integration |
+| [5H](stage-1-wave-5-glacial.md#5h) | Tilted book stage, scene look and drawing→ink→colour transition      | With 5G; finishes on 5G    |
+| [R1](stage-1-wave-5-glacial.md#r1) | Owner review gate; presentation contracts freeze                     | 5H merged                  |
+| [5I](stage-1-wave-5-glacial.md#5i) | GPU glacier and CPU/GPU parity                                       | 5G merged                  |
+| [5J](stage-1-wave-5-glacial.md#5j) | Runs, snapshots, timeline and comparison runtime                     | R1                         |
+| [5K](stage-1-wave-5-glacial.md#5k) | Production scene and direct interaction                              | R1                         |
+| [5L](stage-1-wave-5-glacial.md#5l) | Lesson content and sources                                           | R1                         |
+| [5M](stage-1-wave-5-glacial.md#5m) | Default-book integration and chrome                                  | 5J–5L; 5I or recorded gap  |
+| [5N](stage-1-wave-5-glacial.md#5n) | Registered acceptance and review packet                              | 5M                         |
 
-**Current execution:** 5G → 5H → 5I/5J/5K/5L → 5M → 5N.
-**Current merge order:** G → H → I → J → K → L → M → N.
+**Current execution:** 5G ∥ 5H → R1 → 5I (from 5G) / 5J / 5K / 5L → 5M → 5N.
+**Current merge order:** G → H → (R1) → I, J, K, L as ready → M → N.
 All additions are planned, not launched. Read the linked briefs for owned paths and gates.
 
 **Historical A–F execution:** 5A alone → 5B/5C/5D in parallel → 5E alone → 5F alone.
@@ -789,9 +792,9 @@ the original waterfall outcome.
 `uplift/book/src/reader/**`. Solver tuning only for a demonstrated bottleneck,
 with separate justification and CPU/GPU comparison.
 
-Carry the 5N glacial journey into hardening: measure condition-to-visible-response,
-playback, timeline reconstruction/cancellation, reference comparison, checkpoint memory
-and page departure on both supported CPU and GPU paths. Preserve fixed-step results
+Carry the 5N glacial journey into hardening: measure transition, rock-choice-to-visible-
+response, playback, scrubbing, kept-run comparison, snapshot memory and page departure
+on both supported CPU and GPU paths. Preserve fixed-step results
 while tuning scheduling. The old contour/source measurements alone do not close 6A.
 
 Measure visible Chrome on target integrated-GPU hardware, recording device, driver,

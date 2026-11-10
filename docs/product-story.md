@@ -20,12 +20,21 @@ water need not share paper colour. The old one-or-two-quantity-colours restricti
 is superseded. Data colours still need a legend and non-colour cues; natural material
 colour need not pretend to encode a measured quantity. Preserve accessible contrast.
 
-The first lesson is **formation of U-shaped valleys**. The owner has selected both
-condition changes and observation over time: **change → evolve → inspect/replay →
-compare**. UI and equivalent 3D gestures change the same physical condition; camera,
-section and ice visibility inspect it without changing the model. The implementation
-plan is [Wave 5 sessions 5G–5N](plan/stage-1-wave-5-glacial.md), not yet started.
-Rain/runoff and contours remain useful examples, not the chosen opening.
+The first lesson is **formation of U-shaped valleys** (_From V to U_). The loop is
+**choose rock → watch it evolve → scrub back and inspect → compare runs**:
+
+- **Condition:** rock type, shown with natural colours and textbook lithology patterns.
+  It is chosen on the page or by dropping a specimen on the 3D block; both send one command.
+- **Runs:** each rock choice is a separate run from the same starting V-valley. Earlier
+  runs are kept and compared at matched model time. Runs are separate, never paired.
+- **Inspection:** camera, the block's front-face cross-section and the ice view inspect
+  without changing the model.
+- **Presentation:** the scene is a full valley with its glacier, standing on a tilted
+  3D book page.
+- **Backend:** GPU ships where it passes CPU/GPU parity, and CPU is always the fallback.
+
+The single source of truth is [Wave 5 sessions 5G–5N](plan/stage-1-wave-5-glacial.md),
+not yet started. Rain/runoff and contours remain useful examples, not the chosen opening.
 
 [Saved owner references](references/owner-2026-11-09/README.md) establish the intended
 experience. The exact transformation is not an unresolved science requirement.
@@ -159,14 +168,15 @@ See [NPS: U-shaped valleys](https://www.nps.gov/articles/ushapedvalleysfjordshan
 and [Yosemite geology](https://www.nps.gov/yose/learn/nature/geology.htm).
 These sources support the teaching topic; they do not validate a numerical model.
 
-The scene: a textbook drawing becomes a naturally coloured valley with
-ice moving through it. The reader can inspect how the valley profile changes and
-reveal the land beneath the ice. An ice-visibility control is presentation only;
-it must not imply instantaneous melting or reset the evolving terrain. Keep the
+The scene: a textbook block diagram becomes a naturally coloured valley with
+a glacier flowing through it, standing on the page. The block's front face is the
+live cross-section, with the starting V as a dashed line and a kept run's profile as
+a ghost. The reader can reveal the land beneath the ice. That control is presentation
+only; it must not imply instantaneous melting or reset the evolving terrain. Keep the
 lesson on glacial valley reshaping rather than expanding to a whole glacial system.
-5G selects and freezes the supported condition, range and model law before consumers
-start. One condition with two input methods, playback and inspection still serve
-one idea; the one-idea rule must not delete either interaction or observation.
+The condition is rock type (owner decision). 5G selects the model, the rock set and
+its sources, and tests whether rock changes the shape or only the rate. One condition
+with two input methods, playback and inspection still serves one idea.
 
 The current engine implements surface-water/hydraulic erosion, not glacier flow
 and glacial erosion. Existing book/runtime work remains useful. A shared glacial
