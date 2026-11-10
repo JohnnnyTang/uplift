@@ -12,7 +12,7 @@ import { ROCK_IDS, type RockId } from "../contract/rocks";
 /** Seed of the authored start used by every captured run. */
 export const CAPTURE_SEED = 1;
 /** Identifier of the authored starting valley recorded in each manifest. */
-export const START_PRESET_ID = "v-valley/1";
+export const START_PRESET_ID = "v-valley/2";
 /** Rocks with a captured run, in teaching order (soft → hard). */
 export const CAPTURED_ROCKS: readonly RockId[] = ROCK_IDS;
 

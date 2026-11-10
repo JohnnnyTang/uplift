@@ -1534,3 +1534,27 @@ the snout must not assume a bed that drains down-valley (5H/5K). (d) CPU cost at
 per model year on the reference grid in Node (one core, measured under load): a 300-year run is ~1.5 min
 of worker time at full speed. Faster playback needs the GPU (5I) or a coarser grid; the fixed step must
 not grow.
+
+## D-W5-5G2 — Enclosed valley head; grid 160 × 64; protocol re-registered (deviation)
+
+2026-11-10. Session 5G2 (`s1/w5/5g2-enclosed-head`, from s1/w5/integration 9da4fad).
+
+**Deviation from the 5G registration, recorded before the 5G2 registered runs.** The 5G protocol was
+registered on `v-valley/1` (open head, 128 × 96). 5G2 re-registers it on a new start and grid; the 5G
+results and evidence stay in the record (`docs/review/glacial/model/5g-open-head/`, feasibility.md).
+
+1. **Start `v-valley/2`** (`DEFAULT_V_VALLEY`): the 5G valley over its first 5080 m (same floor and
+   26° V walls, so the registered sections keep their start shape), ending in a head basin enclosed on
+   three sides by a crest that wraps round the valley end; crest rise 800 m (was 1000 m, to fit the grid);
+   outer flanks 20° (was 8°) falling to a quarter of the way from floor to crest (was half), so the ground
+   outside the crest carries only thin, cold-based ice. The 5G start is kept as `OPEN_HEAD_V_VALLEY`;
+   two new preset options (`valleyLengthM`, `outerFlankFloorFraction`) reproduce it bitwise.
+2. **Grid 160 × 64 cells at 40 m** (was 128 × 96): `DEFAULT_GLACIER_CONFIG.nx/ny` changed. Captures
+   and consumers read the grid from the manifest; orientation, indexing and every other config value are
+   unchanged. A capture snapshot is now 81 920 bytes (was 98 304).
+3. **Unchanged:** physics, `GlacierConfig`/state/probe contracts, capture format v1, time compression
+   (120), horizon (300 model years), snapshot interval, matched times, seeds, section columns, thresholds.
+4. **Added readings:** T1 and R1–R4 also read at matched erosion (E-T1, E-R1–E-R4), beside the
+   matched-time verdicts; the 5G open-head start re-run as two recorded attempt arms.
+5. **Chosen after four pilot variants** (feasibility.md, P1–P4), which already showed that no tested
+   start or compression gives every rock a T1 trough at one common time (erodibility differs 5×).

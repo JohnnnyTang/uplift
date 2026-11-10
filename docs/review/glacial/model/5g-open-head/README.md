@@ -1,7 +1,10 @@
-# Glacier model review evidence (session 5G)
+# Glacier model review evidence (session 5G, open valley head; superseded by 5G2)
+
+Archived by session 5G2: the 5G registered run on the open-head start `v-valley/1` (128 × 96). Kept
+unchanged as part of the record; the current evidence is in the parent folder.
 
 Evidence for the 5G glacier model (`@hachure/glacier`, CPU reference). Model note, protocol and the
-full attempt record live in [docs/science/glacial](../../../science/glacial/). Everything here is
+full attempt record live in [docs/science/glacial](../../../../science/glacial/). Everything here is
 generated; regenerate with:
 
 ```sh

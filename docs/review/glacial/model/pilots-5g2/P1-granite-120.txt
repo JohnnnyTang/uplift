@@ -1,0 +1,12 @@
+start max slope 34.6
+steepest start step at i126 j14 z2206
+t=0 V=0.000km3 snout=NaN ub=0 us=0 er=0.0Mm3 cap=0.00% lim=0 out=0.000km3 || i14: H0 d198 fw145 hw451 b1.23 ws26/26 lo0 | i74: H0 d300 fw141 hw655 b1.16 ws26/27 lo0 | i90: H0 d401 fw140 hw860 b1.12 ws26/27 lo0 | i110: H0 d380 fw143 hw817 b1.14 ws26/27 lo0
+t=50 V=0.543km3 snout=2160 ub=160 us=407 er=13.2Mm3 cap=0.33% lim=473032 out=0.274km3 || i14: H0 d198 fw145 hw451 b1.23 ws26/26 lo0 | i74: H166 d303 fw138 hw648 b1.16 ws26/28 lo3 | i90: H210 d407 fw152 hw848 b1.13 ws27/32 lo6 | i110: H147 d412 fw116 hw751 b1.04 ws29/41 lo33
+t=100 V=0.661km3 snout=1120 ub=160 us=455 er=39.2Mm3 cap=2.57% lim=1421734 out=0.748km3 || i14: H0 d198 fw145 hw451 b1.23 ws26/26 lo0 | i74: H208 d306 fw164 hw642 b1.32 ws28/32 lo7 | i90: H239 d412 fw203 hw837 b1.35 ws28/37 lo11 | i110: H191 d461 fw136 hw653 b0.86 ws31/55 lo82
+t=150 V=0.702km3 snout=800 ub=149 us=533 er=64.8Mm3 cap=2.38% lim=2188396 out=1.223km3 || i14: H0 d198 fw145 hw451 b1.23 ws26/26 lo0 | i74: H214 d310 fw197 hw636 b1.45 ws30/36 lo10 | i90: H247 d415 fw218 hw830 b1.30 ws29/41 lo14 | i110: H218 d488 fw158 hw598 b1.21 ws37/55 lo109
+t=200 V=0.723km3 snout=720 ub=160 us=630 er=89.5Mm3 cap=1.37% lim=2782164 out=1.699km3 || i14: H0 d198 fw145 hw451 b1.23 ws26/26 lo0 | i74: H219 d313 fw210 hw630 b1.64 ws31/37 lo13 | i90: H255 d419 fw222 hw824 b1.41 ws29/44 lo18 | i110: H230 d500 fw176 hw575 b1.55 ws40/55 lo120
+t=250 V=0.740km3 snout=720 ub=160 us=562 er=118.9Mm3 cap=1.02% lim=3332750 out=2.175km3 || i14: H0 d198 fw145 hw451 b1.23 ws26/26 lo0 | i74: H223 d316 fw218 hw626 b1.53 ws31/42 lo16 | i90: H263 d421 fw221 hw819 b1.45 ws29/44 lo20 | i110: H235 d506 fw194 hw579 b1.78 ws43/55 lo126
+t=300 V=0.755km3 snout=720 ub=144 us=1214 er=152.6Mm3 cap=0.76% lim=3916515 out=2.653km3 || i14: H0 d198 fw145 hw451 b1.23 ws26/26 lo0 | i74: H225 d318 fw224 hw622 b1.54 ws31/46 lo18 | i90: H269 d424 fw220 hw814 b1.48 ws29/49 lo23 | i110: H245 d513 fw68 hw600 b1.07 ws47/55 lo133
+t=350 V=0.772km3 snout=760 ub=160 us=1451 er=188.8Mm3 cap=0.68% lim=4696408 out=3.134km3 || i14: H0 d198 fw145 hw451 b1.23 ws26/26 lo0 | i74: H230 d320 fw225 hw618 b1.35 ws31/48 lo20 | i90: H277 d426 fw219 hw810 b1.31 ws29/52 lo25 | i110: H255 d517 fw63 hw637 b0.92 ws48/55 lo138
+t=400 V=0.790km3 snout=760 ub=160 us=1395 er=234.2Mm3 cap=0.80% lim=5624294 out=3.617km3 || i14: H0 d198 fw145 hw451 b1.23 ws26/26 lo0 | i74: H236 d323 fw225 hw615 b1.32 ws30/49 lo23 | i90: H285 d428 fw217 hw806 b1.29 ws29/54 lo27 | i110: H262 d521 fw60 hw686 b0.89 ws52/55 lo141
+ms per model year 472.1

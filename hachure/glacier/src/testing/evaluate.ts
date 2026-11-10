@@ -4,7 +4,12 @@
  * fixture tests (on the captured runs).
  */
 import { ROCK_IDS, type RockId } from "../contract/rocks";
-import { PROTOCOL_CRITERIA, PROTOCOL_MATCHED_YEARS, PROTOCOL_SEEDS } from "./protocol";
+import {
+  PROTOCOL_CRITERIA,
+  PROTOCOL_MATCHED_YEARS,
+  PROTOCOL_SEEDS,
+  PROTOCOL_SNAPSHOT_YEARS,
+} from "./protocol";
 
 export interface SectionRecord {
   readonly floorElevationM: number;
@@ -40,16 +45,27 @@ function at(arm: ArmResult, years: number) {
   );
 }
 
-/** Linear interpolation of a section measure at the time the section's eroded area reaches `area`. */
-function atErodedArea(arm: ArmResult, area: number, key: keyof SectionRecord): number {
+type SeriesEntry = ArmResult["series"][number];
+
+/**
+ * Linear interpolation of a measure at the time the under-ice section's eroded area first reaches
+ * `area`. `key` is a section measure, or a function of the series entry (e.g. model years).
+ */
+function atErodedArea(
+  arm: ArmResult,
+  area: number,
+  key: keyof SectionRecord | ((s: SeriesEntry) => number),
+): number {
   const s = arm.series;
+  const pick = (e: SeriesEntry) =>
+    typeof key === "function" ? key(e) : (e.sections.underIce![key] as number);
   for (let i = 1; i < s.length; i++) {
     const a0 = s[i - 1]!.sections.underIce!.erodedAreaM2;
     const a1 = s[i]!.sections.underIce!.erodedAreaM2;
     if (a1 >= area && a1 > a0) {
       const w = (area - a0) / (a1 - a0);
-      const v0 = s[i - 1]!.sections.underIce![key] as number;
-      const v1 = s[i]!.sections.underIce![key] as number;
+      const v0 = pick(s[i - 1]!);
+      const v1 = pick(s[i]!);
       return v0 + w * (v1 - v0);
     }
   }
@@ -191,10 +207,16 @@ export function evaluateProtocol(arms: Record<string, ArmResult>) {
   );
   const matchedArea: Record<string, Record<string, number>> = {};
   for (const { rock, seed, arm } of rockArms) {
+    const start = arm.series[0]!.sections.underIce!;
     matchedArea[`${rock}-s${seed}`] = {
+      modelYears: atErodedArea(arm, ref, (e) => e.modelYears),
       wallSlopeDeg: atErodedArea(arm, ref, "maxWallSlopeDeg"),
       floorWidthM: atErodedArea(arm, ref, "floorWidthM"),
       shapeExponent: atErodedArea(arm, ref, "shapeExponent"),
+      floorLoweringM: start.floorElevationM - atErodedArea(arm, ref, "floorElevationM"),
+      floorWideningM: atErodedArea(arm, ref, "floorWidthM") - start.floorWidthM,
+      shapeIncrease: atErodedArea(arm, ref, "shapeExponent") - start.shapeExponent,
+      wallSteepeningDeg: atErodedArea(arm, ref, "maxWallSlopeDeg") - start.maxWallSlopeDeg,
     };
   }
   const wallAt = (rock: RockId) =>
@@ -211,6 +233,70 @@ export function evaluateProtocol(arms: Record<string, ArmResult>) {
     pass: shapeGap >= C.shapeMinWallGapDeg,
     detail: `matched eroded area ${ref.toFixed(0)} m²; granite walls ${gWall.map((x) => x.toFixed(1)).join("/")}°, shale walls ${sWall.map((x) => x.toFixed(1)).join("/")}°; gap ${shapeGap.toFixed(1)}° (need ≥ ${C.shapeMinWallGapDeg})`,
   });
+
+  // E: the matched-time claims re-read at matched erosion (session 5G2): every rock arm is read at the
+  // moment its under-ice section has lost the S1 reference area (granite reaches it at the horizon, softer
+  // rock earlier). Reported beside the matched-time verdicts, never instead of them.
+  for (const { rock, seed } of rockArms) {
+    const m = matchedArea[`${rock}-s${seed}`]!;
+    const pass =
+      m.floorWideningM! >= C.troughMinFloorWideningM &&
+      m.shapeIncrease! >= C.troughMinShapeIncrease &&
+      m.floorLoweringM! >= C.troughMinLoweringM &&
+      m.wallSteepeningDeg! >= C.troughMinWallSteepeningDeg;
+    verdicts.push({
+      id: `E-T1-${rock}-s${seed}`,
+      claim: "At equal eroded area, the V under the ice has become a trough (T1 thresholds)",
+      pass,
+      detail: `at ${m.modelYears!.toFixed(0)} model years: floor +${m.floorWideningM!.toFixed(0)} m (need ≥ ${C.troughMinFloorWideningM}); b +${m.shapeIncrease!.toFixed(2)} (need +${C.troughMinShapeIncrease}); floor lowered ${m.floorLoweringM!.toFixed(0)} m (need ≥ ${C.troughMinLoweringM}); steepest wall +${m.wallSteepeningDeg!.toFixed(1)}° (need +${C.troughMinWallSteepeningDeg})`,
+    });
+  }
+  const orderAtArea = (key: string, sign: 1 | -1, minGap: number, id: string, claim: string) => {
+    const fails: string[] = [];
+    let worst = Number.POSITIVE_INFINITY;
+    for (const seed of PROTOCOL_SEEDS) {
+      const v = ROCK_IDS.map((r) => matchedArea[`${r}-s${seed}`]?.[key] ?? Number.NaN);
+      if (v.some(Number.isNaN)) continue;
+      const g1 = sign * (v[0]! - v[1]!);
+      const g2 = sign * (v[1]! - v[2]!);
+      worst = Math.min(worst, g1, g2);
+      if (g1 < minGap || g2 < minGap) fails.push(`s${seed}: ${v.map((x) => x.toFixed(1)).join(" / ")}`);
+    }
+    verdicts.push({
+      id,
+      claim,
+      pass: fails.length === 0 && Number.isFinite(worst),
+      detail: `matched eroded area ${ref.toFixed(0)} m²; smallest step ${worst.toFixed(2)} (need ≥ ${minGap})${fails.length ? `; fails ${fails.join("; ")}` : ""}`,
+    });
+  };
+  orderAtArea(
+    "modelYears",
+    -1,
+    PROTOCOL_SNAPSHOT_YEARS,
+    "E-R1-rate",
+    "Softer rock removes the same rock area sooner: time shale < sandstone < granite (by at least one snapshot interval)",
+  );
+  orderAtArea(
+    "floorWidthM",
+    1,
+    C.rockMinWidthGapM,
+    "E-R2-wider",
+    "At equal eroded area, floor width shale > sandstone > granite",
+  );
+  orderAtArea(
+    "wallSlopeDeg",
+    -1,
+    C.rockMinWallGapDeg,
+    "E-R3-steeper",
+    "At equal eroded area, steepest wall granite > sandstone > shale",
+  );
+  orderAtArea(
+    "floorLoweringM",
+    1,
+    C.rockMinDepthGapM,
+    "E-R4-deeper",
+    "At equal eroded area, floor lowering shale > sandstone > granite",
+  );
 
   // Controls.
   const noIce = arms["control-no-ice"];

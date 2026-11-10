@@ -114,11 +114,12 @@ export interface GlacierConfig {
 
 /**
  * Defaults: the reference configuration registered in docs/science/glacial/acceptance-protocol.md.
- * Rock is sandstone (the middle rock). Change only through the protocol.
+ * Rock is sandstone (the middle rock). Change only through the protocol. The grid is 160 × 64 cells since
+ * session 5G2 (the enclosed valley head, `v-valley/2`); session 5G used 128 × 96.
  */
 export const DEFAULT_GLACIER_CONFIG: GlacierConfig = Object.freeze({
-  nx: 128,
-  ny: 96,
+  nx: 160,
+  ny: 64,
   metresPerCell: 40,
   seed: 1,
   dtYears: 0.0025,

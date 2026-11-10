@@ -1,0 +1,4 @@
+start max slope 34.6
+steepest start step at i126 j14 z2206
+t=0 V=0.000km3 snout=NaN ub=0 us=0 er=0.0Mm3 cap=0.00% lim=0 out=0.000km3 || i14: H0 d198 fw145 hw451 b1.23 ws26/26 lo0 | i74: H0 d300 fw141 hw655 b1.16 ws26/27 lo0 | i90: H0 d401 fw140 hw860 b1.12 ws26/27 lo0 | i110: H0 d380 fw143 hw817 b1.14 ws26/27 lo0
+ms per model year Infinity
