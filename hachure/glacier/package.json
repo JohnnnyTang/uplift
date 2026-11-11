@@ -7,10 +7,18 @@
   "license": "MIT",
   "exports": {
     ".": "./src/index.ts",
+    "./gpu": "./src/gpu/index.ts",
     "./testing": "./src/testing/index.ts",
     "./captures/*": "./src/testing/captured-runs/*"
   },
   "dependencies": {
     "@hachure/terrain": "workspace:*"
+  },
+  "devDependencies": {
+    "@vitest/browser-playwright": "5.1.0",
+    "playwright": "1.65.0"
+  },
+  "scripts": {
+    "test:gpu": "tsc -p test/browser/tsconfig.json && vitest run --config test/browser/vitest.browser.config.mjs"
   }
 }
