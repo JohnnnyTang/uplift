@@ -40,3 +40,35 @@ jobs:
             hachure/terrain/src/compare/results-local.json
             hachure/terrain/src/compare/full-results-local.json
           if-no-files-found: warn
+
+  glacier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Clear committed local evidence before CI setup
+        run: rm -f docs/review/glacial/gpu/results-quick-local.json
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @hachure/glacier exec playwright install --with-deps chromium
+      - run: pnpm --filter @hachure/glacier test:gpu
+        env:
+          GPU_CHROMIUM_BUNDLED: "1"
+          GPU_SOFTWARE: "1"
+      - name: Report GPU capability and comparison evidence
+        if: always()
+        run: |
+          if [ -f docs/review/glacial/gpu/results-quick-local.json ]; then
+            cat docs/review/glacial/gpu/results-quick-local.json
+          fi
+
+      - name: Upload actual comparison evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gpu-glacier-evidence
+          path: docs/review/glacial/gpu/results-quick-local.json
+          if-no-files-found: warn
