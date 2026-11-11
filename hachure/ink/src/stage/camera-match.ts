@@ -36,11 +36,15 @@ export interface StageGeometry {
   readonly book: Rect;
   /** CSS `rotateX` of the book about its centre (unit: degrees). Positive tips the top edge away. */
   readonly tiltDeg: number;
+  readonly orbitDeg?: number;
+  readonly viewScale?: number;
+  /** Pivot above the middle of the spine (CSS pixels). */
+  readonly pivotHeightPx?: number;
 }
 
 /** CSS for the book element; pair with `transform-origin: 50% 50%`. */
-export function bookTransformCss(tiltDeg: number): string {
-  return `rotateX(${tiltDeg}deg)`;
+export function bookTransformCss(tiltDeg: number, orbitDeg = 0, viewScale = 1): string {
+  return `rotateX(${tiltDeg}deg)${orbitDeg ? ` rotateY(${orbitDeg}deg)` : ""}${viewScale !== 1 ? ` scale3d(${viewScale}, ${viewScale}, ${viewScale})` : ""}`;
 }
 
 /** A page-local point (X, Y above the paper, Z down the page) in world coordinates. */
@@ -49,13 +53,18 @@ export function pageToWorld(g: StageGeometry, X: number, Y: number, Z: number): 
   const cx = g.book.x + g.book.width / 2;
   const cy = -(g.book.y + g.book.height / 2);
   // Untilted world position, relative to the book centre.
-  const vx = g.book.x + X - cx;
-  const vy = -(g.book.y + Z) - cy;
-  const vz = Y;
+  const scale = g.viewScale ?? 1;
+  const vx = (g.book.x + X - cx) * scale;
+  const vy = (-(g.book.y + Z) - cy) * scale;
+  const pivot = g.pivotHeightPx ?? 0;
+  const a = ((g.orbitDeg ?? 0) * Math.PI) / 180;
+  const vz = (Y - pivot) * scale;
+  const rx = vx * Math.cos(a) + vz * Math.sin(a);
+  const rz = -vx * Math.sin(a) + vz * Math.cos(a);
   // Rotation about the world x axis by −tilt (the same physical rotation as CSS rotateX(+tilt)).
   const c = Math.cos(t);
   const s = Math.sin(t);
-  return [cx + vx, cy + vy * c + vz * s, -vy * s + vz * c];
+  return [cx + rx, cy + vy * c + rz * s, pivot - vy * s + rz * c];
 }
 
 /** Column-major 4×4 matrix (three.js `Matrix4.fromArray` order) taking page-local points to world. */
@@ -82,11 +91,16 @@ export function worldToStage(g: StageGeometry, w: Vec3): [number, number] {
 export function cssProjectBookPoint(g: StageGeometry, px: number, py: number): [number, number] {
   const t = (g.tiltDeg * Math.PI) / 180;
   const oy = g.book.y + g.book.height / 2;
-  const vy = g.book.y + py - oy;
+  const scale = g.viewScale ?? 1;
+  const vy = (g.book.y + py - oy) * scale;
   // CSS rotateX matrix (y down, z towards the viewer): y' = y cos t − z sin t, z' = y sin t + z cos t.
-  const qx = g.book.x + px;
-  const qy = oy + vy * Math.cos(t);
-  const qz = vy * Math.sin(t);
+  const pivot = g.pivotHeightPx ?? 0;
+  const a = ((g.orbitDeg ?? 0) * Math.PI) / 180;
+  const vx = (px - g.book.width / 2) * scale;
+  const rz = -vx * Math.sin(a) - pivot * scale * Math.cos(a);
+  const qx = g.book.x + g.book.width / 2 + vx * Math.cos(a) - pivot * scale * Math.sin(a);
+  const qy = oy + vy * Math.cos(t) - rz * Math.sin(t);
+  const qz = pivot + vy * Math.sin(t) + rz * Math.cos(t);
   const ex = g.widthPx / 2;
   const ey = g.heightPx / 2;
   const k = g.perspectivePx / (g.perspectivePx - qz);

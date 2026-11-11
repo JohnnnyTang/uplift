@@ -6,6 +6,9 @@
  * Kept apart from `@hachure/ink` (like `@hachure/ink/view`) so the flat page can paint before three.js loads.
  */
 export {
+  BOOK_VIEW_LIMITS,
+  clampBookView,
+  type BookView,
   type BookStage,
   type BookStageOptions,
   type StageBackendRequest,

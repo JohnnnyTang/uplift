@@ -725,3 +725,55 @@
 .gs-review {
   --book-paper: var(--gs-paper);
 }
+
+.gs-view-controls {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: fit-content;
+  max-width: calc(100% - 24px);
+  margin: 0 auto 16px;
+  padding: 8px 16px;
+  border: 1px solid var(--gs-rule);
+  background: var(--gs-paper);
+  color: var(--gs-ink);
+  font:
+    16px/1.4 Georgia,
+    serif;
+}
+.gs-view-controls label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.gs-view-controls input {
+  width: 120px;
+  min-height: 44px;
+}
+.gs-view-controls button {
+  min-height: 44px;
+  font: inherit;
+}
+.gs-view-drag {
+  touch-action: none;
+  cursor: grab;
+}
+.gs-view-drag:active {
+  cursor: grabbing;
+}
+.gs-reading-region {
+  cursor: pointer;
+}
+
+/* Keep the view controls in sight on the desk without tilting them with the paper. */
+.gs-review:has(.gs-desk[data-stage-mode="tilted"]) > .gs-view-controls {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}

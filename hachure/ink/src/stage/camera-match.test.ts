@@ -85,3 +85,33 @@ describe("camera matched to a CSS-tilted page", () => {
     expect(tiltedBookFits({ ...stage, book: { x: 0, y: 0, width: 1440, height: 900 } })).toBe(false);
   });
 });
+
+// Combined turns must preserve the CSS/scene match, including the raised spine pivot.
+describe("spine orbit", () => {
+  it("keeps the raised pivot fixed and matches paper corners at all view limits", () => {
+    for (const tiltDeg of [20, 48, 68])
+      for (const orbitDeg of [-24, 0, 24]) {
+        const g = { ...stage, tiltDeg, orbitDeg, pivotHeightPx: 40, viewScale: 0.73 };
+        expect(pageToWorld(g, g.book.width / 2, 40, g.book.height / 2)).toEqual([
+          g.book.x + g.book.width / 2,
+          -(g.book.y + g.book.height / 2),
+          40,
+        ]);
+        for (const [x, y] of [
+          [0, 0],
+          [1123, 0],
+          [0, 693],
+          [1123, 693],
+          [700, 300],
+        ]) {
+          const css = cssProjectBookPoint(g, x!, y!);
+          const gl = worldToStage(g, pageToWorld(g, x!, 0, y!));
+          expect(gl[0]).toBeCloseTo(css[0], 6);
+          expect(gl[1]).toBeCloseTo(css[1], 6);
+          const matrix = apply(pageFrameMatrix(g), [x!, 50, y!]);
+          const point = pageToWorld(g, x!, 50, y!);
+          for (let i = 0; i < 3; i++) expect(matrix[i]).toBeCloseTo(point[i]!, 6);
+        }
+      }
+  });
+});

@@ -1794,3 +1794,21 @@ Keep the physical furniture hidden in flat phone/reduced-motion fallback. Preser
 existing reading panels, focus return and live-bound notes. No scientific claims or model
 parameters changed. Desktop and laptop captures show the recessed silhouette at both ends
 of the binding and visible layers on both outer edges.
+
+## D-W5-R2 — bounded spine view and simultaneous reading copies (2026-11-11)
+
+Owner review follow-up to R1: let readers lower the sight line and turn the whole
+book/scene around a point just above the spine. Implemented in the shared Ink stage,
+with matched CSS/WebGL transforms, a bounded tilt/turn, viewport fitting and immediate
+view-only updates. The review page exposes drag, keyboard sliders, arrow-key rotation
+and reset. The default sight line is lower; flat/reduced-motion layouts retain immediate
+figure rotation without animating or tilting the text. No solver or recorded snapshot changes.
+
+Reading panels now mirror the source DOM instead of moving it off the paper. Live notes
+and explanation disclosure stay synchronized; copied IDs/references are renamed. Click
+outside or Escape closes the panel; explicit close/Escape restores focus to its trigger.
+
+Scope follows the 5H/R1 stage and glacial review paths. Base is the owner's latest reviewed
+`s1/w5/r1-refinements` tip (7f78dd4), rather than the stale workspace main. This is an R1
+refinement follow-up, not a claim that later glacial integration or scientific acceptance
+is complete. See `docs/review/glacial/stage/r2-camera.md` for validation and handover.

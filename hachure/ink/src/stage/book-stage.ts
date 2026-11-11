@@ -41,6 +41,30 @@ import {
 } from "./camera-match";
 import type { ValleyDiorama } from "./diorama";
 
+/** Presentation bounds: keep the reader above the paper and in front of the book. */
+export const BOOK_VIEW_LIMITS = {
+  minTiltDeg: 20,
+  maxTiltDeg: 68,
+  minOrbitDeg: -24,
+  maxOrbitDeg: 24,
+} as const;
+export interface BookView {
+  readonly tiltDeg: number;
+  readonly orbitDeg: number;
+}
+export function clampBookView(view: BookView): BookView {
+  return {
+    tiltDeg: Math.min(
+      BOOK_VIEW_LIMITS.maxTiltDeg,
+      Math.max(BOOK_VIEW_LIMITS.minTiltDeg, Number.isFinite(view.tiltDeg) ? view.tiltDeg : 48),
+    ),
+    orbitDeg: Math.min(
+      BOOK_VIEW_LIMITS.maxOrbitDeg,
+      Math.max(BOOK_VIEW_LIMITS.minOrbitDeg, Number.isFinite(view.orbitDeg) ? view.orbitDeg : 0),
+    ),
+  };
+}
+
 export type StageMode = "tilted" | "flat";
 export type StageModeRequest = StageMode | "auto";
 export type StageBackendRequest = "auto" | "webgpu" | "webgl2";
@@ -57,7 +81,7 @@ export interface BookStageOptions {
   /** The figure frame on the right page that the diorama stands in. Must be a descendant of `book`. */
   readonly anchor: HTMLElement;
   readonly diorama: ValleyDiorama;
-  /** Book tilt (unit: degrees). Default 34. */
+  /** Book tilt (unit: degrees). Default 48. */
   readonly tiltDeg?: number;
   /** CSS perspective as a multiple of the stage's larger side (unit: none). Default 1.25. */
   readonly perspectiveFactor?: number;
@@ -82,6 +106,9 @@ export interface BookStageOptions {
 
 export interface BookStage {
   readonly mode: StageMode;
+  readonly view: BookView;
+  /** View-only orbit; never touches a snapshot or solver. */
+  setView(view: Partial<BookView>): void;
   readonly backend: "webgpu" | "webgl2" | null;
   readonly canvas: HTMLCanvasElement;
   /** Creates the renderer. Resolves when the backend is ready. Rejects if no GPU path is available. */
@@ -145,6 +172,7 @@ class BookStageImpl implements BookStage {
   private activeBackend: "webgpu" | "webgl2" | null = null;
   private currentMode: StageMode = "flat";
   private request: StageModeRequest;
+  private currentView: BookView;
   private media: MediaQueryList | null = null;
   private observer: ResizeObserver | null = null;
   private frameHandle = 0;
@@ -157,6 +185,7 @@ class BookStageImpl implements BookStage {
 
   constructor(options: BookStageOptions) {
     this.o = options;
+    this.currentView = clampBookView({ tiltDeg: options.tiltDeg ?? 48, orbitDeg: 0 });
     this.request = options.mode ?? "auto";
     this.canvas = document.createElement("canvas");
     this.canvas.className = "hachure-stage-canvas";
@@ -197,6 +226,15 @@ class BookStageImpl implements BookStage {
       this.relayoutHolder();
       this.requestRender();
     };
+  }
+
+  get view(): BookView {
+    return { ...this.currentView };
+  }
+
+  setView(view: Partial<BookView>): void {
+    this.currentView = clampBookView({ ...this.currentView, ...view });
+    this.relayout();
   }
 
   get mode(): StageMode {
@@ -282,8 +320,8 @@ class BookStageImpl implements BookStage {
     const g = this.geometry();
     host.style.perspective = `${g.perspectivePx}px`;
     host.style.perspectiveOrigin = "50% 50%";
-    book.style.transformOrigin = "50% 50%";
-    book.style.transform = bookTransformCss(g.tiltDeg);
+    book.style.transformOrigin = `50% 50% ${g.pivotHeightPx}px`;
+    book.style.transform = bookTransformCss(g.tiltDeg, g.orbitDeg, g.viewScale);
     this.sizeTiltedCanvas();
     host.append(this.canvas);
   }
@@ -292,13 +330,19 @@ class BookStageImpl implements BookStage {
     const { host, book } = this.o;
     const widthPx = host.clientWidth;
     const heightPx = host.clientHeight;
-    return {
+    const geometry = {
       widthPx,
       heightPx,
       perspectivePx: Math.round(Math.max(widthPx, heightPx) * (this.o.perspectiveFactor ?? 1.25)),
       book: layoutRect(book, host),
-      tiltDeg: this.o.tiltDeg ?? 34,
+      tiltDeg: this.currentView.tiltDeg,
+      orbitDeg: this.currentView.orbitDeg,
+      pivotHeightPx: Math.min(book.offsetWidth, book.offsetHeight) * 0.06,
+      viewScale: 1,
     };
+    // Reserve space for the physical binding beyond the DOM paper rectangle.
+    while (geometry.viewScale > 0.55 && !tiltedBookFits(geometry, 64, 0)) geometry.viewScale *= 0.98;
+    return geometry;
   }
 
   /**
@@ -325,6 +369,8 @@ class BookStageImpl implements BookStage {
     if (this.currentMode === "tilted") {
       const g = this.geometry();
       this.o.host.style.perspective = `${g.perspectivePx}px`;
+      this.o.book.style.transformOrigin = `50% 50% ${g.pivotHeightPx}px`;
+      this.o.book.style.transform = bookTransformCss(g.tiltDeg, g.orbitDeg, g.viewScale);
       const cam = stageCamera(g);
       this.camera.fov = cam.fovDeg;
       this.camera.aspect = cam.aspect;
@@ -408,8 +454,8 @@ class BookStageImpl implements BookStage {
     const hFov = 2 * Math.atan(Math.tan(vFov / 2) * this.camera.aspect);
     const distance = (radius / Math.sin(Math.min(vFov, hFov) / 2)) * 0.88;
     // From the front and above; the block's yaw gives the three-quarter view, as on the tilted page.
-    const elevation = (36 * Math.PI) / 180;
-    const azimuth = 0;
+    const elevation = ((90 - this.currentView.tiltDeg) * Math.PI) / 180;
+    const azimuth = (-this.currentView.orbitDeg * Math.PI) / 180;
     this.camera.position.set(
       centre.x + distance * Math.cos(elevation) * Math.sin(azimuth),
       centre.y + distance * Math.sin(elevation),
@@ -458,6 +504,7 @@ class BookStageImpl implements BookStage {
     host.style.perspective = "";
     host.style.perspectiveOrigin = "";
     book.style.transform = "";
+    book.style.transformOrigin = "";
     delete host.dataset.stageMode;
     this.canvas.remove();
     this.catcher.geometry.dispose();

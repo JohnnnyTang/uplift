@@ -12,6 +12,7 @@
  * to the recorded run (the model's own section probe), the snapshot or the stage config, never typed.
  */
 import "./review.css";
+import { createViewControls } from "./view-controls";
 import { createReadingPanel } from "./reading-panel";
 import type { LithologyLook, ValleyDiorama } from "@hachure/ink/stage";
 import type { TransitionRun, TransitionState } from "@hachure/ink/transition";
@@ -21,8 +22,8 @@ import { type ReviewRun, type ReviewSection, combinedRange, fixtureRun, loadRevi
 /** Vertical scale of the scene (unit: none). Bound into the caption. */
 const RELIEF_SCALE = 1;
 /** Book tilt (unit: degrees). */
-// Smaller pitch raises the far edge in the view, presenting a steeper reading slope.
-const TILT_DEG = 36;
+// A lower sight line exposes the valley walls; readers can raise or rotate the view.
+const TILT_DEG = 48;
 /** How long each recorded snapshot shows while a run plays (unit: milliseconds). Presentation only. */
 const PLAY_FRAME_MS = 650;
 /** Rock run shown first (a model rock id); the middle of the soft → hard set. */
@@ -216,8 +217,7 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
   desk.append(book, sketchFilter());
   root.append(desk);
   const reading = createReadingPanel(root);
-  // Move existing text nodes, including bound notes, into an upright web panel.
-  // A fixed-size placeholder keeps the page and matched scene camera stable.
+  // Upright reading copies keep the original lesson and live notes on the paper.
   const introduction = el("div", "gs-introduction");
   introduction.append(...Array.from(lesson.children).filter((child) => child !== keywords && child !== flap));
   lesson.prepend(introduction);
@@ -226,13 +226,6 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     source.replaceWith(region);
     region.append(source);
     reading.add(source, title);
-    region.addEventListener(
-      "click",
-      () => {
-        if (region.contains(source)) region.style.minHeight = getComputedStyle(region).height;
-      },
-      { capture: true },
-    );
   };
   readingRegion(introduction, "Lesson");
   readingRegion(keywords, "Key words");
@@ -489,6 +482,7 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
       },
     };
   }
+  const viewControls = createViewControls(bookStage, stageModule.BOOK_VIEW_LIMITS, root);
   desk.dataset.backend = bookStage.backend ?? "";
   dio.setCut(cut);
   applyState(transition.DRAWING_STATE);
@@ -560,6 +554,7 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
 
   return {
     async dispose() {
+      viewControls.dispose();
       binding?.dispose();
       reading.dispose();
       stop();
