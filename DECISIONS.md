@@ -1761,3 +1761,21 @@ mid-run `GlacierGpuError` by offering a new CPU run, never by continuing. (b) 5M
 the CPU with the GPU disabled. (c) GPU and CPU runs of the same rock are numerically different runs (millimetres
 apart), so kept runs should carry their backend label, and comparisons across backends should stay at
 matched times, as already planned.
+
+## D-R1-refinements · 2026-11-11 · Book depth and upright reading
+
+The owner requested a thicker book, a higher far edge / steeper reading slope, and enlarged
+web text panels matching their visual reference. This follow-up is scoped to 5H's glacial
+review composition; no solver, scientific copy or recorded run changes.
+
+- Layer twelve ruled paper edges above a deeper cloth cover.
+- Use a 36-degree CSS camera pitch (previously 46): reducing rotation from face-on raises
+  the far edge in the viewport. The existing stage camera consumes the same angle.
+- Provide explicit keyboard/touch reading actions for lesson, vocabulary, explanation and
+  bound notes. Move the original DOM into an upright nonmodal panel, preserving live
+  bindings and disclosure state. Reserve its exact layout height so the scene does not shift.
+  Closing restores the text and trigger focus. Reduced motion omits the entrance animation.
+- Short laptops show keyword terms on paper and full definitions in the reading panel.
+  Phones retain flat readable pages. The supplied reference is visual direction only.
+- This implements the requested R1 adjustments; it does not declare final owner acceptance
+  or freeze all remaining presentation/gesture decisions.

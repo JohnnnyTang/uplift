@@ -53,8 +53,8 @@
 }
 .gs-desk[data-stage-mode="tilted"] .gs-book {
   /* Page proportions of a large-format textbook; the tilt foreshortens the height. */
-  width: min(78vw, calc((100svh - 60px) * 1.62));
-  aspect-ratio: 1.5;
+  width: min(78vw, calc((100svh - 110px) * 1.25));
+  aspect-ratio: 1.25;
   transform-style: flat;
 }
 .gs-boards {
@@ -562,5 +562,166 @@
   .gs-ruler {
     grid-column: 1 / -1;
     grid-row: 2;
+  }
+}
+
+/* R1: a substantial layered page block, with a cloth cover beneath it. */
+.gs-desk[data-stage-mode="tilted"] .gs-boards {
+  inset: -10px -14px -48px;
+}
+.gs-page-stack {
+  z-index: 0;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.gs-page-layer {
+  z-index: calc(12 - var(--leaf));
+  position: absolute;
+  inset: 0;
+  transform: translateY(calc(4px + var(--leaf) * 2.7px));
+  background: var(--gs-page-edge);
+  border: 1px solid #b9b29f;
+  border-radius: 3px 3px 8px 8px;
+}
+.gs-page-layer:nth-child(2n) {
+  background: #f3efdf;
+}
+.gs-desk[data-stage-mode="flat"] .gs-page-stack {
+  z-index: 0;
+  display: none;
+}
+.gs-read-trigger {
+  display: block;
+  min-height: 32px;
+  padding: 0.15em 0;
+  margin: 0 0 0.35em;
+  border: 0;
+  border-bottom: 1px dotted var(--gs-ink-soft);
+  border-radius: 0;
+  background: transparent;
+  color: var(--gs-pen);
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.gs-reading-region:has(> .gs-margin) {
+  padding-top: 9cqi;
+}
+.gs-reading-region > .gs-margin {
+  padding-top: 0;
+}
+.gs-reading-panel {
+  position: fixed;
+  inset: 5vh auto auto 5vw;
+  margin: 0;
+  width: min(460px, 90vw);
+  max-height: 88dvh;
+  overflow: auto;
+  padding: 24px;
+  border: 1px solid var(--gs-rule);
+  border-radius: 10px;
+  background: var(--gs-paper);
+  color: var(--gs-ink);
+  box-shadow: 0 16px 40px #0004;
+  z-index: 10;
+  font:
+    18px/1.6 Georgia,
+    serif;
+}
+.gs-reading-panel[open] {
+  animation: gs-read-in 180ms ease-out;
+}
+.gs-reading-panel h2 {
+  margin: 0 0 12px;
+  font:
+    24px/1.2 Georgia,
+    serif;
+}
+.gs-reading-panel > button {
+  min-height: 44px;
+  margin-bottom: 20px;
+  font:
+    16px/1.4 Georgia,
+    serif;
+}
+.gs-reading-content .gs-margin {
+  padding: 0;
+  font-size: 18px;
+}
+.gs-reading-content .gs-margin p {
+  transform: none;
+}
+.gs-reading-content .gs-keywords {
+  display: block;
+  font-size: 18px;
+}
+.gs-reading-content .gs-keywords dd {
+  margin: 0 0 12px;
+}
+.gs-reading-content h1 {
+  font-size: 32px;
+}
+.gs-reading-content .gs-flap {
+  margin: 0;
+}
+@keyframes gs-read-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gs-reading-panel[open] {
+    animation: none;
+  }
+}
+@media (max-width: 60rem) {
+  .gs-reading-region:has(> .gs-margin) {
+    padding-top: 0.5em;
+  }
+  .gs-reading-panel {
+    inset: 3vh auto auto 5vw;
+  }
+}
+
+.gs-reading-region {
+  display: flow-root;
+  min-width: 0;
+}
+.gs-lesson {
+  min-width: 0;
+}
+
+/* Short laptop screens keep a full book: definitions expand through the reading panel. */
+@media (min-width: 60.01rem) and (max-height: 820px) {
+  .gs-desk[data-stage-mode="tilted"] .gs-book {
+    width: min(78vw, calc((100svh - 110px) * 1.5));
+    aspect-ratio: 1.5;
+  }
+  .gs-desk[data-stage-mode="tilted"] .gs-keywords {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.2em 0.6em;
+  }
+  .gs-desk[data-stage-mode="tilted"] .gs-keywords dd {
+    display: none;
+  }
+  .gs-desk[data-stage-mode="tilted"] .gs-frame {
+    min-height: 160px;
+  }
+}
+@media (min-width: 60.01rem) and (max-height: 820px) {
+  .gs-desk[data-stage-mode="tilted"] .gs-page {
+    padding-top: 3cqi;
+  }
+  .gs-desk[data-stage-mode="tilted"] .gs-lesson p {
+    margin-bottom: 0.5em;
+  }
+  .gs-desk[data-stage-mode="tilted"] .gs-controls {
+    gap: 0.2cqi 1.2cqi;
   }
 }

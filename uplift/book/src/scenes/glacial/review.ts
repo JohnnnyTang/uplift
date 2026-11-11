@@ -12,6 +12,7 @@
  * to the recorded run (the model's own section probe), the snapshot or the stage config, never typed.
  */
 import "./review.css";
+import { createReadingPanel } from "./reading-panel";
 import type { LithologyLook, ValleyDiorama } from "@hachure/ink/stage";
 import type { TransitionRun, TransitionState } from "@hachure/ink/transition";
 import { GLACIAL_DRAWING_DESCRIPTION, glacialDrawingSvg } from "./drawing";
@@ -20,7 +21,8 @@ import { type ReviewRun, type ReviewSection, combinedRange, fixtureRun, loadRevi
 /** Vertical scale of the scene (unit: none). Bound into the caption. */
 const RELIEF_SCALE = 1;
 /** Book tilt (unit: degrees). */
-const TILT_DEG = 46;
+// Smaller pitch raises the far edge in the view, presenting a steeper reading slope.
+const TILT_DEG = 36;
 /** How long each recorded snapshot shows while a run plays (unit: milliseconds). Presentation only. */
 const PLAY_FRAME_MS = 650;
 /** Rock run shown first (a model rock id); the middle of the soft → hard set. */
@@ -210,9 +212,39 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
   figurePage.append(figure, tray, trayNote, timeline, controls, limit, status, el("p", "gs-folio", "3"));
 
   spread.append(textPage, figurePage);
-  book.append(boards, spread);
+  const pageStack = el("div", "gs-page-stack");
+  pageStack.setAttribute("aria-hidden", "true");
+  for (let i = 0; i < 12; i++) {
+    const leaf = el("div", "gs-page-layer");
+    leaf.style.setProperty("--leaf", String(i));
+    pageStack.append(leaf);
+  }
+  book.append(boards, pageStack, spread);
   desk.append(book, sketchFilter());
   root.append(desk);
+  const reading = createReadingPanel(root);
+  // Move existing text nodes, including bound notes, into an upright web panel.
+  // A fixed-size placeholder keeps the page and matched scene camera stable.
+  const introduction = el("div", "gs-introduction");
+  introduction.append(...Array.from(lesson.children).filter((child) => child !== keywords && child !== flap));
+  lesson.prepend(introduction);
+  const readingRegion = (source: HTMLElement, title: string) => {
+    const region = el("div", "gs-reading-region");
+    source.replaceWith(region);
+    region.append(source);
+    reading.add(source, title);
+    region.addEventListener(
+      "click",
+      () => {
+        if (region.contains(source)) region.style.minHeight = getComputedStyle(region).height;
+      },
+      { capture: true },
+    );
+  };
+  readingRegion(introduction, "Lesson");
+  readingRegion(keywords, "Key words");
+  readingRegion(flap, "Question and explanation");
+  readingRegion(margin, "Live notes");
   desk.dataset.stageMode = "flat";
   timeline.hidden = true;
 
@@ -379,7 +411,12 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
         ? "Drawing only (static view)."
         : "The 3D figure could not load; the drawing shows the same valley.",
     );
-    return { dispose: async () => root.replaceChildren() };
+    return {
+      dispose: async () => {
+        reading.dispose();
+        root.replaceChildren();
+      },
+    };
   }
 
   // ---- The 3D stage ----
@@ -449,7 +486,12 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     showStatic(
       `3D is not available here (${error instanceof Error ? error.message : String(error)}); the drawing shows the same valley.`,
     );
-    return { dispose: async () => root.replaceChildren() };
+    return {
+      dispose: async () => {
+        reading.dispose();
+        root.replaceChildren();
+      },
+    };
   }
   desk.dataset.backend = bookStage.backend ?? "";
   dio.setCut(cut);
@@ -522,6 +564,7 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
 
   return {
     async dispose() {
+      reading.dispose();
       stop();
       running?.cancel();
       bookStage.dispose();
