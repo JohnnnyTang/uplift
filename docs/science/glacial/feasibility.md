@@ -8,6 +8,11 @@ grid (128 × 96 × 40 m) unless stated. Final registered results: [results](#reg
 
 ## Verdict
 
+**Session 5G2 update:** the enclosed valley head fixes the soft-rock leak; a grid-scale (2Δx) erosion
+artefact was found and fixed; the full T1 trough is still not reached in every rock (granite misses only
+the 30 m floor lowering). See [Session 5G2](#session-5g2-enclosed-valley-head-pilots-then-re-registration).
+The 5G verdict below is kept as registered.
+
 **Partly feasible with the plan-view model** (owner decision 7: full valley reach; the idealised-reach
 fallback was not built, because the plan-view model does form troughs by process). Under the ice the floor
 is cut down and the walls steepen to each rock's limit through shallow-ice flow, a lateral-drag shape
@@ -65,3 +70,101 @@ finish the U in sandstone and granite within a playable run erodes shale's confi
 fail at 34°), and the shale glacier is lost through the open grid border. Options for a follow-up: a wider
 domain with the border far from the ice; a head basin enclosed by higher ground; or a per-run horizon
 (each rock compared at matched erosion rather than matched time, which S1 already supports).
+
+## Session 5G2: enclosed valley head (pilots, then re-registration)
+
+5G2 changed only the start and the grid, never the physics, the contracts or the thresholds (brief:
+"change the starting preset/domain"). Pilot logs and plan views: `docs/review/glacial/model/pilots-5g2/`
+(`P<n>-<rock>-<compression>.txt`: probes and four sections every 50 model years; columns 74 and 90 are the
+registered under-ice and upper sections, 110 lies in the head basin). The registered 5G results above stay
+as they were; their evidence moved to `docs/review/glacial/model/5g-open-head/`.
+
+| #   | Pilot                                                                                                                                                    | Outcome                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| —   | Enclosed head, outer flank 28°                                                                                                                           | Start slope 39° where the crest rises along the valley and the outer flank falls across it: above shale's 34°. Outer flank set to 20° (start 35° on one cell pair at the crest, 26° walls elsewhere).                                                                                                                                                                                                                                                                                                                                                                                  |
+| P1  | 160 × 96 grid; valley as 5G for 5080 m, then a head basin enclosed by a crest (crest rise 800 m instead of 1000 m so it fits); compression 120 and 360   | **Leak not fixed.** The outer flanks stay above the snowline, so an ice cap covers the whole upper grid (granite) and in shale erodes basins outside the crest; the crest is consumed and the shale glacier collapses after ~250 model years (0.92 → 0.34 km³; at 360, after ~100). Granite at 120 forms a clear U _shape_ at the teaching section by 300 years (floor 141 → 224 m, b 1.16 → 1.54, wall 27 → 46°) but the floor is lowered only 18 m. The head basin overdeepens: ~140 m in granite (stabilises), runaway (> 1 km) in shale, where failing 34° walls keep widening it. |
+| P2  | As P1 on **160 × 64**: the crest at the head sits next to the border frame, so all ground above the snowline drains into the valley; compression 120–240 | **Leak fixed:** at 120 the shale glacier grows steadily (0.54 → 1.15 km³ over 400 years); no collapse. At 300 years (120): sandstone floor 170 m, b 1.44, lowered 39 m, wall 42° (meets T1); granite 223 m, b 1.50, wall 46°, but lowered 18 m (fails only the 30 m lowering); shale met T1 at 100 years (196 m, b 1.41, 31 m, 35°) but by 300 its walls have retreated (half-depth width 612 → 1147 m) and b fell to 0.72. At 180–240, granite's floor is lowered 25–27 m while wide, then an inner channel cuts the axis (floor 220 → 165 m, b → 1.1) before 30 m is reached.        |
+| P3  | 160 × 72                                                                                                                                                 | As P2 with more ice lost over the outer flanks; no gain.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| P4  | P2 grid with ridges above the snowline at the teaching section (crest profile exponent 1.5, rise 700 m); compression 180                                 | Outer flanks glaciated again; the shale glacier is lost after ~250 years; granite lowered 27 m at 300. No gain.                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+
+**What the pilots show (before the registered runs).** The enclosed head fixes the leak (P2). No
+tested start or compression makes every rock meet T1 at one common time: erodibility differs 5× between
+shale and granite, so each rock's "clear U" occurs at a different time; shale's U then opens into a
+widening trough as its 34° walls retreat, and granite's floor reaches 30 m of lowering only after an inner
+channel has narrowed it. Raising compression moves both windows together and does not overlap them.
+
+**Re-registration**, fixed before the seeded runs (acceptance-protocol.md, "Re-registration"): P2's start
+(`v-valley/2`) on 160 × 64 cells, compression kept at 120, horizon kept at 300 model years, sections and
+thresholds unchanged; the claims are also read at matched erosion (E-T1, E-R1–E-R4); the two 5G open-head
+arms are re-run as recorded attempts. This stopped the preset search after four variants (the brief's
+limit).
+
+### 2Δx ripple (numerical artefact, fixed in 5G2 before the final registered run)
+
+**Found** by session 5H on the merged 5G captures: in shale the eroded bed alternated between
+neighbouring columns along the valley (floor width ~75 m / ~300 m in adjacent columns near the head).
+**Confirmed** in 5G2 with `testing/review/ripple.review.test.ts` (odd/even share of a profile: 0 smooth,
+1 pure checkerboard; `testing/ripple.ts`): in the first 5G2 registered run (P5, below) the bed lowering
+along the valley had an odd/even share of 0.31 / 0.34 / 0.44 at 100 / 200 / 300 years (shale), with a
+±15–20 m zigzag on the axis over the upper valley and the ice thickness zigzagging in antiphase under a
+nearly smooth surface.
+
+**Cause** (a discretisation inconsistency, not physics): ice flux is computed on cell edges, but the cell
+sliding speed that drives erosion used a centred surface gradient and the cell's own thickness. A
+centred gradient cannot see an odd/even surface mode, so a low cell — thicker ice under the same
+surface — had a larger basal stress, slid and eroded faster, and the ripple fed itself with nothing at
+the grid scale to damp it. **Fix:** the cell stress is the mean of its edge stresses: each gradient
+component is weighted by the mean thickness of the two edges it spans, (2H + H₋ + H₊)/4, which cancels an
+odd/even thickness mode exactly. Guarded by a unit test (`cpu/solver.test.ts`: an odd/even bed under a
+smooth surface gives no odd/even sliding) and a fixture test on the shale capture (odd/even share of bed
+lowering < 0.3). **After the fix** (shale): 0.12 / 0.15 / 0.21; the reach up to the valley end is
+smooth; a residual ±10 m alternation remains on the axis in the head basin, where the explicit flux's
+stability cap is active (1–2 % of ice edges) and the surface itself carries a few metres of
+alternation. The 5G registered results (above) were computed with the artefact; their rock ordering
+and S1 do not depend on single columns, but their soft-rock upper-valley numbers do.
+
+| #   | Run                                                                         | Outcome                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| --- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P5  | First 5G2 registered run (all arms, outer flank 20°), before the ripple fix | Kept as `pilots-5g2/P5-registered-before-ripple-fix-summary.json`. Pass: T2, R1, R4, S1, K1, K2, N1, E-R1, E-R3; sandstone seed 1 T1. Fail: T1 in shale (b fell to 0.7–1.2 as the walls retreated), sandstone seeds 2–3 (b 0.88–0.90), granite (lowered 18 m; floor +82 m, b +0.3, wall +19°); R2, R3; every E-T1 (lowering 18–27 m at the matched area); E-R2, E-R4. The 5G open-head arms reproduced 5G's final state hashes bitwise (start options verified). |
+| —   | New start-slope test on the registered start                                | Failed: one cell pair at the head-basin crest corner was 34.9° (the crest rises along the valley while the outer flank falls across it), above shale's 34°, so shale would fail with no ice. Outer flank set to 14° (steepest pair 31.4°); test kept. The final registered run uses this start.                                                                                                                                                                  |
+
+### Registered results (5G2)
+
+Registered run: 300 model years, seeds 1–3, all arms of [acceptance-protocol.md](acceptance-protocol.md),
+on `v-valley/2` (160 × 64) with the ripple fix. Numbers and figures:
+[docs/review/glacial/model](../../review/glacial/model/README.md).
+
+**Pass:** R1 and R4 (softer rock erodes faster and is cut deeper at every matched time and seed); S1
+(at equal eroded area granite holds 46° walls, shale 35°); E-R1 (shale removes the matched area at ~84
+model years, sandstone ~150, granite ~300); E-R3 (at equal erosion walls are ordered granite > sandstone
+
+> shale); K1, K2, N1; T2 in sandstone, granite and shale seed 1; T1 in sandstone seed 1. The shale
+> glacier no longer leaks: it grows over the run (0.57 → 1.10 km³ from 100 to 300 years).
+
+**Fail (kept):** T1 in eight of nine rock arms. Granite fails only the lowering: floor 141 → 225 m,
+b 1.16 → 1.47, wall 27 → 46°, but lowered 18 m (needs 30). Shale (b 0.77–1.14) and sandstone seeds 2–3
+(b 0.92–0.94) have widened and steepened but their shape exponent has fallen: shale's walls retreat at
+34° and the valley opens into an ice-filled basin (half-depth width ~1.1 km); in sandstone seeds 2–3 the
+fit flips with the floor shape at the horizon (seed 1: b 1.37). T2 in shale seeds 2–3: the growing shale
+glacier reached the control section (snout 0.52–0.56 km). R2 and R3 at matched time; E-T1 (at the
+matched area every rock has a U by shape — floor +39 to +83 m, b +0.25 to +0.37, wall +7 to +20° — but
+the floor is lowered only 18–27 m); E-R2 (at equal erosion hard rock has the _wider_ floor); E-R4 (gaps
+2–7 m).
+
+**What can be taught** (subject to expert review): under the ice the floor is cut down and widened and
+the walls steepen to what the rock holds, while below the snout the V is left alone (except where a
+soft-rock glacier grows far enough to reach it); soft rock is worn away faster and deeper; after the
+same amount of erosion, hard rock keeps much steeper walls (S1, E-R3). Visible in every rock: the
+cross-section changes from a V to a flat-floored, steep-walled trough _by shape_. **Not supported:** a
+registered T1 trough in every rock at one time or at equal erosion (the floor-lowering threshold is not
+reached), "the soft-rock valley is wider" (it is wider in hard rock at equal erosion, and not ordered at
+matched time).
+
+**Blocker (specific).** With the leak fixed, two model behaviours remain, both physics, not preset:
+(1) granite's floor reaches 30 m of lowering only after an axial inner channel has narrowed the floor
+(pilots at compression 180–240), so "wide floor" and "lowered ≥ 30 m" do not co-occur at the teaching
+section; (2) shale's U lasts only ~50–100 model years before its 34° walls retreat into an open basin, while
+granite needs ~5× longer (erodibility ratio 5). A single horizon cannot catch both. Options: a per-rock
+horizon on the page (each rock shown when its section has lost the same area, which S1/E-R3 support), a
+lowering threshold re-examined by an expert (it is a legibility choice, not a constant; not changed here),
+or higher-order ice stresses (Egholm et al. 2012) that limit axial incision and runaway overdeepening.

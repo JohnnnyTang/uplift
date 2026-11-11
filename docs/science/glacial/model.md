@@ -10,14 +10,17 @@ Feasibility record: [feasibility.md](feasibility.md). Registered protocol:
 
 ## 1 · State, grid and time
 
-- Grid 128 × 96 square cells of 40 m (5.12 × 3.84 km). Index `j·nx + i`; i runs along the valley
+- Grid 160 × 64 square cells of 40 m (6.4 × 2.56 km) since session 5G2 (5G: 128 × 96). Index `j·nx + i`; i runs along the valley
   (i = 0 the mouth, downstream), j across it.
 - State: bed elevation b (m), ice thickness H ≥ 0 (m), rock id (one per run), step count; model time
   t = step · Δt with fixed Δt = 0.0025 model years (time-step convergence below). A lagged shape-factor
   field f (§2) is recomputed from state every 40 steps (0.1 model years).
-- Start: the authored V-valley `v-valley/1` (`DEFAULT_V_VALLEY`): a straight valley with a gently rising
-  floor (1300 → 1450 m), a headwall rising to 1850 m, 26° V walls, ridges rising from 1550 m at the mouth to
-  2550 m at the head, and ±2 m seeded roughness. Every slope is below the softest rock's critical slope.
+- Start: the authored V-valley `v-valley/2` (`DEFAULT_V_VALLEY`, session 5G2): a straight valley with a
+  gently rising floor (1300 → 1450 m), a headwall rising to 1850 m at 5.08 km, 26° V walls, ridges rising
+  from 1550 m at the mouth to 2350 m at the valley end, where walls, crest and 14° outer flanks wrap round
+  the end so the head basin is enclosed by higher ground on three sides (cirque-like heads feeding valley
+  glaciers: Benn & Evans 2010), and ±2 m seeded roughness. The 5G start `v-valley/1` (open head running to
+  the grid edge, ridges to 2550 m, plateaued 8° outer flanks) is kept as `OPEN_HEAD_V_VALLEY`. Every slope is below the softest rock's critical slope.
   Identical for every rock; labelled as the starting point.
 - Determinism: no randomness after the seeded start; every pass reads the old state and writes a new one.
   The same config gives a bitwise-identical run however steps are chunked (tested).
@@ -84,6 +87,12 @@ into neighbouring valleys; counted as edge outflow in the budget) and its rock i
 quadratic law; Herman et al. 2015 estimate an exponent near 2 in the field), ε_ref = 0.01 m/yr at
 u_ref = 100 m/yr (order of Humphrey & Raymond 1994; inside the 1–100 mm/yr range for temperate valley
 glaciers, Hallet et al. 1996), K_rock the rock's relative erodibility. The bed is lowered vertically.
+
+**Discretisation of u_b for erosion** (5G2): the flux uses edge thicknesses and edge gradients; the
+cell sliding speed uses the mean of its edge stresses (each gradient component weighted by the mean
+thickness of the two edges it spans). With the cell's own thickness and a centred gradient, an odd/even
+bed ripple under a smooth surface grew by itself (a grid-scale artefact; feasibility.md, "2Δx ripple").
+This is a numerical consistency fix, not a change of the sliding or erosion law.
 
 **Time compression S = 120** (a declared teaching choice): each model year erodes as much as 120 years
 of the uncompressed law, so the registered 300-model-year run stands for erosion of the order of 36 000

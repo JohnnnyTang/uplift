@@ -7,7 +7,8 @@
  *   3. a donor-cell outflow limiter, so ice thickness never goes negative and ice is conserved;
  *   4. the snowline mass balance;
  *   5. the border frame: ice entering it leaves the model (counted), no mass balance, never eroded;
- *   6. cell velocities; erosion ė = speedup · ε_ref · erodibility · (u_b / u_ref)^l under ice;
+ *   6. cell velocities (stress from the edge-mean thickness, see updateVelocitiesFromGradients); erosion
+ *      ė = speedup · ε_ref · erodibility · (u_b / u_ref)^l under ice;
  *   7. wall failure: slopes steeper than the rock's critical slope relax, conserving rock volume.
  *
  * Every pass reads the previous state and writes a new one (Jacobi order), so the GPU port (5I) can use the
@@ -456,10 +457,20 @@ class CpuGlacier implements CpuGlacierSolver {
         const gxk = gx[k]!;
         const gyk = gy[k]!;
         const slope = Math.sqrt(gxk * gxk + gyk * gyk);
-        const tau = this.rhoG * f[k]! * h * slope;
+        // Cell stress as the mean of the stresses on its edges, where the flux is computed: each gradient
+        // component is weighted by the mean thickness of the two edges it spans, (2H + H_left + H_right)/4.
+        // A centred gradient with the cell's own H cannot see an odd/even surface mode, so an odd/even bed
+        // ripple fed itself (thicker ice over a low cell slid and eroded faster): a grid-scale artefact
+        // found in session 5G2 (docs/science/glacial/feasibility.md, "2Δx ripple").
+        const hx = 0.25 * (2 * h + ice[i > 0 ? k - 1 : k]! + ice[i < nx - 1 ? k + 1 : k]!);
+        const hy = 0.25 * (2 * h + ice[j > 0 ? k - nx : k]! + ice[j < ny - 1 ? k + nx : k]!);
+        const tx = hx * gxk;
+        const ty = hy * gyk;
+        const hEdge = slope > 0 ? Math.sqrt(tx * tx + ty * ty) / slope : 0.5 * (hx + hy);
+        const tau = this.rhoG * f[k]! * hEdge * slope;
         const r = Math.min(tau, c.maxSlidingStressPa) / c.referenceBasalStressPa;
         const slide =
-          this.warmBased(h) * this.cSlide * (m === 2 ? r * r : m === 3 ? r * r * r : Math.pow(r, m));
+          this.warmBased(hEdge) * this.cSlide * (m === 2 ? r * r : m === 3 ? r * r * r : Math.pow(r, m));
         const speed = slide + surfDef * tau * tau * tau * h;
         const covered = h >= c.minIceThicknessM;
         ub[k] = covered ? slide : 0;

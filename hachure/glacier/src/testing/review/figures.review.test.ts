@@ -34,6 +34,7 @@ it.runIf(RUN)("build review figures", () => {
   // 1. Section panels: rows = rock (seed 1) plus controls/attempts, columns = start and matched times.
   const rowsToDraw = [
     ...ROCK_IDS.map((r) => `${r}-s1`),
+    "attempt-5g-open-head-shale",
     "attempt-a0-plain-sia",
     "attempt-a2a-surface-balance",
     "control-no-erosion",
@@ -93,14 +94,20 @@ it.runIf(RUN)("build review figures", () => {
   }
 
   // 2. Metric charts at the under-ice section: mean of seeds with a min–max band.
-  const metrics = [
-    ["floorWidthM", "Valley floor width", "m"],
-    ["depthM", "Valley depth", "m"],
-    ["wallSlopeDeg", "Lower-wall slope", "degrees"],
-    ["shapeExponent", "Shape exponent b (V ≈ 1, U ≈ 2)", "unitless"],
-  ] as const;
+  // The four registered trough measures (T1, R2–R4): floor width, floor lowering, steepest wall, b.
+  type Entry = ArmResult["series"][number];
+  const metrics: [(e: Entry, first: Entry) => number, string, string][] = [
+    [(e) => e.sections.underIce!.floorWidthM, "Valley floor width", "m"],
+    [
+      (e, first) => first.sections.underIce!.floorElevationM - e.sections.underIce!.floorElevationM,
+      "Floor lowered since the start",
+      "m",
+    ],
+    [(e) => e.sections.underIce!.maxWallSlopeDeg, "Steepest lower wall", "degrees"],
+    [(e) => e.sections.underIce!.shapeExponent, "Shape exponent b (V ≈ 1, U ≈ 2)", "unitless"],
+  ];
   const charts: string[] = [];
-  for (const [key, title, unit] of metrics) {
+  for (const [pick, title, unit] of metrics) {
     const series: ChartSeries[] = [];
     for (const rock of ROCK_IDS) {
       const runs = PROTOCOL_SEEDS.map((s) => arms[`${rock}-s${s}`]).filter(Boolean) as ArmResult[];
@@ -109,7 +116,7 @@ it.runIf(RUN)("build review figures", () => {
       const points: [number, number][] = [];
       const band: [number, number, number][] = [];
       for (let i = 0; i < n; i++) {
-        const vals = runs.map((r) => r.series[i]!.sections.underIce![key] as number);
+        const vals = runs.map((r) => pick(r.series[i]!, r.series[0]!));
         const x = runs[0]!.series[i]!.modelYears;
         points.push([x, vals.reduce((a, b) => a + b, 0) / vals.length]);
         band.push([x, Math.min(...vals), Math.max(...vals)]);

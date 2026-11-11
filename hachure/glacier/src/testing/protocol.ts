@@ -4,6 +4,7 @@
  * docs/science/glacial/acceptance-protocol.md; change both together, never one.
  */
 import type { GlacierConfig } from "../contract/config";
+import { OPEN_HEAD_V_VALLEY, type VValleyOptions } from "../presets/v-valley";
 import { ROCK_IDS, type RockId } from "../contract/rocks";
 
 /** Model years simulated by every registered arm. */
@@ -16,7 +17,8 @@ export const PROTOCOL_MATCHED_YEARS = [100, 200, 300] as const;
 export const PROTOCOL_SEEDS = [1, 2, 3] as const;
 
 /**
- * Registered section columns (grid i) on the 128-column reference grid. "underIce": inside the glacier at
+ * Registered section columns (grid i). The first 5080 m of the valley are the same in the 5G (128-column)
+ * and 5G2 (160-column) starts, so the columns and their start shapes did not change. "underIce": inside the glacier at
  * steady state; "belowSnout": the control reach the glacier never reaches; "upper": below the headwall.
  */
 export const PROTOCOL_SECTIONS = { belowSnout: 14, underIce: 74, upper: 90 } as const;
@@ -26,6 +28,8 @@ export interface ProtocolArm {
   readonly id: string;
   readonly description: string;
   readonly overrides: Partial<GlacierConfig>;
+  /** Start options replacing the registered start's (default: `DEFAULT_V_VALLEY` unchanged). */
+  readonly start?: Partial<VValleyOptions>;
   /** Arms that feed the registered rock comparison (others are controls or recorded attempts). */
   readonly kind: "rock" | "control" | "attempt";
 }
@@ -75,6 +79,21 @@ export const PROTOCOL_ARMS: readonly ProtocolArm[] = [
     id: "attempt-a2a-surface-balance-shale",
     description: "Attempt A2a: mass balance on the live ice surface (shale).",
     overrides: { massBalanceAltitude: "ice-surface", rockId: "shale" },
+    kind: "attempt",
+  },
+  {
+    id: "attempt-5g-open-head-shale",
+    description:
+      "Attempt (session 5G registered start): open valley head on the 128 × 96 grid (shale). Its glacier leaked to the border.",
+    overrides: { nx: 128, ny: 96, rockId: "shale" },
+    start: { ...OPEN_HEAD_V_VALLEY },
+    kind: "attempt",
+  },
+  {
+    id: "attempt-5g-open-head-granite",
+    description: "Attempt (session 5G registered start): open valley head on the 128 × 96 grid (granite).",
+    overrides: { nx: 128, ny: 96, rockId: "granite" },
+    start: { ...OPEN_HEAD_V_VALLEY },
     kind: "attempt",
   },
   {

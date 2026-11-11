@@ -2,7 +2,11 @@
  * The authored starting state: one V-shaped river valley, the same for every run (wave plan §3).
  *
  * A straight valley runs along grid x. Its floor rises from the downstream edge (i = 0) to a headwall at
- * the valley head (i = nx − 1); its sides are planar V walls capped by ridges that rise toward the head.
+ * the valley end; its sides are planar V walls capped by ridges that rise toward the head. In the
+ * registered start (`v-valley/2`, session 5G2) the valley ends inside the grid and the walls, the crest
+ * and the outer flank wrap round its end, so the head is a basin enclosed by higher ground on three sides
+ * and the ground above the snowline drains into the valley rather than to the grid border. The 5G start
+ * (`v-valley/1`, open head running to the grid edge) is kept as {@link OPEN_HEAD_V_VALLEY} for the record.
  * Every slope is gentler than the softest rock's critical wall slope, so no rock fails at the start and
  * the start is the same V for every rock. A small seeded roughness breaks perfect symmetry.
  *
@@ -36,9 +40,27 @@ export interface VValleyOptions {
   readonly outerFlankSlopeDeg: number;
   /** Amplitude of the seeded, smoothed bed roughness (unit: metres). */
   readonly roughnessM: number;
+  /**
+   * Length of the valley from the mouth (i = 0) to the valley end (unit: metres). 0: the valley runs to
+   * the grid edge, an open head (the session 5G start). Positive: beyond the valley end the floor, the
+   * V walls, the crest and the outer flank continue radially around the end of the axis, so the head is
+   * an amphitheatre enclosed by higher ground on three sides (session 5G2).
+   */
+  readonly valleyLengthM: number;
+  /**
+   * Lowest level of the outer flanks, as a fraction of the way from the valley floor up to the crest
+   * (unit: none). 0.5 keeps outer plateaus halfway up (the 5G start); 0 lets the flanks fall to the level
+   * of the valley floor beside them.
+   */
+  readonly outerFlankFloorFraction: number;
 }
 
-export const DEFAULT_V_VALLEY: VValleyOptions = Object.freeze({
+/**
+ * The session 5G start (`v-valley/1`): the valley runs to the grid edge (128 × 96 cells, 40 m) and the
+ * outer flanks keep plateaus above the snowline. Kept so the 5G registered runs stay reproducible; its
+ * glacier leaked through the open border in soft rock (docs/science/glacial/feasibility.md).
+ */
+export const OPEN_HEAD_V_VALLEY: VValleyOptions = Object.freeze({
   floorAtMouthM: 1300,
   floorRiseM: 150,
   longProfileExponent: 1,
@@ -51,6 +73,23 @@ export const DEFAULT_V_VALLEY: VValleyOptions = Object.freeze({
   ridgeRoundingM: 80,
   outerFlankSlopeDeg: 8,
   roughnessM: 2,
+  valleyLengthM: 0,
+  outerFlankFloorFraction: 0.5,
+});
+
+/**
+ * The registered start (`v-valley/2`, session 5G2), on the 160 × 64 reference grid: the same valley
+ * floor and V walls as `v-valley/1` over the first 5080 m (so the registered sections keep their start
+ * shape), ending in a head basin enclosed by a crest 200 m lower than before (so it fits the grid);
+ * steeper outer flanks without plateaus, so the ground outside the crest carries only thin, cold-based
+ * ice. Teaching choices, chosen in pilots recorded in docs/science/glacial/feasibility.md.
+ */
+export const DEFAULT_V_VALLEY: VValleyOptions = Object.freeze({
+  ...OPEN_HEAD_V_VALLEY,
+  ridgeRiseM: 800,
+  outerFlankSlopeDeg: 14,
+  valleyLengthM: 5080,
+  outerFlankFloorFraction: 0.25,
 });
 
 function smoothstep(e0: number, e1: number, x: number): number {
@@ -75,20 +114,29 @@ export function createVValleyBed(
   const yAxis = ((ny - 1) / 2) * dx;
   const hw = options.headwallFraction;
   const tanOuter = Math.tan((options.outerFlankSlopeDeg * Math.PI) / 180);
+  // Valley end (grid x, metres). Beyond it, distances are measured radially from the end of the axis.
+  const open = options.valleyLengthM <= 0;
+  const xEnd = open ? (nx - 1) * dx : options.valleyLengthM;
+  const fOuter = options.outerFlankFloorFraction;
   for (let i = 0; i < nx; i++) {
-    const xi = i / (nx - 1);
+    // Position along the valley: 0 at the mouth, 1 at the valley end.
+    const xi = open ? i / (nx - 1) : Math.min(i * dx, xEnd) / xEnd;
+    const beyond = open ? 0 : Math.max(0, i * dx - xEnd);
     const floor =
       options.floorAtMouthM +
       options.floorRiseM * Math.pow(Math.min(xi / (1 - hw), 1), options.longProfileExponent) +
       options.headwallRiseM * smoothstep(1 - hw, 1, xi);
     const ridge = options.ridgeAtMouthM + options.ridgeRiseM * Math.pow(xi, options.ridgeProfileExponent);
     const crestOffset = (ridge - floor) / tanWall;
+    // (1 − f)·floor + f·ridge; at f = 0.5 this is bitwise 0.5 · (floor + ridge), the 5G start.
+    const outerFloor = (1 - fOuter) * floor + fOuter * ridge;
     for (let j = 0; j < ny; j++) {
-      const r = Math.abs(j * dx - yAxis);
+      const across = Math.abs(j * dx - yAxis);
+      const r = beyond > 0 ? Math.hypot(beyond, across) : across;
       const v = floor + tanWall * r;
       // Beyond the crest the outer flank falls away, so ridges are crests, not snow-collecting plateaus.
-      // …but never below halfway between floor and crest, so the valley floor stays the lowest ground.
-      const outer = Math.max(ridge - tanOuter * Math.max(0, r - crestOffset), 0.5 * (floor + ridge));
+      // …but never below `outerFloor`, so the valley floor stays the lowest ground.
+      const outer = Math.max(ridge - tanOuter * Math.max(0, r - crestOffset), outerFloor);
       bed[j * nx + i] = softMin(v, outer, options.ridgeRoundingM);
     }
   }

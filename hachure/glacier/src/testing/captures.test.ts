@@ -14,6 +14,7 @@ import {
   measureSection,
 } from "../contract/index";
 import { createCpuGlacier } from "../cpu/index";
+import { alongValleyGridScaleShare } from "./ripple";
 import {
   CAPTURED_ROCKS,
   CAPTURE_SEED,
@@ -103,7 +104,8 @@ describe.each(CAPTURED_ROCKS)("captured run: %s", (rock) => {
     const u0 = measureSection(first.bedM, first.iceThicknessM, grid, PROTOCOL_SECTIONS.underIce);
     const u1 = measureSection(last.bedM, last.iceThicknessM, grid, PROTOCOL_SECTIONS.underIce);
     // The direction of change every rock shows by the horizon (the registered T1 magnitudes are met only
-    // by shale; see docs/science/glacial/feasibility.md): wider floor, lower floor, steeper walls.
+    // by sandstone seed 1 in 5G2; see docs/science/glacial/feasibility.md): wider floor, lower floor,
+    // steeper walls.
     expect(u1.floorWidthM - u0.floorWidthM).toBeGreaterThan(10);
     expect(u0.floorElevationM - u1.floorElevationM).toBeGreaterThan(10);
     expect(u1.maxWallSlopeDeg - u0.maxWallSlopeDeg).toBeGreaterThanOrEqual(
@@ -114,6 +116,22 @@ describe.each(CAPTURED_ROCKS)("captured run: %s", (rock) => {
     expect(Math.abs(b1.floorWidthM - b0.floorWidthM)).toBeLessThan(1);
     expect(Math.abs(b1.floorElevationM - b0.floorElevationM)).toBeLessThan(0.1);
   });
+});
+
+describe("grid-scale artefacts in the captured runs", () => {
+  it.each(CAPTURED_ROCKS)(
+    "%s: the eroded bed carries no dominant odd/even (2Δx) ripple along the valley",
+    (rock) => {
+      const run = read(rock);
+      const { nx, ny } = run.manifest.grid;
+      const first = run.snapshot(0);
+      const last = run.snapshot(run.count - 1);
+      const lowering = Float64Array.from(last.bedM, (z, k) => first.bedM[k]! - z);
+      // Before the 5G2 fix shale reached 0.44 (feasibility.md, "2Δx ripple"); smooth erosion is near 0,
+      // white noise 0.75.
+      expect(alongValleyGridScaleShare(lowering, nx, 3, ny - 3, 40, nx - 4)).toBeLessThan(0.3);
+    },
+  );
 });
 
 describe("rock comparison on the captured runs", () => {

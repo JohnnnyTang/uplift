@@ -10,7 +10,9 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { it } from "vitest";
+import { resolveGlacierConfig } from "../../contract/config";
 import { createCpuGlacier } from "../../cpu/index";
+import { DEFAULT_V_VALLEY, createVValleyBed } from "../../presets/v-valley";
 import {
   PROTOCOL_ARMS,
   PROTOCOL_HORIZON_YEARS,
@@ -37,7 +39,17 @@ it.runIf(RUN)(
     const horizon = Number(process.env.GLACIER_YEARS ?? PROTOCOL_HORIZON_YEARS);
     mkdirSync(OUT, { recursive: true });
     for (const arm of arms) {
-      const g = createCpuGlacier(arm.overrides);
+      const g = createCpuGlacier(
+        arm.overrides,
+        arm.start
+          ? {
+              bedM: createVValleyBed(resolveGlacierConfig(arm.overrides), {
+                ...DEFAULT_V_VALLEY,
+                ...arm.start,
+              }),
+            }
+          : {},
+      );
       const c = g.config;
       const grid = { nx: c.nx, ny: c.ny, metresPerCell: c.metresPerCell };
       const row = (field: ArrayLike<number>, i: number) =>
@@ -103,6 +115,7 @@ it.runIf(RUN)(
         join(OUT, `${arm.id}.json`),
         JSON.stringify({
           arm,
+          start: { ...DEFAULT_V_VALLEY, ...arm.start },
           config: c,
           grid,
           sections: PROTOCOL_SECTIONS,
