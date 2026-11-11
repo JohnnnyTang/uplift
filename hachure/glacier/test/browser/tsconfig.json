@@ -1,0 +1,6 @@
+{
+  // Typechecks the browser comparison suite (outside the root `include`); run by `test:gpu`.
+  "extends": "../../../../tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": ["./**/*.ts"]
+}

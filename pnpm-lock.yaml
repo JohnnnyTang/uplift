@@ -44,6 +44,13 @@ importers:
       '@hachure/terrain':
         specifier: workspace:*
         version: link:../terrain
+    devDependencies:
+      '@vitest/browser-playwright':
+        specifier: 5.1.0
+        version: 5.1.0(playwright@1.65.0)(vite@8.3.6(@types/node@24.10.0))(vitest@5.1.0)
+      playwright:
+        specifier: 1.65.0
+        version: 1.65.0
 
   hachure/ink:
     dependencies:
