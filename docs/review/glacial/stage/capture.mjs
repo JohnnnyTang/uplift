@@ -18,6 +18,7 @@
  */
 import { spawn } from "node:child_process";
 import { createRequire } from "node:module";
+import { readFileSync } from "node:fs";
 import { mkdir, readdir, rename, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:net";
 import { URL, fileURLToPath, pathToFileURL } from "node:url";
@@ -120,7 +121,7 @@ async function shot(
   name,
   query,
   viewport,
-  { wait = 3800, full = false, element, scale, before, reducedMotion } = {},
+  { wait = 3800, full = false, element, scale, before, reducedMotion, label } = {},
 ) {
   const { context, page } = await open(query, viewport, { scale, reducedMotion });
   if (before) await before(page);
@@ -128,16 +129,66 @@ async function shot(
   const path = fileURLToPath(new URL(name, out));
   if (element) await page.locator(element).screenshot({ path });
   else await page.screenshot({ path, fullPage: full });
-  results.captures.push({ name, query, viewport, scale: scale ?? 1, ...(await state(page)) });
+  results.captures.push({
+    name,
+    ...(label ? { label } : {}),
+    query,
+    viewport,
+    scale: scale ?? 1,
+    ...(await state(page)),
+  });
   await context.close();
 }
 
-// Where the front face shows the clearest U in the recorded runs (shale, 200 model years, near the head),
-// and the same place in the other rocks. Found by scanning `measureSection` over the captures (shape
-// exponent 1.86 at grid column i = 106, block row 21 of 127 from the head); when the captures are
-// regenerated (5G2), recheck these two numbers against the new runs.
-const U_FRAME = 10;
-const U_CUT = 21 / 127;
+// ---- Framing, chosen on the recorded runs ---------------------------------------------------------------
+// Grid size and snapshot times are read from the capture manifests (format `hachure-glacier-capture` v1:
+// valley along columns i, downstream = decreasing i), so only grid columns and model years are chosen here.
+// Both were picked by scanning the model's own section probe (`measureSection`) over every column and
+// snapshot of the 5G2 captures (160 × 64 cells, 40 m; seed 1), never by eye:
+//
+// U_COLUMN = 51, at the last snapshot (300 model years), is where the front face shows the clearest U under
+//   the ice in shale: shape exponent b 1.73 (b ≥ 1.67 over the five columns 49–53, so not a one-column
+//   spike), floor 209 m wide, lowered 57 m, under 200 m of ice. The same cut and time is also the honest
+//   rock comparison: every rock shows a U by shape there (sandstone b 1.59, granite b 1.61), the floor is
+//   lowered 57 / 40 / 18 m (shale / sandstone / granite) and the steepest wall is 35 / 42 / 45°, which is
+//   the page sentence (softer rock deeper, harder rock steeper walls). Floor width is not ordered by rock
+//   (209 / 177 / 179 m), so the page does not claim a wider floor. Columns above about i = 94 are left out:
+//   they are the overdeepened reach at the head basin, lowered 100–230 m in every rock.
+// MATCHED_COLUMN = 74 is the registered under-ice section (`PROTOCOL_SECTIONS.underIce`). MATCHED_YEARS are
+//   the snapshots nearest to equal eroded section area there (granite's 300-year area, 13 726 m²): shale
+//   80 years (11 868 m², 86 %), sandstone 160 years (14 906 m², 109 %), granite 300 years. Extra, labelled
+//   captures only (`matched-erosion-*.png`): each rock at its own time, never the reader-facing default.
+const U_COLUMN = 51;
+const MATCHED_COLUMN = 74;
+const MATCHED_YEARS = { shale: 80, sandstone: 160, granite: 300 };
+const manifestOf = (rock) =>
+  JSON.parse(
+    readFileSync(
+      new URL(`../../../../hachure/glacier/src/testing/captured-runs/${rock}.json`, import.meta.url),
+      "utf8",
+    ),
+  );
+const shaleManifest = manifestOf("shale");
+const NX = shaleManifest.grid.nx;
+/** Front-face slider value for grid column i (block row nx − 1 − i, counted from the head). */
+const cutAt = (i) => (NX - 1 - i) / (NX - 1);
+const frameAt = (rock, years) => {
+  const k = manifestOf(rock).snapshots.findIndex((s) => s.modelYears === years);
+  if (k < 0) throw new Error(`${rock}: no snapshot at ${years} model years`);
+  return k;
+};
+const LAST_FRAME = shaleManifest.snapshots.length - 1;
+const U_FRAME = LAST_FRAME;
+const U_CUT = cutAt(U_COLUMN);
+results.framing = {
+  grid: shaleManifest.grid,
+  uColumn: U_COLUMN,
+  uFrame: U_FRAME,
+  uModelYears: shaleManifest.snapshots[U_FRAME].modelYears,
+  uCut: U_CUT,
+  matchedColumn: MATCHED_COLUMN,
+  matchedYears: MATCHED_YEARS,
+};
 const desktop = { width: 1440, height: 900 };
 
 try {
@@ -168,7 +219,7 @@ try {
     await shot("static-fallback-1440.png", "&static=1", desktop, { wait: 300 });
     await shot("fixture-1440.png", "&fixture=1", desktop);
     // The recorded run, frame by frame (front face at the mouth, below the snout).
-    for (const k of [0, 5, 10, 15])
+    for (const k of [0, 1, 2, 3].map((q) => Math.round((q * LAST_FRAME) / 3)))
       await shot(
         `run-shale-frame-${String(k).padStart(2, "0")}.png`,
         `&mode=flat&rock=shale&frame=${k}`,
@@ -206,6 +257,22 @@ try {
           await page.getByLabel("See under the ice").check();
         },
       });
+    // Extra, labelled: each rock at its own matched-erosion time, at the registered under-ice section.
+    for (const [rock, years] of Object.entries(MATCHED_YEARS))
+      await shot(
+        `matched-erosion-${rock}-${years}yr.png`,
+        `&mode=flat&rock=${rock}&frame=${frameAt(rock, years)}&cut=${cutAt(MATCHED_COLUMN)}`,
+        desktop,
+        {
+          element: ".gs-frame",
+          scale: 2,
+          label: `Matched erosion (not the reader default): ${rock} at ${years} model years, registered under-ice section i = ${MATCHED_COLUMN}`,
+          before: async (page) => {
+            await page.waitForTimeout(3800);
+            await page.getByLabel("See under the ice").check();
+          },
+        },
+      );
   }
 
   // Video: open → transition → the recorded run playing → front face from V (below the snout) to U (under
@@ -229,6 +296,7 @@ try {
     const time = page.getByRole("slider", { name: "Recorded time" });
     await time.focus();
     const last = Number(await time.getAttribute("max"));
+    // (No-op while U_FRAME is the last snapshot; kept so another U_FRAME still works.)
     for (let k = last; k > U_FRAME; k--) {
       await page.keyboard.press("ArrowLeft");
       await page.waitForTimeout(300);

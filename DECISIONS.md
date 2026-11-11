@@ -1664,3 +1664,37 @@ capture positions `U_FRAME`/`U_CUT` in `docs/review/glacial/stage/capture.mjs` m
 **Cross-owned edits.** `uplift/book/package.json`: one dependency line (`@hachure/glacier`), so the book
 imports the captures and `measureSection` through public entry points. `pnpm-lock.yaml`: the matching
 importer entry, as produced by `pnpm install`.
+
+## D-5H-R1 — R1 review build recaptured on 5G2's captures; U framing re-picked (session 5H, final)
+
+2026-11-10. Session 5H, rebased onto s1/w5/integration (1216f67, 5G2 merged). Technical choices inside the
+plan.
+
+1. **Grid read from the manifest, end to end.** `runs.ts`, the block, the front-face slider (one grid cell
+   per step) and the section probe already took grid, cell size, snapshot count, rock, snowline and time from
+   each capture; the 160 × 64 captures dropped in unchanged. Two places still assumed the 5G grid and are
+   fixed: `capture.mjs` (the U cut was `21 / 127`; it now reads `grid.nx` and snapshot times from the
+   manifests and chooses grid columns and model years), and the rock-sentence test in `runs.test.ts` (it
+   sampled fractions 0.55/0.7/0.85 of the grid, which on 160 columns fall in the overdeepened head reach; it
+   now checks the registered under-ice section, `PROTOCOL_SECTIONS.underIce`, and the review U face).
+2. **U framing, measured.** Scanning `measureSection` over every column and snapshot (seed 1): the clearest
+   robust U under the ice in the valley is shale at 300 model years, column i = 51 (b 1.73; b ≥ 1.67 over
+   i = 49–53; floor 209 m; lowered 57 m; 200 m of ice). At that cut and time every rock is a U by shape
+   (b 1.73 / 1.59 / 1.61), the floor is lowered 57 / 40 / 18 m and the steepest wall is 35 / 42 / 45°
+   (shale / sandstone / granite): the page sentence holds there, so the rock comparison uses the same cut and
+   the reader-default time (the last snapshot). Floor width is 209 / 177 / 179 m: not ordered, no claim.
+   Columns above about i = 94 are left out of the pick: the head-basin overdeepening lowers every rock
+   there by 100–230 m (granite included, with 55° walls), which would invert the teaching.
+3. **Matched-erosion captures, extra and labelled.** At the registered section i = 74, the snapshots
+   nearest to granite's 300-year eroded area (13 726 m²) are shale 80 years (86 %), sandstone 160 years
+   (109 %), granite 300 years; `matched-erosion-<rock>-<years>yr.png` show each rock there. Review only;
+   the page default and claim are unchanged.
+
+**Facts for the plan.** (a) With 5G2 the U reads in all three rocks at one honest cut (i = 51, 300 years),
+which the 5G captures could not do; at the registered i = 74 shale's U has already degraded by 300 years
+(b 0.77, from 1.64 at 140 years). (b) The head-basin overdeepening is the most eye-catching erosion in
+every run, granite included; a reader who slides the face to the head will see hard rock cut deep. Expert
+review should decide whether that is acceptable or needs a margin note. (c) No column-to-column (odd/even)
+alternation is left in shale's valley reach (i < 100); the floor width still jumps in steps (220 → 156 →
+74 m at 300 years) where the probe's 25 m floor band catches or misses a bench, and shale's U ends abruptly
+up-valley (b 1.66 at i = 54, 1.07 at i = 55), so the margin notes can jump when the face moves one cell.

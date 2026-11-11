@@ -16,7 +16,7 @@ import type { LandscapeSnapshot } from "@hachure/ink/stage";
 
 export const FIXTURE_LABEL = "Authored fixture — not a model run";
 
-/** Grid of the fixture, close to the 5G reference grid (about 128 × 96 cells). */
+/** Grid of the authored fixture (its own size; the recorded runs take theirs from each capture manifest). */
 export const FIXTURE_GRID = Object.freeze({
   columns: 96,
   rows: 128,

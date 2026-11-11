@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { type CapturedRunManifest, decodeCapturedRun } from "@hachure/glacier";
+import { PROTOCOL_SECTIONS } from "@hachure/glacier/testing";
 import { PROVISIONAL_LITHOLOGIES, toBlockGrid, validateSnapshot, valleyGridIndex } from "@hachure/ink/stage";
 import { CAPTURE_ORIENTATION, combinedRange, reviewRunsFromCaptures } from "./runs";
 
@@ -71,24 +72,23 @@ describe("review runs from 5G's captured runs", () => {
     expect(run.section(0, nx)).toBeNull();
   });
 
-  it("supports the page's rock sentence: soft rock is lowered deeper, hard rock keeps steeper walls", () => {
-    // Under the ice, two thirds of the way up the valley, at the last recorded time.
-    const byRock = Object.fromEntries(
-      runs.map((run) => {
-        const nx = run.frames[0]!.snapshot.columns;
-        const last = run.frames.length - 1;
-        const sections = [0.55, 0.7, 0.85].map((f) => run.section(last, Math.round(f * (nx - 1)))!);
-        return [
-          run.rockKey,
-          {
-            lowered: Math.max(...sections.map((s) => s.floorLoweredM)),
-            wall: Math.max(...sections.map((s) => s.steepestWallDeg)),
-          },
-        ];
-      }),
-    );
-    expect(byRock.shale!.lowered).toBeGreaterThan(byRock.sandstone!.lowered);
-    expect(byRock.sandstone!.lowered).toBeGreaterThan(byRock.granite!.lowered);
-    expect(byRock.granite!.wall).toBeGreaterThan(byRock.shale!.wall);
-  });
+  // The registered under-ice section and the review build's U front face (docs/review/glacial/stage/
+  // capture.mjs, U_COLUMN). Grid columns, not fractions of the grid, so a regenerated grid cannot silently
+  // move the test into the overdeepened head basin.
+  it.each([
+    ["registered under-ice section", PROTOCOL_SECTIONS.underIce],
+    ["review U front face", 51],
+  ])(
+    "supports the page's rock sentence at the %s: soft rock is lowered deeper, hard rock keeps steeper walls",
+    (_name, column) => {
+      const byRock = Object.fromEntries(
+        runs.map((run) => [run.rockKey, run.section(run.frames.length - 1, column)!]),
+      );
+      expect(byRock.shale!.floorLoweredM).toBeGreaterThan(byRock.sandstone!.floorLoweredM);
+      expect(byRock.sandstone!.floorLoweredM).toBeGreaterThan(byRock.granite!.floorLoweredM);
+      expect(byRock.granite!.steepestWallDeg).toBeGreaterThan(byRock.sandstone!.steepestWallDeg);
+      expect(byRock.sandstone!.steepestWallDeg).toBeGreaterThan(byRock.shale!.steepestWallDeg);
+      for (const s of Object.values(byRock)) expect(s.iceThicknessM).toBeGreaterThan(0);
+    },
+  );
 });
