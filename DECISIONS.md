@@ -1587,3 +1587,114 @@ retreated), T2 shale seeds 2–3 (growing glacier reached the control section), 
 the manifest. (b) The full-T1 claim is not supported in any single horizon; the page should teach the
 S1/E-R3 shape claim and the V → trough change by shape, or adopt a per-rock horizon. (c) The 30 m
 lowering threshold should go to expert review. (d) Shale's growing glacier can reach the control reach.
+
+## D-5H-STAGE — Book stage, scene look and transition (session 5H, draft on the authored fixture)
+
+2026-11-09. Session 5H, branch s1/w5/5h-book-stage from s1/w5/integration (ee4959d). Technical
+choices inside the plan; R1 may change any of the look values.
+
+1. **Camera match, not a 3D book model.** The book stays DOM under CSS `perspective` +
+   `rotateX(tilt)` about its centre; one canvas covers the stage and a perspective camera at the
+   CSS perspective distance (vertical FOV spanning the stage height) projects page points exactly
+   where the browser draws them (unit-tested against the CSS formula). The diorama lives in a
+   page-local frame (X right, Y up off the paper, Z down the page), so shadows land on the right
+   words and the block may rise past the figure frame. Text stays DOM and selectable.
+2. **Tilt 46°, block yawed −24° on the page.** At the 24–34° first tried, the block was seen almost
+   from above and read as a map; 46° (close to the reference) plus a three-quarter yaw makes it read
+   as an object standing on the page. Cost: the left page's text is foreshortened. R1 question.
+3. **Flat fallback** when `(max-width: 60rem), (max-height: 34rem), (prefers-reduced-motion: reduce),
+(forced-colors: active)` matches, when the root font size is ≥ 24 px, or when the tilted book would
+   not fit the stage. The canvas then sits inside the figure frame (slightly larger, so the cast
+   shadow is not clipped). No WebGL/WebGPU → the drawing is the figure.
+4. **Natural look:** banded (three-tone) unlit node materials with their own light term and a shared
+   paper → colour wash uniform; real shadow map only for the paper shadow-catcher. Exposed rock on
+   the land surface is a weathered grey tinted by the rock; the full lithology colour and pattern
+   show on the block's sides, where the rock is seen in section. Lithology tiles follow FGDC-STD-013
+   conventions and render from one definition to canvas (3D) and SVG (page swatches).
+5. **Dressing is presentation read from state** (snow above the snowline on gentle ground; meadow and
+   trees low and gentle; river by steepest descent below the snout, never back up-valley or onto
+   ice; flow marks along ice velocity or, without it, down the ice-surface slope). Deterministic
+   integer hash, no `Math.random()`. 5K owns the production dressing in `ink/src/glacial`.
+6. **Fig. 1 drawing** is generated deterministically from the authored landform (floating-horizon
+   profile lines), not from model output; an illustrator's SVG can replace `glacialDrawingSvg()`.
+7. **Fixture honesty:** two independent authored frames (V start; U trough with glacier), no tween,
+   no model time, labelled "Authored fixture — not a model run" on every view. Removed from the review
+   path once 5G's captured runs are merged.
+
+Open questions for R1: tilt angle vs. text legibility; whether cutting the block should re-centre it
+(today the remaining block stays put, so it shrinks towards the frame top); the provisional rock set
+and colours (5G decides the set); whether labels belong on Fig. 1; the desk/board colours.
+
+Cross-owned edits: `hachure/ink/package.json` (two export lines: `./stage`, `./transition`);
+`uplift/book/src/app/routes.ts` (one bounded `?review=glacial-stage` route entry).
+
+## D-5H-RUNS — Review build on 5G's captured runs (session 5H, continued)
+
+2026-11-10. Session 5H, rebased onto s1/w5/integration (9da4fad, 5G merged). Technical choices inside the
+plan.
+
+1. **Captures load as assets.** `runs.ts` imports each capture's manifest and payload with `?url` from
+   `@hachure/glacier/captures/*` and decodes with `decodeCapturedRun`. Grid size, metres per cell, snapshot
+   count, rock, snowline, erosion speed-up and model time come from each manifest; nothing is hardcoded, so
+   5G2's regenerated captures drop in. The grid orientation (valley along columns, downstream = decreasing
+   i) is the capture format's, held once as `CAPTURE_ORIENTATION`. Cost: about 4.7 MB of `.bin` assets in
+   the build (fetched only by the review route).
+2. **Margin notes bind to the model's probe.** Floor width, depth, floor lowering since the start and the
+   steepest wall at the front face are `measureSection` results at the grid column under the cut
+   (`describe().cutAlongIndex` → `valleyGridIndex`). Shown rounded to 10 m (the grid is 40 m).
+3. **One vertical frame for all runs** (`ValleyDiorama.setElevationRange`): shale lowers its bed far below
+   the starting minimum, and a per-snapshot frame made the block jump when the rock or time changed.
+4. **Rock choice switches run** (same model time); the rock-look preview stays only for the fixture. The
+   look set now matches the model's rocks (shale dashes, sandstone stipple, granite crosses).
+5. **Time ruler**: a native range input over recorded snapshots (one tick each), Play/Pause at a fixed
+   presentation rate (650 ms per snapshot). Playback only shows recorded snapshots; it never simulates.
+6. **Treeline** stays illustrative: 300 m below the model's snowline (the model has no vegetation).
+7. **Science on the page**: "soft rock wears away faster and deeper; hard rock keeps steeper walls"
+   (marked expert-review; checked against the captures in `runs.test.ts`). Not "softer rock gives a wider
+   floor": the runs do not order floor width by rock.
+
+**Facts for the plan.** In the current captures the ice covers almost the whole upper basin, so the U only
+reads clearly in shale near the head at mid-run (shape exponent ≈ 1.9 at 200 model years); by 300 model
+years shale has worn down its rims as well, and granite barely changes (floor ≈ 20 m lower). Sandstone and
+granite sections stay close to V by the model's own shape fit. Shale's eroded bed has an odd/even ripple
+along the valley (floor width ≈ 75 m and ≈ 300 m in neighbouring columns near the head at 200 model years),
+which looks like a grid-scale (2Δx) mode in the erosion or wall-failure update; flagged for 5G2/5I. 5G2's enclosed head may change this; the
+capture positions `U_FRAME`/`U_CUT` in `docs/review/glacial/stage/capture.mjs` must be rechecked then.
+
+**Cross-owned edits.** `uplift/book/package.json`: one dependency line (`@hachure/glacier`), so the book
+imports the captures and `measureSection` through public entry points. `pnpm-lock.yaml`: the matching
+importer entry, as produced by `pnpm install`.
+
+## D-5H-R1 — R1 review build recaptured on 5G2's captures; U framing re-picked (session 5H, final)
+
+2026-11-10. Session 5H, rebased onto s1/w5/integration (1216f67, 5G2 merged). Technical choices inside the
+plan.
+
+1. **Grid read from the manifest, end to end.** `runs.ts`, the block, the front-face slider (one grid cell
+   per step) and the section probe already took grid, cell size, snapshot count, rock, snowline and time from
+   each capture; the 160 × 64 captures dropped in unchanged. Two places still assumed the 5G grid and are
+   fixed: `capture.mjs` (the U cut was `21 / 127`; it now reads `grid.nx` and snapshot times from the
+   manifests and chooses grid columns and model years), and the rock-sentence test in `runs.test.ts` (it
+   sampled fractions 0.55/0.7/0.85 of the grid, which on 160 columns fall in the overdeepened head reach; it
+   now checks the registered under-ice section, `PROTOCOL_SECTIONS.underIce`, and the review U face).
+2. **U framing, measured.** Scanning `measureSection` over every column and snapshot (seed 1): the clearest
+   robust U under the ice in the valley is shale at 300 model years, column i = 51 (b 1.73; b ≥ 1.67 over
+   i = 49–53; floor 209 m; lowered 57 m; 200 m of ice). At that cut and time every rock is a U by shape
+   (b 1.73 / 1.59 / 1.61), the floor is lowered 57 / 40 / 18 m and the steepest wall is 35 / 42 / 45°
+   (shale / sandstone / granite): the page sentence holds there, so the rock comparison uses the same cut and
+   the reader-default time (the last snapshot). Floor width is 209 / 177 / 179 m: not ordered, no claim.
+   Columns above about i = 94 are left out of the pick: the head-basin overdeepening lowers every rock
+   there by 100–230 m (granite included, with 55° walls), which would invert the teaching.
+3. **Matched-erosion captures, extra and labelled.** At the registered section i = 74, the snapshots
+   nearest to granite's 300-year eroded area (13 726 m²) are shale 80 years (86 %), sandstone 160 years
+   (109 %), granite 300 years; `matched-erosion-<rock>-<years>yr.png` show each rock there. Review only;
+   the page default and claim are unchanged.
+
+**Facts for the plan.** (a) With 5G2 the U reads in all three rocks at one honest cut (i = 51, 300 years),
+which the 5G captures could not do; at the registered i = 74 shale's U has already degraded by 300 years
+(b 0.77, from 1.64 at 140 years). (b) The head-basin overdeepening is the most eye-catching erosion in
+every run, granite included; a reader who slides the face to the head will see hard rock cut deep. Expert
+review should decide whether that is acceptable or needs a margin note. (c) No column-to-column (odd/even)
+alternation is left in shale's valley reach (i < 100); the floor width still jumps in steps (220 → 156 →
+74 m at 300 years) where the probe's 25 m floor band catches or misses a bench, and shale's U ends abruptly
+up-valley (b 1.66 at i = 54, 1.07 at i = 55), so the margin notes can jump when the face moves one cell.

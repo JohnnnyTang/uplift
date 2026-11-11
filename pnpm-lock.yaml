@@ -108,6 +108,9 @@ importers:
 
   uplift/book:
     dependencies:
+      '@hachure/glacier':
+        specifier: workspace:*
+        version: link:../../hachure/glacier
       '@hachure/ink':
         specifier: workspace:*
         version: link:../../hachure/ink
