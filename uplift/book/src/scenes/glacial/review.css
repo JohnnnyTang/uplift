@@ -565,32 +565,6 @@
   }
 }
 
-/* R1: a substantial layered page block, with a cloth cover beneath it. */
-.gs-desk[data-stage-mode="tilted"] .gs-boards {
-  inset: -10px -14px -48px;
-}
-.gs-page-stack {
-  z-index: 0;
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.gs-page-layer {
-  z-index: calc(12 - var(--leaf));
-  position: absolute;
-  inset: 0;
-  transform: translateY(calc(4px + var(--leaf) * 2.7px));
-  background: var(--gs-page-edge);
-  border: 1px solid #b9b29f;
-  border-radius: 3px 3px 8px 8px;
-}
-.gs-page-layer:nth-child(2n) {
-  background: #f3efdf;
-}
-.gs-desk[data-stage-mode="flat"] .gs-page-stack {
-  z-index: 0;
-  display: none;
-}
 .gs-read-trigger {
   display: block;
   min-height: 32px;
@@ -724,4 +698,30 @@
   .gs-desk[data-stage-mode="tilted"] .gs-controls {
     gap: 0.2cqi 1.2cqi;
   }
+}
+
+/* Physical binding: all furniture shares the matched page coordinate system. */
+.gs-desk[data-stage-mode="tilted"] .gs-book,
+.gs-desk[data-stage-mode="tilted"] .gs-spread {
+  transform-style: preserve-3d;
+}
+.gs-desk[data-stage-mode="tilted"] .gs-spread {
+  background: transparent;
+  box-shadow: none;
+}
+.gs-desk[data-stage-mode="tilted"] .gs-page {
+  box-shadow: none;
+}
+.gs-desk[data-stage-mode="tilted"] .gs-boards {
+  inset: -14px -38px -16px;
+  transform: translateZ(-51px);
+  border: 3px solid #253c32;
+  box-shadow: 0 16px 24px -14px #0007;
+}
+.gs-desk[data-stage-mode="flat"] .hachure-book-binding {
+  display: none;
+}
+
+.gs-review {
+  --book-paper: var(--gs-paper);
 }

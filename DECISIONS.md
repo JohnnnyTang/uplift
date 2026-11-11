@@ -1779,3 +1779,18 @@ review composition; no solver, scientific copy or recorded run changes.
   Phones retain flat readable pages. The supplied reference is visual direction only.
 - This implements the requested R1 adjustments; it does not declare final owner acceptance
   or freeze all remaining presentation/gesture decisions.
+
+## D-R1-binding · 2026-11-11 · Recessed binding and separate fore-edges
+
+The owner asked for a sunken centre binding and visible left/right page stacks, replacing
+the flat slab and shadow-only gutter. Add createBookBinding to the public Ink stage entry
+point: CSS-3D paper facets descend below the reading plane into a rounded trough; a shaped
+front face and two splayed fore-edges expose ruled paper layers. The cover sits below them.
+This is a reusable book furniture primitive, not custom spread simulation code. The review
+only mounts/disposes it and supplies the paper colour. Both figure and readable DOM retain
+their original plane, so the matched camera and model state are unaffected.
+
+Keep the physical furniture hidden in flat phone/reduced-motion fallback. Preserve the
+existing reading panels, focus return and live-bound notes. No scientific claims or model
+parameters changed. Desktop and laptop captures show the recessed silhouette at both ends
+of the binding and visible layers on both outer edges.

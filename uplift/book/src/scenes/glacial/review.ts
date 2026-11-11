@@ -212,14 +212,7 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
   figurePage.append(figure, tray, trayNote, timeline, controls, limit, status, el("p", "gs-folio", "3"));
 
   spread.append(textPage, figurePage);
-  const pageStack = el("div", "gs-page-stack");
-  pageStack.setAttribute("aria-hidden", "true");
-  for (let i = 0; i < 12; i++) {
-    const leaf = el("div", "gs-page-layer");
-    leaf.style.setProperty("--leaf", String(i));
-    pageStack.append(leaf);
-  }
-  book.append(boards, pageStack, spread);
+  book.append(boards, spread);
   desk.append(book, sketchFilter());
   root.append(desk);
   const reading = createReadingPanel(root);
@@ -250,6 +243,7 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
 
   // three.js loads only now, after the page and its drawing have painted.
   const lithologyModule = await import("@hachure/ink/stage").catch(() => null);
+  const binding = lithologyModule?.createBookBinding(book);
   const looks: readonly LithologyLook[] = lithologyModule?.PROVISIONAL_LITHOLOGIES ?? [];
   const lookIdFor = (rockKey: string) => {
     const look = looks.find((l) => l.key === rockKey);
@@ -413,6 +407,7 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     );
     return {
       dispose: async () => {
+        binding?.dispose();
         reading.dispose();
         root.replaceChildren();
       },
@@ -488,6 +483,7 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     );
     return {
       dispose: async () => {
+        binding?.dispose();
         reading.dispose();
         root.replaceChildren();
       },
@@ -564,6 +560,7 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
 
   return {
     async dispose() {
+      binding?.dispose();
       reading.dispose();
       stop();
       running?.cancel();

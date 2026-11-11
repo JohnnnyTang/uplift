@@ -46,3 +46,5 @@ export {
   worldToStage,
 } from "./camera-match";
 export * from "../materials/natural/index";
+
+export { createBookBinding } from "./book-binding";

@@ -20,3 +20,14 @@ Not done: production 5J–5N migration, scientific/expert sign-off or final owne
 Surprise: increasing CSS rotateX lowered the far edge visually; a smaller camera pitch produces
 the requested steeper reading slope. Added reading actions require compact keyword layout on
 short laptops. Carry these presentation decisions into the production scene and content sessions.
+
+## Binding follow-up
+
+The owner requested a truly recessed centre and stronger left/right page stacks. The book now
+uses the shared Ink createBookBinding primitive: curved CSS-3D gutter facets, a shaped front
+face, two splayed outer fore-edges with paper rules, and a cloth cover below the page block.
+The old flat layer DOM and gutter shadows are removed from tilted mode. The reading and
+figure planes remain unchanged; flat fallbacks retain their readable layout.
+
+Validation repeated: desktop/laptop/phone captures, reading-panel scene stability, live notes,
+Escape focus return and reduced motion, followed by pnpm check and production build.
