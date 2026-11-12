@@ -1830,3 +1830,73 @@ controls beyond the page edge. Media conditions select flat mode; zoom never doe
 
 Design stays with the book's paper/ink/binding palette and serif labels. No model,
 science, playback or solver changes. This continues R2 in its existing worktree.
+
+## D-W5-R1 — Owner review gate: look, book and camera approved; shape claim; default cut; head-basin note
+
+2026-11-11. Owner review gate R1 on main e46ab62 (5G, 5G2, 5H, 5I and the R1/R2 refinements merged).
+Inputs: the 5H review build (`docs/review/glacial/stage/`, including `r1-refinements.md` and
+`r2-camera.md`), D-W5-5G, D-W5-5G2, D-5H-STAGE, D-5H-RUNS, D-5H-R1, D-W5-5I, D-R1-refinements,
+D-R1-binding, D-W5-R2 and D-W5-R2b. Presentation and gesture contracts freeze here for 5J, 5K and 5L.
+
+**Owner decisions.**
+
+1. **The book, as refined by the team, is approved and frozen.** This adopts D-R1-refinements, D-R1-binding,
+   D-W5-R2 and D-W5-R2b as R1 decisions, superseding the 46° tilt of D-5H-STAGE 2:
+   - a thicker book: twelve ruled paper edges above a deeper cloth cover;
+   - a 36° default CSS camera pitch (higher far edge, steeper reading slope), with the three-quarter block
+     yaw kept;
+   - the recessed centre binding and splayed left/right fore-edges from the public Ink primitive
+     `createBookBinding`, hidden in flat phone/reduced-motion fallback;
+   - upright, nonmodal reading panels for lesson, vocabulary, explanation and bound notes that mirror the
+     source DOM (live notes stay synchronised; Escape/close returns focus; click outside closes), with
+     keyword terms on paper on short laptops and flat readable pages on phones;
+   - the bounded spine view: tilt and turn about a point just above the spine, a lower default sight line,
+     and zoom as a view-only multiplier from 1 (fitted) to 1.5;
+   - direct gestures with equivalents: drag on scene/desk rotates, wheel zooms, sliders, arrow keys and
+     Reset view; lesson controls and reading regions never start an orbit; Ctrl/Meta wheel stays with the
+     browser; media conditions, never zoom, select flat mode;
+   - the normal-flow responsive control grid with reserved height, and page content setting paper height.
+     The flat-fallback rules of D-5H-STAGE 3 otherwise stand. 5K and 5M carry all of this into production
+     unchanged.
+2. **Rock set approved:** shale (soft), sandstone (medium), granite (hard), with the 5H lithology patterns
+   and colours (shale dashes, sandstone stipple, granite crosses; FGDC-STD-013 conventions).
+3. **Teach shape.** The page claim stays "soft rock wears away faster and deeper; hard rock keeps steeper
+   walls", plus the V → U change shown by shape. No floor-width claim and no full-T1 claim. Claims rest on
+   the registered S1/E-R3 results (D-W5-5G2); expert-review marks stay.
+4. **Default front face: grid column i = 51 at the last snapshot**, for every rock (lead recommendation,
+   owner accepted). At that cut all three rocks are U by the model's shape fit and the page sentence holds
+   (D-5H-R1 2). The cut was picked _after_ scanning the runs, so it is a display choice, not a registered
+   test: the registered section stays i = 74, and no page claim may rest on i = 51 alone. The default lives
+   in the spread config as a grid column read against the capture manifest (5L), never as a typed number on
+   the page; 5K consumes it.
+5. **Head basin: keep the full cut range, add a bound note** (lead recommendation, owner accepted). The
+   reader may slide the face anywhere; hiding model output would hide the model. When the section under the
+   face is overdeepened, a margin note says that thick ice near the valley head can carve a basin deeper
+   than the valley below it, even in hard rock. "Overdeepened" is computed from model state (the bed rises
+   down-valley from the section, an adverse bed slope), not from a hard-coded column. Science text drafted
+   and marked expert-review; source to cite (5L verifies): Cook & Swift (2012), _Subglacial basins: their
+   origin and importance in glacial systems and landscapes_, Earth-Science Reviews 115. The expert question
+   of D-5H-R1 (b) remains open; this note is the interim answer.
+6. **Cutting does not re-centre the block.** The remaining block stays where it stands on the page; the
+   spine view (item 1) is how the reader re-frames it.
+7. **Fig. 1 gets labels.** A few leader-line labels in the textbook style (e.g. V-shaped valley, valley
+   floor, valley head); words only, no numbers. 5K draws them on `glacialDrawingSvg()`, 5L owns the words.
+8. **Desk and cover cloth: neutral, carrying no hue** (lead recommendation, owner accepted). Keep the
+   warm-grey desk (`--gs-desk`). Change the cloth colour (`--gs-board`, dark green `#2f4a3f`, which competes
+   with meadow, trees and lithology colours) to a dark warm neutral near `#3b352f`, applied to the boards
+   and the `createBookBinding` cover alike. Colour only: the geometry, layering and binding of item 1 do not
+   change. Owned by 5K (scene CSS) until 5M restyles the chrome.
+9. **Margin notes stop jumping cell by cell** (lead recommendation, owner accepted). Notes read the section
+   averaged over three neighbouring columns (120 m along the valley), and say so in the deeper level; values
+   stay rounded to 10 m. Added as a new helper beside `measureSection` in `@hachure/glacier` (additive; the
+   frozen `measureSection` contract is unchanged) by 5K, listed as a cross-owned edit. The registered
+   protocol keeps the single-column measure.
+
+**Frozen for 5J/5K/5L:** everything in items 1–9, and the specimen / cut / under-the-ice / time gestures as
+built in 5H. Changes after this point go through a new owner decision.
+
+**Branches.** `s1/w5/integration` is fast-forwarded to main (e46ab62 plus this entry), so Wave 5 sessions
+keep branching from and targeting it (AGENTS.md) and consume the R1/R2 refinements.
+
+**Not decided here:** the expert review of the shape factor, cold-based ramp, 30 m lowering threshold and
+head-basin overdeepening (D-W5-5G, D-W5-5G2, D-5H-R1); human, hardware and screen-reader checks.

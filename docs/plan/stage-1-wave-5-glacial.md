@@ -1,6 +1,7 @@
 # Wave 5 extension · From V to U · sessions 5G–5N
 
-**Status:** planned, not started. Rewritten 2026-11-09 after the owner settled the condition,
+**Status:** 5G, 5G2, 5H, 5I and R1 done (R1 2026-11-11, D-W5-R1: the R1/R2 book and camera
+refinements are frozen decisions); 5J, 5K, 5L next. Rewritten 2026-11-09 after the owner settled the condition,
 comparison, book presentation and GPU questions. This file is the **single source** for the
 first lesson. Other plan files only point here. If they disagree with this file, this file wins.
 
@@ -170,7 +171,7 @@ flowchart LR
 | ------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------ | ---- |
 | 5G      | Glacier model in `@hachure/glacier`: CPU, rock types, feasibility evidence, captured runs | Verified s1/w5/integration                       | L    |
 | 5H      | Book stage, scene look and drawing→ink→colour transition, shown on 5G's real captures     | Starts with 5G; finishes on merged 5G            | L    |
-| R1      | **Owner review** of a page-size review build and video. Contracts freeze here.            | 5H merged                                        | —    |
+| R1      | **Done 2026-11-11 (D-W5-R1).** Owner review of the build; contracts frozen.               | 5H merged                                        | —    |
 | 5I      | GPU glacier and CPU/GPU comparison suite                                                  | 5G merged (does not wait for R1)                 | L    |
 | 5J      | Runs, snapshots, timeline, comparison lookup and backend selection in the runtime         | R1                                               | M    |
 | 5K      | Production scene: specimen gesture, cut face, ice view, dressing, ghosts, accessibility   | R1                                               | L    |
