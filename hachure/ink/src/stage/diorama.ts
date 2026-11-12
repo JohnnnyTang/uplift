@@ -51,6 +51,7 @@ import {
   buildWalls,
   clampCutRow,
   dashedProfile,
+  solidProfile,
 } from "./block-geometry";
 import {
   type DressingConfig,
@@ -83,6 +84,19 @@ export interface DioramaOptions {
   readonly soilDepthM?: number;
   /** Lithology tile size on the block sides (unit: metres). */
   readonly patternTileM?: number;
+  /**
+   * Replacement dressing rules (session 5K, `@hachure/ink/glacial`). Each reads the snapshot and returns
+   * presentation only. Absent rules keep the 5H defaults.
+   */
+  readonly rules?: DressingRules;
+}
+
+/** Pluggable dressing rules: pure functions of a block grid, deterministic, never changing state. */
+export interface DressingRules {
+  /** River cells in order, from its source to where it leaves the block (block-grid cell indices). */
+  readonly river?: (g: BlockGrid, cfg: DressingConfig) => number[];
+  /** Flow-mark polylines on the ice in fractional cell coordinates (`a0, l0, a1, l1, …`). */
+  readonly flowLines?: (g: BlockGrid, cfg: DressingConfig, lastRow: number) => number[][];
 }
 
 /** View-only reveal values (from the transition). */
@@ -106,6 +120,8 @@ export interface DioramaDescription {
   readonly rockName: string;
   readonly modelTimeYr: number | null;
   readonly iceShown: boolean;
+  /** Whether a comparison profile (a kept run's bed) is drawn on the front face. */
+  readonly ghostShown: boolean;
 }
 
 export interface Footprint {
@@ -118,7 +134,7 @@ export interface Footprint {
   readonly frontZ: number;
 }
 
-type StrokeKind = "edge" | "iceEdge" | "hachure" | "flow" | "dash";
+type StrokeKind = "edge" | "iceEdge" | "hachure" | "flow" | "dash" | "ghostHalo" | "ghost";
 
 class Strokes {
   readonly buffer = new StrokeBuffer();
@@ -198,6 +214,8 @@ export class ValleyDiorama {
   private readonly strokes: Record<StrokeKind, Strokes>;
   private grid: BlockGrid | null = null;
   private reference: BlockGrid | null = null;
+  private ghost: BlockGrid | null = null;
+  private readonly rules: DressingRules;
   private frame: BlockFrame | null = null;
   private cutFraction = 1;
   private iceShown = true;
@@ -214,6 +232,7 @@ export class ValleyDiorama {
     this.dressing = { ...DEFAULT_DRESSING, ...options.dressing };
     this.reliefScale = options.reliefScale ?? 1;
     this.soilDepthM = options.soilDepthM ?? 40;
+    this.rules = options.rules ?? {};
     const u = this.uniforms;
     this.ground = new Mesh(new BufferGeometry(), createGroundMaterial(u));
     this.ice = new Mesh(new BufferGeometry(), createIceMaterial(u));
@@ -238,7 +257,11 @@ export class ValleyDiorama {
       hachure: new Strokes(this.ink),
       flow: new Strokes(this.ink, NATURAL_TOKENS.iceFlow),
       dash: new Strokes(this.ink),
+      // The comparison profile: a paper halo under a dotted ink line, so it reads on any lithology pattern.
+      ghostHalo: new Strokes(this.ink, NATURAL_TOKENS.ghostHalo),
+      ghost: new Strokes(this.ink, NATURAL_TOKENS.ghost),
     };
+    this.strokes.ghost.layer.mesh.renderOrder = 3;
     this.body.add(this.ground, this.ice, this.iceSection, this.walls, this.river, this.trees);
     for (const s of Object.values(this.strokes)) this.body.add(s.layer.mesh);
     this.group.add(this.body);
@@ -288,6 +311,25 @@ export class ValleyDiorama {
     this.range = null;
   }
 
+  /**
+   * Draws another run's bed on the front face as a dotted comparison line (a kept run at the same model
+   * time). Same grid as the snapshot. `null` removes it. View-only.
+   */
+  setGhost(snapshot: LandscapeSnapshot | null): void {
+    this.ghost = snapshot ? toBlockGrid(snapshot, this.orientation) : null;
+    if (
+      this.ghost &&
+      this.grid &&
+      (this.ghost.across !== this.grid.across || this.ghost.along !== this.grid.along)
+    )
+      throw new RangeError("Ghost snapshot must share the snapshot's grid");
+    if (this.grid && this.frame) {
+      this.packStrokes(this.grid, this.frame);
+      this.applyVisibility();
+    }
+    this.onChange();
+  }
+
   /** Moves the front face. `fraction` of the valley length from the head (unit: none, 0–1). View-only. */
   setCut(fraction: number): void {
     this.cutFraction = Math.min(1, Math.max(0, fraction));
@@ -318,6 +360,8 @@ export class ValleyDiorama {
     this.strokes.edge.fade.value = reveal.ink;
     this.strokes.iceEdge.fade.value = reveal.ink;
     this.strokes.dash.fade.value = reveal.ink;
+    this.strokes.ghost.fade.value = reveal.ink;
+    this.strokes.ghostHalo.fade.value = reveal.ink;
     this.strokes.hachure.fade.value = reveal.hachure;
     this.strokes.flow.fade.value = reveal.colour;
     this.applyVisibility();
@@ -368,6 +412,7 @@ export class ValleyDiorama {
       rockName: this.look.name,
       modelTimeYr: g.modelTimeYr,
       iceShown: this.iceShown,
+      ghostShown: this.ghost !== null,
     };
   }
 
@@ -410,7 +455,7 @@ export class ValleyDiorama {
     const soil = (k: number) => (cover.meadow[k]! > 0.5 ? this.soilDepthM : 0);
     this.walls.geometry = toGeometry(buildWalls(g, f, soil), this.walls.geometry);
 
-    const river = riverCells(g, cfg);
+    const river = (this.rules.river ?? riverCells)(g, cfg);
     const riverSet = new Set(river);
     const path = smoothPolyline(
       river.flatMap((k) => [k % g.across, Math.floor(k / g.across)]),
@@ -478,7 +523,7 @@ export class ValleyDiorama {
     flow.buffer.reset();
     const surface = new Float32Array(g.bedM.length);
     for (let k = 0; k < surface.length; k++) surface[k] = g.bedM[k]! + g.iceM[k]!;
-    for (const line of iceFlowLines(g, cfg, f.cutRow)) {
+    for (const line of (this.rules.flowLines ?? iceFlowLines)(g, cfg, f.cutRow)) {
       const pts: number[] = [];
       for (let i = 0; i < line.length; i += 2)
         pts.push(
@@ -491,6 +536,14 @@ export class ValleyDiorama {
 
     dash.buffer.reset();
     if (this.reference) dash.buffer.pushStrokes(dashedProfile(this.reference, f), 1.4);
+
+    const { ghost, ghostHalo } = this.strokes;
+    ghost.buffer.reset();
+    ghostHalo.buffer.reset();
+    if (this.ghost) {
+      ghostHalo.buffer.pushPolyline(solidProfile(this.ghost, f, 0.05), false, 3);
+      ghost.buffer.pushStrokes(dashedProfile(this.ghost, f, 0.18, 0.34), 1.6);
+    }
 
     for (const s of Object.values(this.strokes)) s.upload();
   }

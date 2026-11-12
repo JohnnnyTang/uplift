@@ -28,9 +28,36 @@ interface P2 {
 export interface GlacialDrawingOptions {
   /** id prefix for `<title>`/`<desc>`, so several drawings can share a page. */
   readonly idPrefix?: string;
-  /** Show the teaching labels (cirque, glacier, snout …). Default true. */
-  readonly labels?: boolean;
+  /**
+   * Leader-line word labels (D-W5-R1 item 7; words only, no numbers). `true` (default) draws
+   * {@link GLACIAL_DRAWING_LABELS}; `false` none; a list draws those words at those features (session 5L
+   * owns the words).
+   */
+  readonly labels?: boolean | readonly GlacialDrawingLabel[];
 }
+
+/** Features of the drawing a label can point at. */
+export type GlacialDrawingFeature =
+  "valleyHead" | "valleyFloor" | "vValley" | "uValley" | "cirque" | "glacier" | "snout" | "river";
+
+export interface GlacialDrawingLabel {
+  readonly feature: GlacialDrawingFeature;
+  readonly text: string;
+}
+
+/**
+ * The default labels (D-W5-R1 item 7), with 5L's words (PR #34): valley head, glacier, snout, U-shaped
+ * valley, V-shaped valley, valley floor. 5M passes them from the spread; these stay in step until then.
+ * <!-- expert-review -->
+ */
+export const GLACIAL_DRAWING_LABELS: readonly GlacialDrawingLabel[] = Object.freeze([
+  { feature: "valleyHead", text: "valley head" },
+  { feature: "glacier", text: "glacier" },
+  { feature: "snout", text: "snout" },
+  { feature: "uValley", text: "U-shaped valley" },
+  { feature: "vValley", text: "V-shaped valley" },
+  { feature: "valleyFloor", text: "valley floor" },
+]);
 
 /** Accessible description of the drawing (also used by the figure's text alternative). */
 export const GLACIAL_DRAWING_DESCRIPTION =
@@ -259,7 +286,13 @@ export function glacialDrawingSvg(options: GlacialDrawingOptions = {}): string {
   paths.push(`<path class="flow" d="${arrows.join("")}"/>`);
 
   const labels: string[] = [];
-  if (options.labels ?? true) {
+  const wanted =
+    options.labels === false
+      ? []
+      : options.labels === true || options.labels === undefined
+        ? GLACIAL_DRAWING_LABELS
+        : options.labels;
+  if (wanted.length) {
     const label = (text: string, xM: number, u: number, dx: number, dy: number, anchor = "start") => {
       const p = T(project(xM, surface(xM, u), u));
       const tx = p.x + dx;
@@ -269,12 +302,19 @@ export function glacialDrawingSvg(options: GlacialDrawingOptions = {}): string {
           `<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${anchor}">${text}</text>`,
       );
     };
-    label("cirque", valley.centreM(0.06), 0.06, -40, -60, "end");
-    label("glacier", valley.centreM(0.34) + 250, 0.34, 120, -60);
-    label("snout", valley.centreM(0.6), 0.6, 150, -20);
-    label("meltwater river", valley.centreM(0.86), 0.86, -120, 40, "end");
-    label("U-shaped valley", valley.centreM(0.3) - 900, 0.3, -60, -70, "end");
-    label("V-shaped valley", valley.centreM(0.97) + 700, 0.97, 90, -80);
+    // Anchor point and text offset per feature (SVG units), placed clear of the block's lines.
+    const at: Record<GlacialDrawingFeature, (text: string) => void> = {
+      valleyHead: (t) => label(t, valley.centreM(0.04), 0.04, -50, -95, "end"),
+      cirque: (t) => label(t, valley.centreM(0.06), 0.06, -40, -60, "end"),
+      glacier: (t) => label(t, valley.centreM(0.34) + 250, 0.34, 120, -60),
+      snout: (t) => label(t, valley.centreM(0.6), 0.6, 150, -20),
+      valleyFloor: (t) => label(t, valley.centreM(0.86), 0.86, -210, 55, "end"),
+      river: (t) => label(t, valley.centreM(0.86), 0.86, -120, 40, "end"),
+      uValley: (t) => label(t, valley.centreM(0.3) - 900, 0.3, -60, -70, "end"),
+      vValley: (t) => label(t, valley.centreM(0.97) + 700, 0.97, 90, -80),
+    };
+    const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+    for (const l of wanted) at[l.feature](esc(l.text));
   }
 
   return [

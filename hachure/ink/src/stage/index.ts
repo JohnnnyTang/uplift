@@ -21,6 +21,7 @@ export {
   type DioramaDescription,
   type DioramaOptions,
   type DioramaReveal,
+  type DressingRules,
   type Footprint,
   ValleyDiorama,
   createValleyDiorama,

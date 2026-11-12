@@ -359,3 +359,18 @@ export function dashedProfile(
   }
   return Float64Array.from(out);
 }
+
+/**
+ * Another snapshot's bed along the cut face as one polyline (`x, z, y` triples, the stroke buffer's terrain
+ * order), lifted `offsetCells` in front of the face. Used under a dotted line as its halo.
+ */
+export function solidProfile(reference: BlockGrid, f: BlockFrame, offsetCells = 0.04): number[] {
+  const l = Math.min(f.cutRow, reference.along - 1);
+  const z = blockZ(f, l) + reference.metresPerCell * offsetCells;
+  const out: number[] = [];
+  for (let a = 0; a < reference.across; a += 0.5) {
+    const x = Math.min(reference.across - 1, a);
+    out.push(blockX(f, x), z, blockY(f, sampleField(reference.bedM, reference, x, l)));
+  }
+  return out;
+}

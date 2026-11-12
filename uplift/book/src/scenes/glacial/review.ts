@@ -1,26 +1,49 @@
 /**
- * The glacial book-stage review build (session 5H, for the R1 owner review): the lesson spread on a desk,
- * the book tilted in 3D, Fig. 1 as a textbook line drawing that transitions into the naturally coloured
- * diorama standing on the right page, playing session 5G's recorded glacier runs (one per rock). Flat
- * fallback on phones, reduced motion and large zoom.
+ * The glacial scene (session 5K production scene, on the 5H book stage approved at R1): the lesson spread on
+ * a desk, the book tilted in 3D, Fig. 1 as a textbook line drawing that transitions into the naturally
+ * coloured diorama standing on the right page, playing session 5G's recorded glacier runs (one per rock).
+ * Flat fallback on phones, reduced motion and large zoom.
+ *
+ * 5K adds: dressing read from model state (`@hachure/ink/glacial`), the front face as a live cross-section
+ * with the dashed starting V and a kept run's dotted ghost, an enlarged section lens, margin notes averaged
+ * over three columns, the overdeepening note slot, and direct gestures that mirror page controls (specimen
+ * onto the block → the rock command; drag the front face → the front-face slider; drag the scene → the R2
+ * view sliders). `mountGlacialScene` takes typed options, so 5M can mount it in the default book;
+ * `mountGlacialStageReview` reads the review route's URL into those options.
  *
  * Route: `?review=glacial-stage`. Options for review captures: `&mode=flat|tilted`, `&motion=reduce`,
- * `&backend=webgl2|webgpu`, `&cut=0..1`, `&rock=<model rock id>`, `&frame=<index>`, `&static=1` (drawing
- * only, as without WebGL), `&fixture=1` (the authored fixture instead of the recorded runs).
+ * `&backend=webgl2|webgpu`, `&cut=0..1` (or `&column=<grid column>`), `&rock=<model rock id>`,
+ * `&kept=<rock>[,<rock>]`, `&frame=<index>`, `&static=1` (drawing only, as without WebGL), `&fixture=1`
+ * (the authored fixture instead of the recorded runs).
  *
- * Page copy here is draft layout copy for R1; session 5L writes the lesson. Numbers on the page are bound
- * to the recorded run (the model's own section probe), the snapshot or the stage config, never typed.
+ * Page copy here is draft layout copy; session 5L writes the lesson. Numbers on the page are bound to the
+ * recorded run (the model's own section probe), the snapshot or the stage config, never typed.
  */
 import "./review.css";
 import { createViewControls } from "./view-controls";
 import { createReadingPanel } from "./reading-panel";
 import type { LithologyLook, ValleyDiorama } from "@hachure/ink/stage";
+import {
+  type AttachedGesture,
+  GLACIAL_DRESSING_RULES,
+  attachCutDrag,
+  attachSpecimenDrag,
+  blockScreenGeometry,
+  sectionLensSvg,
+} from "@hachure/ink/glacial";
 import type { TransitionRun, TransitionState } from "@hachure/ink/transition";
-import { GLACIAL_DRAWING_DESCRIPTION, glacialDrawingSvg } from "./drawing";
+import { GLACIAL_DRAWING_DESCRIPTION, type GlacialDrawingLabel, glacialDrawingSvg } from "./drawing";
 import { type ReviewRun, type ReviewSection, combinedRange, fixtureRun, loadReviewRuns } from "./runs";
+import { type RockCommand, type RunsState, createLocalRockCommand } from "./commands";
+import { degrees, describeProfile, overdeepeningNote, km, metres } from "./notes";
 
 /** Vertical scale of the scene (unit: none). Bound into the caption. */
 const RELIEF_SCALE = 1;
+/**
+ * Vertical scale of the enlarged front face (unit: none). Bound into its label. Exaggerated so the floor and
+ * lower walls read at page size; the shape exponent b of a power-law profile does not change with it.
+ */
+const LENS_VERTICAL_SCALE: number = 2;
 /** Book tilt (unit: degrees). */
 // A lower sight line exposes the valley walls; readers can raise or rotate the view.
 const TILT_DEG = 48;
@@ -28,9 +51,44 @@ const TILT_DEG = 48;
 const PLAY_FRAME_MS = 650;
 /** Rock run shown first (a model rock id); the middle of the soft → hard set. */
 const DEFAULT_ROCK = "sandstone";
+/**
+ * The review route's default front face, a grid column along the valley read against the capture manifest
+ * (D-W5-R1 item 4: i = 51 at the last snapshot, every rock). A display choice, never a claim: the
+ * registered section stays i = 74. In the book this value comes from the spread config (5L; wired by 5M).
+ */
+export const REVIEW_DEFAULT_CUT_COLUMN = 51;
 
 export interface MountedReview {
   dispose(): Promise<void>;
+}
+
+export interface GlacialSceneOptions {
+  /** Front face on opening, as a grid column along the valley axis (from the spread config). */
+  readonly defaultCutColumn?: number | undefined;
+  /** Front face on opening as a fraction of the valley from the head (review captures); wins over the column. */
+  readonly cutFraction?: number | undefined;
+  /** Model rock id of the run shown first. Default sandstone. */
+  readonly rock?: string | undefined;
+  /** Rocks whose runs start as kept runs, newest first (review captures). */
+  readonly kept?: readonly string[] | undefined;
+  /** Recorded snapshot shown first. Default the last. */
+  readonly frame?: number | undefined;
+  readonly mode?: "flat" | "tilted" | "auto" | undefined;
+  /** Force reduced motion (otherwise the media query decides). */
+  readonly reducedMotion?: boolean | undefined;
+  readonly backend?: "auto" | "webgl2" | "webgpu" | undefined;
+  /** Drawing only, as without WebGL. */
+  readonly staticOnly?: boolean | undefined;
+  /** The authored fixture instead of the recorded runs. */
+  readonly fixture?: boolean | undefined;
+  /** Fig. 1 label words (5L). Default: the R1 set. */
+  readonly drawingLabels?: readonly GlacialDrawingLabel[] | undefined;
+  /**
+   * The rock command. Default: the local stand-in over recorded runs. 5M passes the runtime command here; the
+   * page selector and the specimen gesture both call it.
+   */
+  readonly createRockCommand?:
+    ((runs: readonly ReviewRun[], initial: ReviewRun, kept: readonly ReviewRun[]) => RockCommand) | undefined;
 }
 
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string) => {
@@ -61,17 +119,35 @@ function sketchFilter(): SVGSVGElement {
   return svg;
 }
 
-/** Display rounding of a model length: to 10 m (the grid is coarser than that). */
-const metres = (m: number) => `${Math.round(m / 10) * 10} m`;
-const km = (m: number) => `${(m / 1000).toFixed(1)} km`;
-
-export async function mountGlacialStageReview(root: HTMLElement, search: string): Promise<MountedReview> {
+/** Reads the review route's URL into scene options. */
+export function reviewOptionsFromSearch(search: string): GlacialSceneOptions {
   const params = new URLSearchParams(search);
-  const forcedMode = params.get("mode");
-  const reduceParam = params.get("motion") === "reduce";
+  const num = (key: string) => (params.has(key) ? Number(params.get(key)) : undefined);
+  const mode = params.get("mode");
+  const backend = params.get("backend");
+  const reduce = params.get("motion") === "reduce";
+  return {
+    defaultCutColumn: num("column") ?? REVIEW_DEFAULT_CUT_COLUMN,
+    cutFraction: num("cut"),
+    rock: params.get("rock") ?? undefined,
+    kept: params.get("kept")?.split(",").filter(Boolean),
+    frame: num("frame"),
+    mode: mode === "flat" || mode === "tilted" ? mode : reduce ? "flat" : "auto",
+    reducedMotion: reduce || undefined,
+    backend: backend === "webgl2" || backend === "webgpu" ? backend : "auto",
+    staticOnly: params.get("static") === "1",
+    fixture: params.get("fixture") === "1",
+  };
+}
+
+export function mountGlacialStageReview(root: HTMLElement, search: string): Promise<MountedReview> {
+  return mountGlacialScene(root, reviewOptionsFromSearch(search));
+}
+
+export async function mountGlacialScene(root: HTMLElement, o: GlacialSceneOptions): Promise<MountedReview> {
   const motionQuery = matchMedia("(prefers-reduced-motion: reduce)");
-  const reducedMotion = () => reduceParam || motionQuery.matches;
-  let cut = Math.min(1, Math.max(0, Number(params.get("cut") ?? 1)));
+  const reducedMotion = () => o.reducedMotion === true || motionQuery.matches;
+  let cut = Number.isFinite(o.cutFraction) ? Math.min(1, Math.max(0, o.cutFraction!)) : 1;
 
   root.replaceChildren();
   root.classList.add("gs-review");
@@ -150,8 +226,14 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
   figure.setAttribute("aria-labelledby", "gs-fig-caption");
   const frame = el("div", "gs-frame");
   const drawing = el("div", "gs-drawing");
-  drawing.innerHTML = glacialDrawingSvg({ idPrefix: "gs-fig" });
+  drawing.innerHTML = glacialDrawingSvg({ idPrefix: "gs-fig", labels: o.drawingLabels ?? true });
   frame.append(drawing);
+  // The front face, enlarged: the same section as the block's cut face, drawn in 2D at legible size.
+  const lens = el("div", "gs-lens");
+  lens.hidden = true;
+  const lensTitle = el("p", "gs-lens-title");
+  const lensDrawing = el("div", "gs-lens-drawing");
+  lens.append(lensTitle, lensDrawing);
   const caption = el("figcaption");
   caption.id = "gs-fig-caption";
   const captionText = el("span");
@@ -161,7 +243,9 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
   );
   const scale = el("span", "gs-scale");
   caption.append(captionText, scale);
-  figure.append(frame, caption);
+  const figureFoot = el("div", "gs-fig-foot");
+  figureFoot.append(caption, lens);
+  figure.append(frame, figureFoot);
 
   const tray = el("fieldset", "gs-tray");
   tray.append(el("legend", undefined, "Rock"));
@@ -244,29 +328,51 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     return look.id;
   };
   const loaded =
-    params.get("fixture") === "1" || !lithologyModule
-      ? { runs: [fixtureRun()], error: null }
-      : await loadReviewRuns(lookIdFor);
+    o.fixture || !lithologyModule ? { runs: [fixtureRun()], error: null } : await loadReviewRuns(lookIdFor);
   const runs = loaded.runs;
-  const requestedRock = params.get("rock") ?? DEFAULT_ROCK;
-  let run: ReviewRun = runs.find((r) => r.rockKey === requestedRock) ?? runs[0]!;
+  const requestedRock = o.rock ?? DEFAULT_ROCK;
+  const initialRun: ReviewRun = runs.find((r) => r.rockKey === requestedRock) ?? runs[0]!;
+  const keptRuns = (o.kept ?? []).flatMap((k) => runs.filter((r) => r.rockKey === k && r !== initialRun));
+  // The one rock command: the page selector and the specimen dropped on the block both call it.
+  const command = (o.createRockCommand ?? createLocalRockCommand)(runs, initialRun, keptRuns);
+  let run: ReviewRun = command.state.live;
   const lastFrame = () => run.frames.length - 1;
-  let frameIndex = Math.min(lastFrame(), Math.max(0, Number(params.get("frame") ?? lastFrame())));
+  let frameIndex = Math.min(lastFrame(), Math.max(0, o.frame ?? lastFrame()));
 
   // The front-face slider moves one grid cell per step, so each arrow key press shows the next section.
-  {
+  const along = () => {
     const s = run.frames[0]!.snapshot;
-    const cells = (run.orientation.valleyAxis === "columns" ? s.columns : s.rows) - 1;
+    return run.orientation.valleyAxis === "columns" ? s.columns : s.rows;
+  };
+  {
+    const cells = along() - 1;
     cutInput.step = String(1 / cells);
     cutInput.min = String(Math.round(0.12 * cells) / cells);
+    if (
+      !Number.isFinite(o.cutFraction) &&
+      o.defaultCutColumn !== undefined &&
+      !run.isFixture &&
+      lithologyModule
+    ) {
+      // The grid column counted along the valley, turned into the block row from the head (same mapping).
+      const row = lithologyModule.valleyGridIndex(run.orientation, cells + 1, o.defaultCutColumn);
+      cut = row / cells;
+    }
     cut = Math.max(Number(cutInput.min), Math.round(cut * cells) / cells);
     cutInput.value = String(cut);
   }
+  /** Block row of the front face, as the diorama clamps it (`clampCutRow`). */
+  const cutRow = () => Math.min(along() - 1, Math.max(2, Math.round(cut * (along() - 1))));
+  /** Grid index along the valley under the front face. */
+  const cutColumn = () =>
+    lithologyModule ? lithologyModule.valleyGridIndex(run.orientation, along(), cutRow()) : cutRow();
 
   const recorded = !run.isFixture;
   for (const look of looks) {
     if (recorded && !runs.some((r) => r.rockId === look.id)) continue;
     const label = el("label", "gs-specimen");
+    label.dataset.rock = runs.find((r) => r.rockId === look.id)?.rockKey ?? look.key;
+    if (recorded) label.dataset.gesture = "specimen";
     const input = el("input");
     input.type = "radio";
     input.name = "gs-rock";
@@ -284,14 +390,21 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
   // ---- Bound text ----
   const current = () => run.frames[frameIndex]!;
   let diorama: ValleyDiorama | null = null;
-  let valleyGridIndex: ((alongFromHead: number) => number) | null = null;
   let playing = false;
-  const sectionNow = (): ReviewSection | null => {
-    const d = diorama?.describe();
-    if (!d || !valleyGridIndex) return null;
-    return run.section(frameIndex, valleyGridIndex(d.cutAlongIndex));
+  const sectionNow = (): ReviewSection | null => run.section(frameIndex, cutColumn());
+  const lookFor = (r: ReviewRun) => looks.find((l) => l.id === r.rockId);
+  const lookName = (r: ReviewRun = run) => lookFor(r)?.name ?? r.rockKey;
+  /** The kept run compared on the front face (the newest), at the recorded time nearest the current one. */
+  const comparison = () => {
+    const kept = command.state.kept[0];
+    if (!kept || run.isFixture) return null;
+    const years = current().modelYears ?? 0;
+    let k = 0;
+    kept.frames.forEach((f, i) => {
+      if (Math.abs((f.modelYears ?? 0) - years) < Math.abs((kept.frames[k]!.modelYears ?? 0) - years)) k = i;
+    });
+    return { run: kept, frameIndex: k, frame: kept.frames[k]! };
   };
-  const lookName = () => looks.find((l) => l.id === run.rockId)?.name ?? run.rockKey;
   const note = (...parts: (string | Node)[]) => {
     const p = el("p");
     p.append(...parts);
@@ -301,6 +414,10 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     const d = diorama?.describe();
     const snap = current().snapshot;
     const s = sectionNow();
+    const col = cutColumn();
+    const cmp = comparison();
+    const throughIce = d ? d.frontFaceCutsIce : (s?.iceThicknessM ?? 0) > 0;
+    const where = km(cutRow() * snap.metresPerCell);
     const notes: HTMLElement[] = [];
     if (run.isFixture) notes.push(el("p", undefined, "authored fixture: no model time"));
     else
@@ -308,14 +425,13 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
         note(el("b", undefined, current().label), ` in ${lookName().toLowerCase()}`),
         note(`erosion sped up ×${run.erosionSpeedup}`),
       );
-    if (d)
-      notes.push(
-        note(
-          "front face ",
-          el("b", undefined, km(d.cutAlongIndex * snap.metresPerCell)),
-          ` down the valley, ${d.frontFaceCutsIce ? "through the ice" : "below the snout"}`,
-        ),
-      );
+    notes.push(
+      note(
+        "front face ",
+        el("b", undefined, where),
+        ` down the valley, ${throughIce ? "through the ice" : "below the snout"}`,
+      ),
+    );
     if (s)
       notes.push(
         note(
@@ -326,9 +442,32 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
           " deep",
         ),
         note("floor lowered ", el("b", undefined, metres(s.floorLoweredM)), " since the start"),
-        note("steepest wall ", el("b", undefined, `${Math.round(s.steepestWallDeg)}°`)),
+        note("steepest wall ", el("b", undefined, degrees(s.steepestWallDeg))),
       );
     else if (run.isFixture) notes.push(el("p", undefined, "floor width and depth: from a model run only"));
+    const keptSection = cmp ? cmp.run.section(cmp.frameIndex, col) : null;
+    if (cmp && keptSection) {
+      const kept = note(
+        el("span", "gs-ghost-key", "····"),
+        " kept ",
+        el("b", undefined, lookName(cmp.run).toLowerCase()),
+        ` run, ${cmp.frame.label}: lowered `,
+        el("b", undefined, metres(keptSection.floorLoweredM)),
+        ", steepest wall ",
+        el("b", undefined, degrees(keptSection.steepestWallDeg)),
+      );
+      kept.className = "gs-note-kept";
+      notes.push(kept);
+    }
+    const basin = overdeepeningNote(run.overdeepening(frameIndex, col));
+    if (basin) {
+      // expert-review: D-W5-R1 item 5; the words are 5L's.
+      const p = note(basin);
+      p.className = "gs-note-overdeepened";
+      notes.push(p);
+    }
+    if (command.state.dropped)
+      notes.push(note(`The oldest kept run (${lookName(command.state.dropped).toLowerCase()}) was dropped.`));
     margin.replaceChildren(...notes);
     scale.textContent = RELIEF_SCALE === 1 ? "True vertical scale" : `Vertical scale ×${RELIEF_SCALE}`;
     provenance.textContent = run.isFixture
@@ -341,7 +480,37 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     frameButton.hidden = !run.isFixture || run.frames.length < 2;
     trayNote.textContent = run.isFixture
       ? "Rock look preview. In the lesson a rock choice starts a new run from the same starting valley."
-      : "Each rock is its own recorded run from the same starting valley.";
+      : "Pick a rock here or drag it onto the block. Each rock is its own recorded run from the same starting valley.";
+    // The enlarged front face (recorded runs only).
+    const profile = run.profile(frameIndex, col);
+    const look = lookFor(run);
+    lens.hidden = !profile || !look;
+    if (profile && look) {
+      const ghostProfile = cmp ? cmp.run.profile(cmp.frameIndex, col) : null;
+      lensTitle.textContent = `Front face, enlarged · ${LENS_VERTICAL_SCALE === 1 ? "true scale" : `vertical ×${LENS_VERTICAL_SCALE}`}`;
+      lensDrawing.innerHTML = sectionLensSvg(
+        {
+          acrossM: profile.acrossM,
+          bedM: profile.bedM,
+          iceM: d && !d.iceShown ? undefined : profile.iceM,
+          startBedM: profile.startBedM,
+          ghost:
+            cmp && ghostProfile
+              ? { bedM: ghostProfile.bedM, label: `${lookName(cmp.run).toLowerCase()} run` }
+              : null,
+          look,
+        },
+        {
+          idPrefix: "gs-lens",
+          verticalScale: LENS_VERTICAL_SCALE,
+          words: { start: "starting V", ice: "ice" },
+        },
+      );
+    }
+    desk.dataset.cutColumn = String(col);
+    desk.dataset.liveRock = run.rockKey;
+    desk.dataset.ghost = cmp ? cmp.run.rockKey : "";
+    desk.dataset.overdeepened = basin ? "true" : "false";
     // Timeline (recorded runs only).
     timeline.hidden = run.isFixture || !diorama;
     timeInput.max = String(lastFrame());
@@ -357,32 +526,45 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     playButton.title = playing ? "" : frameIndex === lastFrame() ? "Plays the run again from the start" : "";
     playButton.setAttribute("aria-pressed", String(playing));
     iceInput.disabled = !d || d.iceReachFraction === 0;
-    if (d)
-      cutInput.setAttribute(
-        "aria-valuetext",
-        `${km(d.cutAlongIndex * snap.metresPerCell)} down the valley, ${d.frontFaceCutsIce ? "through the ice" : "below the snout"}`,
-      );
+    cutInput.value = String(cut);
+    cutInput.setAttribute(
+      "aria-valuetext",
+      `${where} down the valley, ${throughIce ? "through the ice" : "below the snout"}`,
+    );
   };
   const announce = () => {
     const d = diorama?.describe();
     if (!d) return;
-    const s = sectionNow();
-    const when = run.isFixture ? "" : `, after ${current().label}`;
-    status.textContent =
-      `Fig. 1 is now a 3D block of the valley standing on the page, in ${d.rockName.toLowerCase()}${when}. ` +
+    const cmp = comparison();
+    const col = cutColumn();
+    const opening =
+      `Fig. 1 is now a 3D block of the valley standing on the page, in ${d.rockName.toLowerCase()}${run.isFixture ? "" : `, after ${current().label}`}. ` +
       (d.iceReachFraction > 0
         ? `A glacier fills the valley from the head down to its snout, ${Math.round(d.iceReachFraction * 100)} percent of the way along. `
-        : "There is no ice in this view. ") +
-      `The front face is ${d.frontFaceCutsIce ? "cut through the glacier" : "cut below the glacier's snout"}` +
-      (d.iceShown ? "." : "; the ice is hidden to show the rock under it.") +
-      (s
-        ? ` There the floor is ${metres(s.floorWidthM)} wide and ${metres(s.depthM)} deep, lowered ${metres(s.floorLoweredM)} below the dashed starting V; the steepest wall is ${Math.round(s.steepestWallDeg)} degrees.`
-        : "");
+        : "There is no ice in this view. ");
+    status.textContent =
+      opening +
+      describeProfile({
+        where: `${km(d.cutAlongIndex * current().snapshot.metresPerCell)} down the valley`,
+        throughIce: d.frontFaceCutsIce,
+        iceShown: d.iceShown,
+        rockName: d.rockName,
+        when: run.isFixture ? null : current().label,
+        section: sectionNow(),
+        kept: cmp
+          ? {
+              rockName: lookName(cmp.run),
+              when: cmp.frame.label,
+              section: cmp.run.section(cmp.frameIndex, col),
+            }
+          : null,
+        overdeepening: overdeepeningNote(run.overdeepening(frameIndex, col)),
+      });
   };
   describe();
 
   // ---- Static fallback when 3D is off or unavailable ----
-  const staticOnly = params.get("static") === "1" || !lithologyModule;
+  const staticOnly = o.staticOnly || !lithologyModule;
   const showStatic = (why: string) => {
     drawing.style.opacity = "1";
     drawing.style.filter = "";
@@ -390,12 +572,13 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     timeline.hidden = true;
     tray.disabled = true;
     trayNote.textContent = why;
+    desk.dataset.static = "true";
     status.textContent = `Fig. 1: ${GLACIAL_DRAWING_DESCRIPTION}`;
   };
   if (staticOnly) {
     showStatic(
       lithologyModule
-        ? "Drawing only (static view)."
+        ? "Drawing only (static view). The enlarged front face shows the recorded run."
         : "The 3D figure could not load; the drawing shows the same valley.",
     );
     return {
@@ -419,16 +602,10 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     reliefScale: RELIEF_SCALE,
     dressing: run.dressing,
     orientation: run.orientation,
+    rules: GLACIAL_DRESSING_RULES,
   });
   diorama = dio;
   dio.setElevationRange(combinedRange(runs));
-  valleyGridIndex = (alongFromHead) => {
-    const s = current().snapshot;
-    const along = run.orientation.valleyAxis === "columns" ? s.columns : s.rows;
-    return stageModule.valleyGridIndex(run.orientation, along, alongFromHead);
-  };
-  const mode = forcedMode === "flat" || forcedMode === "tilted" ? forcedMode : reduceParam ? "flat" : "auto";
-  const backendParam = params.get("backend");
   let timer: ReturnType<typeof setInterval> | null = null;
   const stop = () => {
     if (timer !== null) clearInterval(timer);
@@ -443,8 +620,8 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     anchor: frame,
     diorama: dio,
     tiltDeg: TILT_DEG,
-    mode,
-    backend: backendParam === "webgl2" || backendParam === "webgpu" ? backendParam : "auto",
+    mode: o.mode ?? "auto",
+    backend: o.backend ?? "auto",
     onContextLost: () => {
       stop();
       bookStage.dispose();
@@ -452,18 +629,24 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     },
   });
   const turbulence = desk.querySelector("feDisplacementMap")!;
+  let transitionDone = false;
   const applyState = (s: TransitionState) => {
     bookStage.applyTransition(s);
     drawing.style.opacity = String(s.drawingOpacity);
     turbulence.setAttribute("scale", (s.drawingRoughness * 9).toFixed(2));
     drawing.style.filter = s.drawingRoughness > 0.01 && s.drawingOpacity > 0.01 ? "url(#gs-sketch)" : "";
+    // The lens joins the scene when the colour arrives; the drawing alone stays uncluttered.
+    lens.style.opacity = String(s.colour);
   };
   let running: TransitionRun | null = null;
   const play = () => {
     running?.cancel();
+    transitionDone = false;
     running = transition.runTransition(applyState, { reducedMotion: reducedMotion() });
     void running.done.then((completed) => {
-      if (completed) announce();
+      if (!completed) return;
+      transitionDone = true;
+      announce();
     });
   };
 
@@ -482,11 +665,12 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
       },
     };
   }
-  const viewControls = createViewControls(bookStage, stageModule.BOOK_VIEW_LIMITS, root, desk);
   desk.dataset.backend = bookStage.backend ?? "";
   dio.setCut(cut);
   applyState(transition.DRAWING_STATE);
   dio.setSnapshot(current().snapshot, run.start);
+  const showGhost = () => dio.setGhost(comparison()?.frame.snapshot ?? null);
+  showGhost();
   describe();
   await bookStage.renderNow();
 
@@ -494,6 +678,7 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
   const showFrame = (k: number, speak = true) => {
     frameIndex = Math.min(lastFrame(), Math.max(0, k));
     dio.setSnapshot(current().snapshot, run.start);
+    showGhost();
     describe();
     if (speak) announce();
   };
@@ -512,7 +697,29 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     }, PLAY_FRAME_MS);
   };
 
-  // ---- Controls (all view-only) ----
+  // ---- The rock command, from the selector or the specimen gesture ----
+  const applyRuns = (state: RunsState) => {
+    const years = current().modelYears;
+    run = state.live;
+    for (const input of tray.querySelectorAll<HTMLInputElement>("input[name=gs-rock]"))
+      input.checked = Number(input.value) === run.rockId;
+    // A rock choice shows that rock's run at the same model time (local stand-in; see commands.ts).
+    const k = run.frames.findIndex((f) => f.modelYears === years);
+    showFrame(k >= 0 ? k : Math.min(frameIndex, lastFrame()));
+  };
+  const chooseRock = (rockKey: string) => {
+    const state = command.chooseRock(rockKey);
+    if (state) applyRuns(state);
+  };
+
+  // ---- Controls (all view-only, except the rock command) ----
+  const setCut = (fraction: number, speak: boolean) => {
+    cut = fraction;
+    dio.setCut(cut);
+    showGhost();
+    describe();
+    if (speak) announce();
+  };
   replay.onclick = () => play();
   playButton.onclick = () => {
     if (!playing) return start();
@@ -523,37 +730,69 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
     if (playing) stop();
     showFrame(Number(timeInput.value));
   };
-  cutInput.oninput = () => {
-    cut = Number(cutInput.value);
-    dio.setCut(cut);
-    describe();
-    announce();
-  };
+  cutInput.oninput = () => setCut(Number(cutInput.value), true);
   iceInput.onchange = () => {
     dio.setIceVisible(!iceInput.checked);
+    describe();
     announce();
   };
   frameButton.onclick = () => showFrame((frameIndex + 1) % run.frames.length);
   tray.onchange = (event) => {
     const id = Number((event.target as HTMLInputElement).value);
     const next = runs.find((r) => r.rockId === id);
-    if (next && !next.isFixture) {
-      // A rock choice switches to that rock's own recorded run, at the same model time.
-      const years = current().modelYears;
-      run = next;
-      const k = run.frames.findIndex((f) => f.modelYears === years);
-      showFrame(k >= 0 ? k : Math.min(frameIndex, lastFrame()));
-    } else {
+    if (next && !next.isFixture) chooseRock(next.rockKey);
+    else {
       dio.setRockLook(id);
       announce();
     }
   };
+
+  // ---- Direct gestures, each the pointer twin of a control above ----
+  const cutDrag: AttachedGesture = attachCutDrag({
+    stage: bookStage,
+    diorama: dio,
+    surface: desk,
+    rows: along,
+    minFraction: () => Number(cutInput.min),
+    enabled: () => transitionDone,
+    onCut: (fraction) => {
+      if (fraction !== cut) setCut(fraction, false);
+    },
+    onDragEnd: () => announce(),
+  });
+  const viewControls = createViewControls(bookStage, stageModule.BOOK_VIEW_LIMITS, root, desk, {
+    claimsPointer: (event) => cutDrag.claims(event),
+  });
+  const overlay = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  overlay.classList.add("gs-drop-overlay");
+  overlay.setAttribute("aria-hidden", "true");
+  root.append(overlay);
+  const specimenDrag = recorded
+    ? attachSpecimenDrag({
+        stage: bookStage,
+        diorama: dio,
+        specimens: () => Array.from(tray.querySelectorAll<HTMLElement>(".gs-specimen")),
+        overlay,
+        onDrop: chooseRock,
+        reducedMotion,
+        enabled: () => transitionDone && !tray.disabled,
+      })
+    : null;
+
+  // Automation hook (browser tests and capture scripts): where the block is on screen, in client pixels.
+  Object.defineProperty(desk, "blockScreenGeometry", {
+    configurable: true,
+    value: () => blockScreenGeometry(bookStage, dio),
+  });
   desk.dataset.ready = "true";
   desk.dataset.source = run.isFixture ? "fixture" : "recorded";
   play();
 
   return {
     async dispose() {
+      cutDrag.dispose();
+      specimenDrag?.dispose();
+      overlay.remove();
       viewControls.dispose();
       binding?.dispose();
       reading.dispose();

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_DRESSING, toBlockGrid, validateSnapshot } from "@hachure/ink/stage";
-import { GLACIAL_DRAWING_DESCRIPTION, glacialDrawingSvg } from "./drawing";
+import { GLACIAL_DRAWING_DESCRIPTION, GLACIAL_DRAWING_LABELS, glacialDrawingSvg } from "./drawing";
 import { FIXTURE_DRESSING, FIXTURE_GRID, FIXTURE_LABEL, authoredValley, fixtureFrames } from "./fixture";
 import { reviewRuns } from "./runs";
 
@@ -54,15 +54,14 @@ describe("Fig. 1 drawing", () => {
     expect(svg).toContain('role="img"');
     expect(svg).toContain('aria-labelledby="t-title t-desc"');
     expect(svg).toContain(GLACIAL_DRAWING_DESCRIPTION);
-    for (const label of [
-      "cirque",
-      "glacier",
-      "snout",
-      "meltwater river",
-      "U-shaped valley",
-      "V-shaped valley",
-    ])
-      expect(svg).toContain(`>${label}</text>`);
+    // The R1 owner's leader-line labels (D-W5-R1 item 7): words only, no numbers.
+    for (const { text } of GLACIAL_DRAWING_LABELS) expect(svg).toContain(`>${text}</text>`);
+    expect(svg.match(/<path class="leader"/g)).toHaveLength(GLACIAL_DRAWING_LABELS.length);
+    for (const [, text] of svg.matchAll(/<text[^>]*>([^<]*)<\/text>/g)) expect(text).not.toMatch(/\d/);
     expect(glacialDrawingSvg({ labels: false })).not.toContain("<text");
+    // 5L can supply its own words at the drawing's features.
+    const custom = glacialDrawingSvg({ labels: [{ feature: "glacier", text: "glacier" }] });
+    expect(custom).toContain(">glacier</text>");
+    expect(custom).not.toContain(">valley head</text>");
   });
 });
