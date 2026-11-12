@@ -70,6 +70,9 @@ importers:
 
   hachure/runtime:
     dependencies:
+      '@hachure/glacier':
+        specifier: workspace:*
+        version: link:../glacier
       '@hachure/terrain':
         specifier: workspace:*
         version: link:../terrain

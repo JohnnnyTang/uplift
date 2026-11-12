@@ -7,9 +7,12 @@
   "license": "MIT",
   "exports": {
     ".": "./src/index.ts",
-    "./worker": "./src/sim-host/worker-engine.ts"
+    "./worker": "./src/sim-host/worker-engine.ts",
+    "./glacial": "./src/glacial-host/index.ts",
+    "./glacial-worker": "./src/glacial-host/worker.ts"
   },
   "dependencies": {
+    "@hachure/glacier": "workspace:*",
     "@hachure/terrain": "workspace:*",
     "katex": "0.19.1"
   }

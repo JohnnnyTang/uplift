@@ -1,0 +1,144 @@
+{
+  "session": "5J",
+  "browsers": {
+    "playwright-chromium": {
+      "eviction": {
+        "kept": [
+          [2, "shale"],
+          [3, "granite"]
+        ],
+        "memoryBytes": 491520,
+        "budget": 33554432
+      },
+      "autoBackend": {
+        "backend": "cpu",
+        "fallbackReason": "WebGPU not used, running on CPU: [adapter-unavailable] No WebGPU adapter"
+      },
+      "forcedDeviceCheckFault": {
+        "backend": "cpu",
+        "fallbackReason": "WebGPU not used, running on CPU: [adapter-unavailable] No WebGPU adapter"
+      },
+      "midRunFake": {
+        "halted": {
+          "id": "run-1",
+          "ordinal": 1,
+          "rockId": "sandstone",
+          "backend": "webgpu",
+          "fallbackReason": null,
+          "status": "halted",
+          "step": 246,
+          "hashes": ["b36afcafbd5b8351", "f06a74f7f2426ad5", "a47f36912330678f"],
+          "recordedBytes": 245760,
+          "clampedValues": 0
+        },
+        "restartReason": "WebGPU run halted at step 246 (device-lost); new CPU run from the authored start"
+      },
+      "determinism": {
+        "hashes": [
+          "b36afcafbd5b8351",
+          "f06a74f7f2426ad5",
+          "a47f36912330678f",
+          "c7d495f13342e80f",
+          "35216f50917fba66",
+          "42c497d1f934a0ef",
+          "3060853d3dc9e86f",
+          "bcc5befdd4efe98f",
+          "270dc5e6a016f208"
+        ],
+        "step": 800
+      }
+    },
+    "chrome": {
+      "eviction": {
+        "kept": [
+          [2, "shale"],
+          [3, "granite"]
+        ],
+        "memoryBytes": 491520,
+        "budget": 33554432
+      },
+      "autoBackend": {
+        "backend": "webgpu",
+        "fallbackReason": null
+      },
+      "forcedDeviceCheckFault": {
+        "backend": "cpu",
+        "fallbackReason": "WebGPU not used, running on CPU: [device-check-failed] GPU differs from CPU on this device after 80 steps (bed 0.6147816356760814 m, ice 0.37397131661001026 m; limit 0.01 m)"
+      },
+      "midRunFake": {
+        "halted": {
+          "id": "run-1",
+          "ordinal": 1,
+          "rockId": "sandstone",
+          "backend": "webgpu",
+          "fallbackReason": null,
+          "status": "halted",
+          "step": 250,
+          "hashes": ["b36afcafbd5b8351", "f06a74f7f2426ad5", "a47f36912330678f"],
+          "recordedBytes": 245760,
+          "clampedValues": 0
+        },
+        "restartReason": "WebGPU run halted at step 250 (device-lost); new CPU run from the authored start"
+      },
+      "realDeviceLoss": {
+        "failure": {
+          "kind": "run-halted",
+          "runId": "run-1",
+          "ordinal": 1,
+          "failure": {
+            "reason": "device-lost",
+            "message": "[device-lost] WebGPU device lost: Device was destroyed.",
+            "atStep": 100,
+            "backend": "webgpu"
+          }
+        }
+      },
+      "determinism": {
+        "hashes": [
+          "b36afcafbd5b8351",
+          "f06a74f7f2426ad5",
+          "a47f36912330678f",
+          "c7d495f13342e80f",
+          "35216f50917fba66",
+          "42c497d1f934a0ef",
+          "3060853d3dc9e86f",
+          "bcc5befdd4efe98f",
+          "270dc5e6a016f208"
+        ],
+        "step": 800
+      },
+      "webgpuDeterminism": {
+        "gpuHashes": [
+          "460fdfccf252d8a2",
+          "8512329b5cdce329",
+          "11f38354e859b4a2",
+          "e4e58880ab6570d6",
+          "d780c1ef4c540e8d",
+          "a63c3636293b8090",
+          "71343db11d1ba9bf",
+          "3e46b4ea7486554c",
+          "a71f38ba2d4eb60c"
+        ],
+        "cpuHashes": [
+          "b36afcafbd5b8351",
+          "f06a74f7f2426ad5",
+          "a47f36912330678f",
+          "c7d495f13342e80f",
+          "35216f50917fba66",
+          "42c497d1f934a0ef",
+          "3060853d3dc9e86f",
+          "bcc5befdd4efe98f",
+          "270dc5e6a016f208"
+        ]
+      },
+      "productionWebgpuRun": {
+        "step": 120000,
+        "snapshots": 16,
+        "recordedBytes": 1310720,
+        "worstCaseBytesLivePlusTwoKept": 3932160,
+        "budgetBytes": 33554432,
+        "wallSecondsAt4x": 8.011
+      }
+    }
+  }
+}

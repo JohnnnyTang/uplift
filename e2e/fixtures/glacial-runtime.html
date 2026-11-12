@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Glacial runtime fixture</title>
+    <style>
+      body {
+        margin: 0;
+        background: #faf8f2;
+        color: #292b2c;
+        font:
+          17px/1.5 Georgia,
+          serif;
+      }
+      main {
+        max-width: 44rem;
+        margin: 3vh auto;
+        padding: 1.25rem;
+      }
+      h1 {
+        font-size: 28px;
+        font-weight: normal;
+      }
+      button,
+      select,
+      input {
+        font: 15px system-ui;
+        margin: 0.25rem;
+        padding: 0.4rem 0.6rem;
+      }
+      button {
+        background: transparent;
+        border: 1px solid #292b2c;
+        border-radius: 2px;
+      }
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      #block:focus-visible {
+        outline: 3px solid #0072b2;
+        outline-offset: 3px;
+      }
+      fieldset {
+        border: 0;
+        padding: 0;
+        margin: 0.5rem 0;
+      }
+      .tray {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .specimen {
+        cursor: grab;
+      }
+      #block {
+        border: 1px dashed #292b2c;
+        padding: 1.5rem;
+        margin: 0.5rem 0;
+        text-align: center;
+      }
+      output {
+        display: block;
+        font:
+          12px ui-monospace,
+          monospace;
+        white-space: pre-wrap;
+        word-break: break-all;
+        margin-top: 1rem;
+        color: #555;
+      }
+      #view-label,
+      #compare-label {
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Runs, time and comparison</h1>
+      <p>Runtime wiring fixture for the glacier lesson. Plain controls, no scene; not a science lesson.</p>
+      <fieldset>
+        <legend>Rock the valley is cut into</legend>
+        <label><input type="radio" name="rock" value="shale" /> shale</label>
+        <label><input type="radio" name="rock" value="sandstone" /> sandstone</label>
+        <label><input type="radio" name="rock" value="granite" /> granite</label>
+      </fieldset>
+      <div class="tray" aria-label="Rock specimens (drag one onto the block)">
+        <span class="specimen" draggable="true" data-rock="shale" id="specimen-shale">shale specimen</span>
+        <span class="specimen" draggable="true" data-rock="sandstone" id="specimen-sandstone"
+          >sandstone specimen</span
+        >
+        <span class="specimen" draggable="true" data-rock="granite" id="specimen-granite"
+          >granite specimen</span
+        >
+      </div>
+      <div id="block">Block (drop a specimen here)</div>
+      <p id="view-label" aria-live="polite"></p>
+      <fieldset>
+        <legend>Time</legend>
+        <button id="play" type="button">Play</button><button id="pause" type="button">Pause</button
+        ><button id="step" type="button">Step to next recorded time</button>
+        <label
+          >Speed
+          <select id="speed">
+            <option value="0.25">¼×</option>
+            <option value="0.5">½×</option>
+            <option value="1" selected>1×</option>
+            <option value="2">2×</option>
+            <option value="4">4×</option>
+          </select></label
+        >
+        <label>Timeline <input id="timeline" type="range" min="0" value="0" /></label>
+        <button id="live" type="button" hidden>Return to live</button>
+      </fieldset>
+      <fieldset>
+        <legend>Compare</legend>
+        <label
+          >Compare with
+          <select id="compare"></select
+        ></label>
+        <p id="compare-label"></p>
+        <p id="kept"></p>
+      </fieldset>
+      <p id="notice" role="status"></p>
+      <button id="dismiss" type="button" hidden>Dismiss note</button>
+      <p id="offer" hidden><button id="restart-cpu" type="button">Start a new run on the CPU</button></p>
+      <button id="reset" type="button">Reset</button>
+      <span id="reset-confirm" hidden
+        >Reset discards the kept runs. <button id="reset-yes" type="button">Reset everything</button
+        ><button id="reset-no" type="button">Keep them</button></span
+      >
+      <fieldset>
+        <legend>Page</legend>
+        <label
+          >Reading level
+          <select id="level">
+            <option value="hs">High school</option>
+            <option value="uni">University</option>
+          </select></label
+        >
+        <button id="leave" type="button">Leave page</button
+        ><button id="return" type="button">Return to page</button>
+      </fieldset>
+      <p id="diagnostics" hidden></p>
+      <p id="error" role="alert"></p>
+      <output id="state"></output>
+    </main>
+    <script type="module" src="./glacial-runtime.ts"></script>
+  </body>
+</html>
