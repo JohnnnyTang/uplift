@@ -2,6 +2,7 @@
 import { contourSpread, waterSpread } from "../book/src/scenes/content";
 import { valleySpread } from "./geomorph.v-valley/spread";
 export { valleySpread, contourSpread, waterSpread };
+export { uValleySpread } from "./geomorph.u-valley/spread";
 export { teacherNotesText as valleyTeacherNotes } from "./geomorph.v-valley/content";
 export const spreads = [contourSpread, waterSpread] as const;
 /** Historical process-model research remains explicitly reachable. */
