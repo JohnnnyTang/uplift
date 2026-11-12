@@ -2032,3 +2032,71 @@ draft margin phrases in `notes.ts`. Name map to 5L: `noteColumns()` ↔ `measure
 field name (5L's exact column range, ~20–47, is a little wider than this probe's 26–43; pick one probe in 5M).
 
 **Not done.** No video capture; no human, screen-reader or hardware check; touch drag of the cut face.
+
+## D-W5-5J — Runs, timeline and comparison runtime on one command path; WebGPU by default, halted runs never continue
+
+2026-11-12. Session 5J (`s1/w5/5j-runs-timeline`, from s1/w5/integration 8aee4cf). Technical choices inside the
+plan and the frozen R1 contracts. Evidence: `docs/review/glacial/runtime/README.md`,
+`e2e/fixtures/glacial-runtime-evidence.json`.
+
+1. **Two entry points.** `@hachure/runtime/glacial` is the main-thread `GlacialHost`, the `runs` module, the
+   Worker transport, labels and an animation driver; it loads no solver or GPU code.
+   `@hachure/runtime/glacial-worker` is the engine (`installGlacialWorker`) and an in-process transport with
+   Worker semantics. The water `SimHost` is untouched; the glacial host follows its lifecycle (serialized
+   requests, one automatic batch in flight, settle/resume without catch-up) and reuses `FixedStepClock`.
+2. **One command path.** Every reader action on runs and time is `host.dispatch(command)`. The page rock
+   selector and the 3D specimen drop both send `{ kind: "choose-rock", rockId }`. Level, camera, cut and ice
+   view are not host state, so they cannot touch a run.
+3. **"Before any run" means before the live run has advanced.** A rock chosen while the live run is still at
+   step 0 replaces that run, and nothing is kept. Choosing the live run's own rock does nothing (unless the run
+   is halted). A choice keeps the play intent: if the old run was playing, the new run plays from its start. The
+   newly kept run becomes the default comparison (§1 "Compare"); the reader may pick another or none.
+4. **Recording.** Snapshots are recorded at step 0 and every `snapshotIntervalYears` (20), up to
+   `horizonYears` (300), where a run is complete and stops. The engine splits batches at record boundaries, so
+   recorded snapshots and hashes do not depend on playback speed or batching (tested). Kept runs are stored in
+   the frozen capture format: `RecordedRun` implements `CapturedRun`. Each run's quantization is fixed at its
+   start, with the bed offset 500 m below the start's lowest bed; all three registered 300-year captures
+   re-encode with 0 values clamped. Budget: 3 runs × 16 × 81 920 B = 3.93 MB, against 32 MiB.
+   `planGlacialRuns` rejects over-budget configs, and `RunStore` asserts the budget after every change.
+5. **Scrub and compare.** Scrubbing pauses and shows the nearest recorded snapshot. `play` and `step` return to
+   live; scrubbing to the live head is the live view. Comparison uses the nearest recorded time, labelled with
+   that actual time. Our reading of "cross-backend comparison only at matched times" (D-W5-5I): a kept run on
+   another backend is shown only when its recorded time equals the viewed time; otherwise the comparison
+   returns `unmatched` with a reason, and scrubbing always lands on matched times.
+6. **Backend.** `selectGlacierBackend({ prefer: "auto" })` runs once, at run 1, in the Worker. Later runs reuse
+   the chosen backend without repeating the device check. If a later WebGPU creation fails, that run and the
+   session from then on use the CPU, labelled. If a run fails mid-way, it is halted and latched, and the
+   snapshots recorded before the failure stay as view data. The host offers `restart-on-cpu`, a new CPU run
+   from the authored start through `restartOnCpu`. The halted run is kept with its `webgpu` label. Reset keeps
+   the session's backend, so a failed GPU is not silently retried.
+7. **Labels** (`labels.ts`) are defaults built from bound values: "earlier · model time t model years",
+   "kept run N · model time t model years". 5L may reword them around the same values.
+8. **"Paused" means settled.** Pause and leave report `activity: "settling"` while accepted batches drain
+   and the final live frame is fetched. Only then is `"paused"` published, and from that point the shown frame
+   equals the live position. The first build published "paused" (and "departed") before draining. A reader
+   could then see a frame older than the run, which happened in CI run 43187600263 (shown step behind live
+   step). The deterministic reproduction is the unit test "never reports paused … while the shown frame lags".
+
+**Results (this machine).** Unit: 31 host/run tests plus the capture-quantization test pass in Node. Browser
+(`e2e/glacial-runtime.spec.ts`): 11/11 in installed Chrome with WebGPU (Intel Arc 140V), and 8 passed + 3
+WebGPU-only skipped in Playwright's bundled Chromium (no adapter). Auto picks WebGPU in Chrome; a forced
+`skew-erosion` fault falls back with `[device-check-failed]`; a real device loss halts at step 100 and offers
+the CPU run. CPU Worker, CPU main-thread and reload runs give identical hashes, and WebGPU same-device replay
+is identical. A production 300-year WebGPU run recorded 16 snapshots (1.31 MB) in about 8 s at 4×.
+
+**Cross-owned edits.** `hachure/runtime/package.json`: dependency `@hachure/glacier: workspace:*` and the
+exports `./glacial` and `./glacial-worker`. `pnpm-lock.yaml`: the importer entry, as regenerated by
+`pnpm install`.
+
+**Not done / open.** (a) No book integration: 5M adds the app Worker module (`installGlacialWorker(self)`) and
+joins `viewFrame()`/`comparison()` to the 5K scene. (b) The real device-loss and same-device replay browser tests run wherever auto
+selection picks WebGPU, including CI's software adapter (Linux bundled Chromium), which passes the device
+check. The 300-year production run needs `UPLIFT_E2E_CHANNEL` and a hardware adapter: on CI's software
+adapter it exceeded the test budget (run 43174361878). The labelled CPU-as-GPU fake covers the halt path on
+every machine. (c) The label wording awaits 5L.
+
+**Plan-changing facts.** (a) GPU and CPU state hashes differ even at step 0, because the GPU hashes its two-lane
+reconstruction. Determinism holds per backend and same-device, never across backends, which is why kept runs
+carry their backend. (b) A CPU-only session plays slower than the scheduled 10 model years per second at 1×
+(about 3 model years per second on this machine); the host drops wall-clock time rather than enlarging the
+step, as specified. (c) Nothing here blocks 5M.
