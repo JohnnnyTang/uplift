@@ -140,6 +140,9 @@ importers:
 
   uplift/spreads:
     dependencies:
+      '@hachure/glacier':
+        specifier: workspace:*
+        version: link:../../hachure/glacier
       '@hachure/runtime':
         specifier: workspace:*
         version: link:../../hachure/runtime
