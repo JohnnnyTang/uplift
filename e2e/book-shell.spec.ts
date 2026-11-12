@@ -65,7 +65,7 @@ test("phone pages settle hidden scenes, disclosures, level and resize preserve s
   await expect(page.getByRole("heading", { name: "Teacher note", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Return to the spread" }).click();
   await expect(page.getByRole("button", { name: "Sources and depth", exact: true })).toBeFocused();
-  await page.locator("#reader-level").selectOption("uni");
+  await page.getByRole("button", { name: "University level" }).click();
   await page.setViewportSize({ width: 1366, height: 900 });
   await expect(page.getByRole("img")).toBeVisible();
   expect(await page.evaluate(() => window.fixtures[0].controller.presentation())).toMatchObject({

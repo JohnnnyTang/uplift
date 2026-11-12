@@ -1,24 +1,24 @@
-import { test, expect } from "@playwright/test";
-import { mkdirSync, copyFileSync } from "node:fs";
+/**
+ * The actual default book (5E; first spread changed by 5M): From V to U on the tilted stage, then the water
+ * lesson. Screenshots go to the test output; the 5E evidence under docs/review/book-revision stays as recorded.
+ */
+import { test, expect, type Page } from "@playwright/test";
 
-const evidence = "docs/review/book-revision/acceptance";
+const flap = (page: Page) => page.locator(".gs-flap");
+async function glacialReady(page: Page) {
+  await expect(page.locator(".gs-desk")).toHaveAttribute("data-transition", "done", { timeout: 60_000 });
+}
+
 test.use({ video: "on" });
 
-test("integrated recording: direct lift, source placement, page turn and retained return", async ({
-  page,
-}, testInfo) => {
+test("integrated recording: rock choice, flap, page turn and retained return", async ({ page }, testInfo) => {
   await page.goto("/?backend=cpu-worker");
-  const lift = page.getByRole("slider", { name: "Lift the drawing" });
-  await expect(lift).toBeEnabled();
-  await page.screenshot({ path: `${evidence}/flat-desktop.png` });
-  const ring = (await page.locator("[data-ring]").boundingBox())!;
-  await page.mouse.move(ring.x + ring.width / 2, ring.y + ring.height / 2);
-  await page.mouse.down();
-  await page.mouse.move(ring.x + ring.width / 2, ring.y - 180, { steps: 12 });
-  await page.mouse.up();
-  await expect(lift).toHaveValue("1");
-  await page.screenshot({ path: `${evidence}/raised-desktop.png` });
-  await page.getByRole("button", { name: "Reveal explanation", exact: true }).click();
+  await glacialReady(page);
+  await page.screenshot({ path: testInfo.outputPath("glacial-desktop.png") });
+  await page.getByRole("radio", { name: /Granite/ }).check();
+  await expect(page.locator(".gs-desk")).toHaveAttribute("data-live-rock", "granite");
+  await flap(page).locator("summary").click();
+  await expect(flap(page)).toHaveAttribute("open", "");
   await page.getByRole("button", { name: "Turn to Where will the water go?" }).click();
   const spring = page.getByRole("button", { name: "Move spring with arrow keys" });
   await expect(spring).toBeEnabled();
@@ -29,19 +29,12 @@ test("integrated recording: direct lift, source placement, page turn and retaine
   const box = (await canvas.boundingBox())!;
   await canvas.click({ position: { x: box.width * 0.75, y: box.height * 0.3 } });
   await expect.poll(() => page.locator("[data-wet]").getAttribute("d")).not.toBe("");
-  await page.screenshot({ path: `${evidence}/water-desktop.png` });
-  await page.getByRole("button", { name: "Turn to Lift a map" }).click();
-  await expect(lift).toHaveValue("1");
-  await expect(page.locator(".reader-answer")).toBeVisible();
-  await expect(page.locator('input[type="radio"]:checked')).toHaveCount(0);
-  await testInfo.attach("scope", {
-    body: "Actual default app; pointer actions and normal-motion page turns. No learner/hardware acceptance inferred.",
-    contentType: "text/plain",
-  });
-  const video = page.video()!;
-  await page.close();
-  mkdirSync(evidence, { recursive: true });
-  copyFileSync(await video.path(), `${evidence}/reader-journey.webm`);
+  await page.screenshot({ path: testInfo.outputPath("water-desktop.png") });
+  await page.getByRole("button", { name: "Turn to From V to U" }).click();
+  await glacialReady(page);
+  await expect(page.locator(".gs-desk")).toHaveAttribute("data-live-rock", "granite");
+  await expect(flap(page)).toHaveAttribute("open", "");
+  await expect(page.locator('input[name="gs-prediction"]:checked')).toHaveCount(0);
 });
 
 for (const [label, width, height] of [
@@ -52,47 +45,47 @@ for (const [label, width, height] of [
   ["reflow-320", 320, 800],
   ["zoom-200-equivalent", 683, 384],
 ] as const) {
-  test(`actual book composition ${label}: both lessons and immediate answers`, async ({ page }) => {
+  test(`actual book composition ${label}: both lessons and immediate answers`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height });
     await page.emulateMedia({ reducedMotion: "reduce" });
-    for (const [id, name] of [
-      ["cartography.contours", "contours"],
-      ["hydrology.water-path", "water"],
-    ]) {
-      await page.goto(`/?backend=cpu-worker&spread=${id}&page=text`);
-      await expect(page.getByRole("button", { name: "Reveal explanation", exact: true })).toBeVisible();
-      if (width >= 1000)
-        await expect(
-          page.getByRole(name === "water" ? "button" : "slider", {
-            name: name === "water" ? "Move spring with arrow keys" : "Lift the drawing",
-          }),
-        ).toBeEnabled();
-      if (width >= 1000)
-        expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBeLessThanOrEqual(height);
-      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
-      await page.screenshot({ path: `${evidence}/${name}-${label}.png`, fullPage: true });
-      await page.getByRole("button", { name: "Reveal explanation", exact: true }).click();
-      await expect(page.locator(".reader-answer")).toBeVisible();
-      if (width < 1000)
-        await page.getByRole("button", { name: "Explore the illustration", exact: true }).click();
-      await expect(page.locator(".reader-scene-status")).not.toContainText("Preparing");
-      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
-      const legendBox = (await page.locator(".scene-legend").boundingBox())!;
-      const scopeBox = (await page.locator(".reader-scope").boundingBox())!;
-      expect(scopeBox.y).toBeGreaterThanOrEqual(legendBox.y + legendBox.height);
-      await page.screenshot({ path: `${evidence}/${name}-${label}-illustration.png`, fullPage: true });
-    }
+    // Spread 1: From V to U.
+    await page.goto(`/?backend=cpu-worker&spread=geomorph.u-valley`);
+    await glacialReady(page);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    await flap(page).locator("summary").click();
+    await expect(flap(page).locator(".gs-flap-answer")).toBeVisible();
+    await expect(page.locator(".gs-lens svg")).toBeVisible();
+    await page.screenshot({ path: testInfo.outputPath(`glacial-${label}.png`), fullPage: true });
+    // Spread 2: the water lesson.
+    await page.goto(`/?backend=cpu-worker&spread=hydrology.water-path&page=text`);
+    await expect(page.getByRole("button", { name: "Reveal explanation", exact: true })).toBeVisible();
+    if (width >= 1000)
+      await expect(page.getByRole("button", { name: "Move spring with arrow keys" })).toBeEnabled();
+    if (width >= 1000)
+      expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBeLessThanOrEqual(height);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    await page.screenshot({ path: testInfo.outputPath(`water-${label}.png`), fullPage: true });
+    await page.getByRole("button", { name: "Reveal explanation", exact: true }).click();
+    await expect(page.locator(".reader-answer")).toBeVisible();
+    if (width < 1000)
+      await page.getByRole("button", { name: "Explore the illustration", exact: true }).click();
+    await expect(page.locator(".reader-scene-status")).not.toContainText("Preparing");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    const legendBox = (await page.locator(".scene-legend").boundingBox())!;
+    const scopeBox = (await page.locator(".reader-scope").boundingBox())!;
+    expect(scopeBox.y).toBeGreaterThanOrEqual(legendBox.y + legendBox.height);
   });
 }
 
 test("actual keyboard reduced-motion journey and serious accessibility audit", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/?backend=cpu-worker");
-  const reveal = page.getByRole("button", { name: "Reveal explanation", exact: true });
-  // Tab from the initial scene focus; never use a mouse in this journey.
+  await glacialReady(page);
+  const summary = flap(page).locator("summary");
+  // Tab from the initial heading focus to the flap; never use a mouse in this journey.
   let found = false;
-  for (let i = 0; i < 35; i++) {
-    if (await reveal.evaluate((node) => node === document.activeElement)) {
+  for (let i = 0; i < 40; i++) {
+    if (await summary.evaluate((node) => node === document.activeElement)) {
       found = true;
       break;
     }
@@ -100,11 +93,10 @@ test("actual keyboard reduced-motion journey and serious accessibility audit", a
   }
   expect(found).toBe(true);
   await page.keyboard.press("Enter");
-  await expect(page.locator(".reader-answer")).toBeVisible();
-  const lift = page.getByRole("slider", { name: "Lift the drawing" });
-  await lift.focus();
-  await page.keyboard.press("End");
-  await expect(lift).toHaveValue("1");
+  await expect(flap(page)).toHaveAttribute("open", "");
+  await page.getByRole("radio", { name: /Shale/ }).focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(page.locator(".gs-desk")).toHaveAttribute("data-live-rock", "sandstone");
   await page.locator("h1").focus();
   await page.keyboard.press("PageDown");
   const spring = page.getByRole("button", { name: "Move spring with arrow keys" });
@@ -131,6 +123,10 @@ test("actual keyboard reduced-motion journey and serious accessibility audit", a
   expect(violations).toEqual([]);
   await page.locator("h1").focus();
   await page.keyboard.press("PageUp");
-  await expect(lift).toHaveValue("1");
-  expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
+  await glacialReady(page);
+  await expect(page.getByRole("heading", { name: "From V to U", exact: true })).toBeFocused();
+  await expect(flap(page)).toHaveAttribute("open", "");
+  expect(
+    await page.evaluate(() => document.getAnimations().filter((a) => a.playState === "running").length),
+  ).toBe(0);
 });

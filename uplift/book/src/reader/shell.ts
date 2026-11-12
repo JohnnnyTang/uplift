@@ -150,7 +150,8 @@ export async function createReaderShell(
     const article = node("article", undefined, "reader-spread reader-stage");
     article.dataset.spread = spread.id;
     article.setAttribute("aria-label", scene.bindings.render(spread.title[level]));
-    const fallbackHeading = node("h2", scene.bindings.render(spread.title[level]), "reader-sr");
+    // Focus target until the scene has drawn its own title (not a heading, so the page keeps one h1).
+    const fallbackHeading = node("p", scene.bindings.render(spread.title[level]), "reader-sr");
     fallbackHeading.tabIndex = -1;
     const surface = node("div", undefined, "reader-stage-surface");
     const status = node("p", undefined, "reader-scene-status");
@@ -168,7 +169,9 @@ export async function createReaderShell(
       article,
       // The scene draws its own title (h1) once mounted.
       get heading(): HTMLElement {
-        return article.querySelector<HTMLElement>("h1") ?? fallbackHeading;
+        const title = article.querySelector<HTMLElement>("h1");
+        if (title) fallbackHeading.remove();
+        return title ?? fallbackHeading;
       },
       surface,
       scene,
@@ -471,6 +474,7 @@ export async function createReaderShell(
     current = target;
     active = makePage(target);
     book.replaceChildren(active.article);
+    updateNavigation();
     if (target.page !== "text" && !suspended) {
       await active.scene.mount(active.surface);
       if (!disposed && !suspended) active.scene.resume();

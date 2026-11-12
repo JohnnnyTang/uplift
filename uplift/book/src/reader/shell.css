@@ -521,3 +521,7 @@
   display: inline-flex;
   margin-right: 1em;
 }
+/* Flat book (phones, reduced motion, large zoom): the page scrolls past the floating bar. */
+.reader-stage-root .gs-desk[data-stage-mode="flat"] {
+  padding-bottom: calc(16px + var(--reader-bar-space));
+}
