@@ -1,5 +1,44 @@
 # Product story and threads
 
+## Current owner direction · 2026-11-09
+
+The pipeline is settled: **textbook illustration → visual transformation → complete
+interactive 3D scene**. The illustration can be any suitable line drawing; contours
+are optional and are not the product theme. The transition is art direction: morph,
+fade, reveal and staged geometry are allowed, with no exact point correspondence,
+projection reconstruction or spatial-calculation acceptance gate. Keep the scene
+recognizable and the endpoint complete. Reduced motion can skip the effect.
+
+Separate this entrance effect from the lesson's process: once the lesson claims to
+show valley formation, the landform change must come from a supported process model,
+not a shape tween presented as erosion. Artistic transition freedom does not require
+relaxing scientific honesty about the actual lesson.
+
+Keep the book chrome and typography simple. Illustrations and 3D scenes may be
+colourful and use natural material colours: rock, soil, vegetation, snow, ice and
+water need not share paper colour. The old one-or-two-quantity-colours restriction
+is superseded. Data colours still need a legend and non-colour cues; natural material
+colour need not pretend to encode a measured quantity. Preserve accessible contrast.
+
+The first lesson is **formation of U-shaped valleys** (_From V to U_). The loop is
+**choose rock → watch it evolve → scrub back and inspect → compare runs**:
+
+- **Condition:** rock type, shown with natural colours and textbook lithology patterns.
+  It is chosen on the page or by dropping a specimen on the 3D block; both send one command.
+- **Runs:** each rock choice is a separate run from the same starting V-valley. Earlier
+  runs are kept and compared at matched model time. Runs are separate, never paired.
+- **Inspection:** camera, the block's front-face cross-section and the ice view inspect
+  without changing the model.
+- **Presentation:** the scene is a full valley with its glacier, standing on a tilted
+  3D book page.
+- **Backend:** GPU ships where it passes CPU/GPU parity, and CPU is always the fallback.
+
+The single source of truth is [Wave 5 sessions 5G–5N](plan/stage-1-wave-5-glacial.md),
+not yet started. Rain/runoff and contours remain useful examples, not the chosen opening.
+
+[Saved owner references](references/owner-2026-11-09/README.md) establish the intended
+experience. The exact transformation is not an unresolved science requirement.
+
 ## Product direction — owner clarification, 2026-11-09
 
 **Uplift is a book whose drawings come to life.** A reader opens a bounded paper spread,
@@ -16,7 +55,7 @@ This clarification is reflected in the [handoff](handoff.md#pedagogical-design-p
 and supersedes the earlier mandatory prediction gate, required challenge/stamp loop,
 and deferral of page turning. The complete [Wave 5 revision](plan/stage-1-wave-5.md)
 revises existing implementations and delivers the new example before Wave 6 hardening.
-[PB1–PB8](plan/product-realignment.md#product-acceptance-gate) remains the product contract.
+[PB1–PB9](plan/product-realignment.md#product-acceptance-gate) remains the product contract.
 Existing scientific evidence keeps its actual status.
 
 ## What the reference teaches us
@@ -75,8 +114,8 @@ the explanation and illustration and onward to the next spread. At large text si
 browser zoom, reflow and vertical scrolling take precedence over fixed dimensions.
 No clipped content, nested scroll traps or tiny replica of a desktop book.
 
-Use ink, hatching, paper and restrained depth. Coloured marks carry a named quantity,
-with a legend and a redundant non-colour cue. Paper edges, contact shadows and a
+Use readable textbook illustration and restrained depth. Natural material colours
+are welcome in scenes; data encodings carry a legend and a redundant non-colour cue. Paper edges, contact shadows and a
 controlled camera establish depth; decorative glow and gradients do not teach anything.
 Keep text as accessible DOM content even when the page surface and scene use 3D rendering.
 
@@ -100,7 +139,7 @@ useful reader context. A list of unfinished research tasks is not lesson content
 pending waterfall challenge stays out of the ordinary book until it has a supported
 outcome; its failed experiments remain available to researchers.
 
-## Where the current implementation drifted
+## Historical drift before A–F (foundations since revised)
 
 This assessment is grounded in source and the committed rain-comparison screenshot,
 not a claim to have conducted a new user study.
@@ -117,37 +156,34 @@ The mismatch is not a reason to throw away the work. Solvers, conservation check
 CPU/GPU comparison, bindings, contours, picking, accessibility and reproducibility are
 assets. They must now serve the reader's next gesture and visible discovery.
 
-## The first proof after this correction
+## The first lesson after this correction
 
-Build a small sequence of two interactive spreads with a genuine page turn between them.
-Use **Contours to terrain** as the first candidate: it can demonstrate the name and the
-flat-to-spatial relationship using existing heightfield and contour capabilities without
-waiting for a convincing valley to form.
+U-shaped valley formation and the combined intervention/time-inspection loop are
+settled. The owner requested the current-wave implementation plan; see 5G–5N.
 
-Its design prompt is "Lift the drawing; explore the shape." A constrained view/lift action
-and a selected contour or height marker should connect the paper drawing to the raised
-surface. The proposed tiny question concerns the same contour in both views. This is a
-content brief, not approved scientific copy: source the claim and mark the actual copy
-`<!-- expert-review -->` during implementation.
+<!-- expert-review -->
 
-A second candidate is **Where will the water go?** Place a source on a prepared small
-landscape and observe the model's route. Choose one gesture and one model-supported
-question. Confirm that the existing host can support the source interaction and that
-the water consequence is visible before committing to this lesson. If a shared
-primitive is missing, record it in `DECISIONS.md`; do not script the water route.
+Valley glaciers can widen and deepen river-cut valleys into broad U-shaped troughs.
+See [NPS: U-shaped valleys](https://www.nps.gov/articles/ushapedvalleysfjordshangingvalleys.htm)
+and [Yosemite geology](https://www.nps.gov/yose/learn/nature/geology.htm).
+These sources support the teaching topic; they do not validate a numerical model.
 
-These are proposed lesson choices, not claims that either spread is complete or validated.
-The first implementation session must test them against the actual renderer and model.
-If a candidate cannot show a clear, truthful consequence promptly, narrow or replace
-the lesson rather than making the reader wait through a numerical experiment.
-The original erosion work remains a research/example surface until its live illustration
-can carry its lesson. Its recorded gross-erosion result does not validate a live valley,
-waterfall or water-routing claim.
+The scene: a textbook block diagram becomes a naturally coloured valley with
+a glacier flowing through it, standing on the page. The block's front face is the
+live cross-section, with the starting V as a dashed line and a kept run's profile as
+a ghost. The reader can reveal the land beneath the ice. That control is presentation
+only; it must not imply instantaneous melting or reset the evolving terrain. Keep the
+lesson on glacial valley reshaping rather than expanding to a whole glacial system.
+The condition is rock type (owner decision). 5G selects the model, the rock set and
+its sources, and tests whether rock changes the shape or only the rate. One condition
+with two input methods, playback and inspection still serves one idea.
 
-The acceptance question is: **Can a new reader discover what to touch, see what changed,
-say one small thing they learned, and reach another playable page without help?**
-Automated checks can establish mechanics; only observed readers can establish that
-the invitation is understandable or that they want to continue.
+The current engine implements surface-water/hydraulic erosion, not glacier flow
+and glacial erosion. Existing book/runtime work remains useful. A shared glacial
+process capability and evidence are needed before claiming to simulate formation;
+changing the water material to ice or interpolating a V into a U is insufficient.
+The old prohibition on ice/new physics is reopened specifically for this owner-
+selected subject, not permission for an unbounded new engine programme.
 
 ## Threads that run through every stage
 

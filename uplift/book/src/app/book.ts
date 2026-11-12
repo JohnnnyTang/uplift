@@ -32,7 +32,7 @@ import {
   createFlatTerrainTransport,
   selectTerrainBackend,
   type TerrainBackend,
-  createSpreadLifecycle,
+  ReaderLifecycle,
   publishTerrainSample,
   createPredict,
   createToolPalette,
@@ -85,10 +85,15 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     probes: spread.probes,
     durationIds: Object.keys(spread.scene.durations ?? {}),
   });
-  const lifecycle = createSpreadLifecycle({
-    keyControlId: "rain",
-    predictOptionCount: spread.page.predict.options.length,
+  const lifecycle = new ReaderLifecycle({
+    questionOptionCount: spread.page.predict.options.length,
+    challenge: "pending",
   });
+  const lifted = () => lifecycle.presentation().liftFraction === 1;
+  const prediction = () => {
+    const value = lifecycle.presentation().prediction;
+    return value.kind === "answered" ? value.optionIndex : null;
+  };
   let level: Level = "hs",
     disposed = false,
     frame = 0,
@@ -147,12 +152,9 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     learningLog?.record(action);
   }
   const predict = createPredict("prediction", spread.page.predict, level, (choice) => {
-    lifecycle.commitPrediction(choice);
+    lifecycle.present({ ...lifecycle.presentation(), prediction: { kind: "answered", optionIndex: choice } });
     recordLesson({ kind: "prediction", choice });
-    comparison.unlock();
-    comparison.root.tabIndex = -1;
-    comparison.root.focus();
-    void liftAndRun();
+    updateText();
   });
   predict.root.disabled = true;
   let comparisonAtEnd = false;
@@ -191,7 +193,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
         ? `You predicted: ${spread.page.predict.options[choice]![level]}. ${choice === spread.page.predict.answer ? "Your prediction matches this comparison." : "This comparison supports heavier rain."} Heavier rain lifted more material over the same model time. This does not establish a deeper valley.`
         : "";
     if (feedback.textContent !== text) feedback.textContent = text;
-    flap.reveal.disabled = !comparisonAtEnd;
+    flap.reveal.disabled = false;
   }
   const time = createTimeScale("Loading model…");
   const figure = el("figure"),
@@ -205,7 +207,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   stage.append(brushOverlay.root);
   const caption = el(
     "figcaption",
-    "Contours show the starting surface; commit a prediction to lift the drawing.",
+    "Contours show the starting surface; lift the drawing whenever you are ready.",
   );
   const scale = createScaleBar("", 0.25),
     legend = el("ul", undefined, "widget-legend");
@@ -326,9 +328,14 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
       settings: { tool: cursor.kind, radiusM: cursor.radiusM, amount: cursor.amount },
     });
   });
-  controls.append(playback.root, rain.root, speed.root, palette.root);
+  const liftButton = el("button", "Lift the drawing");
+  liftButton.disabled = true;
+  liftButton.onclick = () => {
+    void liftAndRun().catch(showError);
+  };
+  controls.append(liftButton, playback.root, rain.root, speed.root, palette.root);
   canvas.addEventListener("pointerdown", (event) => {
-    if (!view?.heightfield || !lifecycle.isControlEnabled("rain")) return;
+    if (!view?.heightfield || !lifted()) return;
     const projection = view.projection();
     if (!projection) return;
     const bounds = canvas.getBoundingClientRect();
@@ -359,9 +366,6 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     spec: spread.challenge,
     predictionOptions: spread.page.predict.options,
     observationIntervalSteps: 1,
-    onAward: () => {
-      if (lifecycle.state === "explained") lifecycle.challenge();
-    },
   });
   left.append(
     title,
@@ -433,7 +437,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
 
   function refreshCursor(cursor: BrushCursorState = palette.state()) {
     const projection = view?.projection();
-    brushOverlay.setVisible(cursor.enabled && !!view && lifecycle.isControlEnabled("rain"));
+    brushOverlay.setVisible(cursor.enabled && !!view && lifted());
     if (view?.heightfield && projection)
       brushOverlay.update(view.heightfield, projection, view.exaggeration, cursor.at, cursor.radiusM);
   }
@@ -465,7 +469,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     noteText.textContent = bindings.render(teacherNotes.replace(/<!--.*?-->/gs, "").trim());
     flap.panel.textContent = committedExplanation(
       spread.page.predict.options,
-      lifecycle.prediction,
+      prediction(),
       level,
       bindings.render(spread.page.flap[level]),
     );
@@ -481,8 +485,8 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
         : undefined,
       {
         level,
-        prediction: lifecycle.prediction,
-        explained: lifecycle.state === "explained" || lifecycle.state === "challenged",
+        prediction: prediction(),
+        explained: lifecycle.presentation().explanationOpen,
       },
     );
     predict.update(level);
@@ -493,7 +497,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     keywords.update(level);
     equations.hidden = level !== "uni";
     time.update(bindings.render("{{scene.timeScale}}"));
-    const liveEnabled = backendReady && selectedBackend !== "flat" && lifecycle.isControlEnabled("rain");
+    const liveEnabled = backendReady && selectedBackend !== "flat" && lifted();
     university.update(sample, level, liveEnabled);
     playback.update(host.playing, !liveEnabled);
     palette.setEnabled(liveEnabled);
@@ -557,7 +561,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
       view.setState(sample.snapshot);
       book.dataset.viewUpdateMs = String(view.stats.lastUpdateMs);
     }
-    if (!view || lifecycle.state === "predicting") renderFlat(sample);
+    if (!view || !lifted()) renderFlat(sample);
     book.dataset.viewStep = String(sample.snapshot.step);
     refreshCursor();
   }
@@ -594,9 +598,10 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     }
   }
   async function liftAndRun() {
+    liftButton.disabled = true;
     const generation = ++liftGeneration;
     await viewPromise;
-    if (disposed || generation !== liftGeneration || lifecycle.state !== "lifting") return;
+    if (disposed || generation !== liftGeneration) return;
     if (view) {
       lift = runLift(
         {
@@ -611,10 +616,11 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
       );
       if (!(await lift.done) || generation !== liftGeneration) return;
     }
-    lifecycle.completeLift();
+    lifecycle.present({ ...lifecycle.presentation(), liftFraction: 1 });
+    liftButton.disabled = true;
     rain.input.disabled = selectedBackend === "flat";
     speed.input.disabled = selectedBackend === "flat";
-    flap.reveal.disabled = !comparisonAtEnd;
+    flap.reveal.disabled = false;
     caption.textContent = view
       ? "The same contours now follow the raised surface. Blue is water; ochre stripes are sediment in transport."
       : selectedBackend === "flat"
@@ -630,9 +636,12 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     runGeneration++;
     challenge.reset();
     lifecycle.reset();
-    lifecycle.beginPrediction();
+
     predict.reset();
     comparison.reset();
+    comparison.unlock();
+    pauseComparison();
+    liftButton.disabled = false;
     flap.reset();
     rain.input.disabled = true;
     speed.input.disabled = true;
@@ -661,14 +670,14 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
     updateText();
   });
   flap.reveal.addEventListener("click", () => {
-    if (lifecycle.state === "interactive") lifecycle.explain();
+    lifecycle.present({ ...lifecycle.presentation(), explanationOpen: !flap.panel.hidden });
     updateText();
     recordLesson({ kind: "flap", open: !flap.panel.hidden });
   });
   const motionChanged = () => {
     if (reducedMotion.matches) {
       host.pause();
-      if (lifecycle.state === "lifting") {
+      if (lift && !lifted()) {
         lift?.cancel();
         void liftAndRun();
       }
@@ -678,12 +687,12 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   reducedMotion.addEventListener("change", motionChanged);
   const resize = new ResizeObserver(() => {
     refreshCursor();
-    if (host.sample && (!view || lifecycle.state === "predicting")) renderFlat(host.sample);
+    if (host.sample && (!view || !lifted())) renderFlat(host.sample);
   });
   resize.observe(stage);
   host.subscribe(renderSample);
   host.onError(showError);
-  lifecycle.beginPrediction();
+
   await host.initialize(initialSample.config, calibration);
   // Paint the process-derived flat diagram before device creation and shader compilation.
   await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
@@ -709,6 +718,15 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   const viewPromise = selectedBackend === "flat" ? Promise.resolve() : prepareView();
   playback.reset.disabled = false;
   predict.root.disabled = false;
+  liftButton.disabled = false;
+  comparison.unlock();
+  pauseComparison();
+  function pauseComparison() {
+    const button = [...comparison.root.querySelectorAll("button")].find(
+      (item) => item.textContent === "Pause comparison",
+    );
+    button?.click();
+  }
   function tick(now: number) {
     debug?.frame(now);
     host.advance(Math.max(0, (now - lastTime) / 1000));
@@ -719,6 +737,32 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
   return {
     host,
     lifecycle,
+    async suspend() {
+      cancelAnimationFrame(frame);
+      liftGeneration++;
+      lift?.cancel();
+      pauseComparison();
+      await viewPromise;
+      if (!lifted()) {
+        view?.applyLiftState(FLAT_STATE);
+        flat.style.opacity = "1";
+        canvas.style.opacity = "0";
+        liftButton.disabled = false;
+      }
+      await host.pauseAndSettle();
+      if (renderTimer !== undefined) {
+        clearTimeout(renderTimer);
+        renderTimer = undefined;
+      }
+      drawLatest();
+    },
+    resume() {
+      host.resume(false);
+      lastTime = performance.now();
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(tick);
+      updateText();
+    },
     dispose() {
       disposed = true;
       cancelAnimationFrame(frame);
@@ -729,6 +773,7 @@ export async function mountLesson(root: HTMLElement, spread: Spread, teacherNote
       palette.dispose();
       brushOverlay.dispose();
       host.dispose();
+      lifecycle.dispose();
       comparison.dispose();
       debug?.dispose();
       learningLog?.stop();

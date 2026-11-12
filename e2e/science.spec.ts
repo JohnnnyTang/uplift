@@ -1,11 +1,11 @@
 import { test, expect } from "@playwright/test";
-import { commit, ready, scienceGuards, unchangedAcrossLevels } from "./helpers";
+import { fixtureOrigin, commit, ready, scienceGuards, unchangedAcrossLevels } from "./helpers";
 
 test("unscored questions and pending science survive commit, endpoint, reset and levels", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  const errors = await ready(page, "http://127.0.0.1:4174/e2e/fixtures/science.html");
+  const errors = await ready(page, `${fixtureOrigin}/e2e/fixtures/science.html`);
   await expect(page.locator(".widget-predict")).toContainText("No option is marked correct");
   await scienceGuards(page);
   await commit(page, 0);

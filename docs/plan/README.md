@@ -1,5 +1,27 @@
 # Implementation plan: framework
 
+## Canonical Wave 5 integration branch
+
+The owner consolidated completed work and current plans into **s1/w5/integration**.
+Future Wave 5 sessions branch from and target PRs to this branch, consuming only
+merged dependencies. Main remains unchanged. This explicit Wave 5 exception
+supersedes earlier instructions to merge the reviewed baseline into main before 5G.
+See [integration provenance and workflow](../review/wave-5-integration/README.md).
+
+## Latest owner review · 2026-11-09
+
+Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
+(8069a7f). Their implementation is real and retained; prior wording saying these
+sessions had not started or could not start is stale. The corrected product is not
+yet accepted: see the [current branch audit](../review/book-revision/current-direction-review.md).
+
+The opening lesson is **From V to U** (U-shaped valley formation). Its single source
+of truth is [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md), rewritten 2026-11-09:
+the reader picks a rock type (page selector or a specimen dropped on the 3D block), each
+choice is a separate run, kept runs are compared at matched model time, the scene stands
+on a tilted 3D book, and the GPU glacier ships where it passes parity. Planned, not started.
+A–F remain foundations; their evidence is not glacial lesson acceptance.
+
 How Uplift and Hachure get built: the work model, the rules that keep parallel agents from colliding, and
 the stage map for the whole project. Only the **current stage** is planned in detail
 ([stage-1.md](stage-1.md)). Each later stage is planned when the previous one closes, using what that stage
@@ -10,9 +32,9 @@ taught us.
 The owner corrected the direction on 2026-11-09: Uplift is a playable 3D book with
 bounded pages, immediate interaction, optional questions/reveals and page turning.
 [Wave 5](stage-1-wave-5.md) revises the built app and delivers a new two-spread example;
-[PB1–PB8](product-realignment.md#product-acceptance-gate) defines product acceptance.
+[PB1–PB9](product-realignment.md#product-acceptance-gate) defines product acceptance.
 Hardening moves to Wave 6. Existing engine work and evidence remain foundations;
-implementation integration does not establish product acceptance.
+implementation integration does not establish product acceptance. 5B–5F are now locally integrated on the review stack; main remains at 5A. See the [acceptance ledger](stage-1-acceptance.md) and [drift audit](../review/book-revision/acceptance/README.md#drift-audit-and-handover).
 Read the updated [product story](../product-story.md) before starting a new session.
 
 ## The work model: stages → waves → sessions
@@ -26,7 +48,7 @@ Stage    a group-reviewed milestone with an exit gate                   (sequent
 | Unit        | Runs                             | Size                                           | Closed by                                                                                        |
 | ----------- | -------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | **Stage**   | One after another                | Weeks; one roadmap phase                       | **Gate:** the group reviews the exit criteria, a retro is written, and the next stage is planned |
-| **Wave**    | One after another inside a stage | 3–6 sessions                                   | **Wave close:** all PRs merged in order, main green, plan revised                                |
+| **Wave**    | One after another inside a stage | Normally 3–6 sessions; W5 extends through 5N   | **Wave close:** all PRs merged in order, main green, plan revised                                |
 | **Session** | In parallel inside a wave        | S ≤ ½ day, M ≈ 1 day, L ≈ 2 days of agent work | **PR merged:** exit criteria met, handover note written                                          |
 
 ### Why this shape
@@ -41,7 +63,10 @@ Stage    a group-reviewed milestone with an exit gate                   (sequent
 1. **Contracts before consumers.** Normally, if sessions in a wave need a shared interface, it is merged
    in an _earlier_ wave. The owner-requested Wave 5 revision uses explicitly gated groups: 5A contracts
    merge first, then 5B/5C/5D start from main, then 5E integration, then 5F acceptance. This exception
-   is scoped in its wave plan. In every case a session consumes only dependencies already on `main`,
+   is scoped in its wave plan. The owner-requested extension adds G → H → I/J/K/L → M → N
+   inside this same wave, with contracts/CPU merged before the independent group.
+   For Wave 5, use the owner-authorized `s1/w5/integration` instead of `main`.
+   In every case a session consumes only dependencies already on its integration base,
    never an unmerged peer branch. Ownership overlap is allowed only across these sequential groups.
 2. **Owned paths.** Every session brief lists the paths it may change. Two sessions in the same wave never own
    the same path. Touching an unowned path is allowed only for minimal glue (a re-export line, a registry
@@ -55,7 +80,7 @@ Stage    a group-reviewed milestone with an exit gate                   (sequent
    - `DECISIONS.md`: append only. On conflict, keep both entries.
    - Package `index.ts` entry points: add your export lines. On conflict, keep both.
 5. **Merge order.** Each wave lists a merge order. When the lead merges a PR, the remaining PRs rebase on
-   `main` and rerun `pnpm check` before they merge.
+   `main` (Wave 5: `s1/w5/integration`) and rerun `pnpm check` before they merge.
 6. **Main is always green.** CI (`typecheck`, `lint`, `format:check`, `test`, `build`) must pass on every PR.
    A session that breaks `main` fixes it before anything else merges.
 7. **Spikes are allowed to be throwaway.** Spike code lives in `spikes/<name>/`. A spike's deliverable is a
@@ -85,6 +110,15 @@ pnpm install                       # fast: pnpm's store is shared between worktr
 # start the agent in this folder with the session prompt below
 ```
 
+For the current Wave 5, use this scoped variant and target PRs to s1/w5/integration:
+
+```sh
+git fetch origin
+git worktree add ../uplift-wt/5g-glacier-model -b s1/w5/5g-glacier-model origin/s1/w5/integration
+cd ../uplift-wt/5g-glacier-model
+pnpm install --frozen-lockfile
+```
+
 Built-in worktree support in your agent tool works too (for example Claude Code's worktree mode), as long
 as the branch name follows the convention.
 
@@ -107,7 +141,7 @@ You are running session {ID} ({title}) of Uplift, Stage {S}, Wave {W}.
    {owned paths}
 3. Read any linked current-wave brief. State the reader action/visible outcome, or the scientific/accessibility guarantee, that this session serves. Build the deliverables and meet every exit criterion in your brief. If the brief is wrong given what is
    now on main, follow the handoff's principles, record the deviation in DECISIONS.md, and say so in the PR.
-4. Run `pnpm check`. Open a PR to main titled "S{S}·W{W}·{ID}: {title}" using the PR template. End the
+4. Run `pnpm check`. Open a PR to main (Wave 5: s1/w5/integration) titled "S{S}·W{W}·{ID}: {title}" using the PR template. End the
    description with a handover note: done / not done / surprises / facts that should change the plan.
 ```
 
@@ -167,11 +201,12 @@ CI, agent rules, decision log, product story, this plan.
 
 **Goal.** Use the existing Hachure foundation to prove two small interactive discoveries in a
 recognisable book, with direct manipulation and page turning.
-**Exit gate.** Product criteria PB1–PB8, applicable scientific and technical checks, expert review of
+**Exit gate.** Product criteria PB1–PB9, applicable scientific and technical checks, expert review of
 the shipped lessons, and an honest record of pending human/hardware checks.
 **Detailed plan:** [stage-1.md](stage-1.md). Waves 1–4 record the engine and research-example work.
 The active [Wave 5 revision](stage-1-wave-5.md) replaces the coarse P1/P2 outline.
-Wave 6 hardens the resulting book; it does not harden the old worksheet as the product.
+Wave 5 now includes [G–N](stage-1-wave-5-glacial.md) for the glacial opening.
+Wave 6 follows 5N and hardens that book, preserving the existing research surface.
 
 ### Stage 2 · Grow the book and extract proven reuse (provisional)
 
@@ -219,10 +254,19 @@ records limitations, and selects improvements rather than merely counting featur
 
 ## Status
 
-| Stage                     | State                                          | Plan                     | Retro |
-| ------------------------- | ---------------------------------------------- | ------------------------ | ----- |
-| 0 · Bootstrap             | Done                                           | —                        | —     |
-| 1 · Demo 1                | **Wave 5 revision planned; direction on main** | [stage-1.md](stage-1.md) | —     |
-| 2 · Book growth and reuse | Outline only                                   | —                        | —     |
-| 3 · Meaningful comparison | Outline only                                   | —                        | —     |
-| 4 · Pilot                 | Outline only                                   | —                        | —     |
+| Stage                     | State                                                   | Plan                     | Retro |
+| ------------------------- | ------------------------------------------------------- | ------------------------ | ----- |
+| 0 · Bootstrap             | Done                                                    | —                        | —     |
+| 1 · Demo 1                | **W5 A–F reviewed; G–N planned; release gates pending** | [stage-1.md](stage-1.md) | —     |
+| 2 · Book growth and reuse | Outline only                                            | —                        | —     |
+| 3 · Meaningful comparison | Outline only                                            | —                        | —     |
+| 4 · Pilot                 | Outline only                                            | —                        | —     |
+
+### Next-stage selection after 5F
+
+The [5F drift audit](../review/book-revision/acceptance/README.md#drift-audit-and-handover)
+requires each candidate to name action, visible consequence, evidence and shared
+primitive. Stage 2 chooses one further discovery after reader observations; Stage 3
+chooses one intervention/place comparison before data or engine expansion; Stage 4
+pilots the reviewed book without silently expanding the rain-only event schema.
+No later-stage capability list authorizes implementation before that choice.

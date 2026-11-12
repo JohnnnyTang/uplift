@@ -1,0 +1,30 @@
+[
+  {
+    "file": "01-book-flat.png",
+    "meaning": "Flat textbook illustration",
+    "originalFilename": "codex-clipboard-d806fa83-f5dc-4b8f-8ca7-244cbf728eec.png",
+    "sha256": "933d25c3170c23fadf12dbb5056404a1ada08022f607ed751688a0349610a40f",
+    "bytes": 3663169
+  },
+  {
+    "file": "02-book-transition.png",
+    "meaning": "Visual transition",
+    "originalFilename": "codex-clipboard-a16df9ae-e09c-4b52-9493-3f5c367eb866.png",
+    "sha256": "00b4d6cc96cc99918f153b37c63ca43e29095b7846bf1372737c0bcf850accae",
+    "bytes": 3032377
+  },
+  {
+    "file": "03-book-spatial.png",
+    "meaning": "Complete spatial illustration",
+    "originalFilename": "codex-clipboard-c57e09cf-975a-4908-b4ed-37be6992500a.png",
+    "sha256": "3afa1b30653a969e984389c9de199b1bf206dc661783b8999b5123c9316f71b3",
+    "bytes": 3112791
+  },
+  {
+    "file": "04-water-cycle-illustration.png",
+    "meaning": "Geographical scene reference: natural colours and a tangible landscape (replaces 04-geography-scene.png on 2026-11-09)",
+    "originalFilename": "Water-cycle-illustration.png",
+    "sha256": "2d97ededb4c5b890b4bb86a2335de74027ee400c2d75f5abfc054a11c4ef9f2f",
+    "bytes": 70122
+  }
+]

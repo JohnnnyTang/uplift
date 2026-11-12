@@ -28,9 +28,9 @@ export default tseslint.config(
     },
   },
   {
-    // Determinism: every random choice in the terrain engine goes through the seeded RNG
+    // Determinism: every random choice in the terrain and glacier engines goes through the seeded RNG
     // (hachure/terrain/src/rng). Math.random() would make runs unreproducible.
-    files: ["hachure/terrain/**/*.ts"],
+    files: ["hachure/terrain/**/*.ts", "hachure/glacier/**/*.ts"],
     rules: {
       "no-restricted-properties": [
         "error",

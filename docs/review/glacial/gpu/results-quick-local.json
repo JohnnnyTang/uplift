@@ -1,0 +1,877 @@
+{
+  "scope": "Session 5I default suite: early-interval CPU/GPU comparison (G7, G1, G3, G4), determinism and precision (G8), fallback (G9). Engineering evidence on this development machine; not classroom hardware.",
+  "tolerances": "docs/review/glacial/gpu/tolerances.md",
+  "cases": {
+    "early-shale": {
+      "years": 20,
+      "steps": 8000,
+      "fields": {
+        "bedM": {
+          "rms": 8.055629525289244e-8,
+          "p99": 2.3820894057280384e-7,
+          "max": 0.00000276616583505529,
+          "maxIndex": 5246
+        },
+        "iceThicknessM": {
+          "rms": 6.977988369838498e-7,
+          "p99": 0.0000025165724792941546,
+          "max": 0.000018744322773045496,
+          "maxIndex": 5079
+        },
+        "surfaceSpeedMPerYear": {
+          "rms": 0.000008898646089471886,
+          "p99": 0.00003814102922206075,
+          "max": 0.00019868616348617252,
+          "maxIndex": 5244
+        }
+      },
+      "fieldGate": {
+        "bedM": true,
+        "iceThicknessM": true,
+        "surfaceSpeedMPerYear": true
+      },
+      "probes": {
+        "iceVolumeM3": {
+          "gpu": 224634233.63146278,
+          "cpu": 224634236.6279115,
+          "diff": 2.99644872546196,
+          "bound": 2246342.366279115,
+          "pass": true
+        },
+        "iceAreaM2": {
+          "gpu": 5219200,
+          "cpu": 5219200,
+          "diff": 0,
+          "bound": 52192,
+          "pass": true
+        },
+        "erodedVolumeM3": {
+          "gpu": 901323.3781694532,
+          "cpu": 901323.6168783155,
+          "diff": 0.23870886221993715,
+          "bound": 100000,
+          "pass": true
+        },
+        "maxSlidingSpeedMPerYear": {
+          "gpu": 136.8106231689453,
+          "cpu": 136.81050467855923,
+          "diff": 0.00011849038608602314,
+          "bound": 6.840525233927962,
+          "pass": true
+        },
+        "maxSurfaceSpeedMPerYear": {
+          "gpu": 264.55450723714347,
+          "cpu": 264.55456726372074,
+          "diff": 0.00006002657727322003,
+          "bound": 13.227728363186039,
+          "pass": true
+        },
+        "snoutXM": {
+          "gpu": 3960,
+          "cpu": 3960,
+          "diff": 0,
+          "bound": 40,
+          "pass": true
+        }
+      },
+      "budget": {
+        "surfaceMassBalanceM3": {
+          "gpu": 238720906.96868095,
+          "cpu": 238720910.55094615,
+          "diff": 3.5822651982307434,
+          "bound": 2387209.1055094614,
+          "pass": true
+        },
+        "edgeOutflowM3": {
+          "gpu": 14086673.329236854,
+          "cpu": 14086673.923034081,
+          "diff": 0.5937972273677588,
+          "bound": 1000000,
+          "pass": true
+        }
+      },
+      "closure": {
+        "residualM3": -0.007981300354003906,
+        "pass": true
+      },
+      "sections": {
+        "belowSnout": {
+          "floorWidthM": {
+            "gpu": 140.6579890069206,
+            "cpu": 140.6579890069206,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "floorElevationM": {
+            "gpu": 1333.5466327690751,
+            "cpu": 1333.5466327690751,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "depthM": {
+            "gpu": 201.25108655551958,
+            "cpu": 201.25108655551958,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "maxWallSlopeDeg": {
+            "gpu": 26.82412046515687,
+            "cpu": 26.82412046515687,
+            "diff": 0,
+            "bound": 1,
+            "pass": true
+          },
+          "wallSlopeDeg": {
+            "gpu": 26.124185564067925,
+            "cpu": 26.124185564067925,
+            "diff": 0,
+            "bound": 1,
+            "pass": true
+          },
+          "shapeExponent": {
+            "gpu": 1.2116247975969376,
+            "cpu": 1.2116247975969376,
+            "diff": 0,
+            "bound": 0.1,
+            "pass": true
+          },
+          "erodedAreaM2": {
+            "gpu": 0,
+            "cpu": 0,
+            "diff": 0,
+            "bound": 500,
+            "pass": true
+          }
+        },
+        "underIce": {
+          "floorWidthM": {
+            "gpu": 140.9555598584727,
+            "cpu": 140.9555598584727,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "floorElevationM": {
+            "gpu": 1437.8232823915034,
+            "cpu": 1437.8232823915034,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "depthM": {
+            "gpu": 301.02611374711955,
+            "cpu": 301.02611374711955,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "maxWallSlopeDeg": {
+            "gpu": 27.133514614298306,
+            "cpu": 27.133514614298306,
+            "diff": 0,
+            "bound": 1,
+            "pass": true
+          },
+          "wallSlopeDeg": {
+            "gpu": 25.889044117337935,
+            "cpu": 25.889044117337903,
+            "diff": 3.197442310920451e-14,
+            "bound": 1,
+            "pass": true
+          },
+          "shapeExponent": {
+            "gpu": 1.1631325919770534,
+            "cpu": 1.1631325919770534,
+            "diff": 0,
+            "bound": 0.1,
+            "pass": true
+          },
+          "erodedAreaM2": {
+            "gpu": 0,
+            "cpu": 0,
+            "diff": 0,
+            "bound": 500,
+            "pass": true
+          }
+        },
+        "upper": {
+          "floorWidthM": {
+            "gpu": 143.3088080989704,
+            "cpu": 143.3088080989704,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "floorElevationM": {
+            "gpu": 1468.6846085811353,
+            "cpu": 1468.6846085811353,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "depthM": {
+            "gpu": 400.26672318199826,
+            "cpu": 400.26672318199803,
+            "diff": 2.2737367544323206e-13,
+            "bound": 2.5,
+            "pass": true
+          },
+          "maxWallSlopeDeg": {
+            "gpu": 27.1262551530108,
+            "cpu": 27.126255153011318,
+            "diff": 5.186961971048731e-13,
+            "bound": 1,
+            "pass": true
+          },
+          "wallSlopeDeg": {
+            "gpu": 25.9685389543049,
+            "cpu": 25.968538954304886,
+            "diff": 1.4210854715202004e-14,
+            "bound": 1,
+            "pass": true
+          },
+          "shapeExponent": {
+            "gpu": 1.104395528695132,
+            "cpu": 1.104395528695132,
+            "diff": 0,
+            "bound": 0.1,
+            "pass": true
+          },
+          "erodedAreaM2": {
+            "gpu": 0,
+            "cpu": 0,
+            "diff": 0,
+            "bound": 500,
+            "pass": true
+          }
+        }
+      },
+      "cpuMsPerModelYear": 261.75,
+      "gpuMsPerModelYear": 7.565000000596046,
+      "diagnostics": {
+        "cpu": {
+          "cappedEdgeSteps": 0,
+          "iceEdgeSteps": 53850550,
+          "limitedCellSteps": 44
+        },
+        "gpu": {
+          "cappedEdgeSteps": 0,
+          "iceEdgeSteps": 53850550,
+          "limitedCellSteps": 44
+        }
+      }
+    },
+    "early-sandstone": {
+      "years": 20,
+      "steps": 8000,
+      "fields": {
+        "bedM": {
+          "rms": 3.610675234993498e-8,
+          "p99": 1.2087593859178014e-7,
+          "max": 0.000001008775598165812,
+          "maxIndex": 5407
+        },
+        "iceThicknessM": {
+          "rms": 8.471977251065651e-7,
+          "p99": 0.0000026728657545049828,
+          "max": 0.000027562844685746768,
+          "maxIndex": 4920
+        },
+        "surfaceSpeedMPerYear": {
+          "rms": 0.000010233624205251186,
+          "p99": 0.00003872538280802473,
+          "max": 0.000260026900491539,
+          "maxIndex": 5085
+        }
+      },
+      "fieldGate": {
+        "bedM": true,
+        "iceThicknessM": true,
+        "surfaceSpeedMPerYear": true
+      },
+      "probes": {
+        "iceVolumeM3": {
+          "gpu": 224631786.70946515,
+          "cpu": 224631789.73187608,
+          "diff": 3.0224109292030334,
+          "bound": 2246317.897318761,
+          "pass": true
+        },
+        "iceAreaM2": {
+          "gpu": 5219200,
+          "cpu": 5219200,
+          "diff": 0,
+          "bound": 52192,
+          "pass": true
+        },
+        "erodedVolumeM3": {
+          "gpu": 450718.8751183381,
+          "cpu": 450718.99406927003,
+          "diff": 0.11895093193743378,
+          "bound": 100000,
+          "pass": true
+        },
+        "maxSlidingSpeedMPerYear": {
+          "gpu": 140.4511260986328,
+          "cpu": 140.45103107104782,
+          "diff": 0.00009502758499024822,
+          "bound": 7.0225515535523915,
+          "pass": true
+        },
+        "maxSurfaceSpeedMPerYear": {
+          "gpu": 253.8707451379158,
+          "cpu": 253.87083627881762,
+          "diff": 0.00009114090181583379,
+          "bound": 12.693541813940882,
+          "pass": true
+        },
+        "snoutXM": {
+          "gpu": 3960,
+          "cpu": 3960,
+          "diff": 0,
+          "bound": 40,
+          "pass": true
+        }
+      },
+      "budget": {
+        "surfaceMassBalanceM3": {
+          "gpu": 238720898.3007243,
+          "cpu": 238720901.88306504,
+          "diff": 3.582340747117996,
+          "bound": 2387209.0188306505,
+          "pass": true
+        },
+        "edgeOutflowM3": {
+          "gpu": 14089111.590667814,
+          "cpu": 14089112.151188323,
+          "diff": 0.5605205092579126,
+          "bound": 1000000,
+          "pass": true
+        }
+      },
+      "closure": {
+        "residualM3": -0.0005913376808166504,
+        "pass": true
+      },
+      "sections": {
+        "belowSnout": {
+          "floorWidthM": {
+            "gpu": 140.6579890069206,
+            "cpu": 140.6579890069206,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "floorElevationM": {
+            "gpu": 1333.5466327690751,
+            "cpu": 1333.5466327690751,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "depthM": {
+            "gpu": 201.25108655551958,
+            "cpu": 201.25108655551958,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "maxWallSlopeDeg": {
+            "gpu": 26.82412046515687,
+            "cpu": 26.82412046515687,
+            "diff": 0,
+            "bound": 1,
+            "pass": true
+          },
+          "wallSlopeDeg": {
+            "gpu": 26.124185564067925,
+            "cpu": 26.124185564067925,
+            "diff": 0,
+            "bound": 1,
+            "pass": true
+          },
+          "shapeExponent": {
+            "gpu": 1.2116247975969376,
+            "cpu": 1.2116247975969376,
+            "diff": 0,
+            "bound": 0.1,
+            "pass": true
+          },
+          "erodedAreaM2": {
+            "gpu": 0,
+            "cpu": 0,
+            "diff": 0,
+            "bound": 500,
+            "pass": true
+          }
+        },
+        "underIce": {
+          "floorWidthM": {
+            "gpu": 140.9555598584727,
+            "cpu": 140.9555598584727,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "floorElevationM": {
+            "gpu": 1437.8232823915034,
+            "cpu": 1437.8232823915034,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "depthM": {
+            "gpu": 301.02611374711955,
+            "cpu": 301.02611374711955,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "maxWallSlopeDeg": {
+            "gpu": 27.133514614298306,
+            "cpu": 27.133514614298306,
+            "diff": 0,
+            "bound": 1,
+            "pass": true
+          },
+          "wallSlopeDeg": {
+            "gpu": 25.889044117337935,
+            "cpu": 25.889044117337903,
+            "diff": 3.197442310920451e-14,
+            "bound": 1,
+            "pass": true
+          },
+          "shapeExponent": {
+            "gpu": 1.1631325919770534,
+            "cpu": 1.1631325919770534,
+            "diff": 0,
+            "bound": 0.1,
+            "pass": true
+          },
+          "erodedAreaM2": {
+            "gpu": 0,
+            "cpu": 0,
+            "diff": 0,
+            "bound": 500,
+            "pass": true
+          }
+        },
+        "upper": {
+          "floorWidthM": {
+            "gpu": 143.3088080989704,
+            "cpu": 143.3088080989704,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "floorElevationM": {
+            "gpu": 1468.6846085811353,
+            "cpu": 1468.6846085811353,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "depthM": {
+            "gpu": 400.26672318199826,
+            "cpu": 400.26672318199803,
+            "diff": 2.2737367544323206e-13,
+            "bound": 2.5,
+            "pass": true
+          },
+          "maxWallSlopeDeg": {
+            "gpu": 27.1262551530108,
+            "cpu": 27.126255153011318,
+            "diff": 5.186961971048731e-13,
+            "bound": 1,
+            "pass": true
+          },
+          "wallSlopeDeg": {
+            "gpu": 25.9685389543049,
+            "cpu": 25.968538954304886,
+            "diff": 1.4210854715202004e-14,
+            "bound": 1,
+            "pass": true
+          },
+          "shapeExponent": {
+            "gpu": 1.104395528695132,
+            "cpu": 1.104395528695132,
+            "diff": 0,
+            "bound": 0.1,
+            "pass": true
+          },
+          "erodedAreaM2": {
+            "gpu": 0,
+            "cpu": 0,
+            "diff": 0,
+            "bound": 500,
+            "pass": true
+          }
+        }
+      },
+      "cpuMsPerModelYear": 273.040000000596,
+      "gpuMsPerModelYear": 7.575,
+      "diagnostics": {
+        "cpu": {
+          "cappedEdgeSteps": 0,
+          "iceEdgeSteps": 53850581,
+          "limitedCellSteps": 52
+        },
+        "gpu": {
+          "cappedEdgeSteps": 0,
+          "iceEdgeSteps": 53850581,
+          "limitedCellSteps": 52
+        }
+      }
+    },
+    "early-granite": {
+      "years": 20,
+      "steps": 8000,
+      "fields": {
+        "bedM": {
+          "rms": 2.0087133172666507e-8,
+          "p99": 3.7261543184285983e-8,
+          "max": 7.125474894564832e-7,
+          "maxIndex": 5087
+        },
+        "iceThicknessM": {
+          "rms": 0.0000011874268823908436,
+          "p99": 0.0000029409498907284615,
+          "max": 0.00005492997332368077,
+          "maxIndex": 5079
+        },
+        "surfaceSpeedMPerYear": {
+          "rms": 0.000016746656940124487,
+          "p99": 0.00004248771136161622,
+          "max": 0.0006367554650239526,
+          "maxIndex": 5079
+        }
+      },
+      "fieldGate": {
+        "bedM": true,
+        "iceThicknessM": true,
+        "surfaceSpeedMPerYear": true
+      },
+      "probes": {
+        "iceVolumeM3": {
+          "gpu": 224630327.08005154,
+          "cpu": 224630329.9336037,
+          "diff": 2.8535521626472473,
+          "bound": 2246303.299336037,
+          "pass": true
+        },
+        "iceAreaM2": {
+          "gpu": 5219200,
+          "cpu": 5219200,
+          "diff": 0,
+          "bound": 52192,
+          "pass": true
+        },
+        "erodedVolumeM3": {
+          "gpu": 180300.6220822321,
+          "cpu": 180300.66935000324,
+          "diff": 0.047267771151382476,
+          "bound": 100000,
+          "pass": true
+        },
+        "maxSlidingSpeedMPerYear": {
+          "gpu": 142.8601531982422,
+          "cpu": 142.86030156548637,
+          "diff": 0.000148367244179326,
+          "bound": 7.143015078274319,
+          "pass": true
+        },
+        "maxSurfaceSpeedMPerYear": {
+          "gpu": 247.84165269938666,
+          "cpu": 247.84148818839626,
+          "diff": 0.0001645109904018227,
+          "bound": 12.392074409419813,
+          "pass": true
+        },
+        "snoutXM": {
+          "gpu": 3960,
+          "cpu": 3960,
+          "diff": 0,
+          "bound": 40,
+          "pass": true
+        }
+      },
+      "budget": {
+        "surfaceMassBalanceM3": {
+          "gpu": 238720892.7773335,
+          "cpu": 238720896.35938993,
+          "diff": 3.5820564329624176,
+          "bound": 2387208.9635938993,
+          "pass": true
+        },
+        "edgeOutflowM3": {
+          "gpu": 14090565.69557457,
+          "cpu": 14090566.425785484,
+          "diff": 0.7302109133452177,
+          "bound": 1000000,
+          "pass": true
+        }
+      },
+      "closure": {
+        "residualM3": -0.0017073750495910645,
+        "pass": true
+      },
+      "sections": {
+        "belowSnout": {
+          "floorWidthM": {
+            "gpu": 140.6579890069206,
+            "cpu": 140.6579890069206,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "floorElevationM": {
+            "gpu": 1333.5466327690751,
+            "cpu": 1333.5466327690751,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "depthM": {
+            "gpu": 201.25108655551958,
+            "cpu": 201.25108655551958,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "maxWallSlopeDeg": {
+            "gpu": 26.82412046515687,
+            "cpu": 26.82412046515687,
+            "diff": 0,
+            "bound": 1,
+            "pass": true
+          },
+          "wallSlopeDeg": {
+            "gpu": 26.124185564067925,
+            "cpu": 26.124185564067925,
+            "diff": 0,
+            "bound": 1,
+            "pass": true
+          },
+          "shapeExponent": {
+            "gpu": 1.2116247975969376,
+            "cpu": 1.2116247975969376,
+            "diff": 0,
+            "bound": 0.1,
+            "pass": true
+          },
+          "erodedAreaM2": {
+            "gpu": 0,
+            "cpu": 0,
+            "diff": 0,
+            "bound": 500,
+            "pass": true
+          }
+        },
+        "underIce": {
+          "floorWidthM": {
+            "gpu": 140.9555598584727,
+            "cpu": 140.9555598584727,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "floorElevationM": {
+            "gpu": 1437.8232823915034,
+            "cpu": 1437.8232823915034,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "depthM": {
+            "gpu": 301.02611374711955,
+            "cpu": 301.02611374711955,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "maxWallSlopeDeg": {
+            "gpu": 27.133514614298306,
+            "cpu": 27.133514614298306,
+            "diff": 0,
+            "bound": 1,
+            "pass": true
+          },
+          "wallSlopeDeg": {
+            "gpu": 25.889044117337935,
+            "cpu": 25.889044117337903,
+            "diff": 3.197442310920451e-14,
+            "bound": 1,
+            "pass": true
+          },
+          "shapeExponent": {
+            "gpu": 1.1631325919770534,
+            "cpu": 1.1631325919770534,
+            "diff": 0,
+            "bound": 0.1,
+            "pass": true
+          },
+          "erodedAreaM2": {
+            "gpu": 0,
+            "cpu": 0,
+            "diff": 0,
+            "bound": 500,
+            "pass": true
+          }
+        },
+        "upper": {
+          "floorWidthM": {
+            "gpu": 143.3088080989704,
+            "cpu": 143.3088080989704,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "floorElevationM": {
+            "gpu": 1468.6846085811353,
+            "cpu": 1468.6846085811353,
+            "diff": 0,
+            "bound": 2.5,
+            "pass": true
+          },
+          "depthM": {
+            "gpu": 400.26672318199826,
+            "cpu": 400.26672318199803,
+            "diff": 2.2737367544323206e-13,
+            "bound": 2.5,
+            "pass": true
+          },
+          "maxWallSlopeDeg": {
+            "gpu": 27.1262551530108,
+            "cpu": 27.126255153011318,
+            "diff": 5.186961971048731e-13,
+            "bound": 1,
+            "pass": true
+          },
+          "wallSlopeDeg": {
+            "gpu": 25.9685389543049,
+            "cpu": 25.968538954304886,
+            "diff": 1.4210854715202004e-14,
+            "bound": 1,
+            "pass": true
+          },
+          "shapeExponent": {
+            "gpu": 1.104395528695132,
+            "cpu": 1.104395528695132,
+            "diff": 0,
+            "bound": 0.1,
+            "pass": true
+          },
+          "erodedAreaM2": {
+            "gpu": 0,
+            "cpu": 0,
+            "diff": 0,
+            "bound": 500,
+            "pass": true
+          }
+        }
+      },
+      "cpuMsPerModelYear": 280.584999999404,
+      "gpuMsPerModelYear": 7.594999998807907,
+      "diagnostics": {
+        "cpu": {
+          "cappedEdgeSteps": 0,
+          "iceEdgeSteps": 53850603,
+          "limitedCellSteps": 57
+        },
+        "gpu": {
+          "cappedEdgeSteps": 0,
+          "iceEdgeSteps": 53850603,
+          "limitedCellSteps": 56
+        }
+      }
+    },
+    "determinism": {
+      "hashes": [
+        ["0e51f11c4f389362", "e9ecf8a3e6c66f25"],
+        ["0e51f11c4f389362", "e9ecf8a3e6c66f25"]
+      ]
+    },
+    "precision": {
+      "start": 2000,
+      "increment": -9.999999974752427e-7,
+      "steps": 100000,
+      "exact": 1999.9000000116212,
+      "lane": 1999.8999999721127,
+      "plain": 2000,
+      "laneError": 3.9508449845016e-8,
+      "plainError": 0.0999999883788405
+    },
+    "deviceCheck": {
+      "shale": {
+        "pass": true,
+        "steps": 80,
+        "maxBedDiffM": 6.396276148734614e-7,
+        "maxIceDiffM": 0.000007019493082793815,
+        "ms": 131.80000001192093
+      },
+      "sandstone": {
+        "pass": true,
+        "steps": 80,
+        "maxBedDiffM": 3.0994578992249444e-7,
+        "maxIceDiffM": 0.000008102148839839174,
+        "ms": 115.59999996423721
+      },
+      "granite": {
+        "pass": true,
+        "steps": 80,
+        "maxBedDiffM": 1.22568735605455e-7,
+        "maxIceDiffM": 0.000008513989087077789,
+        "ms": 123.20000004768372
+      },
+      "skewedShale": {
+        "pass": false,
+        "steps": 80,
+        "maxBedDiffM": 1.23133830582492,
+        "maxIceDiffM": 0.7482469814962371,
+        "ms": 171.10000002384186
+      },
+      "autoWithSkew": "WebGPU not used, running on CPU: [device-check-failed] GPU differs from CPU on this device after 80 steps (bed 1.23133830582492 m, ice 0.7482469814962371 m; limit 0.01 m)"
+    },
+    "fallbackMissing": {
+      "backend": "cpu",
+      "fallbackReason": "WebGPU not used, running on CPU: [webgpu-unavailable] WebGPU is not available in this context"
+    },
+    "fallbackShader": {
+      "backend": "cpu",
+      "fallbackReason": "WebGPU not used, running on CPU: [pipeline-failed] WGSL compilation failed: 449:12 expected ')' for function declaration; 449:19 expected '=' for assignment"
+    },
+    "autoSelection": {
+      "parity": {
+        "status": "passed",
+        "recommendedDefault": "webgpu",
+        "autoSelectsGpu": true,
+        "summary": "GPU glacier passed the registered CPU/GPU comparison (session 5I)",
+        "evidence": "docs/review/glacial/gpu/README.md"
+      },
+      "backend": "webgpu",
+      "fallbackReason": null
+    },
+    "deviceLost": {
+      "message": "[device-lost] WebGPU device lost: Device was destroyed.",
+      "restart": "WebGPU run halted at step 10 (device-lost); new CPU run from the authored start"
+    },
+    "nonFinite": {
+      "message": "[non-finite] glacier state became non-finite by step 1 (GPU)"
+    }
+  },
+  "available": true,
+  "utc": "2026-11-11T03:50:00.626Z",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+  "adapter": {
+    "vendor": "intel",
+    "architecture": "xe-2lpg",
+    "device": "",
+    "description": "",
+    "isFallbackAdapter": false,
+    "maxStorageBuffersPerShaderStage": 16
+  },
+  "capability": "available"
+}

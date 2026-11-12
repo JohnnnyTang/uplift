@@ -1,0 +1,104 @@
+.playable-scene {
+  width: 100%;
+  color: #263332;
+  font-family: Georgia, serif;
+}
+.playable-drawing {
+  position: relative;
+  width: 100%;
+  height: clamp(280px, 42vw, 430px);
+}
+.playable-drawing canvas,
+.playable-overlay,
+.playable-flat {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.playable-flat svg {
+  width: 100%;
+  height: 100%;
+}
+.playable-overlay {
+  pointer-events: none;
+  overflow: visible;
+}
+.selected-contour {
+  fill: none;
+  stroke: #263332;
+  stroke-width: 2.5;
+  stroke-dasharray: 7 4;
+}
+.wet-marks {
+  fill: none;
+  stroke: #263332;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+.scene-ring {
+  fill: #fffdf8;
+  stroke: #263332;
+  stroke-width: 2.5;
+  pointer-events: all;
+  cursor: ns-resize;
+  touch-action: none;
+}
+.scene-hint {
+  fill: #263332;
+  font:
+    italic 15px Georgia,
+    serif;
+  paint-order: stroke;
+  stroke: #fffdf8;
+  stroke-width: 4px;
+}
+.playable-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  font: 1rem system-ui;
+}
+.playable-controls label {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+.playable-controls input {
+  width: 8rem;
+  accent-color: #263332;
+}
+.playable-controls button {
+  font: inherit;
+  border: 1px solid #69716b;
+  background: #fffdf8;
+  color: inherit;
+  padding: 0.45rem 0.65rem;
+}
+.playable-controls :focus-visible {
+  outline: 3px solid #16738d;
+  outline-offset: 4px;
+}
+.scene-caption {
+  min-height: 3em;
+  line-height: 1.5;
+  max-width: 65ch;
+  margin: 0.7rem 0 0.3rem;
+}
+.scene-legend {
+  font: 0.8rem/1.5 system-ui;
+  max-width: 70ch;
+  color: #475652;
+}
+[hidden] {
+  display: none !important;
+}
+@media (max-width: 420px) {
+  .playable-drawing {
+    height: 300px;
+  }
+  .playable-controls label {
+    flex-wrap: wrap;
+  }
+}

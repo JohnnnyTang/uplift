@@ -11,6 +11,7 @@ export const packageName = "@hachure/runtime";
 export * from "./schema/index";
 // Additive playable-reader contract (5A); implementation follows in 5B.
 export * from "./reader/contracts";
+export * from "./reader/lifecycle";
 
 // Headless lifecycle, view state and host-fed live text (session 2D).
 export * from "./core/index";

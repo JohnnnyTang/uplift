@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>
+    Reader runtime fixture</title
+  ><style>
+    body {
+      margin: 0;
+      background: #faf8f2;
+      color: #292b2c;
+      font:
+        18px/1.5 Georgia,
+        serif;
+    }
+    main {
+      max-width: 36rem;
+      margin: 4vh auto;
+      padding: 1.5rem;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: normal;
+    }
+    button,
+    select,
+    input {
+      font: 16px system-ui;
+      margin: 0.3rem;
+      padding: 0.5rem;
+    }
+    button {
+      background: transparent;
+      border: 1px solid #292b2c;
+      border-radius: 2px;
+    }
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible {
+      outline: 3px solid #0072b2;
+      outline-offset: 3px;
+    }
+    fieldset {
+      border: 0;
+      padding: 0;
+    }
+    label {
+      display: block;
+      margin: 0.5rem 0;
+    }
+    .widget-status {
+      font-size: 16px;
+    }
+    .widget-flap {
+      border-top: 1px solid #292b2c;
+      margin-top: 1rem;
+      padding-top: 0.5rem;
+    }
+    output {
+      display: block;
+    }
+    svg {
+      width: 100%;
+      height: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+  <main>
+    <h1>Explore, then reflect</h1>
+    <p>Runtime wiring fixture. These controls test reader state; this is not a science lesson.</p>
+    <section id="learning"></section>
+    <label
+      >Reading depth
+      <select id="level">
+        <option value="hs">High school</option>
+        <option value="uni">University</option>
+      </select></label
+    ><button id="step">Advance a fixed step</button><button id="settle">Leave illustration</button
+    ><button id="resume">Return to illustration</button><button id="reset">Reset illustration</button
+    ><output id="state" aria-live="polite"></output>
+  </main>
+  <script type="module" src="./reader-runtime.ts"></script>
+</html>

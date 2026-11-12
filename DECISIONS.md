@@ -1263,3 +1263,570 @@ Explicit reset restores authored configuration, terrain and sources, pauses and
 resets presentation while retaining level. Instrumentation v1 remains confined
 to the existing research example. Product, science, human accessibility and target
 hardware acceptance remain separately open. Dependents start only after 5A merge.
+
+## D-5BCD — Parallel implementation decisions (2026-11-09)
+
+The owner authorized sessions 5B, 5C and 5D in parallel with GPT-6.1 Sol at high
+reasoning, with the lead responsible for shared decisions. All start from merged
+5A commit 8069a7f in isolated session worktrees. Keep the frozen contour/water
+sequence and composition: the real ink illustration dominates, Georgia carries
+the book text, and meaningful blue water plus non-colour marks explain quantities.
+The installed frontend-design skill guides frontend work; the Playwright skill
+was downloaded through the installer Git fallback for browser verification.
+
+Approve additive shell suspend/resume methods for 5E research navigation. They
+preserve retained scene instances without revising the frozen base contract or
+migrating the default app ahead of its assigned session. No new animation library
+is required for the restrained page turn.
+
+For authored terrain, make valley-specific diagnostics explicitly unavailable.
+Do not present empty legacy compatibility values as observations of a moved source.
+The existing solver rejects off-grid source operations; UI constraints may bound
+input before submission, but source markers update only after accepted operations.
+This keeps presentation and model aligned without changing solver semantics.
+
+Approve 5D's prospective source-location comparison on three authored slope
+variants (0.03, 0.04, 0.05), since changing a seed does not vary explicitly authored
+geometry. Register the complete configuration, source-only intervention, fixed
+horizon, display threshold and directional wet-cell comparison before acceptance
+runs; retain all outcomes. The intended claim concerns wet extent on these prepared
+surfaces, not symmetric outlets, general catchment laws or field rates. Geometry
+and rendered checks independently support the contour identity claim. Expert,
+human usability/accessibility and hardware review remain pending.
+
+Approve additive `SimHost.step(steps): Promise<void>` and `resume(playing=false)`
+for the new scene adapter. Explicit fixed-step response must share host mutation
+ordering and quiescence rather than bypassing it with raw transport requests.
+Reopening a settled host without autoplay lets reduced-motion readers continue
+editing a source. Preserve the retained fractional fixed-step state and omit
+wall-clock catch-up on return. These are bounded runtime APIs, not new physics.
+
+Approve placing the quiet research link in the existing book header and reducing
+navigation's vertical padding. The first desktop capture's separate research row
+pushed the full composition beyond 1366x768. Reuse existing chrome space while
+retaining 18px text, 44px targets and the dominant illustration; phone headers
+wrap naturally. This addresses viewport fit without shrinking the lesson.
+
+Approve hiding the redundant lift slider on the water lesson: source placement
+is its primary gesture; the contour lesson retains its accessible lift control.
+The rendered evidence showed readable depth and retained old water, so UI scope
+can be simplified without inventing another control or changing the model.
+
+GPU checks distinguish unavailable adapters from implementation failures. The
+forced software-rendering setup had no WebGPU adapter; native Chrome subsequently
+passed authored CPU/Worker/GPU comparison and the existing GPU suite. This is
+browser correctness evidence, not target-device performance acceptance.
+
+## D-5E — Integrate the default book on the local review stack (2026-11-09)
+
+The owner requested 5E work, commit and merge into the review branch. Local main
+is still `8069a7f` (5A); `s1/w5/5bcd-lead` at `d74ecc0` contains the combined
+5B–5D review stack. This explicit destination overrides the wave's main-first
+launch rule for this session only. Use an isolated `s1/w5/5e-migration` worktree,
+verify it, and merge back to that review branch. Do not merge main or imply remote
+publication/product acceptance.
+
+Make the new contour/water reader the default; retain the valley research route
+and its evidence. Replace its last prediction-gated lifecycle caller and remove
+the temporary adapter/export/tests. Preserve recorded endpoint-conditioned
+feedback without locking live play, replay or general explanation. Keep schema v1
+instrumentation exclusively in research and retain a settled model on route return.
+See `docs/review/book-revision/migration.md` for bounded compatibility changes,
+verification and the unchanged human/scientific review limits.
+
+## 2026-11-09 · 5F local review and responsive content height
+
+The owner requests 5F and merge into the review branch. Continue from `d01f631`
+on `s1/w5/5bcd-lead`, using an isolated `s1/w5/5f-acceptance` worktree. This extends
+5E's explicitly authorized local-review exception; main remains at 5A and pending
+human/expert/hardware gates cannot be closed by merging.
+
+Actual 320 CSS px captures show scene captions/legends overlapping scope/footer:
+the shell's square mobile scene box ignores the real adapter's content height.
+Bounded exception to 5F path ownership: change only app `reader-layout.css` to let
+mobile scene content determine height. Keep renderer/model/physics untouched, and
+add actual-page non-overlap regression checks. Human listening/true browser zoom
+remain 6B work; visual correctness alone does not prove comprehension.
+
+## D-W5-GLACIAL — Review completed branches; simplify transition; natural colours
+
+2026-11-09, latest owner clarification. Fetched remote B/C/D/E; the combined
+s1/w5/5bcd-lead head e7e7f0a also includes F. Main remains 8069a7f. Review these
+completed foundations, not the stale claim that dependent sessions have not begun.
+This session is s1/w5/current-review in its own worktree based on that review head.
+
+The 2D drawing → artistic transition → complete 3D scene pipeline is settled.
+Exact spatial mapping is not required. Contours are incidental, not a product
+identity or mandatory first lesson. This supersedes the excessive mapping constraints
+in the earlier unmerged scene-direction draft, as well as the old contour-first choice.
+Keep the simple book, allow natural and varied scene colours; supersede the two-colour
+rule in AGENTS and the handoff. Model quantities remain honest and accessible.
+
+The preferred opening is U-shaped valley formation, superseding the rain/runoff
+candidate. Discuss its concrete scene/interaction before implementation planning.
+Reopen glacial process scope specifically for this lesson. Existing hydraulics do
+not validate glacial erosion; the transition may be artistic, but formation may
+not be a keyframed V-to-U shape passed off as a process. Missing shared capability
+is glacier flow/erosion, to be scoped and sourced after scene agreement.
+
+Save the four owner-supplied original PNGs with provenance, hashes and third-party
+rights notice under docs/references/owner-2026-11-09. No reference imagery becomes
+a production asset. Preserve prior trials and acceptance evidence unchanged.
+
+Owned scope: direction/plan/review docs, reference assets and append-only decisions.
+Minimal AGENTS wording change is required to remove the directly contradicted colour
+restriction. No production code or solver is changed in this review. The previous
+unmerged scene-direction worktree is retained but superseded by these current edits.
+
+## D-W5-INTERACT-TIME — Condition changes and temporal observation belong together
+
+2026-11-09. The owner explicitly chooses both: change a physical condition through
+UI/direct 3D interaction and watch/inspect different valley formations over time.
+This supersedes the earlier discussion-only hold and either/or question. U-shaped
+valley formation, artistic drawing-to-scene entrance, optional contours and natural
+scene colours remain settled. Planning is authorized; this session launches no build.
+
+Add 5G–5N inside current Wave 5: G scientific feasibility/contracts and condition choice;
+H CPU glacial process; I GPU parity; J intervention/timeline/comparison runtime;
+K coloured scene and direct gesture; L focused content; M actual-book integration;
+N prospective evidence and acceptance. Preserve A–F. Execution G → H → I/J/K/L →
+M → N; merge G,H,I,J,K,L,M,N. Wave 6 follows N. Integrate reviewed foundations and
+this direction into green main before dependent launches; no silent peer-WIP reliance.
+
+The interaction contract is change → evolve → pause/inspect/replay → compare.
+UI and 3D inputs share the accepted command path. Live condition changes apply at
+fixed-step boundaries without resetting terrain. Past inspection preserves the live
+head and cannot silently branch; comparison starts a named second run from the same
+initial state except the declared intervention, with matched-time/shared-scale views.
+Playback speed is not physics. Levels, camera, section and ice visibility are view-only.
+Bound history and comparison resources; keep research instrumentation unchanged.
+
+5G owns the bounded scientific choice of condition/law and must demonstrate a viable
+process route. Do not default to water physics, target-shape tweening or a numerical
+control without a physical meaning. Sources and budgets/ranges remain required;
+new glacial CPU/GPU behavior needs explicit comparison. Failed feasibility stays failed.
+A source's U-valley result does not validate ours or calibrate geological years.
+
+PB9 plus GV1–GV8 record durable acceptance and session ownership. Every session names
+its reader action, visible outcome and evidence. Product-contract changes require an
+explicit owner decision; ordinary technical choices within it do not require asking
+again. Preserve original uploaded references and archived scientific results.
+
+Planning session continues on s1/w5/current-review. Owned scope: plan/product/handoff/
+review docs, README, append-only decisions; minimal AGENTS entry prevents stale briefs
+from driving future work. No production code, evidence outcomes or lockfile changed.
+
+## D-W5-INTEGRATION — One canonical branch for current and future Wave 5 sessions
+
+2026-11-09. The owner explicitly requests consolidation of all Wave 5 branch work
+and current plans into one branch for future sessions. Create s1/w5/integration by
+fast-forwarding main's 5A baseline to 7bf47d3, which already contains all committed
+Wave 5 tips: revision plan, A, B/C/D, E, F, updated direction, original references
+and G–N planning. Record exact ancestry in docs/review/wave-5-integration/sources.json.
+No cherry-pick duplication, solver rewrite or manual lockfile merge is needed.
+
+The earlier uncommitted scene-direction draft is preserved byte-for-byte as an
+archival patch in the integration handover. Its obsolete strict-transition and
+rain-first wording does not replace the later owner decisions. Leave its source
+worktree intact. Old branches remain traceable; this integration branch is the
+single active base, not an instruction to delete user work.
+
+Future Wave 5 sessions branch from and target PRs to s1/w5/integration, in the
+planned merge order; dependencies must already be merged there and checks green.
+This supersedes the G–N plan's prerequisite to merge everything into main before
+5G. It is a scoped owner-authorized exception, not permission to consume sibling
+WIP. Main remains unchanged. This consolidation does not start 5G or close any
+scientific, product, human or hardware gate. Push the verified branch for reuse.
+
+Integration session owns provenance/archive and minimal workflow/status updates in
+AGENTS, README, current plans and this appended decision; no production code changes.
+
+## D-W5-GLACIAL-REFINE — Rock-type runs, separate comparison, tilted book, GPU; plan rewritten
+
+2026-11-09. Owner answers after the plan discussion, on s1/w5/glacial-plan-refine from
+s1/w5/integration (d62bb19):
+
+1. **Condition = rock type** (hardness/composition): two or three rock types with natural
+   colours and lithology patterns, chosen on the page or by dropping a specimen on the 3D
+   block. This supersedes the open "ice supply / rock resistance / sliding" choice in 5G.
+   Rock cannot change under a moving glacier, so a choice applies to a whole run; choosing
+   while a run exists starts a new run and keeps the earlier one. Mid-run condition commands
+   are removed.
+2. **Scene:** a full valley reach with a glacier and its snout (V below, U under the ice) is
+   approved. An idealised uniform reach is only the feasibility fallback.
+3. **Comparison uses separate runs, not paired runs.** Kept earlier runs are looked up at
+   matched model time (ghost profile on the front face, margin-note numbers, optional
+   flip). Lockstep A/B, checkpoint replay-to-any-time and command logs are dropped.
+   Interpretation recorded here so the owner can correct it.
+4. **Tilted 3D book**, with the diorama standing on and above the right page; flat fallback
+   on phones, reduced motion and large zoom.
+5. **GPU ships too**, as far as it actually gets: 5I starts after 5G and is used where the
+   registered CPU/GPU comparison passes; CPU is always the fallback; gaps are recorded.
+6. The reference `04-geography-scene.png` is removed and replaced by the owner's
+   `Water-cycle-illustration.png` as `04-water-cycle-illustration.png` (hash in manifest).
+
+Plan change: `docs/plan/stage-1-wave-5-glacial.md` is rewritten as the single source for
+the first lesson, leading with a storyboard of the page, and the guardrails become a
+checklist. The session structure is now:
+
+- 5G glacier model and CPU, running in parallel with 5H book stage, look and transition
+  (finishing on 5G captures);
+- **R1 owner review gate**, where presentation contracts freeze;
+- 5I GPU (from 5G), then 5J runs/timeline, 5K scene interaction and 5L content;
+- 5M integration and chrome restyle, then 5N acceptance.
+
+GV1–GV9 replace GV1–GV8 (GV9 = GPU parity or recorded gap). The duplicated status
+paragraph in four plan files is replaced by one pointer.
+
+Owned scope: plan/product/handoff/README/AGENTS wording, the reference swap and this entry.
+No production code, evidence or lockfile changed. Nothing is launched.
+
+## D-W5-5G — Glacier model: plan-view shallow ice with a lateral-drag shape factor; contracts frozen
+
+2026-11-10. Session 5G (`s1/w5/5g-glacier-model`, from s1/w5/integration ee4959d).
+
+**Decisions (technical, inside the plan).**
+
+1. **Model.** `@hachure/glacier` (new package): vertically integrated shallow-ice flow (Glen n = 3,
+   temperate A) with Weertman sliding (m = 2), a fixed authored snowline mass balance, erosion
+   ė ∝ u_b² scaled by rock erodibility and an explicit time compression (S = 120), and threshold
+   rock-wall failure per rock. Fixed step 0.0025 model years (the converged step; at 0.01 the stability
+   cap fired on 8–12 % of edges and doubled erosion); seeded start; Jacobi-ordered passes for the
+   GPU port. Feasible with the full valley reach (owner decision 7); the idealised-reach fallback was not
+   needed. Record: `docs/science/glacial/feasibility.md`.
+2. **The U needs a lateral-drag correction.** Plain shallow ice keeps a V (attempt A0, as Seddik et al.
+   2009). A per-column shape factor from the channel "area method" shields the V bottom and moves the
+   erosion maxima onto the lower walls (Harbor et al. 1988 pattern). It is a geometric estimate, not a
+   higher-order stress solution — flagged for expert review.
+3. **Mass balance on the starting bed.** Every rock gets the same ice supply, so a rock comparison
+   compares rocks. The omitted feedback (a deepening valley lowers and shrinks its glacier) confounded
+   the comparison when switched on (attempt A2a, kept as an arm).
+4. **Regularisations, each recorded as a failed attempt first:** sliding/erosion stress capped at
+   200 kPa (runaway at steep thin fronts, A2b); thin ice (< 40 m, ramp to 120 m) is cold-based and does
+   not slide (ridges eroded away, A2c); a 3-cell ice-free, non-eroding frame at the grid border; a
+   non-finite guard that throws.
+5. **Rock set proposal:** shale (soft), sandstone (medium), granite (hard); erodibility 2 / 1 / 0.4,
+   critical wall 34° / 42° / 55°. Ordering sourced; numbers are teaching choices. Names, colours and
+   patterns are for R1.
+6. **Frozen contracts** (exported from `@hachure/glacier`): `GlacierConfig` (+ `DEFAULT_GLACIER_CONFIG`,
+   limits, `resolveGlacierConfig`), `ROCK_TYPES`, `GlacierSnapshot`/`GLACIER_LAYERS`, `GlacierSolver`,
+   `GlacierProbes`, `measureSection`/`SectionMeasure`, and the captured-run format
+   `hachure-glacier-capture` v1 (`encodeCapturedRun`/`decodeCapturedRun`). Grid orientation: index
+   `j * nx + i`, the valley runs along i, downstream = decreasing i (i = 0 the mouth).
+7. **Time label.** Model years with erosion compressed 120×; never geological years. Horizon 300 model
+   years; snapshot interval 20 model years; a 16-snapshot run is ~1.6 MB quantized; live + 2 kept runs
+   ≈ 4.7 MB (proposal for 5J).
+8. **Section probes measure the lower valley** (wall slope 10–60 % of depth, shape fit 5–60 %) and the
+   registered rock comparison uses the steepest wall and floor lowering, because the upper V above the
+   ice is untouched and dilutes whole-profile averages.
+
+**Deviations from the 5G brief.** The brief's claim "softer rock is wider and deeper" is tested with
+depth read as _floor lowering_; rim-to-floor depth is not ordered because soft rock also lowers its rims
+(walls retreat). Registration thresholds were set after pilot runs (pilots recorded in feasibility.md).
+
+**Cross-owned edits.** `eslint.config.js`: the `Math.random` ban now also covers `hachure/glacier/**`.
+`pnpm-lock.yaml`: the new workspace package entry, as produced by `pnpm install`.
+
+**Open questions.** (a) Expert review of the area-method shape factor and of the cold-based ramp.
+(b) Whether R1 wants the "deeper" claim on the page at all, or only "wider in soft rock, steeper walls in
+hard rock". (c) Overdeepening: the under-ice floor ends below the floor down-valley; a drawn river below
+the snout must not assume a bed that drains down-valley (5H/5K). (d) CPU cost at the converged step ≈ 0.3 s
+per model year on the reference grid in Node (one core, measured under load): a 300-year run is ~1.5 min
+of worker time at full speed. Faster playback needs the GPU (5I) or a coarser grid; the fixed step must
+not grow.
+
+## D-W5-5G2 — Enclosed valley head; grid 160 × 64; protocol re-registered (deviation)
+
+2026-11-10. Session 5G2 (`s1/w5/5g2-enclosed-head`, from s1/w5/integration 9da4fad).
+
+**Deviation from the 5G registration, recorded before the 5G2 registered runs.** The 5G protocol was
+registered on `v-valley/1` (open head, 128 × 96). 5G2 re-registers it on a new start and grid; the 5G
+results and evidence stay in the record (`docs/review/glacial/model/5g-open-head/`, feasibility.md).
+
+1. **Start `v-valley/2`** (`DEFAULT_V_VALLEY`): the 5G valley over its first 5080 m (same floor and
+   26° V walls, so the registered sections keep their start shape), ending in a head basin enclosed on
+   three sides by a crest that wraps round the valley end; crest rise 800 m (was 1000 m, to fit the grid);
+   outer flanks 14° (was 8°) falling to a quarter of the way from floor to crest (was half), so the ground
+   outside the crest carries only thin, cold-based ice. The 5G start is kept as `OPEN_HEAD_V_VALLEY`;
+   two new preset options (`valleyLengthM`, `outerFlankFloorFraction`) reproduce it bitwise.
+2. **Grid 160 × 64 cells at 40 m** (was 128 × 96): `DEFAULT_GLACIER_CONFIG.nx/ny` changed. Captures
+   and consumers read the grid from the manifest; orientation, indexing and every other config value are
+   unchanged. A capture snapshot is now 81 920 bytes (was 98 304).
+3. **Unchanged:** physics, `GlacierConfig`/state/probe contracts, capture format v1, time compression
+   (120), horizon (300 model years), snapshot interval, matched times, seeds, section columns, thresholds.
+4. **Added readings:** T1 and R1–R4 also read at matched erosion (E-T1, E-R1–E-R4), beside the
+   matched-time verdicts; the 5G open-head start re-run as two recorded attempt arms.
+5. **Chosen after four pilot variants** (feasibility.md, P1–P4), which already showed that no tested
+   start or compression gives every rock a T1 trough at one common time (erodibility differs 5×).
+
+**Numerical fix (physics code), recorded before the final registered run.** 5H found an odd/even
+(2Δx) ripple in the eroded shale bed. Confirmed (odd/even share of bed lowering 0.31–0.44 in the first
+5G2 registered run, P5, kept). Cause: the cell sliding speed that drives erosion used a centred surface
+gradient and the cell's own thickness, blind to an odd/even surface mode, so thicker ice over a low cell
+eroded faster and the ripple fed itself. Fix: the cell stress is the mean of its edge stresses (gradient
+components weighted by the edge-mean thickness (2H + H₋ + H₊)/4). Share after the fix 0.12–0.21; a
+residual ±10 m alternation remains on the axis in the head basin, where the flux stability cap is active.
+Guards: `cpu/solver.test.ts` (odd/even bed under a smooth surface gives no odd/even sliding) and
+`captures.test.ts` (odd/even share of bed lowering < 0.3). No GPU solver exists yet (5I); the 5I
+comparison must use this discretisation. The 5G registered numbers were computed with the artefact.
+
+**Start correction, before the final registered run.** A new test found one cell pair at the head-basin
+crest corner at 34.9°, above shale's 34° (shale would fail with no ice). Outer flanks 20° → 14°
+(steepest pair 31.4°).
+
+**Registered result (300 model years).** Pass: R1, R4, S1 (granite 46° vs shale 35° at equal erosion),
+E-R1, E-R3, K1, K2, N1; T2 except shale seeds 2–3; T1 sandstone seed 1. Fail: T1 in 8 of 9 arms (granite
+lowered 18 m < 30 m while floor +83 m, b +0.3, wall +19°; shale and sandstone seeds 2–3: b fell as walls
+retreated), T2 shale seeds 2–3 (growing glacier reached the control section), R2, R3, E-T1 (lowering
+18–27 m at the matched area), E-R2, E-R4. The shale glacier no longer leaks (0.57 → 1.10 km³).
+
+**Captures** regenerated at the same paths on 160 × 64: 16 snapshots × 81 920 B = 1.31 MB each,
+3.93 MB in total (was 4.72 MB), inside the 5H bundle budget without reducing snapshots or resolution.
+
+**Plan-changing facts.** (a) The grid is now 160 × 64 (6.4 × 2.56 km): 5H/5K framing must read it from
+the manifest. (b) The full-T1 claim is not supported in any single horizon; the page should teach the
+S1/E-R3 shape claim and the V → trough change by shape, or adopt a per-rock horizon. (c) The 30 m
+lowering threshold should go to expert review. (d) Shale's growing glacier can reach the control reach.
+
+## D-5H-STAGE — Book stage, scene look and transition (session 5H, draft on the authored fixture)
+
+2026-11-09. Session 5H, branch s1/w5/5h-book-stage from s1/w5/integration (ee4959d). Technical
+choices inside the plan; R1 may change any of the look values.
+
+1. **Camera match, not a 3D book model.** The book stays DOM under CSS `perspective` +
+   `rotateX(tilt)` about its centre; one canvas covers the stage and a perspective camera at the
+   CSS perspective distance (vertical FOV spanning the stage height) projects page points exactly
+   where the browser draws them (unit-tested against the CSS formula). The diorama lives in a
+   page-local frame (X right, Y up off the paper, Z down the page), so shadows land on the right
+   words and the block may rise past the figure frame. Text stays DOM and selectable.
+2. **Tilt 46°, block yawed −24° on the page.** At the 24–34° first tried, the block was seen almost
+   from above and read as a map; 46° (close to the reference) plus a three-quarter yaw makes it read
+   as an object standing on the page. Cost: the left page's text is foreshortened. R1 question.
+3. **Flat fallback** when `(max-width: 60rem), (max-height: 34rem), (prefers-reduced-motion: reduce),
+(forced-colors: active)` matches, when the root font size is ≥ 24 px, or when the tilted book would
+   not fit the stage. The canvas then sits inside the figure frame (slightly larger, so the cast
+   shadow is not clipped). No WebGL/WebGPU → the drawing is the figure.
+4. **Natural look:** banded (three-tone) unlit node materials with their own light term and a shared
+   paper → colour wash uniform; real shadow map only for the paper shadow-catcher. Exposed rock on
+   the land surface is a weathered grey tinted by the rock; the full lithology colour and pattern
+   show on the block's sides, where the rock is seen in section. Lithology tiles follow FGDC-STD-013
+   conventions and render from one definition to canvas (3D) and SVG (page swatches).
+5. **Dressing is presentation read from state** (snow above the snowline on gentle ground; meadow and
+   trees low and gentle; river by steepest descent below the snout, never back up-valley or onto
+   ice; flow marks along ice velocity or, without it, down the ice-surface slope). Deterministic
+   integer hash, no `Math.random()`. 5K owns the production dressing in `ink/src/glacial`.
+6. **Fig. 1 drawing** is generated deterministically from the authored landform (floating-horizon
+   profile lines), not from model output; an illustrator's SVG can replace `glacialDrawingSvg()`.
+7. **Fixture honesty:** two independent authored frames (V start; U trough with glacier), no tween,
+   no model time, labelled "Authored fixture — not a model run" on every view. Removed from the review
+   path once 5G's captured runs are merged.
+
+Open questions for R1: tilt angle vs. text legibility; whether cutting the block should re-centre it
+(today the remaining block stays put, so it shrinks towards the frame top); the provisional rock set
+and colours (5G decides the set); whether labels belong on Fig. 1; the desk/board colours.
+
+Cross-owned edits: `hachure/ink/package.json` (two export lines: `./stage`, `./transition`);
+`uplift/book/src/app/routes.ts` (one bounded `?review=glacial-stage` route entry).
+
+## D-5H-RUNS — Review build on 5G's captured runs (session 5H, continued)
+
+2026-11-10. Session 5H, rebased onto s1/w5/integration (9da4fad, 5G merged). Technical choices inside the
+plan.
+
+1. **Captures load as assets.** `runs.ts` imports each capture's manifest and payload with `?url` from
+   `@hachure/glacier/captures/*` and decodes with `decodeCapturedRun`. Grid size, metres per cell, snapshot
+   count, rock, snowline, erosion speed-up and model time come from each manifest; nothing is hardcoded, so
+   5G2's regenerated captures drop in. The grid orientation (valley along columns, downstream = decreasing
+   i) is the capture format's, held once as `CAPTURE_ORIENTATION`. Cost: about 4.7 MB of `.bin` assets in
+   the build (fetched only by the review route).
+2. **Margin notes bind to the model's probe.** Floor width, depth, floor lowering since the start and the
+   steepest wall at the front face are `measureSection` results at the grid column under the cut
+   (`describe().cutAlongIndex` → `valleyGridIndex`). Shown rounded to 10 m (the grid is 40 m).
+3. **One vertical frame for all runs** (`ValleyDiorama.setElevationRange`): shale lowers its bed far below
+   the starting minimum, and a per-snapshot frame made the block jump when the rock or time changed.
+4. **Rock choice switches run** (same model time); the rock-look preview stays only for the fixture. The
+   look set now matches the model's rocks (shale dashes, sandstone stipple, granite crosses).
+5. **Time ruler**: a native range input over recorded snapshots (one tick each), Play/Pause at a fixed
+   presentation rate (650 ms per snapshot). Playback only shows recorded snapshots; it never simulates.
+6. **Treeline** stays illustrative: 300 m below the model's snowline (the model has no vegetation).
+7. **Science on the page**: "soft rock wears away faster and deeper; hard rock keeps steeper walls"
+   (marked expert-review; checked against the captures in `runs.test.ts`). Not "softer rock gives a wider
+   floor": the runs do not order floor width by rock.
+
+**Facts for the plan.** In the current captures the ice covers almost the whole upper basin, so the U only
+reads clearly in shale near the head at mid-run (shape exponent ≈ 1.9 at 200 model years); by 300 model
+years shale has worn down its rims as well, and granite barely changes (floor ≈ 20 m lower). Sandstone and
+granite sections stay close to V by the model's own shape fit. Shale's eroded bed has an odd/even ripple
+along the valley (floor width ≈ 75 m and ≈ 300 m in neighbouring columns near the head at 200 model years),
+which looks like a grid-scale (2Δx) mode in the erosion or wall-failure update; flagged for 5G2/5I. 5G2's enclosed head may change this; the
+capture positions `U_FRAME`/`U_CUT` in `docs/review/glacial/stage/capture.mjs` must be rechecked then.
+
+**Cross-owned edits.** `uplift/book/package.json`: one dependency line (`@hachure/glacier`), so the book
+imports the captures and `measureSection` through public entry points. `pnpm-lock.yaml`: the matching
+importer entry, as produced by `pnpm install`.
+
+## D-5H-R1 — R1 review build recaptured on 5G2's captures; U framing re-picked (session 5H, final)
+
+2026-11-10. Session 5H, rebased onto s1/w5/integration (1216f67, 5G2 merged). Technical choices inside the
+plan.
+
+1. **Grid read from the manifest, end to end.** `runs.ts`, the block, the front-face slider (one grid cell
+   per step) and the section probe already took grid, cell size, snapshot count, rock, snowline and time from
+   each capture; the 160 × 64 captures dropped in unchanged. Two places still assumed the 5G grid and are
+   fixed: `capture.mjs` (the U cut was `21 / 127`; it now reads `grid.nx` and snapshot times from the
+   manifests and chooses grid columns and model years), and the rock-sentence test in `runs.test.ts` (it
+   sampled fractions 0.55/0.7/0.85 of the grid, which on 160 columns fall in the overdeepened head reach; it
+   now checks the registered under-ice section, `PROTOCOL_SECTIONS.underIce`, and the review U face).
+2. **U framing, measured.** Scanning `measureSection` over every column and snapshot (seed 1): the clearest
+   robust U under the ice in the valley is shale at 300 model years, column i = 51 (b 1.73; b ≥ 1.67 over
+   i = 49–53; floor 209 m; lowered 57 m; 200 m of ice). At that cut and time every rock is a U by shape
+   (b 1.73 / 1.59 / 1.61), the floor is lowered 57 / 40 / 18 m and the steepest wall is 35 / 42 / 45°
+   (shale / sandstone / granite): the page sentence holds there, so the rock comparison uses the same cut and
+   the reader-default time (the last snapshot). Floor width is 209 / 177 / 179 m: not ordered, no claim.
+   Columns above about i = 94 are left out of the pick: the head-basin overdeepening lowers every rock
+   there by 100–230 m (granite included, with 55° walls), which would invert the teaching.
+3. **Matched-erosion captures, extra and labelled.** At the registered section i = 74, the snapshots
+   nearest to granite's 300-year eroded area (13 726 m²) are shale 80 years (86 %), sandstone 160 years
+   (109 %), granite 300 years; `matched-erosion-<rock>-<years>yr.png` show each rock there. Review only;
+   the page default and claim are unchanged.
+
+**Facts for the plan.** (a) With 5G2 the U reads in all three rocks at one honest cut (i = 51, 300 years),
+which the 5G captures could not do; at the registered i = 74 shale's U has already degraded by 300 years
+(b 0.77, from 1.64 at 140 years). (b) The head-basin overdeepening is the most eye-catching erosion in
+every run, granite included; a reader who slides the face to the head will see hard rock cut deep. Expert
+review should decide whether that is acceptable or needs a margin note. (c) No column-to-column (odd/even)
+alternation is left in shale's valley reach (i < 100); the floor width still jumps in steps (220 → 156 →
+74 m at 300 years) where the probe's 25 m floor band catches or misses a bench, and shale's U ends abruptly
+up-valley (b 1.66 at i = 54, 1.07 at i = 55), so the margin notes can jump when the face moves one cell.
+
+## D-W5-5I — GPU glacier: WebGPU port passes the registered CPU/GPU comparison; WebGPU recommended default
+
+2026-11-10. Session 5I (`s1/w5/5i-gpu-glacier`, from s1/w5/integration 2548317). Technical choices inside the
+plan. Evidence: `docs/review/glacial/gpu/` (README, `tolerances.md`, `results-local.json`, `runs/`).
+
+1. **Implementation.** `@hachure/glacier/gpu` ports the frozen 5G/5G2 model to eight WebGPU compute kernels.
+   The pass order, start, fixed step, frame and **D-W5-5G2 edge-mean stress discretisation** all match the CPU.
+   It uses raw WebGPU, not Three.js: the glacier package stays renderer-free and worker-capable, and seven
+   packed storage buffers stay inside the portable limit of eight. The patterns follow D-S1-W3-3C/D-S1-W4-4A:
+   reject capability failures before work, serialize operations, read one status word per batch, latch
+   failures, use no float atomics and keep one writer per output word. `AsyncGlacierSolver` mirrors the frozen
+   `GlacierSolver` method for method, and `asyncCpuGlacier` wraps the unchanged CPU in it.
+2. **Precision.** Bed and ice are two float32 lanes (hi + lo) relative to the run's local datum, updated by
+   error-free two-sum. Surface and bed differences are taken lane by lane. This is the split representation from
+   D-2A-1. Constants and the starting-bed balance are computed in Float64 and rounded once. Budgets are per-cell
+   compensated ledgers summed in Float64 on the host. Counters are u32, and the step counter is a host integer.
+   Results are not bitwise equal to the CPU or across devices. Same-device replay is bitwise.
+3. **Tolerances declared before the run** (commit `ba8b399`), derived from the registered protocol. Section
+   measures must agree within half a registered rock step (2.5 m, 1°, b 0.1, eroded area 2.5 % or 500 m²).
+   Every verdict must match, with a declared borderline rule. Probes must agree within 1–5 %. Budgets must agree
+   within 1–2.5 %, with GPU closure within 1e-5. Fields must agree within RMS/p99 of 0.5/2.5 m for bed,
+   1/5 m for ice and 2/10 m/yr for speed. Section profiles must agree within 2.5 m. The early interval uses one
+   tenth of the field bounds. Determinism, precision and fallback are gates as well.
+4. **Result (Intel Arc 140V, headless Chrome): every gate passed.** The arms were the nine rock arms, both
+   controls and the half step, run to 300 model years. Seed-1 arms were checked against a live CPU, which
+   reproduced the 5G2 record hashes bitwise. Worst field difference: bed 8.3 mm (shale), sandstone 0.94 mm,
+   granite 0.30 mm. Section measures agreed to ≤ 0.6 mm and 1e-4°. Probes agreed to relative ≤ 2.1e-6. GPU
+   budget closure was ≤ 9.5e-10. **All 39 registered verdicts were identical**, including the three borderline
+   ones.
+5. **Speed (diagnostic, this machine).** GPU 7.7 ms per model year against CPU 292 ms in the same browser,
+   about 38×. A 300-year run takes about 2.3 s on the GPU and about 90 s on the CPU.
+6. **Recommended default backend: WebGPU**, by the rule declared in advance (all gates pass and at least 2×
+   faster). `GLACIER_GPU_PARITY` records it, and a test ties that record to the committed evidence. **CPU is
+   always the fallback.**
+7. **Per-device check (addition).** Parity was observed on one adapter, so `selectGlacierBackend({prefer:
+"auto"})` first runs `checkGlacierGpuDevice`. That check runs 80 steps under a 150 m ice slab, which
+   exercises every kernel, and requires GPU and CPU to agree within 1 cm. It costs about 0.1–0.15 s. A shader
+   with skewed erosion fails it. The 1 cm bound was written in code before the check first ran, and was
+   committed with the results.
+8. **Fallback.** For `"auto"`, a creation, device-check or capability failure falls back to the CPU with
+   `fallbackReason` and a typed `GlacierGpuError.reason`. An explicit `"webgpu"` request rejects rather than
+   being served by the CPU. A mid-run failure rejects and latches the run. The run never continues on another
+   backend. `restartOnCpu` starts a new, labelled CPU run from the authored start. All paths are tested, in
+   Node with stubs and in real Chrome with forced faults.
+
+**Cross-owned edits.** `hachure/glacier/package.json`: the `./gpu` export, a `test:gpu` script and
+devDependencies `@vitest/browser-playwright` and `playwright`, at the versions terrain already pins.
+`pnpm-lock.yaml`: regenerated by `pnpm install`. No CI change: adding `test:gpu` to the GPU workflow is
+lead glue.
+
+**Not done / open.** (a) Only one adapter has been observed. Other GPUs, mobile and non-Chrome browsers rely on
+the device check. (b) The recorded failed attempts (A0, A2a, 5G open head) were not re-run on the GPU. (c) CI
+does not run the glacier GPU suite. (d) The expert-review flags of the model (D-W5-5G) are unchanged by the
+port.
+
+**Plan-changing facts.** (a) 5J can make WebGPU the default glacier backend through `selectGlacierBackend`.
+At about 38× the CPU, a whole 300-year run takes a few seconds, so playback speed is no longer CPU-bound.
+5J should surface `backend` and `fallbackReason` to the deeper level or diagnostics, and should handle a
+mid-run `GlacierGpuError` by offering a new CPU run, never by continuing. (b) 5M does **not** need to ship
+the CPU with the GPU disabled. (c) GPU and CPU runs of the same rock are numerically different runs (millimetres
+apart), so kept runs should carry their backend label, and comparisons across backends should stay at
+matched times, as already planned.
+
+## D-R1-refinements · 2026-11-11 · Book depth and upright reading
+
+The owner requested a thicker book, a higher far edge / steeper reading slope, and enlarged
+web text panels matching their visual reference. This follow-up is scoped to 5H's glacial
+review composition; no solver, scientific copy or recorded run changes.
+
+- Layer twelve ruled paper edges above a deeper cloth cover.
+- Use a 36-degree CSS camera pitch (previously 46): reducing rotation from face-on raises
+  the far edge in the viewport. The existing stage camera consumes the same angle.
+- Provide explicit keyboard/touch reading actions for lesson, vocabulary, explanation and
+  bound notes. Move the original DOM into an upright nonmodal panel, preserving live
+  bindings and disclosure state. Reserve its exact layout height so the scene does not shift.
+  Closing restores the text and trigger focus. Reduced motion omits the entrance animation.
+- Short laptops show keyword terms on paper and full definitions in the reading panel.
+  Phones retain flat readable pages. The supplied reference is visual direction only.
+- This implements the requested R1 adjustments; it does not declare final owner acceptance
+  or freeze all remaining presentation/gesture decisions.
+
+## D-R1-binding · 2026-11-11 · Recessed binding and separate fore-edges
+
+The owner asked for a sunken centre binding and visible left/right page stacks, replacing
+the flat slab and shadow-only gutter. Add createBookBinding to the public Ink stage entry
+point: CSS-3D paper facets descend below the reading plane into a rounded trough; a shaped
+front face and two splayed fore-edges expose ruled paper layers. The cover sits below them.
+This is a reusable book furniture primitive, not custom spread simulation code. The review
+only mounts/disposes it and supplies the paper colour. Both figure and readable DOM retain
+their original plane, so the matched camera and model state are unaffected.
+
+Keep the physical furniture hidden in flat phone/reduced-motion fallback. Preserve the
+existing reading panels, focus return and live-bound notes. No scientific claims or model
+parameters changed. Desktop and laptop captures show the recessed silhouette at both ends
+of the binding and visible layers on both outer edges.
+
+## D-W5-R2 — bounded spine view and simultaneous reading copies (2026-11-11)
+
+Owner review follow-up to R1: let readers lower the sight line and turn the whole
+book/scene around a point just above the spine. Implemented in the shared Ink stage,
+with matched CSS/WebGL transforms, a bounded tilt/turn, viewport fitting and immediate
+view-only updates. The review page exposes drag, keyboard sliders, arrow-key rotation
+and reset. The default sight line is lower; flat/reduced-motion layouts retain immediate
+figure rotation without animating or tilting the text. No solver or recorded snapshot changes.
+
+Reading panels now mirror the source DOM instead of moving it off the paper. Live notes
+and explanation disclosure stay synchronized; copied IDs/references are renamed. Click
+outside or Escape closes the panel; explicit close/Escape restores focus to its trigger.
+
+Scope follows the 5H/R1 stage and glacial review paths. Base is the owner's latest reviewed
+`s1/w5/r1-refinements` tip (7f78dd4), rather than the stale workspace main. This is an R1
+refinement follow-up, not a claim that later glacial integration or scientific acceptance
+is complete. See `docs/review/glacial/stage/r2-camera.md` for validation and handover.
+
+## D-W5-R2b — direct camera gestures, bounded zoom and responsive stage (2026-11-12)
+
+Owner follow-up: zoom is a view-only multiplier from the default fitted view (1) to
+1.5, clamped in the shared stage. Tilted mode applies it to the matched DOM/scene
+transform about the existing spine pivot; flat mode uses camera zoom. Mouse drag
+on the scene/desk rotates, wheel zooms, and native sliders plus Reset view remain
+keyboard equivalents. Lesson controls and reading regions do not initiate orbit;
+Ctrl/Meta wheel remains browser-owned. Flat text scrolling remains native.
+
+Replace the absolute, nowrap fieldset with a normal-flow responsive control grid.
+Its measured height is reserved above the desk. Observe book, anchor and host layout
+plus window/visual viewport resize. Remove the fixed flat figure height and let
+page content determine paper height before fitting, so short windows do not leave
+controls beyond the page edge. Media conditions select flat mode; zoom never does.
+
+Design stays with the book's paper/ink/binding palette and serif labels. No model,
+science, playback or solver changes. This continues R2 in its existing worktree.

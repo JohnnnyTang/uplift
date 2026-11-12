@@ -26,16 +26,27 @@ The reference is [Every Joule](https://iamtechartist.com/every-joule/) by Techar
 - The page and the model show the same numbers. In its lesson 2, the margin computes Ep = mgh = 3.6 J and the 3D gauge reads 3.6 J.
 - Play and reflect: an immediately usable illustration, an optional guess, and a freely revealable explanation under a flap. Prediction never gates the scene or navigation.
 - The book frame: one idea per spread, one model, an optional small challenge. Restraint is why it feels finished.
-- Ink-line aesthetic: hatched line art that becomes 3D, with colour reserved for the quantity being taught.
+- Textbook illustration that becomes a complete 3D scene. Natural scene colours are welcome; the reference palette is not a restriction.
 
 **What we add for geography.**
 
-- The signature move is often the concept itself: contour lines lifting into terrain, a globe peeling onto a flat page.
+- The signature move is a visual entrance from a textbook drawing into the scene. Contours are optional; the lesson teaches the phenomenon, not the transition.
 - Sandbox processes: readers change water volume and speed, rock hardness and terrain shape (dig, raise, tilt) and watch landforms develop.
 - Human-involved phenomena: dams, deforestation, paving, river engineering, urban growth, migration, diffusion.
 - Real data: load a real DEM and watch a real watershed fill. Every Joule cannot do this; our group's GIS background can.
 - Two levels on one spread: high school and university readers use the same simulation at different depths.
 - Coverage beyond GIS: physical geography, human geography, environmental science, and GIS/cartography courses.
+
+## Latest lesson choice
+
+The owner selects U-shaped valley formation (**From V to U**) for the opening lesson.
+The condition is rock type, chosen on the page or by dropping a specimen on the 3D block;
+each choice is a separate run, and kept runs are compared at matched model time. The
+authorized plan is [Wave 5 sessions 5G–5N](plan/stage-1-wave-5-glacial.md); implementation
+has not started. One condition plus playback/inspection serve one teaching idea. Ice scope is reopened specifically for this lesson; the
+hydraulic solver does not thereby become a glacier model.
+See the [current product direction](product-story.md#current-owner-direction--2026-11-09)
+and [saved reference images](references/owner-2026-11-09/README.md).
 
 ## Pedagogical design principles
 
@@ -54,8 +65,8 @@ This is a flexible reading rhythm, not a lockstep workflow. Correctness still ma
 - The book is the interface: bounded page-shaped spreads, a dominant 3D illustration, and page turning in the first product proof. Use readable single pages on narrow screens; zoom/reflow takes precedence over fixed dimensions.
 - Play, answer reveal and navigation are independent. Advanced depth, research diagnostics and optional assessment are never prerequisites.
 - Page and model agree. Any number printed on the page (a value, a label, a gauge) is read from the live simulation state, never typed separately.
-- Colour carries meaning. Ink line art is the default; colour is reserved for the quantity taught (water, sediment, ice, people, heat), with a legend on the page.
-- The 2D drawing comes first. Each spread starts as flat line art on the page and lifts into 3D. The flat version is a real diagram, readable on its own.
+- Colour supports recognition and explanation. Keep book furniture simple, but let illustrations and scenes use natural material colours. Data colours need a legend and non-colour cues. No two-colour cap applies.
+- The 2D drawing comes first, followed by an artistic transition into a complete 3D scene. Exact geometric correspondence is unnecessary: morphs, fades and reveals are allowed. The effect is separate from scientific process evolution. Reduced motion can skip it. The flat illustration remains readable on its own.
 - Two levels, one simulation. A level toggle changes text depth, visible controls and overlays, never the underlying model.
 - Teachers' notes and sources ship with every spread.
 - Accessible by default: keyboard operable controls, text alternatives for the key visual change, reduced-motion mode, colour-blind-safe palette.
@@ -305,7 +316,7 @@ Phase 2 tests the book and reuse together. If a selected lesson needs heavy besp
 - Never type a number on the page that the simulation computes; bind it.
 - Keep the CPU reference solver and the GPU solver in agreement; add a comparison test whenever either changes.
 - Do not invent scientific claims for page text or teacher notes. Draft them, mark them for expert review, and cite sources.
-- Keep the art style restrained: ink line, paper, one or two meaning-bearing colours. No gradients or glow beyond what carries a quantity.
+- Keep the book restrained and scenes legible; natural material colours and illustrative shading are allowed. Use accessible legends for data encodings, without imposing a one-or-two-colour limit.
 - Record decisions and open questions in a `DECISIONS.md` in the repo, so the group can review them.
 
 ## Risks and things to watch

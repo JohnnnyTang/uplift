@@ -1,0 +1,24 @@
+{
+  "name": "@hachure/glacier",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Hachure glacier engine: shallow-ice flow with a lateral-drag shape factor, sliding-driven erosion and rock types (CPU reference).",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts",
+    "./gpu": "./src/gpu/index.ts",
+    "./testing": "./src/testing/index.ts",
+    "./captures/*": "./src/testing/captured-runs/*"
+  },
+  "dependencies": {
+    "@hachure/terrain": "workspace:*"
+  },
+  "devDependencies": {
+    "@vitest/browser-playwright": "5.1.0",
+    "playwright": "1.65.0"
+  },
+  "scripts": {
+    "test:gpu": "tsc -p test/browser/tsconfig.json && vitest run --config test/browser/vitest.browser.config.mjs"
+  }
+}

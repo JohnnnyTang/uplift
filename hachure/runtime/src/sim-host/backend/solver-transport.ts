@@ -1,3 +1,5 @@
+import type { AuthoredTerrainInitial } from "../../reader/contracts";
+import { authoredPreset, cloneAuthoredInitial } from "../authored";
 import {
   extractChannel,
   measureFixedSectionIncision,
@@ -23,6 +25,8 @@ export class SolverTransport implements HostTransport {
   private baselinePath: ReturnType<typeof extractChannel> | undefined;
   private calibration: LandscapeTimeStatus = { status: "pending" };
   private disposed = false;
+  private initial: AuthoredTerrainInitial | undefined;
+  private authoredConfig: ReturnType<typeof resolveTerrainConfig> | undefined;
   constructor(private readonly factory: TerrainSolverFactory) {}
   private live(): ReferenceSolver {
     if (!this.solver) throw new Error("Backend is not initialized");
@@ -37,8 +41,12 @@ export class SolverTransport implements HostTransport {
     };
   }
   private async initialState() {
-    const solver = this.live(),
-      layout = tiltedPlateauPreset.layout(solver.config);
+    const solver = this.live();
+    if (this.initial) {
+      for (const source of this.initial.sources) await solver.applyTool(source);
+      return;
+    }
+    const layout = tiltedPlateauPreset.layout(solver.config);
     if (layout.outletFace !== "south") throw new Error("Unsupported preset outlet convention");
     await solver.applyTool(layout.source);
     this.baseline = await solver.snapshot();
@@ -48,8 +56,29 @@ export class SolverTransport implements HostTransport {
   private async sample(): Promise<HostSample> {
     const start = performance.now(),
       solver = this.live(),
-      snapshot = await solver.snapshot(),
-      layout = tiltedPlateauPreset.layout(solver.config),
+      snapshot = await solver.snapshot();
+    if (this.initial) {
+      const empty = {
+        path: [],
+        method: "steepest-descent" as const,
+        complete: false,
+        stoppedAt: "boundary" as const,
+      };
+      return {
+        snapshot,
+        config: solver.config,
+        diagnostics: {
+          kind: "unavailable",
+          reason: "Authored terrain has no fixed valley reference section or source profile.",
+        },
+        paths: { baseline: empty, current: { ...empty } },
+        observationBaseline: { kind: "reset", step: 0 },
+        probes: { incisionDepth: null, sedimentOut: snapshot.budget.exportedSedimentM3 },
+        calibration: this.calibration,
+        snapshotMs: performance.now() - start,
+      };
+    }
+    const layout = tiltedPlateauPreset.layout(solver.config),
       current = extractChannel(snapshot, { source: layout.source.at }),
       incision = measureFixedSectionIncision(this.surface!, await this.currentSurface());
     return {
@@ -64,7 +93,8 @@ export class SolverTransport implements HostTransport {
   }
   request(command: HostCommand): Promise<HostReply> {
     if (this.disposed) return Promise.reject(new Error("Backend transport is disposed"));
-    const result = this.chain.then(() => this.execute(command));
+    const accepted = structuredClone(command);
+    const result = this.chain.then(() => this.execute(accepted));
     this.chain = result.catch(() => undefined);
     return result;
   }
@@ -74,7 +104,13 @@ export class SolverTransport implements HostTransport {
     switch (command.kind) {
       case "init": {
         this.solver?.dispose();
-        const solver = await this.factory(resolveTerrainConfig(command.config), tiltedPlateauPreset);
+        const config = resolveTerrainConfig(command.config);
+        this.initial = command.initial ? cloneAuthoredInitial(command.initial, config) : undefined;
+        this.authoredConfig = this.initial ? config : undefined;
+        const solver = await this.factory(
+          config,
+          this.initial ? authoredPreset(this.initial) : tiltedPlateauPreset,
+        );
         if (!("referenceLayers" in solver)) {
           solver.dispose();
           throw new Error("Backend must expose authoritative elevation diagnostics");
@@ -104,7 +140,16 @@ export class SolverTransport implements HostTransport {
         sample = await this.sample();
         break;
       case "reset":
-        this.live().reset(tiltedPlateauPreset, this.live().config.seed);
+        if (this.initial) {
+          this.live().configure(
+            Object.fromEntries(
+              Object.entries(this.authoredConfig!).filter(
+                ([key]) => !["gridSize", "metresPerCell", "seed"].includes(key),
+              ),
+            ),
+          );
+          this.live().reset(authoredPreset(this.initial), this.authoredConfig!.seed);
+        } else this.live().reset(tiltedPlateauPreset, this.live().config.seed);
         await this.initialState();
         sample = await this.sample();
         break;

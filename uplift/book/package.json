@@ -12,6 +12,7 @@
     "smoke": "node src/smoke.mjs"
   },
   "dependencies": {
+    "@hachure/glacier": "workspace:*",
     "@hachure/ink": "workspace:*",
     "@hachure/runtime": "workspace:*",
     "@hachure/terrain": "workspace:*",

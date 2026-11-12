@@ -7,7 +7,9 @@
   "license": "MIT",
   "exports": {
     ".": "./src/index.ts",
-    "./view": "./src/view/index.ts"
+    "./view": "./src/view/index.ts",
+    "./stage": "./src/stage/index.ts",
+    "./transition": "./src/transition/index.ts"
   },
   "scripts": {
     "dev": "vite dev --config dev/vite.config.ts",

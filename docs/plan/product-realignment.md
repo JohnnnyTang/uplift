@@ -1,5 +1,27 @@
 # Product realignment: accepted direction and product gate
 
+## Canonical Wave 5 integration branch
+
+The owner consolidated completed work and current plans into **s1/w5/integration**.
+Future Wave 5 sessions branch from and target PRs to this branch, consuming only
+merged dependencies. Main remains unchanged. This explicit Wave 5 exception
+supersedes earlier instructions to merge the reviewed baseline into main before 5G.
+See [integration provenance and workflow](../review/wave-5-integration/README.md).
+
+## Latest owner review · 2026-11-09
+
+Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
+(8069a7f). Their implementation is real and retained; prior wording saying these
+sessions had not started or could not start is stale. The corrected product is not
+yet accepted: see the [current branch audit](../review/book-revision/current-direction-review.md).
+
+The opening lesson is **From V to U** (U-shaped valley formation). Its single source
+of truth is [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md), rewritten 2026-11-09:
+the reader picks a rock type (page selector or a specimen dropped on the 3D block), each
+choice is a separate run, kept runs are compared at matched model time, the scene stands
+on a tilted 3D book, and the GPU glacier ships where it passes parity. Planned, not started.
+A–F remain foundations; their evidence is not glacial lesson acceptance.
+
 Owner-directed correction, 2026-11-09. Product-direction commit 46fefe6 is merged
 into main. Read the [product story](../product-story.md) and
 [handoff principles](../handoff.md#pedagogical-design-principles).
@@ -9,8 +31,7 @@ into main. Read the [product story](../product-story.md) and
 The original P0 direction work is delivered. The preliminary P1/P2 outline is
 **superseded by [Wave 5 sessions 5A–5F](stage-1-wave-5.md)**, covering contracts,
 runtime revision, book shell/paging, the new example, migration of the built app,
-and integrated verification. No implementation session has started in this planning
-change. The next launch is 5A alone.
+and integrated verification. 5A is on main; 5B–5F are integrated on the local review branch. See the [acceptance ledger](stage-1-acceptance.md); owner, human, expert and hardware gates remain pending.
 
 The former Wave 5 hardening sessions are now [Wave 6](stage-1.md#wave-6--hardening-and-release-review).
 Historical evidence keeps its original status; this revision neither closes human/
@@ -37,12 +58,25 @@ viewports, not simulated measurements, and do not belong in lesson copy.
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | PB1 · Recognisable book                 | At 1366×768 and 1440×900 at normal zoom, a full two-page spread and navigation fit without lesson scrolling. The illustration is the primary visual element; the key action and answer reveal are reachable. No clipped content or text shrunk to force a pass.                                        |
 | PB2 · Readable adaptation               | At a 390 px phone width, pages have an intentional single-page presentation. At 200% zoom and an equivalent 320 CSS px reflow width, content stays readable and reachable, with scrolling permitted and no two-dimensional text scroll requirement.                                                    |
-| PB3 · Drawing becomes manipulable space | Recording shows the real flat diagram, same-state 3D geometry and direct interaction. Keyboard and reduced-motion alternatives reach equivalent meaningful states.                                                                                                                                     |
+| PB3 · Drawing becomes manipulable space | Recording shows a textbook drawing, artistic transformation and complete interactive 3D scene. Exact 2D/3D geometric correspondence is not required. Contours are optional. Keyboard and reduced motion reach equivalent usable states; presentation effects do not masquerade as simulated formation. |
 | PB4 · Immediate play                    | A fresh reader can operate the main scene without choosing an answer, configuring technical parameters, enabling logging or completing a prior spread. Readiness and genuine capability limitations are the only technical gates.                                                                      |
 | PB5 · One visible lesson                | Each spread has one stated claim and one principal gesture. The visible consequence and any gauge derive from that scene's actual state. Scientific checks and accessible description match the rendered result.                                                                                       |
 | PB6 · Pressure-free reflection          | Question can be skipped; answer can be revealed immediately; no score, stamp, endpoint or correct-choice requirement blocks reading. Optional challenges cannot block navigation.                                                                                                                      |
 | PB7 · A book that continues             | Two working interactive spreads, a genuine page turn, previous/next and keyboard navigation, guarded gestures, preserved return state, managed focus and reduced-motion transition.                                                                                                                    |
 | PB8 · Human review                      | Owner reviews the working sequence against the supplied reference; first-time reader observations report discoverability, understanding and willingness to continue. Human listening, science sign-off and hardware results are explicitly passed, failed or pending, never inferred from screenshots. |
+
+### PB9 · Intervene and observe formation over time
+
+The default U-shaped-valley lesson lets the reader choose a rock type through the page
+selector or by dropping a specimen on the 3D block. Each choice starts a separate run from
+the same starting valley, and earlier runs are kept. The reader watches real evolution,
+pauses/steps, scrubs recorded past states without losing the live run, and compares with
+kept runs at matched model times (separate runs, not paired). A rock choice never edits an
+existing run. Section, ice visibility, camera and level are view-only. All displayed values
+identify the actual run/time/configuration. Keyboard and reduced-motion paths preserve
+meaningful participation. The glacial
+[GV1–GV9 matrix](stage-1-wave-5-glacial.md#traceability-and-drift-gate) assigns evidence
+and owners. A passive animation or input-only demonstration fails this criterion.
 
 For PB1, an opened optional deep explanation may use a further page or accessible
 disclosure view. It must not silently stretch the normal spread into a long worksheet.
@@ -60,10 +94,11 @@ A scene that plays beautifully but teaches an unsupported claim also fails.
 
 ## Open choices and honest completion
 
-5A fixes book proportions, the primary contour gesture and the second lesson after
-a bounded real-renderer trial. 5D supplies sourced draft copy and claim evidence.
-The owner has already authorized the direction; these are implementation decisions,
-not reasons to ask for it again.
+The owner has settled the first subject, the condition (rock type), separate-run
+comparison, the tilted-book presentation and shipping GPU where parity passes.
+5G chooses the model and rock set inside that contract; R1 is the owner's look review;
+5I–5N implement and verify it. Do not reask these choices.
+The prior contour/source sequence is retained evidence, not the opening selection.
 
-5F and Wave 6 explicitly track product review, human listening, target hardware and
+5N and Wave 6 explicitly track product review, human listening, target hardware and
 expert sign-off. Implementation integration alone cannot close those gates.

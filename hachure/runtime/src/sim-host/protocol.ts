@@ -1,3 +1,4 @@
+import type { AuthoredTerrainInitial } from "../reader/contracts";
 import type {
   ChannelResult,
   StateSnapshot,
@@ -11,6 +12,7 @@ import type { LandscapeTimeApproval } from "../bindings/index";
 export type LandscapeTimeStatus =
   LandscapeTimeApproval | { readonly status: "pending" | "failed"; readonly recordId?: string };
 export interface HostSample {
+  readonly diagnostics?: { readonly kind: "unavailable"; readonly reason: string };
   readonly snapshot: StateSnapshot;
   readonly config: TerrainConfig;
   /** Fixed initial route and newly traced route must never be substituted for one another. */
@@ -25,6 +27,7 @@ export type HostCommand =
       readonly kind: "init";
       readonly config: Partial<TerrainConfig>;
       readonly calibration?: LandscapeTimeStatus;
+      readonly initial?: AuthoredTerrainInitial;
     }
   | { readonly kind: "advance"; readonly steps: number; readonly sample: boolean }
   | { readonly kind: "sample" }

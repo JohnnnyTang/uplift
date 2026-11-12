@@ -1,21 +1,61 @@
 # Stage 1 · Wave 5: make Uplift a playable book
 
+## Canonical Wave 5 integration branch
+
+The owner consolidated completed work and current plans into **s1/w5/integration**.
+Future Wave 5 sessions branch from and target PRs to this branch, consuming only
+merged dependencies. Main remains unchanged. This explicit Wave 5 exception
+supersedes earlier instructions to merge the reviewed baseline into main before 5G.
+See [integration provenance and workflow](../review/wave-5-integration/README.md).
+
+## Latest owner review · 2026-11-09
+
+Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
+(8069a7f). Their implementation is real and retained; prior wording saying these
+sessions had not started or could not start is stale. The corrected product is not
+yet accepted: see the [current branch audit](../review/book-revision/current-direction-review.md).
+
+The opening lesson is **From V to U** (U-shaped valley formation). Its single source
+of truth is [Wave 5 sessions 5G–5N](stage-1-wave-5-glacial.md), rewritten 2026-11-09:
+the reader picks a rock type (page selector or a specimen dropped on the 3D block), each
+choice is a separate run, kept runs are compared at matched model time, the scene stands
+on a tilted 3D book, and the GPU glacier ships where it passes parity. Planned, not started.
+A–F remain foundations; their evidence is not glacial lesson acceptance.
+
 Planned 2026-11-09 at the owner's request, after product-direction commit
 `46fefe6` was merged into local and remote `main`.
-**Status: planned; implementation sessions have not started.**
+**Status: 5A on main; 5B–5F integrated on the local review stack. Product/human release gates remain pending.**
 This wave replaces the coarse P1/P2 sequence. Original hardening sessions 5A–5D
 are now **6A–6D**, not completed or cancelled.
 
 Read [the product story](../product-story.md), [handoff principles](../handoff.md#pedagogical-design-principles),
 [science policy](../science/education-policy.md) and
-[PB1–PB8](product-realignment.md#product-acceptance-gate).
-The owner requested planning here, not execution of the implementation wave.
+[PB1–PB9](product-realignment.md#product-acceptance-gate).
+The owner subsequently authorized parallel 5B/5C/5D execution. See [the local handover](../review/book-revision/parallel-handover.md). 5E is integrated as `d01f631`; 5F evidence is in the [acceptance packet](../review/book-revision/acceptance/README.md).
+
+## Active extension: 5G–5N in this wave
+
+The full executable briefs and owned paths are in
+[Wave 5 glacial extension](stage-1-wave-5-glacial.md). Current dependency sequence:
+**5G glacier model + CPU ∥ 5H book stage and look → R1 owner review → 5I GPU (after 5G) /
+5J runs and timeline / 5K scene interaction / 5L content → 5M default-book integration →
+5N acceptance**. Merge I, J, K, L as they become ready.
+The reviewed A–F baseline and current direction are consolidated on s1/w5/integration;
+use its verified tip for future sessions.
+Wave 6 starts after this extension; F alone no longer closes Wave 5 implementation.
+
+The A–F briefs below are retained as historical delivery instructions. Their fixed
+contour opening, cartography fallback and no-new-physics restriction are superseded.
+No second hydrology rewrite or second glacial lesson is needed: retain the current
+water spread for independent paging while the glacial scene becomes the opening.
 
 ## Outcome
 
-The default app opens an inviting, bounded book with two small playable discoveries.
-Ink drawings lift into real 3D. A reader can manipulate the illustration, see its
-consequence, optionally reveal a short explanation and turn to the next spread.
+The default app opens with U-shaped valley formation: pick a rock type, watch the
+glacier reshape the valley, scrub back through the run and compare with kept runs of
+other rocks at matched model times. A textbook drawing transitions into a complete,
+naturally coloured scene standing on a tilted book page. Retain the water spread for a
+second discovery and page turn; questions/explanations remain optional.
 The existing erosion work is revised and retained as an explicitly labelled research
 example. Hachure's numerical integrity and historical evidence are preserved.
 
@@ -23,18 +63,18 @@ This wave is successful only when the **existing runtime and app are migrated** 
 the new example uses shared public capabilities. A polished standalone demo beside
 an unchanged default app does not close it.
 
-**In scope:** lifecycle/schema revision; book composition and page turns; reusable
+**In scope:** the bounded glacial model, CPU/GPU agreement, condition gestures, timeline/comparison and scene from 5G–5N; lifecycle/schema revision; book composition and page turns; reusable
 scene interaction; a new two-spread example; migration of legacy mounting, widgets,
 tests and research disclosures; accessibility and regression evidence; unfinished
 roadmap cleanup.
 
-**Out of scope:** new physics families, solver rewrites, a general-purpose editor,
+**Out of scope:** physics families beyond the selected glacial lesson, unrelated solver rewrites, a general-purpose editor,
 accounts/catalogue, real DEM ingestion, new analytics, mandatory scoring/stamps,
 and calibrating field rates or geological years that the new lessons do not claim.
 A necessary numerical bug fix gets a separate bounded decision, relevant CPU/GPU
 comparison and revalidation; it is never hidden inside a visual redesign.
 
-## What the code audit found
+## Historical A–F code audit
 
 | Existing implementation                                                                              | Required disposition                                                                                                           | Owner                          |
 | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------ |
@@ -53,7 +93,7 @@ comparison and revalidation; it is never hidden inside a visual redesign.
 Paths prefixed with `runtime/`, `ink/` or `terrain/` above are under `hachure/`.
 This is source inspection, not a fresh usability or scientific validation result.
 
-## New example: two discoveries in one small book
+## Historical A–F example selection (superseded as the opening)
 
 The first choice is the following sequence. 5A establishes feasibility with the actual
 renderer/model; 5D supplies final sourced copy and scientific checks.
@@ -76,11 +116,11 @@ into two empty pages, ship an inert second page, or broaden into a solver projec
 The new example still requires two interactive spreads. The choice is fixed at the
 5A exit and recorded in the decision log before dependent work starts.
 
-## Scheduling, dependencies and merge order
+## Historical A–F scheduling, dependencies and merge order
 
 This is one revision wave delivered in **gated groups**, an explicit narrow exception
 to the framework's usual earlier-wave-contract rule. Sessions only consume contracts
-already merged into `main); no session depends on another session's unmerged branch.
+already merged into `main`; no session depends on another session's unmerged branch.
 
 1. **5A alone:** inspect, prove feasibility and merge backward-compatible contracts.
 2. **5B, 5C and 5D may run concurrently** from that main. Their implementation paths
@@ -376,7 +416,7 @@ an unresolved product defect into mere hardening.
   this wave's selected lessons.
 - **Finish now:** update future scope and identifiers so incoming sessions read the
   new priorities rather than an old "page turning later" or "solver-first" brief.
-- **Close implementation:** all six sessions integrated, checks green, actual default
+- **Historical A–F implementation:** all six sessions integrated, checks green, actual default
   book and revised research example demonstrated, evidence packet linked.
 - **Close product acceptance / release:** owner/product review plus required scientific,
   human accessibility and hardware gates passed. Integration alone is not release.
@@ -391,4 +431,27 @@ It does not edit implementation, archived evidence or scientific experiment outc
 
 The direction commit is on main. This document plans the full revision wave; it does
 not execute 5A–5F. The former P1/P2 outline is superseded and hardening is renumbered,
-with its unfinished scope revised rather than discarded. Next launch is **5A alone**.
+with its unfinished scope revised rather than discarded. That historical next launch
+was 5A. The current next session is 5G from verified s1/w5/integration; see the extension rather than relaunching A–F.
+
+## 5F local-review reconciliation · 2026-11-09
+
+The owner authorized 5E then 5F on `s1/w5/5bcd-lead`, bypassing the main-only
+start rule for this local review stack. Main remains at 5A; no remote PR/main
+integration is implied. The actual sequence is contours → prepared water, not
+the unused slope alternative. [Acceptance ledger](stage-1-acceptance.md) separates
+code/visual evidence from owner, human, expert and hardware gates.
+
+5F found that a square scene container let phone/reflow captions overlap scope and
+navigation. A bounded app layout fix restores content height, with integrated
+viewport regression coverage. No solver changes or new primitives were needed.
+Wave 6 must review these actual scenes and retained research route. 6B owns true
+browser zoom and human listening, 6C owner/reader/expert review, 6A visible hardware
+measurement, and 6D selects later lessons from observations. Earlier planning and
+session handovers above remain historical, not current launch instructions.
+
+## Current wave closure amendment
+
+Wave 5 implementation requires 5G–5N as well as retained A–F foundations. Use
+PB1–PB9 and GV1–GV9, not the former contour/water-only checklist. Keep scientific,
+owner, human and hardware gates separate. See [extension closure](stage-1-wave-5-glacial.md#5n).

@@ -9,6 +9,20 @@ change anything:
 3. `docs/plan/README.md`: how work is split into stages, waves and sessions.
 4. The current stage plan (`docs/plan/stage-1.md`), and **your session's brief** in it.
 
+## Current Wave 5 direction
+
+Use `s1/w5/integration` as the base and PR target for every future Wave 5 session.
+Consume only dependencies already merged there; this owner-authorized exception
+supersedes main-only launch instructions for Wave 5. Other waves retain their default.
+
+For the opening lesson, read docs/plan/stage-1-wave-5-glacial.md (the single source)
+and your 5G–5N brief. Start with its storyboard ("The page we are building"). The reader
+picks a rock type (page selector or a specimen dropped on the 3D block); each choice is a
+separate run, compared with kept runs at matched model time. The scene stands on a tilted
+3D book page; the transition is artistic, contours optional, scene colours natural; GPU
+ships where it passes parity. A–F are retained foundations, not glacial acceptance.
+Quote the relevant GV row in the session handover; record deviations before dependent work.
+
 ## Non-negotiables
 
 - **Process-based simulation only.** Landforms emerge from simulated flow, transport and deposition. Never
@@ -22,8 +36,10 @@ change anything:
 - **Determinism.** Fixed time step, seeded randomness (no `Math.random()` in simulation code), reproducible
   runs.
 - **No invented science.** Draft scientific text, mark it `<!-- expert-review -->`, and cite a source.
-- **Restrained art.** Ink line on paper, plus one or two colours that carry a quantity (water blue, sediment
-  ochre), each with a legend. No decorative gradients or glow.
+- **Textbook art and natural scene colours.** Keep the book simple; illustrations and 3D scenes may use
+  natural rock, soil, vegetation, ice and water colours. There is no one-or-two-colour limit. Data colours
+  need legends and non-colour cues; preserve accessible contrast. The 2D-to-3D entrance is an artistic
+  transition, not an exact geometric mapping. Scientific process evolution remains model-driven.
 - **Accessible by default.** Keyboard-operable controls, a text alternative for the key visual change,
   reduced-motion mode, colour-blind-safe palette.
 

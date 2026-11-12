@@ -1,0 +1,1191 @@
+{
+  "scope": "Complete process solver engineering comparison; no field calibration or classroom performance claim",
+  "cases": [
+    {
+      "preset": "water-comparison-dry",
+      "config": {
+        "gridSize": 8,
+        "metresPerCell": 10,
+        "seed": 1,
+        "rainMmPerHr": 10,
+        "gravityMPerS2": 9.81,
+        "manningNSPerMOneThird": 0.035,
+        "pipeAreaM2": 20,
+        "dtSimSeconds": 0.05,
+        "morphAccelerationFactor": 1,
+        "capacityCoefficient": 0.01,
+        "erosionRatePerS": 0.5,
+        "depositionRatePerS": 1,
+        "hardnessRange": [0, 0.9],
+        "talusAngleDeg": 33,
+        "thermalRatePerS": 0.1,
+        "evaporationFractionPerStep": 0.0001,
+        "brushMaxHeightM": 5,
+        "brushMaxDepthM": 5,
+        "brushMaxRadiusM": 200,
+        "brushMaxSlopeDeg": 60
+      },
+      "steps": 80,
+      "checks": {
+        "bedrockM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "sedimentM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "hardness": {
+          "maxAbsolute": 0,
+          "maxScaled": null,
+          "failed": 0
+        },
+        "waterM": {
+          "maxAbsolute": 8.185452315956354e-12,
+          "maxScaled": 0.00003982495145162153,
+          "failed": 0
+        },
+        "fluxWestM3PerS": {
+          "maxAbsolute": 2.3189515086820267e-13,
+          "maxScaled": 1.1594757542737943e-7,
+          "failed": 0
+        },
+        "fluxEastM3PerS": {
+          "maxAbsolute": 2.3189515086820267e-13,
+          "maxScaled": 1.1594757542737943e-7,
+          "failed": 0
+        },
+        "fluxNorthM3PerS": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "fluxSouthM3PerS": {
+          "maxAbsolute": 2.2737367544323206e-13,
+          "maxScaled": 1.1367685842365893e-7,
+          "failed": 0
+        },
+        "velocityXMPerS": {
+          "maxAbsolute": 1.1860395998652962e-9,
+          "maxScaled": 0.00005930197823490244,
+          "failed": 0
+        },
+        "velocityYMPerS": {
+          "maxAbsolute": 5.820766091346741e-10,
+          "maxScaled": 0.000027993930134804143,
+          "failed": 0
+        },
+        "suspendedSedimentM": {
+          "maxAbsolute": 1.1368683772161603e-13,
+          "maxScaled": 5.677121228660575e-7,
+          "failed": 0
+        }
+      },
+      "budget": {
+        "erodedM3": 0.005700855515897274,
+        "depositedM3": 0,
+        "exportedSedimentM3": 8.930946954199825e-11,
+        "evaporatedWaterM3": 0.0002872941840905696,
+        "rainedWaterM3": 0.07111111283302307,
+        "sourcedWaterM3": 0,
+        "outflowedWaterM3": 2.0878170303717525e-9,
+        "toolNetM3": 0,
+        "suspendedM3": 0.005700854671886191
+      }
+    },
+    {
+      "preset": "water-comparison-wet",
+      "config": {
+        "gridSize": 8,
+        "metresPerCell": 10,
+        "seed": 1,
+        "rainMmPerHr": 10,
+        "gravityMPerS2": 9.81,
+        "manningNSPerMOneThird": 0.035,
+        "pipeAreaM2": 20,
+        "dtSimSeconds": 0.05,
+        "morphAccelerationFactor": 1,
+        "capacityCoefficient": 0.01,
+        "erosionRatePerS": 0.5,
+        "depositionRatePerS": 1,
+        "hardnessRange": [0, 0.9],
+        "talusAngleDeg": 33,
+        "thermalRatePerS": 0.1,
+        "evaporationFractionPerStep": 0.0001,
+        "brushMaxHeightM": 5,
+        "brushMaxDepthM": 5,
+        "brushMaxRadiusM": 200,
+        "brushMaxSlopeDeg": 60
+      },
+      "steps": 80,
+      "checks": {
+        "bedrockM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "sedimentM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "hardness": {
+          "maxAbsolute": 0,
+          "maxScaled": null,
+          "failed": 0
+        },
+        "waterM": {
+          "maxAbsolute": 4.842877388000488e-8,
+          "maxScaled": 0.004424686839171776,
+          "failed": 0
+        },
+        "fluxWestM3PerS": {
+          "maxAbsolute": 1.1397060006856918e-7,
+          "maxScaled": 0.04438053831480843,
+          "failed": 0
+        },
+        "fluxEastM3PerS": {
+          "maxAbsolute": 1.1734118743333966e-7,
+          "maxScaled": 0.05841063963521611,
+          "failed": 0
+        },
+        "fluxNorthM3PerS": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "fluxSouthM3PerS": {
+          "maxAbsolute": 3.5762786865234375e-7,
+          "maxScaled": 0.007418586282743154,
+          "failed": 0
+        },
+        "velocityXMPerS": {
+          "maxAbsolute": 2.494307409506291e-7,
+          "maxScaled": 0.012459746173889235,
+          "failed": 0
+        },
+        "velocityYMPerS": {
+          "maxAbsolute": 7.748603820800781e-7,
+          "maxScaled": 0.0030791268790872134,
+          "failed": 0
+        },
+        "suspendedSedimentM": {
+          "maxAbsolute": 2.473825588822365e-10,
+          "maxScaled": 0.000823042623743715,
+          "failed": 0
+        }
+      },
+      "budget": {
+        "erodedM3": 1.1239662170410156,
+        "depositedM3": 0,
+        "exportedSedimentM3": 0.0003572841815184802,
+        "evaporatedWaterM3": 1.0201005935668945,
+        "rainedWaterM3": 0.07111111283302307,
+        "sourcedWaterM3": 0,
+        "outflowedWaterM3": 0.08648799359798431,
+        "toolNetM3": 0,
+        "suspendedM3": 1.123608835041523
+      }
+    },
+    {
+      "preset": "water-comparison-front",
+      "config": {
+        "gridSize": 8,
+        "metresPerCell": 10,
+        "seed": 1,
+        "rainMmPerHr": 10,
+        "gravityMPerS2": 9.81,
+        "manningNSPerMOneThird": 0.035,
+        "pipeAreaM2": 20,
+        "dtSimSeconds": 0.05,
+        "morphAccelerationFactor": 1,
+        "capacityCoefficient": 0.01,
+        "erosionRatePerS": 0.5,
+        "depositionRatePerS": 1,
+        "hardnessRange": [0, 0.9],
+        "talusAngleDeg": 33,
+        "thermalRatePerS": 0.1,
+        "evaporationFractionPerStep": 0.0001,
+        "brushMaxHeightM": 5,
+        "brushMaxDepthM": 5,
+        "brushMaxRadiusM": 200,
+        "brushMaxSlopeDeg": 60
+      },
+      "steps": 80,
+      "checks": {
+        "bedrockM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "sedimentM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "hardness": {
+          "maxAbsolute": 0,
+          "maxScaled": null,
+          "failed": 0
+        },
+        "waterM": {
+          "maxAbsolute": 2.1420419216156006e-8,
+          "maxScaled": 0.004629188081867033,
+          "failed": 0
+        },
+        "fluxWestM3PerS": {
+          "maxAbsolute": 2.3163225894642925e-13,
+          "maxScaled": 1.1581612946650795e-7,
+          "failed": 0
+        },
+        "fluxEastM3PerS": {
+          "maxAbsolute": 2.3163225894642925e-13,
+          "maxScaled": 1.1581612946650795e-7,
+          "failed": 0
+        },
+        "fluxNorthM3PerS": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "fluxSouthM3PerS": {
+          "maxAbsolute": 9.872019290924072e-8,
+          "maxScaled": 0.006944115232239284,
+          "failed": 0
+        },
+        "velocityXMPerS": {
+          "maxAbsolute": 1.1850174175265238e-9,
+          "maxScaled": 0.000059250869120993385,
+          "failed": 0
+        },
+        "velocityYMPerS": {
+          "maxAbsolute": 2.8312206268310547e-7,
+          "maxScaled": 0.002682296538475988,
+          "failed": 0
+        },
+        "suspendedSedimentM": {
+          "maxAbsolute": 6.548361852765083e-11,
+          "maxScaled": 0.00027622809388591694,
+          "failed": 0
+        }
+      },
+      "budget": {
+        "erodedM3": 0.11999399214982986,
+        "depositedM3": 0.0000015268354900399572,
+        "exportedSedimentM3": 8.930946954199825e-11,
+        "evaporatedWaterM3": 0.06404406577348709,
+        "rainedWaterM3": 0.07111111283302307,
+        "sourcedWaterM3": 0,
+        "outflowedWaterM3": 2.0878170303717525e-9,
+        "toolNetM3": 0,
+        "suspendedM3": 0.11999246198683977
+      }
+    },
+    {
+      "preset": "tilted-plateau",
+      "config": {
+        "gridSize": 256,
+        "metresPerCell": 5,
+        "seed": 123,
+        "rainMmPerHr": 10,
+        "gravityMPerS2": 9.81,
+        "manningNSPerMOneThird": 0.035,
+        "pipeAreaM2": 5,
+        "dtSimSeconds": 0.05,
+        "morphAccelerationFactor": 1,
+        "capacityCoefficient": 0.01,
+        "erosionRatePerS": 0.5,
+        "depositionRatePerS": 1,
+        "hardnessRange": [0, 0.9],
+        "talusAngleDeg": 33,
+        "thermalRatePerS": 0.15,
+        "evaporationFractionPerStep": 0.00001,
+        "brushMaxHeightM": 5,
+        "brushMaxDepthM": 5,
+        "brushMaxRadiusM": 200,
+        "brushMaxSlopeDeg": 60
+      },
+      "steps": 80,
+      "checks": {
+        "bedrockM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "sedimentM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "hardness": {
+          "maxAbsolute": 0,
+          "maxScaled": null,
+          "failed": 0
+        },
+        "waterM": {
+          "maxAbsolute": 3.4458935260772705e-8,
+          "maxScaled": 0.00498799183780891,
+          "failed": 0
+        },
+        "fluxWestM3PerS": {
+          "maxAbsolute": 3.306195139884949e-8,
+          "maxScaled": 0.0065203965420556976,
+          "failed": 0
+        },
+        "fluxEastM3PerS": {
+          "maxAbsolute": 7.389644451905042e-13,
+          "maxScaled": 3.6944685208212326e-7,
+          "failed": 0
+        },
+        "fluxNorthM3PerS": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "fluxSouthM3PerS": {
+          "maxAbsolute": 1.4528632164001465e-7,
+          "maxScaled": 0.007936816571103976,
+          "failed": 0
+        },
+        "velocityXMPerS": {
+          "maxAbsolute": 1.2293457984924316e-7,
+          "maxScaled": 0.002885263529811188,
+          "failed": 0
+        },
+        "velocityYMPerS": {
+          "maxAbsolute": 5.364418029785156e-7,
+          "maxScaled": 0.0031510441082335,
+          "failed": 0
+        },
+        "suspendedSedimentM": {
+          "maxAbsolute": 1.7462298274040222e-10,
+          "maxScaled": 0.0006029712055190155,
+          "failed": 0
+        }
+      },
+      "budget": {
+        "erodedM3": 11.475919723510742,
+        "depositedM3": 2.8001025498269883e-8,
+        "exportedSedimentM3": 1.4514504875773326e-10,
+        "evaporatedWaterM3": 0.007544561289250851,
+        "rainedWaterM3": 18.204444885253906,
+        "sourcedWaterM3": 0.40000003576278687,
+        "outflowedWaterM3": 1.4427284922291506e-9,
+        "toolNetM3": 0,
+        "suspendedM3": 11.47591918706894
+      }
+    },
+    {
+      "preset": "tilted-plateau",
+      "config": {
+        "gridSize": 128,
+        "metresPerCell": 10,
+        "seed": 1,
+        "rainMmPerHr": 10,
+        "gravityMPerS2": 9.81,
+        "manningNSPerMOneThird": 0.035,
+        "pipeAreaM2": 20,
+        "dtSimSeconds": 0.05,
+        "morphAccelerationFactor": 1,
+        "capacityCoefficient": 0.01,
+        "erosionRatePerS": 0.5,
+        "depositionRatePerS": 1,
+        "hardnessRange": [0, 0.9],
+        "talusAngleDeg": 33,
+        "thermalRatePerS": 0.15,
+        "evaporationFractionPerStep": 0.00001,
+        "brushMaxHeightM": 5,
+        "brushMaxDepthM": 5,
+        "brushMaxRadiusM": 200,
+        "brushMaxSlopeDeg": 60
+      },
+      "steps": 80,
+      "checks": {
+        "bedrockM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "sedimentM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "hardness": {
+          "maxAbsolute": 0,
+          "maxScaled": null,
+          "failed": 0
+        },
+        "waterM": {
+          "maxAbsolute": 1.2732925824820995e-11,
+          "maxScaled": 0.0000619446274080909,
+          "failed": 0
+        },
+        "fluxWestM3PerS": {
+          "maxAbsolute": 1.4210854715202004e-12,
+          "maxScaled": 7.104075578920467e-7,
+          "failed": 0
+        },
+        "fluxEastM3PerS": {
+          "maxAbsolute": 1.4210854715202004e-12,
+          "maxScaled": 7.104030766745046e-7,
+          "failed": 0
+        },
+        "fluxNorthM3PerS": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "fluxSouthM3PerS": {
+          "maxAbsolute": 8.810729923425242e-13,
+          "maxScaled": 4.404850351770893e-7,
+          "failed": 0
+        },
+        "velocityXMPerS": {
+          "maxAbsolute": 6.05359673500061e-9,
+          "maxScaled": 0.0002573268553796861,
+          "failed": 0
+        },
+        "velocityYMPerS": {
+          "maxAbsolute": 3.725290298461914e-9,
+          "maxScaled": 0.00016857182696445173,
+          "failed": 0
+        },
+        "suspendedSedimentM": {
+          "maxAbsolute": 7.275957614183426e-12,
+          "maxScaled": 0.000035422684349416844,
+          "failed": 0
+        }
+      },
+      "budget": {
+        "erodedM3": 11.390681266784668,
+        "depositedM3": 0,
+        "exportedSedimentM3": 2.0540102951827066e-10,
+        "evaporatedWaterM3": 0.007382355630397797,
+        "rainedWaterM3": 18.204444885253906,
+        "sourcedWaterM3": 0,
+        "outflowedWaterM3": 2.037653379360904e-9,
+        "toolNetM3": 0,
+        "suspendedM3": 11.390680819749832
+      }
+    },
+    {
+      "preset": "active-process-engineering-fixture",
+      "config": {
+        "gridSize": 8,
+        "metresPerCell": 10,
+        "seed": 1,
+        "rainMmPerHr": 10,
+        "gravityMPerS2": 9.81,
+        "manningNSPerMOneThird": 0.035,
+        "pipeAreaM2": 20,
+        "dtSimSeconds": 0.05,
+        "morphAccelerationFactor": 1,
+        "capacityCoefficient": 0.01,
+        "erosionRatePerS": 0.5,
+        "depositionRatePerS": 1,
+        "hardnessRange": [0, 0.9],
+        "talusAngleDeg": 33,
+        "thermalRatePerS": 0.1,
+        "evaporationFractionPerStep": 0.0001,
+        "brushMaxHeightM": 5,
+        "brushMaxDepthM": 5,
+        "brushMaxRadiusM": 200,
+        "brushMaxSlopeDeg": 60
+      },
+      "steps": 200,
+      "checks": {
+        "bedrockM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "sedimentM": {
+          "maxAbsolute": 2.0954757928848267e-9,
+          "maxScaled": 0.0013574494874774438,
+          "failed": 0
+        },
+        "hardness": {
+          "maxAbsolute": 0,
+          "maxScaled": null,
+          "failed": 0
+        },
+        "waterM": {
+          "maxAbsolute": 1.2665987014770508e-7,
+          "maxScaled": 0.011436662087196956,
+          "failed": 0
+        },
+        "fluxWestM3PerS": {
+          "maxAbsolute": 4.209578037261963e-7,
+          "maxScaled": 0.07907422936160255,
+          "failed": 0
+        },
+        "fluxEastM3PerS": {
+          "maxAbsolute": 3.241002559661865e-7,
+          "maxScaled": 0.07495799312946672,
+          "failed": 0
+        },
+        "fluxNorthM3PerS": {
+          "maxAbsolute": 1.1362135410308838e-7,
+          "maxScaled": 0.009627745851898958,
+          "failed": 0
+        },
+        "fluxSouthM3PerS": {
+          "maxAbsolute": 8.866190910339355e-7,
+          "maxScaled": 0.01850260312408126,
+          "failed": 0
+        },
+        "velocityXMPerS": {
+          "maxAbsolute": 7.450580596923828e-7,
+          "maxScaled": 0.03192920590739271,
+          "failed": 0
+        },
+        "velocityYMPerS": {
+          "maxAbsolute": 0.0000017881393432617188,
+          "maxScaled": 0.03325546811122149,
+          "failed": 0
+        },
+        "suspendedSedimentM": {
+          "maxAbsolute": 1.280568540096283e-9,
+          "maxScaled": 0.002532710642796677,
+          "failed": 0
+        }
+      },
+      "budget": {
+        "erodedM3": 2.73374080657959,
+        "depositedM3": 4.560971260070801,
+        "exportedSedimentM3": 0.0014668521471321583,
+        "evaporatedWaterM3": 2.5345139503479004,
+        "rainedWaterM3": 0.17777778208255768,
+        "sourcedWaterM3": 0,
+        "outflowedWaterM3": 0.2692718505859375,
+        "toolNetM3": 0,
+        "suspendedM3": 2.1713025867938995
+      }
+    },
+    {
+      "preset": "stranded-sediment-engineering-fixture",
+      "config": {
+        "gridSize": 8,
+        "metresPerCell": 10,
+        "seed": 1,
+        "rainMmPerHr": 0,
+        "gravityMPerS2": 9.81,
+        "manningNSPerMOneThird": 0.035,
+        "pipeAreaM2": 20,
+        "dtSimSeconds": 0.05,
+        "morphAccelerationFactor": 1,
+        "capacityCoefficient": 0.01,
+        "erosionRatePerS": 0.5,
+        "depositionRatePerS": 1,
+        "hardnessRange": [0, 0.9],
+        "talusAngleDeg": 33,
+        "thermalRatePerS": 0,
+        "evaporationFractionPerStep": 0.0001,
+        "brushMaxHeightM": 5,
+        "brushMaxDepthM": 5,
+        "brushMaxRadiusM": 200,
+        "brushMaxSlopeDeg": 60
+      },
+      "steps": 1,
+      "checks": {
+        "bedrockM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "sedimentM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "hardness": {
+          "maxAbsolute": 0,
+          "maxScaled": null,
+          "failed": 0
+        },
+        "waterM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "fluxWestM3PerS": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "fluxEastM3PerS": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "fluxNorthM3PerS": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "fluxSouthM3PerS": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "velocityXMPerS": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "velocityYMPerS": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "suspendedSedimentM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        }
+      },
+      "budget": {
+        "erodedM3": 0,
+        "depositedM3": 6.400000095367432,
+        "exportedSedimentM3": 0,
+        "evaporatedWaterM3": 3.2014213502407074e-7,
+        "rainedWaterM3": 0,
+        "sourcedWaterM3": 0,
+        "outflowedWaterM3": 0,
+        "toolNetM3": 0,
+        "suspendedM3": 0
+      }
+    },
+    {
+      "preset": "full-outlet-0-4",
+      "config": {
+        "gridSize": 9,
+        "metresPerCell": 10,
+        "seed": 1,
+        "rainMmPerHr": 10,
+        "gravityMPerS2": 9.81,
+        "manningNSPerMOneThird": 0.035,
+        "pipeAreaM2": 20,
+        "dtSimSeconds": 0.05,
+        "morphAccelerationFactor": 1,
+        "capacityCoefficient": 0.01,
+        "erosionRatePerS": 0.5,
+        "depositionRatePerS": 1,
+        "hardnessRange": [0, 0.9],
+        "talusAngleDeg": 33,
+        "thermalRatePerS": 0.1,
+        "evaporationFractionPerStep": 0.0001,
+        "brushMaxHeightM": 5,
+        "brushMaxDepthM": 5,
+        "brushMaxRadiusM": 200,
+        "brushMaxSlopeDeg": 60
+      },
+      "steps": 40,
+      "checks": {
+        "bedrockM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "sedimentM": {
+          "maxAbsolute": 9.5367431640625e-7,
+          "maxScaled": 0.0002066110597307881,
+          "failed": 0
+        },
+        "hardness": {
+          "maxAbsolute": 0,
+          "maxScaled": null,
+          "failed": 0
+        },
+        "waterM": {
+          "maxAbsolute": 2.7939677238464355e-8,
+          "maxScaled": 0.002743543093898724,
+          "failed": 0
+        },
+        "fluxWestM3PerS": {
+          "maxAbsolute": 1.4901161193847656e-7,
+          "maxScaled": 0.05962082858869117,
+          "failed": 0
+        },
+        "fluxEastM3PerS": {
+          "maxAbsolute": 1.4901161193847656e-7,
+          "maxScaled": 0.05962082858869117,
+          "failed": 0
+        },
+        "fluxNorthM3PerS": {
+          "maxAbsolute": 1.043081283569336e-7,
+          "maxScaled": 0.0027967682738493723,
+          "failed": 0
+        },
+        "fluxSouthM3PerS": {
+          "maxAbsolute": 2.60770320892334e-7,
+          "maxScaled": 0.005283764611682651,
+          "failed": 0
+        },
+        "velocityXMPerS": {
+          "maxAbsolute": 4.585872375173494e-7,
+          "maxScaled": 0.022914656278224352,
+          "failed": 0
+        },
+        "velocityYMPerS": {
+          "maxAbsolute": 4.76837158203125e-7,
+          "maxScaled": 0.007380915343722391,
+          "failed": 0
+        },
+        "suspendedSedimentM": {
+          "maxAbsolute": 1.862645149230957e-9,
+          "maxScaled": 0.0007774970234471116,
+          "failed": 0
+        }
+      },
+      "budget": {
+        "erodedM3": 2.334942579269409,
+        "depositedM3": 3.322237730026245,
+        "exportedSedimentM3": 0.00016733726079110056,
+        "evaporatedWaterM3": 0.6468720436096191,
+        "rainedWaterM3": 0.04500000178813934,
+        "sourcedWaterM3": 0,
+        "outflowedWaterM3": 0.03619016706943512,
+        "toolNetM3": 0,
+        "suspendedM3": 3.512537106871605
+      }
+    },
+    {
+      "preset": "full-outlet-8-4",
+      "config": {
+        "gridSize": 9,
+        "metresPerCell": 10,
+        "seed": 1,
+        "rainMmPerHr": 10,
+        "gravityMPerS2": 9.81,
+        "manningNSPerMOneThird": 0.035,
+        "pipeAreaM2": 20,
+        "dtSimSeconds": 0.05,
+        "morphAccelerationFactor": 1,
+        "capacityCoefficient": 0.01,
+        "erosionRatePerS": 0.5,
+        "depositionRatePerS": 1,
+        "hardnessRange": [0, 0.9],
+        "talusAngleDeg": 33,
+        "thermalRatePerS": 0.1,
+        "evaporationFractionPerStep": 0.0001,
+        "brushMaxHeightM": 5,
+        "brushMaxDepthM": 5,
+        "brushMaxRadiusM": 200,
+        "brushMaxSlopeDeg": 60
+      },
+      "steps": 40,
+      "checks": {
+        "bedrockM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "sedimentM": {
+          "maxAbsolute": 9.5367431640625e-7,
+          "maxScaled": 0.00014503418407973506,
+          "failed": 0
+        },
+        "hardness": {
+          "maxAbsolute": 0,
+          "maxScaled": null,
+          "failed": 0
+        },
+        "waterM": {
+          "maxAbsolute": 2.7939677238464355e-8,
+          "maxScaled": 0.0027483542622716416,
+          "failed": 0
+        },
+        "fluxWestM3PerS": {
+          "maxAbsolute": 1.4901161193847656e-7,
+          "maxScaled": 0.06504596017361683,
+          "failed": 0
+        },
+        "fluxEastM3PerS": {
+          "maxAbsolute": 1.4901161193847656e-7,
+          "maxScaled": 0.05962082858869117,
+          "failed": 0
+        },
+        "fluxNorthM3PerS": {
+          "maxAbsolute": 1.043081283569336e-7,
+          "maxScaled": 0.0027967682738493723,
+          "failed": 0
+        },
+        "fluxSouthM3PerS": {
+          "maxAbsolute": 2.60770320892334e-7,
+          "maxScaled": 0.005283764611682651,
+          "failed": 0
+        },
+        "velocityXMPerS": {
+          "maxAbsolute": 4.71482053399086e-7,
+          "maxScaled": 0.022914656278224352,
+          "failed": 0
+        },
+        "velocityYMPerS": {
+          "maxAbsolute": 4.76837158203125e-7,
+          "maxScaled": 0.007380915343722391,
+          "failed": 0
+        },
+        "suspendedSedimentM": {
+          "maxAbsolute": 1.862645149230957e-9,
+          "maxScaled": 0.0007774970234471116,
+          "failed": 0
+        }
+      },
+      "budget": {
+        "erodedM3": 2.334937810897827,
+        "depositedM3": 3.3222382068634033,
+        "exportedSedimentM3": 0.00016727557522244751,
+        "evaporatedWaterM3": 0.6468729376792908,
+        "rainedWaterM3": 0.04500000178813934,
+        "sourcedWaterM3": 0,
+        "outflowedWaterM3": 0.0361858494579792,
+        "toolNetM3": 0,
+        "suspendedM3": 3.512532263994217
+      }
+    },
+    {
+      "preset": "full-outlet-4-0",
+      "config": {
+        "gridSize": 9,
+        "metresPerCell": 10,
+        "seed": 1,
+        "rainMmPerHr": 10,
+        "gravityMPerS2": 9.81,
+        "manningNSPerMOneThird": 0.035,
+        "pipeAreaM2": 20,
+        "dtSimSeconds": 0.05,
+        "morphAccelerationFactor": 1,
+        "capacityCoefficient": 0.01,
+        "erosionRatePerS": 0.5,
+        "depositionRatePerS": 1,
+        "hardnessRange": [0, 0.9],
+        "talusAngleDeg": 33,
+        "thermalRatePerS": 0.1,
+        "evaporationFractionPerStep": 0.0001,
+        "brushMaxHeightM": 5,
+        "brushMaxDepthM": 5,
+        "brushMaxRadiusM": 200,
+        "brushMaxSlopeDeg": 60
+      },
+      "steps": 40,
+      "checks": {
+        "bedrockM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "sedimentM": {
+          "maxAbsolute": 9.5367431640625e-7,
+          "maxScaled": 0.00019098143790153467,
+          "failed": 0
+        },
+        "hardness": {
+          "maxAbsolute": 0,
+          "maxScaled": null,
+          "failed": 0
+        },
+        "waterM": {
+          "maxAbsolute": 2.7939677238464355e-8,
+          "maxScaled": 0.002743543093898724,
+          "failed": 0
+        },
+        "fluxWestM3PerS": {
+          "maxAbsolute": 1.333683030679822e-7,
+          "maxScaled": 0.06504596017361683,
+          "failed": 0
+        },
+        "fluxEastM3PerS": {
+          "maxAbsolute": 1.2665987014770508e-7,
+          "maxScaled": 0.0573234546784063,
+          "failed": 0
+        },
+        "fluxNorthM3PerS": {
+          "maxAbsolute": 8.195638656616211e-8,
+          "maxScaled": 0.004038157377174661,
+          "failed": 0
+        },
+        "fluxSouthM3PerS": {
+          "maxAbsolute": 2.60770320892334e-7,
+          "maxScaled": 0.005283764611682651,
+          "failed": 0
+        },
+        "velocityXMPerS": {
+          "maxAbsolute": 4.71482053399086e-7,
+          "maxScaled": 0.021699093471196345,
+          "failed": 0
+        },
+        "velocityYMPerS": {
+          "maxAbsolute": 4.76837158203125e-7,
+          "maxScaled": 0.006295696369017363,
+          "failed": 0
+        },
+        "suspendedSedimentM": {
+          "maxAbsolute": 9.313225746154785e-10,
+          "maxScaled": 0.0004501673651929638,
+          "failed": 0
+        }
+      },
+      "budget": {
+        "erodedM3": 2.3334553241729736,
+        "depositedM3": 3.3222382068634033,
+        "exportedSedimentM3": 0.000058658377383835614,
+        "evaporatedWaterM3": 0.6468765139579773,
+        "rainedWaterM3": 0.04500000178813934,
+        "sourcedWaterM3": 0,
+        "outflowedWaterM3": 0.03301133215427399,
+        "toolNetM3": 0,
+        "suspendedM3": 3.511158376932144
+      }
+    },
+    {
+      "preset": "full-outlet-8-8",
+      "config": {
+        "gridSize": 9,
+        "metresPerCell": 10,
+        "seed": 1,
+        "rainMmPerHr": 10,
+        "gravityMPerS2": 9.81,
+        "manningNSPerMOneThird": 0.035,
+        "pipeAreaM2": 20,
+        "dtSimSeconds": 0.05,
+        "morphAccelerationFactor": 1,
+        "capacityCoefficient": 0.01,
+        "erosionRatePerS": 0.5,
+        "depositionRatePerS": 1,
+        "hardnessRange": [0, 0.9],
+        "talusAngleDeg": 33,
+        "thermalRatePerS": 0.1,
+        "evaporationFractionPerStep": 0.0001,
+        "brushMaxHeightM": 5,
+        "brushMaxDepthM": 5,
+        "brushMaxRadiusM": 200,
+        "brushMaxSlopeDeg": 60
+      },
+      "steps": 40,
+      "checks": {
+        "bedrockM": {
+          "maxAbsolute": 0,
+          "maxScaled": 0,
+          "failed": 0
+        },
+        "sedimentM": {
+          "maxAbsolute": 9.5367431640625e-7,
+          "maxScaled": 0.00014503418407973506,
+          "failed": 0
+        },
+        "hardness": {
+          "maxAbsolute": 0,
+          "maxScaled": null,
+          "failed": 0
+        },
+        "waterM": {
+          "maxAbsolute": 2.7939677238464355e-8,
+          "maxScaled": 0.002743543093898724,
+          "failed": 0
+        },
+        "fluxWestM3PerS": {
+          "maxAbsolute": 1.4901161193847656e-7,
+          "maxScaled": 0.06504596017361683,
+          "failed": 0
+        },
+        "fluxEastM3PerS": {
+          "maxAbsolute": 1.7395359463989735e-7,
+          "maxScaled": 0.08165660723925978,
+          "failed": 0
+        },
+        "fluxNorthM3PerS": {
+          "maxAbsolute": 1.043081283569336e-7,
+          "maxScaled": 0.0027967682738493723,
+          "failed": 0
+        },
+        "fluxSouthM3PerS": {
+          "maxAbsolute": 2.60770320892334e-7,
+          "maxScaled": 0.005283764611682651,
+          "failed": 0
+        },
+        "velocityXMPerS": {
+          "maxAbsolute": 4.71482053399086e-7,
+          "maxScaled": 0.022914656278224352,
+          "failed": 0
+        },
+        "velocityYMPerS": {
+          "maxAbsolute": 4.76837158203125e-7,
+          "maxScaled": 0.007380915343722391,
+          "failed": 0
+        },
+        "suspendedSedimentM": {
+          "maxAbsolute": 1.862645149230957e-9,
+          "maxScaled": 0.0007774970234471116,
+          "failed": 0
+        }
+      },
+      "budget": {
+        "erodedM3": 2.336491346359253,
+        "depositedM3": 3.3222389221191406,
+        "exportedSedimentM3": 0.00010816951544256881,
+        "evaporatedWaterM3": 0.6468690633773804,
+        "rainedWaterM3": 0.04500000178813934,
+        "sourcedWaterM3": 0,
+        "outflowedWaterM3": 0.03980552405118942,
+        "toolNetM3": 0,
+        "suspendedM3": 3.5141441971063614
+      }
+    }
+  ],
+  "utc": "2026-11-09T11:29:48.439Z",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "adapter": {
+    "vendor": "nvidia",
+    "architecture": "lovelace",
+    "device": "",
+    "description": "",
+    "isFallbackAdapter": false
+  },
+  "capability": "available",
+  "massBudget": [
+    {
+      "step": 100,
+      "solid": -0.000005697440428775735,
+      "water": 0.0004989989101886749,
+      "solidRef": 3.999999910593033,
+      "waterRef": 127.99999713897705
+    },
+    {
+      "step": 200,
+      "solid": -0.00002296347520314157,
+      "water": 0.0008659129962325096,
+      "solidRef": 3.999999910593033,
+      "waterRef": 127.99999713897705
+    },
+    {
+      "step": 300,
+      "solid": 0.000016604754819127265,
+      "water": 0.0011898311786353588,
+      "solidRef": 3.999999910593033,
+      "waterRef": 127.99999713897705
+    },
+    {
+      "step": 400,
+      "solid": 0.00004861060938310402,
+      "water": 0.0013714225497096777,
+      "solidRef": 20.321411319309846,
+      "waterRef": 127.99999713897705
+    },
+    {
+      "step": 500,
+      "solid": 0.00006824847423558822,
+      "water": 0.0015152109554037452,
+      "solidRef": 20.321411319309846,
+      "waterRef": 127.99999713897705
+    },
+    {
+      "step": 600,
+      "solid": -0.000002087428129016189,
+      "water": 0.001655510044656694,
+      "solidRef": 20.321411319309846,
+      "waterRef": 127.99999713897705
+    },
+    {
+      "step": 700,
+      "solid": -0.0000030098434535830165,
+      "water": 0.0017459953669458628,
+      "solidRef": 3.999999910593033,
+      "waterRef": 127.99999713897705
+    },
+    {
+      "step": 800,
+      "solid": 0.00002065298855313813,
+      "water": 0.0018207301036454737,
+      "solidRef": 3.999999910593033,
+      "waterRef": 127.99999713897705
+    },
+    {
+      "step": 900,
+      "solid": -0.000037628100869824266,
+      "water": 0.0018792374175973237,
+      "solidRef": 3.999999910593033,
+      "waterRef": 127.99999713897705
+    },
+    {
+      "step": 1000,
+      "solid": -0.00003331737656253608,
+      "water": 0.0019336937693879008,
+      "solidRef": 3.999999910593033,
+      "waterRef": 127.99999713897705
+    }
+  ],
+  "cumulativeTinyErosion": {
+    "steps": 4096,
+    "maxIncisionM": 3.4748518373817205e-7,
+    "float32UlpM": 0.0078125,
+    "check": {
+      "maxAbsolute": 6.170012056827545e-9,
+      "maxScaled": 0.6170012056827545,
+      "failed": 0
+    }
+  },
+  "sameDeviceFullReplay": {
+    "hash": "ec5799a91cd56d06",
+    "budget": {
+      "erodedM3": 2.5074269771575928,
+      "depositedM3": 3.590288519859314,
+      "exportedSedimentM3": 0.00035766494693234563,
+      "evaporatedWaterM3": 1.0202122032642365,
+      "rainedWaterM3": 0.11555555835366249,
+      "sourcedWaterM3": 0,
+      "outflowedWaterM3": 0.08651923947036266,
+      "toolNetM3": -0.00003504101186990738,
+      "suspendedM3": 2.916780114173889
+    }
+  },
+  "fullGuardAtomic": true,
+  "fullAtomicSnapshot": true,
+  "backendTransports": [
+    {
+      "backend": "webgpu",
+      "gridSize": 256,
+      "metresPerCell": 5,
+      "pipeAreaM2": 5,
+      "failures": []
+    },
+    {
+      "backend": "cpu-worker",
+      "gridSize": 128,
+      "metresPerCell": 10,
+      "pipeAreaM2": 20,
+      "failures": []
+    },
+    {
+      "backend": "cpu-64",
+      "gridSize": 64,
+      "metresPerCell": 20,
+      "pipeAreaM2": 80,
+      "failures": []
+    },
+    {
+      "backend": "flat",
+      "gridSize": 64,
+      "metresPerCell": 20,
+      "pipeAreaM2": 80,
+      "failures": []
+    }
+  ],
+  "toolsAndConfigure": true,
+  "mutationSequenceSnapshots": true,
+  "precisionAcrossReconfigureAndTool": true,
+  "zeroThroughputMass": true,
+  "fullPerformance": {
+    "gridSize": 256,
+    "steps": 80,
+    "msPerStep": 0.8862500011920929,
+    "readbackMs": 7.599999904632568,
+    "scope": "Headless real preset + spring, dispatch/guards/completion; excludes rendering, compilation warmup and classroom thermal/power conditions"
+  },
+  "fixedDtPolicy": true,
+  "queuedToolCapture": true,
+  "queuedResetCounterRecovery": true
+}
