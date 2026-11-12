@@ -134,7 +134,7 @@
         "recordedBytes": 1310720,
         "worstCaseBytesLivePlusTwoKept": 3932160,
         "budgetBytes": 33554432,
-        "wallSecondsAt4x": 8.002,
+        "wallSecondsAt4x": 8.04,
         "adapter": "intel / xe-2lpg"
       }
     }

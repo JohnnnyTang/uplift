@@ -131,8 +131,12 @@ export type GlacialNotice =
 export interface GlacialHostState {
   readonly readiness: "loading" | "ready" | "error" | "disposed";
   readonly error: string | null;
-  /** "busy": a command or step is being applied while not playing. */
-  readonly activity: "paused" | "playing" | "busy";
+  /**
+   * "busy": a command or step is being applied while not playing. "settling": playback has stopped (pause or
+   * leave) and accepted work is draining. "paused" is published only once settled: the shown live frame then
+   * equals the live position, and nothing more changes until the next command.
+   */
+  readonly activity: "paused" | "playing" | "busy" | "settling";
   /** Left the page: paused, everything kept; `resume` restores the play intent. */
   readonly departed: boolean;
   readonly speed: number;
@@ -202,6 +206,8 @@ export class GlacialHost {
   private errorMessage: string | null = null;
   private playing = false;
   private busy = 0;
+  /** Pauses and departures still draining; "paused" is reported only at zero. */
+  private settling = 0;
   private departed = false;
   private resumeIntent = false;
   private skipNextAdvance = false;
@@ -271,12 +277,25 @@ export class GlacialHost {
       this.resumeIntent = this.playing;
       this.playing = false;
       this.clock.reset();
+    }
+    await this.settle();
+  }
+
+  /**
+   * Reports "settling" until every accepted batch has landed and the live frame matches the live position,
+   * then publishes "paused" once. Never publishes a paused state whose frame lags the run.
+   */
+  private async settle(): Promise<void> {
+    this.settling++;
+    this.publish();
+    try {
+      await this.whenIdle();
+      if (this.readiness === "ready")
+        await this.exclusive(() => this.refreshFrame()).catch((e: unknown) => this.fail(e));
+    } finally {
+      this.settling--;
       this.publish();
     }
-    await this.whenIdle();
-    if (this.readiness === "ready")
-      await this.exclusive(() => this.refreshFrame()).catch((e) => this.fail(e));
-    this.publish();
   }
 
   /** Returning: restore the play intent. No hidden advance or catch-up for the time away. */
@@ -545,8 +564,8 @@ export class GlacialHost {
     const was = this.playing;
     this.playing = false;
     this.clock.reset();
-    this.publish();
-    await this.exclusive(() => this.refreshFrame());
+    await this.settle();
+    if (this.readiness === "error") throw new Error(this.errorMessage ?? "Glacial host failed while pausing");
     return was ? { kind: "done" } : { kind: "unchanged", reason: "Already paused" };
   }
 
@@ -777,7 +796,7 @@ export class GlacialHost {
     return Object.freeze({
       readiness: this.readiness,
       error: this.errorMessage,
-      activity: this.playing ? "playing" : this.busy > 0 ? "busy" : "paused",
+      activity: this.playing ? "playing" : this.settling > 0 ? "settling" : this.busy > 0 ? "busy" : "paused",
       departed: this.departed,
       speed: this.speed,
       rockId: live?.rockId ?? this.defaultRockId,

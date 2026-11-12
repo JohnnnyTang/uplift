@@ -2071,6 +2071,11 @@ plan and the frozen R1 contracts. Evidence: `docs/review/glacial/runtime/README.
    the session's backend, so a failed GPU is not silently retried.
 7. **Labels** (`labels.ts`) are defaults built from bound values: "earlier · model time t model years",
    "kept run N · model time t model years". 5L may reword them around the same values.
+8. **"Paused" means settled.** Pause and leave report `activity: "settling"` while accepted batches drain
+   and the final live frame is fetched. Only then is `"paused"` published, and from that point the shown frame
+   equals the live position. The first build published "paused" (and "departed") before draining. A reader
+   could then see a frame older than the run, which happened in CI run 43187600263 (shown step behind live
+   step). The deterministic reproduction is the unit test "never reports paused … while the shown frame lags".
 
 **Results (this machine).** Unit: 31 host/run tests plus the capture-quantization test pass in Node. Browser
 (`e2e/glacial-runtime.spec.ts`): 11/11 in installed Chrome with WebGPU (Intel Arc 140V), and 8 passed + 3

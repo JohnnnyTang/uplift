@@ -72,9 +72,18 @@ async function record(key: string, value: unknown) {
   );
 }
 
+/** Optional stress knob: `GLACIAL_E2E_CPU_THROTTLE=4` slows the page's main thread 4× (CDP). Off by default. */
+const CPU_THROTTLE = Number(process.env.GLACIAL_E2E_CPU_THROTTLE ?? "1");
+const throttled = new WeakSet<Page>();
+
 async function open(page: Page, query = "") {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
+  if (CPU_THROTTLE > 1 && !throttled.has(page)) {
+    throttled.add(page);
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setCPUThrottlingRate", { rate: CPU_THROTTLE });
+  }
   await page.goto(`${origin}/e2e/fixtures/glacial-runtime.html${query}`);
   await expect(page.locator("body"))
     .toHaveAttribute("data-ready", "ready", { timeout: 60_000 })
@@ -258,6 +267,7 @@ test("leaving mid-run pauses and keeps everything; returning resumes without cat
   await page.getByRole("button", { name: "Play" }).click();
   await until(page, (x) => (x.live?.step ?? 0) >= 100);
   await page.getByRole("button", { name: "Leave page" }).click();
+  // "paused" is published only once settled ("settling" before), so the frame must already match the run.
   const left = await until(page, (x) => x.departed && x.activity === "paused");
   expect(left.viewStep).toBe(left.live!.step); // a final, consistent frame
   await page.waitForTimeout(1500);

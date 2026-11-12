@@ -249,6 +249,35 @@ describe("glacial host: comparison and eviction", () => {
 });
 
 describe("glacial host: leave and return", () => {
+  it("never reports paused (left or not) while the shown frame lags the live position", async () => {
+    const { host } = await createTestHost();
+    const seen: { departed: boolean; activity: string; live: number; shown: number }[] = [];
+    host.subscribe((state) => {
+      if (state.activity !== "paused" || !state.live) return;
+      seen.push({
+        departed: state.departed,
+        activity: state.activity,
+        live: state.live.step,
+        shown: host.viewFrame()!.step,
+      });
+    });
+    for (const leave of [true, false]) {
+      await host.dispatch({ kind: "play" });
+      await frames(host, 2);
+      host.advance(0.1); // a batch without a frame (frames come every 0.25 s) …
+      await Promise.resolve(); // … in flight when the reader leaves or pauses
+      const settle = leave ? host.pauseAndSettle() : host.dispatch({ kind: "pause" });
+      expect(host.state().activity).toBe("settling");
+      await settle;
+      if (leave) host.resume();
+    }
+    const paused = seen.filter((s) => s.live > 0);
+    expect(paused.some((s) => s.departed)).toBe(true);
+    expect(paused.some((s) => !s.departed)).toBe(true);
+    for (const s of paused) expect(s.shown, JSON.stringify(s)).toBe(s.live);
+    await host.dispose();
+  });
+
   it("leaving mid-run pauses and keeps everything; returning restores play with no hidden advance or catch-up", async () => {
     const { host } = await createTestHost();
     await host.dispatch({ kind: "play" });
