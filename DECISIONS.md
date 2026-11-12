@@ -1812,3 +1812,21 @@ Scope follows the 5H/R1 stage and glacial review paths. Base is the owner's late
 `s1/w5/r1-refinements` tip (7f78dd4), rather than the stale workspace main. This is an R1
 refinement follow-up, not a claim that later glacial integration or scientific acceptance
 is complete. See `docs/review/glacial/stage/r2-camera.md` for validation and handover.
+
+## D-W5-R2b — direct camera gestures, bounded zoom and responsive stage (2026-11-12)
+
+Owner follow-up: zoom is a view-only multiplier from the default fitted view (1) to
+1.5, clamped in the shared stage. Tilted mode applies it to the matched DOM/scene
+transform about the existing spine pivot; flat mode uses camera zoom. Mouse drag
+on the scene/desk rotates, wheel zooms, and native sliders plus Reset view remain
+keyboard equivalents. Lesson controls and reading regions do not initiate orbit;
+Ctrl/Meta wheel remains browser-owned. Flat text scrolling remains native.
+
+Replace the absolute, nowrap fieldset with a normal-flow responsive control grid.
+Its measured height is reserved above the desk. Observe book, anchor and host layout
+plus window/visual viewport resize. Remove the fixed flat figure height and let
+page content determine paper height before fitting, so short windows do not leave
+controls beyond the page edge. Media conditions select flat mode; zoom never does.
+
+Design stays with the book's paper/ink/binding palette and serif labels. No model,
+science, playback or solver changes. This continues R2 in its existing worktree.

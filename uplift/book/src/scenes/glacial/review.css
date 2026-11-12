@@ -34,13 +34,17 @@
 /* ---- The desk (stage host) ---------------------------------------------------------------------- */
 .gs-desk {
   position: relative;
-  min-height: 100svh;
+  min-height: calc(100dvh - var(--gs-controls-height, 0px));
+  min-width: 0;
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr);
   display: grid;
   place-items: center;
   padding: 16px;
 }
 .gs-desk[data-stage-mode="tilted"] {
-  height: 100svh;
+  height: calc(100dvh - var(--gs-controls-height, 0px));
+  min-height: 0;
   overflow: hidden;
   padding: 0;
 }
@@ -53,9 +57,13 @@
 }
 .gs-desk[data-stage-mode="tilted"] .gs-book {
   /* Page proportions of a large-format textbook; the tilt foreshortens the height. */
-  width: min(78vw, calc((100svh - 110px) * 1.25));
-  aspect-ratio: 1.25;
+  width: min(78vw, calc((100dvh - var(--gs-controls-height, 0px) - 70px) * 1.25));
+  aspect-ratio: auto;
   transform-style: flat;
+}
+.gs-desk[data-stage-mode="tilted"] .gs-spread {
+  height: auto;
+  min-height: 80cqi;
 }
 .gs-boards {
   position: absolute;
@@ -390,7 +398,8 @@
   }
 }
 .gs-desk[data-stage-mode="flat"] .gs-frame {
-  min-height: 420px;
+  min-height: 0;
+  height: clamp(240px, 42vw, 560px);
 }
 .gs-desk[data-stage-mode="flat"] .gs-page-figure {
   overflow: clip;
@@ -408,6 +417,7 @@
 
 /* Neutralise the legacy global book styles (book.css) inside the review build. */
 #app.gs-review {
+  display: flow-root;
   padding: 0;
   min-height: 100svh;
   background: var(--gs-desk);
@@ -674,8 +684,8 @@
 /* Short laptop screens keep a full book: definitions expand through the reading panel. */
 @media (min-width: 60.01rem) and (max-height: 820px) {
   .gs-desk[data-stage-mode="tilted"] .gs-book {
-    width: min(78vw, calc((100svh - 110px) * 1.5));
-    aspect-ratio: 1.5;
+    width: min(78vw, calc((100dvh - var(--gs-controls-height, 0px) - 70px) * 1.5));
+    aspect-ratio: auto;
   }
   .gs-desk[data-stage-mode="tilted"] .gs-keywords {
     grid-template-columns: 1fr 1fr;
@@ -726,19 +736,20 @@
   --book-paper: var(--gs-paper);
 }
 
+/* A reading-tool strip in document flow: its measured height belongs to the viewport. */
 .gs-view-controls {
   position: relative;
   z-index: 3;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  width: fit-content;
-  max-width: calc(100% - 24px);
-  margin: 0 auto 16px;
-  padding: 8px 16px;
+  gap: 0 24px;
+  width: min(980px, calc(100% - 24px));
+  min-width: 0;
+  margin: 12px auto;
+  padding: 8px 20px;
   border: 1px solid var(--gs-rule);
+  border-radius: 4px;
   background: var(--gs-paper);
   color: var(--gs-ink);
   font:
@@ -748,32 +759,58 @@
 .gs-view-controls label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  min-width: 0;
 }
-.gs-view-controls input {
-  width: 120px;
+.gs-view-controls label span {
+  flex: 0 0 auto;
+}
+.gs-review .gs-view-controls input[type="range"] {
+  width: 100%;
+  min-width: 0;
   min-height: 44px;
+  accent-color: var(--gs-board);
 }
 .gs-view-controls button {
   min-height: 44px;
   font: inherit;
+  white-space: normal;
 }
-.gs-view-drag {
-  touch-action: none;
+.gs-view-controls .gs-view-hint {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-bottom: 4px;
+  color: var(--gs-ink-soft);
+  font-size: 14px;
+  text-align: center;
+}
+.gs-desk[data-stage-mode="tilted"],
+.gs-frame {
   cursor: grab;
 }
-.gs-view-drag:active {
+.gs-desk.gs-orbiting,
+.gs-desk.gs-orbiting * {
   cursor: grabbing;
+  user-select: none;
 }
 .gs-reading-region {
   cursor: pointer;
 }
-
-/* Keep the view controls in sight on the desk without tilting them with the paper. */
-.gs-review:has(.gs-desk[data-stage-mode="tilted"]) > .gs-view-controls {
-  position: absolute;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
+@media (max-width: 760px) {
+  .gs-view-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 16px;
+    padding: 8px 12px;
+  }
+}
+@media (max-width: 420px) {
+  .gs-view-controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .gs-view-controls label span {
+    flex-basis: 6em;
+  }
+  .gs-view-controls .gs-view-hint {
+    text-align: left;
+  }
 }

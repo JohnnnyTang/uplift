@@ -34,3 +34,26 @@ Evidence is scoped to the changed mechanics and does not close these entire rows
 
 Owned paths: shared Ink stage, glacial review scene and stage review notes; DECISIONS.md is
 append-only shared session bookkeeping. Based on R1 commit 7f78dd4, branch s1/w5/r2-camera.
+
+## Follow-up: zoom, gestures and resize (2026-11-12)
+
+The toolbar now has View height, Turn, Zoom and Reset view, in normal flow with
+responsive columns. Zoom is clamped to 1–1.5; 1 restores the default fitted size.
+Drag directly on the scene or desk with the primary mouse button to turn it;
+wheel over that surface to zoom. In flat mode wheel capture is restricted to the
+illustration, so the surrounding page scrolls. Ctrl/Meta wheel is left to the browser.
+Native range inputs provide keyboard access. Reset restores all three view settings.
+
+The stage observes book size as well as host/anchor size, and listens for browser
+and visual viewport resizing. The canvas backing size and projection are recalculated.
+The toolbar reserves its measured height, fixed figure height is removed, and paper
+height accommodates lesson content before the book is fitted. No model state changes.
+
+Browser evidence: direct mouse drag, both wheel clamps, keyboard zoom/reset,
+unchanged notes, unique simultaneous reading content, repeated widths 390/800/1100/
+1440/1920, canvas buffer resizing, contained toolbar controls and no horizontal
+page overflow. Check scripts and screenshots: `output/playwright/zoom-*.cjs.txt`,
+`resized-*.png` and `zoom-final.png`. Reduced-motion/flat mode and browser-wheel
+pass-through checked separately. Full project checks and production build rerun.
+
+GV4/GV5/GV6 scope remains as above; no human/expert acceptance is inferred.

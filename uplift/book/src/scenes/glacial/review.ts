@@ -482,7 +482,7 @@ export async function mountGlacialStageReview(root: HTMLElement, search: string)
       },
     };
   }
-  const viewControls = createViewControls(bookStage, stageModule.BOOK_VIEW_LIMITS, root);
+  const viewControls = createViewControls(bookStage, stageModule.BOOK_VIEW_LIMITS, root, desk);
   desk.dataset.backend = bookStage.backend ?? "";
   dio.setCut(cut);
   applyState(transition.DRAWING_STATE);

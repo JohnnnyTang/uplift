@@ -47,13 +47,20 @@ export const BOOK_VIEW_LIMITS = {
   maxTiltDeg: 68,
   minOrbitDeg: -24,
   maxOrbitDeg: 24,
+  minZoom: 1,
+  maxZoom: 1.5,
 } as const;
 export interface BookView {
   readonly tiltDeg: number;
   readonly orbitDeg: number;
+  readonly zoom: number;
 }
 export function clampBookView(view: BookView): BookView {
   return {
+    zoom: Math.min(
+      BOOK_VIEW_LIMITS.maxZoom,
+      Math.max(BOOK_VIEW_LIMITS.minZoom, Number.isFinite(view.zoom) ? view.zoom : 1),
+    ),
     tiltDeg: Math.min(
       BOOK_VIEW_LIMITS.maxTiltDeg,
       Math.max(BOOK_VIEW_LIMITS.minTiltDeg, Number.isFinite(view.tiltDeg) ? view.tiltDeg : 48),
@@ -177,6 +184,7 @@ class BookStageImpl implements BookStage {
   private observer: ResizeObserver | null = null;
   private frameHandle = 0;
   private disposed = false;
+  private readonly onResize = () => this.setMode(this.request);
   private readonly onMedia = () => this.setMode(this.request);
   private readonly onContextLostDom = (event: Event) => {
     event.preventDefault();
@@ -185,7 +193,7 @@ class BookStageImpl implements BookStage {
 
   constructor(options: BookStageOptions) {
     this.o = options;
-    this.currentView = clampBookView({ tiltDeg: options.tiltDeg ?? 48, orbitDeg: 0 });
+    this.currentView = clampBookView({ tiltDeg: options.tiltDeg ?? 48, orbitDeg: 0, zoom: 1 });
     this.request = options.mode ?? "auto";
     this.canvas = document.createElement("canvas");
     this.canvas.className = "hachure-stage-canvas";
@@ -273,21 +281,23 @@ class BookStageImpl implements BookStage {
     this.media = matchMedia(this.o.flatQuery ?? FLAT_STAGE_QUERY);
     this.media.addEventListener("change", this.onMedia);
     if (typeof ResizeObserver !== "undefined") {
-      this.observer = new ResizeObserver(() => this.relayout());
+      this.observer = new ResizeObserver(this.onResize);
       this.observer.observe(this.o.host);
       this.observer.observe(this.o.anchor);
+      this.observer.observe(this.o.book);
     }
+    window.addEventListener("resize", this.onResize);
+    window.visualViewport?.addEventListener("resize", this.onResize);
     this.setMode(this.request);
   }
 
   setMode(request: StageModeRequest): void {
     this.request = request;
     const { host, book } = this.o;
-    let mode: StageMode = request === "auto" ? (this.prefersFlat() ? "flat" : "tilted") : request;
+    const mode: StageMode = request === "auto" ? (this.prefersFlat() ? "flat" : "tilted") : request;
     if (mode === "tilted") {
       this.applyTilted();
-      // Tilted only where the whole book fits and stays readable.
-      if (request === "auto" && !tiltedBookFits(this.geometry())) mode = "flat";
+      // geometry() fits the paper; media conditions choose the readable flat layout.
     }
     if (mode === "flat") {
       host.style.perspective = "";
@@ -342,6 +352,7 @@ class BookStageImpl implements BookStage {
     };
     // Reserve space for the physical binding beyond the DOM paper rectangle.
     while (geometry.viewScale > 0.55 && !tiltedBookFits(geometry, 64, 0)) geometry.viewScale *= 0.98;
+    geometry.viewScale *= this.currentView.zoom;
     return geometry;
   }
 
@@ -371,6 +382,7 @@ class BookStageImpl implements BookStage {
       this.o.host.style.perspective = `${g.perspectivePx}px`;
       this.o.book.style.transformOrigin = `50% 50% ${g.pivotHeightPx}px`;
       this.o.book.style.transform = bookTransformCss(g.tiltDeg, g.orbitDeg, g.viewScale);
+      this.camera.zoom = 1;
       const cam = stageCamera(g);
       this.camera.fov = cam.fovDeg;
       this.camera.aspect = cam.aspect;
@@ -447,6 +459,7 @@ class BookStageImpl implements BookStage {
     const w = this.canvas.clientWidth || 1;
     const h = this.canvas.clientHeight || 1;
     this.camera.fov = 26;
+    this.camera.zoom = this.currentView.zoom;
     this.camera.aspect = w / h;
     const centre = new Vector3(0, fp.heightM * 0.4, 0);
     const radius = Math.hypot(fp.widthM, fp.depthM, fp.heightM) / 2;
@@ -498,6 +511,8 @@ class BookStageImpl implements BookStage {
     this.disposed = true;
     if (this.frameHandle) cancelAnimationFrame(this.frameHandle);
     this.observer?.disconnect();
+    window.removeEventListener("resize", this.onResize);
+    window.visualViewport?.removeEventListener("resize", this.onResize);
     this.media?.removeEventListener("change", this.onMedia);
     this.canvas.removeEventListener("webglcontextlost", this.onContextLostDom);
     const { host, book } = this.o;
