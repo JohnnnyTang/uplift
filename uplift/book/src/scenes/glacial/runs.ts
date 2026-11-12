@@ -14,6 +14,8 @@
 import {
   type CapturedRun,
   type CapturedRunManifest,
+  type AveragedSectionMeasure,
+  type GlacierSnapshot,
   decodeCapturedRun,
   measureOverdeepening,
   measureSectionAveraged,
@@ -99,6 +101,8 @@ export interface ReviewOverdeepening {
   readonly overdeepened: boolean;
   /** Rise of the floor down-valley carved since the start (unit: metres). */
   readonly carvedRiseM: number;
+  /** Highest averaged floor down-valley of the section minus the floor here (unit: metres). */
+  readonly adverseRiseM?: number;
 }
 
 export interface ReviewProfile {
@@ -192,70 +196,14 @@ export function reviewRunsFromCaptures(
     const m = capture.manifest;
     const rockId = lookIdFor(m.rockId);
     const glacier = Array.from({ length: capture.count }, (_, k) => capture.snapshot(k));
-    const snapshots: LandscapeSnapshot[] = glacier.map((g) => ({
-      columns: g.nx,
-      rows: g.ny,
-      metresPerCell: g.metresPerCell,
-      bedM: g.bedM,
-      iceThicknessM: g.iceThicknessM,
-      rockId,
-      iceVelocityMPerYr: { x: g.surfaceVelocityXMPerYear, y: g.surfaceVelocityYMPerYear },
-      modelTimeYr: g.modelYears,
-    }));
+    const snapshots: LandscapeSnapshot[] = glacier.map((g) => toLandscapeSnapshot(g, rockId));
     const frames: ReviewFrame[] = snapshots.map((snapshot, k) => ({
       label: `${glacier[k]!.modelYears} model years`,
       snapshot,
       modelYears: glacier[k]!.modelYears,
     }));
-    const startSections = new Map<number, ReturnType<typeof measureSectionAveraged>>();
-    const valid = (frameIndex: number, valleyIndex: number) =>
-      !!glacier[frameIndex] && Number.isInteger(valleyIndex) && valleyIndex >= 0 && valleyIndex < m.grid.nx;
-    const section = (frameIndex: number, valleyIndex: number): ReviewSection | null => {
-      if (!valid(frameIndex, valleyIndex)) return null;
-      const g = glacier[frameIndex]!;
-      let start = startSections.get(valleyIndex);
-      if (!start) {
-        start = measureSectionAveraged(glacier[0]!.bedM, glacier[0]!.iceThicknessM, m.grid, valleyIndex);
-        startSections.set(valleyIndex, start);
-      }
-      const now = measureSectionAveraged(g.bedM, g.iceThicknessM, m.grid, valleyIndex);
-      return {
-        spanM: now.spanM,
-        shapeExponent: now.shapeExponent,
-        floorWidthM: now.floorWidthM,
-        depthM: now.depthM,
-        floorLoweredM: start.floorElevationM - now.floorElevationM,
-        steepestWallDeg: now.maxWallSlopeDeg,
-        iceThicknessM: now.maxIceThicknessM,
-      };
-    };
-    const overdeepening = (frameIndex: number, valleyIndex: number): ReviewOverdeepening | null => {
-      if (!valid(frameIndex, valleyIndex)) return null;
-      const o = measureOverdeepening(glacier[frameIndex]!.bedM, m.grid, valleyIndex, {
-        initialBed: glacier[0]!.bedM,
-      });
-      return { overdeepened: o.overdeepened, carvedRiseM: o.carvedRiseM };
-    };
-    const profile = (frameIndex: number, valleyIndex: number): ReviewProfile | null => {
-      if (!valid(frameIndex, valleyIndex)) return null;
-      const { nx, ny, metresPerCell } = m.grid;
-      const g = glacier[frameIndex]!;
-      const s0 = glacier[0]!;
-      const out = {
-        acrossM: new Float64Array(ny),
-        bedM: new Float64Array(ny),
-        iceM: new Float64Array(ny),
-        startBedM: new Float64Array(ny),
-      };
-      for (let a = 0; a < ny; a++) {
-        const k = acrossRow(CAPTURE_ORIENTATION, ny, a) * nx + valleyIndex;
-        out.acrossM[a] = a * metresPerCell;
-        out.bedM[a] = g.bedM[k]!;
-        out.iceM[a] = g.iceThicknessM[k]!;
-        out.startBedM[a] = s0.bedM[k]!;
-      }
-      return out;
-    };
+    const start = glacier[0]!;
+    const measures = glacier.map((g) => createFrameMeasures(g, start));
     const snowlineM = m.config.snowlineAltitudeM;
     return {
       id: `capture-${m.rockId}`,
@@ -269,11 +217,99 @@ export function reviewRunsFromCaptures(
       erosionSpeedup: m.config.erosionSpeedup,
       isFixture: false,
       provenance: "Recorded run of the glacier model",
-      section,
-      overdeepening,
-      profile,
+      section: (k, i) => measures[k]?.section(i) ?? null,
+      overdeepening: (k, i) => measures[k]?.overdeepening(i) ?? null,
+      profile: (k, i) => measures[k]?.profile(i) ?? null,
     };
   });
+}
+
+/** A glacier snapshot in the `LandscapeSnapshot` seam of the stage (the fields are shared, not copied). */
+export function toLandscapeSnapshot(g: GlacierSnapshot, rockId: number): LandscapeSnapshot {
+  return {
+    columns: g.nx,
+    rows: g.ny,
+    metresPerCell: g.metresPerCell,
+    bedM: g.bedM,
+    iceThicknessM: g.iceThicknessM,
+    rockId,
+    iceVelocityMPerYr: { x: g.surfaceVelocityXMPerYear, y: g.surfaceVelocityYMPerYear },
+    modelTimeYr: g.modelYears,
+  };
+}
+
+/** The model's own measures of one snapshot, against its run's authored start. */
+export interface FrameMeasures {
+  section(valleyIndex: number): ReviewSection | null;
+  overdeepening(valleyIndex: number): ReviewOverdeepening | null;
+  profile(valleyIndex: number): ReviewProfile | null;
+}
+
+const startSectionCache = new WeakMap<GlacierSnapshot, Map<number, AveragedSectionMeasure>>();
+
+/**
+ * Measures of snapshot `g` of a run whose authored start is `start`, through the model's section probes
+ * (`measureSectionAveraged`, `measureOverdeepening`). Used for recorded captures and for the live runtime
+ * alike (5M), so the page reads the same numbers whichever source it shows.
+ */
+export function createFrameMeasures(g: GlacierSnapshot, start: GlacierSnapshot): FrameMeasures {
+  const grid = { nx: g.nx, ny: g.ny, metresPerCell: g.metresPerCell };
+  const valid = (i: number) => Number.isInteger(i) && i >= 0 && i < g.nx;
+  let startSections = startSectionCache.get(start);
+  if (!startSections) startSectionCache.set(start, (startSections = new Map()));
+  const starts = startSections;
+  const sections = new Map<number, ReviewSection>();
+  return {
+    section(i) {
+      if (!valid(i)) return null;
+      const cached = sections.get(i);
+      if (cached) return cached;
+      let s0 = starts.get(i);
+      if (!s0) {
+        s0 = measureSectionAveraged(start.bedM, start.iceThicknessM, grid, i);
+        starts.set(i, s0);
+      }
+      const now = measureSectionAveraged(g.bedM, g.iceThicknessM, grid, i);
+      const result: ReviewSection = {
+        spanM: now.spanM,
+        shapeExponent: now.shapeExponent,
+        floorWidthM: now.floorWidthM,
+        depthM: now.depthM,
+        floorLoweredM: s0.floorElevationM - now.floorElevationM,
+        steepestWallDeg: now.maxWallSlopeDeg,
+        iceThicknessM: now.maxIceThicknessM,
+      };
+      sections.set(i, result);
+      return result;
+    },
+    overdeepening(i) {
+      if (!valid(i)) return null;
+      const o = measureOverdeepening(g.bedM, grid, i, { initialBed: start.bedM });
+      return {
+        overdeepened: o.overdeepened,
+        carvedRiseM: o.carvedRiseM,
+        adverseRiseM: o.adverseRiseDownValleyM,
+      };
+    },
+    profile(i) {
+      if (!valid(i)) return null;
+      const { nx, ny, metresPerCell } = grid;
+      const out = {
+        acrossM: new Float64Array(ny),
+        bedM: new Float64Array(ny),
+        iceM: new Float64Array(ny),
+        startBedM: new Float64Array(ny),
+      };
+      for (let a = 0; a < ny; a++) {
+        const k = acrossRow(CAPTURE_ORIENTATION, ny, a) * nx + i;
+        out.acrossM[a] = a * metresPerCell;
+        out.bedM[a] = g.bedM[k]!;
+        out.iceM[a] = g.iceThicknessM[k]!;
+        out.startBedM[a] = start.bedM[k]!;
+      }
+      return out;
+    },
+  };
 }
 
 /** Lowest and highest elevation across several runs (unit: metres), to fix the block's frame. */
