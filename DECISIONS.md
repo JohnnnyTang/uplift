@@ -1960,6 +1960,79 @@ reader-facing head note needs a new owner decision; a draft is in the lesson reg
   reference implementation of the trigger.
 - Expert review and human checks.
 
+## D-W5-5K — Production glacial scene: model-read dressing, live front face with ghost and lens, gestures with keyboard twins
+
+2026-11-12. Session 5K (`s1/w5/5k-production-scene`, from s1/w5/integration 8aee4cf). Technical choices inside
+the plan and inside the frozen R1 contracts (D-W5-R1). Evidence: `docs/review/glacial/scene/`.
+
+1. **Engine primitive `@hachure/ink/glacial`** (new entry point; no three.js in its dressing or lens code):
+   production dressing rules (`GLACIAL_DRESSING_RULES`), the section lens (`sectionLensSvg`) and gestures
+   (`attachCutDrag`, `attachSpecimenDrag`, `blockScreenGeometry`). The 5H stage gained only additive API:
+   `DioramaOptions.rules`, `ValleyDiorama.setGhost`, `DioramaDescription.ghostShown`,
+   `BookStage.projectBlockPoints`, `solidProfile`, and palette tokens `ghost`/`ghostHalo`. Old callers are
+   unchanged.
+2. **Dressing reads model state.** River: from the lowest cell of the row below the snout (snout = the most
+   downstream row whose valley bottom carries ice, so thin ridge ice does not count), routed over the bed with
+   closed hollows filled (priority flood from the block's front edge); a receiver is always beside or
+   downstream, never ice, so the path never climbs up-valley and crosses a basin at its spill level. Flow marks:
+   streamlines of the recorded surface velocity seeded where the glacier is wide and flows down-valley (near
+   the headwall the recorded ice flows back into the head basin), dash length 1.5–6 cells by local speed.
+   Snow and trees keep the 5H rules (snowline from the model config; treeline illustrative). Deterministic;
+   a test bans `Math.random` in `ink/src/glacial`. No erosion in a shader or in dressing.
+3. **Front face as a live cross-section, plus an enlarged lens.** The block's cut face keeps the 5H rock
+   pattern, ice section and dashed starting V, and now draws the newest kept run's bed at the matched time as
+   a dotted plum line over a paper halo. At page size the face is only a few pixels tall (1440 × 900 tilted:
+   the U is about 10 px), so the exit criterion needed more: a **section lens** beside the caption draws the
+   same section in 2D (rock with its lithology pattern, ice, dashed start V, labelled dotted ghost, a scale
+   bar from the profile's metres), cropped to the starting valley between its rims, **vertical ×2**, bound
+   into its label. The shape exponent of a power-law profile does not change under vertical scaling. This is
+   a 5K addition to the approved layout, not an R1 decision: owner, please confirm at the next review.
+4. **Margin notes average three columns.** `measureSectionAveraged` (glacier, additive) averages
+   `measureSection` over i − 1 … i + 1 (120 m); notes round to 10 m. The registered protocol keeps the single
+   column. Kept-run notes show the kept run's floor lowering and steepest wall at its matched recorded time.
+5. **Overdeepening note slot**, aligned with 5L (PR #34): `measureOverdeepening` (glacier, additive) reads
+   the long profile of the three-column floor; `adverseRiseDownValleyM` = highest floor between the section
+   and the mouth minus this floor; the start's own rise is subtracted (outside the divide at the head the
+   authored ground already falls away); shown at ≥ 5 m. On the recorded runs it fires only in shale's lower
+   trough at 240–300 model years (i = 26–43 at 300), never in sandstone, granite or the head reach; not at the
+   default cut. Words are 5L's ("The ice has worn the floor here lower than the floor further down: a basin,
+   called an overdeepening."); the R1 head-basin draft is not shown. The single-column, start-subtracted
+   variant with a 20 m threshold, tried first, found no basin anywhere (largest carved rise 16 m); the D-W5-R1
+   premise "head basin lowered 100–230 m" is lowering, not an adverse slope.
+6. **Default front face** is a scene option (`defaultCutColumn`, a grid column read against the manifest);
+   the review route passes i = 51 (`REVIEW_DEFAULT_CUT_COLUMN`); 5L/5M move it to the spread config.
+7. **One rock command.** `RockCommand` (`commands.ts`): the selector and the specimen drop both call
+   `chooseRock`. The local stand-in shows that rock's recorded run at the same model time (the frozen 5H
+   behaviour) and keeps the previous run (newest first, at most two; a dropped run would be named in the
+   notes). 5M passes the 5J runtime command through `GlacialSceneOptions.createRockCommand`.
+8. **Gestures and keyboard twins.** Specimen drag → the radio group; dragging the front face (mouse/pen;
+   claims the press before the R2 orbit) → the Front face slider, one grid cell per arrow; "See under the ice"
+   → checkbox; turntable = the frozen R2 turn/height/zoom (drag, sliders, Reset). Touch: specimen drag works;
+   cut drag stays mouse/pen so phone scrolling is untouched (the slider is the phone path).
+9. **Text alternative** describes the current profile: where the face is, through ice or below the snout,
+   "closer to a U/V" from the shape exponent against the protocol's anchors (V ≈ 1, U ≈ 2; midpoint 1.5),
+   bound floor numbers, the kept run and the overdeepening note.
+10. **Fig. 1 labels**: leader-line words from a list (`GLACIAL_DRAWING_LABELS`, 5L's six words: valley head,
+    glacier, snout, U-shaped valley, V-shaped valley, valley floor); no numbers; `labels: boolean` still works.
+11. **Cloth** `--gs-board` `#3b352f` (edge `#2b2723`) on the boards/cover; colour only.
+12. **Kept unchanged**: everything frozen by D-W5-R1 item 1 (book depth, binding, fore-edges, reading
+    panels, spine view, zoom 1–1.5, gestures, control grid). The code's default tilt stays `TILT_DEG = 48`
+    from R2 ("lower default sight line"); D-W5-R1 item 1 also cites "36°" from R1. Not changed here; 5M
+    should reconcile the wording.
+
+**Cross-owned edits.** `hachure/glacier/src/contract/sections.ts` (+ test) and one export line in
+`contract/index.ts` (allowed by D-W5-R1 item 9); `hachure/ink/package.json` (one `./glacial` export line);
+additive changes in `hachure/ink/src/stage/{diorama,book-stage,block-geometry,index}.ts` and
+`materials/natural/palette.ts` (5H stage/materials, "additions keep old callers working").
+
+**For 5M.** Mount `mountGlacialScene(root, options)`; pass `defaultCutColumn`, `drawingLabels`,
+`createRockCommand` from the spread/runtime. Note words come from 5L: replace `OVERDEEPENING_NOTE` and the
+draft margin phrases in `notes.ts`. Name map to 5L: `noteColumns()` ↔ `measureSectionAveraged` /
+`PAGE_SECTION_HALF_WIDTH_COLUMNS`; `roundForNote()` ↔ `notes.metres`; `adverseRiseDownValleyM` is the same
+field name (5L's exact column range, ~20–47, is a little wider than this probe's 26–43; pick one probe in 5M).
+
+**Not done.** No video capture; no human, screen-reader or hardware check; touch drag of the cut face.
+
 ## D-W5-5J — Runs, timeline and comparison runtime on one command path; WebGPU by default, halted runs never continue
 
 2026-11-12. Session 5J (`s1/w5/5j-runs-timeline`, from s1/w5/integration 8aee4cf). Technical choices inside the

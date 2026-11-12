@@ -15,7 +15,8 @@ import {
   type CapturedRun,
   type CapturedRunManifest,
   decodeCapturedRun,
-  measureSection,
+  measureOverdeepening,
+  measureSectionAveraged,
 } from "@hachure/glacier";
 import graniteBin from "@hachure/glacier/captures/granite.bin?url";
 import graniteManifest from "@hachure/glacier/captures/granite.json?url";
@@ -34,8 +35,16 @@ export interface ReviewFrame {
   readonly modelYears: number | null;
 }
 
-/** The model's own measurements of one cross-section of the valley, at a recorded time. */
+/**
+ * The model's own measurements of one cross-section of the valley, at a recorded time, averaged over the
+ * section column and its neighbours (`measureSectionAveraged`, D-W5-R1 item 9), so the notes do not jump
+ * when the front face moves by one cell.
+ */
 export interface ReviewSection {
+  /** Length of valley the averaged reading covers (unit: metres). */
+  readonly spanM: number;
+  /** Cross-profile shape exponent b (V ≈ 1, U ≈ 2 or more; unit: none). NaN when it cannot be fitted. */
+  readonly shapeExponent: number;
   /** Width of the valley floor (unit: metres). */
   readonly floorWidthM: number;
   /** Rim-to-floor depth (unit: metres). */
@@ -74,6 +83,30 @@ export interface ReviewRun {
    * Null when the run cannot be measured (the fixture).
    */
   section(frameIndex: number, valleyIndex: number): ReviewSection | null;
+  /**
+   * Whether the section sits in a basin carved by the ice (its floor below the floor down-valley,
+   * `measureOverdeepening` against the run's start). Null when the run cannot be measured.
+   */
+  overdeepening(frameIndex: number, valleyIndex: number): ReviewOverdeepening | null;
+  /**
+   * Bed and ice across the valley at grid index `valleyIndex`, left to right as seen from the block's
+   * front, with the starting bed. Null when the run cannot be measured.
+   */
+  profile(frameIndex: number, valleyIndex: number): ReviewProfile | null;
+}
+
+export interface ReviewOverdeepening {
+  readonly overdeepened: boolean;
+  /** Rise of the floor down-valley carved since the start (unit: metres). */
+  readonly carvedRiseM: number;
+}
+
+export interface ReviewProfile {
+  /** Across-valley positions (unit: metres). */
+  readonly acrossM: Float64Array;
+  readonly bedM: Float64Array;
+  readonly iceM: Float64Array;
+  readonly startBedM: Float64Array;
 }
 
 /**
@@ -84,6 +117,15 @@ export const CAPTURE_ORIENTATION: ValleyOrientation = Object.freeze({
   valleyAxis: "columns",
   downstream: "decreasing",
 });
+
+/**
+ * Grid row (for a valley along columns) of the `a`-th sample across the block, left to right as seen from its
+ * front face: the same rotation `toBlockGrid` of `@hachure/ink/stage` applies.
+ */
+export function acrossRow(orientation: ValleyOrientation, rows: number, a: number): number {
+  if (orientation.valleyAxis !== "columns") throw new RangeError("captures run along columns");
+  return orientation.downstream === "decreasing" ? a : rows - 1 - a;
+}
 
 /**
  * Trees are drawn up to this far below the model's snowline (unit: metres). Illustrative dressing only:
@@ -128,6 +170,8 @@ export function fixtureRun(): ReviewRun {
     isFixture: true,
     provenance: FIXTURE_LABEL,
     section: () => null,
+    overdeepening: () => null,
+    profile: () => null,
   };
 }
 
@@ -163,23 +207,54 @@ export function reviewRunsFromCaptures(
       snapshot,
       modelYears: glacier[k]!.modelYears,
     }));
-    const startSections = new Map<number, ReturnType<typeof measureSection>>();
+    const startSections = new Map<number, ReturnType<typeof measureSectionAveraged>>();
+    const valid = (frameIndex: number, valleyIndex: number) =>
+      !!glacier[frameIndex] && Number.isInteger(valleyIndex) && valleyIndex >= 0 && valleyIndex < m.grid.nx;
     const section = (frameIndex: number, valleyIndex: number): ReviewSection | null => {
-      const g = glacier[frameIndex];
-      if (!g || !Number.isInteger(valleyIndex) || valleyIndex < 0 || valleyIndex >= m.grid.nx) return null;
+      if (!valid(frameIndex, valleyIndex)) return null;
+      const g = glacier[frameIndex]!;
       let start = startSections.get(valleyIndex);
       if (!start) {
-        start = measureSection(glacier[0]!.bedM, glacier[0]!.iceThicknessM, m.grid, valleyIndex);
+        start = measureSectionAveraged(glacier[0]!.bedM, glacier[0]!.iceThicknessM, m.grid, valleyIndex);
         startSections.set(valleyIndex, start);
       }
-      const now = measureSection(g.bedM, g.iceThicknessM, m.grid, valleyIndex);
+      const now = measureSectionAveraged(g.bedM, g.iceThicknessM, m.grid, valleyIndex);
       return {
+        spanM: now.spanM,
+        shapeExponent: now.shapeExponent,
         floorWidthM: now.floorWidthM,
         depthM: now.depthM,
         floorLoweredM: start.floorElevationM - now.floorElevationM,
         steepestWallDeg: now.maxWallSlopeDeg,
         iceThicknessM: now.maxIceThicknessM,
       };
+    };
+    const overdeepening = (frameIndex: number, valleyIndex: number): ReviewOverdeepening | null => {
+      if (!valid(frameIndex, valleyIndex)) return null;
+      const o = measureOverdeepening(glacier[frameIndex]!.bedM, m.grid, valleyIndex, {
+        initialBed: glacier[0]!.bedM,
+      });
+      return { overdeepened: o.overdeepened, carvedRiseM: o.carvedRiseM };
+    };
+    const profile = (frameIndex: number, valleyIndex: number): ReviewProfile | null => {
+      if (!valid(frameIndex, valleyIndex)) return null;
+      const { nx, ny, metresPerCell } = m.grid;
+      const g = glacier[frameIndex]!;
+      const s0 = glacier[0]!;
+      const out = {
+        acrossM: new Float64Array(ny),
+        bedM: new Float64Array(ny),
+        iceM: new Float64Array(ny),
+        startBedM: new Float64Array(ny),
+      };
+      for (let a = 0; a < ny; a++) {
+        const k = acrossRow(CAPTURE_ORIENTATION, ny, a) * nx + valleyIndex;
+        out.acrossM[a] = a * metresPerCell;
+        out.bedM[a] = g.bedM[k]!;
+        out.iceM[a] = g.iceThicknessM[k]!;
+        out.startBedM[a] = s0.bedM[k]!;
+      }
+      return out;
     };
     const snowlineM = m.config.snowlineAltitudeM;
     return {
@@ -195,6 +270,8 @@ export function reviewRunsFromCaptures(
       isFixture: false,
       provenance: "Recorded run of the glacier model",
       section,
+      overdeepening,
+      profile,
     };
   });
 }

@@ -29,6 +29,12 @@ export const NATURAL_TOKENS = Object.freeze({
   conifer: "#2E5C3D",
   coniferShade: "#1E412C",
   soil: "#8A6A48",
+  /**
+   * A kept run's profile on the cut face (session 5K): a dark plum dotted line over a paper halo. Its
+   * non-colour cue is the dot pattern (the starting valley is dashed) and its label.
+   */
+  ghost: "#5A2D52",
+  ghostHalo: "#FAF8F2",
   /** Contact shadow on the paper (multiplied with low opacity). */
   shadow: "#3B3A36",
 });

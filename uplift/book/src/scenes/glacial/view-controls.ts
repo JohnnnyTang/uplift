@@ -6,6 +6,10 @@ export function createViewControls(
   limits: typeof BOOK_VIEW_LIMITS,
   host: HTMLElement,
   surface: HTMLElement,
+  options: {
+    /** A scene gesture (the front-face drag, session 5K) that takes this pointer press instead of the orbit. */
+    readonly claimsPointer?: (event: PointerEvent) => boolean;
+  } = {},
 ) {
   const controls = document.createElement("div");
   controls.className = "gs-view-controls";
@@ -49,7 +53,8 @@ export function createViewControls(
   reset.onclick = () => update(initial);
   const hint = document.createElement("p");
   hint.className = "gs-view-hint";
-  hint.textContent = "Drag the scene to turn · Scroll over it to zoom";
+  hint.textContent =
+    "Drag the scene to turn · Scroll over it to zoom · Drag the block's front face to move the cut";
   controls.append(reset, hint);
   host.prepend(controls);
 
@@ -60,13 +65,16 @@ export function createViewControls(
   measure();
   const blocked = (target: EventTarget | null) =>
     target instanceof Element &&
-    !!target.closest("button,input,select,textarea,a,summary,details,.gs-reading-region,[contenteditable]");
+    !!target.closest(
+      "button,input,select,textarea,a,summary,details,.gs-reading-region,[contenteditable],[data-gesture]",
+    );
   let start: { id: number; x: number; y: number; view: BookView; moved: boolean } | null = null;
   let suppressClick = false;
   const down = (event: PointerEvent) => {
     // Mouse drag leaves native touch scrolling available on the readable phone layout.
     if (event.pointerType !== "mouse" || event.button !== 0 || !event.isPrimary || blocked(event.target))
       return;
+    if (options.claimsPointer?.(event)) return;
     suppressClick = false;
     start = { id: event.pointerId, x: event.clientX, y: event.clientY, view: stage.view, moved: false };
   };

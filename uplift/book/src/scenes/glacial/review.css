@@ -6,7 +6,9 @@
 .gs-review {
   --gs-desk: #7a776f;
   --gs-desk-line: #6c6962;
-  --gs-board: #2f4a3f;
+  /* Cloth of the boards and cover: a dark warm neutral carrying no hue (D-W5-R1 item 8). */
+  --gs-board: #3b352f;
+  --gs-board-edge: #2b2723;
   --gs-paper: #faf8f2;
   --gs-page-edge: #e6e0d0;
   --gs-ink: #292b2c;
@@ -725,7 +727,7 @@
 .gs-desk[data-stage-mode="tilted"] .gs-boards {
   inset: -14px -38px -16px;
   transform: translateZ(-51px);
-  border: 3px solid #253c32;
+  border: 3px solid var(--gs-board-edge);
   box-shadow: 0 16px 24px -14px #0007;
 }
 .gs-desk[data-stage-mode="flat"] .hachure-book-binding {
@@ -813,4 +815,134 @@
   .gs-view-controls .gs-view-hint {
     text-align: left;
   }
+}
+
+/* ---- Session 5K: production scene ------------------------------------------------------------------ */
+
+/* The front face, enlarged, beside the caption: the block's cut face drawn again at legible size. */
+.gs-fig-foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 0 1.6cqi;
+  align-items: start;
+}
+.gs-fig-foot:has(> .gs-lens[hidden]) {
+  grid-template-columns: minmax(0, 1fr);
+}
+.gs-lens {
+  margin: 0.8cqi 0 0;
+  pointer-events: none;
+}
+.gs-lens[hidden] {
+  display: none;
+}
+.gs-lens-title {
+  margin: 0 0 0.2em;
+  font-size: max(11px, 0.95cqi);
+  font-style: italic;
+  color: var(--gs-ink-soft);
+}
+.gs-lens-drawing svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.gs-fig-foot figcaption {
+  flex-direction: column;
+  justify-content: flex-start;
+}
+@media (max-width: 30rem) {
+  .gs-fig-foot {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .gs-lens {
+    max-width: 420px;
+  }
+}
+
+/* Margin notes for a kept run and the overdeepening note. */
+.gs-ghost-key {
+  color: #5a2d52;
+  letter-spacing: -0.05em;
+  font-weight: 700;
+}
+.gs-note-kept b {
+  color: #5a2d52;
+}
+.gs-note-overdeepened {
+  border-left: 2px solid var(--gs-pen);
+  padding-left: 0.5em;
+}
+
+/* Gestures: the front face takes a move cursor; a specimen can be picked up. */
+.gs-desk.gs-over-face,
+.gs-desk.gs-over-face * {
+  cursor: ns-resize;
+}
+.gs-desk.gs-cutting,
+.gs-desk.gs-cutting * {
+  cursor: ns-resize;
+  user-select: none;
+}
+.gs-specimen[data-gesture] {
+  touch-action: none;
+  cursor: grab;
+}
+.gs-specimen.gs-specimen-lifted {
+  opacity: 0.45;
+}
+.gs-chip-carried {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 20;
+  width: 52px;
+  margin: -21px 0 0 -26px;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 5px #0005);
+}
+.gs-chip-carried svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.gs-chip-carried .gs-chip-outline {
+  fill: none;
+  stroke: var(--gs-ink, #292b2c);
+  stroke-width: 1.4;
+}
+.gs-chip-carried[data-over] {
+  filter: drop-shadow(0 2px 2px #0006);
+}
+.gs-drop-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 19;
+  pointer-events: none;
+  visibility: hidden;
+}
+.gs-drop-overlay[data-active] {
+  visibility: visible;
+}
+.gs-drop-outline {
+  fill: none;
+  stroke: var(--gs-paper);
+  stroke-width: 2;
+  stroke-dasharray: 7 5;
+}
+.gs-drop-outline[data-over] {
+  stroke: var(--gs-focus);
+  stroke-width: 3;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gs-chip-carried {
+    transition: none !important;
+  }
+}
+
+/* Keep the lesson column (and its flap) clear of the folio when the margin carries a compared run. */
+.gs-page-text .gs-text-column {
+  margin-bottom: 2.2cqi;
 }
