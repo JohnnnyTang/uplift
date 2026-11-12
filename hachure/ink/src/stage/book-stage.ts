@@ -128,6 +128,15 @@ export interface BookStage {
   requestRender(): void;
   /** Compiles pipelines and renders one complete frame. */
   renderNow(): Promise<void>;
+  /**
+   * Viewport (client) coordinates of points given in the diorama's block-local metres (X across, Y up from
+   * the base, Z along the valley; see `ValleyDiorama.footprint`), through the current camera. `null` for a
+   * point behind the camera, and for every point before `mount()`. For hit tests and DOM overlays (session
+   * 5K); view-only.
+   */
+  projectBlockPoints(
+    points: readonly (readonly [number, number, number])[],
+  ): ({ x: number; y: number } | null)[];
   dispose(): void;
 }
 
@@ -497,6 +506,23 @@ class BookStageImpl implements BookStage {
     if (!this.renderer || this.disposed) return;
     this.camera.updateProjectionMatrix();
     this.renderer.render(this.scene, this.camera);
+  }
+
+  projectBlockPoints(
+    points: readonly (readonly [number, number, number])[],
+  ): ({ x: number; y: number } | null)[] {
+    if (!this.renderer || this.disposed) return points.map(() => null);
+    this.scene.updateMatrixWorld(true);
+    this.camera.updateMatrixWorld(true);
+    this.camera.updateProjectionMatrix();
+    const rect = this.canvas.getBoundingClientRect();
+    const world = this.o.diorama.group.matrixWorld;
+    const v = new Vector3();
+    return points.map(([x, y, z]) => {
+      v.set(x, y, z).applyMatrix4(world).project(this.camera);
+      if (!Number.isFinite(v.x) || v.z < -1 || v.z > 1) return null;
+      return { x: rect.left + ((v.x + 1) / 2) * rect.width, y: rect.top + ((1 - v.y) / 2) * rect.height };
+    });
   }
 
   async renderNow(): Promise<void> {

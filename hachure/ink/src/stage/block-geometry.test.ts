@@ -18,6 +18,7 @@ import {
   buildWalls,
   clampCutRow,
   dashedProfile,
+  solidProfile,
 } from "./block-geometry";
 import { surfaceCover } from "./dressing";
 import {
@@ -133,6 +134,14 @@ describe("block geometry", () => {
     const centre = blockY(f, g.bedM[4 * 9 + 4]!);
     const lowest = Math.min(...Array.from(segs).filter((_, i) => i % 3 === 2));
     expect(Math.abs(lowest - centre)).toBeLessThan(10);
+  });
+
+  it("a comparison profile (kept-run ghost halo) follows the other bed along the cut face", () => {
+    const f = frame(4);
+    const pts = solidProfile(g, f, 0.05);
+    expect(pts.length % 3).toBe(0);
+    for (let i = 0; i < pts.length; i += 3) expect(pts[i + 1]).toBeCloseTo(blockZ(f, 4) + 5, 6);
+    expect(pts[2]).toBeCloseTo(blockY(f, g.bedM[4 * 9]!), 4);
   });
 });
 

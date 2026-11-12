@@ -3,7 +3,9 @@ import { describe, expect, it } from "vitest";
 import { type CapturedRunManifest, decodeCapturedRun } from "@hachure/glacier";
 import { PROTOCOL_SECTIONS } from "@hachure/glacier/testing";
 import { PROVISIONAL_LITHOLOGIES, toBlockGrid, validateSnapshot, valleyGridIndex } from "@hachure/ink/stage";
-import { CAPTURE_ORIENTATION, combinedRange, reviewRunsFromCaptures } from "./runs";
+import { CAPTURE_ORIENTATION, acrossRow, combinedRange, reviewRunsFromCaptures } from "./runs";
+import { SHAPE_MIDPOINT, overdeepeningNote } from "./notes";
+import { REVIEW_DEFAULT_CUT_COLUMN } from "./review";
 
 const dir = new URL("../../../../../hachure/glacier/src/testing/captured-runs/", import.meta.url);
 const ROCKS = ["shale", "sandstone", "granite"] as const;
@@ -91,4 +93,45 @@ describe("review runs from 5G's captured runs", () => {
       for (const s of Object.values(byRock)) expect(s.iceThicknessM).toBeGreaterThan(0);
     },
   );
+
+  it("reads the front-face profile in the block's left-to-right order (the same rotation as toBlockGrid)", () => {
+    const run = runs[1]!;
+    const k = run.frames.length - 1;
+    const snap = run.frames[k]!.snapshot;
+    const g = toBlockGrid(snap, run.orientation);
+    const column = 51;
+    const row = valleyGridIndex(run.orientation, g.along, column);
+    const p = run.profile(k, column)!;
+    for (let a = 0; a < g.across; a++) {
+      expect(p.bedM[a]).toBeCloseTo(g.bedM[row * g.across + a]!, 3);
+      expect(p.iceM[a]).toBeCloseTo(g.iceM[row * g.across + a]!, 3);
+      expect(acrossRow(run.orientation, snap.rows, a) * snap.columns + column).toBeGreaterThanOrEqual(0);
+    }
+    expect(Array.from(p.startBedM)).toEqual(Array.from(run.profile(0, column)!.bedM));
+  });
+
+  it("averages the margin-note section over three columns (120 m on the 40 m grid)", () => {
+    const run = runs[0]!;
+    const s = run.section(run.frames.length - 1, 51)!;
+    expect(s.spanM).toBe(3 * run.frames[0]!.snapshot.metresPerCell);
+  });
+
+  it("shows every rock closer to a U than a V at the default front face, last snapshot (D-W5-R1 item 4)", () => {
+    for (const run of runs)
+      expect(run.section(run.frames.length - 1, REVIEW_DEFAULT_CUT_COLUMN)!.shapeExponent).toBeGreaterThan(
+        SHAPE_MIDPOINT,
+      );
+  });
+
+  it("shows the overdeepening note only where the model's floor is worn below the floor further down", () => {
+    const nx = runs[0]!.frames[0]!.snapshot.columns;
+    const noted = (run: (typeof runs)[number]) =>
+      Array.from({ length: nx }, (_, i) => i).filter((i) =>
+        overdeepeningNote(run.overdeepening(run.frames.length - 1, i)),
+      );
+    const byRock = Object.fromEntries(runs.map((r) => [r.rockKey, noted(r)]));
+    expect(byRock.shale!.length).toBeGreaterThan(0);
+    expect(byRock.shale).not.toContain(REVIEW_DEFAULT_CUT_COLUMN);
+    expect(byRock.granite).toEqual([]);
+  });
 });
