@@ -2100,3 +2100,29 @@ reconstruction. Determinism holds per backend and same-device, never across back
 carry their backend. (b) A CPU-only session plays slower than the scheduled 10 model years per second at 1×
 (about 3 model years per second on this machine); the host drops wall-clock time rather than enlarging the
 step, as specified. (c) Nothing here blocks 5M.
+
+## D-W5-R1a — Owner follow-up to R1: overdeepening note, section lens, default tilt correction
+
+2026-11-12. Owner decisions on findings from 5J, 5K and 5L (PRs #34–#36), recorded by the lead on
+s1/w5/integration. These amend D-W5-R1; everything else in it stays frozen.
+
+1. **Overdeepening note: 5L's wording is accepted (supersedes D-W5-R1 item 5's wording).** 5L and 5K
+   found independently that the head reach is _lowered_ (100–230 m) but never overdeepened: on the
+   three-column averaged floor, the bed never rises down-valley there, in any rock. A true reverse slope
+   appears only in shale's lower trough (about i = 20–47 from 200 model years). The page note is "The ice
+   has worn the floor here lower than the floor further down: a basin, called an overdeepening", shown when
+   `adverseRiseDownValleyM` ≥ 5 m on the averaged floor (net of the starting bed's own rise, as in 5K's
+   `measureOverdeepening`). It says nothing about the valley head or hard rock. The deep lowering near the
+   head is explained in the teacher notes only; the unwired head-note draft in 5L's claim register (C16)
+   waits for expert review. Cook & Swift (2012), doi:10.1016/j.earscirev.2012.09.009, is cited only for
+   what its abstract supports. 5M keeps a single overdeepening probe: 5K's.
+2. **Section lens accepted.** On the tilted page the block's front face is about 10 px tall, too small to
+   show V against U. 5K's enlarged front-face lens beside the caption, at 2× vertical exaggeration stated in
+   its label, is part of the frozen presentation.
+3. **Correction: the default book tilt is 48°, not 36°.** D-W5-R1 item 1 cited D-R1-refinements' 36° pitch,
+   but D-W5-R2 (f06e1fc) then set `TILT_DEG = 48` for a lower default sight line, and that is the frozen
+   value. The rest of item 1 stands.
+
+**Merges.** #34 (5L), #36 (5K) and #35 (5J) were merged into s1/w5/integration with conflicts resolved
+by keeping both sides in `DECISIONS.md` and regenerating `pnpm-lock.yaml` with `pnpm install`. Main was
+then brought level with integration. 5M has not started, at the owner's instruction.
