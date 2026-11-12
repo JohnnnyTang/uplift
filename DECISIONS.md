@@ -1952,9 +1952,11 @@ exports `./glacial` and `./glacial-worker`. `pnpm-lock.yaml`: the importer entry
 `pnpm install`.
 
 **Not done / open.** (a) No book integration: 5M adds the app Worker module (`installGlacialWorker(self)`) and
-joins `viewFrame()`/`comparison()` to the 5K scene. (b) The browser suite's WebGPU tests run only with
-`UPLIFT_E2E_CHANNEL=chrome` on a machine with an adapter; CI's bundled Chromium skips them, and the labelled
-CPU-as-GPU fake covers the halt path there. (c) The label wording awaits 5L.
+joins `viewFrame()`/`comparison()` to the 5K scene. (b) The real device-loss and same-device replay browser tests run wherever auto
+selection picks WebGPU, including CI's software adapter (Linux bundled Chromium), which passes the device
+check. The 300-year production run needs `UPLIFT_E2E_CHANNEL` and a hardware adapter: on CI's software
+adapter it exceeded the test budget (run 43174361878). The labelled CPU-as-GPU fake covers the halt path on
+every machine. (c) The label wording awaits 5L.
 
 **Plan-changing facts.** (a) GPU and CPU state hashes differ even at step 0, because the GPU hashes its two-lane
 reconstruction. Determinism holds per backend and same-device, never across backends, which is why kept runs

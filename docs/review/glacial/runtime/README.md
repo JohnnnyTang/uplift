@@ -71,8 +71,17 @@ unit test re-encodes all three registered 300-year captures with it: **0 values 
 ## Browser evidence (this machine, 2026-11-12)
 
 The suite passed **11 of 11 tests in installed Chrome** (`UPLIFT_E2E_CHANNEL=chrome`, Intel Arc 140V, WebGPU)
-and **8 passed + 3 skipped in Playwright's bundled Chromium**, which has no WebGPU adapter. The skipped
-tests need WebGPU, and the labelled fake covers the halt path there.
+and **8 passed + 3 skipped in Playwright's bundled Chromium on Windows**, which has no WebGPU adapter. There
+the labelled fake covers the halt path.
+
+**Which WebGPU tests run where.** The real device-loss test and the same-device replay test run wherever auto
+selection picks WebGPU. That includes a software adapter that passes the device check, as CI's bundled
+Chromium on Linux does: such an adapter would serve readers too, and these runs are short. The full 300-year
+production run is GPU evidence, not a correctness check. It runs only with `UPLIFT_E2E_CHANNEL` set (an
+installed browser) **and** on a hardware adapter. A software adapter is one flagged `isFallbackAdapter`, or one
+whose vendor, architecture or description names SwiftShader, llvmpipe, lavapipe, softpipe, WARP or "software".
+On a software adapter the run exceeded the test budget in CI (run 43174361878); the skip message prints the
+adapter it saw.
 
 - Auto backend: `webgpu` in Chrome. In bundled Chromium it is `cpu`, with "WebGPU not used, running on CPU:
   [adapter-unavailable] No WebGPU adapter".
@@ -89,7 +98,7 @@ tests need WebGPU, and the labelled fake covers the halt path there.
   with 0 clamped, in about 8 s of wall time at 4×.
 
 Commands: `pnpm test` (unit), `pnpm exec playwright test e2e/glacial-runtime.spec.ts` (browser), and
-`UPLIFT_E2E_CHANNEL=chrome …` (adds the WebGPU tests).
+`UPLIFT_E2E_CHANNEL=chrome …` (WebGPU on a hardware adapter, including the 300-year production run).
 
 ## Handover notes for 5K and 5M
 

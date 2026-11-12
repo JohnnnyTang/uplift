@@ -5,6 +5,7 @@
  */
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
+import { format, resolveConfig } from "prettier";
 import type { GlacialHost } from "../hachure/runtime/src/glacial-host/index";
 
 test.use({ launchOptions: { args: ["--enable-unsafe-webgpu"] } });
@@ -51,7 +52,7 @@ interface FixtureState {
 const EVIDENCE = "e2e/fixtures/glacial-runtime-evidence.json";
 const BROWSER = process.env.UPLIFT_E2E_CHANNEL ?? "playwright-chromium";
 /** Merges one finding into the evidence file, per browser (each test records its own; a rerun replaces it). */
-function record(key: string, value: unknown) {
+async function record(key: string, value: unknown) {
   const current = existsSync(EVIDENCE)
     ? (JSON.parse(readFileSync(EVIDENCE, "utf8")) as Record<string, Record<string, unknown>>)
     : {};
@@ -60,10 +61,14 @@ function record(key: string, value: unknown) {
     session: "5J",
     browsers: { ...browsers, [BROWSER]: { ...browsers[BROWSER], [key]: value } },
   };
+  // Prettier-formatted, so a rerun keeps `pnpm format:check` green.
   writeFileSync(
     EVIDENCE,
-    `${JSON.stringify(next, null, 2)}
-`,
+    await format(JSON.stringify(next), {
+      ...(await resolveConfig(EVIDENCE)),
+      parser: "json",
+      filepath: EVIDENCE,
+    }),
   );
 }
 
@@ -91,6 +96,36 @@ async function idle(page: Page) {
   await page.evaluate(() =>
     (window as unknown as { glacialFixture: { host: GlacialHost } }).glacialFixture.host.whenIdle(),
   );
+}
+/**
+ * The page's WebGPU adapter as the browser describes it. Software adapters (SwiftShader, llvmpipe, lavapipe,
+ * WARP or any adapter flagged as a fallback) are correct but far slower. CI's bundled Chromium on Linux offers
+ * one, and auto selection may use it when it passes the device check.
+ */
+async function webgpuAdapter(page: Page): Promise<{ available: boolean; software: boolean; label: string }> {
+  return page.evaluate(async () => {
+    type Info = {
+      vendor?: string;
+      architecture?: string;
+      device?: string;
+      description?: string;
+      isFallbackAdapter?: boolean;
+    };
+    const gpu = (
+      navigator as unknown as {
+        gpu?: { requestAdapter(): Promise<{ info?: Info; isFallbackAdapter?: boolean } | null> };
+      }
+    ).gpu;
+    const adapter = await gpu?.requestAdapter().catch(() => null);
+    if (!adapter) return { available: false, software: false, label: "none" };
+    const info = adapter.info ?? {};
+    const label = [info.vendor, info.architecture, info.device, info.description].filter(Boolean).join(" / ");
+    const software =
+      info.isFallbackAdapter === true ||
+      adapter.isFallbackAdapter === true ||
+      /swiftshader|llvmpipe|lavapipe|softpipe|software|microsoft basic render|warp/i.test(label);
+    return { available: true, software, label };
+  });
 }
 async function commands(page: Page) {
   return page.evaluate(
@@ -211,7 +246,7 @@ test("comparison uses the nearest recorded time, and the oldest of three kept ru
   await expect(page.locator("#compare-label")).toHaveText("kept run 2 · model time 0.25 model years");
   await page.getByRole("button", { name: "Dismiss note" }).click();
   await expect(page.locator("#notice")).toHaveText("");
-  record("eviction", {
+  await record("eviction", {
     kept: s.kept.map((r) => [r.ordinal, r.rockId]),
     memoryBytes: s.memoryBytes,
     budget: s.memoryBudgetBytes,
@@ -266,7 +301,7 @@ test.describe("backend selection and fallback", () => {
     expect(["webgpu", "cpu"]).toContain(auto.backend);
     if (auto.backend === "cpu") expect(auto.fallbackReason).toBeTruthy();
     else expect(auto.fallbackReason).toBeNull();
-    record("autoBackend", { backend: auto.backend, fallbackReason: auto.fallbackReason });
+    await record("autoBackend", { backend: auto.backend, fallbackReason: auto.fallbackReason });
 
     await open(page, "?prefer=auto&fault=skew-erosion");
     const skewed = await state(page);
@@ -276,7 +311,10 @@ test.describe("backend selection and fallback", () => {
     );
     await page.getByLabel("Reading level").selectOption("uni");
     await expect(page.locator("#diagnostics")).toContainText(`Backend: cpu (${skewed.fallbackReason}`);
-    record("forcedDeviceCheckFault", { backend: skewed.backend, fallbackReason: skewed.fallbackReason });
+    await record("forcedDeviceCheckFault", {
+      backend: skewed.backend,
+      fallbackReason: skewed.fallbackReason,
+    });
   });
 
   test("a mid-run GPU failure halts the run and offers a new labelled CPU run (labelled CPU-as-GPU test fake)", async ({
@@ -307,7 +345,7 @@ test.describe("backend selection and fallback", () => {
     await page.getByRole("button", { name: "Step to next recorded time" }).click();
     s = await until(page, (x) => x.live?.step === 100);
     expect(s.comparison?.status).toBe("matched");
-    record("midRunFake", { halted: s.kept[0], restartReason: s.fallbackReason });
+    await record("midRunFake", { halted: s.kept[0], restartReason: s.fallbackReason });
   });
 
   test("real WebGPU: a lost device mid-run halts the run and offers a CPU run", async ({ page }) => {
@@ -327,7 +365,7 @@ test.describe("backend selection and fallback", () => {
     const s = await until(page, (x) => x.live?.status === "halted");
     expect(s.live).toMatchObject({ backend: "webgpu", step: 100 });
     await expect(page.getByRole("button", { name: "Start a new run on the CPU" })).toBeVisible();
-    record("realDeviceLoss", { failure: s.notice });
+    await record("realDeviceLoss", { failure: s.notice });
   });
 });
 
@@ -356,10 +394,12 @@ test("determinism: the same rock and backend reproduce the same run in a Worker 
   expect(new Set(worker.hashes).size).toBe(9);
   expect(main.hashes).toEqual(worker.hashes);
   expect(again.hashes).toEqual(worker.hashes);
-  record("determinism", { hashes: worker.hashes, step: worker.step });
+  await record("determinism", { hashes: worker.hashes, step: worker.step });
 });
 
-test.describe("WebGPU runs (installed Chrome with a WebGPU adapter; skipped elsewhere)", () => {
+// Correctness on whatever WebGPU backend auto selection actually picks, a software adapter included (they are
+// short runs). Only the full-horizon production run needs a hardware adapter.
+test.describe("WebGPU runs (skipped where auto selection does not pick WebGPU)", () => {
   test("same-device replay is reproducible at any speed, and differs from the CPU run (a different run)", async ({
     page,
   }) => {
@@ -390,16 +430,24 @@ test.describe("WebGPU runs (installed Chrome with a WebGPU adapter; skipped else
     // Not bitwise equal to the CPU, even at the start: the GPU hashes its two-lane float32 reconstruction
     // (D-W5-5I). Backends are numerically different runs; kept runs carry their backend label.
     expect(cpu.hashes).not.toEqual(a.hashes);
-    record("webgpuDeterminism", { gpuHashes: a.hashes, cpuHashes: cpu.hashes });
+    await record("webgpuDeterminism", { gpuHashes: a.hashes, cpuHashes: cpu.hashes });
   });
 
   test("production recording: a full 300-year run records 16 snapshots inside the memory budget", async ({
     page,
   }) => {
-    await open(page, "?prefer=auto&runs=production");
+    // A GPU-evidence run: only in an installed browser (UPLIFT_E2E_CHANNEL, e.g. chrome) on a hardware adapter.
+    // CI's bundled Chromium may offer a software WebGPU adapter that passes the device check but needs far
+    // longer than the test budget for 120 000 steps.
     test.skip(
-      (await state(page)).backend !== "webgpu",
-      "A 300-year CPU run takes about 90 s; run with WebGPU",
+      !process.env.UPLIFT_E2E_CHANNEL,
+      "GPU evidence run: set UPLIFT_E2E_CHANNEL=chrome on a machine with a GPU",
+    );
+    await open(page, "?prefer=auto&runs=production");
+    const adapter = await webgpuAdapter(page);
+    test.skip(
+      (await state(page)).backend !== "webgpu" || adapter.software,
+      `Needs WebGPU on a hardware adapter (120 000 steps); here: backend ${(await state(page)).backend}, adapter ${adapter.label}${adapter.software ? " (software)" : ""}`,
     );
     const started = Date.now();
     await page.getByLabel("Speed").selectOption("4");
@@ -413,13 +461,14 @@ test.describe("WebGPU runs (installed Chrome with a WebGPU adapter; skipped else
     expect(s.memoryBudgetBytes).toBe(32 * 1024 * 1024);
     await page.getByLabel("Timeline").fill("100");
     await expect(page.locator("#view-label")).toContainText("earlier · model time 100 model years");
-    record("productionWebgpuRun", {
+    await record("productionWebgpuRun", {
       step: s.live!.step,
       snapshots: s.live!.hashes.length,
       recordedBytes: s.live!.recordedBytes,
       worstCaseBytesLivePlusTwoKept: 3 * 16 * 81_920,
       budgetBytes: s.memoryBudgetBytes,
       wallSecondsAt4x: seconds,
+      adapter: adapter.label,
     });
   });
 });

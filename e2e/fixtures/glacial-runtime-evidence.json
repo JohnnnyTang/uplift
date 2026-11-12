@@ -57,10 +57,7 @@
         "memoryBytes": 491520,
         "budget": 33554432
       },
-      "autoBackend": {
-        "backend": "webgpu",
-        "fallbackReason": null
-      },
+      "autoBackend": { "backend": "webgpu", "fallbackReason": null },
       "forcedDeviceCheckFault": {
         "backend": "cpu",
         "fallbackReason": "WebGPU not used, running on CPU: [device-check-failed] GPU differs from CPU on this device after 80 steps (bed 0.6147816356760814 m, ice 0.37397131661001026 m; limit 0.01 m)"
@@ -137,7 +134,8 @@
         "recordedBytes": 1310720,
         "worstCaseBytesLivePlusTwoKept": 3932160,
         "budgetBytes": 33554432,
-        "wallSecondsAt4x": 8.011
+        "wallSecondsAt4x": 8.002,
+        "adapter": "intel / xe-2lpg"
       }
     }
   }
