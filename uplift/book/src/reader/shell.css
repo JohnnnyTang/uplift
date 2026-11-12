@@ -295,7 +295,8 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.reader-bar-button[aria-pressed="true"] {
+.reader-bar-button[aria-pressed="true"],
+.reader-bar-button[aria-pressed="true"]:hover:not(:disabled) {
   background: var(--reader-ink);
   color: var(--reader-paper);
 }

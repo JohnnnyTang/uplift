@@ -2126,3 +2126,56 @@ s1/w5/integration. These amend D-W5-R1; everything else in it stays frozen.
 **Merges.** #34 (5L), #36 (5K) and #35 (5J) were merged into s1/w5/integration with conflicts resolved
 by keeping both sides in `DECISIONS.md` and regenerating `pnpm-lock.yaml` with `pnpm install`. Main was
 then brought level with integration. 5M has not started, at the owner's instruction.
+
+## D-W5-5M — Default book opens on From V to U, live runtime joined through one scene source; bottom-bar chrome
+
+2026-11-12. Session 5M (`s1/w5/5m-default-book`, from s1/w5/integration d73fa6c). Technical choices inside the
+plan and the frozen R1/R1a contracts. Evidence: `docs/review/glacial/integration/`, `e2e/glacial-book.spec.ts`.
+
+1. **Default sequence.** The reader's entries are _From V to U_ (spread 1, pages 1–2) and the water lesson
+   (spread 2, pages 3–4); `@uplift/spreads` `spreads` matches. The contour lesson leaves the default sequence
+   (its code, tests and evidence stay; contours are "incidental, not a product identity", D-W5-GLACIAL). The
+   reader still retains at most two scenes (`READER_SCENE_LIMIT`). The research route stays, now reached from
+   the contents list.
+2. **Stage spreads.** `ReaderEntry.layout: "stage"` lets a scene draw the whole spread (the tilted book stage)
+   while the shell keeps paging, history, settlement, focus and the chrome. A stage spread is one page on narrow
+   screens; the scene's own flat fallback reflows it. `createScene(level, { folio })` gives scenes their page
+   numbers.
+3. **One scene source.** The 5K scene now draws whatever a `GlacialSceneSource` shows (`scenes/glacial/source.ts`)
+   and sends every reader action on runs and time to it. The book passes the live 5J runtime
+   (`app/glacial-live-source.ts`: `viewFrame()` → figure, notes, lens; `comparison()` → ghost; commands →
+   `host.dispatch`); the review route keeps the recorded runs (R1-frozen behaviour). The page selector and the
+   specimen drop both call `chooseRock` → `{ kind: "choose-rock" }`. Measures come from the same snapshot the
+   figure draws (`createFrameMeasures`, factored out of the capture reader), so page, figure, notes and ghost
+   refer to the same run and time (GV5).
+4. **Runtime placement.** `app/glacial.worker.ts` calls `installGlacialWorker(self)`. The `GlacialHost` lives in
+   the reader controller (`app/glacial-spread.ts`), not in the scene: a page turn settles the host
+   (`pauseAndSettle`) and disposes the scene's DOM and WebGL; turning back mounts a new scene on the same host
+   (runs, kept runs and comparison unchanged; `resume` restores play intent, no catch-up). Backend: auto (WebGPU
+   where the 5I parity record and device check allow, else the labelled CPU), `?glacier=cpu|webgpu` for
+   diagnostics. If the live runtime cannot start, the scene shows the recorded runs and the page says so.
+5. **Content and bindings.** The scene renders 5L's words (`@uplift/spreads` now exports the lesson pieces,
+   view config, reader text and probes) through a `BindingEngine` over `uValleyProbes`: margin notes by their
+   `when` conditions and levels, caption, labels, rock names and help, the flap, the prediction (never gating
+   anything), the challenge, text alternatives, and the deeper level (bound parameters, equations, four run
+   graphs with dash patterns as the non-colour cue) in the upright reading panel. The 5K shape sentence ("closer
+   to a U than a V", from the registered shape fit) stays in the text alternative. **One overdeepening probe,
+   5K's** (D-W5-R1a item 1): the note shows on `measureOverdeepening(...).overdeepened`, and
+   `{{probe.adverseRise}}` binds its `carvedRiseM` (net of the start's own rise), rounded for notes.
+6. **Chrome.** No top header or select. One quiet bar at the bottom: contents (lessons and the research
+   route), previous, the lesson number and title, next, contrast ("More contrast", a book setting on
+   `<html data-contrast>`), reading level ("University level", pressed = university). Running heads and folios
+   on every page. The R2 view controls, binding, tilt 48° and reading panels are unchanged (frozen); in the
+   book their strip is styled more quietly. The left page shows key-word terms on paper with definitions in the
+   reading panel (the R1 short-laptop rule, applied in the book so the spread fits above the bar).
+7. **One limitation line.** The glacial figure carries 5L's single line once (in the provenance line); the water
+   lesson keeps the shell's tier/time line and drops the duplicate "Process model; uncalibrated time." from its
+   legend.
+
+**Cross-owned edits (minimal).** `uplift/book/src/scenes/glacial/{review.ts,review.css,runs.ts,reading-panel.ts}`
+and new `source.ts` (5K's scene: the source seam, 5L words, new controls; review route behaviour kept);
+`uplift/book/src/scenes/playable-scene.ts` (one legend sentence removed, item 7); `e2e/glacial-scene.spec.ts`
+(two text-alternative expectations follow 5L's words); default-route specs updated for the new first spread.
+
+**Not done / open.** See the integration review README: no human, screen-reader or hardware check; the
+WebGPU path was exercised on the machine noted there only.
