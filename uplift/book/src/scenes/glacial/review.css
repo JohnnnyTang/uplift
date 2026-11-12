@@ -36,7 +36,7 @@
 /* ---- The desk (stage host) ---------------------------------------------------------------------- */
 .gs-desk {
   position: relative;
-  min-height: calc(100dvh - var(--gs-controls-height, 0px));
+  min-height: calc(100dvh - var(--gs-controls-height, 0px) - var(--reader-bar-space, 0px));
   min-width: 0;
   width: 100%;
   grid-template-columns: minmax(0, 1fr);
@@ -45,7 +45,7 @@
   padding: 16px;
 }
 .gs-desk[data-stage-mode="tilted"] {
-  height: calc(100dvh - var(--gs-controls-height, 0px));
+  height: calc(100dvh - var(--gs-controls-height, 0px) - var(--reader-bar-space, 0px));
   min-height: 0;
   overflow: hidden;
   padding: 0;
@@ -59,7 +59,10 @@
 }
 .gs-desk[data-stage-mode="tilted"] .gs-book {
   /* Page proportions of a large-format textbook; the tilt foreshortens the height. */
-  width: min(78vw, calc((100dvh - var(--gs-controls-height, 0px) - 70px) * 1.25));
+  width: min(
+    78vw,
+    calc((100dvh - var(--gs-controls-height, 0px) - var(--reader-bar-space, 0px) - 70px) * 1.25)
+  );
   aspect-ratio: auto;
   transform-style: flat;
 }
@@ -686,7 +689,10 @@
 /* Short laptop screens keep a full book: definitions expand through the reading panel. */
 @media (min-width: 60.01rem) and (max-height: 820px) {
   .gs-desk[data-stage-mode="tilted"] .gs-book {
-    width: min(78vw, calc((100dvh - var(--gs-controls-height, 0px) - 70px) * 1.5));
+    width: min(
+      78vw,
+      calc((100dvh - var(--gs-controls-height, 0px) - var(--reader-bar-space, 0px) - 70px) * 1.5)
+    );
     aspect-ratio: auto;
   }
   .gs-desk[data-stage-mode="tilted"] .gs-keywords {
@@ -945,4 +951,156 @@
 /* Keep the lesson column (and its flap) clear of the folio when the margin carries a compared run. */
 .gs-page-text .gs-text-column {
   margin-bottom: 2.2cqi;
+}
+
+/* ---- 5M: live runtime controls and the 5L lesson pieces ---------------------------------------------- */
+.gs-timeline {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.2cqi;
+  row-gap: 0.3cqi;
+}
+.gs-timeline .gs-ruler {
+  flex: 1 1 8em;
+  min-width: 8em;
+}
+.gs-step,
+.gs-back-to-live,
+.gs-confirm button,
+.gs-notice button {
+  min-height: 36px;
+  font: inherit;
+  color: var(--gs-ink);
+  background: transparent;
+  border: 1px solid var(--gs-ink-soft);
+  border-radius: 18px;
+  padding: 0 0.9em;
+  cursor: pointer;
+}
+.gs-back-to-live {
+  border-style: dashed;
+}
+.gs-speed {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 36px;
+}
+.gs-review .gs-speed input[type="range"] {
+  width: 6em;
+  min-height: 36px;
+  accent-color: var(--gs-ink);
+}
+.gs-compare {
+  margin: 0.5cqi 0 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 1.2cqi;
+  font-size: max(12px, 1cqi);
+}
+.gs-compare legend {
+  float: left;
+  padding: 0 0.6em 0 0;
+  font-style: italic;
+  color: var(--gs-ink-soft);
+}
+.gs-compare label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  min-height: 32px;
+}
+.gs-confirm,
+.gs-notice {
+  margin: 0.5cqi 0 0;
+  font-size: max(12px, 1cqi);
+}
+.gs-rock-words {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+.gs-rock-hardness {
+  color: var(--gs-ink-soft);
+  font-size: 0.85em;
+  font-style: italic;
+}
+.gs-predict {
+  margin: 0.8cqi 0 0.4cqi;
+  padding: 0;
+  border: 0;
+  font-size: max(11px, 1cqi);
+}
+.gs-predict legend {
+  padding: 0;
+  margin-bottom: 0.2cqi;
+}
+.gs-predict label {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 24px;
+}
+.gs-predict input {
+  accent-color: var(--gs-ink);
+}
+.gs-margin-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1cqi;
+  min-width: 0;
+}
+.gs-challenge {
+  margin: 0;
+  color: var(--gs-pen);
+  font-style: italic;
+  font-size: max(11px, 0.95cqi);
+}
+.gs-deeper-triggers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.4cqi;
+}
+.gs-graphs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px 20px;
+  margin-top: 12px;
+}
+.gs-graph {
+  margin: 0;
+}
+.gs-graph figcaption {
+  font-style: italic;
+  font-size: 14px;
+}
+.gs-graph svg {
+  width: 100%;
+  height: auto;
+  font:
+    9px Georgia,
+    serif;
+}
+.gs-graph svg text {
+  fill: currentColor;
+}
+.gs-graph-axis {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.8;
+}
+.gs-graph-line {
+  fill: none;
+  stroke: var(--gs-pen);
+  stroke-width: 1.6;
+}
+.gs-equations {
+  overflow-x: auto;
+}
+.gs-review h1:focus:not(:focus-visible),
+.gs-review h1[tabindex="-1"]:focus {
+  outline: none;
 }

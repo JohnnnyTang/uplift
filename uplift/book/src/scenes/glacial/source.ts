@@ -101,6 +101,11 @@ export interface GlacialSceneSource {
   offersCpuRestart(): boolean;
   /** Backend of the live run and why it is not the preferred one (deeper level). */
   backend(): { readonly backend: string; readonly fallbackReason: string | null } | null;
+  /** The shared model config and recording interval of live runs (deeper level); null for recorded stand-ins. */
+  modelConfig(): {
+    readonly model: Readonly<Record<string, unknown>>;
+    readonly snapshotIntervalYears: number;
+  } | null;
   /** Each held run's section at `valleyIndex` over its recorded times (deeper-level graphs). */
   series(
     valleyIndex: number,
@@ -226,6 +231,7 @@ export function createRecordedSource(
     notice: () => (command.state.dropped ? { kind: "dropped", run: refOf(command.state.dropped) } : null),
     offersCpuRestart: () => false,
     backend: () => null,
+    modelConfig: () => null,
     series(i) {
       const all = [run, ...command.state.kept];
       return all

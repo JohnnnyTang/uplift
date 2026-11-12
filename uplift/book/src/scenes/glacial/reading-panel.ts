@@ -88,14 +88,16 @@ export function createReadingPanel(host: HTMLElement) {
   };
   document.addEventListener("pointerdown", outside);
   return {
-    add(source: HTMLElement, title: string) {
+    add(source: HTMLElement, title: string, triggerHost?: HTMLElement) {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "gs-read-trigger";
       button.textContent = `Read ${title.toLowerCase()} ↗`;
       button.setAttribute("aria-haspopup", "dialog");
       button.setAttribute("aria-expanded", "false");
-      source.before(button);
+      // A trigger may live elsewhere when the source itself stays off the paper (5M: deeper level, sources).
+      if (triggerHost) triggerHost.append(button);
+      else source.before(button);
       const open = () => {
         restore(false);
         active = { source, button };

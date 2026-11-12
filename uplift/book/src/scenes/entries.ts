@@ -1,22 +1,36 @@
 import type { BackendSelectionOptions } from "@hachure/runtime";
+import type { GlacialBackendPreference } from "@hachure/runtime/glacial";
 import type { ReaderEntry } from "../reader/contracts";
-import { contourSpread, waterSpread } from "./content";
+import { uValleySpread } from "@uplift/spreads";
+import { createGlacialSpreadScene } from "../app/glacial-spread";
+import { waterSpread } from "./content";
 import { createPlayableScene, type PlayableSceneOptions } from "./playable-scene";
 import { createHostedWaterDriver } from "./water-driver";
-/** Production composition entry. The live lesson always selects the shared authored host. */
+
+/**
+ * Production composition of the default book (5M): "From V to U" on the tilted book stage is spread 1, the
+ * water lesson is spread 2. The contour lesson remains in the repository as a retained foundation.
+ */
 export function createPlayableEntries(
   options: Pick<BackendSelectionOptions, "createWorkerTransport" | "search"> &
     Pick<PlayableSceneOptions, "inkBackend">,
 ): readonly ReaderEntry[] {
-  const flat = new URLSearchParams(options.search ?? "").get("backend") === "flat";
+  const params = new URLSearchParams(options.search ?? "");
+  const flat = params.get("backend") === "flat";
+  const glacier = params.get("glacier");
+  const prefer: GlacialBackendPreference = glacier === "cpu" || glacier === "webgpu" ? glacier : "auto";
+  const mode = params.get("mode");
   return [
     {
-      spread: contourSpread,
-      createScene: (level) =>
-        createPlayableScene("contour", {
+      spread: uValleySpread,
+      layout: "stage",
+      createScene: (level, { folio }) =>
+        createGlacialSpreadScene({
           level,
-          flat,
-          ...(options.inkBackend ? { inkBackend: options.inkBackend } : {}),
+          folio,
+          prefer,
+          ...(mode === "flat" || mode === "tilted" ? { mode } : {}),
+          ...(params.get("motion") === "reduce" ? { reducedMotion: true, mode: "flat" as const } : {}),
         }),
     },
     {

@@ -3,7 +3,18 @@ import type { Level, ReaderSceneController, ReaderSpread } from "@hachure/runtim
 /** Shell owns navigation/focus; scenes own scene gestures and model resources. */
 export interface ReaderEntry {
   readonly spread: ReaderSpread;
-  readonly createScene: (level: Level) => ReaderSceneController;
+  /** `folio`: page number of the spread's left page, for scenes that draw their own pages. */
+  readonly createScene: (level: Level, context: ReaderSceneContext) => ReaderSceneController;
+  /**
+   * "pages" (default): the shell lays out the text page and mounts the scene in the illustration page.
+   * "stage": the scene draws the whole spread itself (the tilted book stage, 5M); the shell keeps the chrome,
+   * paging, history and settlement. A stage spread is one page on narrow screens; it reflows itself.
+   */
+  readonly layout?: "pages" | "stage";
+}
+
+export interface ReaderSceneContext {
+  readonly folio: number;
 }
 
 export type ReaderPage = "spread" | "text" | "illustration";

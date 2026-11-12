@@ -162,6 +162,10 @@ export function createLiveSource(
       const s = state();
       return s.backend ? { backend: s.backend, fallbackReason: s.fallbackReason } : null;
     },
+    modelConfig: () => ({
+      model: host.model as unknown as Readonly<Record<string, unknown>>,
+      snapshotIntervalYears: host.plan.config.snapshotIntervalYears,
+    }),
     series(i) {
       const runs = host.runs();
       return runs.map((run) => {
