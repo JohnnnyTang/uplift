@@ -1900,3 +1900,62 @@ keep branching from and targeting it (AGENTS.md) and consume the R1/R2 refinemen
 
 **Not decided here:** the expert review of the shape factor, cold-based ramp, 30 m lowering threshold and
 head-basin overdeepening (D-W5-5G, D-W5-5G2, D-5H-R1); human, hardware and screen-reader checks.
+
+## D-W5-5L — Lesson content for From V to U: shape claim, bound notes, view config; overdeepened-note finding
+
+2026-11-12. Session 5L (`s1/w5/5l-lesson-content`, from s1/w5/integration 8aee4cf). Technical and content
+choices inside the plan and inside D-W5-R1. The contracts frozen at R1 are not reopened.
+
+1. **Content.** `uplift/spreads/geomorph.u-valley/` holds the left page in editorial form. The text has two
+   or three sentences per level, the five key words, an optional scored prediction and an unscored margin
+   challenge. The prediction asks which rock is worn deeper after the same model time; the answer, shale, is
+   backed by R4-deeper. The folder also holds the caption, the single limitation line, the Fig. 1 label
+   words, rock names and help, bound margin-note and text-alternative templates, the deeper level, teacher
+   notes and sources. It is a `ReaderSpread` validated at import against a glacier catalogue. The lesson
+   number and figure number are data (`LESSON_NUMBER`, `FIGURE_NUMBER`) and the shell composes them, so no
+   text types a digit.
+2. **Teach shape (R1 item 3).** The page claim is "soft rock wears away faster and deeper; hard rock keeps
+   steeper walls", plus V → U by shape. A claim/source register (`claims.ts`; prose in
+   `docs/science/glacial/lesson/README.md`) is tested in three ways. Each reader paragraph names its claims.
+   Each taught claim has a literature source and model evidence. Each verdict relied on passed (R1, R4, S1,
+   E-R1, E-R3, K1, K2), or else a registered component holds in every arm (E-T1 b-rise; T2 floor unchanged).
+   The width claim and the full-T1 claim are registered as not taught, and a test guards against them.
+   Because R3 fails at early matched times, the flap and the teacher notes say to compare walls once both
+   rocks have been worn.
+3. **Bound values.** Every number is a declared probe (`bindings.ts`). The request kinds `glacier-run`,
+   `glacier-section` (the averaged section, R1 item 9), `glacier-face`, `glacier-config`, `glacier-rock`,
+   `lesson-display` and `glacier-section-series` are the contract for 5J/5K/5M. `glacier-config` and
+   `glacier-rock` fields are tested against `GlacierConfig` and `RockType`. The schema has no glacier
+   engine id, so `engine: "terrain"` is used (the handoff lists the lesson as "T (+ice)"); the field is not
+   used for dispatch.
+4. **View config (R1 items 4, 5, 9).** `U_VALLEY_VIEW` sets the default front face (grid column 51, last
+   snapshot), the registered section (`PROTOCOL_SECTIONS.underIce`), note averaging (3 columns) and rounding
+   (10 m), and the overdeepened threshold (5 m adverse rise, half the rounding). `resolveDefaultFrontFace`
+   reads the defaults against a capture manifest and throws if the grid does not fit. The deeper level and
+   the teacher notes say the cut is a display choice and that the claims rest on i = 74.
+5. **Citation verified.** Cook & Swift (2012), _Earth-Science Reviews_ 115(4), 332–372,
+   doi:10.1016/j.earscirev.2012.09.009, checked against the White Rose and Dundee repository records. Only
+   the abstract was read; the full text could not be decoded in this session. The note claims only what the
+   abstract supports.
+
+**Finding that changes the plan (R1 item 5).** On the recorded runs with averaged floors, the R1 trigger
+("the bed rises down-valley") never fires in granite or at the valley head. The deep head-basin lowering is
+not an adverse slope, because the start floor rises steeply to the headwall. The trigger fires only in
+shale's lower trough (rise ≤ about 8 m, columns about 20–47, 200–300 model years). The single-column head
+"basins" are the documented ±10 m residual alternation. The drafted text ("near the valley head … even in
+hard rock") would be false wherever it shows, so it was refined to "the floor here is lower than the floor
+further down: a basin, called an overdeepening". The head reach is explained only in the teacher notes. A
+reader-facing head note needs a new owner decision; a draft is in the lesson register, not wired.
+
+**Cross-owned edits.**
+
+- `uplift/spreads/index.ts`: one export line, `uValleySpread`; not added to `spreads`, which is 5M's job.
+- `uplift/spreads/package.json`: dependency `@hachure/glacier` (`workspace:*`).
+- `pnpm-lock.yaml`: the matching importer entry, as produced by `pnpm install`.
+
+**Not done.**
+
+- Wiring into the book (5M) and the host serving the probe kinds (5J/5K).
+- The averaged-section and adverse-rise helpers in `@hachure/glacier` (5K). The lesson test holds a
+  reference implementation of the trigger.
+- Expert review and human checks.

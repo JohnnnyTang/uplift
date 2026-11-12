@@ -1,0 +1,336 @@
+{
+  "origin": "http://127.0.0.1:53515",
+  "captures": [
+    {
+      "name": "desktop-1440-hs.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "level": "hs",
+      "live": {
+        "modelYears": 300,
+        "rock": "shale",
+        "faceKm": 4.32,
+        "floorWidth": 210,
+        "depth": 270,
+        "lowered": 60,
+        "wall": 35,
+        "b": 1.7443558607542453,
+        "ice": 200,
+        "spanM": 120
+      },
+      "kept": {
+        "modelYears": 300,
+        "rock": "sandstone",
+        "faceKm": 4.32,
+        "floorWidth": 180,
+        "depth": 260,
+        "lowered": 40,
+        "wall": 42,
+        "b": 1.598860488953406,
+        "ice": 190,
+        "spanM": 120
+      },
+      "notes": [
+        "300 model years in shale",
+        "front face 4.3 km down the valley, under 200 m of ice",
+        "floor 210 m wide, valley 270 m deep",
+        "floor lowered 60 m since the start",
+        "steepest wall 35 degrees",
+        "a separate run with another rock, sandstone, at 300 model years: lowered 40 m, wall 42 degrees",
+        "Try this: slide the front face past the end of the glacier. Where does the U turn back into a V?"
+      ],
+      "mode": "tilted",
+      "textPage": {
+        "scroll": 876,
+        "client": 876,
+        "overflows": false
+      },
+      "column": {
+        "scroll": 770,
+        "client": 770,
+        "overflows": false
+      },
+      "textBottomPx": 843,
+      "folioTopPx": 833
+    },
+    {
+      "name": "desktop-1440-uni.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "level": "uni",
+      "live": {
+        "modelYears": 300,
+        "rock": "shale",
+        "faceKm": 4.32,
+        "floorWidth": 210,
+        "depth": 270,
+        "lowered": 60,
+        "wall": 35,
+        "b": 1.7443558607542453,
+        "ice": 200,
+        "spanM": 120
+      },
+      "kept": {
+        "modelYears": 300,
+        "rock": "sandstone",
+        "faceKm": 4.32,
+        "floorWidth": 180,
+        "depth": 260,
+        "lowered": 40,
+        "wall": 42,
+        "b": 1.598860488953406,
+        "ice": 190,
+        "spanM": 120
+      },
+      "notes": [
+        "300 model years in shale",
+        "front face 4.3 km down the valley, under 200 m of ice",
+        "floor 210 m wide, valley 270 m deep",
+        "floor lowered 60 m since the start",
+        "steepest wall 35 degrees",
+        "shape b = 1.7",
+        "a separate run with another rock, sandstone, at 300 model years: lowered 40 m, wall 42 degrees, b = 1.6",
+        "Try this: slide the cut from under the ice to below the snout. Where does b stop changing, and why?"
+      ],
+      "mode": "tilted",
+      "textPage": {
+        "scroll": 930,
+        "client": 930,
+        "overflows": false
+      },
+      "column": {
+        "scroll": 824,
+        "client": 824,
+        "overflows": false
+      },
+      "textBottomPx": 897,
+      "folioTopPx": 887
+    },
+    {
+      "name": "laptop-1366x768-hs.png",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "level": "hs",
+      "live": {
+        "modelYears": 300,
+        "rock": "shale",
+        "faceKm": 4.32,
+        "floorWidth": 210,
+        "depth": 270,
+        "lowered": 60,
+        "wall": 35,
+        "b": 1.7443558607542453,
+        "ice": 200,
+        "spanM": 120
+      },
+      "kept": {
+        "modelYears": 300,
+        "rock": "sandstone",
+        "faceKm": 4.32,
+        "floorWidth": 180,
+        "depth": 260,
+        "lowered": 40,
+        "wall": 42,
+        "b": 1.598860488953406,
+        "ice": 190,
+        "spanM": 120
+      },
+      "notes": [
+        "300 model years in shale",
+        "front face 4.3 km down the valley, under 200 m of ice",
+        "floor 210 m wide, valley 270 m deep",
+        "floor lowered 60 m since the start",
+        "steepest wall 35 degrees",
+        "a separate run with another rock, sandstone, at 300 model years: lowered 40 m, wall 42 degrees",
+        "Try this: slide the front face past the end of the glacier. Where does the U turn back into a V?"
+      ],
+      "mode": "tilted",
+      "textPage": {
+        "scroll": 750,
+        "client": 750,
+        "overflows": false
+      },
+      "column": {
+        "scroll": 657,
+        "client": 657,
+        "overflows": false
+      },
+      "textBottomPx": 719,
+      "folioTopPx": 708
+    },
+    {
+      "name": "laptop-1366x768-uni.png",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "level": "uni",
+      "live": {
+        "modelYears": 300,
+        "rock": "shale",
+        "faceKm": 4.32,
+        "floorWidth": 210,
+        "depth": 270,
+        "lowered": 60,
+        "wall": 35,
+        "b": 1.7443558607542453,
+        "ice": 200,
+        "spanM": 120
+      },
+      "kept": {
+        "modelYears": 300,
+        "rock": "sandstone",
+        "faceKm": 4.32,
+        "floorWidth": 180,
+        "depth": 260,
+        "lowered": 40,
+        "wall": 42,
+        "b": 1.598860488953406,
+        "ice": 190,
+        "spanM": 120
+      },
+      "notes": [
+        "300 model years in shale",
+        "front face 4.3 km down the valley, under 200 m of ice",
+        "floor 210 m wide, valley 270 m deep",
+        "floor lowered 60 m since the start",
+        "steepest wall 35 degrees",
+        "shape b = 1.7",
+        "a separate run with another rock, sandstone, at 300 model years: lowered 40 m, wall 42 degrees, b = 1.6",
+        "Try this: slide the cut from under the ice to below the snout. Where does b stop changing, and why?"
+      ],
+      "mode": "tilted",
+      "textPage": {
+        "scroll": 797,
+        "client": 797,
+        "overflows": false
+      },
+      "column": {
+        "scroll": 704,
+        "client": 704,
+        "overflows": false
+      },
+      "textBottomPx": 766,
+      "folioTopPx": 755
+    },
+    {
+      "name": "phone-390-hs.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "level": "hs",
+      "full": true,
+      "live": {
+        "modelYears": 300,
+        "rock": "shale",
+        "faceKm": 4.32,
+        "floorWidth": 210,
+        "depth": 270,
+        "lowered": 60,
+        "wall": 35,
+        "b": 1.7443558607542453,
+        "ice": 200,
+        "spanM": 120
+      },
+      "kept": {
+        "modelYears": 300,
+        "rock": "sandstone",
+        "faceKm": 4.32,
+        "floorWidth": 180,
+        "depth": 260,
+        "lowered": 40,
+        "wall": 42,
+        "b": 1.598860488953406,
+        "ice": 190,
+        "spanM": 120
+      },
+      "notes": [
+        "300 model years in shale",
+        "front face 4.3 km down the valley, under 200 m of ice",
+        "floor 210 m wide, valley 270 m deep",
+        "floor lowered 60 m since the start",
+        "steepest wall 35 degrees",
+        "a separate run with another rock, sandstone, at 300 model years: lowered 40 m, wall 42 degrees",
+        "Try this: slide the front face past the end of the glacier. Where does the U turn back into a V?"
+      ],
+      "mode": "flat",
+      "textPage": {
+        "scroll": 1271,
+        "client": 1271,
+        "overflows": false
+      },
+      "column": {
+        "scroll": 1180,
+        "client": 1180,
+        "overflows": false
+      },
+      "textBottomPx": 1231,
+      "folioTopPx": 1232
+    },
+    {
+      "name": "phone-390-uni.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "level": "uni",
+      "full": true,
+      "live": {
+        "modelYears": 300,
+        "rock": "shale",
+        "faceKm": 4.32,
+        "floorWidth": 210,
+        "depth": 270,
+        "lowered": 60,
+        "wall": 35,
+        "b": 1.7443558607542453,
+        "ice": 200,
+        "spanM": 120
+      },
+      "kept": {
+        "modelYears": 300,
+        "rock": "sandstone",
+        "faceKm": 4.32,
+        "floorWidth": 180,
+        "depth": 260,
+        "lowered": 40,
+        "wall": 42,
+        "b": 1.598860488953406,
+        "ice": 190,
+        "spanM": 120
+      },
+      "notes": [
+        "300 model years in shale",
+        "front face 4.3 km down the valley, under 200 m of ice",
+        "floor 210 m wide, valley 270 m deep",
+        "floor lowered 60 m since the start",
+        "steepest wall 35 degrees",
+        "shape b = 1.7",
+        "a separate run with another rock, sandstone, at 300 model years: lowered 40 m, wall 42 degrees, b = 1.6",
+        "Try this: slide the cut from under the ice to below the snout. Where does b stop changing, and why?"
+      ],
+      "mode": "flat",
+      "textPage": {
+        "scroll": 1476,
+        "client": 1476,
+        "overflows": false
+      },
+      "column": {
+        "scroll": 1385,
+        "client": 1385,
+        "overflows": false
+      },
+      "textBottomPx": 1436,
+      "folioTopPx": 1437
+    }
+  ],
+  "errors": [],
+  "browser": "157.0.8103.78"
+}

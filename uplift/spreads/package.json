@@ -9,6 +9,7 @@
     ".": "./index.ts"
   },
   "dependencies": {
+    "@hachure/glacier": "workspace:*",
     "@hachure/runtime": "workspace:*",
     "@hachure/terrain": "workspace:*"
   }
