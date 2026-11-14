@@ -7,7 +7,7 @@
  * Statistics are over all samples of a metric for one backend (repetitions pooled): n, median, p90 (nearest
  * rank) and max. Headless repetitions are excluded unless asked for, and are then labelled.
  */
-import { readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath, URL } from "node:url";
 import process from "node:process";
@@ -25,9 +25,13 @@ const runs = readdirSync(RAW)
   .filter((f) => f.endsWith(".json"))
   .map((f) => ({ file: f, ...JSON.parse(readFileSync(join(RAW, f), "utf8")) }))
   .filter((r) => includeHeadless || !r.headless);
+/** Known concurrent load on the machine (results/external-load.json), treated like window interruptions. */
+const external = existsSync(new URL("./results/external-load.json", import.meta.url))
+  ? JSON.parse(readFileSync(new URL("./results/external-load.json", import.meta.url), "utf8")).intervals
+  : [];
 const dropped = [];
 for (const r of runs) {
-  const hits = (a, b) => (r.interruptions ?? []).some((i) => a <= i.to && b >= i.from);
+  const hits = (a, b) => [...(r.interruptions ?? []), ...external].some((i) => a <= i.to && b >= i.from);
   const drop = (what) => dropped.push({ file: r.file, what });
   const badWindow = (w) => w && w.origin !== undefined && hits(w.origin + w.t0, w.origin + w.t1);
   const badSample = (s) =>

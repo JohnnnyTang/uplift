@@ -1,0 +1,1005 @@
+{
+  "generatedAt": "2026-11-14T22:43:04.382Z",
+  "files": [
+    "2026-11-14T22-00-18-788Z-webgpu-1.json",
+    "2026-11-14T22-03-15-301Z-cpu-1.json",
+    "2026-11-14T22-09-46-856Z-webgpu-2.json",
+    "2026-11-14T22-12-42-464Z-cpu-2.json",
+    "2026-11-14T22-19-02-729Z-webgpu-3.json",
+    "2026-11-14T22-21-56-036Z-cpu-3.json",
+    "2026-11-14T22-26-15-082Z-webgpu-4.json",
+    "2026-11-14T22-28-38-653Z-cpu-4.json",
+    "2026-11-14T22-32-54-270Z-webgpu-5.json",
+    "2026-11-14T22-35-20-748Z-cpu-5.json"
+  ],
+  "repetitionsWithIssues": [],
+  "dropped": [
+    {
+      "file": "2026-11-14T22-19-02-729Z-webgpu-3.json",
+      "what": "sample rockSelectNewRun"
+    },
+    {
+      "file": "2026-11-14T22-19-02-729Z-webgpu-3.json",
+      "what": "sample navFirst"
+    },
+    {
+      "file": "2026-11-14T22-19-02-729Z-webgpu-3.json",
+      "what": "sample navRepeat"
+    },
+    {
+      "file": "2026-11-14T22-19-02-729Z-webgpu-3.json",
+      "what": "step researchPlay"
+    },
+    {
+      "file": "2026-11-14T22-32-54-270Z-webgpu-5.json",
+      "what": "sample scrubKey"
+    },
+    {
+      "file": "2026-11-14T22-32-54-270Z-webgpu-5.json",
+      "what": "sample scrubKey"
+    },
+    {
+      "file": "2026-11-14T22-32-54-270Z-webgpu-5.json",
+      "what": "sample scrubKey"
+    },
+    {
+      "file": "2026-11-14T22-32-54-270Z-webgpu-5.json",
+      "what": "sample scrubKey"
+    },
+    {
+      "file": "2026-11-14T22-32-54-270Z-webgpu-5.json",
+      "what": "sample scrubKey"
+    },
+    {
+      "file": "2026-11-14T22-32-54-270Z-webgpu-5.json",
+      "what": "sample scrubKey"
+    },
+    {
+      "file": "2026-11-14T22-32-54-270Z-webgpu-5.json",
+      "what": "step playMax"
+    },
+    {
+      "file": "2026-11-14T22-32-54-270Z-webgpu-5.json",
+      "what": "step scrubSweep"
+    }
+  ],
+  "shas": ["32d45c83461d80e1a673a4757eac2ed9c73454ef"],
+  "backends": {
+    "webgpu": {
+      "reps": 5,
+      "repsWithErrors": [],
+      "glacierSolver": ["webgpu"],
+      "stageRenderer": ["webgpu"],
+      "research": [
+        {
+          "backend": "webgpu",
+          "grid": 256,
+          "failures": "[]"
+        }
+      ],
+      "chrome": ["157.0.8103.78"],
+      "viewport": ["[1440,709,2]"],
+      "allStateKept": true,
+      "thermalC": [
+        {
+          "start": [85, 66],
+          "end": [81, 66]
+        },
+        {
+          "start": [85, 66],
+          "end": [81, 64]
+        },
+        {
+          "start": [80, 64],
+          "end": [86, 64]
+        },
+        {
+          "start": [81, 58],
+          "end": [79, 58]
+        },
+        {
+          "start": [85, 60],
+          "end": [87, 62]
+        }
+      ],
+      "metrics": {
+        "Cold start: first contentful paint (ms)": {
+          "n": 5,
+          "median": 332,
+          "p90": 424,
+          "max": 424
+        },
+        "Cold start: readable drawing painted (ms)": {
+          "n": 5,
+          "median": 1227,
+          "p90": 1335,
+          "max": 1335
+        },
+        "Cold start: largest contentful paint (ms)": {
+          "n": 5,
+          "median": 1332,
+          "p90": 1432,
+          "max": 1432
+        },
+        "Cold start: 3D stage and live run ready (ms)": {
+          "n": 5,
+          "median": 1762,
+          "p90": 1802,
+          "max": 1802
+        },
+        "Cold start: first usable interaction (ms)": {
+          "n": 5,
+          "median": 4432,
+          "p90": 4478,
+          "max": 4478
+        },
+        "Cold start: longest frame before usable (ms)": {
+          "n": 5,
+          "median": 464.1,
+          "p90": 568.5,
+          "max": 568.5
+        },
+        "Transition: duration (ms)": {
+          "n": 5,
+          "median": 2694,
+          "p90": 2699,
+          "max": 2699
+        },
+        "Transition: frames per second": {
+          "n": 5,
+          "median": 80.2,
+          "p90": 111.1,
+          "max": 111.1
+        },
+        "Transition: p95 frame interval (ms)": {
+          "n": 5,
+          "median": 12.1,
+          "p90": 14.1,
+          "max": 14.1
+        },
+        "Transition: longest frame (ms)": {
+          "n": 5,
+          "median": 163.2,
+          "p90": 250.7,
+          "max": 250.7
+        },
+        "Transition: frames over 50 ms": {
+          "n": 5,
+          "median": 2,
+          "p90": 2,
+          "max": 2
+        },
+        "Warm start: readable drawing painted (ms)": {
+          "n": 5,
+          "median": 769,
+          "p90": 1206,
+          "max": 1206
+        },
+        "Warm start: first usable interaction (ms)": {
+          "n": 5,
+          "median": 3703,
+          "p90": 4346,
+          "max": 4346
+        },
+        "Warm start: longest transition frame (ms)": {
+          "n": 5,
+          "median": 141.7,
+          "p90": 185.1,
+          "max": 185.1
+        },
+        "First interaction (rock, page selector): visible response (ms)": {
+          "n": 5,
+          "median": 204,
+          "p90": 226,
+          "max": 226
+        },
+        "Rock by page selector, before advance: visible response (ms)": {
+          "n": 20,
+          "median": 80,
+          "p90": 204,
+          "max": 226
+        },
+        "Rock by specimen drop, before advance: visible response (ms)": {
+          "n": 15,
+          "median": 67,
+          "p90": 71,
+          "max": 72
+        },
+        "Rock by specimen drop, new run (kept run): visible response (ms)": {
+          "n": 5,
+          "median": 99,
+          "p90": 130,
+          "max": 130
+        },
+        "Rock by page selector, new run (kept run): visible response (ms)": {
+          "n": 34,
+          "median": 86,
+          "p90": 102,
+          "max": 106
+        },
+        "Front face (keyboard): visible response (ms)": {
+          "n": 25,
+          "median": 25,
+          "p90": 30,
+          "max": 34
+        },
+        "Camera orbit drag: frames per second": {
+          "n": 5,
+          "median": 117.6,
+          "p90": 120,
+          "max": 120
+        },
+        "Camera orbit drag: longest frame (ms)": {
+          "n": 5,
+          "median": 12.7,
+          "p90": 16.7,
+          "max": 16.7
+        },
+        "Play: button to playing state (ms)": {
+          "n": 5,
+          "median": 18,
+          "p90": 20,
+          "max": 20
+        },
+        "Play: button to first advanced landform (ms)": {
+          "n": 5,
+          "median": 62,
+          "p90": 86,
+          "max": 86
+        },
+        "Playback 1x: frames per second": {
+          "n": 5,
+          "median": 111.9,
+          "p90": 119.7,
+          "max": 119.7
+        },
+        "Playback 1x: p95 frame interval (ms)": {
+          "n": 5,
+          "median": 11.3,
+          "p90": 15.5,
+          "max": 15.5
+        },
+        "Playback 1x: longest frame (ms)": {
+          "n": 5,
+          "median": 41.6,
+          "p90": 44.6,
+          "max": 44.6
+        },
+        "Playback 1x: frames over 50 ms per 10 s": {
+          "n": 5,
+          "median": 0,
+          "p90": 0,
+          "max": 0
+        },
+        "Playback 1x: model years per second": {
+          "n": 5,
+          "median": 10,
+          "p90": 10,
+          "max": 10
+        },
+        "Playback 1x: landform updates per second": {
+          "n": 5,
+          "median": 4.8,
+          "p90": 4.8,
+          "max": 4.8
+        },
+        "Playback 1x: main thread busy (%)": {
+          "n": 5,
+          "median": 58,
+          "p90": 64,
+          "max": 64
+        },
+        "Playback 1x: renderer CPU (% of one core)": {
+          "n": 5,
+          "median": 81,
+          "p90": 88,
+          "max": 88
+        },
+        "Playback 1x: GPU process CPU (% of one core)": {
+          "n": 5,
+          "median": 53,
+          "p90": 57,
+          "max": 57
+        },
+        "Playback 4x: frames per second": {
+          "n": 4,
+          "median": 104.7,
+          "p90": 119.7,
+          "max": 119.7
+        },
+        "Playback 4x: p95 frame interval (ms)": {
+          "n": 4,
+          "median": 12.6,
+          "p90": 16.6,
+          "max": 16.6
+        },
+        "Playback 4x: longest frame (ms)": {
+          "n": 4,
+          "median": 17.1,
+          "p90": 25.4,
+          "max": 25.4
+        },
+        "Playback 4x: model years per second": {
+          "n": 4,
+          "median": 31.7,
+          "p90": 39.9,
+          "max": 39.9
+        },
+        "Playback 4x: renderer CPU (% of one core)": {
+          "n": 4,
+          "median": 43,
+          "p90": 49,
+          "max": 49
+        },
+        "Scrub (keyboard step): visible response (ms)": {
+          "n": 24,
+          "median": 25,
+          "p90": 39,
+          "max": 43
+        },
+        "Scrub with kept run (matched time): visible response (ms)": {
+          "n": 30,
+          "median": 24,
+          "p90": 33,
+          "max": 47
+        },
+        "Scrub pointer sweep: frames per second": {
+          "n": 4,
+          "median": 102.6,
+          "p90": 120,
+          "max": 120
+        },
+        "Scrub pointer sweep: longest frame (ms)": {
+          "n": 4,
+          "median": 23.3,
+          "p90": 25,
+          "max": 25
+        },
+        "Back to latest moment: visible response (ms)": {
+          "n": 5,
+          "median": 25,
+          "p90": 40,
+          "max": 40
+        },
+        "Comparison on/off (kept run): visible response (ms)": {
+          "n": 20,
+          "median": 12,
+          "p90": 17,
+          "max": 18
+        },
+        "Research, first departure while playing: research page visible (ms)": {
+          "n": 4,
+          "median": 157,
+          "p90": 214,
+          "max": 214
+        },
+        "Research, first departure: terrain backend ready (ms)": {
+          "n": 4,
+          "median": 1638,
+          "p90": 1723,
+          "max": 1723
+        },
+        "Research, first return: lesson usable (ms)": {
+          "n": 4,
+          "median": 805,
+          "p90": 1069,
+          "max": 1069
+        },
+        "Research, repeat departure: research page visible (ms)": {
+          "n": 29,
+          "median": 30,
+          "p90": 63,
+          "max": 77
+        },
+        "Research, repeat return: lesson usable (ms)": {
+          "n": 29,
+          "median": 887,
+          "p90": 1051,
+          "max": 1085
+        },
+        "Navigation legs: longest frame (ms)": {
+          "n": 66,
+          "median": 83.3,
+          "p90": 166.2,
+          "max": 273.5
+        },
+        "Research terrain playing: frames per second": {
+          "n": 4,
+          "median": 111.6,
+          "p90": 118.5,
+          "max": 118.5
+        },
+        "Research terrain playing: p95 frame interval (ms)": {
+          "n": 4,
+          "median": 8.5,
+          "p90": 10.9,
+          "max": 10.9
+        },
+        "Research terrain playing: longest frame (ms)": {
+          "n": 4,
+          "median": 33.3,
+          "p90": 60.5,
+          "max": 60.5
+        },
+        "Research terrain playing: solver steps per second": {
+          "n": 4,
+          "median": 29.1,
+          "p90": 30,
+          "max": 30
+        },
+        "Research terrain: ms per step (last batch)": {
+          "n": 4,
+          "median": 4.4,
+          "p90": 4.8,
+          "max": 4.8
+        },
+        "Idle (scene at rest): main thread busy (%)": {
+          "n": 5,
+          "median": 4,
+          "p90": 4,
+          "max": 4
+        },
+        "Leave the page while playing (wall ms, diagnostic)": {
+          "n": 5,
+          "median": 32,
+          "p90": 41,
+          "max": 41
+        }
+      },
+      "memory": {
+        "JS heap after startup (MB)": {
+          "n": 5,
+          "median": 8.6,
+          "p90": 8.6,
+          "max": 8.6
+        },
+        "JS heap after last repeated run (MB)": {
+          "n": 5,
+          "median": 11,
+          "p90": 11,
+          "max": 11
+        },
+        "JS heap, max over repeated runs (MB)": {
+          "n": 5,
+          "median": 11,
+          "p90": 11,
+          "max": 11
+        },
+        "Kept runs after last repeated run": {
+          "n": 5,
+          "median": 2,
+          "p90": 2,
+          "max": 2
+        },
+        "Renderer private memory after startup (MB)": {
+          "n": 5,
+          "median": 73.2,
+          "p90": 74.6,
+          "max": 74.6
+        },
+        "Renderer private memory after last repeated run (MB)": {
+          "n": 5,
+          "median": 109.4,
+          "p90": 115.4,
+          "max": 115.4
+        },
+        "GPU process private memory after startup (MB)": {
+          "n": 5,
+          "median": 619.1,
+          "p90": 621.8,
+          "max": 621.8
+        },
+        "GPU process private memory after last repeated run (MB)": {
+          "n": 5,
+          "median": 699.9,
+          "p90": 710.4,
+          "max": 710.4
+        },
+        "JS heap after first navigation cycle (MB)": {
+          "n": 5,
+          "median": 13.3,
+          "p90": 13.7,
+          "max": 13.7
+        },
+        "JS heap after last navigation cycle (MB)": {
+          "n": 5,
+          "median": 13.9,
+          "p90": 13.9,
+          "max": 13.9
+        },
+        "DOM nodes after first navigation cycle": {
+          "n": 5,
+          "median": 2403,
+          "p90": 2403,
+          "max": 2403
+        },
+        "DOM nodes after last navigation cycle": {
+          "n": 5,
+          "median": 2334,
+          "p90": 2334,
+          "max": 2334
+        },
+        "Renderer private memory after last navigation cycle (MB)": {
+          "n": 5,
+          "median": 194.2,
+          "p90": 198.4,
+          "max": 198.4
+        },
+        "GPU process private memory after last navigation cycle (MB)": {
+          "n": 5,
+          "median": 1358.3,
+          "p90": 1390.8,
+          "max": 1390.8
+        }
+      }
+    },
+    "cpu": {
+      "reps": 5,
+      "repsWithErrors": [],
+      "glacierSolver": ["cpu"],
+      "stageRenderer": ["webgpu"],
+      "research": [
+        {
+          "backend": "cpu-worker",
+          "grid": 128,
+          "failures": "[]"
+        }
+      ],
+      "chrome": ["157.0.8103.78"],
+      "viewport": ["[1440,709,2]"],
+      "allStateKept": true,
+      "thermalC": [
+        {
+          "start": [82, 66],
+          "end": [85, 66]
+        },
+        {
+          "start": [82, 64],
+          "end": [81, 64]
+        },
+        {
+          "start": [88, 63],
+          "end": [82, 58]
+        },
+        {
+          "start": [90, 58],
+          "end": [89, 60]
+        },
+        {
+          "start": [82, 62],
+          "end": [85, 61]
+        }
+      ],
+      "metrics": {
+        "Cold start: first contentful paint (ms)": {
+          "n": 5,
+          "median": 400,
+          "p90": 440,
+          "max": 440
+        },
+        "Cold start: readable drawing painted (ms)": {
+          "n": 5,
+          "median": 435,
+          "p90": 794,
+          "max": 794
+        },
+        "Cold start: largest contentful paint (ms)": {
+          "n": 5,
+          "median": 616,
+          "p90": 904,
+          "max": 904
+        },
+        "Cold start: 3D stage and live run ready (ms)": {
+          "n": 5,
+          "median": 848,
+          "p90": 1748,
+          "max": 1748
+        },
+        "Cold start: first usable interaction (ms)": {
+          "n": 5,
+          "median": 3541,
+          "p90": 4417,
+          "max": 4417
+        },
+        "Cold start: longest frame before usable (ms)": {
+          "n": 5,
+          "median": 374.8,
+          "p90": 553.8,
+          "max": 553.8
+        },
+        "Transition: duration (ms)": {
+          "n": 5,
+          "median": 2698,
+          "p90": 2703,
+          "max": 2703
+        },
+        "Transition: frames per second": {
+          "n": 5,
+          "median": 96.6,
+          "p90": 110.1,
+          "max": 110.1
+        },
+        "Transition: p95 frame interval (ms)": {
+          "n": 5,
+          "median": 8.5,
+          "p90": 13.9,
+          "max": 13.9
+        },
+        "Transition: longest frame (ms)": {
+          "n": 5,
+          "median": 181.2,
+          "p90": 333.4,
+          "max": 333.4
+        },
+        "Transition: frames over 50 ms": {
+          "n": 5,
+          "median": 2,
+          "p90": 3,
+          "max": 3
+        },
+        "Warm start: readable drawing painted (ms)": {
+          "n": 5,
+          "median": 626,
+          "p90": 742,
+          "max": 742
+        },
+        "Warm start: first usable interaction (ms)": {
+          "n": 5,
+          "median": 3560,
+          "p90": 3777,
+          "max": 3777
+        },
+        "Warm start: longest transition frame (ms)": {
+          "n": 5,
+          "median": 150.1,
+          "p90": 176,
+          "max": 176
+        },
+        "First interaction (rock, page selector): visible response (ms)": {
+          "n": 5,
+          "median": 94,
+          "p90": 115,
+          "max": 115
+        },
+        "Rock by page selector, before advance: visible response (ms)": {
+          "n": 20,
+          "median": 39,
+          "p90": 94,
+          "max": 115
+        },
+        "Rock by specimen drop, before advance: visible response (ms)": {
+          "n": 15,
+          "median": 23,
+          "p90": 45,
+          "max": 46
+        },
+        "Rock by specimen drop, new run (kept run): visible response (ms)": {
+          "n": 5,
+          "median": 49,
+          "p90": 74,
+          "max": 74
+        },
+        "Rock by page selector, new run (kept run): visible response (ms)": {
+          "n": 25,
+          "median": 39,
+          "p90": 54,
+          "max": 59
+        },
+        "Front face (keyboard): visible response (ms)": {
+          "n": 25,
+          "median": 18,
+          "p90": 33,
+          "max": 33
+        },
+        "Camera orbit drag: frames per second": {
+          "n": 5,
+          "median": 119.2,
+          "p90": 120,
+          "max": 120
+        },
+        "Camera orbit drag: longest frame (ms)": {
+          "n": 5,
+          "median": 12.8,
+          "p90": 16.7,
+          "max": 16.7
+        },
+        "Play: button to playing state (ms)": {
+          "n": 5,
+          "median": 16,
+          "p90": 25,
+          "max": 25
+        },
+        "Play: button to first advanced landform (ms)": {
+          "n": 5,
+          "median": 100,
+          "p90": 192,
+          "max": 192
+        },
+        "Playback 1x: frames per second": {
+          "n": 5,
+          "median": 117,
+          "p90": 119.5,
+          "max": 119.5
+        },
+        "Playback 1x: p95 frame interval (ms)": {
+          "n": 5,
+          "median": 8.5,
+          "p90": 11.9,
+          "max": 11.9
+        },
+        "Playback 1x: longest frame (ms)": {
+          "n": 5,
+          "median": 25.1,
+          "p90": 66.7,
+          "max": 66.7
+        },
+        "Playback 1x: frames over 50 ms per 10 s": {
+          "n": 5,
+          "median": 0,
+          "p90": 1,
+          "max": 1
+        },
+        "Playback 1x: model years per second": {
+          "n": 5,
+          "median": 3.3,
+          "p90": 4.1,
+          "max": 4.1
+        },
+        "Playback 1x: landform updates per second": {
+          "n": 5,
+          "median": 3.2,
+          "p90": 4,
+          "max": 4
+        },
+        "Playback 1x: main thread busy (%)": {
+          "n": 5,
+          "median": 10,
+          "p90": 10,
+          "max": 10
+        },
+        "Playback 1x: renderer CPU (% of one core)": {
+          "n": 5,
+          "median": 107,
+          "p90": 113,
+          "max": 113
+        },
+        "Playback 1x: GPU process CPU (% of one core)": {
+          "n": 5,
+          "median": 6,
+          "p90": 7,
+          "max": 7
+        },
+        "Playback 4x: frames per second": {
+          "n": 5,
+          "median": 119.1,
+          "p90": 120,
+          "max": 120
+        },
+        "Playback 4x: p95 frame interval (ms)": {
+          "n": 5,
+          "median": 8.4,
+          "p90": 10.7,
+          "max": 10.7
+        },
+        "Playback 4x: longest frame (ms)": {
+          "n": 5,
+          "median": 16.8,
+          "p90": 19.5,
+          "max": 19.5
+        },
+        "Playback 4x: model years per second": {
+          "n": 5,
+          "median": 3.2,
+          "p90": 3.5,
+          "max": 3.5
+        },
+        "Playback 4x: renderer CPU (% of one core)": {
+          "n": 5,
+          "median": 106,
+          "p90": 108,
+          "max": 108
+        },
+        "Scrub (keyboard step): visible response (ms)": {
+          "n": 30,
+          "median": 18,
+          "p90": 23,
+          "max": 29
+        },
+        "Scrub with kept run (matched time): visible response (ms)": {
+          "n": 30,
+          "median": 20,
+          "p90": 185,
+          "max": 452
+        },
+        "Scrub pointer sweep: frames per second": {
+          "n": 5,
+          "median": 117.2,
+          "p90": 120,
+          "max": 120
+        },
+        "Scrub pointer sweep: longest frame (ms)": {
+          "n": 5,
+          "median": 16.7,
+          "p90": 20.8,
+          "max": 20.8
+        },
+        "Back to latest moment: visible response (ms)": {
+          "n": 5,
+          "median": 16,
+          "p90": 26,
+          "max": 26
+        },
+        "Comparison on/off (kept run): visible response (ms)": {
+          "n": 20,
+          "median": 10,
+          "p90": 12,
+          "max": 13
+        },
+        "Research, first departure while playing: research page visible (ms)": {
+          "n": 5,
+          "median": 312,
+          "p90": 574,
+          "max": 574
+        },
+        "Research, first departure: terrain backend ready (ms)": {
+          "n": 5,
+          "median": 558,
+          "p90": 977,
+          "max": 977
+        },
+        "Research, first return: lesson usable (ms)": {
+          "n": 5,
+          "median": 722,
+          "p90": 823,
+          "max": 823
+        },
+        "Research, repeat departure: research page visible (ms)": {
+          "n": 30,
+          "median": 384,
+          "p90": 502,
+          "max": 754
+        },
+        "Research, repeat return: lesson usable (ms)": {
+          "n": 30,
+          "median": 730,
+          "p90": 831,
+          "max": 889
+        },
+        "Navigation legs: longest frame (ms)": {
+          "n": 70,
+          "median": 147.1,
+          "p90": 220.7,
+          "max": 297.2
+        },
+        "Research terrain playing: frames per second": {
+          "n": 5,
+          "median": 119.5,
+          "p90": 119.9,
+          "max": 119.9
+        },
+        "Research terrain playing: p95 frame interval (ms)": {
+          "n": 5,
+          "median": 8.5,
+          "p90": 9.5,
+          "max": 9.5
+        },
+        "Research terrain playing: longest frame (ms)": {
+          "n": 5,
+          "median": 16.7,
+          "p90": 16.7,
+          "max": 16.7
+        },
+        "Research terrain playing: solver steps per second": {
+          "n": 5,
+          "median": 29.2,
+          "p90": 29.2,
+          "max": 29.2
+        },
+        "Research terrain: ms per step (last batch)": {
+          "n": 5,
+          "median": 2.1,
+          "p90": 2.8,
+          "max": 2.8
+        },
+        "Idle (scene at rest): main thread busy (%)": {
+          "n": 5,
+          "median": 3,
+          "p90": 4,
+          "max": 4
+        },
+        "Leave the page while playing (wall ms, diagnostic)": {
+          "n": 5,
+          "median": 23,
+          "p90": 41,
+          "max": 41
+        }
+      },
+      "memory": {
+        "JS heap after startup (MB)": {
+          "n": 5,
+          "median": 8.6,
+          "p90": 8.6,
+          "max": 8.6
+        },
+        "JS heap after last repeated run (MB)": {
+          "n": 5,
+          "median": 11.2,
+          "p90": 11.2,
+          "max": 11.2
+        },
+        "JS heap, max over repeated runs (MB)": {
+          "n": 5,
+          "median": 11.2,
+          "p90": 11.2,
+          "max": 11.2
+        },
+        "Kept runs after last repeated run": {
+          "n": 5,
+          "median": 2,
+          "p90": 2,
+          "max": 2
+        },
+        "Renderer private memory after startup (MB)": {
+          "n": 5,
+          "median": 70.8,
+          "p90": 72,
+          "max": 72
+        },
+        "Renderer private memory after last repeated run (MB)": {
+          "n": 5,
+          "median": 103.9,
+          "p90": 105,
+          "max": 105
+        },
+        "GPU process private memory after startup (MB)": {
+          "n": 5,
+          "median": 579.6,
+          "p90": 581.4,
+          "max": 581.4
+        },
+        "GPU process private memory after last repeated run (MB)": {
+          "n": 5,
+          "median": 564.8,
+          "p90": 566.9,
+          "max": 566.9
+        },
+        "JS heap after first navigation cycle (MB)": {
+          "n": 5,
+          "median": 12.8,
+          "p90": 12.9,
+          "max": 12.9
+        },
+        "JS heap after last navigation cycle (MB)": {
+          "n": 5,
+          "median": 13.5,
+          "p90": 13.5,
+          "max": 13.5
+        },
+        "DOM nodes after first navigation cycle": {
+          "n": 5,
+          "median": 2320,
+          "p90": 2320,
+          "max": 2320
+        },
+        "DOM nodes after last navigation cycle": {
+          "n": 5,
+          "median": 2324,
+          "p90": 2324,
+          "max": 2324
+        },
+        "Renderer private memory after last navigation cycle (MB)": {
+          "n": 5,
+          "median": 140.6,
+          "p90": 144.6,
+          "max": 144.6
+        },
+        "GPU process private memory after last navigation cycle (MB)": {
+          "n": 5,
+          "median": 1473.1,
+          "p90": 1547.7,
+          "max": 1547.7
+        }
+      }
+    }
+  }
+}

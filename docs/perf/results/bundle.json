@@ -1,0 +1,526 @@
+{
+  "sha": "32d45c83461d80e1a673a4757eac2ed9c73454ef",
+  "limitBytes": 10000000,
+  "totalRaw": 6663058,
+  "totalGzip": 3396178,
+  "totalBrotli": 2346702,
+  "withinBudget": true,
+  "files": [
+    {
+      "file": "assets/granite-qFAk0vsB.bin",
+      "raw": 1310720,
+      "gzip": 677443,
+      "brotli": 307346
+    },
+    {
+      "file": "assets/sandstone-5B1WCbEI.bin",
+      "raw": 1310720,
+      "gzip": 674322,
+      "brotli": 353442
+    },
+    {
+      "file": "assets/shale-CIutRyEL.bin",
+      "raw": 1310720,
+      "gzip": 682004,
+      "brotli": 424628
+    },
+    {
+      "file": "assets/three.webgpu-BlxmCGip.js",
+      "raw": 816223,
+      "gzip": 217866,
+      "brotli": 176638
+    },
+    {
+      "file": "assets/src-BA8pV1bv.js",
+      "raw": 324897,
+      "gzip": 101395,
+      "brotli": 83536
+    },
+    {
+      "file": "assets/KaTeX_AMS-Regular-DRggAlZN.ttf",
+      "raw": 63632,
+      "gzip": 34709,
+      "brotli": 32208
+    },
+    {
+      "file": "assets/glacial.worker-_9gsJ_9g.js",
+      "raw": 63381,
+      "gzip": 21405,
+      "brotli": 19145
+    },
+    {
+      "file": "assets/review-Di6WIByJ.js",
+      "raw": 58933,
+      "gzip": 22286,
+      "brotli": 20005
+    },
+    {
+      "file": "assets/spreads-BQWnguc2.js",
+      "raw": 58788,
+      "gzip": 20256,
+      "brotli": 17515
+    },
+    {
+      "file": "assets/index-DZpuOPC3.js",
+      "raw": 57746,
+      "gzip": 19567,
+      "brotli": 17497
+    },
+    {
+      "file": "assets/KaTeX_Main-Regular-ypZvNtVU.ttf",
+      "raw": 53580,
+      "gzip": 31719,
+      "brotli": 29620
+    },
+    {
+      "file": "assets/KaTeX_Main-Bold-waoOVXN0.ttf",
+      "raw": 51336,
+      "gzip": 30802,
+      "brotli": 28913
+    },
+    {
+      "file": "assets/book-C9QUTZrj.js",
+      "raw": 41360,
+      "gzip": 15504,
+      "brotli": 13843
+    },
+    {
+      "file": "assets/terrain.worker-V_w_CCpe.js",
+      "raw": 37471,
+      "gzip": 12841,
+      "brotli": 11526
+    },
+    {
+      "file": "assets/KaTeX_Main-Italic-3WenGoN9.ttf",
+      "raw": 33580,
+      "gzip": 19924,
+      "brotli": 18877
+    },
+    {
+      "file": "assets/KaTeX_AMS-Regular-DMm9YOAa.woff",
+      "raw": 33516,
+      "gzip": 33536,
+      "brotli": 33397
+    },
+    {
+      "file": "assets/stage-DMQazouL.js",
+      "raw": 33360,
+      "gzip": 11690,
+      "brotli": 10526
+    },
+    {
+      "file": "assets/KaTeX_Main-BoldItalic-DzxPMmG6.ttf",
+      "raw": 32968,
+      "gzip": 19673,
+      "brotli": 18591
+    },
+    {
+      "file": "assets/KaTeX_Math-Italic-flOr_0UB.ttf",
+      "raw": 31308,
+      "gzip": 19077,
+      "brotli": 18011
+    },
+    {
+      "file": "assets/KaTeX_Math-BoldItalic-B3XSjfu4.ttf",
+      "raw": 31196,
+      "gzip": 19003,
+      "brotli": 17862
+    },
+    {
+      "file": "assets/KaTeX_Main-Regular-Dr94JaBh.woff",
+      "raw": 30772,
+      "gzip": 30795,
+      "brotli": 30776
+    },
+    {
+      "file": "assets/src-CvJqGyzx.css",
+      "raw": 30570,
+      "gzip": 8162,
+      "brotli": 7107
+    },
+    {
+      "file": "assets/KaTeX_Main-Bold-Jm3AIy58.woff",
+      "raw": 29912,
+      "gzip": 29940,
+      "brotli": 29822
+    },
+    {
+      "file": "assets/gpu-BbRQz6x3.js",
+      "raw": 28178,
+      "gzip": 8988,
+      "brotli": 8109
+    },
+    {
+      "file": "assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
+      "raw": 28076,
+      "gzip": 28104,
+      "brotli": 28080
+    },
+    {
+      "file": "assets/KaTeX_Typewriter-Regular-D3Ib7_Hf.ttf",
+      "raw": 27556,
+      "gzip": 16479,
+      "brotli": 15387
+    },
+    {
+      "file": "assets/KaTeX_Main-Regular-B22Nviop.woff2",
+      "raw": 26272,
+      "gzip": 26300,
+      "brotli": 26272
+    },
+    {
+      "file": "assets/cpu-CFG0KgGf.js",
+      "raw": 25382,
+      "gzip": 8919,
+      "brotli": 7996
+    },
+    {
+      "file": "assets/KaTeX_Main-Bold-Cx986IdX.woff2",
+      "raw": 25324,
+      "gzip": 25352,
+      "brotli": 25324
+    },
+    {
+      "file": "assets/KaTeX_SansSerif-Bold-CFMepnvq.ttf",
+      "raw": 24504,
+      "gzip": 14775,
+      "brotli": 13713
+    },
+    {
+      "file": "assets/KaTeX_SansSerif-Italic-YYjJ1zSn.ttf",
+      "raw": 22364,
+      "gzip": 14433,
+      "brotli": 13549
+    },
+    {
+      "file": "assets/KaTeX_Main-Italic-BMLOBm91.woff",
+      "raw": 19676,
+      "gzip": 19665,
+      "brotli": 19576
+    },
+    {
+      "file": "assets/KaTeX_Fraktur-Bold-BdnERNNW.ttf",
+      "raw": 19584,
+      "gzip": 13494,
+      "brotli": 12741
+    },
+    {
+      "file": "assets/KaTeX_Fraktur-Regular-CB_wures.ttf",
+      "raw": 19572,
+      "gzip": 13431,
+      "brotli": 12649
+    },
+    {
+      "file": "assets/KaTeX_SansSerif-Regular-BNo7hRIc.ttf",
+      "raw": 19436,
+      "gzip": 12546,
+      "brotli": 11751
+    },
+    {
+      "file": "assets/KaTeX_Main-BoldItalic-SpSLRI95.woff",
+      "raw": 19412,
+      "gzip": 19405,
+      "brotli": 19311
+    },
+    {
+      "file": "assets/KaTeX_Math-Italic-DA0__PXp.woff",
+      "raw": 18748,
+      "gzip": 18738,
+      "brotli": 18649
+    },
+    {
+      "file": "assets/KaTeX_Math-BoldItalic-iY-2wyZ7.woff",
+      "raw": 18668,
+      "gzip": 18647,
+      "brotli": 18550
+    },
+    {
+      "file": "assets/review-CrA74emQ.css",
+      "raw": 17313,
+      "gzip": 4393,
+      "brotli": 3865
+    },
+    {
+      "file": "assets/KaTeX_Main-Italic-NWA7e6Wa.woff2",
+      "raw": 16988,
+      "gzip": 17016,
+      "brotli": 16990
+    },
+    {
+      "file": "assets/KaTeX_Main-BoldItalic-DxDJ3AOS.woff2",
+      "raw": 16780,
+      "gzip": 16808,
+      "brotli": 16784
+    },
+    {
+      "file": "assets/KaTeX_Script-Regular-C5JkGWo-.ttf",
+      "raw": 16648,
+      "gzip": 10808,
+      "brotli": 10047
+    },
+    {
+      "file": "assets/KaTeX_Math-Italic-t53AETM-.woff2",
+      "raw": 16440,
+      "gzip": 16468,
+      "brotli": 16441
+    },
+    {
+      "file": "assets/KaTeX_Math-BoldItalic-CZnvNsCZ.woff2",
+      "raw": 16400,
+      "gzip": 16423,
+      "brotli": 16399
+    },
+    {
+      "file": "assets/KaTeX_Typewriter-Regular-C0xS9mPB.woff",
+      "raw": 16028,
+      "gzip": 16010,
+      "brotli": 15927
+    },
+    {
+      "file": "assets/KaTeX_SansSerif-Bold-DbIhKOiC.woff",
+      "raw": 14408,
+      "gzip": 14398,
+      "brotli": 14316
+    },
+    {
+      "file": "assets/KaTeX_SansSerif-Italic-DN2j7dab.woff",
+      "raw": 14112,
+      "gzip": 14087,
+      "brotli": 14019
+    },
+    {
+      "file": "assets/index-Bz-Z3uNa.css",
+      "raw": 13914,
+      "gzip": 3820,
+      "brotli": 3334
+    },
+    {
+      "file": "assets/KaTeX_Typewriter-Regular-CO6r4hn1.woff2",
+      "raw": 13568,
+      "gzip": 13591,
+      "brotli": 13572
+    },
+    {
+      "file": "assets/KaTeX_Fraktur-Bold-BsDP51OF.woff",
+      "raw": 13296,
+      "gzip": 13279,
+      "brotli": 13195
+    },
+    {
+      "file": "assets/KaTeX_Fraktur-Regular-Dxdc4cR9.woff",
+      "raw": 13208,
+      "gzip": 13192,
+      "brotli": 13110
+    },
+    {
+      "file": "assets/KaTeX_Caligraphic-Bold-ATXxdsX0.ttf",
+      "raw": 12368,
+      "gzip": 7854,
+      "brotli": 7235
+    },
+    {
+      "file": "assets/KaTeX_Caligraphic-Regular-wX97UBjC.ttf",
+      "raw": 12344,
+      "gzip": 7795,
+      "brotli": 7175
+    },
+    {
+      "file": "assets/KaTeX_SansSerif-Regular-CS6fqUqJ.woff",
+      "raw": 12316,
+      "gzip": 12298,
+      "brotli": 12215
+    },
+    {
+      "file": "assets/KaTeX_Size1-Regular-Dbsnue_I.ttf",
+      "raw": 12228,
+      "gzip": 6540,
+      "brotli": 6004
+    },
+    {
+      "file": "assets/KaTeX_SansSerif-Bold-D1sUS0GD.woff2",
+      "raw": 12216,
+      "gzip": 12239,
+      "brotli": 12220
+    },
+    {
+      "file": "assets/KaTeX_SansSerif-Italic-C3H0VqGB.woff2",
+      "raw": 12028,
+      "gzip": 12051,
+      "brotli": 12032
+    },
+    {
+      "file": "assets/KaTeX_Size2-Regular-B7gKUWhC.ttf",
+      "raw": 11508,
+      "gzip": 6241,
+      "brotli": 5696
+    },
+    {
+      "file": "assets/KaTeX_Fraktur-Bold-CL6g_b3V.woff2",
+      "raw": 11348,
+      "gzip": 11371,
+      "brotli": 11352
+    },
+    {
+      "file": "assets/KaTeX_Fraktur-Regular-CTYiF6lA.woff2",
+      "raw": 11316,
+      "gzip": 11339,
+      "brotli": 11320
+    },
+    {
+      "file": "assets/KaTeX_Script-Regular-D5yQViql.woff",
+      "raw": 10588,
+      "gzip": 10550,
+      "brotli": 10472
+    },
+    {
+      "file": "assets/KaTeX_Size4-Regular-DWFBv043.ttf",
+      "raw": 10364,
+      "gzip": 6061,
+      "brotli": 5512
+    },
+    {
+      "file": "assets/KaTeX_SansSerif-Regular-DDBCnlJ7.woff2",
+      "raw": 10344,
+      "gzip": 10367,
+      "brotli": 10348
+    },
+    {
+      "file": "assets/KaTeX_Script-Regular-D3wIWfF6.woff2",
+      "raw": 9644,
+      "gzip": 9667,
+      "brotli": 9648
+    },
+    {
+      "file": "assets/sandstone-CpsHf7C9.json",
+      "raw": 8925,
+      "gzip": 2088,
+      "brotli": 1666
+    },
+    {
+      "file": "assets/shale-BYdjHNqU.json",
+      "raw": 8923,
+      "gzip": 2117,
+      "brotli": 1681
+    },
+    {
+      "file": "assets/granite-D1bmfxMo.json",
+      "raw": 8871,
+      "gzip": 2032,
+      "brotli": 1633
+    },
+    {
+      "file": "assets/KaTeX_Caligraphic-Bold-BEiXGLvX.woff",
+      "raw": 7716,
+      "gzip": 7677,
+      "brotli": 7599
+    },
+    {
+      "file": "assets/KaTeX_Caligraphic-Regular-CTRA-rTL.woff",
+      "raw": 7656,
+      "gzip": 7621,
+      "brotli": 7543
+    },
+    {
+      "file": "assets/view-DbdUEIg_.js",
+      "raw": 7652,
+      "gzip": 2673,
+      "brotli": 2410
+    },
+    {
+      "file": "assets/KaTeX_Size3-Regular-DgpXs0kz.ttf",
+      "raw": 7588,
+      "gzip": 4389,
+      "brotli": 3934
+    },
+    {
+      "file": "assets/KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2",
+      "raw": 6912,
+      "gzip": 6935,
+      "brotli": 6916
+    },
+    {
+      "file": "assets/KaTeX_Caligraphic-Regular-Di6jR-x-.woff2",
+      "raw": 6908,
+      "gzip": 6931,
+      "brotli": 6908
+    },
+    {
+      "file": "assets/KaTeX_Size1-Regular-C195tn64.woff",
+      "raw": 6496,
+      "gzip": 6465,
+      "brotli": 6391
+    },
+    {
+      "file": "assets/KaTeX_Size2-Regular-oD1tc_U0.woff",
+      "raw": 6188,
+      "gzip": 6161,
+      "brotli": 6078
+    },
+    {
+      "file": "assets/KaTeX_Size4-Regular-BF-4gkZK.woff",
+      "raw": 5980,
+      "gzip": 5944,
+      "brotli": 5878
+    },
+    {
+      "file": "assets/materials-Da3MFbK-.js",
+      "raw": 5648,
+      "gzip": 2330,
+      "brotli": 2128
+    },
+    {
+      "file": "assets/contours-DnAMMxPK.js",
+      "raw": 5622,
+      "gzip": 2575,
+      "brotli": 2330
+    },
+    {
+      "file": "assets/KaTeX_Size1-Regular-mCD8mA8B.woff2",
+      "raw": 5468,
+      "gzip": 5491,
+      "brotli": 5472
+    },
+    {
+      "file": "assets/KaTeX_Size2-Regular-Dy4dx90m.woff2",
+      "raw": 5208,
+      "gzip": 5231,
+      "brotli": 5212
+    },
+    {
+      "file": "assets/KaTeX_Size4-Regular-Dl5lxZxV.woff2",
+      "raw": 4928,
+      "gzip": 4951,
+      "brotli": 4932
+    },
+    {
+      "file": "assets/KaTeX_Size3-Regular-CTq5MqoE.woff",
+      "raw": 4420,
+      "gzip": 4380,
+      "brotli": 4322
+    },
+    {
+      "file": "assets/book-DCt2HW8n.css",
+      "raw": 1859,
+      "gzip": 826,
+      "brotli": 677
+    },
+    {
+      "file": "assets/transition-BufvvTWI.js",
+      "raw": 1643,
+      "gzip": 793,
+      "brotli": 723
+    },
+    {
+      "file": "index.html",
+      "raw": 1133,
+      "gzip": 553,
+      "brotli": 437
+    },
+    {
+      "file": "assets/rolldown-runtime-DK3Fl9T5.js",
+      "raw": 158,
+      "gzip": 154,
+      "brotli": 116
+    }
+  ]
+}

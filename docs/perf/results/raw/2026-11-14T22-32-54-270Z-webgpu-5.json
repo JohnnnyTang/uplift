@@ -1,0 +1,2069 @@
+{
+  "session": "6A",
+  "sha": "32d45c83461d80e1a673a4757eac2ed9c73454ef",
+  "workingTreeClean": true,
+  "backend": "webgpu",
+  "rep": 5,
+  "url": "http://127.0.0.1:4190/",
+  "headless": false,
+  "startedAt": "2026-11-14T22:32:54.270Z",
+  "machine": {
+    "gpu": "Intel(R) Arc(TM) 140V GPU (16GB)",
+    "gpuDriver": "32.0.101.8860",
+    "gpuDriverDate": "2026-06-24",
+    "display": "2880x1800@120Hz",
+    "cpu": "Intel(R) Core(TM) Ultra 7 258V",
+    "model": "ASUSTeK COMPUTER INC. ASUS Zenbook S 14 UX5406SA_UX5406SA",
+    "ramBytes": 33796481024,
+    "batteryStatus": 2,
+    "batteryPercent": 100,
+    "powerScheme": "381b4222-f694-41f0-9685-ff5bb260df2e",
+    "powerOverlayAc": "ded574b5-45a0-4f42-8737-46345c09c238",
+    "os": "Microsoft Windows NT 10.0.26300.0",
+    "onAcPower": true
+  },
+  "thermalStart": {
+    "\\_tz.thrm": {
+      "kelvin": 358,
+      "celsius": 85
+    },
+    "\\_tz.thz0": {
+      "kelvin": 333,
+      "celsius": 60
+    }
+  },
+  "steps": {
+    "startupCold": {
+      "kind": "cold",
+      "origin": 1794695578292.8,
+      "responseEndMs": 11,
+      "domContentLoadedMs": 74,
+      "loadMs": 85,
+      "fcpMs": 332,
+      "lcpMs": 864,
+      "lcpElement": "",
+      "drawingVisibleMs": 798,
+      "stageReadyMs": 1070,
+      "liveSourceMs": 1070,
+      "transitionStartMs": 1059,
+      "transitionDoneMs": 3765,
+      "transitionMs": 2698,
+      "interactiveMs": 3765,
+      "startupWindow": {
+        "origin": 1794695578292.8,
+        "t0": 0,
+        "t1": 3765,
+        "spanS": 3.8,
+        "fps": 87.5,
+        "frameMs": {
+          "p50": 8.3,
+          "p95": 8.5,
+          "p99": 108.3,
+          "max": 358.4
+        },
+        "over33": 10,
+        "over50": 8,
+        "over100": 4,
+        "frames": 325,
+        "loafCount": 8,
+        "loafMaxMs": 332.9,
+        "loafBlockingMs": 35.2,
+        "loafTop": [
+          {
+            "duration": 332.9,
+            "render": 3.1,
+            "scripts": []
+          },
+          {
+            "duration": 132.2,
+            "render": 66.5,
+            "scripts": [
+              {
+                "invoker": "FrameRequestCallback",
+                "duration": 56,
+                "source": "stage-DMQazouL.js",
+                "fn": ""
+              },
+              {
+                "invoker": "DOMVisualViewport.onresize",
+                "duration": 8,
+                "source": "stage-DMQazouL.js",
+                "fn": "onResize"
+              }
+            ]
+          },
+          {
+            "duration": 111.4,
+            "render": 1.7,
+            "scripts": []
+          }
+        ],
+        "updates": 1,
+        "updatesPerS": 0.3
+      },
+      "transitionWindow": {
+        "origin": 1794695578292.8,
+        "t0": 1059,
+        "t1": 3757,
+        "spanS": 2.7,
+        "fps": 111.1,
+        "frameMs": {
+          "p50": 8.3,
+          "p95": 8.4,
+          "p99": 8.5,
+          "max": 116.6
+        },
+        "over33": 2,
+        "over50": 2,
+        "over100": 1,
+        "frames": 262,
+        "loafCount": 3,
+        "loafMaxMs": 332.9,
+        "loafBlockingMs": 0,
+        "loafTop": [
+          {
+            "duration": 332.9,
+            "render": 3.1,
+            "scripts": []
+          },
+          {
+            "duration": 111.4,
+            "render": 1.7,
+            "scripts": []
+          },
+          {
+            "duration": 78.4,
+            "render": 1.8,
+            "scripts": []
+          }
+        ],
+        "updates": 0,
+        "updatesPerS": 0
+      },
+      "requests": 16,
+      "transferKB": 442,
+      "decodedKB": 1479,
+      "resources": [
+        {
+          "name": "/assets/index-DZpuOPC3.js",
+          "start": 15,
+          "end": 30,
+          "transferB": 19889,
+          "decodedB": 57746
+        },
+        {
+          "name": "/assets/cpu-CFG0KgGf.js",
+          "start": 16,
+          "end": 37,
+          "transferB": 9222,
+          "decodedB": 25382
+        },
+        {
+          "name": "/assets/rolldown-runtime-DK3Fl9T5.js",
+          "start": 16,
+          "end": 38,
+          "transferB": 458,
+          "decodedB": 158
+        },
+        {
+          "name": "/assets/src-BA8pV1bv.js",
+          "start": 16,
+          "end": 54,
+          "transferB": 102195,
+          "decodedB": 324897
+        },
+        {
+          "name": "/assets/src-CvJqGyzx.css",
+          "start": 16,
+          "end": 39,
+          "transferB": 8573,
+          "decodedB": 30570
+        },
+        {
+          "name": "/assets/spreads-BQWnguc2.js",
+          "start": 16,
+          "end": 43,
+          "transferB": 20561,
+          "decodedB": 58788
+        },
+        {
+          "name": "/assets/index-Bz-Z3uNa.css",
+          "start": 16,
+          "end": 40,
+          "transferB": 4132,
+          "decodedB": 13914
+        },
+        {
+          "name": "/assets/review-Di6WIByJ.js",
+          "start": 74,
+          "end": 79,
+          "transferB": 22609,
+          "decodedB": 58933
+        },
+        {
+          "name": "/assets/review-CrA74emQ.css",
+          "start": 74,
+          "end": 78,
+          "transferB": 4710,
+          "decodedB": 17313
+        },
+        {
+          "name": "/assets/stage-DMQazouL.js",
+          "start": 92,
+          "end": 101,
+          "transferB": 12006,
+          "decodedB": 33360
+        },
+        {
+          "name": "/assets/three.webgpu-BlxmCGip.js",
+          "start": 93,
+          "end": 128,
+          "transferB": 219028,
+          "decodedB": 816223
+        },
+        {
+          "name": "/assets/contours-DnAMMxPK.js",
+          "start": 93,
+          "end": 100,
+          "transferB": 2875,
+          "decodedB": 5622
+        },
+        {
+          "name": "/assets/materials-Da3MFbK-.js",
+          "start": 93,
+          "end": 101,
+          "transferB": 2630,
+          "decodedB": 5648
+        },
+        {
+          "name": "/assets/glacial.worker-_9gsJ_9g.js",
+          "start": 182,
+          "end": 175,
+          "transferB": 21736,
+          "decodedB": 63381
+        },
+        {
+          "name": "/assets/transition-BufvvTWI.js",
+          "start": 772,
+          "end": 775,
+          "transferB": 1093,
+          "decodedB": 1643
+        }
+      ],
+      "visibility": "visible",
+      "focused": true,
+      "viewport": [1440, 709, 2]
+    },
+    "idle": {
+      "origin": 1794695578292.8,
+      "t0": 6251,
+      "t1": 9266,
+      "spanS": 3,
+      "fps": 120,
+      "frameMs": {
+        "p50": 8.3,
+        "p95": 8.4,
+        "p99": 8.5,
+        "max": 8.5
+      },
+      "over33": 0,
+      "over50": 0,
+      "over100": 0,
+      "frames": 361,
+      "loafCount": 0,
+      "loafMaxMs": 0,
+      "loafBlockingMs": 0,
+      "loafTop": [],
+      "updates": 0,
+      "updatesPerS": 0,
+      "valueStart": 0,
+      "valueEnd": 0,
+      "valuePerS": 0,
+      "mainThreadBusyPct": 3,
+      "cpuPctByProcessType": {
+        "browser": 1,
+        "renderer": 5,
+        "GPU": 2,
+        "network.mojom.NetworkService": 0,
+        "storage.mojom.StorageService": 0
+      }
+    },
+    "firstInteraction": {
+      "origin": 1794695578292.8,
+      "inputAt": 10475,
+      "domMs": 142,
+      "visibleMs": 150,
+      "value": "shale"
+    },
+    "orbitDrag": {
+      "origin": 1794695578292.8,
+      "t0": 15125,
+      "t1": 17025,
+      "spanS": 1.9,
+      "fps": 120,
+      "frameMs": {
+        "p50": 8.3,
+        "p95": 8.4,
+        "p99": 8.5,
+        "max": 8.5
+      },
+      "over33": 0,
+      "over50": 0,
+      "over100": 0,
+      "frames": 227,
+      "loafCount": 0,
+      "loafMaxMs": 0,
+      "loafBlockingMs": 0,
+      "loafTop": [],
+      "updates": 0,
+      "updatesPerS": 0
+    },
+    "firstAdvanceVisibleMs": 40,
+    "play1x": {
+      "origin": 1794695578292.8,
+      "t0": 18130,
+      "t1": 24142,
+      "spanS": 6,
+      "fps": 119.7,
+      "frameMs": {
+        "p50": 8.3,
+        "p95": 8.4,
+        "p99": 8.5,
+        "max": 16.7
+      },
+      "over33": 0,
+      "over50": 0,
+      "over100": 0,
+      "frames": 719,
+      "loafCount": 0,
+      "loafMaxMs": 0,
+      "loafBlockingMs": 0,
+      "loafTop": [],
+      "updates": 29,
+      "updatesPerS": 4.8,
+      "valueStart": 0.0825,
+      "valueEnd": 58.75,
+      "valuePerS": 9.76,
+      "mainThreadBusyPct": 42,
+      "cpuPctByProcessType": {
+        "browser": 2,
+        "renderer": 65,
+        "GPU": 45,
+        "network.mojom.NetworkService": 0,
+        "storage.mojom.StorageService": 0
+      }
+    },
+    "speedMax": "4",
+    "playMax": {
+      "origin": 1794695578292.8,
+      "t0": 24172,
+      "t1": 28196,
+      "spanS": 4,
+      "fps": 120,
+      "frameMs": {
+        "p50": 8.3,
+        "p95": 8.4,
+        "p99": 8.5,
+        "max": 8.5
+      },
+      "over33": 0,
+      "over50": 0,
+      "over100": 0,
+      "frames": 482,
+      "loafCount": 0,
+      "loafMaxMs": 0,
+      "loafBlockingMs": 0,
+      "loafTop": [],
+      "updates": 19,
+      "updatesPerS": 4.7,
+      "valueStart": 60.75,
+      "valueEnd": 203.745,
+      "valuePerS": 35.53,
+      "mainThreadBusyPct": 24,
+      "cpuPctByProcessType": {
+        "browser": 2,
+        "renderer": 38,
+        "GPU": 38,
+        "network.mojom.NetworkService": 0,
+        "storage.mojom.StorageService": 0
+      }
+    },
+    "scrubSweep": {
+      "origin": 1794695578292.8,
+      "t0": 29070,
+      "t1": 30742,
+      "spanS": 1.7,
+      "fps": 118.2,
+      "frameMs": {
+        "p50": 8.3,
+        "p95": 8.4,
+        "p99": 16.6,
+        "max": 16.7
+      },
+      "over33": 0,
+      "over50": 0,
+      "over100": 0,
+      "frames": 197,
+      "loafCount": 0,
+      "loafMaxMs": 0,
+      "loafBlockingMs": 0,
+      "loafTop": [],
+      "updates": 22,
+      "updatesPerS": 13.2
+    },
+    "researchPlay": {
+      "origin": 1794695578292.8,
+      "t0": 99334,
+      "t1": 109357,
+      "spanS": 10,
+      "fps": 116.4,
+      "frameMs": {
+        "p50": 8.3,
+        "p95": 8.5,
+        "p99": 16.7,
+        "max": 33.3
+      },
+      "over33": 0,
+      "over50": 0,
+      "over100": 0,
+      "frames": 1166,
+      "loafCount": 0,
+      "loafMaxMs": 0,
+      "loafBlockingMs": 0,
+      "loafTop": [],
+      "updates": 19,
+      "updatesPerS": 1.9,
+      "valueStart": 61,
+      "valueEnd": 350,
+      "valuePerS": 28.83,
+      "mainThreadBusyPct": 13,
+      "cpuPctByProcessType": {
+        "browser": 2,
+        "renderer": 18,
+        "GPU": 8,
+        "network.mojom.NetworkService": 0,
+        "storage.mojom.StorageService": 0
+      },
+      "batch": {
+        "batchSteps": 1,
+        "batchMs": 4.4000000059604645,
+        "workerMs": 24.700000017881393,
+        "snapshotMs": 20.200000017881393,
+        "viewUpdateMs": 8.199999988079071
+      }
+    },
+    "startupWarm": {
+      "kind": "warm",
+      "origin": 1794695710338.6,
+      "responseEndMs": 8,
+      "domContentLoadedMs": 309,
+      "loadMs": 320,
+      "fcpMs": 316,
+      "lcpMs": 784,
+      "lcpElement": "",
+      "drawingVisibleMs": 744,
+      "stageReadyMs": 1000,
+      "liveSourceMs": 1000,
+      "transitionStartMs": 985,
+      "transitionDoneMs": 3689,
+      "transitionMs": 2698,
+      "interactiveMs": 3689,
+      "startupWindow": {
+        "origin": 1794695710338.6,
+        "t0": 0,
+        "t1": 3689,
+        "spanS": 3.7,
+        "fps": 104.5,
+        "frameMs": {
+          "p50": 8.3,
+          "p95": 9.4,
+          "p99": 41.4,
+          "max": 150.6
+        },
+        "over33": 4,
+        "over50": 2,
+        "over100": 2,
+        "frames": 356,
+        "loafCount": 3,
+        "loafMaxMs": 164,
+        "loafBlockingMs": 49.1,
+        "loafTop": [
+          {
+            "duration": 164,
+            "render": 97.6,
+            "scripts": [
+              {
+                "invoker": "FrameRequestCallback",
+                "duration": 84,
+                "source": "stage-DMQazouL.js",
+                "fn": ""
+              },
+              {
+                "invoker": "ResizeObserverCallback",
+                "duration": 7,
+                "source": "stage-DMQazouL.js",
+                "fn": "onResize"
+              }
+            ]
+          },
+          {
+            "duration": 150.3,
+            "render": 2,
+            "scripts": []
+          },
+          {
+            "duration": 55.7,
+            "render": 7,
+            "scripts": [
+              {
+                "invoker": "Worker.onmessage",
+                "duration": 45,
+                "source": "index-DZpuOPC3.js",
+                "fn": ""
+              }
+            ]
+          }
+        ],
+        "updates": 1,
+        "updatesPerS": 0.3
+      },
+      "transitionWindow": {
+        "origin": 1794695710338.6,
+        "t0": 985,
+        "t1": 3684,
+        "spanS": 2.7,
+        "fps": 111.9,
+        "frameMs": {
+          "p50": 8.3,
+          "p95": 8.6,
+          "p99": 16.7,
+          "max": 141.7
+        },
+        "over33": 1,
+        "over50": 1,
+        "over100": 1,
+        "frames": 300,
+        "loafCount": 1,
+        "loafMaxMs": 150.3,
+        "loafBlockingMs": 0,
+        "loafTop": [
+          {
+            "duration": 150.3,
+            "render": 2,
+            "scripts": []
+          }
+        ],
+        "updates": 0,
+        "updatesPerS": 0
+      },
+      "requests": 16,
+      "transferKB": 5,
+      "decodedKB": 1479,
+      "resources": [
+        {
+          "name": "/assets/index-DZpuOPC3.js",
+          "start": 17,
+          "end": 30,
+          "transferB": 300,
+          "decodedB": 57746
+        },
+        {
+          "name": "/assets/cpu-CFG0KgGf.js",
+          "start": 17,
+          "end": 30,
+          "transferB": 300,
+          "decodedB": 25382
+        },
+        {
+          "name": "/assets/src-BA8pV1bv.js",
+          "start": 17,
+          "end": 34,
+          "transferB": 300,
+          "decodedB": 324897
+        },
+        {
+          "name": "/assets/rolldown-runtime-DK3Fl9T5.js",
+          "start": 17,
+          "end": 33,
+          "transferB": 300,
+          "decodedB": 158
+        },
+        {
+          "name": "/assets/src-CvJqGyzx.css",
+          "start": 17,
+          "end": 32,
+          "transferB": 300,
+          "decodedB": 30570
+        },
+        {
+          "name": "/assets/spreads-BQWnguc2.js",
+          "start": 17,
+          "end": 33,
+          "transferB": 300,
+          "decodedB": 58788
+        },
+        {
+          "name": "/assets/index-Bz-Z3uNa.css",
+          "start": 18,
+          "end": 33,
+          "transferB": 300,
+          "decodedB": 13914
+        },
+        {
+          "name": "/assets/review-Di6WIByJ.js",
+          "start": 308,
+          "end": 314,
+          "transferB": 300,
+          "decodedB": 58933
+        },
+        {
+          "name": "/assets/review-CrA74emQ.css",
+          "start": 309,
+          "end": 312,
+          "transferB": 300,
+          "decodedB": 17313
+        },
+        {
+          "name": "/assets/stage-DMQazouL.js",
+          "start": 326,
+          "end": 329,
+          "transferB": 300,
+          "decodedB": 33360
+        },
+        {
+          "name": "/assets/three.webgpu-BlxmCGip.js",
+          "start": 327,
+          "end": 336,
+          "transferB": 300,
+          "decodedB": 816223
+        },
+        {
+          "name": "/assets/contours-DnAMMxPK.js",
+          "start": 328,
+          "end": 331,
+          "transferB": 300,
+          "decodedB": 5622
+        },
+        {
+          "name": "/assets/materials-Da3MFbK-.js",
+          "start": 328,
+          "end": 332,
+          "transferB": 300,
+          "decodedB": 5648
+        },
+        {
+          "name": "/assets/glacial.worker-_9gsJ_9g.js",
+          "start": 408,
+          "end": 396,
+          "transferB": 300,
+          "decodedB": 63381
+        },
+        {
+          "name": "/assets/transition-BufvvTWI.js",
+          "start": 730,
+          "end": 734,
+          "transferB": 300,
+          "decodedB": 1643
+        }
+      ],
+      "visibility": "visible",
+      "focused": true,
+      "viewport": [1440, 709, 2]
+    },
+    "leavePageWallMs": 32
+  },
+  "samples": {
+    "rockSelectReplace": [
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 10475,
+        "domMs": 142,
+        "visibleMs": 150,
+        "value": "shale"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 11084,
+        "domMs": 96,
+        "visibleMs": 102,
+        "value": "granite"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 11642,
+        "domMs": 42,
+        "visibleMs": 50,
+        "value": "sandstone"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 12142,
+        "domMs": 39,
+        "visibleMs": 44,
+        "value": "shale"
+      }
+    ],
+    "rockDropReplace": [
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 12719,
+        "domMs": 38,
+        "visibleMs": 44,
+        "value": "granite"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 13294,
+        "domMs": 37,
+        "visibleMs": 42,
+        "value": "sandstone"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 13877,
+        "domMs": 36,
+        "visibleMs": 43,
+        "value": "shale"
+      }
+    ],
+    "cutKey": [
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 14975,
+        "domMs": 10,
+        "visibleMs": 16,
+        "value": "52"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 14999,
+        "domMs": 12,
+        "visibleMs": 16,
+        "value": "53"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 15023,
+        "domMs": 10,
+        "visibleMs": 17,
+        "value": "54"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 15069,
+        "domMs": 13,
+        "visibleMs": 16,
+        "value": "55"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 15094,
+        "domMs": 10,
+        "visibleMs": 16,
+        "value": "56"
+      }
+    ],
+    "playStart": [
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 18084,
+        "domMs": 2,
+        "visibleMs": 8,
+        "value": "true"
+      }
+    ],
+    "pause": [
+      {
+        "settledYears": 205.745
+      }
+    ],
+    "scrubKey": [
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 28913,
+        "domMs": 10,
+        "visibleMs": 21,
+        "value": "0"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 28942,
+        "domMs": 10,
+        "visibleMs": 16,
+        "value": "20"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 28967,
+        "domMs": 8,
+        "visibleMs": 14,
+        "value": "40"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 28989,
+        "domMs": 10,
+        "visibleMs": 17,
+        "value": "60"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 29014,
+        "domMs": 7,
+        "visibleMs": 12,
+        "value": "80"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 29045,
+        "domMs": 8,
+        "visibleMs": 13,
+        "value": "100"
+      }
+    ],
+    "backToLive": [
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 30768,
+        "domMs": 12,
+        "visibleMs": 24,
+        "value": "live"
+      }
+    ],
+    "rockDropNewRun": [
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 31539,
+        "domMs": 52,
+        "visibleMs": 86,
+        "value": "granite"
+      }
+    ],
+    "scrubCompare": [
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 35005,
+        "domMs": 14,
+        "visibleMs": 28,
+        "value": "0"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 35041,
+        "domMs": 13,
+        "visibleMs": 23,
+        "value": "20"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 35086,
+        "domMs": 14,
+        "visibleMs": 23,
+        "value": "40"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 35119,
+        "domMs": 12,
+        "visibleMs": 19,
+        "value": "60"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 35148,
+        "domMs": 11,
+        "visibleMs": 18,
+        "value": "80"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 35177,
+        "domMs": 12,
+        "visibleMs": 19,
+        "value": "100"
+      }
+    ],
+    "compareToggle": [
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 35235,
+        "domMs": 4,
+        "visibleMs": 8,
+        "value": ""
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 35276,
+        "domMs": 4,
+        "visibleMs": 12,
+        "value": "shale"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 35319,
+        "domMs": 3,
+        "visibleMs": 11,
+        "value": ""
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 35360,
+        "domMs": 4,
+        "visibleMs": 12,
+        "value": "shale"
+      }
+    ],
+    "rockSelectNewRun": [
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 36075,
+        "domMs": 53,
+        "visibleMs": 69,
+        "value": "sandstone"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 45160,
+        "domMs": 60,
+        "visibleMs": 76,
+        "value": "shale"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 54152,
+        "domMs": 58,
+        "visibleMs": 74,
+        "value": "granite"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 63135,
+        "domMs": 64,
+        "visibleMs": 78,
+        "value": "sandstone"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 72062,
+        "domMs": 67,
+        "visibleMs": 84,
+        "value": "shale"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 81012,
+        "domMs": 68,
+        "visibleMs": 84,
+        "value": "granite"
+      },
+      {
+        "origin": 1794695578292.8,
+        "inputAt": 89788,
+        "domMs": 67,
+        "visibleMs": 86,
+        "value": "sandstone"
+      }
+    ],
+    "navFirst": [
+      {
+        "guard": {
+          "phase": "navigation 0",
+          "fps": 120,
+          "throttled": false,
+          "visibility": "visible"
+        },
+        "departVisibleMs": 157,
+        "researchReadyMs": 1638,
+        "departWindow": {
+          "origin": 1794695578292.8,
+          "t0": 92532,
+          "t1": 109365,
+          "spanS": 16.8,
+          "fps": 112.2,
+          "frameMs": {
+            "p50": 8.3,
+            "p95": 9.4,
+            "p99": 16.9,
+            "max": 66.7
+          },
+          "over33": 7,
+          "over50": 5,
+          "over100": 0,
+          "frames": 1889,
+          "loafCount": 5,
+          "loafMaxMs": 102.8,
+          "loafBlockingMs": 59.4,
+          "loafTop": [
+            {
+              "duration": 102.8,
+              "render": 7.7,
+              "scripts": [
+                {
+                  "invoker": "import.then",
+                  "duration": 90,
+                  "source": "index-DZpuOPC3.js",
+                  "fn": ""
+                },
+                {
+                  "invoker": "ResizeObserverCallback",
+                  "duration": 6,
+                  "source": "book-C9QUTZrj.js",
+                  "fn": ""
+                }
+              ]
+            },
+            {
+              "duration": 77.2,
+              "render": 0.1,
+              "scripts": []
+            },
+            {
+              "duration": 75.6,
+              "render": 0.1,
+              "scripts": []
+            }
+          ],
+          "updates": 1,
+          "updatesPerS": 0.1
+        },
+        "returnVisibleMs": 805,
+        "returnWindow": {
+          "origin": 1794695578292.8,
+          "t0": 109372,
+          "t1": 111022,
+          "spanS": 1.6,
+          "fps": 93.8,
+          "frameMs": {
+            "p50": 8.3,
+            "p95": 16.7,
+            "p99": 100,
+            "max": 108.4
+          },
+          "over33": 6,
+          "over50": 2,
+          "over100": 1,
+          "frames": 154,
+          "loafCount": 3,
+          "loafMaxMs": 112.4,
+          "loafBlockingMs": 32,
+          "loafTop": [
+            {
+              "duration": 112.4,
+              "render": 82,
+              "scripts": [
+                {
+                  "invoker": "FrameRequestCallback",
+                  "duration": 71,
+                  "source": "stage-DMQazouL.js",
+                  "fn": ""
+                }
+              ]
+            },
+            {
+              "duration": 103.6,
+              "render": 2.2,
+              "scripts": []
+            },
+            {
+              "duration": 50.2,
+              "render": 13.6,
+              "scripts": [
+                {
+                  "invoker": "import.then",
+                  "duration": 33,
+                  "source": "review-Di6WIByJ.js",
+                  "fn": ""
+                }
+              ]
+            }
+          ],
+          "updates": 7,
+          "updatesPerS": 4.2
+        },
+        "state": {
+          "sameRun": true,
+          "sameRock": true,
+          "sameGhost": true,
+          "yearsAtLeave": 89.0025,
+          "yearsAtReturn": 89.0025,
+          "noHiddenAdvance": true
+        }
+      }
+    ],
+    "navRepeat": [
+      {
+        "guard": {
+          "phase": "navigation 1",
+          "fps": 120,
+          "throttled": false,
+          "visibility": "visible"
+        },
+        "departVisibleMs": 46,
+        "departWindow": {
+          "origin": 1794695578292.8,
+          "t0": 112403,
+          "t1": 112483,
+          "spanS": 0.1,
+          "fps": 90.1,
+          "frameMs": {
+            "p50": 8.4,
+            "p95": 16.7,
+            "p99": 16.7,
+            "max": 16.7
+          },
+          "over33": 0,
+          "over50": 0,
+          "over100": 0,
+          "frames": 6,
+          "loafCount": 0,
+          "loafMaxMs": 0,
+          "loafBlockingMs": 0,
+          "loafTop": [],
+          "updates": 1,
+          "updatesPerS": 12.6
+        },
+        "returnVisibleMs": 886,
+        "returnWindow": {
+          "origin": 1794695578292.8,
+          "t0": 112488,
+          "t1": 114244,
+          "spanS": 1.8,
+          "fps": 94.5,
+          "frameMs": {
+            "p50": 8.3,
+            "p95": 16.7,
+            "p99": 100.1,
+            "max": 108.4
+          },
+          "over33": 5,
+          "over50": 2,
+          "over100": 2,
+          "frames": 163,
+          "loafCount": 3,
+          "loafMaxMs": 119.1,
+          "loafBlockingMs": 36.8,
+          "loafTop": [
+            {
+              "duration": 119.1,
+              "render": 86.8,
+              "scripts": [
+                {
+                  "invoker": "FrameRequestCallback",
+                  "duration": 78,
+                  "source": "stage-DMQazouL.js",
+                  "fn": ""
+                }
+              ]
+            },
+            {
+              "duration": 99.5,
+              "render": 3.3,
+              "scripts": []
+            },
+            {
+              "duration": 51.9,
+              "render": 2.6,
+              "scripts": []
+            }
+          ],
+          "updates": 7,
+          "updatesPerS": 4
+        },
+        "state": {
+          "sameRun": true,
+          "sameRock": true,
+          "sameGhost": true,
+          "yearsAtLeave": 184.66,
+          "yearsAtReturn": 184.66,
+          "noHiddenAdvance": true
+        }
+      },
+      {
+        "guard": {
+          "phase": "navigation 2",
+          "fps": 113.4,
+          "throttled": false,
+          "visibility": "visible"
+        },
+        "departVisibleMs": 54,
+        "departWindow": {
+          "origin": 1794695578292.8,
+          "t0": 115725,
+          "t1": 115815,
+          "spanS": 0.1,
+          "fps": 93.3,
+          "frameMs": {
+            "p50": 8.4,
+            "p95": 16.7,
+            "p99": 16.7,
+            "max": 16.7
+          },
+          "over33": 0,
+          "over50": 0,
+          "over100": 0,
+          "frames": 7,
+          "loafCount": 0,
+          "loafMaxMs": 0,
+          "loafBlockingMs": 0,
+          "loafTop": [],
+          "updates": 1,
+          "updatesPerS": 11.1
+        },
+        "returnVisibleMs": 846,
+        "returnWindow": {
+          "origin": 1794695578292.8,
+          "t0": 115819,
+          "t1": 117587,
+          "spanS": 1.8,
+          "fps": 85.9,
+          "frameMs": {
+            "p50": 8.4,
+            "p95": 16.8,
+            "p99": 91.8,
+            "max": 133.4
+          },
+          "over33": 6,
+          "over50": 2,
+          "over100": 1,
+          "frames": 146,
+          "loafCount": 4,
+          "loafMaxMs": 130.6,
+          "loafBlockingMs": 18.6,
+          "loafTop": [
+            {
+              "duration": 130.6,
+              "render": 1.2,
+              "scripts": []
+            },
+            {
+              "duration": 100.7,
+              "render": 68.5,
+              "scripts": [
+                {
+                  "invoker": "FrameRequestCallback",
+                  "duration": 60,
+                  "source": "stage-DMQazouL.js",
+                  "fn": ""
+                }
+              ]
+            },
+            {
+              "duration": 52.8,
+              "render": 0.2,
+              "scripts": []
+            }
+          ],
+          "updates": 5,
+          "updatesPerS": 2.8
+        },
+        "state": {
+          "sameRun": true,
+          "sameRock": true,
+          "sameGhost": true,
+          "yearsAtLeave": 284.65000000000003,
+          "yearsAtReturn": 284.65000000000003,
+          "noHiddenAdvance": true
+        }
+      },
+      {
+        "guard": {
+          "phase": "navigation 3",
+          "fps": 118.3,
+          "throttled": false,
+          "visibility": "visible"
+        },
+        "departVisibleMs": 29,
+        "departWindow": {
+          "origin": 1794695578292.8,
+          "t0": 118901,
+          "t1": 118966,
+          "spanS": 0.1,
+          "fps": 92.9,
+          "frameMs": {
+            "p50": 8.4,
+            "p95": 20.4,
+            "p99": 20.4,
+            "max": 20.4
+          },
+          "over33": 0,
+          "over50": 0,
+          "over100": 0,
+          "frames": 5,
+          "loafCount": 0,
+          "loafMaxMs": 0,
+          "loafBlockingMs": 0,
+          "loafTop": [],
+          "updates": 0,
+          "updatesPerS": 0
+        },
+        "returnVisibleMs": 901,
+        "returnWindow": {
+          "origin": 1794695578292.8,
+          "t0": 118972,
+          "t1": 120767,
+          "spanS": 1.8,
+          "fps": 87.8,
+          "frameMs": {
+            "p50": 8.4,
+            "p95": 25,
+            "p99": 100,
+            "max": 149.9
+          },
+          "over33": 5,
+          "over50": 3,
+          "over100": 1,
+          "frames": 152,
+          "loafCount": 4,
+          "loafMaxMs": 148.8,
+          "loafBlockingMs": 38.1,
+          "loafTop": [
+            {
+              "duration": 148.8,
+              "render": 1.7,
+              "scripts": []
+            },
+            {
+              "duration": 107.9,
+              "render": 74.5,
+              "scripts": [
+                {
+                  "invoker": "FrameRequestCallback",
+                  "duration": 67,
+                  "source": "stage-DMQazouL.js",
+                  "fn": ""
+                }
+              ]
+            },
+            {
+              "duration": 65.5,
+              "render": 7.8,
+              "scripts": [
+                {
+                  "invoker": "import.then",
+                  "duration": 56,
+                  "source": "review-Di6WIByJ.js",
+                  "fn": ""
+                }
+              ]
+            }
+          ],
+          "updates": 1,
+          "updatesPerS": 0.6
+        },
+        "state": {
+          "sameRun": true,
+          "sameRock": true,
+          "sameGhost": true,
+          "yearsAtLeave": 300,
+          "yearsAtReturn": 300,
+          "noHiddenAdvance": true
+        }
+      },
+      {
+        "guard": {
+          "phase": "navigation 4",
+          "fps": 116,
+          "throttled": false,
+          "visibility": "visible"
+        },
+        "departVisibleMs": 35,
+        "departWindow": {
+          "origin": 1794695578292.8,
+          "t0": 122047,
+          "t1": 122120,
+          "spanS": 0.1,
+          "fps": 119.8,
+          "frameMs": {
+            "p50": 8.4,
+            "p95": 8.5,
+            "p99": 8.5,
+            "max": 8.5
+          },
+          "over33": 0,
+          "over50": 0,
+          "over100": 0,
+          "frames": 4,
+          "loafCount": 0,
+          "loafMaxMs": 0,
+          "loafBlockingMs": 0,
+          "loafTop": [],
+          "updates": 0,
+          "updatesPerS": 0
+        },
+        "returnVisibleMs": 856,
+        "returnWindow": {
+          "origin": 1794695578292.8,
+          "t0": 122124,
+          "t1": 123861,
+          "spanS": 1.7,
+          "fps": 92.7,
+          "frameMs": {
+            "p50": 8.3,
+            "p95": 16.7,
+            "p99": 104.5,
+            "max": 116.7
+          },
+          "over33": 5,
+          "over50": 3,
+          "over100": 2,
+          "frames": 156,
+          "loafCount": 4,
+          "loafMaxMs": 113.6,
+          "loafBlockingMs": 42.4,
+          "loafTop": [
+            {
+              "duration": 113.6,
+              "render": 1.7,
+              "scripts": []
+            },
+            {
+              "duration": 112.3,
+              "render": 80.6,
+              "scripts": [
+                {
+                  "invoker": "FrameRequestCallback",
+                  "duration": 73,
+                  "source": "stage-DMQazouL.js",
+                  "fn": ""
+                }
+              ]
+            },
+            {
+              "duration": 64.1,
+              "render": 7.7,
+              "scripts": [
+                {
+                  "invoker": "import.then",
+                  "duration": 54,
+                  "source": "review-Di6WIByJ.js",
+                  "fn": ""
+                }
+              ]
+            }
+          ],
+          "updates": 1,
+          "updatesPerS": 0.6
+        },
+        "state": {
+          "sameRun": true,
+          "sameRock": true,
+          "sameGhost": true,
+          "yearsAtLeave": 300,
+          "yearsAtReturn": 300,
+          "noHiddenAdvance": true
+        }
+      },
+      {
+        "guard": {
+          "phase": "navigation 5",
+          "fps": 120,
+          "throttled": false,
+          "visibility": "visible"
+        },
+        "departVisibleMs": 32,
+        "departWindow": {
+          "origin": 1794695578292.8,
+          "t0": 125166,
+          "t1": 125232,
+          "spanS": 0.1,
+          "fps": 100,
+          "frameMs": {
+            "p50": 8.4,
+            "p95": 16.6,
+            "p99": 16.6,
+            "max": 16.6
+          },
+          "over33": 0,
+          "over50": 0,
+          "over100": 0,
+          "frames": 5,
+          "loafCount": 0,
+          "loafMaxMs": 0,
+          "loafBlockingMs": 0,
+          "loafTop": [],
+          "updates": 0,
+          "updatesPerS": 0
+        },
+        "returnVisibleMs": 838,
+        "returnWindow": {
+          "origin": 1794695578292.8,
+          "t0": 125237,
+          "t1": 126975,
+          "spanS": 1.7,
+          "fps": 94.3,
+          "frameMs": {
+            "p50": 8.3,
+            "p95": 16.8,
+            "p99": 108.1,
+            "max": 116.9
+          },
+          "over33": 4,
+          "over50": 3,
+          "over100": 2,
+          "frames": 158,
+          "loafCount": 4,
+          "loafMaxMs": 116.4,
+          "loafBlockingMs": 36.1,
+          "loafTop": [
+            {
+              "duration": 116.4,
+              "render": 2,
+              "scripts": []
+            },
+            {
+              "duration": 115,
+              "render": 77.1,
+              "scripts": [
+                {
+                  "invoker": "FrameRequestCallback",
+                  "duration": 67,
+                  "source": "stage-DMQazouL.js",
+                  "fn": ""
+                }
+              ]
+            },
+            {
+              "duration": 61.3,
+              "render": 6,
+              "scripts": [
+                {
+                  "invoker": "import.then",
+                  "duration": 53,
+                  "source": "review-Di6WIByJ.js",
+                  "fn": ""
+                }
+              ]
+            }
+          ],
+          "updates": 1,
+          "updatesPerS": 0.6
+        },
+        "state": {
+          "sameRun": true,
+          "sameRock": true,
+          "sameGhost": true,
+          "yearsAtLeave": 300,
+          "yearsAtReturn": 300,
+          "noHiddenAdvance": true
+        }
+      },
+      {
+        "guard": {
+          "phase": "navigation 6",
+          "fps": 116.6,
+          "throttled": false,
+          "visibility": "visible"
+        },
+        "departVisibleMs": 28,
+        "departWindow": {
+          "origin": 1794695578292.8,
+          "t0": 128281,
+          "t1": 128347,
+          "spanS": 0.1,
+          "fps": 100,
+          "frameMs": {
+            "p50": 8.4,
+            "p95": 16.5,
+            "p99": 16.5,
+            "max": 16.5
+          },
+          "over33": 0,
+          "over50": 0,
+          "over100": 0,
+          "frames": 5,
+          "loafCount": 0,
+          "loafMaxMs": 0,
+          "loafBlockingMs": 0,
+          "loafTop": [],
+          "updates": 0,
+          "updatesPerS": 0
+        },
+        "returnVisibleMs": 848,
+        "returnWindow": {
+          "origin": 1794695578292.8,
+          "t0": 128351,
+          "t1": 130090,
+          "spanS": 1.7,
+          "fps": 93.2,
+          "frameMs": {
+            "p50": 8.3,
+            "p95": 16.7,
+            "p99": 91.6,
+            "max": 99.9
+          },
+          "over33": 5,
+          "over50": 3,
+          "over100": 0,
+          "frames": 157,
+          "loafCount": 4,
+          "loafMaxMs": 109.1,
+          "loafBlockingMs": 30.3,
+          "loafTop": [
+            {
+              "duration": 109.1,
+              "render": 74.4,
+              "scripts": [
+                {
+                  "invoker": "FrameRequestCallback",
+                  "duration": 67,
+                  "source": "stage-DMQazouL.js",
+                  "fn": ""
+                }
+              ]
+            },
+            {
+              "duration": 96.6,
+              "render": 1.6,
+              "scripts": []
+            },
+            {
+              "duration": 56.9,
+              "render": 3.7,
+              "scripts": []
+            }
+          ],
+          "updates": 1,
+          "updatesPerS": 0.6
+        },
+        "state": {
+          "sameRun": true,
+          "sameRock": true,
+          "sameGhost": true,
+          "yearsAtLeave": 300,
+          "yearsAtReturn": 300,
+          "noHiddenAdvance": true
+        }
+      }
+    ]
+  },
+  "memory": [
+    {
+      "label": "after startup",
+      "jsHeapUsedMB": 8.6,
+      "domNodes": 820,
+      "listeners": 123,
+      "documents": 1,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 136.6,
+          "privateMB": 73.2
+        },
+        "gpuProcess": {
+          "wsMB": 652.2,
+          "privateMB": 614.7
+        },
+        "totalPrivateMB": 834.5
+      }
+    },
+    {
+      "label": "after run 1",
+      "run": 1,
+      "modelYears": 300,
+      "kept": 2,
+      "jsHeapUsedMB": 10.6,
+      "domNodes": 889,
+      "listeners": 115,
+      "documents": 1,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 198.1,
+          "privateMB": 128.3
+        },
+        "gpuProcess": {
+          "wsMB": 705.4,
+          "privateMB": 670.4
+        },
+        "totalPrivateMB": 943.3
+      }
+    },
+    {
+      "label": "after run 2",
+      "run": 2,
+      "modelYears": 300,
+      "kept": 2,
+      "jsHeapUsedMB": 10.7,
+      "domNodes": 888,
+      "listeners": 118,
+      "documents": 1,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 202.7,
+          "privateMB": 133.4
+        },
+        "gpuProcess": {
+          "wsMB": 730.3,
+          "privateMB": 695.3
+        },
+        "totalPrivateMB": 973.6
+      }
+    },
+    {
+      "label": "after run 3",
+      "run": 3,
+      "modelYears": 300,
+      "kept": 2,
+      "jsHeapUsedMB": 10.8,
+      "domNodes": 894,
+      "listeners": 118,
+      "documents": 1,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 201,
+          "privateMB": 132.1
+        },
+        "gpuProcess": {
+          "wsMB": 730,
+          "privateMB": 695.2
+        },
+        "totalPrivateMB": 968.8
+      }
+    },
+    {
+      "label": "after run 4",
+      "run": 4,
+      "modelYears": 300,
+      "kept": 2,
+      "jsHeapUsedMB": 10.9,
+      "domNodes": 890,
+      "listeners": 117,
+      "documents": 1,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 203.1,
+          "privateMB": 133.8
+        },
+        "gpuProcess": {
+          "wsMB": 739.9,
+          "privateMB": 706
+        },
+        "totalPrivateMB": 980.9
+      }
+    },
+    {
+      "label": "after run 5",
+      "run": 5,
+      "modelYears": 300,
+      "kept": 2,
+      "jsHeapUsedMB": 10.9,
+      "domNodes": 888,
+      "listeners": 119,
+      "documents": 1,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 182.5,
+          "privateMB": 112.8
+        },
+        "gpuProcess": {
+          "wsMB": 718,
+          "privateMB": 683.3
+        },
+        "totalPrivateMB": 937.3
+      }
+    },
+    {
+      "label": "after run 6",
+      "run": 6,
+      "modelYears": 300,
+      "kept": 2,
+      "jsHeapUsedMB": 11,
+      "domNodes": 894,
+      "listeners": 118,
+      "documents": 1,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 184.6,
+          "privateMB": 114.7
+        },
+        "gpuProcess": {
+          "wsMB": 726,
+          "privateMB": 691.2
+        },
+        "totalPrivateMB": 947.2
+      }
+    },
+    {
+      "label": "after navigation 0",
+      "cycle": 0,
+      "jsHeapUsedMB": 13.3,
+      "domNodes": 2403,
+      "listeners": 182,
+      "documents": 2,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 300.5,
+          "privateMB": 211.7
+        },
+        "gpuProcess": {
+          "wsMB": 1328.8,
+          "privateMB": 1254.4
+        },
+        "totalPrivateMB": 1608.7
+      }
+    },
+    {
+      "label": "after navigation 1",
+      "cycle": 1,
+      "jsHeapUsedMB": 13.3,
+      "domNodes": 2428,
+      "listeners": 184,
+      "documents": 2,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 300.1,
+          "privateMB": 210.6
+        },
+        "gpuProcess": {
+          "wsMB": 1385.8,
+          "privateMB": 1311.3
+        },
+        "totalPrivateMB": 1665
+      }
+    },
+    {
+      "label": "after navigation 2",
+      "cycle": 2,
+      "jsHeapUsedMB": 13.5,
+      "domNodes": 2334,
+      "listeners": 191,
+      "documents": 2,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 288.8,
+          "privateMB": 198.1
+        },
+        "gpuProcess": {
+          "wsMB": 1434.4,
+          "privateMB": 1359.2
+        },
+        "totalPrivateMB": 1700
+      }
+    },
+    {
+      "label": "after navigation 3",
+      "cycle": 3,
+      "jsHeapUsedMB": 13.6,
+      "domNodes": 2334,
+      "listeners": 192,
+      "documents": 2,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 288,
+          "privateMB": 198
+        },
+        "gpuProcess": {
+          "wsMB": 1472.5,
+          "privateMB": 1396.7
+        },
+        "totalPrivateMB": 1735.1
+      }
+    },
+    {
+      "label": "after navigation 4",
+      "cycle": 4,
+      "jsHeapUsedMB": 13.7,
+      "domNodes": 2334,
+      "listeners": 192,
+      "documents": 2,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 282.1,
+          "privateMB": 193.1
+        },
+        "gpuProcess": {
+          "wsMB": 1410.8,
+          "privateMB": 1335.3
+        },
+        "totalPrivateMB": 1668.5
+      }
+    },
+    {
+      "label": "after navigation 5",
+      "cycle": 5,
+      "jsHeapUsedMB": 13.8,
+      "domNodes": 2334,
+      "listeners": 192,
+      "documents": 2,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 286.8,
+          "privateMB": 197.6
+        },
+        "gpuProcess": {
+          "wsMB": 1413.4,
+          "privateMB": 1339
+        },
+        "totalPrivateMB": 1679.1
+      }
+    },
+    {
+      "label": "after navigation 6",
+      "cycle": 6,
+      "jsHeapUsedMB": 13.8,
+      "domNodes": 2334,
+      "listeners": 192,
+      "documents": 2,
+      "process": {
+        "rendererLargest": {
+          "pid": 13816,
+          "wsMB": 287.8,
+          "privateMB": 198.4
+        },
+        "gpuProcess": {
+          "wsMB": 1422.3,
+          "privateMB": 1347.9
+        },
+        "totalPrivateMB": 1688.7
+      }
+    }
+  ],
+  "checks": {
+    "ghostAfterDrop": "shale",
+    "matched": {
+      "years": 100,
+      "ghost": "shale",
+      "compareNote": "···· a separate run with another rock, shale, at 100 model years: lowered 20 m, wall 34 degrees"
+    }
+  },
+  "guards": [
+    {
+      "phase": "idle",
+      "fps": 120,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "rock choice",
+      "fps": 120,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "manipulation",
+      "fps": 120,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "playback",
+      "fps": 120,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "scrub",
+      "fps": 118.3,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "comparison",
+      "fps": 120,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "repeated runs",
+      "fps": 120,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "navigation 0",
+      "fps": 120,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "navigation 1",
+      "fps": 120,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "navigation 2",
+      "fps": 113.4,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "navigation 3",
+      "fps": 118.3,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "navigation 4",
+      "fps": 116,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "navigation 5",
+      "fps": 120,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "navigation 6",
+      "fps": 116.6,
+      "throttled": false,
+      "visibility": "visible"
+    },
+    {
+      "phase": "warm start",
+      "fps": 119.9,
+      "throttled": false,
+      "visibility": "visible"
+    }
+  ],
+  "interruptions": [
+    {
+      "from": 1794695606042,
+      "to": 1794695608071,
+      "state": "minimized"
+    }
+  ],
+  "errors": [],
+  "chrome": "157.0.8103.78",
+  "device": {
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+    "webgpuAdapter": {
+      "vendor": "intel",
+      "architecture": "xe-2lpg",
+      "device": "",
+      "description": ""
+    },
+    "stageRenderer": "webgpu",
+    "hardwareConcurrency": 8
+  },
+  "research": {
+    "backend": "webgpu",
+    "grid": 256,
+    "failures": "[]"
+  },
+  "glacierSolver": "webgpu",
+  "thermalEnd": {
+    "\\_tz.thrm": {
+      "kelvin": 360,
+      "celsius": 87
+    },
+    "\\_tz.thz0": {
+      "kelvin": 335,
+      "celsius": 62
+    }
+  },
+  "finishedAt": "2026-11-14T22:35:20.251Z"
+}

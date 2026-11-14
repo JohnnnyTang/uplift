@@ -11,7 +11,7 @@
  */
 import { mkdtempSync, rmSync, writeFileSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 import { fileURLToPath, URL } from "node:url";
 import process from "node:process";
 import console from "node:console";
@@ -99,6 +99,6 @@ for (const [a, b] of gaps.gaps) {
     .slice(0, 12);
   summary.push({ gapAtMs: Math.round(a), gapMs: Math.round(b - a), overlap });
 }
-const report = { query: QUERY, trace: OUT, marks: gaps.marks, gaps: summary };
+const report = { query: QUERY, trace: basename(OUT), marks: gaps.marks, gaps: summary };
 writeFileSync(OUT.replace(/\.json$/, "-gaps.json"), JSON.stringify(report, null, 1) + "\n");
 console.log(JSON.stringify(report, null, 1));

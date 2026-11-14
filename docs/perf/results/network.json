@@ -1,0 +1,801 @@
+{
+  "session": "6A",
+  "sha": "32d45c83461d80e1a673a4757eac2ed9c73454ef",
+  "base": "http://127.0.0.1:4190",
+  "startedAt": "2026-11-14T22:39:51.621Z",
+  "loads": [
+    {
+      "profile": "local (no throttling)",
+      "rep": 1,
+      "fcpMs": 256,
+      "drawingVisibleMs": 766,
+      "stageReadyMs": 1482,
+      "interactiveMs": 3738,
+      "requests": 16,
+      "transferKB": 442,
+      "lastResponseEndMs": 742,
+      "resources": [
+        {
+          "name": "index-DZpuOPC3.js",
+          "endMs": 61,
+          "transferB": 19889
+        },
+        {
+          "name": "cpu-CFG0KgGf.js",
+          "endMs": 56,
+          "transferB": 9222
+        },
+        {
+          "name": "src-BA8pV1bv.js",
+          "endMs": 81,
+          "transferB": 102195
+        },
+        {
+          "name": "rolldown-runtime-DK3Fl9T5.js",
+          "endMs": 44,
+          "transferB": 458
+        },
+        {
+          "name": "spreads-BQWnguc2.js",
+          "endMs": 70,
+          "transferB": 20561
+        },
+        {
+          "name": "src-CvJqGyzx.css",
+          "endMs": 68,
+          "transferB": 8573
+        },
+        {
+          "name": "index-Bz-Z3uNa.css",
+          "endMs": 66,
+          "transferB": 4132
+        },
+        {
+          "name": "review-Di6WIByJ.js",
+          "endMs": 115,
+          "transferB": 22609
+        },
+        {
+          "name": "review-CrA74emQ.css",
+          "endMs": 113,
+          "transferB": 4710
+        },
+        {
+          "name": "stage-DMQazouL.js",
+          "endMs": 155,
+          "transferB": 12006
+        },
+        {
+          "name": "three.webgpu-BlxmCGip.js",
+          "endMs": 202,
+          "transferB": 219028
+        },
+        {
+          "name": "contours-DnAMMxPK.js",
+          "endMs": 151,
+          "transferB": 2875
+        },
+        {
+          "name": "materials-Da3MFbK-.js",
+          "endMs": 153,
+          "transferB": 2630
+        },
+        {
+          "name": "glacial.worker-_9gsJ_9g.js",
+          "endMs": 231,
+          "transferB": 21736
+        },
+        {
+          "name": "transition-BufvvTWI.js",
+          "endMs": 742,
+          "transferB": 1093
+        }
+      ]
+    },
+    {
+      "profile": "local (no throttling)",
+      "rep": 2,
+      "fcpMs": 288,
+      "drawingVisibleMs": 772,
+      "stageReadyMs": 1490,
+      "interactiveMs": 3737,
+      "requests": 16,
+      "transferKB": 442,
+      "lastResponseEndMs": 742,
+      "resources": [
+        {
+          "name": "index-DZpuOPC3.js",
+          "endMs": 38,
+          "transferB": 19889
+        },
+        {
+          "name": "cpu-CFG0KgGf.js",
+          "endMs": 41,
+          "transferB": 9222
+        },
+        {
+          "name": "src-BA8pV1bv.js",
+          "endMs": 59,
+          "transferB": 102195
+        },
+        {
+          "name": "rolldown-runtime-DK3Fl9T5.js",
+          "endMs": 37,
+          "transferB": 458
+        },
+        {
+          "name": "spreads-BQWnguc2.js",
+          "endMs": 51,
+          "transferB": 20561
+        },
+        {
+          "name": "src-CvJqGyzx.css",
+          "endMs": 45,
+          "transferB": 8573
+        },
+        {
+          "name": "index-Bz-Z3uNa.css",
+          "endMs": 47,
+          "transferB": 4132
+        },
+        {
+          "name": "review-Di6WIByJ.js",
+          "endMs": 92,
+          "transferB": 22609
+        },
+        {
+          "name": "review-CrA74emQ.css",
+          "endMs": 91,
+          "transferB": 4710
+        },
+        {
+          "name": "stage-DMQazouL.js",
+          "endMs": 115,
+          "transferB": 12006
+        },
+        {
+          "name": "three.webgpu-BlxmCGip.js",
+          "endMs": 144,
+          "transferB": 219028
+        },
+        {
+          "name": "contours-DnAMMxPK.js",
+          "endMs": 114,
+          "transferB": 2875
+        },
+        {
+          "name": "materials-Da3MFbK-.js",
+          "endMs": 114,
+          "transferB": 2630
+        },
+        {
+          "name": "glacial.worker-_9gsJ_9g.js",
+          "endMs": 181,
+          "transferB": 21736
+        },
+        {
+          "name": "transition-BufvvTWI.js",
+          "endMs": 742,
+          "transferB": 1093
+        }
+      ]
+    },
+    {
+      "profile": "local (no throttling)",
+      "rep": 3,
+      "fcpMs": 212,
+      "drawingVisibleMs": 798,
+      "stageReadyMs": 1551,
+      "interactiveMs": 3788,
+      "requests": 16,
+      "transferKB": 442,
+      "lastResponseEndMs": 770,
+      "resources": [
+        {
+          "name": "index-DZpuOPC3.js",
+          "endMs": 51,
+          "transferB": 19889
+        },
+        {
+          "name": "cpu-CFG0KgGf.js",
+          "endMs": 55,
+          "transferB": 9222
+        },
+        {
+          "name": "src-BA8pV1bv.js",
+          "endMs": 77,
+          "transferB": 102195
+        },
+        {
+          "name": "rolldown-runtime-DK3Fl9T5.js",
+          "endMs": 50,
+          "transferB": 458
+        },
+        {
+          "name": "spreads-BQWnguc2.js",
+          "endMs": 67,
+          "transferB": 20561
+        },
+        {
+          "name": "src-CvJqGyzx.css",
+          "endMs": 59,
+          "transferB": 8573
+        },
+        {
+          "name": "index-Bz-Z3uNa.css",
+          "endMs": 60,
+          "transferB": 4132
+        },
+        {
+          "name": "review-Di6WIByJ.js",
+          "endMs": 107,
+          "transferB": 22609
+        },
+        {
+          "name": "review-CrA74emQ.css",
+          "endMs": 102,
+          "transferB": 4710
+        },
+        {
+          "name": "stage-DMQazouL.js",
+          "endMs": 132,
+          "transferB": 12006
+        },
+        {
+          "name": "three.webgpu-BlxmCGip.js",
+          "endMs": 172,
+          "transferB": 219028
+        },
+        {
+          "name": "contours-DnAMMxPK.js",
+          "endMs": 139,
+          "transferB": 2875
+        },
+        {
+          "name": "materials-Da3MFbK-.js",
+          "endMs": 140,
+          "transferB": 2630
+        },
+        {
+          "name": "glacial.worker-_9gsJ_9g.js",
+          "endMs": 196,
+          "transferB": 21736
+        },
+        {
+          "name": "transition-BufvvTWI.js",
+          "endMs": 770,
+          "transferB": 1093
+        }
+      ]
+    },
+    {
+      "profile": "emulated 10 Mbit/s, 40 ms RTT",
+      "rep": 1,
+      "fcpMs": 408,
+      "drawingVisibleMs": 1177,
+      "stageReadyMs": 1468,
+      "interactiveMs": 4165,
+      "requests": 16,
+      "transferKB": 442,
+      "lastResponseEndMs": 1199,
+      "resources": [
+        {
+          "name": "index-DZpuOPC3.js",
+          "endMs": 212,
+          "transferB": 19889
+        },
+        {
+          "name": "cpu-CFG0KgGf.js",
+          "endMs": 180,
+          "transferB": 9222
+        },
+        {
+          "name": "src-BA8pV1bv.js",
+          "endMs": 290,
+          "transferB": 102195
+        },
+        {
+          "name": "rolldown-runtime-DK3Fl9T5.js",
+          "endMs": 150,
+          "transferB": 458
+        },
+        {
+          "name": "src-CvJqGyzx.css",
+          "endMs": 182,
+          "transferB": 8573
+        },
+        {
+          "name": "spreads-BQWnguc2.js",
+          "endMs": 213,
+          "transferB": 20561
+        },
+        {
+          "name": "index-Bz-Z3uNa.css",
+          "endMs": 212,
+          "transferB": 4132
+        },
+        {
+          "name": "review-Di6WIByJ.js",
+          "endMs": 397,
+          "transferB": 22609
+        },
+        {
+          "name": "review-CrA74emQ.css",
+          "endMs": 371,
+          "transferB": 4710
+        },
+        {
+          "name": "stage-DMQazouL.js",
+          "endMs": 506,
+          "transferB": 12006
+        },
+        {
+          "name": "three.webgpu-BlxmCGip.js",
+          "endMs": 691,
+          "transferB": 219028
+        },
+        {
+          "name": "contours-DnAMMxPK.js",
+          "endMs": 478,
+          "transferB": 2875
+        },
+        {
+          "name": "materials-Da3MFbK-.js",
+          "endMs": 477,
+          "transferB": 2630
+        },
+        {
+          "name": "glacial.worker-_9gsJ_9g.js",
+          "endMs": 772,
+          "transferB": 21736
+        },
+        {
+          "name": "transition-BufvvTWI.js",
+          "endMs": 1199,
+          "transferB": 1093
+        }
+      ]
+    },
+    {
+      "profile": "emulated 10 Mbit/s, 40 ms RTT",
+      "rep": 2,
+      "fcpMs": 424,
+      "drawingVisibleMs": 1248,
+      "stageReadyMs": 1518,
+      "interactiveMs": 4209,
+      "requests": 16,
+      "transferKB": 442,
+      "lastResponseEndMs": 1279,
+      "resources": [
+        {
+          "name": "index-DZpuOPC3.js",
+          "endMs": 217,
+          "transferB": 19889
+        },
+        {
+          "name": "cpu-CFG0KgGf.js",
+          "endMs": 202,
+          "transferB": 9222
+        },
+        {
+          "name": "rolldown-runtime-DK3Fl9T5.js",
+          "endMs": 171,
+          "transferB": 458
+        },
+        {
+          "name": "src-BA8pV1bv.js",
+          "endMs": 310,
+          "transferB": 102195
+        },
+        {
+          "name": "spreads-BQWnguc2.js",
+          "endMs": 262,
+          "transferB": 20561
+        },
+        {
+          "name": "src-CvJqGyzx.css",
+          "endMs": 202,
+          "transferB": 8573
+        },
+        {
+          "name": "index-Bz-Z3uNa.css",
+          "endMs": 174,
+          "transferB": 4132
+        },
+        {
+          "name": "review-Di6WIByJ.js",
+          "endMs": 417,
+          "transferB": 22609
+        },
+        {
+          "name": "review-CrA74emQ.css",
+          "endMs": 390,
+          "transferB": 4710
+        },
+        {
+          "name": "stage-DMQazouL.js",
+          "endMs": 531,
+          "transferB": 12006
+        },
+        {
+          "name": "three.webgpu-BlxmCGip.js",
+          "endMs": 716,
+          "transferB": 219028
+        },
+        {
+          "name": "contours-DnAMMxPK.js",
+          "endMs": 505,
+          "transferB": 2875
+        },
+        {
+          "name": "materials-Da3MFbK-.js",
+          "endMs": 506,
+          "transferB": 2630
+        },
+        {
+          "name": "glacial.worker-_9gsJ_9g.js",
+          "endMs": 800,
+          "transferB": 21736
+        },
+        {
+          "name": "transition-BufvvTWI.js",
+          "endMs": 1279,
+          "transferB": 1093
+        }
+      ]
+    },
+    {
+      "profile": "emulated 10 Mbit/s, 40 ms RTT",
+      "rep": 3,
+      "fcpMs": 428,
+      "drawingVisibleMs": 1181,
+      "stageReadyMs": 1447,
+      "interactiveMs": 4146,
+      "requests": 16,
+      "transferKB": 442,
+      "lastResponseEndMs": 1223,
+      "resources": [
+        {
+          "name": "index-DZpuOPC3.js",
+          "endMs": 207,
+          "transferB": 19889
+        },
+        {
+          "name": "cpu-CFG0KgGf.js",
+          "endMs": 191,
+          "transferB": 9222
+        },
+        {
+          "name": "rolldown-runtime-DK3Fl9T5.js",
+          "endMs": 161,
+          "transferB": 458
+        },
+        {
+          "name": "src-BA8pV1bv.js",
+          "endMs": 315,
+          "transferB": 102195
+        },
+        {
+          "name": "spreads-BQWnguc2.js",
+          "endMs": 253,
+          "transferB": 20561
+        },
+        {
+          "name": "src-CvJqGyzx.css",
+          "endMs": 192,
+          "transferB": 8573
+        },
+        {
+          "name": "index-Bz-Z3uNa.css",
+          "endMs": 165,
+          "transferB": 4132
+        },
+        {
+          "name": "review-Di6WIByJ.js",
+          "endMs": 409,
+          "transferB": 22609
+        },
+        {
+          "name": "review-CrA74emQ.css",
+          "endMs": 394,
+          "transferB": 4710
+        },
+        {
+          "name": "stage-DMQazouL.js",
+          "endMs": 517,
+          "transferB": 12006
+        },
+        {
+          "name": "three.webgpu-BlxmCGip.js",
+          "endMs": 705,
+          "transferB": 219028
+        },
+        {
+          "name": "materials-Da3MFbK-.js",
+          "endMs": 488,
+          "transferB": 2630
+        },
+        {
+          "name": "contours-DnAMMxPK.js",
+          "endMs": 489,
+          "transferB": 2875
+        },
+        {
+          "name": "glacial.worker-_9gsJ_9g.js",
+          "endMs": 788,
+          "transferB": 21736
+        },
+        {
+          "name": "transition-BufvvTWI.js",
+          "endMs": 1223,
+          "transferB": 1093
+        }
+      ]
+    },
+    {
+      "profile": "emulated 1.6 Mbit/s, 150 ms RTT (DevTools 'Slow 4G'-like)",
+      "rep": 1,
+      "fcpMs": 1324,
+      "drawingVisibleMs": 3724,
+      "stageReadyMs": 4161,
+      "interactiveMs": 6848,
+      "requests": 16,
+      "transferKB": 442,
+      "lastResponseEndMs": 3868,
+      "resources": [
+        {
+          "name": "index-DZpuOPC3.js",
+          "endMs": 740,
+          "transferB": 19889
+        },
+        {
+          "name": "rolldown-runtime-DK3Fl9T5.js",
+          "endMs": 368,
+          "transferB": 458
+        },
+        {
+          "name": "cpu-CFG0KgGf.js",
+          "endMs": 585,
+          "transferB": 9222
+        },
+        {
+          "name": "spreads-BQWnguc2.js",
+          "endMs": 834,
+          "transferB": 20561
+        },
+        {
+          "name": "src-BA8pV1bv.js",
+          "endMs": 1220,
+          "transferB": 102195
+        },
+        {
+          "name": "index-Bz-Z3uNa.css",
+          "endMs": 476,
+          "transferB": 4132
+        },
+        {
+          "name": "src-CvJqGyzx.css",
+          "endMs": 569,
+          "transferB": 8573
+        },
+        {
+          "name": "review-Di6WIByJ.js",
+          "endMs": 1549,
+          "transferB": 22609
+        },
+        {
+          "name": "review-CrA74emQ.css",
+          "endMs": 1454,
+          "transferB": 4710
+        },
+        {
+          "name": "stage-DMQazouL.js",
+          "endMs": 1893,
+          "transferB": 12006
+        },
+        {
+          "name": "three.webgpu-BlxmCGip.js",
+          "endMs": 2966,
+          "transferB": 219028
+        },
+        {
+          "name": "contours-DnAMMxPK.js",
+          "endMs": 1768,
+          "transferB": 2875
+        },
+        {
+          "name": "materials-Da3MFbK-.js",
+          "endMs": 1768,
+          "transferB": 2630
+        },
+        {
+          "name": "glacial.worker-_9gsJ_9g.js",
+          "endMs": 3276,
+          "transferB": 21736
+        },
+        {
+          "name": "transition-BufvvTWI.js",
+          "endMs": 3868,
+          "transferB": 1093
+        }
+      ]
+    },
+    {
+      "profile": "emulated 1.6 Mbit/s, 150 ms RTT (DevTools 'Slow 4G'-like)",
+      "rep": 2,
+      "fcpMs": 1328,
+      "drawingVisibleMs": 3804,
+      "stageReadyMs": 4205,
+      "interactiveMs": 6896,
+      "requests": 16,
+      "transferKB": 442,
+      "lastResponseEndMs": 3938,
+      "resources": [
+        {
+          "name": "index-DZpuOPC3.js",
+          "endMs": 755,
+          "transferB": 19889
+        },
+        {
+          "name": "cpu-CFG0KgGf.js",
+          "endMs": 602,
+          "transferB": 9222
+        },
+        {
+          "name": "rolldown-runtime-DK3Fl9T5.js",
+          "endMs": 381,
+          "transferB": 458
+        },
+        {
+          "name": "spreads-BQWnguc2.js",
+          "endMs": 849,
+          "transferB": 20561
+        },
+        {
+          "name": "src-BA8pV1bv.js",
+          "endMs": 1238,
+          "transferB": 102195
+        },
+        {
+          "name": "index-Bz-Z3uNa.css",
+          "endMs": 492,
+          "transferB": 4132
+        },
+        {
+          "name": "src-CvJqGyzx.css",
+          "endMs": 586,
+          "transferB": 8573
+        },
+        {
+          "name": "review-Di6WIByJ.js",
+          "endMs": 1580,
+          "transferB": 22609
+        },
+        {
+          "name": "review-CrA74emQ.css",
+          "endMs": 1471,
+          "transferB": 4710
+        },
+        {
+          "name": "stage-DMQazouL.js",
+          "endMs": 1913,
+          "transferB": 12006
+        },
+        {
+          "name": "three.webgpu-BlxmCGip.js",
+          "endMs": 2987,
+          "transferB": 219028
+        },
+        {
+          "name": "contours-DnAMMxPK.js",
+          "endMs": 1804,
+          "transferB": 2875
+        },
+        {
+          "name": "materials-Da3MFbK-.js",
+          "endMs": 1804,
+          "transferB": 2630
+        },
+        {
+          "name": "glacial.worker-_9gsJ_9g.js",
+          "endMs": 3330,
+          "transferB": 21736
+        },
+        {
+          "name": "transition-BufvvTWI.js",
+          "endMs": 3938,
+          "transferB": 1093
+        }
+      ]
+    },
+    {
+      "profile": "emulated 1.6 Mbit/s, 150 ms RTT (DevTools 'Slow 4G'-like)",
+      "rep": 3,
+      "fcpMs": 1304,
+      "drawingVisibleMs": 3717,
+      "stageReadyMs": 4120,
+      "interactiveMs": 6812,
+      "requests": 16,
+      "transferKB": 442,
+      "lastResponseEndMs": 3853,
+      "resources": [
+        {
+          "name": "index-DZpuOPC3.js",
+          "endMs": 730,
+          "transferB": 19889
+        },
+        {
+          "name": "cpu-CFG0KgGf.js",
+          "endMs": 590,
+          "transferB": 9222
+        },
+        {
+          "name": "src-BA8pV1bv.js",
+          "endMs": 1211,
+          "transferB": 102195
+        },
+        {
+          "name": "rolldown-runtime-DK3Fl9T5.js",
+          "endMs": 390,
+          "transferB": 458
+        },
+        {
+          "name": "spreads-BQWnguc2.js",
+          "endMs": 838,
+          "transferB": 20561
+        },
+        {
+          "name": "src-CvJqGyzx.css",
+          "endMs": 562,
+          "transferB": 8573
+        },
+        {
+          "name": "index-Bz-Z3uNa.css",
+          "endMs": 468,
+          "transferB": 4132
+        },
+        {
+          "name": "review-Di6WIByJ.js",
+          "endMs": 1538,
+          "transferB": 22609
+        },
+        {
+          "name": "review-CrA74emQ.css",
+          "endMs": 1446,
+          "transferB": 4710
+        },
+        {
+          "name": "stage-DMQazouL.js",
+          "endMs": 1865,
+          "transferB": 12006
+        },
+        {
+          "name": "three.webgpu-BlxmCGip.js",
+          "endMs": 2945,
+          "transferB": 219028
+        },
+        {
+          "name": "contours-DnAMMxPK.js",
+          "endMs": 1743,
+          "transferB": 2875
+        },
+        {
+          "name": "materials-Da3MFbK-.js",
+          "endMs": 1757,
+          "transferB": 2630
+        },
+        {
+          "name": "glacial.worker-_9gsJ_9g.js",
+          "endMs": 3258,
+          "transferB": 21736
+        },
+        {
+          "name": "transition-BufvvTWI.js",
+          "endMs": 3853,
+          "transferB": 1093
+        }
+      ]
+    }
+  ],
+  "chrome": "157.0.8103.78"
+}

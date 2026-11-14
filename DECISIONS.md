@@ -2392,3 +2392,53 @@ INP ≤ 200 ms) and the RAIL model's 100 ms response for continuous manipulation
 A miss is reported as a miss. A fix is made only for a demonstrated bottleneck, bounded, with before/after
 measurement and fixed-step results unchanged; solver changes would need their own justification and an updated
 CPU/GPU comparison. Other hardware remains **pending**, never inferred from this machine.
+
+## D-W6-6A-RESULTS — Reader-journey performance on the target laptop: smooth on both paths, three narrow misses, no fix
+
+2026-11-14. Session 6A, measured at `32d45c8` (application code identical to main `c50cbd9`) against the targets
+declared in D-W6-6A (`22ef5f1`). Evidence: `docs/perf/README.md`, `docs/perf/results/`.
+
+**Setup.** ASUS Zenbook S 14, Intel Core Ultra 7 258V, Intel Arc 140V (driver 32.0.101.8860), Windows 11
+10.0.26300, 2880 × 1800 at 120 Hz. Visible installed Chrome 157.0.8103.78, maximised (1440 × 709 CSS px, DPR 2).
+AC power, "Best performance" mode, thermal zones 79–90 °C. Five fresh-profile repetitions per path. Backends
+were read back on every repetition: WebGPU path = WebGPU glacier, WebGPU stage, WebGPU research terrain 256²;
+CPU path = CPU worker glacier, WebGPU stage, CPU worker research terrain 128². A watchdog restored the window
+after outside minimisation (7 times); the 12 overlapping samples were dropped, not reported.
+
+**Met (both paths unless stated).** Readable drawing ≤ 1.34 s cold and stage ready ≤ 1.8 s. Transition median
+80–97 fps, p95 ≤ 14.1 ms. Playback at 1× and 4×: p95 frame ≤ 16.6 ms and no frame over 100 ms. WebGPU reaches the
+scheduled 10 model years per second. Specimen drop p90 ≤ 130 ms. Front face p90 ≤ 33 ms, camera drag ≤ 16.7 ms
+frames. Keyboard scrub p90 ≤ 39 ms. Ghost on/off p90 ≤ 17 ms. First research departure ≤ 0.6 s (page) and
+≤ 1.7 s (terrain ready); repeat departures ≤ 0.76 s. Run, rock, kept run, ghost and model time were identical
+after all 70 returns, with no hidden advance. Research terrain (AC1) 112 fps at 256² on WebGPU and 120 fps at 128²
+on the CPU worker. Memory bounded: 2 kept runs, heap 8.6 → 11 MB over the repeated runs, ≤ 5 % growth over 7
+navigation cycles. Bundle 6 663 058 / 10 000 000 bytes.
+
+**Missed (narrowly; recorded, not fixed).**
+
+1. CPU path, scrub with a kept run: p90 185 ms (max 452) against 100. Only the first scrub right after Pause is
+   slow: it waits while Pause settles the in-flight CPU batch (up to 1 model year, about 300 ms here). Repeat
+   research departures on the CPU path (144–754 ms) wait on the same settle.
+2. WebGPU path, rock by page selector before advance: p90 204 ms against 200. The first two new GPU runs take
+   135–226 ms, later ones 43–106 ms.
+3. WebGPU path, return from research: p90 1 051 ms (median 887) against 1 000. This includes the authored 450 ms
+   return crossfade and a new WebGPU stage renderer per mount (D-W5-5M item 4).
+
+**Why no fix.** Each cause lies outside 6A's owned paths: the glacial host and run config, GPU run creation, and
+the ink stage's dispose-on-departure design. None is a stutter or a blocked gesture on this machine; each is a
+few frames over a threshold 6A chose. Smaller CPU batches would bound miss 1 without changing fixed-step results
+(batching is result-independent, D-W5-5J item 4). That is the one bounded fix worth an owner decision; it belongs
+to the owner of `hachure/runtime/src/glacial-host` and `runs`.
+
+**Also recorded.**
+
+- WebGPU playback uses about 58 % of the main thread (CPU path 10 %), mostly layout, paint and style after
+  each host publish: headroom, not a miss.
+- The cold transition has one or two 163–333 ms frames on both paths. The trace shows Chrome's delayed teardown of
+  the previous document's compositor waiting on the GPU; it is not app script.
+- A trial-only observation of 280–300 ms playback frames was not reproduced in 5 repetitions, a trace and 12 A/B
+  runs; it is kept as a diagnostic.
+
+**Ledger.** This evidence supports the acceptance-ledger row "Startup, manipulation and page-turn performance"
+for this one device and browser (visible target integrated GPU measured; three narrow misses as above). 6B owns
+the ledger. Other hardware, battery, mobile and other browsers stay **pending**, never inferred.
