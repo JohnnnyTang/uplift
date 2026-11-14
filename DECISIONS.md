@@ -2251,7 +2251,7 @@ journey walk-through that a first-time reader finds Play without help. Cross-own
 
 **Cross-owned edits (minimal).** `uplift/spreads/geomorph.u-valley/deeper.uni.md` (one sentence);
 `uplift/book/index.html` (icon link); `hachure/glacier/test/browser/{harness.ts,globals.d.ts,vitest.browser.config.mjs}`
-(evidence directory override).
+(evidence directory override); `.github/workflows/ci.yml` (e2e job timeout 15 → 25 minutes: the acceptance spec plays the glacier on the CPU worker to 100 model years three times, and CI run 43570724708 was cancelled at the 15-minute limit with every completed test passing).
 
 **Pending, not inferred:** owner scene review, expert sign-off (eight questions in the packet), first-time
 readers, screen-reader listening, colour-vision/projector checks, other GPUs, mobile and non-Chrome browsers.
