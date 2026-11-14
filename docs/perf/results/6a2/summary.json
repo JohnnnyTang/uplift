@@ -1,0 +1,517 @@
+{
+  "before/webgpu": {
+    "reps": 5,
+    "errors": 0,
+    "sha": ["05a547a"],
+    "chrome": ["157.0.8103.78"],
+    "driver": ["32.0.101.8860"],
+    "onAcPower": true,
+    "thermalC": [61, 95],
+    "window": ["2026-11-14T23:24:57.070Z", "2026-11-14T23:40:50.119Z"],
+    "play1xYearsPerS": {
+      "n": 5,
+      "median": 10.01,
+      "p90": 10.11,
+      "max": 10.11
+    },
+    "play4xYearsPerS": {
+      "n": 5,
+      "median": 34.97,
+      "p90": 38.48,
+      "max": 38.48
+    },
+    "play1xFps": {
+      "n": 5,
+      "median": 118.3,
+      "p90": 119.3,
+      "max": 119.3
+    },
+    "play1xP95FrameMs": {
+      "n": 5,
+      "median": 8.5,
+      "p90": 8.6,
+      "max": 8.6
+    },
+    "play1xMaxFrameMs": {
+      "n": 5,
+      "median": 25.3,
+      "p90": 33.7,
+      "max": 33.7
+    },
+    "play4xFps": {
+      "n": 5,
+      "median": 118.2,
+      "p90": 118.8,
+      "max": 118.8
+    },
+    "play4xMaxFrameMs": {
+      "n": 5,
+      "median": 16.8,
+      "p90": 41.6,
+      "max": 41.6
+    },
+    "play1xMainThreadBusyPct": {
+      "n": 5,
+      "median": 56,
+      "p90": 58,
+      "max": 58
+    },
+    "play1xLandformUpdatesPerS": {
+      "n": 5,
+      "median": 4.8,
+      "p90": 4.8,
+      "max": 4.8
+    },
+    "pauseToPlayLabelMs": {
+      "n": 35,
+      "median": 12,
+      "p90": 27,
+      "max": 31
+    },
+    "pauseToSettledFrameMs": {
+      "n": 35,
+      "median": 34,
+      "p90": 46,
+      "max": 59
+    },
+    "scrubAfterPauseMs": {
+      "n": 30,
+      "median": 27,
+      "p90": 32,
+      "max": 35
+    },
+    "scrubAfterSettledPauseMs": {
+      "n": 30,
+      "median": 27,
+      "p90": 31,
+      "max": 34
+    },
+    "departFirstMs": {
+      "n": 5,
+      "median": 161,
+      "p90": 189,
+      "max": 189
+    },
+    "departRepeatMs": {
+      "n": 30,
+      "median": 48,
+      "p90": 55,
+      "max": 65
+    },
+    "runKeptAfterReturn": true,
+    "throttledGuards": 0,
+    "droppedSamples": 0
+  },
+  "before/cpu": {
+    "reps": 5,
+    "errors": 0,
+    "sha": ["05a547a"],
+    "chrome": ["157.0.8103.78"],
+    "driver": ["32.0.101.8860"],
+    "onAcPower": true,
+    "thermalC": [61, 96],
+    "window": ["2026-11-14T23:26:43.770Z", "2026-11-14T23:42:35.002Z"],
+    "play1xYearsPerS": {
+      "n": 5,
+      "median": 2.99,
+      "p90": 3.33,
+      "max": 3.33
+    },
+    "play4xYearsPerS": {
+      "n": 5,
+      "median": 2.74,
+      "p90": 2.99,
+      "max": 2.99
+    },
+    "play1xFps": {
+      "n": 5,
+      "median": 118,
+      "p90": 118.8,
+      "max": 118.8
+    },
+    "play1xP95FrameMs": {
+      "n": 5,
+      "median": 8.5,
+      "p90": 8.6,
+      "max": 8.6
+    },
+    "play1xMaxFrameMs": {
+      "n": 5,
+      "median": 24.6,
+      "p90": 25.1,
+      "max": 25.1
+    },
+    "play4xFps": {
+      "n": 5,
+      "median": 117.8,
+      "p90": 118.5,
+      "max": 118.5
+    },
+    "play4xMaxFrameMs": {
+      "n": 5,
+      "median": 16.8,
+      "p90": 50,
+      "max": 50
+    },
+    "play1xMainThreadBusyPct": {
+      "n": 5,
+      "median": 10,
+      "p90": 10,
+      "max": 10
+    },
+    "play1xLandformUpdatesPerS": {
+      "n": 5,
+      "median": 3,
+      "p90": 3.3,
+      "max": 3.3
+    },
+    "pauseToPlayLabelMs": {
+      "n": 35,
+      "median": 8,
+      "p90": 12,
+      "max": 32
+    },
+    "pauseToSettledFrameMs": {
+      "n": 35,
+      "median": 254,
+      "p90": 370,
+      "max": 448
+    },
+    "scrubAfterPauseMs": {
+      "n": 30,
+      "median": 249,
+      "p90": 344,
+      "max": 358
+    },
+    "scrubAfterSettledPauseMs": {
+      "n": 30,
+      "median": 27,
+      "p90": 31,
+      "max": 38
+    },
+    "departFirstMs": {
+      "n": 5,
+      "median": 264,
+      "p90": 456,
+      "max": 456
+    },
+    "departRepeatMs": {
+      "n": 30,
+      "median": 305,
+      "p90": 481,
+      "max": 657
+    },
+    "runKeptAfterReturn": true,
+    "throttledGuards": 0,
+    "droppedSamples": 0
+  },
+  "trial-0.1/cpu": {
+    "reps": 2,
+    "errors": 0,
+    "sha": ["05a547a"],
+    "chrome": ["157.0.8103.78"],
+    "driver": ["32.0.101.8860"],
+    "onAcPower": true,
+    "thermalC": [60, 91],
+    "window": ["2026-11-14T23:42:56.625Z", "2026-11-14T23:46:22.343Z"],
+    "play1xYearsPerS": {
+      "n": 2,
+      "median": 2.61,
+      "p90": 2.81,
+      "max": 2.81
+    },
+    "play4xYearsPerS": {
+      "n": 2,
+      "median": 2.49,
+      "p90": 2.73,
+      "max": 2.73
+    },
+    "play1xFps": {
+      "n": 2,
+      "median": 118.2,
+      "p90": 119.3,
+      "max": 119.3
+    },
+    "play1xP95FrameMs": {
+      "n": 2,
+      "median": 8.5,
+      "p90": 8.5,
+      "max": 8.5
+    },
+    "play1xMaxFrameMs": {
+      "n": 2,
+      "median": 16.7,
+      "p90": 16.8,
+      "max": 16.8
+    },
+    "play4xFps": {
+      "n": 2,
+      "median": 117.5,
+      "p90": 119.3,
+      "max": 119.3
+    },
+    "play4xMaxFrameMs": {
+      "n": 2,
+      "median": 16.6,
+      "p90": 39.2,
+      "max": 39.2
+    },
+    "play1xMainThreadBusyPct": {
+      "n": 2,
+      "median": 24,
+      "p90": 24,
+      "max": 24
+    },
+    "play1xLandformUpdatesPerS": {
+      "n": 2,
+      "median": 4.5,
+      "p90": 4.7,
+      "max": 4.7
+    },
+    "pauseToPlayLabelMs": {
+      "n": 14,
+      "median": 9,
+      "p90": 24,
+      "max": 27
+    },
+    "pauseToSettledFrameMs": {
+      "n": 14,
+      "median": 38,
+      "p90": 52,
+      "max": 81
+    },
+    "scrubAfterPauseMs": {
+      "n": 12,
+      "median": 25,
+      "p90": 43,
+      "max": 49
+    },
+    "scrubAfterSettledPauseMs": {
+      "n": 12,
+      "median": 26,
+      "p90": 34,
+      "max": 37
+    },
+    "departFirstMs": {
+      "n": 2,
+      "median": 144,
+      "p90": 168,
+      "max": 168
+    },
+    "departRepeatMs": {
+      "n": 12,
+      "median": 174,
+      "p90": 230,
+      "max": 233
+    },
+    "runKeptAfterReturn": true,
+    "throttledGuards": 0,
+    "droppedSamples": 0
+  },
+  "trial-0.1-chain/cpu": {
+    "reps": 2,
+    "errors": 0,
+    "sha": ["05a547a"],
+    "chrome": ["157.0.8103.78"],
+    "driver": ["32.0.101.8860"],
+    "onAcPower": true,
+    "thermalC": [60, 94],
+    "window": ["2026-11-14T23:47:21.146Z", "2026-11-14T23:50:48.180Z"],
+    "play1xYearsPerS": {
+      "n": 2,
+      "median": 2.77,
+      "p90": 2.96,
+      "max": 2.96
+    },
+    "play4xYearsPerS": {
+      "n": 2,
+      "median": 2.56,
+      "p90": 2.72,
+      "max": 2.72
+    },
+    "play1xFps": {
+      "n": 2,
+      "median": 118.3,
+      "p90": 118.8,
+      "max": 118.8
+    },
+    "play1xP95FrameMs": {
+      "n": 2,
+      "median": 8.5,
+      "p90": 8.5,
+      "max": 8.5
+    },
+    "play1xMaxFrameMs": {
+      "n": 2,
+      "median": 16.7,
+      "p90": 16.9,
+      "max": 16.9
+    },
+    "play4xFps": {
+      "n": 2,
+      "median": 118.5,
+      "p90": 119,
+      "max": 119
+    },
+    "play4xMaxFrameMs": {
+      "n": 2,
+      "median": 16.7,
+      "p90": 16.7,
+      "max": 16.7
+    },
+    "play1xMainThreadBusyPct": {
+      "n": 2,
+      "median": 25,
+      "p90": 25,
+      "max": 25
+    },
+    "play1xLandformUpdatesPerS": {
+      "n": 2,
+      "median": 4.5,
+      "p90": 4.7,
+      "max": 4.7
+    },
+    "pauseToPlayLabelMs": {
+      "n": 14,
+      "median": 8,
+      "p90": 11,
+      "max": 27
+    },
+    "pauseToSettledFrameMs": {
+      "n": 14,
+      "median": 35,
+      "p90": 48,
+      "max": 48
+    },
+    "scrubAfterPauseMs": {
+      "n": 12,
+      "median": 26,
+      "p90": 40,
+      "max": 41
+    },
+    "scrubAfterSettledPauseMs": {
+      "n": 12,
+      "median": 24,
+      "p90": 28,
+      "max": 33
+    },
+    "departFirstMs": {
+      "n": 2,
+      "median": 188,
+      "p90": 213,
+      "max": 213
+    },
+    "departRepeatMs": {
+      "n": 12,
+      "median": 170,
+      "p90": 261,
+      "max": 271
+    },
+    "runKeptAfterReturn": true,
+    "throttledGuards": 0,
+    "droppedSamples": 0
+  },
+  "trial-0.2-chain/cpu": {
+    "reps": 2,
+    "errors": 0,
+    "sha": ["05a547a"],
+    "chrome": ["157.0.8103.78"],
+    "driver": ["32.0.101.8860"],
+    "onAcPower": true,
+    "thermalC": [60, 94],
+    "window": ["2026-11-14T23:51:46.575Z", "2026-11-14T23:55:12.607Z"],
+    "play1xYearsPerS": {
+      "n": 2,
+      "median": 2.93,
+      "p90": 3.12,
+      "max": 3.12
+    },
+    "play4xYearsPerS": {
+      "n": 2,
+      "median": 2.83,
+      "p90": 2.84,
+      "max": 2.84
+    },
+    "play1xFps": {
+      "n": 2,
+      "median": 118.2,
+      "p90": 119,
+      "max": 119
+    },
+    "play1xP95FrameMs": {
+      "n": 2,
+      "median": 8.5,
+      "p90": 8.5,
+      "max": 8.5
+    },
+    "play1xMaxFrameMs": {
+      "n": 2,
+      "median": 16.8,
+      "p90": 16.8,
+      "max": 16.8
+    },
+    "play4xFps": {
+      "n": 2,
+      "median": 119.5,
+      "p90": 119.5,
+      "max": 119.5
+    },
+    "play4xMaxFrameMs": {
+      "n": 2,
+      "median": 16.6,
+      "p90": 16.7,
+      "max": 16.7
+    },
+    "play1xMainThreadBusyPct": {
+      "n": 2,
+      "median": 17,
+      "p90": 17,
+      "max": 17
+    },
+    "play1xLandformUpdatesPerS": {
+      "n": 2,
+      "median": 4.2,
+      "p90": 4.2,
+      "max": 4.2
+    },
+    "pauseToPlayLabelMs": {
+      "n": 14,
+      "median": 8,
+      "p90": 12,
+      "max": 23
+    },
+    "pauseToSettledFrameMs": {
+      "n": 14,
+      "median": 64,
+      "p90": 81,
+      "max": 114
+    },
+    "scrubAfterPauseMs": {
+      "n": 12,
+      "median": 27,
+      "p90": 64,
+      "max": 72
+    },
+    "scrubAfterSettledPauseMs": {
+      "n": 12,
+      "median": 26,
+      "p90": 29,
+      "max": 29
+    },
+    "departFirstMs": {
+      "n": 2,
+      "median": 182,
+      "p90": 187,
+      "max": 187
+    },
+    "departRepeatMs": {
+      "n": 12,
+      "median": 182,
+      "p90": 248,
+      "max": 274
+    },
+    "runKeptAfterReturn": true,
+    "throttledGuards": 0,
+    "droppedSamples": 0
+  }
+}
