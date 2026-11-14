@@ -29,6 +29,7 @@ export const TEST_RUNS: Partial<GlacialRunConfig> = Object.freeze({
   horizonYears: 0.4,
   modelYearsPerRealSecond: 0.1,
   maxBatchModelYears: 0.025,
+  cpuMaxBatchModelYears: 0.025,
   frameIntervalSeconds: 0.25,
 });
 

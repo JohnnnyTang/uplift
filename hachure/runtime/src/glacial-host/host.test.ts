@@ -6,7 +6,7 @@ import { ReaderLifecycle } from "../reader/lifecycle";
 import { driveGlacialHost } from "./driver";
 import type { GlacialHost } from "./host";
 import { formatModelYears, pastViewLabel } from "./labels";
-import { createTestHost, fakeGpuSelect, frames } from "./test-support";
+import { TEST_RUNS, createTestHost, fakeGpuSelect, frames } from "./test-support";
 
 /** Everything a run is: its recorded hashes and bytes. Used to prove runs are never altered. */
 function fingerprint(host: GlacialHost, runId: string) {
@@ -162,7 +162,9 @@ describe("glacial host: time", () => {
     await host.dispatch({ kind: "set-speed", speed: 2 });
     await host.dispatch({ kind: "play" });
     await frames(host, 1);
-    expect(host.state().live!.step).toBe(10); // capped at one batch (maxBatchModelYears) per frame in flight
+    // 20 steps of wall time, batches of 10 (cpuMaxBatchModelYears): one batch, then one chained because a full
+    // batch was waiting (CPU behind schedule, D-W6-6A2); never more than the clock holds (two batches).
+    expect(host.state().live!.step).toBe(20);
     await expect(host.dispatch({ kind: "set-speed", speed: 8 })).rejects.toThrow(/quarter and four/);
     await host.dispose();
   });
@@ -413,6 +415,80 @@ describe("glacial host: determinism", () => {
     expect(await played.host.liveHash()).toBe(await stepped.host.liveHash());
     await played.host.dispose();
     await stepped.host.dispose();
+  });
+
+  it("the CPU batch size changes scheduling only: bitwise-identical records and state for 1-, 7- and 40-step batches (D-W6-6A2)", async () => {
+    const results = [];
+    for (const [cpuMaxBatchModelYears, steps] of [
+      [0.0025, 1],
+      [0.0175, 7],
+      [0.1, 40],
+    ] as const) {
+      const { host } = await createTestHost({ runConfig: { ...TEST_RUNS, cpuMaxBatchModelYears } });
+      expect(host.state().backend).toBe("cpu");
+      expect(host.maxBatchSteps).toBe(steps);
+      await host.dispatch({ kind: "set-speed", speed: 4 }); // 40 steps of wall time per 0.25 s frame
+      await host.dispatch({ kind: "play" });
+      const batches = new Set<number>();
+      for (let k = 0; k < 400 && host.state().live!.status === "active"; k++) {
+        await frames(host, 1);
+        if (host.lastBatch) batches.add(host.lastBatch.steps);
+      }
+      const live = host.state().live!;
+      expect(live).toMatchObject({ status: "complete", step: 160 });
+      // The automatic batches really were that size.
+      expect(Math.max(...batches)).toBe(steps);
+      results.push({
+        steps,
+        hashes: live.recordedHashes,
+        bytes: host.run(live.id)!.payload(),
+        liveHash: await host.liveHash(),
+      });
+      await host.dispose();
+    }
+    const [reference, ...others] = results;
+    expect(new Set(reference!.hashes).size).toBe(9);
+    for (const other of others) {
+      expect(other.hashes).toEqual(reference!.hashes);
+      expect(other.bytes).toEqual(reference!.bytes);
+      expect(other.liveHash).toBe(reference!.liveHash);
+    }
+  });
+
+  it("WebGPU runs keep the WebGPU batch; a CPU run after a GPU halt uses the CPU batch, chained while behind schedule (D-W6-6A2)", async () => {
+    /** Drains the queue, including a batch chained from a finished one. */
+    const settled = async (host: GlacialHost) => {
+      for (let k = 0; k < 4; k++) {
+        await host.whenIdle();
+        await new Promise((resolve) => setTimeout(resolve, 0));
+      }
+    };
+    const { host } = await createTestHost({
+      runConfig: { ...TEST_RUNS, maxBatchModelYears: 0.05, cpuMaxBatchModelYears: 0.0125 },
+      engine: { select: fakeGpuSelect({ failAtStep: 45 }) },
+    });
+    expect(host.state().backend).toBe("webgpu");
+    expect(host.maxBatchSteps).toBe(20);
+    await host.dispatch({ kind: "set-speed", speed: 4 });
+    await host.dispatch({ kind: "play" });
+    host.advance(0.25); // 40 steps of wall time: one 20-step batch, the rest waits for the next frame
+    await settled(host);
+    expect(host.lastBatch?.steps).toBe(20);
+    expect(host.state().live!.step).toBe(20);
+    await frames(host, 4);
+    expect(host.state().live).toMatchObject({ status: "halted", backend: "webgpu" });
+    await host.dispatch({ kind: "restart-on-cpu" });
+    expect(host.state().live).toMatchObject({ backend: "cpu", step: 0 });
+    expect(host.maxBatchSteps).toBe(5);
+    await host.dispatch({ kind: "play" });
+    host.advance(0.25); // 40 steps of wall time, 10 held (twice the batch): a 5-step batch, then a chained one
+    await settled(host);
+    expect(host.lastBatch?.steps).toBe(5);
+    expect(host.state().live!.step).toBe(10);
+    await host.dispatch({ kind: "pause" });
+    expect(host.state().activity).toBe("paused");
+    expect(host.viewFrame()!.step).toBe(10);
+    await host.dispose();
   });
 
   it("every run starts from the same authored start", async () => {

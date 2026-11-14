@@ -23,6 +23,10 @@ export class FixedStepClock {
     this.droppedRealSeconds += excess / (this.stepsPerRealSecond * speed);
     this.remainder = Math.min(capacity, this.remainder + incoming);
   }
+  /** Whole steps of accumulated wall time not yet taken (unit: steps). Read-only. */
+  get pendingSteps(): number {
+    return Math.floor(this.remainder + 1e-10);
+  }
   take(): number {
     const steps = Math.min(this.maxBatchSteps, Math.floor(this.remainder + 1e-10));
     this.remainder = Math.max(0, this.remainder - steps);
