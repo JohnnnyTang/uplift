@@ -2221,3 +2221,37 @@ at its live head; the Play button gets a heavier ink border and is described by 
 (`aria-describedby`). The line hides once the run moves and returns for a fresh run. 5N should confirm in the
 journey walk-through that a first-time reader finds Play without help. Cross-owned minimal edits:
 `uplift/spreads/geomorph.u-valley/lesson.ts` (one copy entry), `uplift/book/src/scenes/glacial/review.{ts,css}`.
+
+## D-W5-5N — Acceptance: registered protocol reproduced on production code; journey walked; owner, expert, human and hardware gates pending
+
+2026-11-14. Session 5N (`s1/w5/5n-acceptance`, from s1/w5/integration b82dae5). Evidence:
+`docs/review/glacial/acceptance/` (ledger, owner and expert packets, captures),
+`docs/science/validation/glacial-valley/` (protocol rerun), `e2e/glacial-acceptance.spec.ts`.
+
+1. **Protocol rerun, unchanged.** The 5G2 registration (`acceptance-protocol.md`, `protocol.ts`, `evaluate.ts`)
+   was run as registered on commit b82dae5: all 18 arms on the CPU reference (Node), and 5I's registered
+   CPU/GPU suite on WebGPU (headless Chrome 157, Intel Arc 140V). **All 18 arms end on the 5G2 record's state
+   hash bitwise; all 39 verdicts are identical: 16 pass, 23 fail.** Pass: R1, R4, S1, E-R1, E-R3, K1, K2, N1,
+   T1 sandstone s1, T2 in 7 of 9 arms. Fail: T1 in 8 of 9 arms, T2 shale s2–3, R2, R3, E-T1 (all 9), E-R2,
+   E-R4. GPU: G1–G7 pass, 39/39 verdicts identical, worst bed difference 8.3 mm, 44× the CPU in the same
+   browser (diagnostic). Every arm and failure is kept.
+2. **Ledger** (row → status): PB1 at risk (mechanics pass; owner decision O1), PB2–PB7 and PB9 pass with their
+   human parts pending, PB8 pending-human; GV1, GV2, GV4–GV8 pass (GV4 owner review pending), GV3 partial
+   (taught claims pass, T1 and the width/early-wall claims fail and are not taught), GV9 pass on one adapter
+   with other hardware pending.
+3. **Fixed here.** (a) The deeper level printed "Grid 160 cells by 64 cells cells of 40 m" (the probe carries
+   its unit): `deeper.uni.md` template corrected. (b) A favicon 404 logged a console error on every load:
+   inline icon in `uplift/book/index.html`. (c) `GLACIER_GPU_OUT` in the glacier GPU test harness so an
+   acceptance rerun does not overwrite 5I's evidence (test glue only; no solver change).
+4. **Owner decision needed (O1, PB1).** At the frozen default view the tilted spread is small: at 1440 × 900 the
+   pages span 559 px, the block 74 × 79 px, and the 29 px title is drawn 12 px tall (1366 × 768: 477 px,
+   50 × 54 px, 10 px). The R2 fit reserves the whole tilt/turn range. The framing is frozen (D-W5-R1 item 1,
+   D-W5-R1a item 3), so 5N did not change it; options are in the owner packet. O2: the block covers the figure
+   page's running head. O3: whether a first-time reader finds Play (D-W5-5M2) is a human observation, pending.
+
+**Cross-owned edits (minimal).** `uplift/spreads/geomorph.u-valley/deeper.uni.md` (one sentence);
+`uplift/book/index.html` (icon link); `hachure/glacier/test/browser/{harness.ts,globals.d.ts,vitest.browser.config.mjs}`
+(evidence directory override); `.github/workflows/ci.yml` (e2e job timeout 15 → 25 minutes: the acceptance spec plays the glacier on the CPU worker to 100 model years three times, and CI run 43570724708 was cancelled at the 15-minute limit with every completed test passing).
+
+**Pending, not inferred:** owner scene review, expert sign-off (eight questions in the packet), first-time
+readers, screen-reader listening, colour-vision/projector checks, other GPUs, mobile and non-Chrome browsers.

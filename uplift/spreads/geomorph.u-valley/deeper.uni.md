@@ -18,7 +18,7 @@
 
 <!-- claims: C15 | sources: Lesson; Protocol -->
 
-**What the notes measure.** Each margin note reads the cross-section under the front face, averaged over {{probe.sectionSpan}} of valley and rounded to {{probe.noteRounding}}, so the numbers do not jump from one grid cell to the next. The registered protocol measures single sections (Protocol). The front face opens on a section chosen for display after the runs were scanned; the lesson's claims rest on the registered under-ice section instead (Lesson). Grid {{probe.gridColumns}} by {{probe.gridRows}} cells of {{probe.metresPerCell}}. Solver: {{probe.backend}}.
+**What the notes measure.** Each margin note reads the cross-section under the front face, averaged over {{probe.sectionSpan}} of valley and rounded to {{probe.noteRounding}}, so the numbers do not jump from one grid cell to the next. The registered protocol measures single sections (Protocol). The front face opens on a section chosen for display after the runs were scanned; the lesson's claims rest on the registered under-ice section instead (Lesson). Grid {{probe.gridColumns}} by {{probe.gridRows}}, each {{probe.metresPerCell}} across. Solver: {{probe.backend}}.
 
 <!-- claims: C5, C6, C7, C13, C14 | sources: Protocol; Results; Sve59; Har92 -->
 

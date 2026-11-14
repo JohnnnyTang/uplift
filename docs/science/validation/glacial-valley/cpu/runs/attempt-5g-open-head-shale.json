@@ -1,0 +1,1350 @@
+{
+  "arm": {
+    "id": "attempt-5g-open-head-shale",
+    "description": "Attempt (session 5G registered start): open valley head on the 128 × 96 grid (shale). Its glacier leaked to the border.",
+    "overrides": { "nx": 128, "ny": 96, "rockId": "shale" },
+    "start": {
+      "floorAtMouthM": 1300,
+      "floorRiseM": 150,
+      "longProfileExponent": 1,
+      "headwallRiseM": 400,
+      "headwallFraction": 0.32,
+      "wallSlopeDeg": 26,
+      "ridgeAtMouthM": 1550,
+      "ridgeRiseM": 1000,
+      "ridgeProfileExponent": 2.5,
+      "ridgeRoundingM": 80,
+      "outerFlankSlopeDeg": 8,
+      "roughnessM": 2,
+      "valleyLengthM": 0,
+      "outerFlankFloorFraction": 0.5
+    },
+    "kind": "attempt"
+  },
+  "start": {
+    "floorAtMouthM": 1300,
+    "floorRiseM": 150,
+    "longProfileExponent": 1,
+    "headwallRiseM": 400,
+    "headwallFraction": 0.32,
+    "wallSlopeDeg": 26,
+    "ridgeAtMouthM": 1550,
+    "ridgeRiseM": 1000,
+    "ridgeProfileExponent": 2.5,
+    "ridgeRoundingM": 80,
+    "outerFlankSlopeDeg": 8,
+    "roughnessM": 2,
+    "valleyLengthM": 0,
+    "outerFlankFloorFraction": 0.5
+  },
+  "config": {
+    "nx": 128,
+    "ny": 96,
+    "metresPerCell": 40,
+    "seed": 1,
+    "dtYears": 0.0025,
+    "rockId": "shale",
+    "iceEnabled": true,
+    "erosionEnabled": true,
+    "lateralDragEnabled": true,
+    "glenRateFactorPerPa3PerYear": 7.573824e-17,
+    "iceDensityKgPerM3": 917,
+    "gravityMPerS2": 9.81,
+    "slidingMPerYearAtReferenceStress": 40,
+    "referenceBasalStressPa": 100000,
+    "slidingStressExponent": 2,
+    "maxSlidingStressPa": 200000,
+    "slidingOnsetIceThicknessM": 40,
+    "fullSlidingIceThicknessM": 120,
+    "snowlineAltitudeM": 1830,
+    "massBalanceGradientPerYear": 0.01,
+    "maxAccumulationMPerYear": 3,
+    "massBalanceAltitude": "starting-bed",
+    "erosionMPerYearAtReferenceSliding": 0.01,
+    "referenceSlidingMPerYear": 100,
+    "erosionSlidingExponent": 2,
+    "erosionSpeedup": 120,
+    "wallFailureRatePerYear": 5,
+    "minIceThicknessM": 1,
+    "shapeFactorIntervalSteps": 40,
+    "lateralDragSearchCells": 14
+  },
+  "grid": { "nx": 128, "ny": 96, "metresPerCell": 40 },
+  "sections": { "belowSnout": 14, "underIce": 74, "upper": 90 },
+  "msPerModelYear": 362.7,
+  "finalHash": "33be30213ec5887b",
+  "series": [
+    {
+      "modelYears": 0,
+      "probes": {
+        "step": 0,
+        "modelYears": 0,
+        "iceVolumeM3": 0,
+        "iceAreaM2": 0,
+        "erodedVolumeM3": 0,
+        "maxSlidingSpeedMPerYear": 0,
+        "maxSurfaceSpeedMPerYear": 0,
+        "snoutXM": null
+      },
+      "budget": { "surfaceMassBalanceM3": 0, "edgeOutflowM3": 0, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 0, "iceEdgeSteps": 0, "limitedCellSteps": 0 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1438.023,
+          "floorCentreYM": 1900.494,
+          "depthM": 356.317,
+          "floorWidthM": 142.431,
+          "halfDepthWidthM": 769.971,
+          "wallSlopeDeg": 26.019,
+          "maxWallSlopeDeg": 27.067,
+          "shapeExponent": 1.163,
+          "formRatio": 0.207,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1468.994,
+          "floorCentreYM": 1900.681,
+          "depthM": 488.534,
+          "floorWidthM": 144.281,
+          "halfDepthWidthM": 1042.011,
+          "wallSlopeDeg": 26.115,
+          "maxWallSlopeDeg": 27.49,
+          "shapeExponent": 1.103,
+          "formRatio": 0.214,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        }
+      }
+    },
+    {
+      "modelYears": 20,
+      "probes": {
+        "step": 8000,
+        "modelYears": 20,
+        "iceVolumeM3": 170213864.462,
+        "iceAreaM2": 4555200,
+        "erodedVolumeM3": 381127.412,
+        "maxSlidingSpeedMPerYear": 34.214,
+        "maxSurfaceSpeedMPerYear": 102.293,
+        "snoutXM": 3160
+      },
+      "budget": { "surfaceMassBalanceM3": 176480191.331, "edgeOutflowM3": 6266326.869, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 0, "iceEdgeSteps": 47570243, "limitedCellSteps": 126079 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1438.023,
+          "floorCentreYM": 1900.494,
+          "depthM": 356.317,
+          "floorWidthM": 142.431,
+          "halfDepthWidthM": 769.971,
+          "wallSlopeDeg": 26.019,
+          "maxWallSlopeDeg": 27.067,
+          "shapeExponent": 1.163,
+          "formRatio": 0.207,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1468.994,
+          "floorCentreYM": 1900.681,
+          "depthM": 488.534,
+          "floorWidthM": 144.281,
+          "halfDepthWidthM": 1042.011,
+          "wallSlopeDeg": 26.115,
+          "maxWallSlopeDeg": 27.49,
+          "shapeExponent": 1.103,
+          "formRatio": 0.214,
+          "maxIceThicknessM": 25.618,
+          "erodedAreaM2": 0
+        }
+      }
+    },
+    {
+      "modelYears": 40,
+      "probes": {
+        "step": 16000,
+        "modelYears": 40,
+        "iceVolumeM3": 279541393.471,
+        "iceAreaM2": 5964800,
+        "erodedVolumeM3": 7036053.891,
+        "maxSlidingSpeedMPerYear": 104.124,
+        "maxSurfaceSpeedMPerYear": 128.938,
+        "snoutXM": 3160
+      },
+      "budget": { "surfaceMassBalanceM3": 338840296.859, "edgeOutflowM3": 59298903.388, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 0, "iceEdgeSteps": 102363056, "limitedCellSteps": 184979 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1438.023,
+          "floorCentreYM": 1900.494,
+          "depthM": 356.317,
+          "floorWidthM": 142.431,
+          "halfDepthWidthM": 769.971,
+          "wallSlopeDeg": 26.019,
+          "maxWallSlopeDeg": 27.067,
+          "shapeExponent": 1.163,
+          "formRatio": 0.207,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1462.452,
+          "floorCentreYM": 1900.548,
+          "depthM": 495.062,
+          "floorWidthM": 124.186,
+          "halfDepthWidthM": 1028.868,
+          "wallSlopeDeg": 26.141,
+          "maxWallSlopeDeg": 30.621,
+          "shapeExponent": 1.041,
+          "formRatio": 0.217,
+          "maxIceThicknessM": 117.548,
+          "erodedAreaM2": 3283.714
+        }
+      }
+    },
+    {
+      "modelYears": 60,
+      "probes": {
+        "step": 24000,
+        "modelYears": 60,
+        "iceVolumeM3": 336229236.412,
+        "iceAreaM2": 6624000,
+        "erodedVolumeM3": 25871366.452,
+        "maxSlidingSpeedMPerYear": 82.619,
+        "maxSurfaceSpeedMPerYear": 128.094,
+        "snoutXM": 2600
+      },
+      "budget": { "surfaceMassBalanceM3": 464063937.122, "edgeOutflowM3": 127834700.71, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 0, "iceEdgeSteps": 167516653, "limitedCellSteps": 431039 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1432.623,
+          "floorCentreYM": 1900.236,
+          "depthM": 361.717,
+          "floorWidthM": 125.803,
+          "halfDepthWidthM": 759.139,
+          "wallSlopeDeg": 26.077,
+          "maxWallSlopeDeg": 30.393,
+          "shapeExponent": 1.085,
+          "formRatio": 0.21,
+          "maxIceThicknessM": 111.42,
+          "erodedAreaM2": 714.976
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1450.803,
+          "floorCentreYM": 1900.113,
+          "depthM": 506.683,
+          "floorWidthM": 136.974,
+          "halfDepthWidthM": 1006.161,
+          "wallSlopeDeg": 27.232,
+          "maxWallSlopeDeg": 34.389,
+          "shapeExponent": 1.043,
+          "formRatio": 0.222,
+          "maxIceThicknessM": 175.482,
+          "erodedAreaM2": 11165.22
+        }
+      }
+    },
+    {
+      "modelYears": 80,
+      "probes": {
+        "step": 32000,
+        "modelYears": 80,
+        "iceVolumeM3": 368587845.685,
+        "iceAreaM2": 6952000,
+        "erodedVolumeM3": 49647919.156,
+        "maxSlidingSpeedMPerYear": 123.115,
+        "maxSurfaceSpeedMPerYear": 154.473,
+        "snoutXM": 2240
+      },
+      "budget": { "surfaceMassBalanceM3": 567360975.39, "edgeOutflowM3": 198773129.705, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 0, "iceEdgeSteps": 237411173, "limitedCellSteps": 730646 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1424.202,
+          "floorCentreYM": 1899.915,
+          "depthM": 370.138,
+          "floorWidthM": 120.586,
+          "halfDepthWidthM": 742.413,
+          "wallSlopeDeg": 26.766,
+          "maxWallSlopeDeg": 32.145,
+          "shapeExponent": 1.062,
+          "formRatio": 0.215,
+          "maxIceThicknessM": 146.503,
+          "erodedAreaM2": 2674.203
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1445.967,
+          "floorCentreYM": 1900.321,
+          "depthM": 511.493,
+          "floorWidthM": 160.716,
+          "halfDepthWidthM": 997.946,
+          "wallSlopeDeg": 27.809,
+          "maxWallSlopeDeg": 34.442,
+          "shapeExponent": 1.162,
+          "formRatio": 0.224,
+          "maxIceThicknessM": 188.901,
+          "erodedAreaM2": 23150.134
+        }
+      }
+    },
+    {
+      "modelYears": 100,
+      "probes": {
+        "step": 40000,
+        "modelYears": 100,
+        "iceVolumeM3": 383443742.592,
+        "iceAreaM2": 7118400,
+        "erodedVolumeM3": 87706317.057,
+        "maxSlidingSpeedMPerYear": 126.448,
+        "maxSurfaceSpeedMPerYear": 173.677,
+        "snoutXM": 2040
+      },
+      "budget": { "surfaceMassBalanceM3": 658782337.682, "edgeOutflowM3": 275338595.09, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 3413, "iceEdgeSteps": 309724554, "limitedCellSteps": 981490 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1419.194,
+          "floorCentreYM": 1899.867,
+          "depthM": 375.146,
+          "floorWidthM": 130.382,
+          "halfDepthWidthM": 732.482,
+          "wallSlopeDeg": 27.195,
+          "maxWallSlopeDeg": 34.257,
+          "shapeExponent": 1.13,
+          "formRatio": 0.218,
+          "maxIceThicknessM": 160.199,
+          "erodedAreaM2": 4824.713
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1440.771,
+          "floorCentreYM": 1901.039,
+          "depthM": 516.665,
+          "floorWidthM": 181.256,
+          "halfDepthWidthM": 988.843,
+          "wallSlopeDeg": 28.817,
+          "maxWallSlopeDeg": 34.33,
+          "shapeExponent": 1.263,
+          "formRatio": 0.227,
+          "maxIceThicknessM": 193.66,
+          "erodedAreaM2": 50250.141
+        }
+      }
+    },
+    {
+      "modelYears": 120,
+      "probes": {
+        "step": 48000,
+        "modelYears": 120,
+        "iceVolumeM3": 388949425.467,
+        "iceAreaM2": 7211200,
+        "erodedVolumeM3": 139483278.116,
+        "maxSlidingSpeedMPerYear": 111.691,
+        "maxSurfaceSpeedMPerYear": 230.617,
+        "snoutXM": 1920
+      },
+      "budget": { "surfaceMassBalanceM3": 744710404.709, "edgeOutflowM3": 355760979.242, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 7635, "iceEdgeSteps": 383285083, "limitedCellSteps": 1171570 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1415.243,
+          "floorCentreYM": 1899.753,
+          "depthM": 379.097,
+          "floorWidthM": 139.939,
+          "halfDepthWidthM": 724.647,
+          "wallSlopeDeg": 28.195,
+          "maxWallSlopeDeg": 34.277,
+          "shapeExponent": 1.064,
+          "formRatio": 0.22,
+          "maxIceThicknessM": 165.788,
+          "erodedAreaM2": 7171.826
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1434.4,
+          "floorCentreYM": 1903.058,
+          "depthM": 523.013,
+          "floorWidthM": 191.638,
+          "halfDepthWidthM": 977.331,
+          "wallSlopeDeg": 29.749,
+          "maxWallSlopeDeg": 34.335,
+          "shapeExponent": 1.264,
+          "formRatio": 0.229,
+          "maxIceThicknessM": 197.463,
+          "erodedAreaM2": 76488.51
+        }
+      }
+    },
+    {
+      "modelYears": 140,
+      "probes": {
+        "step": 56000,
+        "modelYears": 140,
+        "iceVolumeM3": 390288491.184,
+        "iceAreaM2": 7233600,
+        "erodedVolumeM3": 202449404.468,
+        "maxSlidingSpeedMPerYear": 110.093,
+        "maxSurfaceSpeedMPerYear": 325.639,
+        "snoutXM": 1880
+      },
+      "budget": { "surfaceMassBalanceM3": 828473524.098, "edgeOutflowM3": 438185032.914, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 7635, "iceEdgeSteps": 457353177, "limitedCellSteps": 1375214 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1411.57,
+          "floorCentreYM": 1899.519,
+          "depthM": 382.77,
+          "floorWidthM": 148.128,
+          "halfDepthWidthM": 717.362,
+          "wallSlopeDeg": 29.17,
+          "maxWallSlopeDeg": 34.251,
+          "shapeExponent": 1.127,
+          "formRatio": 0.223,
+          "maxIceThicknessM": 167.344,
+          "erodedAreaM2": 9659.391
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1429.813,
+          "floorCentreYM": 1902.954,
+          "depthM": 527.577,
+          "floorWidthM": 202.951,
+          "halfDepthWidthM": 969.43,
+          "wallSlopeDeg": 30.55,
+          "maxWallSlopeDeg": 34.38,
+          "shapeExponent": 1.256,
+          "formRatio": 0.231,
+          "maxIceThicknessM": 199.759,
+          "erodedAreaM2": 91131.915
+        }
+      }
+    },
+    {
+      "modelYears": 160,
+      "probes": {
+        "step": 64000,
+        "modelYears": 160,
+        "iceVolumeM3": 389226778.068,
+        "iceAreaM2": 7240000,
+        "erodedVolumeM3": 286912822.962,
+        "maxSlidingSpeedMPerYear": 110.984,
+        "maxSurfaceSpeedMPerYear": 470.536,
+        "snoutXM": 1840
+      },
+      "budget": { "surfaceMassBalanceM3": 911909830.33, "edgeOutflowM3": 522683052.262, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 7635, "iceEdgeSteps": 531550081, "limitedCellSteps": 1590663 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1407.787,
+          "floorCentreYM": 1899.089,
+          "depthM": 386.553,
+          "floorWidthM": 154.306,
+          "halfDepthWidthM": 709.859,
+          "wallSlopeDeg": 29.952,
+          "maxWallSlopeDeg": 34.235,
+          "shapeExponent": 1.179,
+          "formRatio": 0.225,
+          "maxIceThicknessM": 167.697,
+          "erodedAreaM2": 12271.358
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1426.978,
+          "floorCentreYM": 1901.038,
+          "depthM": 530.391,
+          "floorWidthM": 216.425,
+          "halfDepthWidthM": 964.874,
+          "wallSlopeDeg": 31.399,
+          "maxWallSlopeDeg": 34.477,
+          "shapeExponent": 1.358,
+          "formRatio": 0.233,
+          "maxIceThicknessM": 200.743,
+          "erodedAreaM2": 99779.39
+        }
+      }
+    },
+    {
+      "modelYears": 180,
+      "probes": {
+        "step": 72000,
+        "modelYears": 180,
+        "iceVolumeM3": 385406450.054,
+        "iceAreaM2": 7232000,
+        "erodedVolumeM3": 409650705.332,
+        "maxSlidingSpeedMPerYear": 115.995,
+        "maxSurfaceSpeedMPerYear": 491.717,
+        "snoutXM": 1840
+      },
+      "budget": { "surfaceMassBalanceM3": 996090120.529, "edgeOutflowM3": 610683670.475, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 7635, "iceEdgeSteps": 605670884, "limitedCellSteps": 1824171 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1403.882,
+          "floorCentreYM": 1899.031,
+          "depthM": 390.458,
+          "floorWidthM": 158.859,
+          "halfDepthWidthM": 702.116,
+          "wallSlopeDeg": 30.68,
+          "maxWallSlopeDeg": 34.207,
+          "shapeExponent": 1.224,
+          "formRatio": 0.227,
+          "maxIceThicknessM": 166.309,
+          "erodedAreaM2": 14977.469
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1425.001,
+          "floorCentreYM": 1896.521,
+          "depthM": 532.35,
+          "floorWidthM": 234.331,
+          "halfDepthWidthM": 965.861,
+          "wallSlopeDeg": 32.301,
+          "maxWallSlopeDeg": 34.459,
+          "shapeExponent": 1.484,
+          "formRatio": 0.238,
+          "maxIceThicknessM": 198.825,
+          "erodedAreaM2": 107931.223
+        }
+      }
+    },
+    {
+      "modelYears": 200,
+      "probes": {
+        "step": 80000,
+        "modelYears": 200,
+        "iceVolumeM3": 378729457.061,
+        "iceAreaM2": 7203200,
+        "erodedVolumeM3": 573280600.05,
+        "maxSlidingSpeedMPerYear": 116.834,
+        "maxSurfaceSpeedMPerYear": 639.737,
+        "snoutXM": 1840
+      },
+      "budget": { "surfaceMassBalanceM3": 1081652053.528, "edgeOutflowM3": 702922596.467, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 7635, "iceEdgeSteps": 679615745, "limitedCellSteps": 2193858 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1400.102,
+          "floorCentreYM": 1899.237,
+          "depthM": 394.238,
+          "floorWidthM": 162.115,
+          "halfDepthWidthM": 694.619,
+          "wallSlopeDeg": 31.332,
+          "maxWallSlopeDeg": 34.354,
+          "shapeExponent": 1.26,
+          "formRatio": 0.229,
+          "maxIceThicknessM": 163.114,
+          "erodedAreaM2": 17662.227
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1423.373,
+          "floorCentreYM": 1888.748,
+          "depthM": 533.965,
+          "floorWidthM": 259.276,
+          "halfDepthWidthM": 984.756,
+          "wallSlopeDeg": 33.335,
+          "maxWallSlopeDeg": 34.398,
+          "shapeExponent": 1.534,
+          "formRatio": 0.238,
+          "maxIceThicknessM": 195.117,
+          "erodedAreaM2": 116783.505
+        }
+      }
+    },
+    {
+      "modelYears": 220,
+      "probes": {
+        "step": 88000,
+        "modelYears": 220,
+        "iceVolumeM3": 370510219.505,
+        "iceAreaM2": 7148800,
+        "erodedVolumeM3": 768846346.52,
+        "maxSlidingSpeedMPerYear": 118.525,
+        "maxSurfaceSpeedMPerYear": 646.119,
+        "snoutXM": 1880
+      },
+      "budget": { "surfaceMassBalanceM3": 1169694425.883, "edgeOutflowM3": 799184206.378, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 7635, "iceEdgeSteps": 753113493, "limitedCellSteps": 2671792 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1396.749,
+          "floorCentreYM": 1899.502,
+          "depthM": 397.591,
+          "floorWidthM": 164.882,
+          "halfDepthWidthM": 687.97,
+          "wallSlopeDeg": 31.901,
+          "maxWallSlopeDeg": 34.335,
+          "shapeExponent": 1.289,
+          "formRatio": 0.231,
+          "maxIceThicknessM": 157.479,
+          "erodedAreaM2": 20236.07
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1421.942,
+          "floorCentreYM": 1855,
+          "depthM": 535.388,
+          "floorWidthM": 209.281,
+          "halfDepthWidthM": 1009.512,
+          "wallSlopeDeg": 34.247,
+          "maxWallSlopeDeg": 34.392,
+          "shapeExponent": 1.466,
+          "formRatio": 0.239,
+          "maxIceThicknessM": 188.826,
+          "erodedAreaM2": 132864.191
+        }
+      }
+    },
+    {
+      "modelYears": 240,
+      "probes": {
+        "step": 96000,
+        "modelYears": 240,
+        "iceVolumeM3": 361361927.128,
+        "iceAreaM2": 7078400,
+        "erodedVolumeM3": 972629638.826,
+        "maxSlidingSpeedMPerYear": 117.042,
+        "maxSurfaceSpeedMPerYear": 647.889,
+        "snoutXM": 1960
+      },
+      "budget": { "surfaceMassBalanceM3": 1261091348.857, "edgeOutflowM3": 899729421.729, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 7635, "iceEdgeSteps": 825982597, "limitedCellSteps": 3272943 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1393.746,
+          "floorCentreYM": 1899.764,
+          "depthM": 400.594,
+          "floorWidthM": 167.137,
+          "halfDepthWidthM": 686.57,
+          "wallSlopeDeg": 32.397,
+          "maxWallSlopeDeg": 34.396,
+          "shapeExponent": 1.326,
+          "formRatio": 0.233,
+          "maxIceThicknessM": 150.311,
+          "erodedAreaM2": 22642.672
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1420.209,
+          "floorCentreYM": 1850.519,
+          "depthM": 537.117,
+          "floorWidthM": 213.977,
+          "halfDepthWidthM": 1029.84,
+          "wallSlopeDeg": 34.245,
+          "maxWallSlopeDeg": 34.307,
+          "shapeExponent": 1.48,
+          "formRatio": 0.24,
+          "maxIceThicknessM": 182.297,
+          "erodedAreaM2": 170553.044
+        }
+      }
+    },
+    {
+      "modelYears": 260,
+      "probes": {
+        "step": 104000,
+        "modelYears": 260,
+        "iceVolumeM3": 351106869.373,
+        "iceAreaM2": 6996800,
+        "erodedVolumeM3": 1168588585.824,
+        "maxSlidingSpeedMPerYear": 116.756,
+        "maxSurfaceSpeedMPerYear": 686.686,
+        "snoutXM": 2000
+      },
+      "budget": { "surfaceMassBalanceM3": 1356513298.157, "edgeOutflowM3": 1005406428.784, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 7635, "iceEdgeSteps": 898105374, "limitedCellSteps": 4021074 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1391.015,
+          "floorCentreYM": 1900.204,
+          "depthM": 403.325,
+          "floorWidthM": 168.963,
+          "halfDepthWidthM": 690.587,
+          "wallSlopeDeg": 32.829,
+          "maxWallSlopeDeg": 34.419,
+          "shapeExponent": 1.341,
+          "formRatio": 0.234,
+          "maxIceThicknessM": 142.621,
+          "erodedAreaM2": 24893.176
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1418.396,
+          "floorCentreYM": 1846.703,
+          "depthM": 538.929,
+          "floorWidthM": 218.002,
+          "halfDepthWidthM": 1048.539,
+          "wallSlopeDeg": 34.274,
+          "maxWallSlopeDeg": 34.295,
+          "shapeExponent": 1.479,
+          "formRatio": 0.241,
+          "maxIceThicknessM": 176.024,
+          "erodedAreaM2": 221296.133
+        }
+      }
+    },
+    {
+      "modelYears": 280,
+      "probes": {
+        "step": 112000,
+        "modelYears": 280,
+        "iceVolumeM3": 340784547.861,
+        "iceAreaM2": 6891200,
+        "erodedVolumeM3": 1376751369.587,
+        "maxSlidingSpeedMPerYear": 119.637,
+        "maxSurfaceSpeedMPerYear": 681.733,
+        "snoutXM": 2120
+      },
+      "budget": { "surfaceMassBalanceM3": 1456458342.065, "edgeOutflowM3": 1115673794.204, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 7635, "iceEdgeSteps": 969274948, "limitedCellSteps": 4873756 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1388.461,
+          "floorCentreYM": 1900.417,
+          "depthM": 405.879,
+          "floorWidthM": 171.166,
+          "halfDepthWidthM": 694.138,
+          "wallSlopeDeg": 33.255,
+          "maxWallSlopeDeg": 34.517,
+          "shapeExponent": 1.38,
+          "formRatio": 0.236,
+          "maxIceThicknessM": 135.177,
+          "erodedAreaM2": 27053.209
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1416.686,
+          "floorCentreYM": 1843.851,
+          "depthM": 540.322,
+          "floorWidthM": 222.751,
+          "halfDepthWidthM": 1065.591,
+          "wallSlopeDeg": 34.268,
+          "maxWallSlopeDeg": 34.584,
+          "shapeExponent": 1.496,
+          "formRatio": 0.246,
+          "maxIceThicknessM": 169.846,
+          "erodedAreaM2": 296825.526
+        }
+      }
+    },
+    {
+      "modelYears": 300,
+      "probes": {
+        "step": 120000,
+        "modelYears": 300,
+        "iceVolumeM3": 329362518.291,
+        "iceAreaM2": 6777600,
+        "erodedVolumeM3": 1603319934.385,
+        "maxSlidingSpeedMPerYear": 125.852,
+        "maxSurfaceSpeedMPerYear": 706.769,
+        "snoutXM": 2200
+      },
+      "budget": { "surfaceMassBalanceM3": 1560840967.897, "edgeOutflowM3": 1231478449.605, "residualM3": 0 },
+      "diagnostics": { "cappedEdgeSteps": 7635, "iceEdgeSteps": 1039418024, "limitedCellSteps": 5768553 },
+      "sections": {
+        "belowSnout": {
+          "i": 14,
+          "sectionXM": 560,
+          "floorElevationM": 1333.608,
+          "floorCentreYM": 1900.195,
+          "depthM": 207.098,
+          "floorWidthM": 142.417,
+          "halfDepthWidthM": 463.007,
+          "wallSlopeDeg": 26.186,
+          "maxWallSlopeDeg": 26.986,
+          "shapeExponent": 1.22,
+          "formRatio": 0.192,
+          "maxIceThicknessM": 0,
+          "erodedAreaM2": 0
+        },
+        "underIce": {
+          "i": 74,
+          "sectionXM": 2960,
+          "floorElevationM": 1386.075,
+          "floorCentreYM": 1900.595,
+          "depthM": 408.265,
+          "floorWidthM": 173.084,
+          "halfDepthWidthM": 698.63,
+          "wallSlopeDeg": 33.665,
+          "maxWallSlopeDeg": 34.577,
+          "shapeExponent": 1.393,
+          "formRatio": 0.237,
+          "maxIceThicknessM": 127.614,
+          "erodedAreaM2": 29300.25
+        },
+        "upper": {
+          "i": 90,
+          "sectionXM": 3600,
+          "floorElevationM": 1415.033,
+          "floorCentreYM": 1841.414,
+          "depthM": 528.831,
+          "floorWidthM": 227.003,
+          "halfDepthWidthM": 1061.984,
+          "wallSlopeDeg": 34.29,
+          "maxWallSlopeDeg": 34.857,
+          "shapeExponent": 1.515,
+          "formRatio": 0.254,
+          "maxIceThicknessM": 163.628,
+          "erodedAreaM2": 384518.39
+        }
+      }
+    }
+  ],
+  "rows": {
+    "belowSnout": {
+      "initial": [
+        1439.6, 1439.46, 1439.33, 1439.17, 1439.39, 1439.66, 1439.46, 1439.16, 1438.99, 1439.22, 1439.07,
+        1438.83, 1438.59, 1439.07, 1439.56, 1440.09, 1443.71, 1449.15, 1454.48, 1460.05, 1465, 1469.95,
+        1475.41, 1481.28, 1487.12, 1492.93, 1498.89, 1504.99, 1510.96, 1516.52, 1521.85, 1526.47, 1531.89,
+        1537.48, 1540.71, 1538.99, 1531.82, 1519.41, 1505.3, 1489.3, 1470.94, 1451.09, 1431.03, 1410.66,
+        1391.28, 1372.16, 1353.46, 1333.89, 1333.61, 1352.89, 1372.95, 1392.78, 1412.47, 1431.68, 1451.98,
+        1471.76, 1490.55, 1505.77, 1519.52, 1531.08, 1538.62, 1540.88, 1539.44, 1534, 1528.51, 1522.71,
+        1517.33, 1511.47, 1505.57, 1499.23, 1493.77, 1488.41, 1483.7, 1478.06, 1472.69, 1467.06, 1461.89,
+        1456.29, 1450.33, 1444.27, 1440.07, 1440.04, 1439.71, 1439.33, 1439.12, 1439.31, 1439.38, 1438.9,
+        1438.14, 1437.71, 1438.21, 1438.96, 1439.7, 1439.88, 1440.1, 1440.07
+      ],
+      "at": {
+        "0": {
+          "bed": [
+            1439.6, 1439.46, 1439.33, 1439.17, 1439.39, 1439.66, 1439.46, 1439.16, 1438.99, 1439.22, 1439.07,
+            1438.83, 1438.59, 1439.07, 1439.56, 1440.09, 1443.71, 1449.15, 1454.48, 1460.05, 1465, 1469.95,
+            1475.41, 1481.28, 1487.12, 1492.93, 1498.89, 1504.99, 1510.96, 1516.52, 1521.85, 1526.47, 1531.89,
+            1537.48, 1540.71, 1538.99, 1531.82, 1519.41, 1505.3, 1489.3, 1470.94, 1451.09, 1431.03, 1410.66,
+            1391.28, 1372.16, 1353.46, 1333.89, 1333.61, 1352.89, 1372.95, 1392.78, 1412.47, 1431.68, 1451.98,
+            1471.76, 1490.55, 1505.77, 1519.52, 1531.08, 1538.62, 1540.88, 1539.44, 1534, 1528.51, 1522.71,
+            1517.33, 1511.47, 1505.57, 1499.23, 1493.77, 1488.41, 1483.7, 1478.06, 1472.69, 1467.06, 1461.89,
+            1456.29, 1450.33, 1444.27, 1440.07, 1440.04, 1439.71, 1439.33, 1439.12, 1439.31, 1439.38, 1438.9,
+            1438.14, 1437.71, 1438.21, 1438.96, 1439.7, 1439.88, 1440.1, 1440.07
+          ],
+          "ice": [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+          ]
+        },
+        "100": {
+          "bed": [
+            1439.6, 1439.46, 1439.33, 1439.17, 1439.39, 1439.66, 1439.46, 1439.16, 1438.99, 1439.22, 1439.07,
+            1438.83, 1438.59, 1439.07, 1439.56, 1440.09, 1443.71, 1449.15, 1454.48, 1460.05, 1465, 1469.95,
+            1475.41, 1481.28, 1487.12, 1492.93, 1498.89, 1504.99, 1510.96, 1516.52, 1521.85, 1526.47, 1531.89,
+            1537.48, 1540.71, 1538.99, 1531.82, 1519.41, 1505.3, 1489.3, 1470.94, 1451.09, 1431.03, 1410.66,
+            1391.28, 1372.16, 1353.46, 1333.89, 1333.61, 1352.89, 1372.95, 1392.78, 1412.47, 1431.68, 1451.98,
+            1471.76, 1490.55, 1505.77, 1519.52, 1531.08, 1538.62, 1540.88, 1539.44, 1534, 1528.51, 1522.71,
+            1517.33, 1511.47, 1505.57, 1499.23, 1493.77, 1488.41, 1483.7, 1478.06, 1472.69, 1467.06, 1461.89,
+            1456.29, 1450.33, 1444.27, 1440.07, 1440.04, 1439.71, 1439.33, 1439.12, 1439.31, 1439.38, 1438.9,
+            1438.14, 1437.71, 1438.21, 1438.96, 1439.7, 1439.88, 1440.1, 1440.07
+          ],
+          "ice": [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+          ]
+        },
+        "200": {
+          "bed": [
+            1439.6, 1439.46, 1439.33, 1439.17, 1439.39, 1439.66, 1439.46, 1439.16, 1438.99, 1439.22, 1439.07,
+            1438.83, 1438.59, 1439.07, 1439.56, 1440.09, 1443.71, 1449.15, 1454.48, 1460.05, 1465, 1469.95,
+            1475.41, 1481.28, 1487.12, 1492.93, 1498.89, 1504.99, 1510.96, 1516.52, 1521.85, 1526.47, 1531.89,
+            1537.48, 1540.71, 1538.99, 1531.82, 1519.41, 1505.3, 1489.3, 1470.94, 1451.09, 1431.03, 1410.66,
+            1391.28, 1372.16, 1353.46, 1333.89, 1333.61, 1352.89, 1372.95, 1392.78, 1412.47, 1431.68, 1451.98,
+            1471.76, 1490.55, 1505.77, 1519.52, 1531.08, 1538.62, 1540.88, 1539.44, 1534, 1528.51, 1522.71,
+            1517.33, 1511.47, 1505.57, 1499.23, 1493.77, 1488.41, 1483.7, 1478.06, 1472.69, 1467.06, 1461.89,
+            1456.29, 1450.33, 1444.27, 1440.07, 1440.04, 1439.71, 1439.33, 1439.12, 1439.31, 1439.38, 1438.9,
+            1438.14, 1437.71, 1438.21, 1438.96, 1439.7, 1439.88, 1440.1, 1440.07
+          ],
+          "ice": [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+          ]
+        },
+        "300": {
+          "bed": [
+            1439.6, 1439.46, 1439.33, 1439.17, 1439.39, 1439.66, 1439.46, 1439.16, 1438.99, 1439.22, 1439.07,
+            1438.83, 1438.59, 1439.07, 1439.56, 1440.09, 1443.71, 1449.15, 1454.48, 1460.05, 1465, 1469.95,
+            1475.41, 1481.28, 1487.12, 1492.93, 1498.89, 1504.99, 1510.96, 1516.52, 1521.85, 1526.47, 1531.89,
+            1537.48, 1540.71, 1538.99, 1531.82, 1519.41, 1505.3, 1489.3, 1470.94, 1451.09, 1431.03, 1410.66,
+            1391.28, 1372.16, 1353.46, 1333.89, 1333.61, 1352.89, 1372.95, 1392.78, 1412.47, 1431.68, 1451.98,
+            1471.76, 1490.55, 1505.77, 1519.52, 1531.08, 1538.62, 1540.88, 1539.44, 1534, 1528.51, 1522.71,
+            1517.33, 1511.47, 1505.57, 1499.23, 1493.77, 1488.41, 1483.7, 1478.06, 1472.69, 1467.06, 1461.89,
+            1456.29, 1450.33, 1444.27, 1440.07, 1440.04, 1439.71, 1439.33, 1439.12, 1439.31, 1439.38, 1438.9,
+            1438.14, 1437.71, 1438.21, 1438.96, 1439.7, 1439.88, 1440.1, 1440.07
+          ],
+          "ice": [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+          ]
+        }
+      }
+    },
+    "underIce": {
+      "initial": [
+        1650.12, 1655.98, 1661.82, 1667.67, 1673.48, 1679.67, 1685.57, 1691.4, 1696.46, 1701.85, 1706.9,
+        1713.03, 1719.18, 1725.67, 1731.42, 1736.59, 1741.92, 1746.98, 1752.58, 1758.24, 1764.7, 1770.64,
+        1775.5, 1779.69, 1784.43, 1790.51, 1794.34, 1794.3, 1789.44, 1778.42, 1764.77, 1749.29, 1731.42,
+        1712.02, 1692.23, 1672.73, 1653.37, 1634.44, 1614.88, 1594.94, 1574.5, 1554.87, 1536.06, 1517.34,
+        1497.86, 1477.72, 1457.64, 1438.22, 1438.02, 1457.41, 1476.59, 1496.49, 1516, 1535.03, 1553.42,
+        1572.37, 1592.09, 1612.5, 1632.64, 1652.46, 1672.49, 1692.67, 1712.4, 1731.25, 1748.51, 1763.98,
+        1777.77, 1789.58, 1795, 1795.47, 1791.5, 1785.74, 1781.03, 1776.65, 1771.21, 1765.2, 1759.32, 1754.16,
+        1748.58, 1742.43, 1735.48, 1729.49, 1724.08, 1719.22, 1713.94, 1707.79, 1701.72, 1695.7, 1690.33,
+        1685.06, 1679.82, 1674.56, 1669.24, 1663.81, 1658.8, 1653.39
+      ],
+      "at": {
+        "0": {
+          "bed": [
+            1650.12, 1655.98, 1661.82, 1667.67, 1673.48, 1679.67, 1685.57, 1691.4, 1696.46, 1701.85, 1706.9,
+            1713.03, 1719.18, 1725.67, 1731.42, 1736.59, 1741.92, 1746.98, 1752.58, 1758.24, 1764.7, 1770.64,
+            1775.5, 1779.69, 1784.43, 1790.51, 1794.34, 1794.3, 1789.44, 1778.42, 1764.77, 1749.29, 1731.42,
+            1712.02, 1692.23, 1672.73, 1653.37, 1634.44, 1614.88, 1594.94, 1574.5, 1554.87, 1536.06, 1517.34,
+            1497.86, 1477.72, 1457.64, 1438.22, 1438.02, 1457.41, 1476.59, 1496.49, 1516, 1535.03, 1553.42,
+            1572.37, 1592.09, 1612.5, 1632.64, 1652.46, 1672.49, 1692.67, 1712.4, 1731.25, 1748.51, 1763.98,
+            1777.77, 1789.58, 1795, 1795.47, 1791.5, 1785.74, 1781.03, 1776.65, 1771.21, 1765.2, 1759.32,
+            1754.16, 1748.58, 1742.43, 1735.48, 1729.49, 1724.08, 1719.22, 1713.94, 1707.79, 1701.72, 1695.7,
+            1690.33, 1685.06, 1679.82, 1674.56, 1669.24, 1663.81, 1658.8, 1653.39
+          ],
+          "ice": [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+          ]
+        },
+        "100": {
+          "bed": [
+            1650.12, 1655.98, 1661.82, 1667.26, 1666.65, 1676.71, 1684.06, 1690.62, 1695.99, 1701.6, 1706.77,
+            1713.01, 1719.18, 1725.67, 1731.42, 1736.59, 1741.92, 1746.98, 1752.58, 1758.24, 1764.7, 1770.64,
+            1775.5, 1779.69, 1784.43, 1790.51, 1794.34, 1794.3, 1789.44, 1778.42, 1764.77, 1749.29, 1731.42,
+            1712.02, 1692.23, 1672.73, 1653.37, 1634.44, 1614.88, 1594.94, 1574.5, 1554.87, 1536.06, 1516.85,
+            1494.86, 1467.62, 1440.6, 1419.31, 1419.19, 1440.87, 1467.15, 1494.33, 1515.51, 1535.03, 1553.42,
+            1572.37, 1592.09, 1612.5, 1632.64, 1652.46, 1672.49, 1692.67, 1712.4, 1731.25, 1748.51, 1763.98,
+            1777.77, 1789.58, 1795, 1795.47, 1791.5, 1785.74, 1781.03, 1776.65, 1771.21, 1765.2, 1759.32,
+            1754.16, 1748.58, 1742.43, 1735.48, 1729.49, 1724.08, 1719.22, 1713.92, 1707.65, 1701.36, 1695,
+            1689.26, 1683.49, 1677.44, 1670.63, 1669.15, 1663.81, 1658.8, 1653.39
+          ],
+          "ice": [
+            0, 0, 0, 53.3, 60.54, 52.6, 48.21, 45.66, 45.23, 44.89, 44.75, 43.21, 40.45, 35.32, 30.17, 1.26,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 37.55, 60.92, 84.45,
+            111.99, 138.91, 160.1, 160.2, 138.62, 112.42, 84.93, 62.44, 39.81, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.28, 34.05, 38.76, 41.52, 42.93, 44.4, 45.55,
+            46.61, 47.05, 47.99, 50.34, 54.45, 50.11, 0, 0, 0
+          ]
+        },
+        "200": {
+          "bed": [
+            1650.12, 1655.98, 1661.82, 1667.18, 1661.57, 1676.38, 1683.98, 1690.58, 1695.93, 1701.53, 1706.69,
+            1712.98, 1719.18, 1725.67, 1731.42, 1736.59, 1741.92, 1746.98, 1752.58, 1758.24, 1764.7, 1770.64,
+            1775.5, 1779.69, 1784.43, 1790.51, 1794.34, 1794.3, 1789.44, 1778.42, 1764.77, 1749.29, 1731.42,
+            1712.02, 1692.23, 1672.73, 1653.37, 1634.44, 1614.88, 1594.94, 1573.02, 1545.86, 1518.51, 1491.35,
+            1464.2, 1437.11, 1410.69, 1400.1, 1401.65, 1411.39, 1438.42, 1465.53, 1492.7, 1519.87, 1547.04,
+            1572.37, 1592.09, 1612.5, 1632.64, 1652.46, 1672.49, 1692.67, 1712.4, 1731.25, 1748.51, 1763.98,
+            1777.77, 1789.58, 1795, 1795.47, 1791.5, 1785.74, 1781.03, 1776.65, 1771.21, 1765.2, 1759.32,
+            1754.16, 1748.58, 1742.43, 1735.48, 1729.49, 1724.08, 1719.22, 1713.91, 1707.59, 1701.25, 1694.85,
+            1689.13, 1683.37, 1677.19, 1669.11, 1669.15, 1663.81, 1658.8, 1653.39
+          ],
+          "ice": [
+            0, 0, 0, 22.69, 40.33, 10.27, 0, 8.78, 24.86, 31.41, 35.36, 36.17, 35.96, 34.88, 33.83, 32.26,
+            30.04, 26.36, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 44.41,
+            72.42, 99.74, 126.65, 152.67, 163.11, 161.32, 151.88, 125.04, 98.16, 70.67, 42.12, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23.52, 29.77, 33.36, 34.79, 34.23,
+            32.82, 32.09, 30.81, 27.54, 20.59, 3.13, 0, 19.51, 5.45, 0, 0, 0
+          ]
+        },
+        "300": {
+          "bed": [
+            1650.12, 1655.98, 1661.82, 1667.18, 1661.57, 1676.38, 1683.98, 1690.58, 1695.93, 1701.53, 1706.69,
+            1712.98, 1719.18, 1725.67, 1731.42, 1736.59, 1741.92, 1746.98, 1752.58, 1758.24, 1764.7, 1770.64,
+            1775.5, 1779.69, 1784.43, 1790.51, 1794.34, 1794.3, 1789.44, 1778.42, 1764.77, 1749.29, 1731.42,
+            1712.02, 1692.23, 1672.73, 1653.37, 1634.44, 1611.35, 1584.26, 1557.05, 1529.73, 1502.29, 1474.74,
+            1447.65, 1420.57, 1393.54, 1386.07, 1391.65, 1392.71, 1419.78, 1446.87, 1473.97, 1501.54, 1528.99,
+            1556.33, 1583.54, 1610.64, 1632.64, 1652.46, 1672.49, 1692.67, 1712.4, 1731.25, 1748.51, 1763.98,
+            1777.77, 1789.58, 1795, 1795.47, 1791.5, 1785.74, 1781.03, 1776.65, 1771.21, 1765.2, 1759.32,
+            1754.16, 1748.58, 1742.43, 1735.48, 1729.49, 1724.08, 1719.22, 1713.91, 1707.59, 1701.25, 1694.85,
+            1689.13, 1683.37, 1677.19, 1669.11, 1669.15, 1663.81, 1658.8, 1653.39
+          ],
+          "ice": [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.09, 14.97, 18.93, 19.43, 18.49, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 38.67, 66.78, 93.85, 120.19, 127.61, 121.72,
+            121.37, 94.68, 67.6, 38.94, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 8.04, 11.79, 11.83, 6.37, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+          ]
+        }
+      }
+    },
+    "upper": {
+      "initial": [
+        1854.82, 1860.19, 1865.77, 1871.51, 1877.14, 1881.85, 1886.86, 1892.32, 1898.31, 1904.18, 1909.84,
+        1915.37, 1920.91, 1926.43, 1932.61, 1938.44, 1944.19, 1949.19, 1954.64, 1958.18, 1958.11, 1954.27,
+        1944.55, 1931.72, 1916.26, 1898.76, 1879.32, 1859.56, 1839.28, 1819.5, 1799.8, 1780.32, 1761.16,
+        1741.9, 1722.78, 1702.95, 1683.53, 1663.97, 1644.66, 1625.13, 1605.82, 1586.48, 1566.65, 1546.83,
+        1526.85, 1507.79, 1488.46, 1469.35, 1468.99, 1487.9, 1506.9, 1526.61, 1546.64, 1566.65, 1586.46,
+        1606.63, 1626.5, 1645.78, 1664.41, 1683.19, 1702.62, 1722.7, 1742.99, 1762.94, 1782.37, 1801.05,
+        1819.7, 1838.23, 1857.88, 1878.17, 1898.98, 1917.22, 1932.04, 1944.04, 1953.08, 1957.16, 1957.53,
+        1954.3, 1948.48, 1942.47, 1936.48, 1930.9, 1925.56, 1920.48, 1915.32, 1909.97, 1904.06, 1898.27,
+        1892.35, 1887.2, 1881.73, 1876.39, 1870.66, 1865.53, 1860.69, 1855.63
+      ],
+      "at": {
+        "0": {
+          "bed": [
+            1854.82, 1860.19, 1865.77, 1871.51, 1877.14, 1881.85, 1886.86, 1892.32, 1898.31, 1904.18, 1909.84,
+            1915.37, 1920.91, 1926.43, 1932.61, 1938.44, 1944.19, 1949.19, 1954.64, 1958.18, 1958.11, 1954.27,
+            1944.55, 1931.72, 1916.26, 1898.76, 1879.32, 1859.56, 1839.28, 1819.5, 1799.8, 1780.32, 1761.16,
+            1741.9, 1722.78, 1702.95, 1683.53, 1663.97, 1644.66, 1625.13, 1605.82, 1586.48, 1566.65, 1546.83,
+            1526.85, 1507.79, 1488.46, 1469.35, 1468.99, 1487.9, 1506.9, 1526.61, 1546.64, 1566.65, 1586.46,
+            1606.63, 1626.5, 1645.78, 1664.41, 1683.19, 1702.62, 1722.7, 1742.99, 1762.94, 1782.37, 1801.05,
+            1819.7, 1838.23, 1857.88, 1878.17, 1898.98, 1917.22, 1932.04, 1944.04, 1953.08, 1957.16, 1957.53,
+            1954.3, 1948.48, 1942.47, 1936.48, 1930.9, 1925.56, 1920.48, 1915.32, 1909.97, 1904.06, 1898.27,
+            1892.35, 1887.2, 1881.73, 1876.39, 1870.66, 1865.53, 1860.69, 1855.63
+          ],
+          "ice": [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+          ]
+        },
+        "100": {
+          "bed": [
+            1854.82, 1860.19, 1835.84, 1813.91, 1788.05, 1813.89, 1835.79, 1862.78, 1887.67, 1895.13, 1901.67,
+            1907.96, 1915.24, 1922.23, 1930.2, 1936.96, 1943.37, 1948.69, 1954.45, 1958.09, 1958.06, 1954.24,
+            1944.51, 1931.68, 1916.21, 1898.72, 1879.24, 1859.41, 1839.01, 1819.06, 1799.2, 1779.6, 1760.4,
+            1741.12, 1721.96, 1702.05, 1682.54, 1662.92, 1643.56, 1623.79, 1603.85, 1579.73, 1552.43, 1525.13,
+            1497.89, 1470.79, 1451.51, 1442.4, 1440.77, 1455.34, 1468.52, 1495.68, 1522.93, 1550.25, 1577.56,
+            1604.6, 1625.08, 1644.47, 1663.03, 1681.98, 1701.61, 1721.91, 1742.31, 1762.28, 1781.72, 1800.44,
+            1819.18, 1837.85, 1857.67, 1878.1, 1898.96, 1917.17, 1931.96, 1943.97, 1953.04, 1957.1, 1957.44,
+            1954.13, 1948.04, 1941.49, 1934.67, 1927.98, 1921.25, 1914.96, 1908.93, 1902.98, 1895.56, 1877.78,
+            1849.15, 1820.59, 1792.18, 1763.96, 1791.78, 1821.83, 1850.36, 1855.63
+          ],
+          "ice": [
+            0, 0, 0, 69.17, 97.8, 72.81, 54.22, 40.13, 39.67, 47.51, 50.03, 51.28, 50.48, 49.46, 47.26, 46.09,
+            45.05, 44.62, 43.31, 42.96, 42.81, 41.76, 41.77, 41.53, 41.29, 40.92, 41.29, 41.54, 42.37, 42.96,
+            43.53, 43.95, 44, 44.1, 43.87, 44.29, 44.5, 44.81, 44.71, 45, 47.46, 61.1, 84.16, 109.93, 136.68,
+            163.53, 182.85, 191.9, 193.66, 179.19, 166.12, 139.14, 112.32, 86.36, 62.96, 46.31, 44.86, 45.53,
+            45.74, 45.31, 44.57, 43.91, 43.59, 43.59, 43.61, 43.78, 43.52, 43.2, 42.11, 41.2, 40.4, 41.05,
+            42.07, 42.63, 42.73, 43.47, 43.12, 43.07, 44.24, 45.58, 46.93, 48.29, 49.64, 50.32, 50.11, 48.29,
+            42.78, 37.5, 41.13, 59.36, 84.17, 110.67, 79.24, 0, 0, 0
+          ]
+        },
+        "200": {
+          "bed": [
+            1831.93, 1804.95, 1779.58, 1752.6, 1725.62, 1752.54, 1779.52, 1806.51, 1833.49, 1860.47, 1887.46,
+            1906.7, 1913.83, 1920.82, 1929.34, 1936.26, 1942.88, 1948.3, 1954.29, 1958, 1958.01, 1954.21,
+            1944.47, 1931.62, 1916.15, 1898.66, 1879.16, 1859.25, 1838.66, 1818.46, 1798.31, 1778.51, 1759.23,
+            1739.98, 1720.58, 1693.29, 1665.93, 1638.58, 1611.23, 1583.89, 1556.57, 1529.25, 1501.95, 1474.83,
+            1447.77, 1438.38, 1424.67, 1435.29, 1423.37, 1447.54, 1438.01, 1460.56, 1478.99, 1506.2, 1533.56,
+            1560.94, 1588.32, 1615.7, 1643.09, 1670.47, 1697.85, 1720.8, 1741.31, 1761.31, 1780.8, 1799.58,
+            1818.47, 1837.34, 1857.41, 1878.01, 1898.93, 1917.12, 1931.86, 1943.88, 1952.98, 1957.02, 1957.34,
+            1953.99, 1947.73, 1940.92, 1933.85, 1926.96, 1920.09, 1913.97, 1907.85, 1880.96, 1869.58, 1846.83,
+            1819.85, 1792.87, 1765.89, 1739.02, 1761.94, 1788.92, 1815.9, 1842.88
+          ],
+          "ice": [
+            0, 0, 0, 39.88, 66.77, 44.01, 33.35, 28.43, 26.89, 25.97, 24.79, 28.1, 36.62, 40.52, 41.14, 41.97,
+            42.32, 42.86, 42.15, 42.24, 42.29, 41.32, 41.33, 41.1, 40.85, 40.42, 40.69, 40.77, 41.44, 41.93,
+            42.47, 42.87, 42.84, 42.73, 37.5, 37.16, 36.68, 36.27, 37.04, 43.91, 65.12, 90.99, 117.78, 144.36,
+            170.95, 179.84, 193.43, 182.85, 195.12, 171.62, 181.81, 159.68, 141.59, 114.65, 87.7, 61.95,
+            41.84, 36.78, 36.24, 36.76, 37.34, 40.56, 42.09, 42.16, 42.3, 42.56, 42.4, 42.2, 41.24, 40.52,
+            39.86, 40.59, 41.58, 42.08, 42.16, 42.84, 42.3, 41.83, 42.22, 42.35, 41.93, 40.96, 38.97, 33.76,
+            23.06, 29.71, 21.15, 21.68, 24.51, 29.21, 38.97, 60.54, 39.71, 0, 0, 0
+          ]
+        },
+        "300": {
+          "bed": [
+            1709.39, 1698.1, 1686.24, 1674.17, 1664.07, 1674.17, 1684.02, 1693.73, 1703.62, 1714.14, 1725.63,
+            1738.05, 1750.91, 1763.69, 1779.65, 1793.79, 1820.77, 1847.76, 1874.77, 1901.81, 1928.9, 1954.1,
+            1944.46, 1931.61, 1916.15, 1898.66, 1879.15, 1859.23, 1838.62, 1818.37, 1793.06, 1765.8, 1738.54,
+            1711.28, 1684.01, 1656.74, 1629.47, 1602.2, 1574.63, 1546.78, 1519.5, 1492.23, 1465.02, 1444.63,
+            1421.38, 1433.68, 1415.03, 1433.31, 1416.44, 1443.47, 1425.73, 1449.29, 1442.47, 1469.51, 1496.65,
+            1523.82, 1551, 1578.39, 1605.58, 1632.77, 1659.95, 1687.14, 1714.33, 1741.52, 1768.71, 1795.9,
+            1818.36, 1837.26, 1857.38, 1878.01, 1898.93, 1917.12, 1931.85, 1943.86, 1921.13, 1893.71, 1866.45,
+            1839.29, 1812.22, 1785.2, 1758.2, 1731.22, 1717.26, 1703.35, 1689.69, 1676.65, 1664.69, 1654.08,
+            1644.63, 1635.89, 1627.43, 1619.04, 1627.43, 1643.2, 1657.18, 1668.92
+          ],
+          "ice": [
+            0, 0, 0, 22.16, 29.78, 24.4, 24.12, 24.91, 25.92, 26.94, 27.89, 28.96, 30.55, 32.88, 32.73, 37.08,
+            31.76, 29.84, 29.16, 28.41, 27.38, 27.73, 35.99, 36.51, 36.44, 36.19, 36.46, 36.03, 34.98, 31.28,
+            29.72, 29.12, 28.14, 26.66, 24.42, 20.75, 10.94, 0, 0, 34.15, 63.77, 90.86, 117.3, 136.49, 158.87,
+            145.64, 163.63, 145.09, 162.05, 135.37, 153.63, 130.8, 138.53, 112.13, 85.4, 57.5, 18.13, 0,
+            15.79, 21.94, 25.64, 27.76, 29.18, 30.14, 30.78, 31.19, 34.2, 37.09, 36.87, 35.75, 34.12, 33.9,
+            33.88, 28.85, 26.76, 28.1, 29.34, 30.26, 30.98, 32.05, 34.75, 40.17, 34.53, 30.93, 29.19, 28.38,
+            27.58, 26.31, 24.9, 23.89, 24.43, 28.82, 22.03, 0, 0, 0
+          ]
+        }
+      }
+    }
+  }
+}

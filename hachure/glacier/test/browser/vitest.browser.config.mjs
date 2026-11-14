@@ -10,7 +10,11 @@ import { playwright } from "@vitest/browser-playwright";
 const full = process.env.GLACIER_GPU_FULL === "1";
 export default defineConfig({
   root: fileURLToPath(new URL("../..", import.meta.url)),
-  define: { __GLACIER_GPU_FULL__: JSON.stringify(full) },
+  define: {
+    __GLACIER_GPU_FULL__: JSON.stringify(full),
+    // Session 5N: an acceptance rerun writes its own evidence directory (relative to this root).
+    __GLACIER_GPU_OUT__: JSON.stringify(process.env.GLACIER_GPU_OUT ?? null),
+  },
   test: {
     include: ["test/browser/**/*.browser.ts"],
     testTimeout: full ? 4 * 3_600_000 : 600_000,
