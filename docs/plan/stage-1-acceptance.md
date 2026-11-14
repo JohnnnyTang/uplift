@@ -10,14 +10,27 @@ U-shaped valley formation. Prior test results remain valid for their original sc
 not evidence of glacial erosion or approval of the old lesson. See the
 [current review](../review/book-revision/current-direction-review.md).
 
-## Planned extension acceptance — not yet run
+## Glacial acceptance (5N, 2026-11-14) — current
 
-5G–5N must supply PB9 and GV1–GV9 evidence: rock-type choice through UI/3D starting
-separate runs, formation over time, pause/step/scrubbing, matched-time comparison with
-kept runs, glacial process and CPU/GPU parity, a naturally coloured scene on a tilted
-book page, provenance and accessible default-book integration. Every extension
-criterion is **pending**. 5N owns the integrated packet; 5G/5I own mechanism and
-backend evidence; R1 records the owner's scene review. The table below remains the historical A–F baseline, not a glacial pass.
+Walked on the default app at `b82dae5` plus 5N fixes; full ledger with evidence links:
+[docs/review/glacial/acceptance](../review/glacial/acceptance/README.md) (D-W5-5N). The registered protocol
+was rerun on production code: 18/18 arms reproduce the 5G2 record bitwise, 39/39 verdicts identical
+(16 pass, 23 fail as registered); the GPU passes every registered gate on one adapter
+([validation](../science/validation/glacial-valley/README.md)).
+
+| Row | Status                                                      | Row | Status                                                                      |
+| --- | ----------------------------------------------------------- | --- | --------------------------------------------------------------------------- |
+| PB1 | at risk: mechanics pass, owner decision O1 (view size)      | GV1 | pass                                                                        |
+| PB2 | pass; human legibility and real zoom pending                | GV2 | pass                                                                        |
+| PB3 | pass; human spatial reading pending                         | GV3 | partial: taught claims pass; T1, R2, R3, E-T1, E-R2, E-R4 fail (not taught) |
+| PB4 | pass; first-time reader finding Play pending                | GV4 | pass; owner scene review pending                                            |
+| PB5 | pass; expert sign-off pending                               | GV5 | pass (one content defect fixed in 5N)                                       |
+| PB6 | pass                                                        | GV6 | pass; screen-reader listening and colour-vision pending                     |
+| PB7 | pass; listening and gesture usability pending               | GV7 | pass                                                                        |
+| PB8 | pending-human (owner, readers, listening, expert, hardware) | GV8 | pass                                                                        |
+| PB9 | pass                                                        | GV9 | pass on Intel Arc 140V; other hardware pending                              |
+
+The table below remains the historical A–F baseline, not a glacial pass.
 See [session ownership and criteria](stage-1-wave-5-glacial.md#traceability-and-drift-gate).
 
 | Criterion                    | Automated / rendered evidence                                                                                                                                        | Status and remaining owner                                                                    |

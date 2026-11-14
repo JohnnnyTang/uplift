@@ -1,0 +1,324 @@
+{
+  "base": "http://127.0.0.1:4180",
+  "channel": "chrome",
+  "browser": "157.0.8103.78",
+  "captures": [
+    {
+      "file": "captures/01-desktop-1440-transition.png",
+      "note": "mid-transition"
+    },
+    {
+      "file": "captures/02-desktop-1440-open.png",
+      "note": "default route at rest: live run 1, sandstone, model time 0",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stageMode": "tilted",
+      "renderer": "webgpu",
+      "liveRock": "sandstone",
+      "ghost": "",
+      "modelYears": "0",
+      "view": "live",
+      "cutColumn": "51",
+      "runId": "run-1",
+      "marginNotes": "0 model years in sandstone\n\nfront face 4.3 km down the valley, below the snout\n\nfloor 140 m wide, valley 220 m deep\n\nfloor lowered 0 m since the start\n\nsteepest wall 26 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into sandstone, after 0 model years. There is no ice in this view. The front face of the block stands 4.3 km down the valley. The front face cuts the valley below the glacier's snout, where the river's V is unchanged. Its cross-section is closer to a V than a U (shape 1.2; a V is about 1, a U about 2)."
+    },
+    {
+      "file": "captures/03-figure-open-2x.png",
+      "note": "figure page at model time 0 (crop)",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stageMode": "tilted",
+      "renderer": "webgpu",
+      "liveRock": "sandstone",
+      "ghost": "",
+      "modelYears": "0",
+      "view": "live",
+      "cutColumn": "51",
+      "runId": "run-1",
+      "marginNotes": "0 model years in sandstone\n\nfront face 4.3 km down the valley, below the snout\n\nfloor 140 m wide, valley 220 m deep\n\nfloor lowered 0 m since the start\n\nsteepest wall 26 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into sandstone, after 0 model years. There is no ice in this view. The front face of the block stands 4.3 km down the valley. The front face cuts the valley below the glacier's snout, where the river's V is unchanged. Its cross-section is closer to a V than a U (shape 1.2; a V is about 1, a U about 2)."
+    },
+    {
+      "file": "captures/04-desktop-1440-shale-300.png",
+      "note": "shale run complete at the horizon",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stageMode": "tilted",
+      "renderer": "webgpu",
+      "liveRock": "shale",
+      "ghost": "",
+      "modelYears": "300",
+      "view": "live",
+      "cutColumn": "51",
+      "runId": "run-2",
+      "marginNotes": "300 model years in shale\n\nfront face 4.3 km down the valley, under 200 m of ice\n\nfloor 210 m wide, valley 270 m deep\n\nfloor lowered 60 m since the start\n\nsteepest wall 35 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into shale, after 300 model years. A glacier fills the valley from the valley head down to its snout. The front face of the block stands 4.3 km down the valley. The front face cuts through the glacier. There the valley floor is 210 m wide and lowered 60 m below the dashed starting V; the steepest wall is 35 degrees. Its cross-section is closer to a U than a V (shape 1.7; a V is about 1, a U about 2)."
+    },
+    {
+      "file": "captures/05-figure-shale-300-2x.png",
+      "note": "shale at 300 model years, default cut (crop)",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stageMode": "tilted",
+      "renderer": "webgpu",
+      "liveRock": "shale",
+      "ghost": "",
+      "modelYears": "300",
+      "view": "live",
+      "cutColumn": "51",
+      "runId": "run-2",
+      "marginNotes": "300 model years in shale\n\nfront face 4.3 km down the valley, under 200 m of ice\n\nfloor 210 m wide, valley 270 m deep\n\nfloor lowered 60 m since the start\n\nsteepest wall 35 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into shale, after 300 model years. A glacier fills the valley from the valley head down to its snout. The front face of the block stands 4.3 km down the valley. The front face cuts through the glacier. There the valley floor is 210 m wide and lowered 60 m below the dashed starting V; the steepest wall is 35 degrees. Its cross-section is closer to a U than a V (shape 1.7; a V is about 1, a U about 2)."
+    },
+    {
+      "file": "captures/06-figure-granite-vs-shale-300-2x.png",
+      "note": "granite at 300 model years with the kept shale run as ghost at the same time, default cut i = 51",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stageMode": "tilted",
+      "renderer": "webgpu",
+      "liveRock": "granite",
+      "ghost": "shale",
+      "modelYears": "300",
+      "view": "live",
+      "cutColumn": "51",
+      "runId": "run-3",
+      "marginNotes": "300 model years in granite\n\nfront face 4.3 km down the valley, under 180 m of ice\n\nfloor 180 m wide, valley 230 m deep\n\nfloor lowered 20 m since the start\n\nsteepest wall 45 degrees\n\n···· a separate run with another rock, shale, at 300 model years: lowered 60 m, wall 35 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into granite, after 300 model years. A glacier fills the valley from the valley head down to its snout. The front face of the block stands 4.3 km down the valley. The front face cuts through the glacier. There the valley floor is 180 m wide and lowered 20 m below the dashed starting V; the steepest wall is 45 degrees. Its cross-section is closer to a U than a V (shape 1.6; a V is about 1, a U about 2). The ghost line is a separate run with another rock, shale, at 300 model years: its floor is lowered 60 m and its steepest wall is 35 degrees."
+    },
+    {
+      "file": "captures/07-figure-registered-section-300-2x.png",
+      "note": "same, front face moved to the registered section i = 74",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stageMode": "tilted",
+      "renderer": "webgpu",
+      "liveRock": "granite",
+      "ghost": "shale",
+      "modelYears": "300",
+      "view": "live",
+      "cutColumn": "74",
+      "runId": "run-3",
+      "marginNotes": "300 model years in granite\n\nfront face 3.4 km down the valley, under 230 m of ice\n\nfloor 220 m wide, valley 320 m deep\n\nfloor lowered 20 m since the start\n\nsteepest wall 46 degrees\n\n···· a separate run with another rock, shale, at 300 model years: lowered 50 m, wall 37 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into granite, after 300 model years. A glacier fills the valley from the valley head down to its snout. The front face of the block stands 3.4 km down the valley. The front face cuts through the glacier. There the valley floor is 220 m wide and lowered 20 m below the dashed starting V; the steepest wall is 46 degrees. Its cross-section is closer to a V than a U (shape 1.5; a V is about 1, a U about 2). The ghost line is a separate run with another rock, shale, at 300 model years: its floor is lowered 50 m and its steepest wall is 37 degrees."
+    },
+    {
+      "file": "captures/08-figure-matched-100-2x.png",
+      "note": "granite vs shale at 100 model years, i = 74",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stageMode": "tilted",
+      "renderer": "webgpu",
+      "liveRock": "granite",
+      "ghost": "shale",
+      "modelYears": "100",
+      "view": "past",
+      "cutColumn": "74",
+      "runId": "run-3",
+      "marginNotes": "100 model years in granite\n\nan earlier moment of this run\n\nfront face 3.4 km down the valley, under 210 m of ice\n\nfloor 170 m wide, valley 310 m deep\n\nfloor lowered 10 m since the start\n\nsteepest wall 34 degrees\n\n···· a separate run with another rock, shale, at 100 model years: lowered 30 m, wall 35 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into granite, after 0 model years. There is no ice in this view. The front face of the block stands 3.4 km down the valley. The front face cuts the valley below the glacier's snout, where the river's V is unchanged. Its cross-section is closer to a V than a U (shape 1.2; a V is about 1, a U about 2). The ghost line is a separate run with another rock, shale, at 0 model years: its floor is lowered 0 m and its steepest wall is 27 degrees. You are looking at an earlier moment of this run, 0 model years."
+    },
+    {
+      "file": "captures/09-figure-under-the-ice-2x.png",
+      "note": "see under the ice (X-ray view)",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stageMode": "tilted",
+      "renderer": "webgpu",
+      "liveRock": "granite",
+      "ghost": "shale",
+      "modelYears": "300",
+      "view": "live",
+      "cutColumn": "74",
+      "runId": "run-3",
+      "marginNotes": "300 model years in granite\n\nfront face 3.4 km down the valley, under 230 m of ice\n\nfloor 220 m wide, valley 320 m deep\n\nfloor lowered 20 m since the start\n\nsteepest wall 46 degrees\n\n···· a separate run with another rock, shale, at 300 model years: lowered 50 m, wall 37 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into granite, after 300 model years. A glacier fills the valley from the valley head down to its snout. The front face of the block stands 3.4 km down the valley. The ice is hidden to show the rock under it. The front face cuts through the glacier. There the valley floor is 220 m wide and lowered 20 m below the dashed starting V; the steepest wall is 46 degrees. Its cross-section is closer to a V than a U (shape 1.5; a V is about 1, a U about 2). The ghost line is a separate run with another rock, shale, at 300 model years: its floor is lowered 50 m and its steepest wall is 37 degrees."
+    },
+    {
+      "file": "captures/10-figure-below-snout-2x.png",
+      "note": "front face below the snout (i = 14): the V stays",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stageMode": "tilted",
+      "renderer": "webgpu",
+      "liveRock": "granite",
+      "ghost": "shale",
+      "modelYears": "300",
+      "view": "live",
+      "cutColumn": "14",
+      "runId": "run-3",
+      "marginNotes": "300 model years in granite\n\nfront face 5.8 km down the valley, below the snout\n\nfloor 140 m wide, valley 200 m deep\n\nfloor lowered 0 m since the start\n\nsteepest wall 27 degrees\n\n···· a separate run with another rock, shale, at 300 model years: lowered 0 m, wall 27 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into granite, after 300 model years. A glacier fills the valley from the valley head down to its snout. The front face of the block stands 5.8 km down the valley. The front face cuts the valley below the glacier's snout, where the river's V is unchanged. Its cross-section is closer to a V than a U (shape 1.2; a V is about 1, a U about 2). The ghost line is a separate run with another rock, shale, at 300 model years: its floor is lowered 0 m and its steepest wall is 27 degrees."
+    },
+    {
+      "file": "captures/11-desktop-1440-zoom-max.png",
+      "note": "view zoom at its maximum (1.5)",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stageMode": "tilted",
+      "renderer": "webgpu",
+      "liveRock": "granite",
+      "ghost": "shale",
+      "modelYears": "300",
+      "view": "live",
+      "cutColumn": "51",
+      "runId": "run-3",
+      "marginNotes": "300 model years in granite\n\nfront face 4.3 km down the valley, under 180 m of ice\n\nfloor 180 m wide, valley 230 m deep\n\nfloor lowered 20 m since the start\n\nsteepest wall 45 degrees\n\n···· a separate run with another rock, shale, at 300 model years: lowered 60 m, wall 35 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into granite, after 300 model years. A glacier fills the valley from the valley head down to its snout. The front face of the block stands 4.3 km down the valley. The front face cuts through the glacier. There the valley floor is 180 m wide and lowered 20 m below the dashed starting V; the steepest wall is 45 degrees. Its cross-section is closer to a U than a V (shape 1.6; a V is about 1, a U about 2). The ghost line is a separate run with another rock, shale, at 300 model years: its floor is lowered 60 m and its steepest wall is 35 degrees."
+    },
+    {
+      "file": "captures/12-desktop-1440-university.png",
+      "note": "university level: same runs",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stageMode": "tilted",
+      "renderer": "webgpu",
+      "liveRock": "granite",
+      "ghost": "shale",
+      "modelYears": "300",
+      "view": "live",
+      "cutColumn": "51",
+      "runId": "run-3",
+      "marginNotes": "300 model years in granite\n\nfront face 4.3 km down the valley, under 180 m of ice\n\nfloor 180 m wide, valley 230 m deep\n\nfloor lowered 20 m since the start\n\nsteepest wall 45 degrees\n\nshape b = 1.6\n\n···· a separate run with another rock, shale, at 300 model years: lowered 60 m, wall 35 degrees, b = 1.7",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into granite, after 300 model years. A glacier fills the valley from the valley head down to its snout. The front face of the block stands 4.3 km down the valley. The front face cuts through the glacier. There the valley floor is 180 m wide and lowered 20 m below the dashed starting V; the steepest wall is 45 degrees. Its cross-section is closer to a U than a V (shape 1.6; a V is about 1, a U about 2). The ghost line is a separate run with another rock, shale, at 300 model years: its floor is lowered 60 m and its steepest wall is 35 degrees."
+    },
+    {
+      "file": "captures/13-desktop-1440-deeper-panel.png",
+      "note": "deeper level: bound parameters, equations, graphs",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stageMode": "tilted",
+      "renderer": "webgpu",
+      "liveRock": "granite",
+      "ghost": "shale",
+      "modelYears": "300",
+      "view": "live",
+      "cutColumn": "51",
+      "runId": "run-3",
+      "marginNotes": "300 model years in granite\n\nfront face 4.3 km down the valley, under 180 m of ice\n\nfloor 180 m wide, valley 230 m deep\n\nfloor lowered 20 m since the start\n\nsteepest wall 45 degrees\n\nshape b = 1.6\n\n···· a separate run with another rock, shale, at 300 model years: lowered 60 m, wall 35 degrees, b = 1.7",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into granite, after 300 model years. A glacier fills the valley from the valley head down to its snout. The front face of the block stands 4.3 km down the valley. The front face cuts through the glacier. There the valley floor is 180 m wide and lowered 20 m below the dashed starting V; the steepest wall is 45 degrees. Its cross-section is closer to a U than a V (shape 1.6; a V is about 1, a U about 2). The ghost line is a separate run with another rock, shale, at 300 model years: its floor is lowered 60 m and its steepest wall is 35 degrees."
+    },
+    {
+      "file": "captures/14-laptop-1366x768-open.png",
+      "note": "short laptop",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "stageMode": "tilted",
+      "renderer": "webgpu",
+      "liveRock": "sandstone",
+      "ghost": "",
+      "modelYears": "0",
+      "view": "live",
+      "cutColumn": "51",
+      "runId": "run-1",
+      "marginNotes": "0 model years in sandstone\n\nfront face 4.3 km down the valley, below the snout\n\nfloor 140 m wide, valley 220 m deep\n\nfloor lowered 0 m since the start\n\nsteepest wall 26 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into sandstone, after 0 model years. There is no ice in this view. The front face of the block stands 4.3 km down the valley. The front face cuts the valley below the glacier's snout, where the river's V is unchanged. Its cross-section is closer to a V than a U (shape 1.2; a V is about 1, a U about 2)."
+    },
+    {
+      "file": "captures/15-phone-390.png",
+      "note": "phone: flat single page, shale at 200 model years",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stageMode": "flat",
+      "renderer": "webgpu",
+      "liveRock": "shale",
+      "ghost": "",
+      "modelYears": "203.25",
+      "view": "live",
+      "cutColumn": "51",
+      "runId": "run-2",
+      "marginNotes": "203.3 model years in shale\n\nfront face 4.3 km down the valley, under 190 m of ice\n\nfloor 160 m wide, valley 260 m deep\n\nfloor lowered 40 m since the start\n\nsteepest wall 34 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into shale, after 201.8 model years. A glacier fills the valley from the valley head down to its snout. The front face of the block stands 4.3 km down the valley. The front face cuts through the glacier. There the valley floor is 160 m wide and lowered 40 m below the dashed starting V; the steepest wall is 34 degrees. Its cross-section is closer to a U than a V (shape 1.5; a V is about 1, a U about 2)."
+    },
+    {
+      "file": "captures/16-phone-390-full.png",
+      "note": "phone full page"
+    },
+    {
+      "file": "captures/17-reflow-320-full.png",
+      "note": "320 CSS px (200 % zoom reflow)"
+    },
+    {
+      "file": "captures/18-reduced-motion-1366.png",
+      "note": "reduced motion: flat page",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "stageMode": "flat",
+      "renderer": "webgpu",
+      "liveRock": "sandstone",
+      "ghost": "",
+      "modelYears": "0",
+      "view": "live",
+      "cutColumn": "51",
+      "runId": "run-1",
+      "marginNotes": "0 model years in sandstone\n\nfront face 4.3 km down the valley, below the snout\n\nfloor 140 m wide, valley 220 m deep\n\nfloor lowered 0 m since the start\n\nsteepest wall 26 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into sandstone, after 0 model years. There is no ice in this view. The front face of the block stands 4.3 km down the valley. The front face cuts the valley below the glacier's snout, where the river's V is unchanged. Its cross-section is closer to a V than a U (shape 1.2; a V is about 1, a U about 2)."
+    },
+    {
+      "file": "captures/19-reduced-motion-contrast.png",
+      "note": "more contrast (book setting)",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "stageMode": "flat",
+      "renderer": "webgpu",
+      "liveRock": "sandstone",
+      "ghost": "",
+      "modelYears": "0",
+      "view": "live",
+      "cutColumn": "51",
+      "runId": "run-1",
+      "marginNotes": "0 model years in sandstone\n\nfront face 4.3 km down the valley, below the snout\n\nfloor 140 m wide, valley 220 m deep\n\nfloor lowered 0 m since the start\n\nsteepest wall 26 degrees",
+      "textAlternative": "The figure is now a 3D block of the valley standing on the page, cut into sandstone, after 0 model years. There is no ice in this view. The front face of the block stands 4.3 km down the valley. The front face cuts the valley below the glacier's snout, where the river's V is unchanged. Its cross-section is closer to a V than a U (shape 1.2; a V is about 1, a U about 2)."
+    },
+    {
+      "file": "captures/20-desktop-1440-water-spread-2.png",
+      "note": "water lesson, spread 2"
+    }
+  ],
+  "device": {
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+    "webgpu": true,
+    "adapter": {
+      "vendor": "intel",
+      "architecture": "xe-2lpg",
+      "device": "",
+      "description": ""
+    },
+    "devicePixelRatio": 2
+  },
+  "solverLine": "What the notes measure. Each margin note reads the cross-section under the front face, averaged over 120 m of valley and rounded to 10 m, so the numbers do not jump from one grid cell to the next. The registered protocol measures single sections (Protocol). The front face opens on a section chosen for display after the runs were scanned; the lesson's claims rest on the registered under-ice section instead (Lesson). Grid 160 cells by 64 cells, each 40 m across. Solver: webgpu.",
+  "reflow320": true
+}

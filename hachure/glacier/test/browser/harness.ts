@@ -11,8 +11,11 @@ import type { CpuGlacierSolver } from "../../src/cpu/solver";
 import type { GpuGlacierSolver } from "../../src/gpu/index";
 import { PROTOCOL_SECTIONS } from "../../src/testing/protocol";
 
-/** Evidence directory, relative to the Vitest root (hachure/glacier). */
-export const EVIDENCE_DIR = "../../docs/review/glacial/gpu";
+/**
+ * Evidence directory, relative to the Vitest root (hachure/glacier). GLACIER_GPU_OUT redirects it, so an
+ * acceptance rerun (5N) keeps its own record and never overwrites the 5I evidence.
+ */
+export const EVIDENCE_DIR = __GLACIER_GPU_OUT__ ?? "../../docs/review/glacial/gpu";
 /** Registered CPU records from 5G2 (relative to the Vitest root). */
 export const CPU_RECORDS_DIR = "../../docs/review/glacial/model";
 
