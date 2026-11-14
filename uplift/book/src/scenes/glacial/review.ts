@@ -390,7 +390,10 @@ export async function mountGlacialScene(
     speedInput.value = String(speedControl.default);
   }
   speedLabel.append(el("span", undefined, "Speed"), speedInput);
-  timeline.append(playButton, stepButton, ruler, timeOutput, liveButton, speedLabel);
+  // The live run opens paused at its start (D-W5-5M2); this line invites Play until the run moves.
+  const playInvite = el("p", "gs-play-invite");
+  playInvite.id = "gs-play-invite";
+  timeline.append(playButton, stepButton, ruler, timeOutput, liveButton, speedLabel, playInvite);
 
   const controls = el("div", "gs-controls");
   const replay = el("button", undefined, "Replay the drawing");
@@ -523,6 +526,7 @@ export async function mountGlacialScene(
     drawing.innerHTML = glacialDrawingSvg({ idPrefix: "gs-fig", labels: drawingLabels() });
     trayLegend.textContent = t(L.controlsCopy.rockLegend);
     timeLegend.textContent = t(L.controlsCopy.timeLegend);
+    playInvite.textContent = t(L.controlsCopy.playInvite);
     liveButton.textContent = t(L.controlsCopy.backToLive);
     cutName.textContent = t(L.controlsCopy.frontFace);
     iceName.textContent = t(L.controlsCopy.underIce);
@@ -836,6 +840,12 @@ export async function mountGlacialScene(
         ? "This run is complete. Choose another rock or start again."
         : "";
     stepButton.disabled = playButton.disabled;
+    const invite =
+      source.kind === "live" && tl.atLive && !tl.playing && tl.status === "active" && !shown.modelYears;
+    playInvite.hidden = !invite;
+    playButton.dataset.invite = String(invite);
+    if (invite) playButton.setAttribute("aria-describedby", playInvite.id);
+    else playButton.removeAttribute("aria-describedby");
     speedLabel.hidden = source.kind !== "live";
     speedInput.value = String(source.speed());
     speedInput.setAttribute("aria-valuetext", `${source.speed()} times`);

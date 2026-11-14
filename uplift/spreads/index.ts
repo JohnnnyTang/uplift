@@ -1,8 +1,8 @@
 /** Registry of the real spreads shipped in the book. */
-import { contourSpread, waterSpread } from "../book/src/scenes/content";
+import { waterSpread } from "../book/src/scenes/content";
 import { valleySpread } from "./geomorph.v-valley/spread";
 import { uValleySpread } from "./geomorph.u-valley/spread";
-export { valleySpread, contourSpread, waterSpread, uValleySpread };
+export { valleySpread, waterSpread, uValleySpread };
 export { teacherNotesText as valleyTeacherNotes } from "./geomorph.v-valley/content";
 /** "From V to U" (5L): editorial pieces, view defaults and reader text, for the book (5M). */
 export * as uValleyLesson from "./geomorph.u-valley/lesson";
@@ -13,10 +13,7 @@ export {
   teacherNotesText as uValleyTeacherNotes,
 } from "./geomorph.u-valley/content";
 export { uValleyProbes } from "./geomorph.u-valley/bindings";
-/**
- * The default book (5M): From V to U opens it and the water lesson is spread 2. The contour lesson stays in
- * the repository as a retained foundation but is no longer in the default sequence.
- */
+/** The default book (5M): From V to U opens it and the water lesson is spread 2. */
 export const spreads = [uValleySpread, waterSpread] as const;
 /** Historical process-model research remains explicitly reachable. */
 export const researchSpreads = [valleySpread] as const;

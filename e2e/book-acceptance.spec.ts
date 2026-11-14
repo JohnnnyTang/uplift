@@ -37,6 +37,25 @@ test("integrated recording: rock choice, flap, page turn and retained return", a
   await expect(page.locator('input[name="gs-prediction"]:checked')).toHaveCount(0);
 });
 
+test("removed contour lesson (5M2): old deep links open the book's first spread", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  for (const deepLink of [
+    "/?backend=cpu-worker&spread=cartography.contours",
+    "/?backend=cpu-worker&spread=cartography.contours&page=illustration",
+  ]) {
+    await page.goto(deepLink);
+    await glacialReady(page);
+    await expect(page).toHaveURL(/spread=geomorph\.u-valley/);
+    await page.getByRole("button", { name: "Contents" }).click();
+    const contents = page.locator("#reader-contents");
+    await expect(contents).toContainText("From V to U");
+    await expect(contents).toContainText("Where will the water go?");
+    await expect(contents).not.toContainText("Lift a map");
+  }
+  expect(errors).toEqual([]);
+});
+
 for (const [label, width, height] of [
   ["desktop-1366", 1366, 768],
   ["desktop-1440", 1440, 900],

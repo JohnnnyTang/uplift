@@ -158,6 +158,8 @@ export const controlsCopy = {
   newRun: both("Each rock starts a separate run from the same starting valley. Earlier runs are kept."),
   droppedRun: both("The oldest kept run was removed to make room for the new one."),
   timeLegend: both("Time"),
+  /** Shown beside Play while the live run is still at its start (5M2: the opening invites Play). */
+  playInvite: both("Press Play and watch the ice reshape the valley."),
   timeUnit: both("model years"),
   earlier: both("Earlier moment · {{probe.modelTime}}"),
   backToLive: both("Back to the latest moment"),

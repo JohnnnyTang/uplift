@@ -2,7 +2,9 @@
 
 **Status:** 5G, 5G2, 5H, 5I and R1 done (R1 2026-11-11, D-W5-R1: the R1/R2 book and camera
 refinements are frozen decisions; D-W5-R1a amends it). 5J (#35), 5K (#36) and 5L (#34) merged
-2026-11-12. 5M next, not started (owner hold). Rewritten 2026-11-09 after the owner settled the condition,
+2026-11-12. 5M merged (#37). 5M2 (2026-11-13, D-W5-5M2) removed the contour lesson: the book is
+_From V to U_ then water, and the live run opens at model time 0 on the authored V (no pre-run).
+5N next. Rewritten 2026-11-09 after the owner settled the condition,
 comparison, book presentation and GPU questions. This file is the **single source** for the
 first lesson. Other plan files only point here. If they disagree with this file, this file wins.
 

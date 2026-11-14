@@ -105,6 +105,16 @@ test("the full journey on the live runtime, with the model never reset by view o
 }) => {
   const errors = await openBook(page);
 
+  // The live run opens paused at model time 0 on the authored V, and the page invites Play (D-W5-5M2).
+  await expect(desk(page)).toHaveAttribute("data-model-years", "0");
+  await expect(desk(page)).toHaveAttribute("data-playing", "false");
+  const invite = page.locator(".gs-play-invite");
+  await expect(invite).toBeVisible();
+  await expect(invite).toContainText("Press Play");
+  await expect(page.getByRole("button", { name: "Play", exact: true })).toHaveAccessibleDescription(
+    /Press Play/,
+  );
+
   // Pick a rock on the page (before any advance it just sets the rock: no kept run).
   await page.getByRole("radio", { name: /Shale/ }).check();
   await expect(desk(page)).toHaveAttribute("data-live-rock", "shale");
@@ -112,6 +122,7 @@ test("the full journey on the live runtime, with the model never reset by view o
 
   // Play, then pause.
   await playUntil(page, 40);
+  await expect(invite).toBeHidden();
   const firstRun = await desk(page).getAttribute("data-run-id");
   await expect(page.locator(".gs-margin")).toContainText("in shale");
   await expect(page.locator(".gs-margin")).toContainText("floor lowered");
