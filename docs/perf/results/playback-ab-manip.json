@@ -1,0 +1,134 @@
+{
+  "session": "6A",
+  "sha": "22ef5f1fef20df9d400024b023c23d432523a869",
+  "query": "/",
+  "startedAt": "2026-11-14T21:54:56.886Z",
+  "runs": [
+    {
+      "rep": 1,
+      "condition": "quiet",
+      "fps": 117.9,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 25.1,
+      "loafTop": []
+    },
+    {
+      "rep": 1,
+      "condition": "after-manip",
+      "fps": 11,
+      "over50": 7,
+      "over100": 7,
+      "maxMs": 1008.3,
+      "loafTop": [
+        {
+          "duration": 51,
+          "render": 20.5,
+          "scripts": [
+            {
+              "invoker": "Worker.onmessage",
+              "duration": 22,
+              "source": "index-DZpuOPC3.js",
+              "fn": ""
+            },
+            {
+              "invoker": "FrameRequestCallback",
+              "duration": 20,
+              "source": "stage-DMQazouL.js",
+              "fn": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rep": 2,
+      "condition": "after-manip",
+      "fps": 119.2,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 25,
+      "loafTop": []
+    },
+    {
+      "rep": 2,
+      "condition": "quiet",
+      "fps": 118.3,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 33.3,
+      "loafTop": []
+    },
+    {
+      "rep": 3,
+      "condition": "quiet",
+      "fps": 53.7,
+      "over50": 4,
+      "over100": 4,
+      "maxMs": 1008.2,
+      "loafTop": []
+    },
+    {
+      "rep": 3,
+      "condition": "after-manip",
+      "fps": 34.9,
+      "over50": 6,
+      "over100": 6,
+      "maxMs": 1008.4,
+      "loafTop": [
+        {
+          "duration": 1007.9,
+          "render": 0.2,
+          "scripts": []
+        },
+        {
+          "duration": 999.6,
+          "render": 0.3,
+          "scripts": []
+        },
+        {
+          "duration": 123.2,
+          "render": 0.2,
+          "scripts": []
+        }
+      ]
+    },
+    {
+      "rep": 4,
+      "condition": "after-manip",
+      "fps": 113.5,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 42.3,
+      "loafTop": []
+    },
+    {
+      "rep": 4,
+      "condition": "quiet",
+      "fps": 109.7,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 41.7,
+      "loafTop": [
+        {
+          "duration": 51.1,
+          "render": 20.7,
+          "scripts": [
+            {
+              "invoker": "Worker.onmessage",
+              "duration": 25,
+              "source": "index-DZpuOPC3.js",
+              "fn": ""
+            },
+            {
+              "invoker": "FrameRequestCallback",
+              "duration": 16,
+              "source": "stage-DMQazouL.js",
+              "fn": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

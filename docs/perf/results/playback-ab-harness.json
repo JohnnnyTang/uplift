@@ -1,0 +1,93 @@
+{
+  "session": "6A",
+  "sha": "22ef5f1fef20df9d400024b023c23d432523a869",
+  "query": "/",
+  "startedAt": "2026-11-14T21:49:49.335Z",
+  "runs": [
+    {
+      "rep": 1,
+      "condition": "quiet",
+      "fps": 118.4,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 41.7,
+      "loafTop": [
+        {
+          "duration": 55.1,
+          "render": 7.1,
+          "scripts": [
+            {
+              "invoker": "Worker.onmessage",
+              "duration": 44,
+              "source": "index-DZpuOPC3.js",
+              "fn": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rep": 1,
+      "condition": "watchdog",
+      "fps": 118.5,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 27.2,
+      "loafTop": []
+    },
+    {
+      "rep": 2,
+      "condition": "watchdog",
+      "fps": 118.9,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 33.3,
+      "loafTop": []
+    },
+    {
+      "rep": 2,
+      "condition": "quiet",
+      "fps": 118.3,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 33,
+      "loafTop": []
+    },
+    {
+      "rep": 3,
+      "condition": "quiet",
+      "fps": 118.6,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 25,
+      "loafTop": []
+    },
+    {
+      "rep": 3,
+      "condition": "watchdog",
+      "fps": 118.9,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 25.1,
+      "loafTop": []
+    },
+    {
+      "rep": 4,
+      "condition": "watchdog",
+      "fps": 118.6,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 25.6,
+      "loafTop": []
+    },
+    {
+      "rep": 4,
+      "condition": "quiet",
+      "fps": 118.6,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 33.3,
+      "loafTop": []
+    }
+  ]
+}
