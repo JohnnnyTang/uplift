@@ -1,0 +1,10 @@
+{
+  "note": "Known concurrent load on the machine during measured runs (epoch ms). summarize.mjs drops every sample and window overlapping one, as for window interruptions.",
+  "intervals": [
+    {
+      "from": 1794694820000,
+      "to": 1794694840000,
+      "what": "6A diagnostic build (vite build --minify false) run by the session agent during WebGPU repetition 3"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "session": "6A",
+  "sha": "22ef5f1fef20df9d400024b023c23d432523a869",
+  "query": "/",
+  "startedAt": "2026-11-14T21:52:12.950Z",
+  "runs": [
+    {
+      "rep": 1,
+      "condition": "quiet",
+      "fps": 118.7,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 33.3,
+      "loafTop": []
+    },
+    {
+      "rep": 1,
+      "condition": "after-runs",
+      "fps": 118.8,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 25.4,
+      "loafTop": []
+    },
+    {
+      "rep": 2,
+      "condition": "after-runs",
+      "fps": 119.4,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 25,
+      "loafTop": []
+    },
+    {
+      "rep": 2,
+      "condition": "quiet",
+      "fps": 119.1,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 25,
+      "loafTop": []
+    },
+    {
+      "rep": 3,
+      "condition": "quiet",
+      "fps": 119,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 25,
+      "loafTop": []
+    },
+    {
+      "rep": 3,
+      "condition": "after-runs",
+      "fps": 118.9,
+      "over50": 0,
+      "over100": 0,
+      "maxMs": 33.2,
+      "loafTop": []
+    },
+    {
+      "rep": 4,
+      "condition": "after-runs",
+      "fps": 1,
+      "over50": 6,
+      "over100": 6,
+      "maxMs": 1008.4,
+      "loafTop": []
+    },
+    {
+      "rep": 4,
+      "condition": "quiet",
+      "fps": 1.6,
+      "over50": 7,
+      "over100": 7,
+      "maxMs": 1008.4,
+      "loafTop": []
+    }
+  ]
+}

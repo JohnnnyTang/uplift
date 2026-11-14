@@ -1,0 +1,277 @@
+{
+  "query": "/",
+  "trace": "trace-gpu.json (150 MB Chrome trace, not committed; regenerate with trace-playback.mjs)",
+  "marks": [
+    {
+      "t": 660.4000000059605,
+      "attr": "data-playing",
+      "value": "false",
+      "el": "gs-desk",
+      "painted": 685.5999999940395
+    },
+    {
+      "t": 923.0999999940395,
+      "attr": "data-transition",
+      "value": "running",
+      "el": "gs-desk",
+      "painted": 933.6999999880791
+    },
+    {
+      "t": 3625.199999988079,
+      "attr": "data-transition",
+      "value": "done",
+      "el": "gs-desk",
+      "painted": 3632.9000000059605
+    },
+    {
+      "t": 4962,
+      "attr": "data-playing",
+      "value": "true",
+      "el": "gs-desk",
+      "painted": 4974.199999988079
+    },
+    {
+      "t": 11032.59999999404,
+      "attr": "data-playing",
+      "value": "false",
+      "el": "gs-desk",
+      "painted": 11044.799999982119
+    }
+  ],
+  "gaps": [
+    {
+      "gapAtMs": 789,
+      "gapMs": 117,
+      "overlap": [
+        {
+          "thread": "GPU Process/CrGpuMain",
+          "name": "RunTask",
+          "ms": 90.1,
+          "startOffsetMs": 89.1
+        },
+        {
+          "thread": "GPU Process/CrGpuMain",
+          "name": "ThreadControllerImpl::RunTask",
+          "ms": 90.1,
+          "startOffsetMs": 89.1
+        },
+        {
+          "thread": "GPU Process/CrGpuMain",
+          "name": "Scheduler::RunTask",
+          "ms": 90.1,
+          "startOffsetMs": 89.1
+        },
+        {
+          "thread": "GPU Process/CrGpuMain",
+          "name": "GpuChannel::ExecuteDeferredRequest",
+          "ms": 90.1,
+          "startOffsetMs": 89.1
+        },
+        {
+          "thread": "GPU Process/CrGpuMain",
+          "name": "GPUTask",
+          "ms": 90.1,
+          "startOffsetMs": 89.1
+        },
+        {
+          "thread": "GPU Process/CrGpuMain",
+          "name": "WebGPU",
+          "ms": 90.1,
+          "startOffsetMs": 89.1
+        },
+        {
+          "thread": "GPU Process/CrGpuMain",
+          "name": "CommandBuffer::Flush",
+          "ms": 90.1,
+          "startOffsetMs": 89.1
+        },
+        {
+          "thread": "GPU Process/CrGpuMain",
+          "name": "CommandBufferStub::OnAsyncFlush",
+          "ms": 90.1,
+          "startOffsetMs": 89.1
+        },
+        {
+          "thread": "GPU Process/CrGpuMain",
+          "name": "CommandBufferService:PutChanged",
+          "ms": 90.1,
+          "startOffsetMs": 89.1
+        },
+        {
+          "thread": "Renderer/CrRendererMain",
+          "name": "RunTask",
+          "ms": 66.1,
+          "startOffsetMs": -7.5
+        },
+        {
+          "thread": "Renderer/CrRendererMain",
+          "name": "BlinkScheduler_PerformMicrotaskCheckpoint",
+          "ms": 65.8,
+          "startOffsetMs": -7.4
+        },
+        {
+          "thread": "Renderer/CrRendererMain",
+          "name": "RunTask",
+          "ms": 64.7,
+          "startOffsetMs": 58.6
+        }
+      ]
+    },
+    {
+      "gapAtMs": 906,
+      "gapMs": 317,
+      "overlap": [
+        {
+          "thread": "Renderer/CrRendererMain",
+          "name": "RunTask",
+          "ms": 295,
+          "startOffsetMs": 123.8
+        },
+        {
+          "thread": "Renderer/CrRendererMain",
+          "name": "ThreadControllerImpl::RunTask",
+          "ms": 294.9,
+          "startOffsetMs": 123.8
+        },
+        {
+          "thread": "Renderer/CrRendererMain",
+          "name": "LayerTreeHost::~LayerTreeHost",
+          "ms": 294.9,
+          "startOffsetMs": 123.9
+        },
+        {
+          "thread": "Renderer/CrRendererMain",
+          "name": "ProxyMain::Stop",
+          "ms": 294.8,
+          "startOffsetMs": 123.9
+        },
+        {
+          "thread": "Renderer/Compositor",
+          "name": "RunTask",
+          "ms": 287.9,
+          "startOffsetMs": 123.9
+        },
+        {
+          "thread": "Renderer/Compositor",
+          "name": "ThreadControllerImpl::RunTask",
+          "ms": 287.9,
+          "startOffsetMs": 123.9
+        },
+        {
+          "thread": "Renderer/Compositor",
+          "name": "ProxyImpl::FinishGLOnImplThread",
+          "ms": 287.9,
+          "startOffsetMs": 123.9
+        },
+        {
+          "thread": "Renderer/Compositor",
+          "name": "RasterImplementation::Finish",
+          "ms": 287.9,
+          "startOffsetMs": 123.9
+        },
+        {
+          "thread": "Renderer/Compositor",
+          "name": "CommandBufferHelper::Finish",
+          "ms": 287.7,
+          "startOffsetMs": 124
+        },
+        {
+          "thread": "Renderer/Compositor",
+          "name": "CommandBufferProxyImpl::WaitForGetOffset",
+          "ms": 287.6,
+          "startOffsetMs": 124.1
+        },
+        {
+          "thread": "GPU Process/CrGpuMain",
+          "name": "RunTask",
+          "ms": 90.1,
+          "startOffsetMs": -27.5
+        },
+        {
+          "thread": "GPU Process/CrGpuMain",
+          "name": "ThreadControllerImpl::RunTask",
+          "ms": 90.1,
+          "startOffsetMs": -27.5
+        }
+      ]
+    },
+    {
+      "gapAtMs": 1222,
+      "gapMs": 100,
+      "overlap": [
+        {
+          "thread": "Renderer/CrRendererMain",
+          "name": "RunTask",
+          "ms": 295,
+          "startOffsetMs": -192.9
+        },
+        {
+          "thread": "Renderer/CrRendererMain",
+          "name": "ThreadControllerImpl::RunTask",
+          "ms": 294.9,
+          "startOffsetMs": -192.9
+        },
+        {
+          "thread": "Renderer/CrRendererMain",
+          "name": "LayerTreeHost::~LayerTreeHost",
+          "ms": 294.9,
+          "startOffsetMs": -192.8
+        },
+        {
+          "thread": "Renderer/CrRendererMain",
+          "name": "ProxyMain::Stop",
+          "ms": 294.8,
+          "startOffsetMs": -192.8
+        },
+        {
+          "thread": "Renderer/Compositor",
+          "name": "RunTask",
+          "ms": 287.9,
+          "startOffsetMs": -192.8
+        },
+        {
+          "thread": "Renderer/Compositor",
+          "name": "ThreadControllerImpl::RunTask",
+          "ms": 287.9,
+          "startOffsetMs": -192.8
+        },
+        {
+          "thread": "Renderer/Compositor",
+          "name": "ProxyImpl::FinishGLOnImplThread",
+          "ms": 287.9,
+          "startOffsetMs": -192.8
+        },
+        {
+          "thread": "Renderer/Compositor",
+          "name": "RasterImplementation::Finish",
+          "ms": 287.9,
+          "startOffsetMs": -192.8
+        },
+        {
+          "thread": "Renderer/Compositor",
+          "name": "CommandBufferHelper::Finish",
+          "ms": 287.7,
+          "startOffsetMs": -192.7
+        },
+        {
+          "thread": "Renderer/Compositor",
+          "name": "CommandBufferProxyImpl::WaitForGetOffset",
+          "ms": 287.6,
+          "startOffsetMs": -192.6
+        },
+        {
+          "thread": "GPU Process/CrGpuMain",
+          "name": "RunTask",
+          "ms": 46.7,
+          "startOffsetMs": 46.2
+        },
+        {
+          "thread": "GPU Process/CrGpuMain",
+          "name": "ThreadControllerImpl::RunTask",
+          "ms": 46.7,
+          "startOffsetMs": 46.2
+        }
+      ]
+    }
+  ]
+}

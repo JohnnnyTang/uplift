@@ -1,0 +1,183 @@
+{
+  "session": "6A",
+  "sha": "32d45c83461d80e1a673a4757eac2ed9c73454ef",
+  "base": "http://127.0.0.1:4191",
+  "query": "/",
+  "build": "unminified diagnostic build (vite build --minify false)",
+  "seconds": 6,
+  "frames": {
+    "origin": 1794696107157,
+    "t0": 5818,
+    "t1": 11851,
+    "spanS": 6,
+    "fps": 118.2,
+    "frameMs": {
+      "p50": 8.3,
+      "p95": 8.5,
+      "p99": 16.6,
+      "max": 25
+    },
+    "over33": 0,
+    "over50": 0,
+    "over100": 0,
+    "frames": 712,
+    "loafCount": 0,
+    "loafMaxMs": 0,
+    "loafBlockingMs": 0,
+    "loafTop": [],
+    "updates": 30,
+    "updatesPerS": 5
+  },
+  "top": [
+    {
+      "fn": "(program) :0",
+      "ms": 2474,
+      "pctOfWall": 40
+    },
+    {
+      "fn": "(idle) :0",
+      "ms": 2295,
+      "pctOfWall": 37.1
+    },
+    {
+      "fn": "describe review-DgoDAAsT.js:2433",
+      "ms": 317,
+      "pctOfWall": 5.1
+    },
+    {
+      "fn": "formatBoundNumber src-xrs9Emke.js:1976",
+      "ms": 167,
+      "pctOfWall": 2.7
+    },
+    {
+      "fn": "bedSlopeDeg review-DgoDAAsT.js:246",
+      "ms": 72,
+      "pctOfWall": 1.2
+    },
+    {
+      "fn": "(garbage collector) :0",
+      "ms": 53,
+      "pctOfWall": 0.9
+    },
+    {
+      "fn": "replaceChildren :0",
+      "ms": 47,
+      "pctOfWall": 0.8
+    },
+    {
+      "fn": "pop review-DgoDAAsT.js:809",
+      "ms": 32,
+      "pctOfWall": 0.5
+    },
+    {
+      "fn": "el review-DgoDAAsT.js:1936",
+      "ms": 17,
+      "pctOfWall": 0.3
+    },
+    {
+      "fn": "(anonymous) review-DgoDAAsT.js:2708",
+      "ms": 16,
+      "pctOfWall": 0.3
+    },
+    {
+      "fn": "toBlockGrid stage-CSUeHyO4.js:1113",
+      "ms": 15,
+      "pctOfWall": 0.2
+    },
+    {
+      "fn": "postMessage :0",
+      "ms": 14,
+      "pctOfWall": 0.2
+    },
+    {
+      "fn": "routeFilledBed review-DgoDAAsT.js:835",
+      "ms": 14,
+      "pctOfWall": 0.2
+    },
+    {
+      "fn": "(anonymous) index-YPVMxcMw.js:2080",
+      "ms": 14,
+      "pctOfWall": 0.2
+    },
+    {
+      "fn": "assertKey index-YPVMxcMw.js:77",
+      "ms": 14,
+      "pctOfWall": 0.2
+    },
+    {
+      "fn": "sectionLensSvg review-DgoDAAsT.js:1039",
+      "ms": 13,
+      "pctOfWall": 0.2
+    },
+    {
+      "fn": "parseBindings src-xrs9Emke.js:30",
+      "ms": 13,
+      "pctOfWall": 0.2
+    },
+    {
+      "fn": "adverseRise index-YPVMxcMw.js:1020",
+      "ms": 13,
+      "pctOfWall": 0.2
+    },
+    {
+      "fn": "surfaceNormals stage-CSUeHyO4.js:727",
+      "ms": 12,
+      "pctOfWall": 0.2
+    },
+    {
+      "fn": "querySelectorAll :0",
+      "ms": 12,
+      "pctOfWall": 0.2
+    },
+    {
+      "fn": "f1 review-DgoDAAsT.js:1036",
+      "ms": 12,
+      "pctOfWall": 0.2
+    },
+    {
+      "fn": "createElement :0",
+      "ms": 10,
+      "pctOfWall": 0.2
+    },
+    {
+      "fn": "publish review-DgoDAAsT.js:2360",
+      "ms": 9,
+      "pctOfWall": 0.2
+    },
+    {
+      "fn": "update index-YPVMxcMw.js:81",
+      "ms": 9,
+      "pctOfWall": 0.1
+    },
+    {
+      "fn": "gridIndex stage-CSUeHyO4.js:757",
+      "ms": 8,
+      "pctOfWall": 0.1
+    },
+    {
+      "fn": "profile index-YPVMxcMw.js:2467",
+      "ms": 7,
+      "pctOfWall": 0.1
+    },
+    {
+      "fn": "advance index-YPVMxcMw.js:1717",
+      "ms": 7,
+      "pctOfWall": 0.1
+    },
+    {
+      "fn": "rebuild stage-CSUeHyO4.js:1471",
+      "ms": 7,
+      "pctOfWall": 0.1
+    },
+    {
+      "fn": "packStrokes stage-CSUeHyO4.js:1519",
+      "ms": 7,
+      "pctOfWall": 0.1
+    },
+    {
+      "fn": "writeBuffer :0",
+      "ms": 7,
+      "pctOfWall": 0.1
+    }
+  ]
+}
