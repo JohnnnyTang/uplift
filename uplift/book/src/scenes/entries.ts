@@ -9,7 +9,7 @@ import { createHostedWaterDriver } from "./water-driver";
 
 /**
  * Production composition of the default book (5M): "From V to U" on the tilted book stage is spread 1, the
- * water lesson is spread 2. The contour lesson remains in the repository as a retained foundation.
+ * water lesson is spread 2. The contour lesson was removed (5M2).
  */
 export function createPlayableEntries(
   options: Pick<BackendSelectionOptions, "createWorkerTransport" | "search"> &
@@ -36,7 +36,7 @@ export function createPlayableEntries(
     {
       spread: waterSpread,
       createScene: (level) =>
-        createPlayableScene("water", {
+        createPlayableScene({
           level,
           flat,
           ...(options.inkBackend ? { inkBackend: options.inkBackend } : {}),

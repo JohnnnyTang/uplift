@@ -2,6 +2,8 @@
 
 <!-- expert-review -->
 
+**Removed 2026-11-13 (D-W5-5M2):** the contour lesson (`cartography.contours`) was removed from the book. Its geometry checks below are kept as the historical record; the water results are unchanged and still back the water lesson.
+
 The prospective source-only intervention was committed as `aa3acda` before acceptance execution. All results are retained in `results.json`, including complete resolved run configs, wet masks, hashes, diagnostics and relocation continuations. The deterministic runs were repeated once to add full resolved configuration metadata; outcomes were unchanged. The separate 5A exploratory observations were not relabelled as acceptance.
 
 | Prepared longitudinal slope | Left source: left / right wet cells | Right source: left / right wet cells |

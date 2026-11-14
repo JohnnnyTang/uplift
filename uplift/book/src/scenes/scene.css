@@ -24,12 +24,6 @@
   pointer-events: none;
   overflow: visible;
 }
-.selected-contour {
-  fill: none;
-  stroke: #263332;
-  stroke-width: 2.5;
-  stroke-dasharray: 7 4;
-}
 .wet-marks {
   fill: none;
   stroke: #263332;
@@ -60,15 +54,6 @@
   flex-wrap: wrap;
   font: 1rem system-ui;
 }
-.playable-controls label {
-  display: flex;
-  gap: 0.6rem;
-  align-items: center;
-}
-.playable-controls input {
-  width: 8rem;
-  accent-color: #263332;
-}
 .playable-controls button {
   font: inherit;
   border: 1px solid #69716b;
@@ -97,8 +82,5 @@
 @media (max-width: 420px) {
   .playable-drawing {
     height: 300px;
-  }
-  .playable-controls label {
-    flex-wrap: wrap;
   }
 }

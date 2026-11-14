@@ -1,8 +1,6 @@
 import { cellAt } from "@hachure/terrain";
 import {
-  attachLiftHandle,
   attachSourcePlacement,
-  contourPath,
   wetSampleMarks,
   createProjection,
   terrainFrameFromHeightfield,
@@ -21,7 +19,7 @@ import {
   type ReaderSceneStatus,
 } from "@hachure/runtime";
 import { GEOMETRY_PROBES } from "./content";
-import { createContourHill, createWaterInitial, DISPLAY, SOURCE, RESPONSE_STEPS } from "./geometry";
+import { createWaterInitial, DISPLAY, SOURCE, RESPONSE_STEPS } from "./geometry";
 import type { WaterSceneDriver } from "./water-driver";
 import "./scene.css";
 export interface PlayableSceneOptions {
@@ -30,16 +28,14 @@ export interface PlayableSceneOptions {
   readonly inkBackend?: InkBackendRequest;
   readonly createWaterDriver?: () => Promise<WaterSceneDriver | null>;
 }
-/** Two lesson adapters; all geometric selection and gesture transforms live in Ink. */
-export function createPlayableScene(
-  kind: "contour" | "water",
-  options: PlayableSceneOptions = {},
-): ReaderSceneController {
-  const water = kind === "water",
-    initial = createWaterInitial();
-  let field: Heightfield = water
-    ? { gridSize: initial.gridSize, metresPerCell: initial.metresPerCell, heightsM: initial.bedrockM }
-    : createContourHill();
+/** The water lesson's scene adapter; all geometric selection and gesture transforms live in Ink. */
+export function createPlayableScene(options: PlayableSceneOptions = {}): ReaderSceneController {
+  const initial = createWaterInitial();
+  let field: Heightfield = {
+    gridSize: initial.gridSize,
+    metresPerCell: initial.metresPerCell,
+    heightsM: initial.bedrockM,
+  };
   let depths: Float32Array | undefined,
     driver: WaterSceneDriver | null = null,
     view: InkView | null = null;
@@ -48,7 +44,7 @@ export function createPlayableScene(
     prediction: { kind: "unanswered" },
     explanationOpen: false,
     liftFraction: 0,
-    selection: water ? { kind: "source", id: SOURCE.id, ...SOURCE.at } : { kind: "contour", elevationM: 4 },
+    selection: { kind: "source", id: SOURCE.id, ...SOURCE.at },
   };
   const defaults = structuredClone(state),
     bindings = new BindingEngine({ probes: GEOMETRY_PROBES, controls: [] });
@@ -66,7 +62,6 @@ export function createPlayableScene(
     fallback: HTMLElement | null = null,
     caption: HTMLElement | null = null,
     legend: HTMLElement | null = null,
-    slider: HTMLInputElement | null = null,
     sourceButton: HTMLButtonElement | null = null;
   let observer: ResizeObserver | null = null,
     release: (() => void) | null = null,
@@ -99,20 +94,11 @@ export function createPlayableScene(
   function paint() {
     const p = projection(),
       fraction = status.readiness.kind === "fallback" ? 0 : state.liftFraction;
-    const contours = view?.contours ?? extractContours(field, DISPLAY.contourIntervalM);
-    const selected =
-      contours.lines.find(
-        (l) => l.levelM === (state.selection.kind === "contour" ? state.selection.elevationM : 4),
-      ) ?? contours.lines[0];
-    const elevation = selected?.levelM ?? 0;
     const wet = depths
       ? wetSampleMarks(field, depths, DISPLAY.wetThresholdM, p, fraction)
       : { path: "", wetCells: 0, leftCells: 0, rightCells: 0 };
     bindings.update({
       probe: {
-        elevation,
-        interval: DISPLAY.contourIntervalM,
-        exaggeration: fraction * DISPLAY.reliefScale,
         wetCells: wet.wetCells,
         sourceX: acceptedSource.xM,
         sourceY: acceptedSource.yM,
@@ -126,64 +112,38 @@ export function createPlayableScene(
     fallback!.hidden = !flat;
     canvas!.hidden = flat;
     if (flat)
-      fallback!.innerHTML = toSvg(contours, {
+      fallback!.innerHTML = toSvg(view?.contours ?? extractContours(field, DISPLAY.contourIntervalM), {
         projection: p,
-        title: water
-          ? "Static contour map of the prepared terrain. Live water unavailable."
-          : "Contour map of the authored hill.",
+        title: "Static contour map of the prepared terrain. Live water unavailable.",
       });
     overlay.setAttribute("viewBox", `0 0 ${p.viewport.widthPx} ${p.viewport.heightPx}`);
-    overlay
-      .querySelector("[data-selected]")!
-      .setAttribute("d", !water && selected ? contourPath(selected, p, fraction) : "");
-    overlay.querySelector("[data-wet]")!.setAttribute("d", water && !flat ? wet.path : "");
-    let xy: readonly number[] = [0, 0];
-    if (water)
-      xy = projectToViewport(
-        p,
-        acceptedSource.xM,
-        acceptedSource.yM,
-        sampleSurface(field, acceptedSource.xM, acceptedSource.yM),
-        fraction,
-      );
-    else if (selected)
-      xy = projectToViewport(p, selected.pointsM[0], selected.pointsM[1], selected.levelM, fraction);
+    overlay.querySelector("[data-wet]")!.setAttribute("d", flat ? "" : wet.path);
+    const xy = projectToViewport(
+      p,
+      acceptedSource.xM,
+      acceptedSource.yM,
+      sampleSurface(field, acceptedSource.xM, acceptedSource.yM),
+      fraction,
+    );
     const ring = overlay.querySelector("[data-ring]")!;
     ring.setAttribute("cx", String(xy[0]));
     ring.setAttribute("cy", String(xy[1]));
     const hint = overlay.querySelector("[data-hint]")!;
     hint.setAttribute("x", String(xy[0] + 16));
     hint.setAttribute("y", String(xy[1] - 14));
-    hint.textContent = water ? "spring" : "pull to lift";
-    slider!.value = String(state.liftFraction);
-    slider!.disabled = flat;
-    sourceButton!.hidden = !water;
+    hint.textContent = "spring";
     sourceButton!.disabled = flat || status.activity === "settling";
     caption!.textContent = flat
-      ? `Flat diagram. ${status.readiness.kind === "fallback" ? status.readiness.reason : "Preparing the illustration."} ${water ? "No live water process is running." : "The dashed line marks equal elevation."}`
-      : water
-        ? bindings.render("Earlier water remains after moving. Ink dots show where this surface is wet.")
-        : bindings.render(
-            "Dashed contour: {{probe.elevation}} above datum. Vertical view scale ×{{probe.exaggeration}}. Terrain unchanged.",
-          );
-    if (water && state.level === "uni" && !flat)
+      ? `Flat diagram. ${status.readiness.kind === "fallback" ? status.readiness.reason : "Preparing the illustration."} No live water process is running.`
+      : bindings.render("Earlier water remains after moving. Ink dots show where this surface is wet.");
+    if (state.level === "uni" && !flat)
       caption!.textContent = bindings.render(
         "Spring at {{probe.sourceX}}, {{probe.sourceY}}. {{probe.wetCells}} wet cells. Earlier water remains after moving.",
       );
-    if (water && !flat && placementNotice) caption!.textContent += " " + placementNotice;
-    legend!.textContent = water
-      ? bindings.render(
-          "Blue = water depth; ink dots = cells at least {{probe.threshold}} deep. Full blue at {{probe.fullDepth}}. Model width {{probe.width}}.",
-        )
-      : bindings.render(
-          "Ink = elevation contours, interval {{probe.interval}}. Static geometry; no model clock.",
-        );
-  }
-  function lift(fraction: number) {
-    if (!accepting) return;
-    state = { ...state, liftFraction: Math.max(0, Math.min(1, fraction)) };
-    view?.setExaggeration(state.liftFraction);
-    paint();
+    if (!flat && placementNotice) caption!.textContent += " " + placementNotice;
+    legend!.textContent = bindings.render(
+      "Blue = water depth; ink dots = cells at least {{probe.threshold}} deep. Full blue at {{probe.fullDepth}}. Model width {{probe.width}}.",
+    );
   }
   async function pull() {
     if (!driver) return;
@@ -256,7 +216,7 @@ export function createPlayableScene(
     emit();
   }
   const controller: ReaderSceneController = {
-    scope: water ? { kind: "live-process", time: "uncalibrated" } : { kind: "static-geometry" },
+    scope: { kind: "live-process", time: "uncalibrated" },
     bindings,
     readiness: () => status.readiness,
     status: () => ({ ...status }),
@@ -283,37 +243,32 @@ export function createPlayableScene(
         if (status.attached) throw new Error("Already attached");
         root = document.createElement("section");
         root.className = "playable-scene";
-        root.innerHTML = `<div class="playable-drawing"><canvas aria-label="${water ? "Place a spring on the prepared surface" : "Lifted contour drawing"}"></canvas><div class="playable-flat"></div><svg class="playable-overlay" aria-hidden="true"><path data-selected class="selected-contour"/><path data-wet class="wet-marks"/><circle data-ring r="10" class="scene-ring"/><text data-hint class="scene-hint"/></svg></div><div class="playable-controls"><label>Lift the drawing <input aria-label="Lift the drawing" type="range" min="0" max="1" step="0.01" value="0"></label><button type="button" class="source-keyboard">Move spring with arrow keys</button></div><p class="scene-caption" role="status" aria-live="polite"></p><p class="scene-legend"></p>`;
+        root.innerHTML = `<div class="playable-drawing"><canvas aria-label="Place a spring on the prepared surface"></canvas><div class="playable-flat"></div><svg class="playable-overlay" aria-hidden="true"><path data-wet class="wet-marks"/><circle data-ring r="10" class="scene-ring"/><text data-hint class="scene-hint"/></svg></div><div class="playable-controls"><button type="button" class="source-keyboard">Move spring with arrow keys</button></div><p class="scene-caption" role="status" aria-live="polite"></p><p class="scene-legend"></p>`;
         container.append(root);
         canvas = root.querySelector("canvas");
         overlay = root.querySelector("svg");
         fallback = root.querySelector(".playable-flat");
         caption = root.querySelector(".scene-caption");
         legend = root.querySelector(".scene-legend");
-        slider = root.querySelector("input");
         sourceButton = root.querySelector("button");
         status = { ...status, attached: true };
         accepting = true;
         paint();
-        slider!.closest("label")!.hidden = water;
-        slider!.addEventListener("input", () => lift(Number(slider!.value)));
         const gesture = (active: boolean) => {
-          status = { ...status, gesture: active ? (water ? "source" : "lift") : "idle" };
+          status = { ...status, gesture: active ? "source" : "idle" };
           emit();
         };
-        release = water
-          ? attachSourcePlacement({
-              canvas: canvas!,
-              marker: overlay!.querySelector("[data-ring]")!,
-              keyboard: sourceButton!,
-              geometry: () => ({ field, projection: projection(), liftFraction: state.liftFraction }),
-              source: () => acceptedSource,
-              place: (x, y) => {
-                void place(x, y);
-              },
-              gesture,
-            })
-          : attachLiftHandle(overlay!.querySelector("[data-ring]")!, () => state.liftFraction, lift, gesture);
+        release = attachSourcePlacement({
+          canvas: canvas!,
+          marker: overlay!.querySelector("[data-ring]")!,
+          keyboard: sourceButton!,
+          geometry: () => ({ field, projection: projection(), liftFraction: state.liftFraction }),
+          source: () => acceptedSource,
+          place: (x, y) => {
+            void place(x, y);
+          },
+          gesture,
+        });
         observer = new ResizeObserver(() => {
           view?.resize();
           paint();
@@ -324,7 +279,7 @@ export function createPlayableScene(
             fail("This device is showing the static map.");
             return;
           }
-          if (water && !initialized) {
+          if (!initialized) {
             driver = (await options.createWaterDriver?.()) ?? null;
             if (disposing || disposed) {
               driver?.dispose();
@@ -343,7 +298,7 @@ export function createPlayableScene(
             reliefScale: DISPLAY.reliefScale,
             backend: options.inkBackend ?? "auto",
             camera: { azimuthDeg: 0, elevationDeg: 48, zoom: 1.05 },
-            layers: { hachures: true, sediment: false, water },
+            layers: { hachures: true, sediment: false, water: true },
             channels: {
               water: {
                 visibleFromM: DISPLAY.wetThresholdM,

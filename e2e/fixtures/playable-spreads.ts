@@ -1,13 +1,12 @@
 import { WorkerTransport } from "../../hachure/runtime/src/index";
 import { createHostedWaterDriver } from "../../uplift/book/src/scenes/water-driver";
 import { createPlayableScene } from "../../uplift/book/src/scenes/playable-scene";
-import { contourSpread, waterSpread } from "../../uplift/book/src/scenes/content";
+import { waterSpread } from "../../uplift/book/src/scenes/content";
 import { realCpuFixtureDriver } from "./playable-spreads-driver";
 const container = document.querySelector<HTMLElement>("#scene")!;
 const params = new URLSearchParams(location.search);
 const scenes = {
-  contour: createPlayableScene("contour", { flat: params.has("flat"), inkBackend: "webgl2" }),
-  water: createPlayableScene("water", {
+  water: createPlayableScene({
     flat: params.has("flat"),
     inkBackend: "webgl2",
     createWaterDriver: params.has("host")
@@ -22,15 +21,15 @@ const scenes = {
       : realCpuFixtureDriver,
   }),
 };
-let active: "contour" | "water" = "contour",
-  mounted = false;
-async function show(kind: typeof active) {
+const active = "water";
+let mounted = false;
+/** Mounts the water scene; called again, it detaches and remounts it (a page departure and return). */
+async function show() {
   if (mounted) {
     await scenes[active].pauseAndSettle();
     scenes[active].detach();
   }
-  active = kind;
-  const spread = kind === "water" ? waterSpread : contourSpread;
+  const spread = waterSpread;
   document.querySelector("#title")!.textContent = spread.title.hs;
   document.querySelector("#invite")!.textContent = spread.page.body.hs;
   await scenes[active].mount(container);
@@ -40,8 +39,6 @@ async function show(kind: typeof active) {
   );
   mounted = true;
 }
-document.querySelector("#contour")!.addEventListener("click", () => void show("contour"));
-document.querySelector("#water")!.addEventListener("click", () => void show("water"));
 document.querySelector("#reset")!.addEventListener("click", () => void scenes[active].reset());
 document.querySelector("#level")!.addEventListener("click", () => {
   const scene = scenes[active],
@@ -59,7 +56,7 @@ Object.assign(window, {
       const waiting = new Promise<void>((resolve) => {
         release = resolve;
       });
-      const scene = createPlayableScene("water", {
+      const scene = createPlayableScene({
         inkBackend: "webgl2",
         createWaterDriver: async () => {
           await waiting;
@@ -84,4 +81,4 @@ Object.assign(window, {
     },
   },
 });
-void show("contour");
+void show();

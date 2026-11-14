@@ -31,6 +31,9 @@ See [session ownership and criteria](stage-1-wave-5-glacial.md#traceability-and-
 | PB7 book continues           | Actual default pointer/keyboard turns, retained lift/explanation, smoke settled water/research return; shell arbitration/race fixtures                               | Automated mechanics; listening/gesture usability with people pending, 6B/6C                   |
 | PB8 human review             | New listening and first-time-reader protocols in packet                                                                                                              | Pending; no human participants or owner approval recorded                                     |
 
+The contour lesson behind the PB3 and PB5 lift evidence was removed on 2026-11-13 (D-W5-5M2); the
+rows stay as the historical record.
+
 Evidence paths above are repository-relative; captures live in
 `docs/review/book-revision/acceptance/`. Exact execution outcomes are in the
 packet's verification record; a screenshot or unit pass does not close PB8.

@@ -4,7 +4,6 @@ import "./reader-layout.css";
 import { BOOK_PALETTE, WorkerTransport } from "@hachure/runtime";
 import { createReaderShell, type MountedReaderShell } from "../reader/shell";
 import { createPlayableEntries } from "../scenes/entries";
-import contourNotes from "../../../spreads/cartography.contours/teacher.md?raw";
 import waterNotes from "../../../spreads/hydrology.water-path/teacher.md?raw";
 
 /** Retain both model owners while only the visible route is attached and active. */
@@ -61,7 +60,7 @@ export async function mountApp(root: HTMLElement) {
               ),
           }),
           {
-            teacherNotes: { "cartography.contours": contourNotes, "hydrology.water-path": waterNotes },
+            teacherNotes: { "hydrology.water-path": waterNotes },
             onResearch: () => navigate(true),
           },
         );

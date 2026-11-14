@@ -2179,3 +2179,45 @@ and new `source.ts` (5K's scene: the source seam, 5L words, new controls; review
 
 **Not done / open.** See the integration review README: no human, screen-reader or hardware check; the
 WebGPU path was exercised on the machine noted there only.
+
+## D-W5-5M2 — Contour lesson removed; the live run opens at model time 0; the opening invites Play
+
+2026-11-13. Session 5M2 (`s1/w5/5m2-remove-contours`, from s1/w5/integration f1b381d). Owner decisions,
+recorded by the lead; this entry records them and what the session changed.
+
+1. **Owner: the contour lesson is removed now.** It "drifted from our main thread". 5M had taken it out of
+   the default sequence (D-W5-5M item 1); it is now out of the product. The book is _From V to U_ (spread 1)
+   followed by the water lesson (spread 2), plus the research route.
+2. **Owner: the live run keeps starting at model time 0 from the authored V.** No pre-run and no recorded run
+   on opening (the owner accepted the lead's recommendation). The lesson is watching V become U through
+   simulated ice flow; a pre-run would hide that change, and a recorded run on opening would be a run the
+   reader did not choose.
+
+**Removed (Uplift only).** `uplift/spreads/cartography.contours/` (spread re-export and teacher notes); the
+`lesson("contour")` branch and `contourSpread` export in `uplift/book/src/scenes/content.ts` (now a single
+`waterSpread`) and its re-export from `@uplift/spreads`; its teacher-notes registration in `app/routes.ts`;
+the contour-only probes (`elevation`, `interval`, `exaggeration`), the authored `createContourHill` surface,
+the lift slider, lift handle, dashed selected-contour overlay and their CSS from the water lesson's playable
+scene (`createPlayableScene(options)` is now water-only); the isoline claim test in `scenes/claims.test.ts`;
+the contour half of `e2e/playable-spreads.spec.ts` and its fixture (`e2e/fixtures/playable-spreads.{ts,html}`).
+
+**Kept.** Hachure's contour primitives (`hachure/ink/src/contours.ts`, `contourPath`, `attachLiftHandle`,
+stage, view and SVG code) and their engine tests: an engine capability that the research route (the
+rain lesson's contour drawing and lift) and the water lesson's ink view and flat fallback still use. The `static-geometry`
+scope and `contour` selection kinds in `@hachure/runtime` stay as schema. Historical evidence and records
+are untouched (`docs/review/**`, earlier DECISIONS entries, `docs/spikes/**`); the playable-book validation
+protocol and results carry a short removal note, with all results kept.
+
+**Old links.** `?spread=cartography.contours` (any `page`) opens the book's first spread and the address is
+rewritten to `spread=geomorph.u-valley`: the shell already falls back to the first entry for an unknown
+spread id. `e2e/book-acceptance.spec.ts` covers both forms, with no page errors and no contour entry in the
+contents.
+
+**For 5N: the opening must clearly invite the reader to press Play.** Checked on the 5M page: the run opened
+paused at model time 0 with a small outline Play pill and no words asking for Play ("Choose the rock" and
+"Drag a rock onto the block" only). Smallest fix: 5L's `controlsCopy.playInvite` ("Press Play and watch the
+ice reshape the valley.", no numbers) shows under the timeline while the live run is at its start, paused and
+at its live head; the Play button gets a heavier ink border and is described by that line
+(`aria-describedby`). The line hides once the run moves and returns for a fresh run. 5N should confirm in the
+journey walk-through that a first-time reader finds Play without help. Cross-owned minimal edits:
+`uplift/spreads/geomorph.u-valley/lesson.ts` (one copy entry), `uplift/book/src/scenes/glacial/review.{ts,css}`.

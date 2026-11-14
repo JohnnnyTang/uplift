@@ -1104,3 +1104,20 @@
 .gs-review h1[tabindex="-1"]:focus {
   outline: none;
 }
+
+/* 5M2: the opening invites Play. The run starts paused at model time 0; Play stands out until it moves. */
+.gs-play[data-invite="true"] {
+  border-color: var(--gs-ink);
+  border-width: 2px;
+  font-weight: 600;
+}
+.gs-play-invite {
+  flex-basis: 100%;
+  grid-column: 1 / -1;
+  margin: 0.2em 0 0;
+  font-style: italic;
+  color: var(--gs-ink);
+}
+.gs-play-invite[hidden] {
+  display: none;
+}

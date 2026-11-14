@@ -1,23 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { validateReaderSpread } from "@hachure/runtime";
-import { contourSpread, waterSpread, GEOMETRY_CATALOGUE } from "./content";
-import {
-  extractContours,
-  sampleSurface,
-  createProjection,
-  terrainFrameFromHeightfield,
-  projectToViewport,
-  contourPath,
-  wetSampleMarks,
-} from "@hachure/ink";
-import {
-  createContourHill,
-  DISPLAY,
-  createWaterInitial,
-  WATER_CONFIG,
-  SOURCE,
-  RESPONSE_STEPS,
-} from "./geometry";
+import { waterSpread, GEOMETRY_CATALOGUE } from "./content";
+import { createProjection, terrainFrameFromHeightfield, wetSampleMarks } from "@hachure/ink";
+import { DISPLAY, createWaterInitial, WATER_CONFIG, SOURCE, RESPONSE_STEPS } from "./geometry";
 import { createTerrainState, createCpuSolver, type TerrainPreset } from "@hachure/terrain";
 import { writeFileSync } from "node:fs";
 function preset(slope: number): TerrainPreset {
@@ -33,31 +18,8 @@ function preset(slope: number): TerrainPreset {
   };
 }
 describe("playable claims", () => {
-  it("validates all lesson text and geometry probes", () => {
-    for (const spread of [contourSpread, waterSpread])
-      expect(validateReaderSpread(spread, GEOMETRY_CATALOGUE)).toMatchObject({ ok: true });
-  });
-  it("selected isoline stays on the triangulated surface in every view", () => {
-    const field = createContourHill(),
-      before = field.heightsM.slice(),
-      lines = extractContours(field, DISPLAY.contourIntervalM);
-    const line = lines.lines.find((l) => l.levelM === 4)!;
-    expect(line).toBeDefined();
-    const projection = createProjection(
-      terrainFrameFromHeightfield(field),
-      { azimuthDeg: 0, elevationDeg: 48, zoom: 1.05 },
-      { widthPx: 480, heightPx: 420 },
-      DISPLAY.reliefScale,
-    );
-    for (const lift of [0, 0.5, 1]) {
-      for (let i = 0; i < line.pointsM.length; i += 2)
-        expect(
-          Math.abs(sampleSurface(field, line.pointsM[i], line.pointsM[i + 1]) - line.levelM),
-        ).toBeLessThan(1e-5);
-      const [x, y] = projectToViewport(projection, line.pointsM[0], line.pointsM[1], line.levelM, lift);
-      expect(contourPath(line, projection, lift).startsWith(`M${x},${y}`)).toBe(true);
-    }
-    expect(field.heightsM).toEqual(before);
+  it("validates the water lesson text and geometry probes", () => {
+    expect(validateReaderSpread(waterSpread, GEOMETRY_CATALOGUE)).toMatchObject({ ok: true });
   });
   it("source-only intervention changes wet extent across the preregistered prepared slopes", async () => {
     const outcomes = [];

@@ -1,4 +1,3 @@
-import { heightfieldFromFunction } from "@hachure/ink";
 import type { AuthoredTerrainInitial } from "@hachure/runtime";
 import type { TerrainConfig } from "@hachure/terrain";
 export const DISPLAY = Object.freeze({
@@ -28,8 +27,6 @@ export const SOURCE = Object.freeze({
   flowM3PerS: 0.4,
 });
 export const RESPONSE_STEPS = 2000;
-export const createContourHill = () =>
-  heightfieldFromFunction(32, 2, (x, y) => 8 * Math.exp(-((x - 32) ** 2 + (y - 32) ** 2) / 450));
 /** Authored test surface, not a simulated landform or real catchment. Fresh arrays per consumer. */
 export function createWaterInitial(slope = 0.04): AuthoredTerrainInitial {
   const gridSize = WATER_CONFIG.gridSize!,

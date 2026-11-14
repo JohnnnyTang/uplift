@@ -4,24 +4,11 @@ import { test, expect } from "@playwright/test";
 const url =
   (process.env.PLAYABLE_FIXTURE_URL ?? "http://127.0.0.1:4174") + "/e2e/fixtures/playable-spreads.html";
 const evidence = "docs/review/book-revision/example";
-test("real contour lift and water gesture, state, keyboard and fallback", async ({ page }, testInfo) => {
+test("real water gesture, state, keyboard and fallback", async ({ page }, testInfo) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(url);
-  await expect(page.locator(".scene-caption")).toContainText("Terrain unchanged");
-  await page.screenshot({ path: `${evidence}/contour-flat-desktop.png` });
-  const ring = page.locator("[data-ring]"),
-    r = await ring.boundingBox();
-  expect(r).toBeTruthy();
-  await page.mouse.move(r!.x + r!.width / 2, r!.y + r!.height / 2);
-  await page.mouse.down();
-  await page.mouse.move(r!.x + r!.width / 2, r!.y - 180, { steps: 8 });
-  await page.mouse.up();
-  await expect(page.getByRole("slider")).toHaveValue("1");
-  await page.screenshot({ path: `${evidence}/contour-raised-desktop.png` });
-  await page.getByRole("button", { name: "Change level" }).click();
-  await expect(page.getByRole("slider")).toHaveValue("1");
-  await page.getByRole("button", { name: "Water lesson", exact: true }).click();
+  await expect(page.getByRole("slider")).toHaveCount(0);
   await expect(page.locator(".scene-caption")).toContainText("surface is wet");
   await page.getByRole("button", { name: "Change level" }).click();
   const source = page.getByRole("button", { name: "Move spring with arrow keys" });
@@ -44,14 +31,11 @@ test("real contour lift and water gesture, state, keyboard and fallback", async 
   await page.screenshot({ path: `${evidence}/water-reduced-motion.png` });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: `${evidence}/water-phone.png`, fullPage: true });
-  await page.getByRole("button", { name: "Contour lesson", exact: true }).click();
-  await expect(page.getByRole("slider")).toHaveValue("1");
   await page.goto(url + "?flat");
   await expect(page.locator(".scene-caption")).toContainText("Flat diagram");
-  await expect(page.getByRole("slider")).toBeDisabled();
-  await page.screenshot({ path: `${evidence}/flat-fallback-phone.png`, fullPage: true });
-  await page.getByRole("button", { name: "Water lesson", exact: true }).click();
   await expect(page.locator(".scene-caption")).toContainText("No live water process");
+  await expect(page.getByRole("button", { name: "Move spring with arrow keys" })).toBeDisabled();
+  await page.screenshot({ path: `${evidence}/flat-fallback-phone.png`, fullPage: true });
   expect(errors).toEqual([]);
   if (page.video()) {
     const videoPath = await page.video()!.path();
@@ -60,14 +44,13 @@ test("real contour lift and water gesture, state, keyboard and fallback", async 
 });
 
 type Harness = {
-  playable: { scenes: { water: ReaderSceneController }; show: (kind: "water" | "contour") => Promise<void> };
+  playable: { scenes: { water: ReaderSceneController }; show: () => Promise<void> };
   playableModel: { snapshot: () => Promise<StateSnapshot>; hash: () => Promise<string> };
 };
 test("departure retains partial response, level and selection never mutate model, return finishes response", async ({
   page,
 }) => {
   await page.goto(url + "?lag");
-  await page.getByRole("button", { name: "Water lesson", exact: true }).click();
   await page.getByRole("button", { name: "Move spring with arrow keys" }).press("ArrowRight");
   const settled = await page.evaluate(async () => {
     const h = window as unknown as Harness,
@@ -89,8 +72,7 @@ test("departure retains partial response, level and selection never mutate model
   expect(settled.caption).toBe("19 m");
   await page.evaluate(async () => {
     const h = window as unknown as Harness;
-    await h.playable.show("contour");
-    await h.playable.show("water");
+    await h.playable.show();
   });
   await expect
     .poll(() =>
@@ -108,7 +90,7 @@ test("departure retains partial response, level and selection never mutate model
 
 test("disposal while initialization awaits cannot resurrect a scene", async ({ page }) => {
   await page.goto(url);
-  await expect(page.locator(".scene-caption")).toContainText("Terrain unchanged");
+  await expect(page.locator(".scene-caption")).toContainText("surface is wet");
   const result = await page.evaluate(async () =>
     (
       window as unknown as {
