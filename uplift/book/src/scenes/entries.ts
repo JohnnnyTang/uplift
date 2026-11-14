@@ -3,20 +3,15 @@ import type { GlacialBackendPreference } from "@hachure/runtime/glacial";
 import type { ReaderEntry } from "../reader/contracts";
 import { uValleySpread } from "@uplift/spreads";
 import { createGlacialSpreadScene } from "../app/glacial-spread";
-import { waterSpread } from "./content";
-import { createPlayableScene, type PlayableSceneOptions } from "./playable-scene";
-import { createHostedWaterDriver } from "./water-driver";
 
 /**
- * Production composition of the default book (5M): "From V to U" on the tilted book stage is spread 1, the
- * water lesson is spread 2. The contour lesson was removed (5M2).
+ * Production composition of the default book: the single lesson "From V to U" on the tilted book stage.
+ * The contour lesson was removed (5M2) and the water lesson was removed (5N2, D-W5-5N2).
  */
 export function createPlayableEntries(
-  options: Pick<BackendSelectionOptions, "createWorkerTransport" | "search"> &
-    Pick<PlayableSceneOptions, "inkBackend">,
+  options: Pick<BackendSelectionOptions, "search">,
 ): readonly ReaderEntry[] {
   const params = new URLSearchParams(options.search ?? "");
-  const flat = params.get("backend") === "flat";
   const glacier = params.get("glacier");
   const prefer: GlacialBackendPreference = glacier === "cpu" || glacier === "webgpu" ? glacier : "auto";
   const mode = params.get("mode");
@@ -31,16 +26,6 @@ export function createPlayableEntries(
           prefer,
           ...(mode === "flat" || mode === "tilted" ? { mode } : {}),
           ...(params.get("motion") === "reduce" ? { reducedMotion: true, mode: "flat" as const } : {}),
-        }),
-    },
-    {
-      spread: waterSpread,
-      createScene: (level) =>
-        createPlayableScene({
-          level,
-          flat,
-          ...(options.inkBackend ? { inkBackend: options.inkBackend } : {}),
-          createWaterDriver: () => createHostedWaterDriver(options),
         }),
     },
   ];

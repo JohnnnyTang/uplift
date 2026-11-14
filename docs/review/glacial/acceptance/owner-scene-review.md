@@ -1,6 +1,10 @@
 # Owner scene-review packet: the default book (session 5N)
 
-**Status: pending.** Prepared for the owner; nothing here records an owner decision. Captures come from
+**Status: approved by owner 2026-11-14** (D-W5-5N2). The owner reviewed the scene and approved it as working,
+and accepted findings O1 (book small at the default view) and O2 (block over the running head) as they are,
+with no change. O3 (a first-time reader finds Play) remains a pending first-time-reader observation. The
+owner also removed the water lesson in the same decision, so capture 20 shows a spread that is no longer in
+the book; it stays as the record of what was reviewed. The packet below is unchanged from 5N. Captures come from
 the real production build (`pnpm build`, `vite preview`), default route with no query string, installed
 Chrome 157 with WebGPU on an Intel Arc 140V (the book's deeper level reads "Solver: webgpu"), commit
 `b82dae5` plus this session's fixes. Regenerate with [`capture.mjs`](capture.mjs); per-capture rock, ghost,
@@ -20,7 +24,7 @@ model time, cut column, margin notes and text alternative are in [`results.json`
 | [12 university](captures/12-desktop-1440-university.png) · [13 deeper panel](captures/13-desktop-1440-deeper-panel.png)                                                          | University level; deeper level with bound parameters, equations and run graphs                |
 | [14 laptop 1366 × 768](captures/14-laptop-1366x768-open.png)                                                                                                                     | Short laptop                                                                                  |
 | [15 phone](captures/15-phone-390.png) · [16 full page](captures/16-phone-390-full.png) · [17 320 px](captures/17-reflow-320-full.png)                                            | Phone flat page; 320 CSS px reflow                                                            |
-| [18 reduced motion](captures/18-reduced-motion-1366.png) · [19 more contrast](captures/19-reduced-motion-contrast.png) · [20 water](captures/20-desktop-1440-water-spread-2.png) | Reduced motion; contrast setting; the water lesson as spread 2                                |
+| [18 reduced motion](captures/18-reduced-motion-1366.png) · [19 more contrast](captures/19-reduced-motion-contrast.png) · [20 water](captures/20-desktop-1440-water-spread-2.png) | Reduced motion; contrast setting; the water lesson as spread 2 (removed 2026-11-14, D-W5-5N2) |
 
 ## Findings that need an owner decision
 
@@ -56,3 +60,5 @@ i = 51, overdeepening wording: all frozen (D-W5-R1, D-W5-R1a, D-W5-5M, D-W5-5M2)
 
 Append a DECISIONS.md entry (approve, adjust or reject O1–O3 and the scene as a whole). The GV4 row of the
 [ledger](README.md) stays pending-human until then.
+
+Recorded: D-W5-5N2 (2026-11-14), scene approved; O1 and O2 accepted as they are; GV4 owner review closed.

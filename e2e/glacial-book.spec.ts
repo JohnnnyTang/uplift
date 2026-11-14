@@ -73,7 +73,8 @@ test("the default book opens on From V to U in the tilted stage, with the quiet 
   await expect(bar.getByRole("button", { name: "Contents" })).toBeVisible();
   await expect(bar.locator(".reader-position")).toHaveText(/1\s*From V to U/);
   await expect(bar.getByRole("button", { name: "Beginning of book" })).toBeDisabled();
-  await expect(bar.getByRole("button", { name: "Turn to Where will the water go?" })).toBeEnabled();
+  // One-lesson book (D-W5-5N2): next ends the book as previous begins it.
+  await expect(bar.getByRole("button", { name: "End of book" })).toBeDisabled();
   await expect(bar.getByRole("button", { name: "More contrast" })).toBeVisible();
   await expect(bar.getByRole("button", { name: "University level" })).toHaveAttribute(
     "aria-pressed",
@@ -89,10 +90,11 @@ test("the default book opens on From V to U in the tilted stage, with the quiet 
   await expect(desk(page)).toHaveAttribute("data-model-years", "0");
   await expect(page.locator(".gs-time-now")).toHaveText("model time 0 model years");
   await expect(page.locator(".gs-margin")).toContainText("0 model years in sandstone");
-  // Contents lists both lessons and the research route.
+  // Contents lists the one lesson and the research route (the water lesson was removed, D-W5-5N2).
   await bar.getByRole("button", { name: "Contents" }).click();
+  await expect(page.locator(".reader-contents .reader-contents-link")).toHaveCount(1);
   await expect(page.locator(".reader-contents")).toContainText("From V to U");
-  await expect(page.locator(".reader-contents")).toContainText("Where will the water go?");
+  await expect(page.locator(".reader-contents")).not.toContainText("Where will the water go?");
   await expect(page.getByRole("button", { name: "Research example" })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.locator(".reader-contents")).toBeHidden();
@@ -204,13 +206,16 @@ test("the full journey on the live runtime, with the model never reset by view o
   await page.getByRole("button", { name: "University level" }).click();
   await expect(desk(page)).toHaveAttribute("data-run-id", run!);
 
-  // Turn the page while running, and back: the runs are kept, nothing advanced while away, play resumes.
+  // Leave the book for the research route while running, and come back: the runs are kept, nothing advanced
+  // while away, play resumes. (The one-lesson book has no other spread to turn to, D-W5-5N2.)
   await page.getByRole("button", { name: "Play", exact: true }).click();
   await expect(desk(page)).toHaveAttribute("data-playing", "true");
-  await page.getByRole("button", { name: "Turn to Where will the water go?" }).click();
-  await expect(page.getByRole("heading", { name: "Where will the water go?", exact: true })).toBeVisible();
-  await expect(page.locator(".reader-position")).toHaveText(/2\s*Where will the water go\?/);
-  await page.getByRole("button", { name: "Turn to From V to U" }).click();
+  await page.getByRole("button", { name: "Contents" }).click();
+  await page.getByRole("button", { name: "Research example" }).click();
+  await expect(page).toHaveURL(/view=research/);
+  await expect(page.locator(".book")).toBeVisible({ timeout: 60_000 });
+  await page.getByRole("button", { name: "Return to the book" }).click();
+  await expect(page.locator(".reader-position")).toHaveText(/1\s*From V to U/);
   await expect(desk(page)).toHaveAttribute("data-source", "live", { timeout: 60_000 });
   await expect(desk(page)).toHaveAttribute("data-run-id", run!);
   await expect(desk(page)).toHaveAttribute("data-live-rock", "granite");
@@ -231,7 +236,7 @@ test("the full journey on the live runtime, with the model never reset by view o
   expect(errors).toEqual([]);
 });
 
-test("phone: flat page, rock choice and play work, no horizontal scroll, the bar turns to the water lesson", async ({
+test("phone: flat page, rock choice and play work, no horizontal scroll, the bar ends the one-lesson book", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -243,11 +248,10 @@ test("phone: flat page, rock choice and play work, no horizontal scroll, the bar
   await playUntil(page, 20);
   await expect(page.locator(".gs-lens svg")).toBeVisible();
   await expect(page.locator(".reader-bar")).toBeVisible();
-  await page.getByRole("button", { name: /(Turn to|Read) Where will the water go?/ }).click();
-  await expect(page.getByRole("heading", { name: "Where will the water go?", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Beginning of book" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "End of book" })).toBeDisabled();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
-  await page.getByRole("button", { name: /Turn to From V to U|Read From V to U/ }).click();
-  await expect(desk(page)).toHaveAttribute("data-live-rock", "granite", { timeout: 60_000 });
+  await expect(desk(page)).toHaveAttribute("data-live-rock", "granite");
   expect(await years(page)).toBeGreaterThanOrEqual(20);
   expect(errors).toEqual([]);
 });

@@ -187,7 +187,8 @@ async function figureCrop(page, name, note) {
   await record(page, "13-desktop-1440-deeper-panel.png", "deeper level: bound parameters, equations, graphs");
   await page.close();
 }
-// 4. Laptop, phone, narrow reflow, reduced motion, contrast, water spread.
+// 4. Laptop, phone, narrow reflow, reduced motion, contrast. (Capture 20, the water lesson as spread 2, was
+// taken by 5N and stays in captures/ as the record; the water lesson was removed by 5N2, D-W5-5N2.)
 {
   const page = await open({ width: 1366, height: 768 });
   await record(page, "14-laptop-1366x768-open.png", "short laptop");
@@ -215,19 +216,6 @@ async function figureCrop(page, name, note) {
   await page.getByRole("button", { name: "More contrast" }).click();
   await page.waitForTimeout(200);
   await record(page, "19-reduced-motion-contrast.png", "more contrast (book setting)");
-  await page.close();
-}
-{
-  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-  await page.goto(`${base}/?spread=hydrology.water-path`);
-  await page.waitForSelector(".reader-spread[data-spread='hydrology.water-path']");
-  await page.waitForFunction(() => !document.querySelector(".reader-scene-status")?.textContent);
-  await page.waitForTimeout(500);
-  await page.screenshot({ path: out("20-desktop-1440-water-spread-2.png") });
-  results.captures.push({
-    file: "captures/20-desktop-1440-water-spread-2.png",
-    note: "water lesson, spread 2",
-  });
   await page.close();
 }
 await writeFile(

@@ -5,8 +5,10 @@ refinements are frozen decisions; D-W5-R1a amends it). 5J (#35), 5K (#36) and 5L
 2026-11-12. 5M merged (#37). 5M2 (2026-11-13, D-W5-5M2) removed the contour lesson: the book is
 _From V to U_ then water, and the live run opens at model time 0 on the authored V (no pre-run).
 5N (2026-11-14, D-W5-5N) ran the registered protocol on production code and walked PB1–PB9/GV1–GV9:
-[ledger](../review/glacial/acceptance/README.md); owner scene review, expert, human and hardware checks
-pending. Rewritten 2026-11-09 after the owner settled the condition,
+[ledger](../review/glacial/acceptance/README.md). 5N2 (2026-11-14, D-W5-5N2): the owner removed the water
+lesson (it came from a drifted idea), so the book is the single lesson _From V to U_ (GV7 amended), and
+the owner approved the scene as working (GV4 owner review closed; O1 and O2 accepted as they are).
+Expert, first-reader, listening and hardware checks pending. Rewritten 2026-11-09 after the owner settled the condition,
 comparison, book presentation and GPU questions. This file is the **single source** for the
 first lesson. Other plan files only point here. If they disagree with this file, this file wins.
 
@@ -51,7 +53,8 @@ its own colour and textbook lithology pattern) and quiet play/pause and timeline
 | Compare            | Pick another rock, and a new run starts while the first is kept. The front face shows the kept run's profile at the same model time as a ghost line labelled with its rock. The margin notes put both runs' widths and depths side by side.                                                                                                                               |
 | Go deeper          | The university level adds the equations, graphs of width and depth over model time for each run, and bound parameter values. The model and runs are unchanged.                                                                                                                                                                                                            |
 
-Turn the page and the water lesson follows as spread 2.
+~~Turn the page and the water lesson follows as spread 2.~~ Removed 2026-11-14 (D-W5-5N2): the book is
+the single lesson _From V to U_; previous and next end the book, and the research route stays in the contents.
 
 ---
 
@@ -402,7 +405,7 @@ to Wave 6.
 | GV4 | Drawing → ink → colour transition into a complete, naturally coloured diorama standing on a tilted book page            | 5H, R1, 5K, 5M/N |
 | GV5 | Margin notes, caption, front face, ghost and explanation all refer to the same run, time and config                     | 5J, 5L, 5M       |
 | GV6 | Keyboard equivalents for every gesture, text alternatives, reduced motion, lithology patterns as non-colour cue, reflow | 5J, 5K, 5M, 5N   |
-| GV7 | Default book, water spread, research route and privacy safeguards retained                                              | 5M, 5N           |
+| GV7 | Default book (the single lesson, D-W5-5N2), research route and privacy safeguards retained                              | 5M, 5N, 5N2      |
 | GV8 | Sources, failed attempts, human/expert/hardware status and original owner references stay explicit                      | 5G, 5L, 5N       |
 | GV9 | CPU and GPU glacier agree within registered tolerances for every shipped rock, or the GPU gap is recorded and CPU ships | 5I, 5M, 5N       |
 
