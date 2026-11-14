@@ -93,13 +93,14 @@ test("debug readout is opt-in and uses measured worker batch timings", async ({ 
   expect(errors).toEqual([]);
 });
 
-test("default book: unanswered play, settled turns, research return and explicit reset", async ({ page }) => {
+test("default book: unanswered play and a research return keep the lesson state", async ({ page }) => {
   await page.setViewportSize({ width: 1366, height: 768 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/?backend=cpu-worker");
-  // 5M: the default book opens on From V to U (live glacier runtime) and the water lesson is spread 2.
+  // The default book is the single lesson From V to U (live glacier runtime); the water lesson was removed
+  // in 5N2 (D-W5-5N2).
   await expect(page.getByRole("heading", { name: "From V to U", exact: true })).toBeVisible();
   await expect(page.locator(".learning-log, .challenge-status, .paired-replay")).toHaveCount(0);
   const desk = page.locator(".gs-desk");
@@ -108,26 +109,7 @@ test("default book: unanswered play, settled turns, research return and explicit
   await expect(page.locator(".gs-flap")).toHaveAttribute("open", "");
   await page.getByRole("radio", { name: /Granite/ }).check();
   await expect(desk).toHaveAttribute("data-live-rock", "granite");
-  await page.getByRole("button", { name: "Turn to Where will the water go?" }).click();
-  const spring = page.getByRole("button", { name: "Move spring with arrow keys" });
-  await expect(spring).toBeEnabled();
-  await spring.focus();
-  await page.keyboard.press("ArrowRight");
-  await expect.poll(() => page.locator("[data-wet]").getAttribute("d")).not.toBe("");
-  // Wait for a settled response before requiring exact return-state equality.
-  await expect
-    .poll(async () => {
-      const before = await page.locator("[data-wet]").getAttribute("d");
-      await page.waitForTimeout(400);
-      return before === (await page.locator("[data-wet]").getAttribute("d"));
-    })
-    .toBe(true);
-  expect(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight)).toBe(true);
-  await page.screenshot({ path: "output/playwright/5e-default-water.png", fullPage: true });
-  const wet = await page.locator("[data-wet]").getAttribute("d");
-  await page.getByRole("button", { name: "University level" }).click();
-  await expect(page.locator(".scene-caption")).toContainText("Spring at 19 m, 9 m");
-  await expect(page.locator("[data-wet]")).toHaveAttribute("d", wet!);
+  await expect(page.getByRole("button", { name: "End of book" })).toBeDisabled();
   await page.getByRole("button", { name: "Contents" }).click();
   await page.getByRole("button", { name: "Research example", exact: true }).click();
   await expect(page.locator(".book")).toHaveAttribute("data-backend-ready", "true");
@@ -138,59 +120,10 @@ test("default book: unanswered play, settled turns, research return and explicit
   await page.getByRole("button", { name: "Lift the drawing", exact: true }).click();
   await expect(page.locator("#rain")).toBeEnabled();
   await page.getByRole("button", { name: "Return to the book", exact: true }).click();
-  await expect(spring).toBeEnabled();
-  await expect(page.locator("[data-wet]")).toHaveAttribute("d", wet!);
-  await page.getByRole("button", { name: "Reset illustration" }).click();
-  await expect(page.locator("[data-wet]")).toHaveAttribute("d", "");
-  await page.getByRole("button", { name: "Turn to From V to U" }).click();
-  await expect(desk).toHaveAttribute("data-transition", "done", { timeout: 60_000 });
+  await expect(desk).toHaveAttribute("data-source", "live", { timeout: 60_000 });
   await expect(desk).toHaveAttribute("data-live-rock", "granite");
   await expect(page.locator(".gs-flap")).toHaveAttribute("open", "");
   expect(errors).toEqual([]);
-});
-
-for (const backend of ["cpu-64", "flat", "webgpu"]) {
-  test(`default ${backend}: source readiness, context loss and free navigation`, async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto(`/?backend=${backend}&spread=hydrology.water-path&page=spread`);
-    const spring = page.getByRole("button", { name: "Move spring with arrow keys" });
-    await expect(page.locator(".reader-scene-status")).not.toContainText("Preparing");
-    if (backend === "flat" || (await spring.isDisabled())) {
-      await expect(page.locator(".scene-caption")).toContainText("No live water process");
-    } else {
-      await spring.focus();
-      await page.keyboard.press("ArrowRight");
-      await page.keyboard.press("ArrowRight");
-      await expect.poll(() => page.locator("[data-wet]").getAttribute("d")).not.toBe("");
-      await page.getByRole("button", { name: "University level" }).click();
-      await expect(page.locator(".scene-caption")).toContainText("Spring at 21 m, 9 m");
-      await page.locator(".playable-drawing canvas").dispatchEvent("webglcontextlost");
-      await expect(page.locator(".scene-caption")).toContainText("Flat diagram");
-    }
-    await page.getByRole("button", { name: "Turn to From V to U" }).click();
-    await expect(page.getByRole("heading", { name: "From V to U", exact: true })).toBeVisible();
-    await page.locator(".gs-flap summary").click();
-    await expect(page.locator(".gs-flap")).toHaveAttribute("open", "");
-  });
-}
-
-test("actual phone book has readable pages and a rapid in-flight departure retains the source", async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/?backend=cpu-worker&spread=hydrology.water-path&page=illustration");
-  const spring = page.getByRole("button", { name: "Move spring with arrow keys" });
-  await expect(spring).toBeEnabled();
-  await spring.focus();
-  await page.keyboard.press("ArrowRight");
-  await page.getByRole("button", { name: "Read the explanation", exact: true }).click();
-  await expect(page.locator(".reader-shell")).toHaveAttribute("data-page", "text");
-  await page.getByRole("button", { name: "Explore the illustration", exact: true }).click();
-  await expect(spring).toBeEnabled();
-  await page.getByRole("button", { name: "University level" }).click();
-  await expect(page.locator(".scene-caption")).toContainText("Spring at 19 m, 9 m");
-  await expect.poll(() => page.locator("[data-wet]").getAttribute("d")).not.toBe("");
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
 test("research departure cancels an unfinished lift and return can lift again", async ({ page }) => {

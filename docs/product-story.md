@@ -34,8 +34,9 @@ The first lesson is **formation of U-shaped valleys** (_From V to U_). The loop 
 - **Backend:** GPU ships where it passes CPU/GPU parity, and CPU is always the fallback.
 
 The single source of truth is [Wave 5 sessions 5G–5N](plan/stage-1-wave-5-glacial.md).
-The book is _From V to U_ followed by the water lesson. The contour lesson was removed
-on 2026-11-13 (D-W5-5M2); contours stay as an engine drawing capability.
+The book is the single lesson _From V to U_. The contour lesson was removed
+on 2026-11-13 (D-W5-5M2) and the water lesson on 2026-11-14 (D-W5-5N2, owner: it came
+from a drifted idea); contours and the surface-water solver stay as engine capabilities.
 
 [Saved owner references](references/owner-2026-11-09/README.md) establish the intended
 experience. The exact transformation is not an unresolved science requirement.

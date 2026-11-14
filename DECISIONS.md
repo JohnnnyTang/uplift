@@ -2255,3 +2255,83 @@ journey walk-through that a first-time reader finds Play without help. Cross-own
 
 **Pending, not inferred:** owner scene review, expert sign-off (eight questions in the packet), first-time
 readers, screen-reader listening, colour-vision/projector checks, other GPUs, mobile and non-Chrome browsers.
+
+## D-W5-5N2 — Water lesson removed; the book is the single lesson From V to U; owner approves the scene
+
+2026-11-14. Session 5N2 (`s1/w5/5n2-remove-water`, from s1/w5/integration e41a30e). Owner decisions,
+given to the lead directly; this entry records them and what the session changed.
+
+1. **Owner: the second lesson, water flowing (`hydrology.water-path`, "Where will the water go?"), is
+   removed. Reason: it came from a drifted idea.** The book is now the single lesson _From V to U_, plus the
+   labelled research route. As with D-W5-5M2, history is kept and marked, not erased.
+2. **Owner: the scene is reviewed and approved as working.** This closes the 5N owner scene review (GV4).
+   The owner accepts finding O1 (the book is small at the default view) and O2 (the block covers the figure
+   page's running head) as they are, with no change. The framing stays frozen (D-W5-R1 item 1, D-W5-R1a
+   item 3). O3 (does a first-time reader find Play) stays a pending first-time-reader observation.
+
+**Dependency check before deleting.** The research route (`?view=research`) mounts the historical
+`valleySpread` through `app/book.ts` with its own `terrain.worker.ts` worker and `SimHost`; it imports
+nothing from the water lesson. Privacy (`instrumentation.spec.ts`, the v1 rain scope), the challenge and
+university features (`university.spec.ts`, `science.spec.ts`, `comparison.spec.ts`) and the glacial lesson do
+not import the water spread, its scene, its prepared surface or its driver. Hachure never imported it. The
+only consumers of the removed modules were the reader's entry list, the `@uplift/spreads` registry, the
+route's teacher-notes map, the water claim test and the water e2e fixture. No research or privacy path
+needed a workaround.
+
+**Removed (Uplift only).** `uplift/spreads/hydrology.water-path/` (spread re-export, teacher notes);
+`uplift/book/src/scenes/{content,geometry,water-driver,playable-scene}.ts` and `scene.css` (the water
+spread definition, geometry probes, authored prepared twin-channel surface, hosted water driver and
+playable scene adapter); `scenes/claims.test.ts` (the source-only claim test that wrote
+`docs/science/validation/playable-book/results.json`); the `waterSpread` export and second entry in
+`@uplift/spreads` (`spreads` is now `[uValleySpread]`); the second reader entry in `scenes/entries.ts`
+(`createPlayableEntries` now takes only `search`); the water teacher note and the terrain worker transport
+passed to the reader in `app/routes.ts`; `e2e/playable-spreads.spec.ts` and its fixtures
+(`e2e/fixtures/playable-spreads{.ts,.html,-driver.ts,.config.ts,.playwright.ts,.worker.ts}`); the water
+capture step in `docs/review/glacial/acceptance/capture.mjs`. The production bundle dropped from
+6,679,019 to 6,663,058 bytes (−15,961, all files uncompressed).
+
+**Kept, and why.**
+
+- Hachure's surface-water solver (`@hachure/terrain` CPU reference and WebGPU hydraulics), `SimHost`,
+  `selectTerrainBackend`, the terrain worker and their CPU/GPU comparison tests: the research route runs on
+  them. The `water` CI job (`.github/workflows/gpu-water.yml`) runs `@hachure/terrain test:gpu`, the engine's
+  CPU/GPU parity suite, not the removed spread, so it stays unchanged.
+- Hachure Ink's `attachSourcePlacement` and `wetSampleMarks` (`hachure/ink/src/interaction.ts`). After this
+  session no Uplift code calls them, but they are public engine primitives with their own place in the Ink
+  API; removing them is not clearly safe or needed, so they stay (as D-W5-5M2 kept the contour primitives).
+  A later engine clean-up may retire them with their own decision.
+- `e2e/reader-runtime.spec.ts` and its fixture: they test the runtime host on the engine (spring tool,
+  CPU/worker/GPU agreement), not the lesson.
+- The reader shell's paging code. With one entry, previous reads "Beginning of book" and next "End of book",
+  both disabled; PageUp/PageDown are no-ops; the contents list one lesson and the research route. The
+  multi-spread page-turn mechanics stay covered by the `book-shell` fixture spec (mock spreads).
+- History: earlier DECISIONS entries, `docs/review/**` (5E, integration and 5N captures, including 5N's
+  capture 20 of the water spread), `docs/science/validation/playable-book/` (protocol and all results, now
+  with a removal note), `spikes/playable-book/`.
+
+**Old links.** `?spread=hydrology.water-path` with any `page` (none, `text`, `illustration`, `spread`) opens
+the book's first spread and the address is rewritten to `spread=geomorph.u-valley`; the shell already falls
+back to the first entry for an unknown id. `e2e/book-acceptance.spec.ts` covers all four forms for both
+removed lessons (contours and water), with no page errors and one entry in the contents.
+
+**GV7 amended** (`docs/plan/stage-1-wave-5-glacial.md` §6). Before: "Default book, water spread, research
+route and privacy safeguards retained". After: "Default book (the single lesson, D-W5-5N2), research route
+and privacy safeguards retained". The storyboard line "Turn the page and the water lesson follows as
+spread 2" is struck through and marked removed.
+
+**Plan-changing fact: PB7 ("Two working interactive spreads, a genuine page turn …", product realignment)
+can no longer be met as written** in a one-lesson book. The 5N ledger marks PB7 **amended**: for the
+one-lesson book the bar ends at both sides, the keyboard turn keys stay on the lesson, and leaving for the
+research route and returning keeps the run, kept runs and model time; the page-turn mechanics remain in the
+shell and its fixture spec. A second spread returns PB7 to its original form when the owner chooses the next
+lesson.
+
+**Specs updated.** `glacial-acceptance.spec.ts` (journey PB7 step, PB6, phone, GV7), `glacial-book.spec.ts`
+(bar, contents, running-play departure via the research route, phone), `smoke.spec.ts` (the default-book
+test now leaves for the research route; the three water-backend tests and the phone water test removed),
+`book-acceptance.spec.ts` (integrated recording, deep links, composition and keyboard journey for one lesson).
+
+**Ledgers.** `docs/review/glacial/acceptance/` (ledger rows PB1, PB7, PB8, GV4, GV7; owner packet status
+**approved by owner 2026-11-14**) and `docs/plan/stage-1-acceptance.md` are amended with the 5N statuses kept
+in the rows. Expert sign-off, first-time readers, screen-reader listening, colour-vision/projector checks and
+other hardware stay **pending**.

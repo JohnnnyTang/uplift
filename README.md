@@ -12,9 +12,9 @@ used to show slope, which is the look the engine draws.
 > current G–N plan. Future Wave 5 sessions branch from and target this branch.
 > [Integration handover](docs/review/wave-5-integration/README.md).
 >
-> **Status:** The book has two playable lessons, _From V to U_ (glacial valley formation) and
-> prepared-terrain spring placement, with page turning and a labelled erosion research route.
-> The earlier contour-lift lesson was removed on 2026-11-13 (D-W5-5M2).
+> **Status:** The book is a single playable lesson, _From V to U_ (glacial valley formation), with a
+> labelled erosion research route. The earlier contour-lift lesson was removed on 2026-11-13
+> (D-W5-5M2) and the prepared-terrain water lesson on 2026-11-14 (D-W5-5N2).
 > Main remains at 5A. Implementation verification and pending owner, human accessibility,
 > expert and hardware review are tracked in the [acceptance ledger](docs/plan/stage-1-acceptance.md)
 > and [review packet](docs/review/book-revision/acceptance/README.md). Wave 6 completes those gates;

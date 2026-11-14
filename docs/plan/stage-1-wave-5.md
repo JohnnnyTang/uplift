@@ -48,6 +48,8 @@ The A–F briefs below are retained as historical delivery instructions. Their f
 contour opening, cartography fallback and no-new-physics restriction are superseded.
 No second hydrology rewrite or second glacial lesson is needed: retain the current
 water spread for independent paging while the glacial scene becomes the opening.
+(Superseded 2026-11-14, D-W5-5N2: the water spread was removed; the book is the single
+lesson _From V to U_.)
 
 ## Outcome
 
@@ -55,7 +57,7 @@ The default app opens with U-shaped valley formation: pick a rock type, watch th
 glacier reshape the valley, scrub back through the run and compare with kept runs of
 other rocks at matched model times. A textbook drawing transitions into a complete,
 naturally coloured scene standing on a tilted book page. Retain the water spread for a
-second discovery and page turn; questions/explanations remain optional.
+second discovery and page turn (superseded by D-W5-5N2: removed); questions/explanations remain optional.
 The existing erosion work is revised and retained as an explicitly labelled research
 example. Hachure's numerical integrity and historical evidence are preserved.
 
@@ -439,8 +441,8 @@ was 5A. The current next session is 5G from verified s1/w5/integration; see the 
 The owner authorized 5E then 5F on `s1/w5/5bcd-lead`, bypassing the main-only
 start rule for this local review stack. Main remains at 5A; no remote PR/main
 integration is implied. The actual sequence is contours → prepared water, not
-the unused slope alternative (superseded: the book is now _From V to U_ then water; the contour
-lesson was removed on 2026-11-13, D-W5-5M2). [Acceptance ledger](stage-1-acceptance.md) separates
+the unused slope alternative (superseded: the book is now the single lesson _From V to U_; the
+contour lesson was removed on 2026-11-13, D-W5-5M2, and the water lesson on 2026-11-14, D-W5-5N2). [Acceptance ledger](stage-1-acceptance.md) separates
 code/visual evidence from owner, human, expert and hardware gates.
 
 5F found that a square scene container let phone/reflow captions overlap scope and

@@ -4,6 +4,8 @@ Registered before acceptance execution, 2026-11-09. Lead approved the source-onl
 
 **Removed 2026-11-13 (D-W5-5M2):** the contour lesson (`cartography.contours`) was removed from the book. The geometry section below is kept as registered; it no longer covers a shipped lesson.
 
+**Removed 2026-11-14 (D-W5-5N2):** the water lesson (`hydrology.water-path`) was removed from the book. The source-only intervention below is kept as registered and its results as recorded; it no longer covers a shipped lesson.
+
 Claim: changing spring position changes the wet extent on this prepared fixed terrain. No catchment/outlet, erosion, field rate or learner-outcome inference.
 
 Three authored initial states: longitudinal slopes .03, .04 (production), .05. Each has the same twin troughs, 32-square grid, 2 m cells, left edge outlet (8,31), zero water/flux/sediment and hardness .5. Seed 5 is fixed but does not affect this authored geometry; these are geometry variants, not stochastic replicates.

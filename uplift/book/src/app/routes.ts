@@ -1,10 +1,9 @@
 import type { mountLesson } from "./book";
 import "../book.css";
 import "./reader-layout.css";
-import { BOOK_PALETTE, WorkerTransport } from "@hachure/runtime";
+import { BOOK_PALETTE } from "@hachure/runtime";
 import { createReaderShell, type MountedReaderShell } from "../reader/shell";
 import { createPlayableEntries } from "../scenes/entries";
-import waterNotes from "../../../spreads/hydrology.water-path/teacher.md?raw";
 
 /** Retain both model owners while only the visible route is attached and active. */
 export async function mountApp(root: HTMLElement) {
@@ -50,20 +49,9 @@ export async function mountApp(root: HTMLElement) {
       readerRoot.hidden = false;
       readerRoot.inert = false;
       if (!reader) {
-        reader = await createReaderShell(
-          readerRoot,
-          createPlayableEntries({
-            search: location.search,
-            createWorkerTransport: () =>
-              new WorkerTransport(
-                new Worker(new URL("./terrain.worker.ts", import.meta.url), { type: "module" }),
-              ),
-          }),
-          {
-            teacherNotes: { "hydrology.water-path": waterNotes },
-            onResearch: () => navigate(true),
-          },
-        );
+        reader = await createReaderShell(readerRoot, createPlayableEntries({ search: location.search }), {
+          onResearch: () => navigate(true),
+        });
       } else await reader.resume();
     }
     if (write) {

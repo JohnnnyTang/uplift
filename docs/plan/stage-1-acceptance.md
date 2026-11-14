@@ -18,17 +18,21 @@ was rerun on production code: 18/18 arms reproduce the 5G2 record bitwise, 39/39
 (16 pass, 23 fail as registered); the GPU passes every registered gate on one adapter
 ([validation](../science/validation/glacial-valley/README.md)).
 
-| Row | Status                                                      | Row | Status                                                                      |
-| --- | ----------------------------------------------------------- | --- | --------------------------------------------------------------------------- |
-| PB1 | at risk: mechanics pass, owner decision O1 (view size)      | GV1 | pass                                                                        |
-| PB2 | pass; human legibility and real zoom pending                | GV2 | pass                                                                        |
-| PB3 | pass; human spatial reading pending                         | GV3 | partial: taught claims pass; T1, R2, R3, E-T1, E-R2, E-R4 fail (not taught) |
-| PB4 | pass; first-time reader finding Play pending                | GV4 | pass; owner scene review pending                                            |
-| PB5 | pass; expert sign-off pending                               | GV5 | pass (one content defect fixed in 5N)                                       |
-| PB6 | pass                                                        | GV6 | pass; screen-reader listening and colour-vision pending                     |
-| PB7 | pass; listening and gesture usability pending               | GV7 | pass                                                                        |
-| PB8 | pending-human (owner, readers, listening, expert, hardware) | GV8 | pass                                                                        |
-| PB9 | pass                                                        | GV9 | pass on Intel Arc 140V; other hardware pending                              |
+**5N2 amendment (2026-11-14, D-W5-5N2):** the owner approved the scene as working (GV4 owner review closed;
+O1 and O2 accepted as they are) and removed the water lesson; the book is the single lesson _From V to U_.
+PB7 is amended for a one-lesson book (no second spread to turn to) and GV7 drops the water spread.
+
+| Row | Status                                                                   | Row | Status                                                                      |
+| --- | ------------------------------------------------------------------------ | --- | --------------------------------------------------------------------------- |
+| PB1 | pass: owner accepted O1 as is (5N2); 5N: at risk                         | GV1 | pass                                                                        |
+| PB2 | pass; human legibility and real zoom pending                             | GV2 | pass                                                                        |
+| PB3 | pass; human spatial reading pending                                      | GV3 | partial: taught claims pass; T1, R2, R3, E-T1, E-R2, E-R4 fail (not taught) |
+| PB4 | pass; first-time reader finding Play pending                             | GV4 | pass; owner approved 2026-11-14 (5N2)                                       |
+| PB5 | pass; expert sign-off pending                                            | GV5 | pass (one content defect fixed in 5N)                                       |
+| PB6 | pass                                                                     | GV6 | pass; screen-reader listening and colour-vision pending                     |
+| PB7 | amended (5N2, one lesson): pass; listening and gesture usability pending | GV7 | pass (amended by 5N2: single lesson, research route, privacy)               |
+| PB8 | pending-human (readers, listening, expert, hardware; owner review done)  | GV8 | pass                                                                        |
+| PB9 | pass                                                                     | GV9 | pass on Intel Arc 140V; other hardware pending                              |
 
 The table below remains the historical A–F baseline, not a glacial pass.
 See [session ownership and criteria](stage-1-wave-5-glacial.md#traceability-and-drift-gate).
@@ -45,7 +49,8 @@ See [session ownership and criteria](stage-1-wave-5-glacial.md#traceability-and-
 | PB8 human review             | New listening and first-time-reader protocols in packet                                                                                                              | Pending; no human participants or owner approval recorded                                     |
 
 The contour lesson behind the PB3 and PB5 lift evidence was removed on 2026-11-13 (D-W5-5M2); the
-rows stay as the historical record.
+rows stay as the historical record. The water lesson behind the PB3 spring, PB5 source-only intervention, PB6 and PB7 water evidence was
+removed on 2026-11-14 (D-W5-5N2); those rows also stay as the historical record.
 
 Evidence paths above are repository-relative; captures live in
 `docs/review/book-revision/acceptance/`. Exact execution outcomes are in the
