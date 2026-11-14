@@ -1,103 +1,131 @@
-/* Scoped reader composition: legacy research and widget fixtures retain their styles. */
+/*
+ * The reader shell (5C; chrome restyled by 5M after the owner's reference): the book lies on a warm-grey desk,
+ * pages are paper with running heads and folios, and one quiet bar at the bottom carries the book's
+ * navigation — contents, previous, the lesson's number and title, next, contrast and reading level. No top
+ * header and no form controls in the chrome. Legacy research and widget fixtures keep their own styles.
+ */
 .reader-shell {
+  --reader-desk: #7a776f;
   --reader-paper: #faf8f2;
   --reader-ink: #292b2c;
+  --reader-ink-soft: #5d5f5c;
+  --reader-pen: #27477a;
+  --reader-rule: #d8d4c8;
+  --reader-bar: rgb(250 248 242 / 0.94);
+  --reader-bar-space: 84px;
   color: var(--reader-ink);
   font:
     18px/1.5 Georgia,
     serif;
-  width: min(100%, 1200px);
+  width: 100%;
   margin: auto;
+}
+:root[data-contrast="more"] .reader-shell {
+  --reader-desk: #4b4945;
+  --reader-paper: #ffffff;
+  --reader-ink: #000000;
+  --reader-ink-soft: #2b2b2b;
+  --reader-pen: #0b2a5c;
+  --reader-rule: #6f6a5f;
+  --reader-bar: #ffffff;
 }
 .reader-shell *,
 .reader-shell *::before,
 .reader-shell *::after {
   box-sizing: border-box;
 }
-.reader-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  min-height: 60px;
-  color: var(--reader-paper);
-}
-.reader-brand {
-  font:
-    28px/1.2 Georgia,
-    serif;
-  margin: 0 auto 0 0;
-}
-.reader-shell button,
-.reader-shell select,
-.reader-shell label,
-.reader-navigation,
+.reader-shell .reader-spread:not(.reader-stage) button,
+.reader-shell .reader-spread:not(.reader-stage) select,
+.reader-shell .reader-spread:not(.reader-stage) label,
 .reader-scope,
 .reader-scene-status {
   font:
     16px/1.4 system-ui,
     sans-serif;
 }
-.reader-shell button,
-.reader-shell select {
+.reader-shell .reader-spread:not(.reader-stage) button,
+.reader-shell .reader-spread:not(.reader-stage) select {
   min-height: 44px;
-  border: 1px solid #777b77;
+  border: 1px solid var(--reader-ink-soft);
   background: var(--reader-paper);
   color: var(--reader-ink);
   padding: 0.5rem 0.8rem;
-  border-radius: 2px;
+  border-radius: 22px;
   cursor: pointer;
 }
 .reader-shell button:disabled {
   cursor: default;
-  opacity: 0.55;
+  opacity: 0.45;
 }
 .reader-shell :focus-visible {
   outline: 3px solid #0072b2;
   outline-offset: 3px;
 }
+
+/* ---- Pages (page-layout spreads) -------------------------------------------------------------------- */
 .reader-book {
+  width: min(100%, 1200px);
+  margin: 0 auto;
   perspective: 1800px;
-  background: var(--reader-paper);
-  box-shadow:
-    0 3px 0 #d4d2ca,
-    0 6px 0 #8c8e85,
-    0 12px 16px #0002;
+  padding-bottom: var(--reader-bar-space);
 }
-.reader-spread {
+.reader-spread:not(.reader-stage) {
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: 620px;
   transform-origin: left center;
   background: var(--reader-paper);
+  box-shadow:
+    0 3px 0 #e6e0d0,
+    0 6px 0 #c9c3b3,
+    0 9px 0 #3b352f,
+    0 18px 28px -12px #0006;
+  border-radius: 2px;
 }
 .reader-page {
   position: relative;
   min-width: 0;
-  padding: 2rem 2.4rem 3rem;
+  padding: 2.4rem 2.4rem 3.2rem;
+}
+.reader-running-head {
+  position: absolute;
+  top: 0.9rem;
+  left: 2.4rem;
+  right: 2.4rem;
+  margin: 0 !important;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--reader-rule);
+  color: var(--reader-ink-soft);
+  font:
+    italic 13px/1.3 Georgia,
+    serif;
+}
+.reader-illustration .reader-running-head {
+  text-align: right;
 }
 .reader-text {
   border-right: 1px solid #c6c7bf;
   box-shadow: inset -9px 0 9px -12px #292b2c;
 }
-.reader-shell h1 {
+.reader-shell .reader-spread:not(.reader-stage) h1 {
   font:
     400 clamp(28px, 2.6vw, 36px)/1.15 Georgia,
     serif;
-  margin: 0 0 1.2rem;
+  margin: 0.6rem 0 1.2rem;
   max-width: 22ch;
 }
-.reader-shell h2 {
+.reader-shell .reader-spread:not(.reader-stage) h2 {
   font:
     400 28px/1.2 Georgia,
     serif;
 }
-.reader-shell h3 {
+.reader-shell .reader-spread:not(.reader-stage) h3 {
   font:
     400 22px/1.3 Georgia,
     serif;
   margin: 1.5rem 0 0.5rem;
 }
-.reader-shell p {
+.reader-shell .reader-spread:not(.reader-stage) p {
   margin: 0.7rem 0;
 }
 .reader-invitation {
@@ -121,7 +149,7 @@
 .reader-question input {
   width: 18px;
   height: 18px;
-  accent-color: #292b2c;
+  accent-color: var(--reader-ink);
   flex: 0 0 auto;
 }
 .reader-answer {
@@ -135,7 +163,7 @@
   margin-top: 1rem;
 }
 .reader-illustration {
-  padding: 1rem 1.5rem 3rem;
+  padding: 2.2rem 1.5rem 3.2rem;
   display: flex;
   flex-direction: column;
 }
@@ -145,14 +173,14 @@
   flex: 1;
   position: relative;
 }
-.reader-shell canvas {
+.reader-shell .reader-spread:not(.reader-stage) canvas {
   width: 100%;
   max-height: none;
   border: 0;
 }
 .reader-scope,
 .reader-scene-status {
-  color: #505651;
+  color: var(--reader-ink-soft);
 }
 .reader-scene-status:empty {
   display: none;
@@ -162,38 +190,16 @@
 }
 .reader-folio {
   position: absolute;
-  bottom: 0.65rem;
-  left: 2rem;
-  font-size: 16px;
+  bottom: 0.8rem;
+  left: 2.4rem;
+  color: var(--reader-ink-soft);
+  font:
+    14px/1 Georgia,
+    serif;
 }
 .reader-illustration .reader-folio {
   left: auto;
   right: 2rem;
-}
-.reader-navigation {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.2rem 0;
-  color: var(--reader-paper);
-}
-.reader-navigation button {
-  background: transparent;
-  color: inherit;
-  border-color: transparent;
-  text-align: left;
-}
-.reader-navigation button:last-child {
-  text-align: right;
-}
-.reader-research {
-  display: block;
-  margin: 0 0 0 1rem;
-  background: transparent !important;
-  color: var(--reader-paper) !important;
-  border: 0 !important;
-  text-decoration: underline;
 }
 .reader-phone-link {
   display: none;
@@ -214,6 +220,176 @@
 .reader-teacher-note {
   white-space: pre-wrap;
 }
+
+/* ---- Stage spreads (the tilted book draws its own pages) ----------------------------------------------- */
+.reader-book:has(> .reader-stage) {
+  width: 100%;
+  padding-bottom: 0;
+  perspective: none;
+}
+.reader-stage {
+  position: relative;
+}
+.reader-stage > .reader-scene-status {
+  position: absolute;
+  z-index: 4;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0.3rem 0.8rem;
+  border-radius: 14px;
+  background: var(--reader-bar);
+  font-size: 14px;
+}
+
+/* ---- The bottom bar ------------------------------------------------------------------------------------ */
+.reader-bar {
+  position: fixed;
+  z-index: 20;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  width: min(720px, calc(100% - 24px));
+  min-height: 56px;
+  padding: 6px 10px;
+  border: 1px solid var(--reader-rule);
+  border-radius: 28px;
+  background: var(--reader-bar);
+  box-shadow: 0 10px 24px -14px #0008;
+  color: var(--reader-ink);
+  backdrop-filter: blur(6px);
+}
+.reader-bar-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  flex: 0 0 auto;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.55rem;
+  border: 0;
+  border-radius: 22px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.reader-shell .reader-bar-button {
+  font:
+    14px/1 Georgia,
+    serif;
+}
+.reader-bar-button:hover:not(:disabled) {
+  background: rgb(41 43 44 / 0.07);
+}
+.reader-bar-button svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.reader-bar-button[aria-pressed="true"],
+.reader-bar-button[aria-pressed="true"]:hover:not(:disabled) {
+  background: var(--reader-ink);
+  color: var(--reader-paper);
+}
+.reader-position {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  padding: 0 0.4rem;
+  overflow: hidden;
+  white-space: nowrap;
+  font:
+    19px/1.2 Georgia,
+    serif;
+}
+.reader-position-number {
+  color: var(--reader-pen);
+  font-size: 16px;
+}
+.reader-position-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.reader-bar-divider {
+  width: 1px;
+  align-self: stretch;
+  margin: 6px 4px;
+  background: var(--reader-rule);
+}
+.reader-contents {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 10px);
+  width: min(360px, 100%);
+  padding: 0.8rem 0.6rem 0.6rem;
+  border: 1px solid var(--reader-rule);
+  border-radius: 14px;
+  background: var(--reader-paper);
+  box-shadow: 0 14px 30px -16px #0009;
+}
+.reader-shell .reader-contents-heading {
+  margin: 0 0.6rem 0.4rem;
+  color: var(--reader-ink-soft);
+  font:
+    italic 15px/1.3 Georgia,
+    serif;
+}
+.reader-contents ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.reader-shell .reader-contents-link,
+.reader-shell .reader-contents .reader-research {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 0.6rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font:
+    18px/1.3 Georgia,
+    serif;
+}
+.reader-contents-link:hover,
+.reader-contents .reader-research:hover {
+  background: rgb(41 43 44 / 0.06);
+}
+.reader-contents-link[aria-current="page"] {
+  font-style: italic;
+}
+.reader-contents-number {
+  min-width: 1.2em;
+  color: var(--reader-pen);
+  font-size: 15px;
+}
+.reader-contents-research {
+  margin-top: 0.3rem;
+  padding-top: 0.3rem;
+  border-top: 1px solid var(--reader-rule);
+}
+.reader-shell .reader-contents .reader-research {
+  color: var(--reader-ink-soft);
+  font-size: 16px;
+}
+
 .reader-sr {
   position: absolute;
   width: 1px;
@@ -228,30 +404,26 @@
   display: none !important;
 }
 @media (min-width: 60.001rem) and (min-height: 740px) {
-  .reader-spread {
+  .reader-spread:not(.reader-stage) {
     min-height: min(660px, calc(100svh - 175px));
   }
 }
 @media (max-width: 60rem) {
-  .reader-shell {
+  .reader-book:not(:has(> .reader-stage)) {
     width: min(100%, 680px);
   }
-  .reader-header {
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    padding-bottom: 1rem;
-  }
-  .reader-brand {
-    width: 100%;
-  }
-  .reader-spread {
+  .reader-spread:not(.reader-stage) {
     display: block;
     min-height: 0;
   }
   .reader-page {
-    padding: 1.5rem 1.25rem 3rem;
+    padding: 2.2rem 1.25rem 3rem;
     border: 0;
     box-shadow: none;
+  }
+  .reader-running-head {
+    left: 1.25rem;
+    right: 1.25rem;
   }
   .reader-invitation {
     min-height: 0;
@@ -264,16 +436,93 @@
     min-height: 0;
     aspect-ratio: 1 / 1;
   }
-  .reader-navigation {
-    gap: 0.25rem;
+}
+@media (max-width: 34rem) {
+  .reader-shell {
+    --reader-bar-space: 76px;
   }
-  .reader-navigation button {
-    padding: 0.5rem 0.25rem;
-    overflow-wrap: anywhere;
+  .reader-bar {
+    bottom: 8px;
+    width: calc(100% - 16px);
+    padding: 4px 6px;
+  }
+  .reader-bar-text,
+  .reader-bar-divider {
+    display: none;
+  }
+  .reader-position {
+    font-size: 16px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .reader-shell * {
     scroll-behavior: auto;
   }
+}
+@media (forced-colors: active) {
+  .reader-bar,
+  .reader-contents {
+    border: 1px solid CanvasText;
+  }
+}
+
+/* ---- The tilted book inside the reader (5M): quiet chrome around the frozen R2 controls ----------------- */
+.reader-stage-root.gs-review {
+  display: flow-root;
+  --reader-bar-space: 84px;
+  background: transparent;
+}
+:root[data-contrast="more"] .reader-stage-root.gs-review {
+  --gs-desk: #4b4945;
+  --gs-paper: #ffffff;
+  --gs-ink: #000000;
+  --gs-ink-soft: #2b2b2b;
+  --gs-pen: #0b2a5c;
+  --gs-rule: #6f6a5f;
+}
+.reader-stage-root .gs-view-controls {
+  width: min(860px, calc(100% - 24px));
+  margin: 10px auto 4px;
+  padding: 2px 16px;
+  border-color: transparent;
+  border-radius: 24px;
+  background: rgb(250 248 242 / 0.82);
+  font-size: 14px;
+}
+:root[data-contrast="more"] .reader-stage-root .gs-view-controls {
+  background: var(--gs-paper);
+  border-color: var(--gs-rule);
+}
+.reader-stage-root .gs-view-controls button {
+  border: 0;
+  background: transparent;
+  color: var(--gs-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.reader-stage-root .gs-view-controls .gs-view-hint {
+  font-size: 13px;
+}
+@media (max-width: 34rem) {
+  .reader-stage-root.gs-review {
+    --reader-bar-space: 76px;
+  }
+}
+/* The book's left page carries the lesson, prediction and flap; key-word definitions open in the reading
+   panel (as on short laptops, D-R1-refinements) so the whole spread fits above the bottom bar. */
+.reader-stage-root .gs-desk[data-stage-mode="tilted"] .gs-keywords {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.2em 0.6em;
+}
+.reader-stage-root .gs-desk[data-stage-mode="tilted"] .gs-keywords dd {
+  display: none;
+}
+.reader-stage-root .gs-predict label {
+  display: inline-flex;
+  margin-right: 1em;
+}
+/* Flat book (phones, reduced motion, large zoom): the page scrolls past the floating bar. */
+.reader-stage-root .gs-desk[data-stage-mode="flat"] {
+  padding-bottom: calc(16px + var(--reader-bar-space));
 }

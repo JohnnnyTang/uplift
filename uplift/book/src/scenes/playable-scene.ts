@@ -173,7 +173,7 @@ export function createPlayableScene(
     if (water && !flat && placementNotice) caption!.textContent += " " + placementNotice;
     legend!.textContent = water
       ? bindings.render(
-          "Blue = water depth; ink dots = cells at least {{probe.threshold}} deep. Full blue at {{probe.fullDepth}}. Model width {{probe.width}}. Process model; uncalibrated time.",
+          "Blue = water depth; ink dots = cells at least {{probe.threshold}} deep. Full blue at {{probe.fullDepth}}. Model width {{probe.width}}.",
         )
       : bindings.render(
           "Ink = elevation contours, interval {{probe.interval}}. Static geometry; no model clock.",

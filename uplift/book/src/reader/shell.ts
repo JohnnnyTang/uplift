@@ -22,6 +22,26 @@ const node = <K extends keyof HTMLElementTagNameMap>(tag: K, text?: string, clas
   return result;
 };
 
+const ICONS = {
+  contents: '<path d="M4 6h12M4 10h12M4 14h8"/>',
+  previous: '<path d="M12 4 6 10l6 6"/>',
+  next: '<path d="m8 4 6 6-6 6"/>',
+  contrast: '<circle cx="10" cy="10" r="6.5"/><path d="M10 3.5a6.5 6.5 0 0 1 0 13Z" fill="currentColor"/>',
+  level: '<path d="M2 8.5 10 5l8 3.5-8 3.5Z"/><path d="M5.5 10v3.5c2.6 2 6.4 2 9 0V10M18 8.5v4"/>',
+} as const;
+/** A quiet icon button of the bottom bar; its accessible name is its label. */
+function iconButton(icon: keyof typeof ICONS, label: string) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = `reader-bar-button reader-bar-${icon}`;
+  if (label) {
+    button.setAttribute("aria-label", label);
+    button.title = label;
+  }
+  button.innerHTML = `<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">${ICONS[icon]}</svg>`;
+  return button;
+}
+
 /** Retained controllers own models; this shell owns only their DOM attachment and reading state. */
 export async function createReaderShell(
   host: HTMLElement,
@@ -38,36 +58,41 @@ export async function createReaderShell(
   const narrow = matchMedia("(max-width: 60rem)");
   const motion = matchMedia("(prefers-reduced-motion: reduce)");
   const root = node("div", undefined, "reader-shell");
-  const header = node("header", undefined, "reader-header");
-  const brand = node("p", "Uplift", "reader-brand");
-  const levelLabel = node("label", "Reading level");
-  const levelSelect = node("select");
-  levelSelect.id = "reader-level";
-  levelLabel.htmlFor = levelSelect.id;
-  for (const [value, label] of [
-    ["hs", "High school"],
-    ["uni", "University"],
-  ]) {
-    const option = node("option", label);
-    option.value = value!;
-    levelSelect.append(option);
-  }
-  levelSelect.value = level;
-  header.append(brand, levelLabel, levelSelect);
   const book = node("main", undefined, "reader-book");
-  const nav = node("nav", undefined, "reader-navigation");
+  // The quiet bottom bar (5M, after the owner's reference): contents, previous, title, next, contrast, level.
+  const nav = node("nav", undefined, "reader-navigation reader-bar");
   nav.setAttribute("aria-label", "Book pages");
-  const previous = node("button"),
-    next = node("button"),
-    position = node("span");
+  const contentsButton = iconButton("contents", "Contents");
+  contentsButton.setAttribute("aria-expanded", "false");
+  contentsButton.setAttribute("aria-controls", "reader-contents");
+  const contents = node("div", undefined, "reader-contents");
+  contents.id = "reader-contents";
+  contents.hidden = true;
+  const contentsHeading = node("h2", "Contents", "reader-contents-heading");
+  const contentsList = node("ol");
+  contents.append(contentsHeading, contentsList);
+  const previous = iconButton("previous", "");
+  const next = iconButton("next", "");
+  const position = node("span", undefined, "reader-position");
+  const positionNumber = node("span", undefined, "reader-position-number");
+  const positionTitle = node("span", undefined, "reader-position-title");
+  position.append(positionNumber, positionTitle);
+  const contrastButton = iconButton("contrast", "More contrast");
+  contrastButton.setAttribute("aria-pressed", "false");
+  const levelButton = iconButton("level", "University level");
+  levelButton.removeAttribute("title");
+  levelButton.id = "reader-level";
+  const levelText = node("span", undefined, "reader-bar-text");
+  levelButton.append(levelText);
+  const divider = node("span", undefined, "reader-bar-divider");
+  divider.setAttribute("aria-hidden", "true");
+  nav.append(contentsButton, previous, position, next, divider, contrastButton, levelButton, contents);
   const live = node("p", undefined, "reader-sr");
   live.setAttribute("role", "status");
   live.setAttribute("aria-live", "polite");
-  nav.append(previous, position, next);
   const research = node("button", "Research example", "reader-research");
   research.hidden = !options.onResearch;
-  header.append(research);
-  root.append(header, book, nav, live);
+  root.append(book, nav, live);
   host.append(root);
   const scenes = new Map<string, ReaderSceneController>();
   let current: ReaderTarget = { spreadId: entries[0]!.spread.id, page: narrow.matches ? "text" : "spread" };
@@ -89,14 +114,21 @@ export async function createReaderShell(
   let depthWork = Promise.resolve();
   const focusMemory = new Map<string, string>();
   const key = (target: ReaderTarget) => `${target.spreadId}:${target.page}`;
+  const isStage = (id: string) => entries.find((e) => e.spread.id === id)?.layout === "stage";
   const normalize = (target: ReaderTarget): ReaderTarget => ({
     spreadId: target.spreadId,
-    page: narrow.matches ? (target.page === "spread" ? "text" : target.page) : "spread",
+    page:
+      narrow.matches && !isStage(target.spreadId)
+        ? target.page === "spread"
+          ? "text"
+          : target.page
+        : "spread",
   });
   const sceneFor = (id: string) => {
     let scene = scenes.get(id);
     if (!scene) {
-      scene = entries.find((e) => e.spread.id === id)!.createScene(level);
+      const entry = entries.find((e) => e.spread.id === id)!;
+      scene = entry.createScene(level, { folio: entries.indexOf(entry) * 2 + 1 });
       scenes.set(id, scene);
     }
     return scene;
@@ -112,8 +144,46 @@ export async function createReaderShell(
     const visible = saved && saved.getClientRects().length && !saved.closest("[hidden], [inert]");
     (visible ? saved : active?.heading)?.focus({ preventScroll: true });
   }
+  function makeStage(target: ReaderTarget) {
+    const spread = entries.find((e) => e.spread.id === target.spreadId)!.spread;
+    const scene = sceneFor(spread.id);
+    const article = node("article", undefined, "reader-spread reader-stage");
+    article.dataset.spread = spread.id;
+    article.setAttribute("aria-label", scene.bindings.render(spread.title[level]));
+    // Focus target until the scene has drawn its own title (not a heading, so the page keeps one h1).
+    const fallbackHeading = node("p", scene.bindings.render(spread.title[level]), "reader-sr");
+    fallbackHeading.tabIndex = -1;
+    const surface = node("div", undefined, "reader-stage-surface");
+    const status = node("p", undefined, "reader-scene-status");
+    article.append(fallbackHeading, surface, status);
+    const unsubscribeStatus = scene.subscribe((state) => {
+      status.textContent =
+        state.readiness.kind === "fallback"
+          ? `Showing recorded runs: ${state.readiness.reason}`
+          : state.readiness.kind === "error"
+            ? `Illustration unavailable: ${state.readiness.reason}`
+            : "";
+      if (state.gesture === "idle" && queued && !turning) pump();
+    });
+    return {
+      article,
+      // The scene draws its own title (h1) once mounted.
+      get heading(): HTMLElement {
+        const title = article.querySelector<HTMLElement>("h1");
+        if (title) fallbackHeading.remove();
+        return title ?? fallbackHeading;
+      },
+      surface,
+      scene,
+      refresh: () => {
+        article.setAttribute("aria-label", scene.bindings.render(spread.title[level]));
+      },
+      cleanup: () => unsubscribeStatus(),
+    };
+  }
   function makePage(target: ReaderTarget) {
     const entry = entries.find((e) => e.spread.id === target.spreadId)!;
+    if (entry.layout === "stage") return makeStage(target);
     const spread = entry.spread,
       scene = sceneFor(spread.id);
     const article = node("article", undefined, "reader-spread");
@@ -209,7 +279,15 @@ export async function createReaderShell(
         });
     };
     const folio = entries.indexOf(entry) * 2 + 1;
+    const textHead = node("p", undefined, "reader-running-head");
+    textHead.setAttribute("aria-hidden", "true");
+    textHead.textContent = `Lesson ${entries.indexOf(entry) + 1}`;
+    const figureHead = node("p", undefined, "reader-running-head");
+    figureHead.setAttribute("aria-hidden", "true");
+    figureHead.textContent = scene.bindings.render(spread.title[level]);
+    illustration.prepend(figureHead);
     text.append(
+      textHead,
       heading,
       invitation,
       shortcut,
@@ -345,16 +423,16 @@ export async function createReaderShell(
   }
   function destination(direction: "previous" | "next"): ReaderTarget | undefined {
     const index = entries.findIndex((e) => e.spread.id === current.spreadId);
-    if (narrow.matches) {
+    if (narrow.matches && !isStage(current.spreadId)) {
       if (direction === "next" && current.page === "text") return { ...current, page: "illustration" };
       if (direction === "previous" && current.page === "illustration") return { ...current, page: "text" };
     }
     const entry = entries[index + (direction === "next" ? 1 : -1)];
     return entry
-      ? {
+      ? normalize({
           spreadId: entry.spread.id,
           page: narrow.matches ? (direction === "next" ? "text" : "illustration") : "spread",
-        }
+        })
       : undefined;
   }
   function updateNavigation() {
@@ -364,9 +442,22 @@ export async function createReaderShell(
         : fallback;
     previous.disabled = !destination("previous");
     next.disabled = !destination("next");
-    previous.textContent = label(destination("previous"), "Beginning of book");
-    next.textContent = label(destination("next"), "End of book");
-    position.textContent = `${entries.findIndex((e) => e.spread.id === current.spreadId) + 1} / ${entries.length}`;
+    previous.setAttribute("aria-label", label(destination("previous"), "Beginning of book"));
+    next.setAttribute("aria-label", label(destination("next"), "End of book"));
+    previous.title = previous.getAttribute("aria-label")!;
+    next.title = next.getAttribute("aria-label")!;
+    const index = entries.findIndex((e) => e.spread.id === current.spreadId);
+    positionNumber.textContent = String(index + 1);
+    positionTitle.textContent = sceneFor(current.spreadId).bindings.render(
+      entries[index]!.spread.title[level],
+    );
+    levelButton.setAttribute("aria-pressed", String(level === "uni"));
+    levelText.textContent = "University";
+    levelButton.title =
+      level === "uni"
+        ? "Reading level: university. Press for high school."
+        : "Reading level: high school. Press for university.";
+    renderContents();
     root.dataset.page = current.page;
     root.dataset.turning = String(turning);
   }
@@ -378,10 +469,12 @@ export async function createReaderShell(
     history[replace ? "replaceState" : "pushState"]({ ...history.state, reader: current }, "", url);
   }
   async function display(target: ReaderTarget) {
+    target = normalize(target);
     active?.cleanup();
     current = target;
     active = makePage(target);
     book.replaceChildren(active.article);
+    updateNavigation();
     if (target.page !== "text" && !suspended) {
       await active.scene.mount(active.surface);
       if (!disposed && !suspended) active.scene.resume();
@@ -509,12 +602,65 @@ export async function createReaderShell(
   }
   function setLevel(value: Level) {
     level = value;
-    levelSelect.value = value;
     for (const scene of scenes.values()) scene.present({ ...scene.presentation(), level });
     active?.refresh();
     updateNavigation();
   }
-  levelSelect.onchange = () => setLevel(levelSelect.value as Level);
+  levelButton.onclick = () => setLevel(level === "uni" ? "hs" : "uni");
+  const contrastRoot = document.documentElement;
+  const setContrast = (more: boolean) => {
+    if (more) contrastRoot.dataset.contrast = "more";
+    else delete contrastRoot.dataset.contrast;
+    contrastButton.setAttribute("aria-pressed", String(more));
+  };
+  setContrast(contrastRoot.dataset.contrast === "more");
+  contrastButton.onclick = () => setContrast(contrastButton.getAttribute("aria-pressed") !== "true");
+  function closeContents(focus: boolean) {
+    if (contents.hidden) return;
+    contents.hidden = true;
+    contentsButton.setAttribute("aria-expanded", "false");
+    if (focus) contentsButton.focus();
+  }
+  function renderContents() {
+    contentsList.replaceChildren();
+    entries.forEach((entry, index) => {
+      const item = node("li");
+      const link = node("button", undefined, "reader-contents-link");
+      link.type = "button";
+      link.append(
+        node("span", String(index + 1), "reader-contents-number"),
+        node("span", sceneFor(entry.spread.id).bindings.render(entry.spread.title[level])),
+      );
+      if (entry.spread.id === current.spreadId) link.setAttribute("aria-current", "page");
+      link.onclick = () => {
+        closeContents(false);
+        void navigate({ spreadId: entry.spread.id, page: "spread" });
+      };
+      item.append(link);
+      contentsList.append(item);
+    });
+    if (options.onResearch) {
+      const item = node("li", undefined, "reader-contents-research");
+      item.append(research);
+      contentsList.append(item);
+    }
+  }
+  contentsButton.onclick = () => {
+    const open = contents.hidden;
+    contents.hidden = !open;
+    contentsButton.setAttribute("aria-expanded", String(open));
+    if (open) contents.querySelector<HTMLElement>("[aria-current], button")?.focus();
+  };
+  contents.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeContents(true);
+    }
+  });
+  const outsideContents = (event: PointerEvent) => {
+    if (!contents.hidden && event.target instanceof Node && !nav.contains(event.target)) closeContents(false);
+  };
+  document.addEventListener("pointerdown", outsideContents);
   const controller: MountedReaderShell = {
     navigation: (): ReaderNavigation => ({ ...current, turning }),
     turn,
@@ -555,6 +701,7 @@ export async function createReaderShell(
       queued = undefined;
       animation?.cancel();
       root.removeEventListener("keydown", keyboard);
+      document.removeEventListener("pointerdown", outsideContents);
       window.removeEventListener("popstate", popstate);
       narrow.removeEventListener("change", resize);
       motion.removeEventListener("change", reduceMotion);
@@ -566,6 +713,7 @@ export async function createReaderShell(
     },
   };
   research.onclick = () => {
+    closeContents(false);
     void controller.suspend().then(() => options.onResearch?.());
   };
   root.addEventListener("keydown", keyboard);

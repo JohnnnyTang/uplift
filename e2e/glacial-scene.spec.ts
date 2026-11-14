@@ -70,12 +70,14 @@ test.describe("glacial production scene", () => {
     await settled(page);
     await expect(desk(page)).toHaveAttribute("data-live-rock", "sandstone");
     // Keyboard: the radio group.
-    await page.getByRole("radio", { name: "Sandstone" }).focus();
+    await page.getByRole("radio", { name: /^Sandstone/ }).focus();
     await page.keyboard.press("ArrowLeft");
     await expect(desk(page)).toHaveAttribute("data-live-rock", "shale");
     await expect(desk(page)).toHaveAttribute("data-ghost", "sandstone");
     await expect(page.locator(".gs-note-kept")).toContainText("sandstone");
-    await expect(page.locator(".gs-sr")).toContainText("dotted line is the kept sandstone run");
+    await expect(page.locator(".gs-sr")).toContainText(
+      "ghost line is a separate run with another rock, sandstone",
+    );
     await expect(page.locator(".gs-lens .lens-ghost")).toHaveCount(1);
     // Pointer: carry the granite specimen onto the block.
     const chip = await page.locator('.gs-specimen[data-rock="granite"]').boundingBox();
@@ -91,7 +93,7 @@ test.describe("glacial production scene", () => {
     await page.mouse.up();
     await expect(desk(page)).toHaveAttribute("data-live-rock", "granite");
     await expect(desk(page)).toHaveAttribute("data-ghost", "shale");
-    await expect(page.getByRole("radio", { name: "Granite" })).toBeChecked();
+    await expect(page.getByRole("radio", { name: /^Granite/ })).toBeChecked();
     // Letting go away from the block changes nothing.
     const sandstone = await page.locator('.gs-specimen[data-rock="sandstone"]').boundingBox();
     await page.mouse.move(sandstone!.x + 12, sandstone!.y + sandstone!.height / 2);
@@ -131,7 +133,7 @@ test.describe("glacial production scene", () => {
     const notes = await page.locator(".gs-margin").innerText();
     await page.getByLabel("See under the ice").focus();
     await page.keyboard.press("Space");
-    await expect(page.locator(".gs-sr")).toContainText("the ice is hidden");
+    await expect(page.locator(".gs-sr")).toContainText("ice is hidden");
     await expect(page.locator(".gs-lens .lens-ice")).toHaveCount(0);
     const turn = page.getByRole("slider", { name: "Turn" });
     await turn.focus();
@@ -147,7 +149,7 @@ test.describe("glacial production scene", () => {
     await settled(page);
     await expect(desk(page)).toHaveAttribute("data-overdeepened", "true");
     await expect(page.locator(".gs-note-overdeepened")).toContainText("overdeepening");
-    await page.getByRole("radio", { name: "Granite" }).check();
+    await page.getByRole("radio", { name: /^Granite/ }).check();
     await expect(desk(page)).toHaveAttribute("data-overdeepened", "false");
     await expect(page.locator(".gs-note-overdeepened")).toHaveCount(0);
   });

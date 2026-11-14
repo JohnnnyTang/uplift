@@ -1,13 +1,21 @@
 /* Compose the real scene within the shared shell; keep font size and natural reflow. */
 #app[data-view="reader"] {
-  padding-bottom: 1rem;
+  padding: 1.25rem clamp(0.75rem, 3vw, 3rem) 0;
+  background: var(--reader-desk, #7a776f);
+}
+/* The tilted book stage (spread 1) fills the viewport itself; the bottom bar floats over the desk. */
+#app[data-view="reader"]:has(.reader-stage) {
+  padding: 0;
+}
+:root[data-contrast="more"] #app[data-view="reader"] {
+  background: #4b4945;
 }
 @media (min-width: 60.001rem) and (min-height: 740px) {
   #app[data-view="reader"] .playable-drawing {
-    height: clamp(250px, calc(100svh - 520px), 400px);
+    height: clamp(250px, calc(100svh - 560px), 400px);
   }
   #app[data-view="reader"] .reader-illustration {
-    padding-top: 1rem;
+    padding-top: 2.2rem;
   }
 }
 /* At phone/reflow widths the complete scene includes controls, caption and legend.

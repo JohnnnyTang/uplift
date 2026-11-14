@@ -99,15 +99,15 @@ test("default book: unanswered play, settled turns, research return and explicit
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/?backend=cpu-worker");
-  await expect(page.getByRole("heading", { name: "Lift a map", exact: true })).toBeVisible();
+  // 5M: the default book opens on From V to U (live glacier runtime) and the water lesson is spread 2.
+  await expect(page.getByRole("heading", { name: "From V to U", exact: true })).toBeVisible();
   await expect(page.locator(".learning-log, .challenge-status, .paired-replay")).toHaveCount(0);
-  await page.getByRole("button", { name: "Reveal explanation", exact: true }).click();
-  await expect(page.locator(".reader-answer")).toBeVisible();
-  const lift = page.getByRole("slider", { name: "Lift the drawing" });
-  await expect(lift).toBeEnabled();
-  await lift.focus();
-  await page.keyboard.press("End");
-  await expect(lift).toHaveValue("1");
+  const desk = page.locator(".gs-desk");
+  await expect(desk).toHaveAttribute("data-transition", "done", { timeout: 60_000 });
+  await page.locator(".gs-flap summary").click();
+  await expect(page.locator(".gs-flap")).toHaveAttribute("open", "");
+  await page.getByRole("radio", { name: /Granite/ }).check();
+  await expect(desk).toHaveAttribute("data-live-rock", "granite");
   await page.getByRole("button", { name: "Turn to Where will the water go?" }).click();
   const spring = page.getByRole("button", { name: "Move spring with arrow keys" });
   await expect(spring).toBeEnabled();
@@ -125,9 +125,10 @@ test("default book: unanswered play, settled turns, research return and explicit
   expect(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight)).toBe(true);
   await page.screenshot({ path: "output/playwright/5e-default-water.png", fullPage: true });
   const wet = await page.locator("[data-wet]").getAttribute("d");
-  await page.getByLabel("Reading level").selectOption("uni");
+  await page.getByRole("button", { name: "University level" }).click();
   await expect(page.locator(".scene-caption")).toContainText("Spring at 19 m, 9 m");
   await expect(page.locator("[data-wet]")).toHaveAttribute("d", wet!);
+  await page.getByRole("button", { name: "Contents" }).click();
   await page.getByRole("button", { name: "Research example", exact: true }).click();
   await expect(page.locator(".book")).toHaveAttribute("data-backend-ready", "true");
   await page.getByRole("button", { name: "Reveal explanation", exact: true }).click();
@@ -141,9 +142,10 @@ test("default book: unanswered play, settled turns, research return and explicit
   await expect(page.locator("[data-wet]")).toHaveAttribute("d", wet!);
   await page.getByRole("button", { name: "Reset illustration" }).click();
   await expect(page.locator("[data-wet]")).toHaveAttribute("d", "");
-  await page.getByRole("button", { name: "Turn to Lift a map" }).click();
-  await expect(lift).toHaveValue("1");
-  await expect(page.locator(".reader-answer")).toBeVisible();
+  await page.getByRole("button", { name: "Turn to From V to U" }).click();
+  await expect(desk).toHaveAttribute("data-transition", "done", { timeout: 60_000 });
+  await expect(desk).toHaveAttribute("data-live-rock", "granite");
+  await expect(page.locator(".gs-flap")).toHaveAttribute("open", "");
   expect(errors).toEqual([]);
 });
 
@@ -160,15 +162,15 @@ for (const backend of ["cpu-64", "flat", "webgpu"]) {
       await page.keyboard.press("ArrowRight");
       await page.keyboard.press("ArrowRight");
       await expect.poll(() => page.locator("[data-wet]").getAttribute("d")).not.toBe("");
-      await page.getByLabel("Reading level").selectOption("uni");
+      await page.getByRole("button", { name: "University level" }).click();
       await expect(page.locator(".scene-caption")).toContainText("Spring at 21 m, 9 m");
       await page.locator(".playable-drawing canvas").dispatchEvent("webglcontextlost");
       await expect(page.locator(".scene-caption")).toContainText("Flat diagram");
     }
-    await page.getByRole("button", { name: "Turn to Lift a map" }).click();
-    await expect(page.getByRole("heading", { name: "Lift a map", exact: true })).toBeVisible();
-    await page.getByRole("button", { name: "Reveal explanation", exact: true }).click();
-    await expect(page.locator(".reader-answer")).toBeVisible();
+    await page.getByRole("button", { name: "Turn to From V to U" }).click();
+    await expect(page.getByRole("heading", { name: "From V to U", exact: true })).toBeVisible();
+    await page.locator(".gs-flap summary").click();
+    await expect(page.locator(".gs-flap")).toHaveAttribute("open", "");
   });
 }
 
@@ -185,7 +187,7 @@ test("actual phone book has readable pages and a rapid in-flight departure retai
   await expect(page.locator(".reader-shell")).toHaveAttribute("data-page", "text");
   await page.getByRole("button", { name: "Explore the illustration", exact: true }).click();
   await expect(spring).toBeEnabled();
-  await page.getByLabel("Reading level").selectOption("uni");
+  await page.getByRole("button", { name: "University level" }).click();
   await expect(page.locator(".scene-caption")).toContainText("Spring at 19 m, 9 m");
   await expect.poll(() => page.locator("[data-wet]").getAttribute("d")).not.toBe("");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -197,6 +199,7 @@ test("research departure cancels an unfinished lift and return can lift again", 
   await expect(lift).toBeEnabled();
   await lift.click();
   await page.getByRole("button", { name: "Return to the book", exact: true }).click();
+  await page.getByRole("button", { name: "Contents" }).click();
   await page.getByRole("button", { name: "Research example", exact: true }).click();
   await expect(lift).toBeEnabled();
   await lift.click();
