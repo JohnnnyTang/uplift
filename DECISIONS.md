@@ -2335,3 +2335,60 @@ test now leaves for the research route; the three water-backend tests and the ph
 **approved by owner 2026-11-14**) and `docs/plan/stage-1-acceptance.md` are amended with the 5N statuses kept
 in the rows. Expert sign-off, first-time readers, screen-reader listening, colour-vision/projector checks and
 other hardware stay **pending**.
+
+## D-W6-6A — Performance of the one-lesson book: journey mapping (deviation) and targets declared before measuring
+
+2026-11-14. Session 6A (`s1/w6/6a-performance`, from main c50cbd9). Recorded **before** the measured runs;
+results follow in a later entry and in `docs/perf/`.
+
+**Deviation: what the brief's journey steps mean in the current app.** The 6A brief predates D-W5-5M2 and
+D-W5-5N2: the book is now one lesson, _From V to U_ (`geomorph.u-valley`), plus the labelled research route
+(`?view=research`). The contour lesson and the water lesson are removed. The brief's steps are measured as:
+
+| Brief step                                          | Measured in the current app                                                                                      |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Initial readable drawing                            | Cold and warm start of the default route: the glacial drawing (`.gs-drawing svg`) painted; FCP and LCP           |
+| First usable interaction                            | Scene usable (transition done, live run attached); the first rock choice's visible response                      |
+| Transition                                          | The opening drawing → ink → colour → 3D transition: duration and frames                                          |
+| Response to direct manipulation / "source movement" | Rock choice by page selector **and** by specimen drop (before and after the run advances), front face, camera    |
+| Playback, scrubbing, kept-run comparison            | Play at 1× and 4×; keyboard and pointer scrubbing; scrubbing and ghost on/off with a kept run at matched time    |
+| Snapshot memory                                     | Main-thread JS heap, DOM and process memory after each of several repeated runs                                  |
+| "Page-turn frames", repeated navigation, departure  | Research departure (while the glacier plays) and return, with run, kept run, ghost and model time kept; repeated |
+| "Retained terrain backend"                          | The research route's terrain solver (WebGPU 256² by auto selection, CPU worker 128²) while it plays              |
+| Page departure                                      | Departure to the research route (settle and dispose); leaving the page while a run plays (diagnostic)            |
+
+Both supported paths are measured: the default route (auto: WebGPU glacier where the device check passes;
+auto research terrain) and the CPU worker paths (`?glacier=cpu&backend=cpu-worker`). There is no page turn to
+measure in a one-lesson book (D-W5-5N2, PB7 amended); the shell's paging mechanics keep their fixture spec.
+
+**Method.** Visible installed Chrome (Playwright `channel: "chrome"`, headed, maximized, real device pixel
+ratio) on the target machine; each repetition is a fresh browser process and empty profile. Times are taken by
+the page (`docs/perf/instrument.js`): input event timestamp → the app's own state attribute change → the end of
+the next produced frame. Headless numbers, if any, are labelled diagnostics.
+
+**Targets declared before measuring** (6A's, since the plan names only AC1, the bundle budget and the 32 MiB
+run budget). Thresholds come from web.dev's Core Web Vitals "good" bounds (FCP ≤ 1.8 s, LCP ≤ 2.5 s,
+INP ≤ 200 ms) and the RAIL model's 100 ms response for continuous manipulation; the 30 fps floor is AC1's.
+
+1. Readable drawing painted ≤ 1 800 ms after navigation, cold, local network.
+2. 3D stage ready to start the transition ≤ 2 500 ms, cold; the scene usable at that time plus the authored
+   transition (2 700 ms; 450 ms with reduced motion).
+3. Discrete commands (rock choice by selector or drop, Play, Back to the latest moment, ghost on/off): visible
+   response p90 ≤ 200 ms. Continuous manipulation (scrub step, front face, camera drag frames): p90 ≤ 100 ms.
+4. Animation (transition, playback at 1× and 4×, camera drag, scrub sweep): median ≥ 30 fps, p95 frame
+   interval ≤ 33.4 ms, and no frame over 100 ms in steady playback.
+5. Glacier playback at 1× reaches the scheduled 10 model years per second on WebGPU (D-W5-5J). On the CPU the
+   known shortfall (D-W5-5J (b), scheduling drops wall time) is recorded, not counted as a defect; frames must
+   still meet target 4.
+6. Research terrain (AC1, retained): ≥ 30 fps at 256² on WebGPU; the CPU worker at 128² recorded against the
+   same 30 fps.
+7. Research departure and return: repeat legs visible ≤ 1 000 ms, the first departure ≤ 2 500 ms; the run, rock,
+   kept run, ghost and model time identical after every return (correctness gate, no hidden advance).
+8. Memory bounded: kept runs ≤ 3 (D-W5-5J budget); JS heap after the last repeated run ≤ 1.1 × the maximum of
+   the earlier runs; after repeated navigation, heap and DOM nodes within 10 % of the first cycle.
+9. Production bundle < 10 000 000 bytes (`pnpm check:bundle`). Network startup is reported (requests, bytes,
+   emulated slow links) without a pass threshold: no hosting target exists yet.
+
+A miss is reported as a miss. A fix is made only for a demonstrated bottleneck, bounded, with before/after
+measurement and fixed-step results unchanged; solver changes would need their own justification and an updated
+CPU/GPU comparison. Other hardware remains **pending**, never inferred from this machine.
