@@ -58,6 +58,7 @@ import {
   patternedProfile,
   solidProfile,
 } from "./block-geometry";
+import { buildLakes, buildStreams } from "./water";
 import {
   type CrustBandLook,
   type CrustLayer,
@@ -117,6 +118,35 @@ export interface DressingRules {
   readonly river?: (g: BlockGrid, cfg: DressingConfig) => number[];
   /** Flow-mark polylines on the ice in fractional cell coordinates (`a0, l0, a1, l1, …`). */
   readonly flowLines?: (g: BlockGrid, cfg: DressingConfig, lastRow: number) => number[][];
+  /**
+   * Additional streams (D-W7-7D): polylines in fractional cell coordinates (`a0, l0, …`), each drawn as a
+   * water ribbon like the river. Absent: none.
+   */
+  readonly streams?: (g: BlockGrid, cfg: DressingConfig, lastRow: number) => readonly (readonly number[])[];
+  /**
+   * Standing water (D-W7-7D): a water level per block-grid cell (unit: metres), not finite where dry. Drawn
+   * as a flat water surface. Absent: none.
+   */
+  readonly lakes?: (g: BlockGrid, cfg: DressingConfig, lastRow: number) => ArrayLike<number> | null;
+  /**
+   * Replacement slope hachures (D-W7-7D): segments `a0, l0, a1, l1` in fractional cell coordinates. Absent:
+   * the default `slopeHachures`.
+   */
+  readonly hachures?: (g: BlockGrid, cfg: DressingConfig, lastRow: number) => number[];
+  /**
+   * Thins the trees (D-W7-7D): false drops the tree placed at fractional cell (a, l), for example to keep a
+   * strip clear where small relief must read. Absent: every tree the dressing config places is drawn.
+   */
+  readonly keepTree?: (g: BlockGrid, a: number, l: number) => boolean;
+  /**
+   * Extra ink lines draped on the surface (D-W7-7D), for example fault traces or scarp crests: polylines in
+   * fractional cell coordinates, at full ink strength. Absent: none.
+   */
+  readonly inkLines?: (
+    g: BlockGrid,
+    cfg: DressingConfig,
+    lastRow: number,
+  ) => readonly { readonly points: readonly number[]; readonly widthPx?: number }[];
 }
 
 /** View-only reveal values (from the transition). */
@@ -166,7 +196,16 @@ export interface Footprint {
 }
 
 type StrokeKind =
-  "edge" | "iceEdge" | "hachure" | "flow" | "dash" | "ghostHalo" | "ghost" | "crustBase" | "coverBase";
+  | "edge"
+  | "iceEdge"
+  | "hachure"
+  | "flow"
+  | "dash"
+  | "ghostHalo"
+  | "ghost"
+  | "crustBase"
+  | "coverBase"
+  | "inkLine";
 
 /** Most comparison profiles drawn at once. */
 export const MAX_GHOSTS = 3;
@@ -269,6 +308,9 @@ export class ValleyDiorama {
   private readonly iceSection: Mesh;
   private readonly walls: Mesh;
   private readonly river: Mesh;
+  /** Extra streams and lakes from dressing rules (D-W7-7D); empty and hidden without those rules. */
+  private readonly streams: Mesh;
+  private readonly lakes: Mesh;
   private readonly trees: InstancedMesh;
   private readonly wallMaterial: ReturnType<typeof createWallMaterial>;
   private readonly strokes: Record<StrokeKind, Strokes>;
@@ -314,6 +356,10 @@ export class ValleyDiorama {
     });
     this.walls = new Mesh(new BufferGeometry(), this.wallMaterial.material);
     this.river = new Mesh(new BufferGeometry(), createWaterMaterial(u));
+    this.streams = new Mesh(new BufferGeometry(), createWaterMaterial(u));
+    this.lakes = new Mesh(new BufferGeometry(), createWaterMaterial(u));
+    this.streams.visible = false;
+    this.lakes.visible = false;
     this.trees = new InstancedMesh(treeGeometry(), createTreeMaterial(u), 4096);
     // The crust band and mantle: built only for snapshots with a crust base (materials made on first use).
     this.crustMesh = new Mesh(new BufferGeometry());
@@ -339,9 +385,11 @@ export class ValleyDiorama {
       ghost: new Strokes(this.ink, NATURAL_TOKENS.ghost),
       crustBase: new Strokes(this.ink, this.crustLook.baseLine),
       coverBase: new Strokes(this.ink, this.crustLook.coverBaseLine ?? this.crustLook.baseLine),
+      inkLine: new Strokes(this.ink),
     };
     this.strokes.ghost.layer.mesh.renderOrder = 3;
     this.body.add(this.ground, this.ice, this.iceSection, this.walls, this.river, this.trees);
+    this.body.add(this.streams, this.lakes);
     this.body.add(this.crustMesh, this.mantleMesh);
     for (const s of Object.values(this.strokes)) this.body.add(s.layer.mesh);
     this.group.add(this.body);
@@ -453,6 +501,7 @@ export class ValleyDiorama {
     this.strokes.ghostHalo.fade.value = reveal.ink;
     this.strokes.crustBase.fade.value = reveal.ink;
     this.strokes.coverBase.fade.value = reveal.ink;
+    this.strokes.inkLine.fade.value = reveal.ink;
     this.strokes.hachure.fade.value = reveal.hachure;
     this.strokes.flow.fade.value = reveal.colour;
     this.applyVisibility();
@@ -562,7 +611,10 @@ export class ValleyDiorama {
     this.river.geometry = ribbon ? toGeometry(ribbon) : new BufferGeometry();
     this.river.visible = ribbon !== null;
 
-    const sites = treeSites(g, cfg, riverSet, f.cutRow);
+    this.rebuildWater(g, f, riverSet);
+
+    const keep = this.rules.keepTree;
+    const sites = treeSites(g, cfg, riverSet, f.cutRow).filter((t) => !keep || keep(g, t.a, t.l));
     const m = g.metresPerCell;
     const matrix = new Matrix4();
     const count = Math.min(sites.length, this.trees.instanceMatrix.count);
@@ -598,7 +650,7 @@ export class ValleyDiorama {
       );
 
     hachure.buffer.reset();
-    const h = slopeHachures(g, cfg, f.cutRow);
+    const h = (this.rules.hachures ?? slopeHachures)(g, cfg, f.cutRow);
     const hs = new Float64Array((h.length / 4) * 6);
     for (let i = 0, o = 0; i < h.length; i += 4, o += 6) {
       const [a0, l0, a1, l1] = [h[i]!, h[i + 1]!, h[i + 2]!, h[i + 3]!];
@@ -660,7 +712,42 @@ export class ValleyDiorama {
     if (section?.coverBasePolyline)
       coverBase.buffer.pushPolyline(section.coverBasePolyline, false, COVER_BASE_LINE_WIDTH_PX);
 
+    // Extra ink lines from the dressing rules (D-W7-7D), draped on the surface.
+    const { inkLine } = this.strokes;
+    inkLine.buffer.reset();
+    for (const line of this.rules.inkLines?.(g, cfg, f.cutRow) ?? []) {
+      const pts: number[] = [];
+      for (let i = 0; i + 1 < line.points.length; i += 2) {
+        const [a, l] = [line.points[i]!, line.points[i + 1]!];
+        if (l > f.cutRow) break;
+        pts.push(blockX(f, a), blockZ(f, l), blockY(f, sampleField(g.bedM, g, a, l) + lift));
+      }
+      if (pts.length >= 6)
+        inkLine.buffer.pushPolyline(pts, false, line.widthPx ?? INK_TOKENS.indexContourWidthPx);
+    }
+
     for (const s of Object.values(this.strokes)) s.upload();
+  }
+
+  /**
+   * Streams and lakes from the dressing rules (D-W7-7D). Stream cells join `riverSet`, so trees keep off
+   * them. Without the rules both meshes stay empty and hidden.
+   */
+  private rebuildWater(g: BlockGrid, f: BlockFrame, riverSet: Set<number>): void {
+    const cfg = this.dressing;
+    const paths = this.rules.streams?.(g, cfg, f.cutRow) ?? [];
+    for (const p of paths)
+      for (let i = 0; i + 1 < p.length; i += 2)
+        riverSet.add(Math.round(p[i + 1]!) * g.across + Math.round(p[i]!));
+    const streams = paths.length ? buildStreams(g, f, paths, 1.3) : null;
+    this.streams.geometry.dispose();
+    this.streams.geometry = streams ? toGeometry(streams) : new BufferGeometry();
+    this.streams.visible = streams !== null;
+    const levels = this.rules.lakes?.(g, cfg, f.cutRow) ?? null;
+    const lakes = levels ? buildLakes(g, f, levels) : null;
+    this.lakes.geometry.dispose();
+    this.lakes.geometry = lakes ? toGeometry(lakes) : new BufferGeometry();
+    this.lakes.visible = lakes !== null;
   }
 
   /** The crust band and mantle on the front face; hidden (and never built) without a crust base. */
@@ -705,7 +792,16 @@ export class ValleyDiorama {
   }
 
   dispose(): void {
-    for (const mesh of [this.ground, this.ice, this.iceSection, this.walls, this.river, this.trees]) {
+    for (const mesh of [
+      this.ground,
+      this.ice,
+      this.iceSection,
+      this.walls,
+      this.river,
+      this.streams,
+      this.lakes,
+      this.trees,
+    ]) {
       mesh.geometry.dispose();
       (mesh.material as MeshBasicNodeMaterial).dispose();
     }

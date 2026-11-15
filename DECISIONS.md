@@ -3106,3 +3106,106 @@ artistic choice, and no copy states a ridge height.
 **Revisit if.** 7D cannot serve `scaleBarLabel` (drop the scale-bar sentence from `textAlternatives.scale`);
 the owner wants a figure on the school page (then a cited figure next to the picker needs an explicit "in
 the real world" frame); or the display scales change (the flap's drawn-root sentence test will fail first).
+
+## D-W7-7D — Lesson 2 production scene: entry point, bindings and events (contract, session 7D, 2026-11-15)
+
+**Context.** 7D builds the production scene for _Where plates meet_ (wave plan §1, 7D brief) on the 7B stage,
+consuming 7C's `relief(boundary, stage)` and the frozen look (D-W7-7R). 7E (copy) and 7F (book integration)
+run in parallel; this entry is the contract they code against, pushed before the implementation. Shapes stay
+authored illustrations (D-L2-1); nothing in the scene is simulated or claims to be.
+
+**Entry point (7F mounts this).** `uplift/book/src/scenes/plates/index.ts`:
+
+```ts
+export function createPlatesSpreadScene(o: {
+  level: Level;
+  folio: number; // left page number, as lesson 1
+  copy?: PlatesSceneCopy; // 7E's words; default: clearly marked placeholder copy
+  probes?: readonly Probe[]; // the spread's probes (7E); the scene serves the kinds below
+  mode?: "flat" | "tilted" | "auto"; // ?mode=, as lesson 1
+  reducedMotion?: boolean; // ?motion=reduce, as lesson 1
+}): ReaderSceneController;
+export function mountPlatesScene(root: HTMLElement, o: PlatesSceneOptions): Promise<MountedPlatesScene>;
+export const PLATES_PROBE_KINDS = ["plates-scene", "plates-config"] as const;
+export type { PlatesSceneCopy }; // the words the scene renders (see below)
+```
+
+7F wires it in `scenes/entries.ts` exactly like lesson 1: `{ spread: <7E spread>, layout: "stage", createScene:
+(level, { folio }) => createPlatesSpreadScene({ level, folio, copy: <7E copy>, probes: <7E spread>.probes,
+...mode flags }) }`. The scene draws both pages (stage layout) on lesson 1's tilted book stage and reflows to one
+page on phones. The authored-sequence source lives in the controller, not the DOM: turning away settles and
+detaches; turning back mounts a fresh scene on the same source with boundary, stage and ghosts as left (no
+catch-up). `reset()` clears to no boundary chosen and clears the ghosts. `scope` is `{ kind: "static-geometry" }`
+(no model time).
+
+**Bindings served** (probe `request.kind`; anything else is ignored; strings render as given):
+
+- `plates-scene`, by `field`: `boundaryName` (string, the copy's name for the current boundary, or its "none
+  chosen" words), `stageLabel` (string: the copy's early / middle / late words), `viewedNames` (string: names of
+  the boundaries drawn as ghosts, or empty), `surfaceVerticalExaggeration` and `crustVerticalExaggeration`
+  (numbers, config rows 2 and 3), `blockWidthKm` and `blockLengthKm` (numbers, config row 1).
+- `plates-config`, by `field`: any numeric leaf of `PLATES_RELIEF_CONFIG` as a dotted path (for example
+  `convergent.rangeCrestElevationM`, `crust.normalThicknessM`, `divergent.crustThicknessAtAxisM`,
+  `transform.offsetM`, `dressing.snowlineM`), so every cited figure on the page is bound to the config the
+  block is drawn from. Units come from the probe declaration.
+
+7E: declare the probes you bind with these kinds and fields; if you need another key, name it in D-W7-7E and 7D
+serves it.
+
+**Copy (`PlatesSceneCopy`, every text `{ hs, uni }`).** Lesson number, title, running heads, body (blank-line
+paragraphs, `**bold**`, bindings allowed), key words, optional prediction and flap answer, the one label line,
+the figure number, caption and drawing alternative, per boundary `{ name, help }`, the control words (picker
+legend, stage legend, early / middle / late, play / pause, front face, reset, arrow-drag hint), "What this shows /
+ignores", deeper text, teacher notes and sources. The scene's text alternatives (boundary, stage, front-face
+profile, ghosts) are drafted by 7D, marked expert-review, and overridable from the copy. The scene never types a
+figure: scales and cited values come through the bindings above.
+
+**Events and test hooks.** The controller's `status()` reports `activity: "playing" | "paused"`. The desk element
+carries `data-ready`, `data-transition`, `data-boundary` (`none` | key), `data-stage`, `data-stage-word`,
+`data-playing`, `data-ghosts` (comma list) and `data-mode`; `blockScreenGeometry()` and `plateArrowTargets()` are
+exposed on it for browser tests, as in lesson 1.
+
+**Revisit if.** 7E publishes different binding keys first (7D adopts them), or 7F needs another entry shape.
+
+**Implementation (session 7D, after the contract).** Built as recorded, with these additions:
+
+1. **Bindings.** `plates-scene` also serves `scaleBarLabel` (D-W7-7E's request: the label of the scale bar the
+   scene draws along the block's front edge and on Fig. 2, a round length near a quarter of the block's width
+   from config row 1, today "40 km"). `stageLabel` follows 7E's `stageWordFor`: "starting" at stage 0, then
+   early / middle / late by thirds. 7E's probe ids (`reliefScale`, `crustScale`, `airyRatio`, `crustDensity`,
+   `mantleDensity`, `snowline` as `plates-config` paths; `blockWidth`, `boundaryName`, `stageLabel`,
+   `ghostNames` (field `viewedNames`), `scaleBar` (field `scaleBarLabel`) as `plates-scene`) are all served.
+2. **Copy.** `PlatesSceneCopy` gained `controls.start`, optional `figure.labels` (features `plate`,
+   `plate-boundary`, `rock-layers`, `crust`, `mantle`, as 7E's `figure.labels`) and optional
+   `textAlternatives { start, boundary }` (7E's templates, rendered through the bindings). **For 7F, the
+   mapping from 7E's lesson exports:** `title`, `runningHeads`, `LESSON_NUMBER`, `FIGURE_NUMBER`, `keyWords`,
+   `predict`, flap → `flap.answer`; `figure.label` → `labelLine`; `figure.caption`, `figure.scaleNote` →
+   `figure.scale`, `figure.drawingAlternative`, `figure.labels`; `boundaries[i].name/help` →
+   `boundaries[id]`; `controlsCopy.boundaryLegend` → `pickerLegend`, `stageLegend` ("Stage"), `stageEarly`,
+   `stageLate`, `play`, `pause`, `frontFace`, `reset`, `ghostLegend` → `ghostsLegend`, `boundaryHelp` →
+   `invite`; `stageWords.start/middle` → `controls.start/middle`; `textAlternatives.start/boundary`;
+   `shows`, `page.ignores` → `showsIgnores`. The arrow-handle names and help (`leftPlateArrow`,
+   `rightPlateArrow`, `arrowHelp`) and `noBoundary`, `replay` have no 7E words yet: 7F keeps the placeholder's
+   or 7E adds them.
+3. **Generic engine additions (additive, lesson 1 byte-identical: it passes none of them).** `DressingRules`
+   gains `streams`, `lakes`, `hachures`, `inkLines` and `keepTree` (`hachure/ink/src/stage/diorama.ts`, a new
+   `inkLine` stroke kind beside 7R2's `coverBase`); stream ribbons and lake surfaces are plain geometry in
+   `hachure/ink/src/stage/water.ts`. `@hachure/ink/plates` (a new package export) holds
+   `attachBlockArrows`: handles anchored on the block that report drags and arrow keys as block-axis
+   directions; Hachure has no plate vocabulary.
+4. **Dressing** (`scenes/plates/dressing.ts`, pure, tested): streams on the filled surface where 140 cells
+   drain (every valley crossing the boundary gets one; they jog at the transform fault); lakes only on dropped
+   ground (negative layer offset), at most 70 m deep below the spill level; fault scarps found where the layer
+   offset steps sharply, inked 2.2 px with the textbook tick symbol towards the dropped side; hachures by
+   drawn slope (×4) over 38°; trees at 0.03 density and none within 16 km of the boundary (the owner's
+   2026-11-15 requirement that the transform offset read at page size); the transform's fault trace as ink.
+5. **Camera.** Book tilt 42° (lesson 1: 48°), so the offset reads from the default view; the turntable limits
+   are lesson 1's.
+6. **Playback.** Frames quantised to 1/100 of the stage and memoised (LRU of 48), the next frame prefetched in
+   idle time; the source's own stage is never rounded. On the dev laptop's GPU, continuous play holds the
+   display rate (median 8.3 ms, p90 8.5 ms, p99 25–33 ms) with 101 block rebuilds from early to late at a
+   median 26 ms each. Deterministic: the same stage always gives the same frame.
+7. **Static view reports "ready".** The drawing plus the enlarged front face is a complete page that says so;
+   the shell words its "fallback" status for lesson 1's recorded runs, which this lesson does not have.
+
+**For the lead.** `hachure/ink/package.json` gained the `./plates` export (outside 7D's owned paths, one line).
