@@ -2833,3 +2833,47 @@ should name.
 
 **Revisit if.** 7R wants the layers on the front face over the crust (see the open fact), or the layers need
 to fold or thin rather than move as a block (then one offset per cell is not enough).
+
+## D-W7-7C — Boundary relief generators and the 7R review build (session 7C, 2026-11-15)
+
+**Context.** 7C builds the authored formation sequences for lesson 2 under D-L2-1 (illustration, not
+simulation): `uplift/book/src/scenes/plates/relief/`, transcribed from the 7A table (D-W7-7A) and drawn on
+the 7B stage (D-W7-7B, D-W7-7B2). Review build and captures: `docs/review/plates/relief/`.
+
+**Decisions (session).**
+
+1. **One typed config, `PLATES_RELIEF_CONFIG`**, with units in every name and a row comment per value. A
+   test keeps it equal to `docs/science/plates/parameters.json`. The display scales come from
+   `platesSceneScales(config)`: `reliefScale` = row 2; `crustBaseM = −mohoDepth × row 3 / row 2`.
+2. **Formulas and noise are 7A's**, including its hash and value-noise octaves, so the block and the approved
+   storyboard draw the same field. `field.cell(boundary, stage, x, z)` is the reference formula. The grid
+   generator caches the parts that do not depend on the stage, and a test checks that it matches the
+   reference bit for bit. A frame takes about 10–27 ms on the dev laptop (Node).
+3. **Snapshot** (`PlatesReliefSnapshot extends LandscapeSnapshot`): `bedM` (real metres), `rockId` (the
+   top layer, one id for the grid), `crustBaseM` (scene metres) and `layerOffsetM` (real metres: `E(x)`,
+   `Δ(x)`, 0). There is no `modelTimeYr`. Stage 0 is identical bit for bit for all three boundaries: −0 is
+   normalised to +0.
+4. **Fixed frame:** `elevationFrame()` runs from the deepest crust base to the highest bed over every
+   boundary at stages 0 and 1, that is −11,842 to 7,037 m, matching 7A's extremes. Pass it to
+   `setElevationRange`. It is not row 4's block base: the stage adds its own 20 % margin below `minM`, so
+   the base sits at about −15,618 scene metres, not −13,500. Passing −13,500 would push the base lower
+   still. 7A's mapping section also quotes −18,000, which disagrees with its row 4 and with D-W7-7A
+   (−13,500).
+5. **Presentation rock ids 10–13** (sandstone, shale, limestone, crystalline crust) are lesson-local looks,
+   not science.
+6. **Review build** at `uplift/book/src/scenes/plates/relief/review/` (a Vite dev page under 7C's owned
+   paths; no app route or entry was touched). It drives the stage through 7B's `createAuthoredSequence`.
+   Its look choices are review-only and belong to 7D: trees at 0.05 density, the lesson-1 river rule off,
+   and a wall pattern tile of one start layer (600 m). Look probes (`ridge=`, `crust=0`) are labelled on the
+   page and never the default.
+
+**Facts for 7R (see the review README for captures and options).** (1) The transform offset does not read
+at page size with row 10's 500 m ridges; the 1,500 m probe reads at once. (2) The rift scarps that face the
+light show only as an ink line. (3) The bent layers are invisible in the lesson's view: the crust band
+covers the front face, and the side walls are far from the boundary (D-W7-7B2). The options are to keep the
+band, add a cover field (engine), or toggle between the views (7D). (4) Tan streaks in the mantle band on
+SwiftShader, probably z-fighting between the wall and the mantle quads, are for 7B or the lead to check on a
+real GPU.
+
+**Revisit if.** 7R changes rows 2, 3, 10 or 28–29, or asks for a cover field: the config and tests change in
+one place.

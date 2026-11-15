@@ -1,0 +1,296 @@
+/*
+ * Session 7C review build (7R look review). The same book furniture as lesson 1: grey desk, dark cloth
+ * boards, paper and ink. Natural colour lives only in the block; the page stays a textbook page.
+ */
+.pr-review {
+  --pr-desk: #7a776f;
+  --pr-board: #3b352f;
+  --pr-paper: #faf8f2;
+  --pr-page-edge: #e6e0d0;
+  --pr-ink: #292b2c;
+  --pr-ink-soft: #5d5f5c;
+  --pr-pen: #27477a;
+  --pr-rule: #d8d4c8;
+  --pr-focus: #0072b2;
+  --book-paper: var(--pr-paper);
+  margin: 0;
+  color: var(--pr-ink);
+  background: var(--pr-desk);
+  font:
+    16px/1.5 Georgia,
+    "Times New Roman",
+    serif;
+}
+html,
+body {
+  margin: 0;
+  background: #7a776f;
+}
+.pr-review *,
+.pr-review *::before,
+.pr-review *::after {
+  box-sizing: border-box;
+}
+.pr-review :focus-visible {
+  outline: 3px solid var(--pr-focus);
+  outline-offset: 2px;
+}
+.pr-loading {
+  padding: 16px;
+  color: var(--pr-paper);
+}
+
+/* ---- Desk and book --------------------------------------------------------------------------------- */
+.pr-desk {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+.pr-desk[data-stage-mode="tilted"] {
+  height: 100dvh;
+  overflow: hidden;
+  padding: 0;
+}
+.pr-book {
+  position: relative;
+  width: min(1280px, 100%);
+  container-type: inline-size;
+}
+.pr-desk[data-stage-mode="tilted"] .pr-book {
+  width: min(78vw, calc((100dvh - 70px) * 1.25));
+}
+.pr-boards {
+  position: absolute;
+  inset: -10px -12px -14px;
+  background: var(--pr-board);
+  border-radius: 6px;
+  box-shadow: 0 18px 30px -18px #0007;
+}
+.pr-spread {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 62cqi;
+  background: var(--pr-paper);
+  box-shadow:
+    0 2px 0 var(--pr-page-edge),
+    0 4px 0 #d5cfbf,
+    0 6px 0 var(--pr-page-edge);
+}
+.pr-page {
+  position: relative;
+  min-width: 0;
+  padding: 4.2cqi 4cqi 4.4cqi;
+  display: flex;
+  flex-direction: column;
+}
+.pr-page-text {
+  box-shadow: inset -14px 0 14px -16px #292b2c;
+}
+.pr-page-figure {
+  box-shadow: inset 14px 0 14px -16px #292b2c;
+}
+.pr-running-head {
+  margin: 0 0 1.6cqi;
+  font-style: italic;
+  font-size: max(11px, 0.95cqi);
+  color: var(--pr-ink-soft);
+  border-bottom: 1px solid var(--pr-rule);
+  padding-bottom: 0.4cqi;
+}
+.pr-page-figure .pr-running-head {
+  text-align: right;
+}
+.pr-folio {
+  position: absolute;
+  bottom: 1.6cqi;
+  margin: 0;
+  font-size: max(11px, 0.95cqi);
+  color: var(--pr-ink-soft);
+}
+.pr-page-text .pr-folio {
+  left: 4cqi;
+}
+.pr-page-figure .pr-folio {
+  right: 4cqi;
+}
+
+/* ---- Left page ------------------------------------------------------------------------------------- */
+.pr-page-text {
+  font-size: max(13px, 1.25cqi);
+}
+.pr-page-text h1 {
+  margin: 0.8cqi 0 0.6cqi;
+  font-weight: normal;
+  font-size: max(24px, 3.1cqi);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.pr-purpose {
+  margin: 0 0 1.6cqi;
+  color: var(--pr-ink-soft);
+  font-style: italic;
+  max-width: 34em;
+}
+/* The one label line (D-L2-1): a quiet ruled line, the way a textbook marks a figure's status. */
+.pr-label {
+  margin: 0 0 1.8cqi;
+  padding: 0.5cqi 0;
+  border-top: 1px solid var(--pr-ink);
+  border-bottom: 1px solid var(--pr-ink);
+  font-style: italic;
+}
+.pr-now {
+  margin: 0 0 1.2cqi;
+  max-width: 32em;
+  line-height: 1.6;
+}
+.pr-example {
+  margin: 0 0 1.2cqi;
+  color: var(--pr-ink-soft);
+}
+.pr-scale {
+  margin: auto 0 1.4cqi;
+  font-size: max(11px, 1cqi);
+  color: var(--pr-ink-soft);
+  max-width: 34em;
+}
+
+/* ---- Right page: the figure and its controls ------------------------------------------------------- */
+.pr-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.pr-frame {
+  position: relative;
+  flex: 1;
+  min-height: max(260px, 34cqi);
+}
+.pr-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  color: var(--pr-ink-soft);
+  font-style: italic;
+}
+.pr-figure figcaption {
+  margin-top: 1cqi;
+  font-size: max(11px, 1cqi);
+  color: var(--pr-ink-soft);
+}
+.pr-figure figcaption b {
+  color: var(--pr-ink);
+  margin-right: 0.4em;
+}
+.pr-picker,
+.pr-stage {
+  border: 0;
+  margin: 1.2cqi 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6cqi 1.2cqi;
+  font-size: max(12px, 1.05cqi);
+}
+.pr-picker legend,
+.pr-stage legend {
+  float: left;
+  margin-right: 0.6cqi;
+  font-style: italic;
+  color: var(--pr-ink-soft);
+}
+.pr-choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.2em 0.7em 0.2em 0.4em;
+  border: 1px solid var(--pr-rule);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.pr-choice:has(input:checked) {
+  border-color: var(--pr-ink);
+  box-shadow: inset 0 -2px 0 var(--pr-ink);
+}
+.pr-choice input {
+  margin: 0;
+  accent-color: var(--pr-ink);
+}
+.pr-glyph {
+  font-family: "Segoe UI Symbol", "DejaVu Sans", sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+.pr-play,
+.pr-view button {
+  font: inherit;
+  font-size: max(12px, 1.05cqi);
+  color: var(--pr-ink);
+  background: var(--pr-paper);
+  border: 1px solid var(--pr-ink);
+  border-radius: 3px;
+  padding: 0.15em 0.9em;
+  cursor: pointer;
+}
+.pr-play:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.pr-ruler {
+  flex: 1;
+  min-width: 140px;
+  display: grid;
+}
+.pr-ruler input {
+  width: 100%;
+  margin: 0;
+  accent-color: var(--pr-ink);
+}
+.pr-ends {
+  display: flex;
+  justify-content: space-between;
+  font-size: max(10px, 0.9cqi);
+  font-style: italic;
+  color: var(--pr-ink-soft);
+}
+.pr-view {
+  margin-top: 1cqi;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6cqi 1.6cqi;
+  font-size: max(11px, 1cqi);
+  color: var(--pr-ink-soft);
+}
+.pr-view label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.pr-view input[type="checkbox"] {
+  accent-color: var(--pr-ink);
+}
+.pr-view input[type="range"] {
+  width: max(90px, 9cqi);
+  accent-color: var(--pr-ink);
+}
+
+/* ---- Narrow screens: the spread stacks ------------------------------------------------------------- */
+@media (max-width: 760px) {
+  .pr-spread {
+    grid-template-columns: 1fr;
+  }
+  .pr-page {
+    padding: 20px 16px 36px;
+  }
+  .pr-frame {
+    min-height: 300px;
+  }
+}
