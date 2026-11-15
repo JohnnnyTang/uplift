@@ -219,108 +219,108 @@
     "boundary": "divergent",
     "stage": 0.5,
     "xFromBoundaryKm": 0,
-    "smoothSurfaceM": -200,
-    "mohoDepthBelowSeaLevelM": 30200,
+    "smoothSurfaceM": -350,
+    "mohoDepthBelowSeaLevelM": 30350,
     "crustThicknessM": 30000,
-    "crustBaseSceneM": -5662
+    "crustBaseSceneM": -5691
   },
   {
     "boundary": "divergent",
     "stage": 0.5,
     "xFromBoundaryKm": 10,
-    "smoothSurfaceM": -125,
-    "mohoDepthBelowSeaLevelM": 30844,
-    "crustThicknessM": 30719,
-    "crustBaseSceneM": -5783
+    "smoothSurfaceM": -252,
+    "mohoDepthBelowSeaLevelM": 30972,
+    "crustThicknessM": 30720,
+    "crustBaseSceneM": -5807
   },
   {
     "boundary": "divergent",
     "stage": 0.5,
     "xFromBoundaryKm": 20,
-    "smoothSurfaceM": 130,
-    "mohoDepthBelowSeaLevelM": 32400,
-    "crustThicknessM": 32530,
-    "crustBaseSceneM": -6075
+    "smoothSurfaceM": 70,
+    "mohoDepthBelowSeaLevelM": 32475,
+    "crustThicknessM": 32545,
+    "crustBaseSceneM": -6089
   },
   {
     "boundary": "divergent",
     "stage": 0.5,
     "xFromBoundaryKm": 30,
-    "smoothSurfaceM": 550,
-    "mohoDepthBelowSeaLevelM": 33956,
-    "crustThicknessM": 34505,
-    "crustBaseSceneM": -6367
+    "smoothSurfaceM": 589,
+    "mohoDepthBelowSeaLevelM": 33978,
+    "crustThicknessM": 34566,
+    "crustBaseSceneM": -6371
   },
   {
     "boundary": "divergent",
     "stage": 0.5,
     "xFromBoundaryKm": 40,
-    "smoothSurfaceM": 458,
+    "smoothSurfaceM": 482,
     "mohoDepthBelowSeaLevelM": 34600,
-    "crustThicknessM": 35058,
+    "crustThicknessM": 35082,
     "crustBaseSceneM": -6487
   },
   {
     "boundary": "divergent",
     "stage": 0.5,
     "xFromBoundaryKm": 60,
-    "smoothSurfaceM": 353,
+    "smoothSurfaceM": 362,
     "mohoDepthBelowSeaLevelM": 34600,
-    "crustThicknessM": 34953,
+    "crustThicknessM": 34962,
     "crustBaseSceneM": -6487
   },
   {
     "boundary": "divergent",
     "stage": 1,
     "xFromBoundaryKm": 0,
-    "smoothSurfaceM": -800,
-    "mohoDepthBelowSeaLevelM": 25800,
+    "smoothSurfaceM": -1100,
+    "mohoDepthBelowSeaLevelM": 26100,
     "crustThicknessM": 25000,
-    "crustBaseSceneM": -4837
+    "crustBaseSceneM": -4894
   },
   {
     "boundary": "divergent",
     "stage": 1,
     "xFromBoundaryKm": 10,
-    "smoothSurfaceM": -635,
-    "mohoDepthBelowSeaLevelM": 27089,
-    "crustThicknessM": 26454,
-    "crustBaseSceneM": -5079
+    "smoothSurfaceM": -890,
+    "mohoDepthBelowSeaLevelM": 27345,
+    "crustThicknessM": 26455,
+    "crustBaseSceneM": -5127
   },
   {
     "boundary": "divergent",
     "stage": 1,
     "xFromBoundaryKm": 20,
-    "smoothSurfaceM": -110,
-    "mohoDepthBelowSeaLevelM": 30200,
-    "crustThicknessM": 30090,
-    "crustBaseSceneM": -5662
+    "smoothSurfaceM": -230,
+    "mohoDepthBelowSeaLevelM": 30350,
+    "crustThicknessM": 30120,
+    "crustBaseSceneM": -5691
   },
   {
     "boundary": "divergent",
     "stage": 1,
     "xFromBoundaryKm": 30,
-    "smoothSurfaceM": 744,
-    "mohoDepthBelowSeaLevelM": 33311,
-    "crustThicknessM": 34056,
-    "crustBaseSceneM": -6246
+    "smoothSurfaceM": 822,
+    "mohoDepthBelowSeaLevelM": 33355,
+    "crustThicknessM": 34177,
+    "crustBaseSceneM": -6254
   },
   {
     "boundary": "divergent",
     "stage": 1,
     "xFromBoundaryKm": 40,
-    "smoothSurfaceM": 576,
+    "smoothSurfaceM": 623,
     "mohoDepthBelowSeaLevelM": 34600,
-    "crustThicknessM": 35176,
+    "crustThicknessM": 35223,
     "crustBaseSceneM": -6487
   },
   {
     "boundary": "divergent",
     "stage": 1,
     "xFromBoundaryKm": 60,
-    "smoothSurfaceM": 397,
+    "smoothSurfaceM": 414,
     "mohoDepthBelowSeaLevelM": 34600,
-    "crustThicknessM": 34997,
+    "crustThicknessM": 35014,
     "crustBaseSceneM": -6487
   },
   {

@@ -1,6 +1,6 @@
 {
   "about": "Session 7A parameter table for the plate-boundaries lesson, machine-readable. Every key is explained, sourced or labelled ARTISTIC in parameters.md (same folder). 7C transcribes this into its typed config; the 7A storyboard (docs/review/plates/brief/storyboard.mjs) draws from it. Shapes are authored illustrations, not simulations.",
-  "version": "7A-1",
+  "version": "7R-1",
   "seed": 7,
   "grid": {
     "columns": 160,
@@ -19,7 +19,7 @@
     "lowlandElevationM": 400,
     "regionalTiltMPerKm": 1.5,
     "ridgeSpacingM": 20000,
-    "ridgeReliefM": 500,
+    "ridgeReliefM": 1500,
     "ridgeMeanderAmplitudeM": 1000,
     "ridgeMeanderWavelengthM": 60000,
     "streamChannelDepthM": 40,
@@ -52,8 +52,8 @@
     "riftFloorWidthM": 20000,
     "scarpsPerSide": 3,
     "scarpDropFractions": [0.4, 0.3, 0.3],
-    "floorDropM": 1200,
-    "shoulderHeightM": 500,
+    "floorDropM": 1500,
+    "shoulderHeightM": 600,
     "shoulderDecayM": 20000,
     "scarpFaceWidthM": 1000,
     "crustThicknessAtAxisM": 25000,

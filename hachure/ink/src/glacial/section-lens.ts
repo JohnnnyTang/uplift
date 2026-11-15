@@ -6,7 +6,8 @@
  * the profile's own metres.
  *
  * With a crust base (D-W7-7B) it frames the whole face and draws the crust band and the mantle below it in
- * their own patterns; without one its output is unchanged.
+ * their own patterns; without one its output is unchanged. With a cover base as well (D-W7-7R2) the band
+ * starts below the layered cover rock, which keeps the rock's own pattern.
  *
  * Pure: returns SVG markup; no DOM, no three.js. Deterministic.
  */
@@ -45,6 +46,12 @@ export interface SectionLensProfile {
   readonly crustBaseM?: ArrayLike<number> | undefined;
   /** The starting crust base, drawn dashed like the starting bed (unit: metres). */
   readonly startCrustBaseM?: ArrayLike<number> | undefined;
+  /**
+   * Base of the layered cover rock at each position (unit: metres; D-W7-7R2). Used only with `crustBaseM`:
+   * the rock's pattern shows from the bed down to it, the crust band from it down to the crust base, with a
+   * light contact line between. Absent: the band starts at the bed, unchanged.
+   */
+  readonly coverBaseM?: ArrayLike<number> | undefined;
 }
 
 export interface SectionLensWords {
@@ -56,6 +63,8 @@ export interface SectionLensWords {
   readonly crust?: string;
   /** Label of the mantle below it; omitted when empty or without a crust base. */
   readonly mantle?: string;
+  /** Label of the layered cover rock; omitted when empty or without a crust base and a cover base. */
+  readonly cover?: string;
 }
 
 export interface SectionLensOptions {
@@ -174,6 +183,8 @@ export function sectionLensSvg(p: SectionLensProfile, options: SectionLensOption
   const ghosts = lensGhosts(p);
   const crustBase = p.crustBaseM;
   if (crustBase && crustBase.length !== n) throw new RangeError("profile arrays must match");
+  const coverBase = crustBase ? p.coverBaseM : undefined;
+  if (coverBase && coverBase.length !== n) throw new RangeError("profile arrays must match");
   const crustLook = options.crustBand ?? CRUST_BAND_LOOK;
   const threshold = options.iceThresholdM ?? 1;
   const vs = options.verticalScale ?? 1;
@@ -211,6 +222,13 @@ export function sectionLensSvg(p: SectionLensProfile, options: SectionLensOption
   const drawnBase = crustBase
     ? Float64Array.from({ length: n }, (_, k) => Math.max(win.bottomM, Math.min(p.bedM[k]!, crustBase[k]!)))
     : null;
+  // The top of the band: the cover base kept between the crust base and the bed, or the bed itself.
+  const drawnTop =
+    drawnBase && coverBase
+      ? Float64Array.from({ length: n }, (_, k) =>
+          Math.max(drawnBase[k]!, Math.min(p.bedM[k]!, coverBase[k]!)),
+        )
+      : null;
   if (drawnBase) {
     const right = f1(X(p.acrossM[win.last]!));
     const back = (z: ArrayLike<number>) =>
@@ -222,7 +240,7 @@ export function sectionLensSvg(p: SectionLensProfile, options: SectionLensOption
     body.push(
       `<path class="lens-mantle" d="M${f1(X(x0))} ${f1(bottomY)}L${line(drawnBase)}L${right} ${f1(bottomY)}Z"/>`,
     );
-    body.push(`<path class="lens-crust" d="M${line(p.bedM)}L${back(drawnBase)}Z"/>`);
+    body.push(`<path class="lens-crust" d="M${line(drawnTop ?? p.bedM)}L${back(drawnBase)}Z"/>`);
   }
   // Ice in section: one polygon per run of iced samples.
   let iceTop = -1;
@@ -259,6 +277,7 @@ export function sectionLensSvg(p: SectionLensProfile, options: SectionLensOption
   body.push(`<path class="lens-start" d="M${line(p.startBedM)}"/>`);
   if (drawnBase) {
     body.push(`<path class="lens-crust-base" d="M${line(drawnBase)}"/>`);
+    if (drawnTop) body.push(`<path class="lens-cover-base" d="M${line(drawnTop)}"/>`);
     if (p.startCrustBaseM) body.push(`<path class="lens-start" d="M${line(p.startCrustBaseM)}"/>`);
   }
   ghosts.forEach((g, i) => {
@@ -306,9 +325,14 @@ export function sectionLensSvg(p: SectionLensProfile, options: SectionLensOption
     // Layer names inside their bands, near the left edge.
     const k = win.first + Math.round((win.last - win.first) * 0.08);
     const x = f1(X(p.acrossM[k]!));
+    const bandTop = drawnTop ?? p.bedM;
+    if (options.words.cover && drawnTop)
+      labels.push(
+        `<text class="lens-cover-label" x="${x}" y="${f1((Y(p.bedM[k]!) + Y(drawnTop[k]!)) / 2 + 4)}">${esc(options.words.cover)}</text>`,
+      );
     if (options.words.crust)
       labels.push(
-        `<text class="lens-crust-label" x="${x}" y="${f1((Y(p.bedM[k]!) + Y(drawnBase[k]!)) / 2 + 4)}">${esc(options.words.crust)}</text>`,
+        `<text class="lens-crust-label" x="${x}" y="${f1((Y(bandTop[k]!) + Y(drawnBase[k]!)) / 2 + 4)}">${esc(options.words.crust)}</text>`,
       );
     if (options.words.mantle)
       labels.push(
@@ -349,6 +373,9 @@ export function sectionLensSvg(p: SectionLensProfile, options: SectionLensOption
       ? `.section-lens .lens-crust,.section-lens .lens-mantle{stroke:none}` +
         `.section-lens .lens-crust{fill:url(#${id}-crust)}.section-lens .lens-mantle{fill:url(#${id}-mantle)}` +
         `.section-lens .lens-crust-base{stroke:${crustLook.baseLine};stroke-width:1.8}`
+      : "") +
+    (drawnTop
+      ? `.section-lens .lens-cover-base{stroke:${crustLook.coverBaseLine ?? crustLook.baseLine};stroke-width:1.1}`
       : "") +
     (ghosts.length > 1 ? `.section-lens .lens-ghost-1{stroke-dasharray:7 3 0.1 3}` : "") +
     (ghosts.length > 2 ? `.section-lens .lens-ghost-2{stroke-dasharray:7 3 0.1 3 0.1 3}` : "");

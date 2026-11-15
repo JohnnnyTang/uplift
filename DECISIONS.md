@@ -2915,6 +2915,94 @@ presentation for 7D and 7E. Shapes stay authored illustrations under D-L2-1.
 **Revisit if.** The cover-rock follow-up shows the front face too busy at page size, or the 1,500 m ridges
 crowd the range and rift at stage 1; either goes back to the owner.
 
+## D-W7-7R2 — Cover rock above the crust: `coverBaseM`, and the look-review changes (session 7R2, 2026-11-15)
+
+**Context.** The owner's look review (D-W7-7R) asked for taller starting ridges, a deeper rift and a band of
+layered cover rock above the crust band on the front face, and named the engine field `coverBaseM`. The lead
+added two technical items: correct 7A's stray −18,000 block-base figure, and explain and fix the tan streaks
+in the mantle band. Shapes stay authored illustrations under D-L2-1.
+
+**Contract addendum (extends D-W7-7B and D-W7-7B2; additive).**
+
+```ts
+interface LandscapeSnapshot {
+  // … unchanged fields …
+  /** Elevation of the base of the layered cover rock per cell (unit: metres; same grid and units as bedM,
+   *  scaled by the stage's vertical exaggeration as the bed is). Used only with crustBaseM. */
+  readonly coverBaseM?: Field;
+}
+interface BlockGrid {
+  /* … */ readonly coverBaseM?: Float32Array;
+} // present only when the snapshot has it
+interface CrustSection {
+  /* … */ readonly coverBasePolyline?: number[];
+} // present only with coverBaseM
+interface CrustBandLook {
+  /* … */ readonly coverBaseLine?: string;
+} // default: baseLine
+interface DioramaDescription {
+  /* … */ readonly coverShown: boolean;
+}
+interface SectionLensProfile {
+  /* … */ readonly coverBaseM?: ArrayLike<number>;
+}
+interface SectionLensWords {
+  /* … */ readonly cover?: string;
+}
+export const COVER_BASE_LINE_WIDTH_PX = 1.1; // @hachure/ink/stage
+export function drawnCoverBaseM(g: BlockGrid, f: BlockFrame, k: number): number | null; // block-geometry.ts
+```
+
+Semantics. With `crustBaseM` and `coverBaseM`, the front face shows the wall's layered rock (moved by
+`layerOffsetM`) from the bed down to the cover base, then the crust band from the cover base down to the
+crust base, then the mantle. The drawn cover base is kept between the drawn crust base and the bed. A light
+ink line (1.1 px) marks the cover base; the crust base keeps its heavier line (1.65 px). Without `crustBaseM`,
+`coverBaseM` draws nothing and changes nothing. Without `coverBaseM`, the band starts at the bed, exactly as
+before. `validateSnapshot` checks its length; `toBlockGrid` resamples it with the bed; `elevationRange`
+ignores it (it lies between bed and crust base). The section lens does the same, additively: the band starts
+at the cover base, the rock's own pattern shows above it, an optional `words.cover` label; without the field
+the SVG is byte-identical. Ghost and starting profiles draw no cover base (kept quiet on purpose).
+
+**Wall trim (the streak fix, a change to D-W7-7B's drawing).** With a crust base, `buildWalls` now stops the
+front side at the top of the band (`drawnCoverBaseM`: the cover base, or the bed without one) instead of the
+block's base. Before, the wall ran down to the base 10 m (0.01 cell) behind the crust and mantle meshes on a
+160 km block; on SwiftShader their depths rounded together along lines of constant depth, and the sandstone
+wall won in thin, near-vertical tan streaks. The same build with the trim disabled shows **no streaks on a
+real GPU** (Intel Arc 140V, ANGLE Direct3D 11, 24-bit depth) and streaks on SwiftShader
+(`docs/review/plates/relief/gpu/streaks-before-fix-*.png`). With the trim nothing lies behind the band, so the
+streaks are gone on both. Without a crust base the walls are unchanged (lesson 1 untouched).
+
+**Relief (7C's generator, `uplift/book/src/scenes/plates/relief/`).** Config version `7R-1` (also in
+`parameters.json`): row 10 `ridgeReliefM` 500 → 1,500 m (ARTISTIC, owner); rows 28/29 `floorDropM`
+1,200 → 1,500 m and `shoulderHeightM` 500 → 600 m, so the shoulder-to-floor relief is 2,100 m (the top of
+Chorowicz 2005's range, CITED; the split stays ARTISTIC at about 2/7, as 7A's). Crust at the rift axis stays
+25 km (row 32), so the Moho rise at the axis is now 8,500 m. **Cover thickness: no new parameter.** The cover
+base is the base of the start's three layers (row 14: 3 × 600 m below the ridge troughs, `layerBaseM(2, x)`)
+plus `layerOffsetM`: real metres like `bedM`, drawn ×4. Cover thickness ranges 1,728–3,332 m at the start and
+narrows to 281 m under the highest peak noise of the range (still above zero). New extremes: highest bed
+7,534 m, lowest −1,906 m; frame −11,842 to 7,534; base drawn at about −15,718 scene metres.
+
+**Docs.** `parameters.md`: rows 10, 14, 19, 28, 29, 32; cover-base formula; extremes; the block-frame line now
+gives row 4 on the crust's scale (`−72,000 × 0.1875 = −13,500`) and the frame actually drawn (−15,718), noting
+7A's `−72,000 / 4 = −18,000` error. `crust-geometry.json` re-derived with the storyboard script: only the
+divergent rows change (the deeper floor); the axis crust is still 25,000 m. The storyboard SVGs (7A's,
+approved) were not regenerated.
+
+**Tests.** `hachure/ink/src/stage/cover-base.test.ts` (absent = identical band; validation and resampling;
+no range change; band top follows the cover base, clamped; front wall trimmed to meet the band without
+overlap; layers between bed and cover base follow `layerOffsetM`; ignored without a crust base; lens additive
+and byte-identical without it). `relief.test.ts`: the owner's values; cover base = start stack base +
+offset; bit-for-bit match to `field.cell`; between crust base and bed; monotonic under the range and in the
+rift; the transform leaves it exactly unchanged (so distributionally too). Glacial unit and e2e suites
+unchanged and green.
+
+**Open.** The cover draws one lithology (the top layer's) with a bedding line every 600 m; three coloured
+layers would need a layered wall look in the engine. Side walls still show no crust or mantle (D-W7-7B open
+question).
+
+**Revisit if.** The owner finds the front face too busy at page size (D-W7-7R's revisit clause), or 7D needs
+the starting or ghost cover base drawn.
+
 ## D-W7-7E — Lesson 2 content: binding contract for the plates scene (session 7E, contract first, 2026-11-15)
 
 **Context.** 7E writes the copy of lesson 2 (`uplift/spreads/tectonics.plate-boundaries/`) in parallel with

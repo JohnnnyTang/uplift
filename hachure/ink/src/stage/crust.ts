@@ -21,7 +21,20 @@ export interface CrustBandLook {
   readonly mantle: CrustLayerLook;
   /** The crust-base line (sRGB hex). */
   readonly baseLine: string;
+  /**
+   * The cover-base line, the contact between the layered cover rock and the crust band (sRGB hex; D-W7-7R2).
+   * Default: `baseLine`. It is drawn thinner than the crust base, so the two contacts read apart in
+   * monochrome.
+   */
+  readonly coverBaseLine?: string;
 }
+
+/**
+ * Stroke width of the cover-base contact on the front face (unit: CSS pixels): lighter than the crust base
+ * (drawn as heavy as an index contour, 1.65 px). With the patterns (horizontal bedding in the cover, "v"
+ * ticks in the crust, rings in the mantle) the two weights carry the three bands without colour.
+ */
+export const COVER_BASE_LINE_WIDTH_PX = 1.1;
 
 /**
  * Default look: a warm, pale granitic buff for continental crust over a darker olive for the mantle

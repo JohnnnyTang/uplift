@@ -2,11 +2,15 @@
  * Captures the 7C review build (the three boundaries on the real block) for the owner's 7R look review.
  * From the repository root:
  *
- *   node uplift/book/src/scenes/plates/relief/review/capture.mjs [--backend=webgl2]
+ *   node uplift/book/src/scenes/plates/relief/review/capture.mjs [--backend=webgl2] [--only=<name part>]
+ *   node uplift/book/src/scenes/plates/relief/review/capture.mjs --gpu --only=zoom
  *
  * Starts a Vite dev server for the book, opens the review page in Chromium (Playwright) for each frame, and
  * writes PNGs and an index of what was captured to docs/review/plates/relief/. Deterministic input: the
  * relief is seeded and the page is driven only by query parameters; the renderer may differ by GPU.
+ * By default Chromium renders on SwiftShader (software), so every machine gives the same pixels. `--gpu`
+ * renders on the machine's own GPU instead (ANGLE/Direct3D 11 on Windows) and writes to the `gpu/`
+ * subfolder, with the GPU's name in its captures.json (7R2 used it to check the mantle streaks).
  */
 /* global document, requestAnimationFrame, setTimeout -- used only inside page.evaluate (browser) */
 import { writeFileSync, mkdirSync } from "node:fs";
@@ -19,6 +23,11 @@ import { chromium } from "playwright";
 const bookRoot = fileURLToPath(new URL("../../../../../", import.meta.url));
 const outDir = fileURLToPath(new URL("../../../../../../../docs/review/plates/relief/", import.meta.url));
 const backendArg = process.argv.find((a) => a.startsWith("--backend="))?.slice("--backend=".length);
+const gpu = process.argv.includes("--gpu");
+const shotDir = gpu ? `${outDir}gpu/` : outDir;
+const launchArgs = gpu
+  ? ["--ignore-gpu-blocklist", "--enable-gpu", ...(process.platform === "win32" ? ["--use-angle=d3d11"] : [])]
+  : ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"];
 
 const STAGES = [
   ["0", "0"],
@@ -36,6 +45,36 @@ const SHOTS = [
     })),
   ),
   {
+    file: "front-face-convergent-stage-1.png",
+    query: { boundary: "convergent", stage: "1", ghosts: "0", zoom: "1.5" },
+    note: "Front face, convergent at stage 1, zoomed: the layered cover rock bends up under the range, over the crust band and its root.",
+  },
+  {
+    file: "front-face-divergent-stage-1.png",
+    query: { boundary: "divergent", stage: "1", ghosts: "0", zoom: "1.5" },
+    note: "Front face, divergent at stage 1, zoomed: the cover steps down at each rift fault; the crust thins beneath.",
+  },
+  {
+    file: "front-face-transform-stage-1.png",
+    query: { boundary: "transform", stage: "1", ghosts: "0", zoom: "1.5" },
+    note: "Front face, transform at stage 1, zoomed: cover, crust and mantle unchanged.",
+  },
+  {
+    file: "transform-stage-1-top.png",
+    query: { boundary: "transform", stage: "1", ghosts: "0", tilt: "20" },
+    note: "Transform at stage 1 from a steep camera (from above).",
+  },
+  {
+    file: "transform-stage-1-oblique.png",
+    query: { boundary: "transform", stage: "1", ghosts: "0", orbit: "-30", zoom: "1.2" },
+    note: "Transform at stage 1, camera turned to an oblique view along the ridges.",
+  },
+  {
+    file: "transform-stage-1-top-bare.png",
+    query: { boundary: "transform", stage: "1", ghosts: "0", tilt: "20", trees: "0" },
+    note: "Transform at stage 1 from above, without trees (tree density is 7D's).",
+  },
+  {
     file: "ghosts-stage-1.png",
     query: { boundary: "convergent", stage: "1", viewed: "divergent,transform" },
     note: "Convergent at stage 1 with the divergent and transform profiles at the same stage (ghosts).",
@@ -51,59 +90,9 @@ const SHOTS = [
     note: "Convergent at stage 1, front face slid halfway along the boundary.",
   },
   {
-    file: "transform-stage-1-top.png",
-    query: { boundary: "transform", stage: "1", ghosts: "0", tilt: "20" },
-    note: "Transform at stage 1 from a steeper camera (the offset reads best from above).",
-  },
-  {
-    file: "transform-stage-1-top-bare.png",
-    query: { boundary: "transform", stage: "1", ghosts: "0", tilt: "20", trees: "0" },
-    note: "Transform at stage 1 from the steep camera, without trees (look question: tree density).",
-  },
-  {
-    file: "divergent-stage-1-bare.png",
-    query: { boundary: "divergent", stage: "1", ghosts: "0", trees: "0" },
-    note: "Divergent at stage 1 without trees (look question: tree density).",
-  },
-  {
-    file: "transform-stage-1-hachure.png",
-    query: { boundary: "transform", stage: "1", ghosts: "0", trees: "0", hachure: "1" },
-    note: "Transform at stage 1, no trees, full-strength slope hachures (look question: does ink make the offset read?).",
-  },
-  {
-    file: "divergent-stage-1-hachure.png",
-    query: { boundary: "divergent", stage: "1", ghosts: "0", trees: "0", hachure: "1" },
-    note: "Divergent at stage 1, no trees, full-strength slope hachures.",
-  },
-  {
-    file: "probe-ridge-1500-transform-stage-1.png",
-    query: { boundary: "transform", stage: "1", ghosts: "0", trees: "0", ridge: "1500" },
-    note: "LOOK PROBE, not the 7A table: starting ridges 1,500 m (row 10 is 500 m), transform at stage 1, no trees.",
-  },
-  {
-    file: "layers-side-wall-convergent-stage-1.png",
-    query: { boundary: "convergent", stage: "1", ghosts: "0", orbit: "-24", zoom: "1.3" },
-    note: "Convergent at stage 1, camera turned to show the right-hand side wall: far from the boundary, the layer offset is near zero, so the layers there are flat; the front face is covered by the crust band.",
-  },
-  {
-    file: "probe-no-crust-convergent-stage-1.png",
-    query: { boundary: "convergent", stage: "1", ghosts: "0", crust: "0", zoom: "1.3" },
-    note: "LOOK PROBE: crust band off, so the front face shows the rock layers bent up by the layer offset under the range.",
-  },
-  {
-    file: "probe-no-crust-divergent-stage-1.png",
-    query: { boundary: "divergent", stage: "1", ghosts: "0", crust: "0", zoom: "1.3", trees: "0" },
-    note: "LOOK PROBE: crust band off, divergent at stage 1: the layers drop in steps at each rift fault.",
-  },
-  {
-    file: "convergent-stage-1-zoom.png",
-    query: { boundary: "convergent", stage: "1", ghosts: "0", zoom: "1.5" },
-    note: "Convergent at stage 1, camera zoomed in on the front face.",
-  },
-  {
     file: "convergent-stage-1-flat.png",
     query: { boundary: "convergent", stage: "1", ghosts: "0", mode: "flat" },
-    note: "Convergent at stage 1 on the flat (untilted) page, for a closer look at the front face.",
+    note: "Convergent at stage 1 on the flat (untilted) page.",
   },
 ];
 
@@ -114,8 +103,8 @@ const server = await createServer({
 });
 await server.listen();
 const base = server.resolvedUrls.local[0];
-const browser = await chromium.launch({ args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"] });
-mkdirSync(outDir, { recursive: true });
+const browser = await chromium.launch({ args: launchArgs });
+mkdirSync(shotDir, { recursive: true });
 const results = [];
 try {
   const page = await browser.newPage({ viewport: { width: 1600, height: 1000 }, deviceScaleFactor: 1 });
@@ -127,10 +116,13 @@ try {
     await page.evaluate(
       () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(r, 400)))),
     );
-    await page.screenshot({ path: `${outDir}${shot.file}` });
+    await page.screenshot({ path: `${shotDir}${shot.file}` });
     const meta = await page.evaluate(() => {
       const d = document.querySelector(".pr-desk");
+      const probe = document.createElement("canvas").getContext("webgl2");
+      const info = probe?.getExtension("WEBGL_debug_renderer_info");
       return {
+        renderer: info ? probe.getParameter(info.UNMASKED_RENDERER_WEBGL) : undefined,
         backend: d?.dataset.backend,
         mode: d?.dataset.mode,
         text: document.querySelector(".pr-now")?.textContent,
@@ -143,4 +135,4 @@ try {
   await browser.close();
   await server.close();
 }
-writeFileSync(`${outDir}captures.json`, `${JSON.stringify(results, null, 2)}\n`);
+writeFileSync(`${shotDir}captures.json`, `${JSON.stringify(results, null, 2)}\n`);

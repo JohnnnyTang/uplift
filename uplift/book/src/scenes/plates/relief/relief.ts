@@ -40,6 +40,13 @@ export interface PlatesReliefSnapshot extends LandscapeSnapshot {
    * divergent `Δ(x)`, transform 0.
    */
   readonly layerOffsetM: Float32Array;
+  /**
+   * Base of the layered cover rock per cell (unit: metres, real, same grid and scale as `bedM`; D-W7-7R2):
+   * the base of the start's three layers (row 14, 3 × 600 m under the ridge troughs) plus `layerOffsetM`.
+   * On the front face the layers show from the bed down to it and the crust band starts below it. It
+   * bends up under the range, steps down at each rift fault and is unchanged by the transform.
+   */
+  readonly coverBaseM: Float32Array;
 }
 
 /**
@@ -98,6 +105,7 @@ export function createPlatesRelief(config: PlatesReliefConfig = PLATES_RELIEF_CO
     const bedM = new Float32Array(n);
     const crustBaseM = new Float32Array(n);
     const layerOffsetM = new Float32Array(n);
+    const coverBaseM = new Float32Array(n);
     startGrid ??= cached(field.startM);
     const start = startGrid;
     if (boundary === "convergent") noiseGrid ??= cached(field.peakNoise);
@@ -106,6 +114,8 @@ export function createPlatesRelief(config: PlatesReliefConfig = PLATES_RELIEF_CO
       const x = xs[c]!;
       const p = field.column(boundary, stage, x);
       const crustBase = -p.mohoDepthM * crustSceneFactor;
+      // The same expression as `field.cell`, so the grid matches the reference formula bit for bit.
+      const coverBase = field.coverBaseStartM(x) + p.liftM;
       for (let r = 0; r < rows; r++) {
         const k = r * columns + c;
         if (boundary === "convergent") bedM[k] = start[k]! + p.liftM * (1 + peakFraction * noise![k]!);
@@ -113,9 +123,10 @@ export function createPlatesRelief(config: PlatesReliefConfig = PLATES_RELIEF_CO
         else bedM[k] = p.shiftM === 0 ? start[k]! : field.startM(x, zs[r]! - p.shiftM);
         crustBaseM[k] = crustBase;
         layerOffsetM[k] = p.liftM;
+        coverBaseM[k] = coverBase;
       }
     }
-    return { columns, rows, metresPerCell, bedM, rockId, crustBaseM, layerOffsetM };
+    return { columns, rows, metresPerCell, bedM, rockId, crustBaseM, layerOffsetM, coverBaseM };
   };
 
   let frame: PlatesElevationFrame | null = null;
