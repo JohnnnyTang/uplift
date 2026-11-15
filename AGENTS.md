@@ -23,10 +23,17 @@ separate run, compared with kept runs at matched model time. The scene stands on
 ships where it passes parity. A–F are retained foundations, not glacial acceptance.
 Quote the relevant GV row in the session handover; record deviations before dependent work.
 
+## Wave 7 direction (lesson 2)
+
+The second lesson, plate boundaries, is planned in docs/plan/stage-1-wave-7-plates.md (the single source).
+It runs after 6A; 6B–6D are deferred until it merges. Its relief is authored under the scoped exception
+below; quote the relevant PL row in the session handover.
+
 ## Non-negotiables
 
 - **Process-based simulation only.** Landforms emerge from simulated flow, transport and deposition. Never
-  script or keyframe a landform.
+  script or keyframe a landform. _Owner exception (D-L2-1):_ the plate-boundaries lesson may show
+  authored relief, labelled as an illustration and never claimed to be simulated; no other lesson.
 - **Page and model agree.** Never type a number on the page that the simulation computes or configures
   (values, years, metres, labels on gauges). Bind it: `{{probe.sedimentOut}}`, `{{scene.timeScale}}`.
 - **One idea per spread.** Two ideas means two spreads.

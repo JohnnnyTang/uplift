@@ -208,6 +208,15 @@ selected subject, not permission for an unbounded new engine programme.
 8. **Book craft.** Bounded composition, readable typography, meaningful ink and colour,
    real navigation, and a deliberate page-to-page rhythm.
 
+## The second lesson · 2026-11-14
+
+The owner chose **plate boundaries** (working title _Where plates meet_; D-L2-1). The reader picks a
+convergent, divergent or transform boundary between two continental plates and watches a collision
+range rise, a rift valley sink or crossing ridges and streams offset, with the crust shown on the
+block's front face. The lesson leans towards the visual effect: its relief is authored, labelled as an
+illustration and never claimed to be simulated (a scoped exception for this lesson only). Single source:
+[Wave 7](plan/stage-1-wave-7-plates.md).
+
 ## Tensions in the brief, and how the plan resolves them
 
 Earlier T1–T9 references remain in historical Stage 1 briefs. Their technical decisions

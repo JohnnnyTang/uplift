@@ -772,7 +772,28 @@ start only from merged main. Ownership is disjoint within the parallel group.
 **Exit:** implementation integration and product/human acceptance are tracked separately,
 as specified in the wave. No standalone demo or unchanged default app can close it.
 
+## Wave 7 · Lesson 2 · Where plates meet (runs between 6A and 6B)
+
+**Status:** planned 2026-11-14 (D-L2-1), not started. **Single source:**
+[the Wave 7 plan](stage-1-wave-7-plates.md). The owner chose plate boundaries as Stage 1's second
+discovery, so PB7 returns to its original form. Order: 6A/6A2 → 7A–7G → 6B → 6C → 6D.
+
+| Session                           | Deliverable                                                          | Starts after      |
+| --------------------------------- | -------------------------------------------------------------------- | ----------------- |
+| [7A](stage-1-wave-7-plates.md#7a) | Science and art brief: references, cited parameter table, storyboard | This plan on main |
+| [7B](stage-1-wave-7-plates.md#7b) | Engine primitives: authored-sequence source and crust band           | With 7A           |
+| [7C](stage-1-wave-7-plates.md#7c) | Starting landscape and three boundary relief generators              | 7A; 7B contract   |
+| [7R](stage-1-wave-7-plates.md#7r) | Owner look review; presentation freezes                              | 7B, 7C merged     |
+| [7D](stage-1-wave-7-plates.md#7d) | Production scene and interaction                                     | 7R                |
+| [7E](stage-1-wave-7-plates.md#7e) | Lesson content and sources                                           | 7R                |
+| [7F](stage-1-wave-7-plates.md#7f) | Spread 2 in the default book; page turn; bounded performance check   | 7D, 7E merged     |
+| [7G](stage-1-wave-7-plates.md#7g) | Acceptance for the two-lesson book                                   | 7F merged         |
+
 ## Wave 6 · Hardening and release review
+
+**Split by owner decision D-L2-1 (2026-11-14):** 6A and 6A2 are merged (D-W6-6A2). **6B, 6C and 6D are
+deferred until Wave 7 (lesson 2) has merged**, and then audit, review and retro the two-lesson book.
+Their briefs below apply to both lessons; 6D no longer selects the next lesson (the owner did).
 
 These are the unfinished former 5A–5D, renumbered **6A–6D**. Historical references
 to "5A performance" or "5C review" in W1–W4 handovers mean these sessions; historical
@@ -885,6 +906,10 @@ for traceability rather than reopened as the current priority:
 | WebGPU is testable in CI                                                                                           | Run GPU tests locally and record the run at each wave close                | 3C          |
 
 ## Changelog
+
+- 2026-11-14: Owner chooses lesson 2, plate boundaries (D-L2-1), as Stage 1's second discovery, with
+  authored relief as a scoped exception. Add Wave 7 (7A–7G, owner look review 7R); defer 6B–6D until
+  after it; PB7 returns to its original form.
 
 - 2026-11-09: Owner chooses condition intervention AND temporal observation. Add
   5G–5N inside Wave 5, with glacial feasibility, CPU/GPU, timeline, scene/content,
