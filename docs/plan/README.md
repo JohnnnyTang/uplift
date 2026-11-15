@@ -207,6 +207,8 @@ the shipped lessons, and an honest record of pending human/hardware checks.
 The active [Wave 5 revision](stage-1-wave-5.md) replaces the coarse P1/P2 outline.
 Wave 5 now includes [G–N](stage-1-wave-5-glacial.md) for the glacial opening.
 Wave 6 follows 5N and hardens that book, preserving the existing research surface.
+The second lesson, plate boundaries, is [Wave 7](stage-1-wave-7-plates.md) (D-L2-1). It runs after 6A,
+and 6B–6D then cover both lessons.
 
 ### Stage 2 · Grow the book and extract proven reuse (provisional)
 

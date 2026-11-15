@@ -2442,3 +2442,71 @@ to the owner of `hachure/runtime/src/glacial-host` and `runs`.
 **Ledger.** This evidence supports the acceptance-ledger row "Startup, manipulation and page-turn performance"
 for this one device and browser (visible target integrated GPU measured; three narrow misses as above). 6B owns
 the ledger. Other hardware, battery, mobile and other browsers stay **pending**, never inferred.
+
+## D-L2-1 — Second lesson: plate boundaries and the topography they make; authored relief allowed for this lesson (owner, 2026-11-14)
+
+**Context.** After D-W5-5N2 the book holds one lesson, so PB7 ("two working interactive spreads") was
+amended. The owner chose the next lesson while 6A2 is running, ahead of the 6D selection.
+
+**Owner decisions.**
+
+1. **Topic.** Plate tectonics, focused on the three plate boundaries (divergent, convergent and transform)
+   and the topography each one makes. The lesson leans towards the visual effect rather than scientific depth.
+2. **Relief may be authored (owner exception to "process-based simulation only", this lesson only).** The
+   boundary topography may be artist-authored or tweened rather than produced by a solver. Considered and
+   declined: a light kinematic model (crust thickness moved by plate motion, plus Airy isostasy), which
+   would have kept every non-negotiable unchanged.
+3. **Scope: continental settings only.** Collision mountains (convergent), rift valley (divergent), offset
+   ridges and streams (transform). Ocean settings (mid-ocean ridge, trench, volcanic arc) are out of scope.
+4. **Gesture: pick one of three boundaries.** The reader chooses on the page or by dragging a plate arrow on
+   the block, mirroring lesson 1's rock choice. Both input methods send one command.
+5. **No erosion.** The lesson shows tectonic relief only. Erosion may come back later as an optional
+   "Try this" that needs its own decision.
+
+**Guardrails that keep the exception honest (lead proposal; owner may amend).**
+
+- The page names the scene as an illustration, not a simulation. Its tier label reads "Illustration: shapes
+  drawn from real examples", and "What this shows / ignores" says the landforms are authored, with no claim
+  that they formed in the scene.
+- No number implies a computed result. Model time, elevation gauges and bound probes are not shown. Any
+  figure on the page is a cited real-world fact (for example a range's height or a plate's speed) with its
+  source.
+- "No invented science" still applies. The text is drafted with `<!-- expert-review -->` and cited (for
+  example, USGS _This Dynamic Earth_). The shapes follow recognizable real examples, such as the Himalaya,
+  the East African Rift and the San Andreas (Wallace Creek offset streams).
+- The exception is scoped. Lesson 1, the engine (Hachure) and every other non-negotiable (accessibility,
+  determinism of any simulation, page/model agreement for bound values, two levels/one state) are
+  unchanged. CPU/GPU parity applies only where a solver runs, and this lesson runs none.
+
+**Owner decisions, follow-ups (2026-11-14).**
+
+6. **Placement: Stage 1's second discovery.** PB7 returns to its original form ("two working interactive
+   spreads, a genuine page turn"). This replaces 6D's "select the next lesson" step. 6D still writes the
+   retro and the Stage 2 plan.
+7. **Cross-section shows the crust.** The block's front face shows the crust thickening into a root under
+   the collision range and thinning under the rift, authored and cited like the surface.
+
+8. **Reader loop without a model (owner accepted the lead proposal).** Each boundary is an authored
+   formation sequence, not a simulated run, so choosing it again gives identical frames and nothing differs
+   between "runs". The loop: pick a boundary, then play or scrub a "stage of formation" (no years, no model
+   time). Boundaries already viewed appear as ghost profiles on the front face at the same stage. The page
+   never uses the words "run" or "model time" for this lesson.
+9. **Asset route: procedural height fields (owner accepted the lead recommendation).** The stage already draws gridded
+   `LandscapeSnapshot`s, and `modelTimeYr` is optional for authored, timeless states
+   (`hachure/ink/src/stage/snapshot.ts`). Each boundary is then `relief(stage ∈ [0, 1])` over a seeded
+   base landscape, parameterized from cited examples. That reuses lesson 1's block, materials, front face,
+   section lens, camera, page stage and transition, and keeps the face and the surface consistent by
+   construction. Hand-modelled meshes would need a second rendering path, separately authored faces and an
+   asset pipeline.
+10. **Planned as its own wave; 6B–6D deferred.** The lesson is Wave 7
+    ([plan](docs/plan/stage-1-wave-7-plates.md), sessions 7A–7G with an owner look review, 7R). 6A and
+    6A2 finish first; 6B → 6C → 6D then run once over the two-lesson book, keeping their IDs and briefs.
+
+**Primitives raised for Hachure (7B owns them).** (a) An authored-sequence source that feeds stage
+snapshots from a stage parameter, through the same seam the solvers use, with no model time. (b) An
+optional crust-base field on `LandscapeSnapshot`, drawn as a band on the front face and in the section lens
+(for decision 7). Both are additions: existing glacial callers stay unchanged. The three boundary shapes
+stay lesson content in Uplift.
+
+**Revisit if.** The owner later wants the lesson to claim that landforms "form" in the scene. That claim
+needs a process model, and the kinematic option in decision 2 is the smallest one.
