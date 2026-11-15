@@ -134,12 +134,16 @@ export function buildIce(g: BlockGrid, f: BlockFrame, iceThresholdM: number): Me
 
 /**
  * The four sides of the block, from the base to the bed. Attributes for the wall material: `wallU`
- * (distance along the wall), `wallV` (elevation), `depthM` (depth below the ground) and `soilM` (soil
- * thickness at that column), all in metres. `soil(k)` gives the soil thickness at grid cell k.
+ * (distance along the wall), `wallV` (elevation in the undeformed layer stack: the elevation minus the
+ * grid's `layerOffsetM` at that column, or the elevation itself without one), `depthM` (depth below the
+ * ground) and `soilM` (soil thickness at that column), all in metres. `soil(k)` gives the soil thickness at
+ * grid cell k. The rock layers are drawn by `wallV`, so with a layer offset a layer boundary at h sits at
+ * elevation h + offset (D-W7-7B2); the offset never moves the wall itself.
  */
 export function buildWalls(g: BlockGrid, f: BlockFrame, soil: (k: number) => number): MeshArrays {
   const m = f.metresPerCell;
   const last = f.cutRow;
+  const layerOffset = g.layerOffsetM;
   const sides: { cells: number[]; normal: [number, number, number]; u: (i: number) => number }[] = [];
   const range = (n: number) => Array.from({ length: n }, (_, i) => i);
   // Front (cut face), left, right and back, each listed in a consistent order along the wall.
@@ -166,6 +170,7 @@ export function buildWalls(g: BlockGrid, f: BlockFrame, soil: (k: number) => num
       const x = blockX(f, a);
       const z = blockZ(f, l);
       const top = g.bedM[k]!;
+      const offsetM = layerOffset ? layerOffset[k]! : 0;
       for (const [y, elev] of [
         [blockY(f, top), top],
         [0, f.baseM],
@@ -173,7 +178,7 @@ export function buildWalls(g: BlockGrid, f: BlockFrame, soil: (k: number) => num
         position.push(x, y, z);
         normal.push(...side.normal);
         wallU.push(side.u(i));
-        wallV.push(elev);
+        wallV.push(layerOffset ? elev - offsetM : elev);
         depthM.push(top - elev);
         soilM.push(soil(k));
       }

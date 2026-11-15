@@ -2788,3 +2788,48 @@ for which only the abstract was read are marked in `docs/science/plates/sources.
 
 **Revisit if.** 7R rejects the tall front face (lower both vertical scales together); or 7B's layer offset
 is declined.
+
+## D-W7-7B2 — Rock-layer offset on the snapshot: `layerOffsetM` (session 7B follow-up, 2026-11-15)
+
+**Context.** D-W7-7A left an open fact for 7B: the block walls draw the rock layers by elevation, so under a
+raised range the layers stay flat and the range looks carved from flat beds. The owner confirmed this
+follow-up on 2026-11-15; the lead fixed the field's name because 7C codes against it in parallel. This
+addendum extends the D-W7-7B contract; nothing in D-W7-7B changes.
+
+**Contract (additive).** `LandscapeSnapshot` gains
+
+```ts
+/** Vertical displacement of the rock-layer stack per cell, relative to its starting position (unit: metres;
+ *  same grid as `bedM`, scaled by the stage's vertical exaggeration exactly as the bed is). */
+readonly layerOffsetM?: Field;
+```
+
+A layer boundary that lies at elevation h in the undeformed stack is drawn at h + `layerOffsetM[cell]` at
+that cell: positive where layers are raised (under a range), stepped negative where they drop (at each
+rift fault), zero for the transform. It is validated for length and resampled into block order with the
+bed (`BlockGrid.layerOffsetM`, present only when the snapshot has one), as `crustBaseM` is. Absent: the
+layers draw flat, byte-identical to before (lesson 1 unchanged).
+
+**Implementation.** The walls (`buildWalls`) set the wall material's layer coordinate `wallV` to the vertex
+elevation minus the column's offset, so the lithology texture's bedding bands, the rock layers, sit at
+h + offset; at vertical exaggeration s they move by offset × s in block Y. The offset never moves the wall,
+the block's frame, `elevationRange`, the soil band (`depthM`) or the crust band. It applies on all four
+walls, including the front face where no crust band covers it. `describe()` gains `layersOffset`. The section
+lens is unchanged: its lithology pattern is a page-space fill with no bedding, so it draws no layers to
+offset. Tests: `hachure/ink/src/stage/layer-offset.test.ts` (absent and all-zero offsets give identical
+walls, with `wallV` equal to the elevation as before; a uniform offset moves every layer boundary by exactly
+offset × exaggeration; a step makes one step in the front-face layer line, at the fault; resampling for
+every orientation; the crust band is unchanged). Captures: `docs/review/plates/engine/layers-*.png`.
+
+**Open fact for 7C, 7R (and the lead).** With `crustBaseM` present, the crust band covers the front face from
+the bed down to the crust base, so the offset layers show only on the left, right and back walls. In 7A's
+block (boundary from back to front through the middle) the left and right walls are parallel to the
+boundary and far from it, where the offset is near zero, and the back wall faces away. So in the lesson as
+planned, with the crust shown, the bent layers will barely be visible. Showing them on the front face, as
+the storyboard does (layers over a crystalline crust), needs the crust band to start below a layered cover:
+for example an optional cover-thickness or cover-base field that the band starts under. That is a small,
+separate engine addition; it is not made here because it is a look decision for 7R and a field the lead
+should name.
+
+**Revisit if.** 7R wants the layers on the front face over the crust (see the open fact), or the layers need
+to fold or thin rather than move as a block (then one offset per cell is not enough).

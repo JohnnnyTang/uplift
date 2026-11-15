@@ -29,6 +29,14 @@ export interface LandscapeSnapshot {
    * without it. Values above the bed are drawn at the bed.
    */
   readonly crustBaseM?: Field;
+  /**
+   * Vertical displacement of the rock-layer stack per cell, relative to its starting position (unit:
+   * metres; same grid as `bedM`, and scaled by the stage's vertical exaggeration exactly as the bed is).
+   * A layer boundary that lies at elevation h in the undeformed stack is drawn at h + layerOffsetM at that
+   * cell: positive where the layers are raised, negative where they have dropped (D-W7-7B2). Absent: the
+   * layers are drawn flat, exactly as without it.
+   */
+  readonly layerOffsetM?: Field;
 }
 
 /** How the model grid maps onto the block: which grid axis runs along the valley, and which way is down. */
@@ -61,6 +69,8 @@ export interface BlockGrid {
   readonly modelTimeYr: number | null;
   /** Crust-base elevation in block order (unit: metres). Present only when the snapshot has one. */
   readonly crustBaseM?: Float32Array;
+  /** Rock-layer offset in block order (unit: metres). Present only when the snapshot has one. */
+  readonly layerOffsetM?: Float32Array;
 }
 
 /** Throws a `RangeError` naming the first problem with a snapshot. */
@@ -78,6 +88,7 @@ export function validateSnapshot(s: LandscapeSnapshot): void {
   check("iceVelocityMPerYr.x", s.iceVelocityMPerYr?.x);
   check("iceVelocityMPerYr.y", s.iceVelocityMPerYr?.y);
   check("crustBaseM", s.crustBaseM);
+  check("layerOffsetM", s.layerOffsetM);
 }
 
 /** Resamples a snapshot into block order. Pure; copies every field. */
@@ -108,6 +119,7 @@ export function toBlockGrid(
   const rockId = new Uint8Array(n);
   const vel = s.iceVelocityMPerYr ? { across: new Float32Array(n), along: new Float32Array(n) } : null;
   const crust = s.crustBaseM ? new Float32Array(n) : null;
+  const layers = s.layerOffsetM ? new Float32Array(n) : null;
   const sign = flip ? -1 : 1;
   for (let l = 0; l < along; l++) {
     for (let a = 0; a < across; a++) {
@@ -116,6 +128,7 @@ export function toBlockGrid(
       bedM[k] = s.bedM[src]!;
       iceM[k] = Math.max(0, s.iceThicknessM?.[src] ?? 0);
       if (crust) crust[k] = s.crustBaseM![src]!;
+      if (layers) layers[k] = s.layerOffsetM![src]!;
       rockId[k] = typeof s.rockId === "number" ? s.rockId : (s.rockId?.[src] ?? 0);
       if (vel && s.iceVelocityMPerYr) {
         const vx = s.iceVelocityMPerYr.x[src]!;
@@ -140,6 +153,7 @@ export function toBlockGrid(
     velocity: vel,
     modelTimeYr: s.modelTimeYr ?? null,
     ...(crust ? { crustBaseM: crust } : {}),
+    ...(layers ? { layerOffsetM: layers } : {}),
   };
 }
 

@@ -145,6 +145,8 @@ export interface DioramaDescription {
   readonly ghostCount: number;
   /** Whether the front face shows the crust band (the snapshot has a crust base). */
   readonly crustShown: boolean;
+  /** Whether the rock layers on the walls follow a layer offset (the snapshot has `layerOffsetM`). */
+  readonly layersOffset: boolean;
 }
 
 export interface Footprint {
@@ -495,6 +497,7 @@ export class ValleyDiorama {
       ghostShown: this.ghosts.length > 0,
       ghostCount: this.ghosts.length,
       crustShown: g.crustBaseM !== undefined,
+      layersOffset: g.layerOffsetM !== undefined,
     };
   }
 
