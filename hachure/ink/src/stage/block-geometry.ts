@@ -334,17 +334,21 @@ export function blockOutline(
 /**
  * A dashed line on the cut face following another snapshot's bed at the same row (the starting valley, or
  * a kept run's profile). Returns single segments, six numbers each (`x0, z0, y0, x1, z1, y1`).
+ * `heightsM` is the field followed (default the bed; the crust base for crust profiles, D-W7-7B).
  */
 export function dashedProfile(
   reference: BlockGrid,
   f: BlockFrame,
   dashCells = 0.9,
   gapCells = 0.7,
+  heightsM: Float32Array = reference.bedM,
 ): Float64Array {
   const l = Math.min(f.cutRow, reference.along - 1);
   const z = blockZ(f, l) + reference.metresPerCell * 0.04;
   const out: number[] = [];
-  const at = (a: number) => sampleField(reference.bedM, reference, a, l);
+  // Crust profiles stop at the block's base; bed profiles are drawn exactly as before.
+  const floor = heightsM === reference.bedM ? -Infinity : f.baseM;
+  const at = (a: number) => Math.max(floor, sampleField(heightsM, reference, a, l));
   let a = 0;
   while (a < reference.across - 1) {
     const end = Math.min(reference.across - 1, a + dashCells);
@@ -362,15 +366,124 @@ export function dashedProfile(
 
 /**
  * Another snapshot's bed along the cut face as one polyline (`x, z, y` triples, the stroke buffer's terrain
- * order), lifted `offsetCells` in front of the face. Used under a dotted line as its halo.
+ * order), lifted `offsetCells` in front of the face. Used under a dotted line as its halo. `heightsM` is the
+ * field followed (default the bed; the crust base for crust profiles, D-W7-7B).
  */
-export function solidProfile(reference: BlockGrid, f: BlockFrame, offsetCells = 0.04): number[] {
+export function solidProfile(
+  reference: BlockGrid,
+  f: BlockFrame,
+  offsetCells = 0.04,
+  heightsM: Float32Array = reference.bedM,
+): number[] {
   const l = Math.min(f.cutRow, reference.along - 1);
   const z = blockZ(f, l) + reference.metresPerCell * offsetCells;
   const out: number[] = [];
+  const floor = heightsM === reference.bedM ? -Infinity : f.baseM;
   for (let a = 0; a < reference.across; a += 0.5) {
     const x = Math.min(reference.across - 1, a);
-    out.push(blockX(f, x), z, blockY(f, sampleField(reference.bedM, reference, x, l)));
+    out.push(blockX(f, x), z, blockY(f, Math.max(floor, sampleField(heightsM, reference, x, l))));
   }
   return out;
+}
+
+/**
+ * Crust-base elevation drawn at block cell `k` (unit: metres): never above the bed and never below the
+ * block's base. Null when the grid has no crust field.
+ */
+export function drawnCrustBaseM(g: BlockGrid, f: BlockFrame, k: number): number | null {
+  if (!g.crustBaseM) return null;
+  return Math.max(f.baseM, Math.min(g.bedM[k]!, g.crustBaseM[k]!));
+}
+
+/** The crust band and the mantle below it on the front (cut) face (D-W7-7B). */
+export interface CrustSection {
+  /** From the bed down to the crust base. */
+  readonly crust: MeshArrays;
+  /** From the crust base down to the block's base. */
+  readonly mantle: MeshArrays;
+  /** The crust base along the face as one polyline (`x, z, y` triples, the stroke buffer's terrain order). */
+  readonly basePolyline: number[];
+}
+
+/**
+ * Front-face meshes for the crust band and the mantle, just in front of the wall, or null when the grid has
+ * no crust field. Attributes match the wall material (`wallU`, `wallV`, `depthM`, `soilM`), with `wallU`
+ * and `wallV` in block-local metres (vertical already scaled) so a pattern keeps its proportions under
+ * vertical exaggeration; `depthM` is large and `soilM` zero, so no soil band is drawn.
+ */
+export function buildCrustSection(g: BlockGrid, f: BlockFrame): CrustSection | null {
+  if (!g.crustBaseM) return null;
+  const l = f.cutRow;
+  const z = blockZ(f, l) + g.metresPerCell * 0.01;
+  const strip = (top: (k: number) => number, bottom: (k: number) => number): MeshArrays => {
+    const position: number[] = [];
+    const index: number[] = [];
+    const wallU: number[] = [];
+    const wallV: number[] = [];
+    for (let a = 0; a < g.across; a++) {
+      const k = l * g.across + a;
+      const x = blockX(f, a);
+      for (const y of [top(k), bottom(k)]) {
+        position.push(x, y, z);
+        wallU.push(a * g.metresPerCell);
+        wallV.push(y);
+      }
+      if (a > 0) {
+        const v = a * 2;
+        index.push(v - 2, v - 1, v, v - 1, v + 1, v);
+      }
+    }
+    const count = position.length / 3;
+    const normal = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) normal[i * 3 + 2] = 1;
+    return {
+      position: Float32Array.from(position),
+      normal,
+      index: Uint32Array.from(index),
+      attributes: {
+        wallU: Float32Array.from(wallU),
+        wallV: Float32Array.from(wallV),
+        depthM: new Float32Array(count).fill(1e9),
+        soilM: new Float32Array(count),
+      },
+    };
+  };
+  const bedY = (k: number) => blockY(f, g.bedM[k]!);
+  const baseY = (k: number) => blockY(f, drawnCrustBaseM(g, f, k)!);
+  const basePolyline: number[] = [];
+  for (let a = 0; a < g.across; a++)
+    basePolyline.push(blockX(f, a), z + g.metresPerCell * 0.01, baseY(l * g.across + a));
+  return { crust: strip(bedY, baseY), mantle: strip(baseY, () => 0), basePolyline };
+}
+
+/**
+ * Like `dashedProfile`, but with a repeating dash pattern (`[dash, gap, dash, gap, …]` in cells), so up to
+ * three comparison profiles read apart without colour (dotted, dash-dot, dash-dot-dot). Single segments,
+ * six numbers each. `heightsM` is the field followed (default the bed).
+ */
+export function patternedProfile(
+  reference: BlockGrid,
+  f: BlockFrame,
+  pattern: readonly number[],
+  heightsM: Float32Array = reference.bedM,
+): Float64Array {
+  if (pattern.length < 2 || pattern.length % 2 || pattern.some((v) => !(v > 0)))
+    throw new RangeError("A dash pattern needs positive dash and gap pairs");
+  const l = Math.min(f.cutRow, reference.along - 1);
+  const z = blockZ(f, l) + reference.metresPerCell * 0.04;
+  const floor = heightsM === reference.bedM ? -Infinity : f.baseM;
+  const at = (a: number) => Math.max(floor, sampleField(heightsM, reference, a, l));
+  const out: number[] = [];
+  let a = 0;
+  for (let i = 0; a < reference.across - 1; i = (i + 2) % pattern.length) {
+    const end = Math.min(reference.across - 1, a + pattern[i]!);
+    const steps = Math.max(1, Math.ceil((end - a) / 0.3));
+    for (let s = 0; s < steps; s++) {
+      const a0 = a + ((end - a) * s) / steps;
+      const a1 = a + ((end - a) * (s + 1)) / steps;
+      out.push(blockX(f, a0), z, blockY(f, at(a0)), blockX(f, a1), z, blockY(f, at(a1)));
+    }
+    a = end + pattern[i + 1]!;
+  }
+  return Float64Array.from(out);
 }

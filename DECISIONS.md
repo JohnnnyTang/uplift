@@ -2669,9 +2669,14 @@ export interface AuthoredSequenceSource<TFrame> {
   dispose(): void;
 }
 
-export function createAuthoredSequence<TFrame>(o: AuthoredSequenceOptions<TFrame>): AuthoredSequenceSource<TFrame>;
+export function createAuthoredSequence<TFrame>(
+  o: AuthoredSequenceOptions<TFrame>,
+): AuthoredSequenceSource<TFrame>;
 /** Drives `advance` from animation frames (injectable scheduler, as `driveGlacialHost`). Returns stop. */
-export function driveSequence(target: { advance(viewSeconds: number): void }, scheduler?: AnimationScheduler): () => void;
+export function driveSequence(
+  target: { advance(viewSeconds: number): void },
+  scheduler?: AnimationScheduler,
+): () => void;
 ```
 
 Semantics. Holds **no model time, no runs and no years**; the stage is the only position. Play adds
@@ -2691,7 +2696,9 @@ interface LandscapeSnapshot {
    *  Absent: no crust band, and rendering is identical to before. Values above the bed are drawn at the bed. */
   readonly crustBaseM?: ArrayLike<number>;
 }
-interface BlockGrid { /* … */ readonly crustBaseM?: Float32Array }   // present only when the snapshot has it
+interface BlockGrid {
+  /* … */ readonly crustBaseM?: Float32Array;
+} // present only when the snapshot has it
 ```
 
 - `validateSnapshot` checks its length; `toBlockGrid` resamples it like `bedM`; `elevationRange` includes it,
@@ -2721,3 +2728,13 @@ unchanged, and their tests are not edited. The section lens lives in `hachure/in
 crust bases), or the block resizes as the root deepens. A 35–70 km crust at the surface's vertical
 exaggeration makes a very tall block; whether the crust depth is drawn at true scale or compressed is a
 7A/7C presentation choice, to be labelled as artistic if compressed.
+
+**Implementation notes (7B, after the contract).** Built as recorded, with these additions, all additive:
+`sequenceStops(count)` (the stops, exported for pages that label them); `drawnCrustBaseM(g, f, k)` and
+`patternedProfile(...)` in `block-geometry.ts`; `MAX_GHOSTS`, `CrustLayer`, `CrustLayerLook`,
+`crustPatternMarks` and `crustPatternSvg` exported from `@hachure/ink/stage`; `SectionLensGhost` exported
+from `@hachure/ink/glacial`. The crust look module (`stage/crust.ts`) has no three.js import, so the lens
+stays three-free. The section lens output without crust fields was checked byte-identical against the
+pre-7B implementation for every provisional rock, with and without ice and a kept run. Open for 7R: the band
+is on the front face only, so the left and right sides keep the lithology pattern down to the block's base;
+whether the sides should show the crust and mantle too is a look question, not an engine one.

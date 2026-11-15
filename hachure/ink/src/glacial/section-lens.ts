@@ -5,10 +5,23 @@
  * no landform and invents no number. The one number it prints, the scale bar's length, is derived from
  * the profile's own metres.
  *
+ * With a crust base (D-W7-7B) it frames the whole face and draws the crust band and the mantle below it in
+ * their own patterns; without one its output is unchanged.
+ *
  * Pure: returns SVG markup; no DOM, no three.js. Deterministic.
  */
 import { type LithologyLook, lithologyPatternSvg, mixHex } from "../materials/natural/lithology";
 import { NATURAL_TOKENS } from "../materials/natural/palette";
+import { type CrustBandLook, CRUST_BAND_LOOK, crustPatternSvg } from "../stage/crust";
+
+/** A comparison profile at the same positions, drawn dotted (then dash-dot, dash-dot-dot) with a label. */
+export interface SectionLensGhost {
+  /** Bed elevation (unit: metres). */
+  readonly bedM: ArrayLike<number>;
+  readonly label: string;
+  /** Crust-base elevation, drawn in the same style when the profile has a crust (unit: metres). */
+  readonly crustBaseM?: ArrayLike<number> | undefined;
+}
 
 export interface SectionLensProfile {
   /** Across-valley positions, increasing left to right as seen from the front face (unit: metres). */
@@ -20,9 +33,18 @@ export interface SectionLensProfile {
   /** The starting bed at the same positions, drawn dashed (unit: metres). */
   readonly startBedM: ArrayLike<number>;
   /** A kept run's bed at the same positions, drawn dotted with a label (unit: metres). */
-  readonly ghost?: { readonly bedM: ArrayLike<number>; readonly label: string } | null;
+  readonly ghost?: SectionLensGhost | null;
+  /** More comparison profiles after `ghost` (at most three in all), each with its own dash pattern. */
+  readonly ghosts?: readonly SectionLensGhost[] | undefined;
   /** The rock of the run shown, for its colour and lithology pattern. */
   readonly look: LithologyLook;
+  /**
+   * Crust-base elevation at each position (unit: metres; D-W7-7B). Present: the lens shows the whole face,
+   * the crust band from the bed down to it and the mantle below. Absent: unchanged output.
+   */
+  readonly crustBaseM?: ArrayLike<number> | undefined;
+  /** The starting crust base, drawn dashed like the starting bed (unit: metres). */
+  readonly startCrustBaseM?: ArrayLike<number> | undefined;
 }
 
 export interface SectionLensWords {
@@ -30,6 +52,10 @@ export interface SectionLensWords {
   readonly start: string;
   /** Label of the ice in section; omitted when empty. */
   readonly ice?: string;
+  /** Label of the crust band; omitted when empty or without a crust base. */
+  readonly crust?: string;
+  /** Label of the mantle below it; omitted when empty or without a crust base. */
+  readonly mantle?: string;
 }
 
 export interface SectionLensOptions {
@@ -47,6 +73,8 @@ export interface SectionLensOptions {
   readonly words: SectionLensWords;
   /** Ice thinner than this is not drawn (unit: metres). Default 1. */
   readonly iceThresholdM?: number;
+  /** Look of the crust band and mantle. Default `CRUST_BAND_LOOK`. */
+  readonly crustBand?: CrustBandLook;
 }
 
 export interface SectionLensWindow {
@@ -63,6 +91,7 @@ export interface SectionLensWindow {
  * or the valley glacier's surface, whichever is higher; down, a little below the lowest bed shown.
  */
 export function sectionLensWindow(p: SectionLensProfile, iceThresholdM = 1): SectionLensWindow {
+  if (p.crustBaseM) return crustWindow(p, iceThresholdM);
   const n = p.acrossM.length;
   let lowStart = 0;
   for (let k = 1; k < n; k++) if (p.startBedM[k]! < p.startBedM[lowStart]!) lowStart = k;
@@ -83,8 +112,46 @@ export function sectionLensWindow(p: SectionLensProfile, iceThresholdM = 1): Sec
   last = Math.min(n - 1, last + 1);
   let bottomM = Infinity;
   for (let k = first; k <= last; k++)
-    bottomM = Math.min(bottomM, p.bedM[k]!, p.startBedM[k]!, p.ghost ? p.ghost.bedM[k]! : Infinity);
+    bottomM = Math.min(
+      bottomM,
+      p.bedM[k]!,
+      p.startBedM[k]!,
+      p.ghost ? p.ghost.bedM[k]! : Infinity,
+      ...(p.ghosts ?? []).map((g) => g.bedM[k]!),
+    );
   return { first, last, bottomM: bottomM - Math.max(20, (topM - bottomM) * 0.12), topM };
+}
+
+/** The comparison profiles in drawing order: `ghost`, then `ghosts`. */
+function lensGhosts(p: SectionLensProfile): SectionLensGhost[] {
+  const all = [...(p.ghost ? [p.ghost] : []), ...(p.ghosts ?? [])];
+  if (all.length > 3) throw new RangeError("At most three comparison profiles can be drawn");
+  return all;
+}
+
+/**
+ * With a crust: the whole face across; up, a little above the highest surface; down, below the deepest
+ * crust base, leaving a band of mantle.
+ */
+function crustWindow(p: SectionLensProfile, iceThresholdM: number): SectionLensWindow {
+  const n = p.acrossM.length;
+  const ghosts = lensGhosts(p);
+  let topM = -Infinity;
+  let bottomM = Infinity;
+  for (let k = 0; k < n; k++) {
+    const ice = p.iceM && p.iceM[k]! > iceThresholdM ? p.iceM[k]! : 0;
+    topM = Math.max(topM, p.bedM[k]! + ice, p.startBedM[k]!, ...ghosts.map((g) => g.bedM[k]!));
+    bottomM = Math.min(bottomM, p.crustBaseM![k]!, p.bedM[k]!);
+    if (p.startCrustBaseM) bottomM = Math.min(bottomM, p.startCrustBaseM[k]!);
+    for (const g of ghosts) if (g.crustBaseM) bottomM = Math.min(bottomM, g.crustBaseM[k]!);
+  }
+  const span = topM - bottomM;
+  return {
+    first: 0,
+    last: n - 1,
+    topM: topM + Math.max(20, span * 0.04),
+    bottomM: bottomM - Math.max(20, span * 0.12),
+  };
 }
 
 /** A round scale-bar length near a quarter of `spanM` (1, 2 or 5 × a power of ten; unit: metres). */
@@ -104,6 +171,10 @@ export function sectionLensSvg(p: SectionLensProfile, options: SectionLensOption
   if (n < 3 || p.bedM.length !== n || p.startBedM.length !== n)
     throw new RangeError("profile arrays must match");
   const id = options.idPrefix ?? "section-lens";
+  const ghosts = lensGhosts(p);
+  const crustBase = p.crustBaseM;
+  if (crustBase && crustBase.length !== n) throw new RangeError("profile arrays must match");
+  const crustLook = options.crustBand ?? CRUST_BAND_LOOK;
   const threshold = options.iceThresholdM ?? 1;
   const vs = options.verticalScale ?? 1;
   const win = sectionLensWindow(p, threshold);
@@ -123,8 +194,12 @@ export function sectionLensSvg(p: SectionLensProfile, options: SectionLensOption
   const rockFill = mixHex(p.look.colour, NATURAL_TOKENS.paper, 0.15);
   const patternId = `${id}-litho-${p.look.key}`;
   const parts: string[] = [];
+  const crustDefs = crustBase
+    ? crustPatternSvg("crust", crustLook.crust, `${id}-crust`, 18) +
+      crustPatternSvg("mantle", crustLook.mantle, `${id}-mantle`, 18)
+    : "";
   parts.push(
-    `<defs>${lithologyPatternSvg(p.look, patternId, 12)}` +
+    `<defs>${lithologyPatternSvg(p.look, patternId, 12)}${crustDefs}` +
       `<clipPath id="${id}-clip"><rect x="${pad.l}" y="${pad.t}" width="${f1(W - pad.l - pad.r)}" height="${f1(bottomY - pad.t)}"/></clipPath></defs>`,
   );
   const body: string[] = [];
@@ -132,6 +207,23 @@ export function sectionLensSvg(p: SectionLensProfile, options: SectionLensOption
   const rock = `M${f1(X(x0))} ${f1(bottomY)}L${line(p.bedM)}L${f1(X(p.acrossM[win.last]!))} ${f1(bottomY)}Z`;
   body.push(`<path class="lens-rock" d="${rock}" fill="${rockFill}"/>`);
   body.push(`<path class="lens-rock-pattern" d="${rock}" fill="url(#${patternId})"/>`);
+  // The crust band (bed → crust base) over the rock, and the mantle below it (crust base → frame bottom).
+  const drawnBase = crustBase
+    ? Float64Array.from({ length: n }, (_, k) => Math.max(win.bottomM, Math.min(p.bedM[k]!, crustBase[k]!)))
+    : null;
+  if (drawnBase) {
+    const right = f1(X(p.acrossM[win.last]!));
+    const back = (z: ArrayLike<number>) =>
+      range
+        .slice()
+        .reverse()
+        .map((k) => `${f1(X(p.acrossM[k]!))} ${f1(Y(z[k]!))}`)
+        .join("L");
+    body.push(
+      `<path class="lens-mantle" d="M${f1(X(x0))} ${f1(bottomY)}L${line(drawnBase)}L${right} ${f1(bottomY)}Z"/>`,
+    );
+    body.push(`<path class="lens-crust" d="M${line(p.bedM)}L${back(drawnBase)}Z"/>`);
+  }
   // Ice in section: one polygon per run of iced samples.
   let iceTop = -1;
   let iceTopY = Infinity;
@@ -165,10 +257,18 @@ export function sectionLensSvg(p: SectionLensProfile, options: SectionLensOption
   // Profiles: the current bed (solid), the start (dashed), the kept run (dotted over a paper halo).
   body.push(`<path class="lens-bed" d="M${line(p.bedM)}"/>`);
   body.push(`<path class="lens-start" d="M${line(p.startBedM)}"/>`);
-  if (p.ghost) {
-    body.push(`<path class="lens-ghost-halo" d="M${line(p.ghost.bedM)}"/>`);
-    body.push(`<path class="lens-ghost" d="M${line(p.ghost.bedM)}"/>`);
+  if (drawnBase) {
+    body.push(`<path class="lens-crust-base" d="M${line(drawnBase)}"/>`);
+    if (p.startCrustBaseM) body.push(`<path class="lens-start" d="M${line(p.startCrustBaseM)}"/>`);
   }
+  ghosts.forEach((g, i) => {
+    const cls = i === 0 ? "lens-ghost" : `lens-ghost lens-ghost-${i}`;
+    const fields = drawnBase && g.crustBaseM ? [g.bedM, g.crustBaseM] : [g.bedM];
+    for (const z of fields) {
+      body.push(`<path class="lens-ghost-halo" d="M${line(z)}"/>`);
+      body.push(`<path class="${cls}" d="M${line(z)}"/>`);
+    }
+  });
   parts.push(`<g clip-path="url(#${id}-clip)">${body.join("")}</g>`);
   parts.push(
     `<rect class="lens-frame" x="${pad.l}" y="${pad.t}" width="${f1(W - pad.l - pad.r)}" height="${f1(bottomY - pad.t)}"/>`,
@@ -194,13 +294,26 @@ export function sectionLensSvg(p: SectionLensProfile, options: SectionLensOption
     `<path class="lens-leader" d="M${f1(s.x)} ${f1(s.y)}L${f1(s.x + 12 * side)} ${f1(ty + 2)}"/>` +
       `<text x="${f1(s.x + 14 * side)}" y="${f1(ty)}" text-anchor="${side > 0 ? "start" : "end"}">${esc(options.words.start)}</text>`,
   );
-  if (p.ghost) {
-    const rightK = win.first + Math.round((win.last - win.first) * 0.68);
-    const g = at(rightK, p.ghost.bedM);
+  ghosts.forEach((ghost, i) => {
+    const rightK = win.first + Math.round((win.last - win.first) * [0.68, 0.84, 0.52][i]!);
+    const g = at(rightK, ghost.bedM);
     labels.push(
       `<path class="lens-leader" d="M${f1(g.x)} ${f1(g.y)}L${f1(g.x + 10)} ${f1(Math.min(bottomY - 4, g.y + 14))}"/>` +
-        `<text class="lens-ghost-label" x="${f1(g.x + 12)}" y="${f1(Math.min(bottomY - 2, g.y + 18))}">${esc(p.ghost.label)}</text>`,
+        `<text class="lens-ghost-label" x="${f1(g.x + 12)}" y="${f1(Math.min(bottomY - 2, g.y + 18))}">${esc(ghost.label)}</text>`,
     );
+  });
+  if (drawnBase) {
+    // Layer names inside their bands, near the left edge.
+    const k = win.first + Math.round((win.last - win.first) * 0.08);
+    const x = f1(X(p.acrossM[k]!));
+    if (options.words.crust)
+      labels.push(
+        `<text class="lens-crust-label" x="${x}" y="${f1((Y(p.bedM[k]!) + Y(drawnBase[k]!)) / 2 + 4)}">${esc(options.words.crust)}</text>`,
+      );
+    if (options.words.mantle)
+      labels.push(
+        `<text class="lens-mantle-label" x="${x}" y="${f1((Y(drawnBase[k]!) + bottomY) / 2 + 4)}">${esc(options.words.mantle)}</text>`,
+      );
   }
   if (options.words.ice && iceTop >= 0)
     labels.push(
@@ -231,7 +344,14 @@ export function sectionLensSvg(p: SectionLensProfile, options: SectionLensOption
     `.section-lens .lens-leader,.section-lens .lens-bar{stroke:${ink};stroke-width:.8}` +
     `.section-lens text{font:italic 12px Georgia,serif;fill:${ink};stroke:${NATURAL_TOKENS.paper};stroke-width:3px;paint-order:stroke;stroke-linejoin:round}` +
     `.section-lens .lens-ghost-label{fill:${NATURAL_TOKENS.ghost}}` +
-    `.section-lens .lens-bar-label{font-style:normal;font-size:11px}`;
+    `.section-lens .lens-bar-label{font-style:normal;font-size:11px}` +
+    (drawnBase
+      ? `.section-lens .lens-crust,.section-lens .lens-mantle{stroke:none}` +
+        `.section-lens .lens-crust{fill:url(#${id}-crust)}.section-lens .lens-mantle{fill:url(#${id}-mantle)}` +
+        `.section-lens .lens-crust-base{stroke:${crustLook.baseLine};stroke-width:1.8}`
+      : "") +
+    (ghosts.length > 1 ? `.section-lens .lens-ghost-1{stroke-dasharray:7 3 0.1 3}` : "") +
+    (ghosts.length > 2 ? `.section-lens .lens-ghost-2{stroke-dasharray:7 3 0.1 3 0.1 3}` : "");
   const title = options.title ? `<title id="${id}-title">${esc(options.title)}</title>` : "";
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" class="section-lens" viewBox="0 0 ${W} ${H}" ` +
