@@ -2877,3 +2877,63 @@ real GPU.
 
 **Revisit if.** 7R changes rows 2, 3, 10 or 28–29, or asks for a cover field: the config and tests change in
 one place.
+
+## D-W7-7D — Lesson 2 production scene: entry point, bindings and events (contract, session 7D, 2026-11-15)
+
+**Context.** 7D builds the production scene for _Where plates meet_ (wave plan §1, 7D brief) on the 7B stage,
+consuming 7C's `relief(boundary, stage)` and the frozen look (D-W7-7R). 7E (copy) and 7F (book integration)
+run in parallel; this entry is the contract they code against, pushed before the implementation. Shapes stay
+authored illustrations (D-L2-1); nothing in the scene is simulated or claims to be.
+
+**Entry point (7F mounts this).** `uplift/book/src/scenes/plates/index.ts`:
+
+```ts
+export function createPlatesSpreadScene(o: {
+  level: Level;
+  folio: number;                    // left page number, as lesson 1
+  copy?: PlatesSceneCopy;           // 7E's words; default: clearly marked placeholder copy
+  probes?: readonly Probe[];        // the spread's probes (7E); the scene serves the kinds below
+  mode?: "flat" | "tilted" | "auto"; // ?mode=, as lesson 1
+  reducedMotion?: boolean;           // ?motion=reduce, as lesson 1
+}): ReaderSceneController;
+export function mountPlatesScene(root: HTMLElement, o: PlatesSceneOptions): Promise<MountedPlatesScene>;
+export const PLATES_PROBE_KINDS = ["plates-scene", "plates-config"] as const;
+export type { PlatesSceneCopy };    // the words the scene renders (see below)
+```
+
+7F wires it in `scenes/entries.ts` exactly like lesson 1: `{ spread: <7E spread>, layout: "stage", createScene:
+(level, { folio }) => createPlatesSpreadScene({ level, folio, copy: <7E copy>, probes: <7E spread>.probes,
+...mode flags }) }`. The scene draws both pages (stage layout) on lesson 1's tilted book stage and reflows to one
+page on phones. The authored-sequence source lives in the controller, not the DOM: turning away settles and
+detaches; turning back mounts a fresh scene on the same source with boundary, stage and ghosts as left (no
+catch-up). `reset()` clears to no boundary chosen and clears the ghosts. `scope` is `{ kind: "static-geometry" }`
+(no model time).
+
+**Bindings served** (probe `request.kind`; anything else is ignored; strings render as given):
+
+- `plates-scene`, by `field`: `boundaryName` (string, the copy's name for the current boundary, or its "none
+  chosen" words), `stageLabel` (string: the copy's early / middle / late words), `viewedNames` (string: names of
+  the boundaries drawn as ghosts, or empty), `surfaceVerticalExaggeration` and `crustVerticalExaggeration`
+  (numbers, config rows 2 and 3), `blockWidthKm` and `blockLengthKm` (numbers, config row 1).
+- `plates-config`, by `field`: any numeric leaf of `PLATES_RELIEF_CONFIG` as a dotted path (for example
+  `convergent.rangeCrestElevationM`, `crust.normalThicknessM`, `divergent.crustThicknessAtAxisM`,
+  `transform.offsetM`, `dressing.snowlineM`), so every cited figure on the page is bound to the config the
+  block is drawn from. Units come from the probe declaration.
+
+7E: declare the probes you bind with these kinds and fields; if you need another key, name it in D-W7-7E and 7D
+serves it.
+
+**Copy (`PlatesSceneCopy`, every text `{ hs, uni }`).** Lesson number, title, running heads, body (blank-line
+paragraphs, `**bold**`, bindings allowed), key words, optional prediction and flap answer, the one label line,
+the figure number, caption and drawing alternative, per boundary `{ name, help }`, the control words (picker
+legend, stage legend, early / middle / late, play / pause, front face, reset, arrow-drag hint), "What this shows /
+ignores", deeper text, teacher notes and sources. The scene's text alternatives (boundary, stage, front-face
+profile, ghosts) are drafted by 7D, marked expert-review, and overridable from the copy. The scene never types a
+figure: scales and cited values come through the bindings above.
+
+**Events and test hooks.** The controller's `status()` reports `activity: "playing" | "paused"`. The desk element
+carries `data-ready`, `data-transition`, `data-boundary` (`none` | key), `data-stage`, `data-stage-word`,
+`data-playing`, `data-ghosts` (comma list) and `data-mode`; `blockScreenGeometry()` and `plateArrowTargets()` are
+exposed on it for browser tests, as in lesson 1.
+
+**Revisit if.** 7E publishes different binding keys first (7D adopts them), or 7F needs another entry shape.
