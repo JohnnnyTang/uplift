@@ -553,6 +553,7 @@ export async function mountPlatesScene(
         bedM: pick(snap, snap.bedM)!,
         startBedM: pick(sequence.start, sequence.start.bedM)!,
         crustBaseM: pick(snap, snap.crustBaseM),
+        coverBaseM: pick(snap, snap.coverBaseM),
         startCrustBaseM: pick(sequence.start, sequence.start.crustBaseM),
         ghosts: ghosts.map((g) => ({
           bedM: pick(g.frame, g.frame.bedM)!,
@@ -565,7 +566,7 @@ export async function mountPlatesScene(
         idPrefix: "ps-lens",
         verticalScale: reliefScale,
         title: `${t(copy.controls.frontFace)}, ${t(copy.controls.stageLegend).toLowerCase()}`,
-        words: { start: "start", crust: "crust", mantle: "mantle" },
+        words: { start: "start", cover: "rock layers", crust: "crust", mantle: "mantle" },
       },
     );
   };

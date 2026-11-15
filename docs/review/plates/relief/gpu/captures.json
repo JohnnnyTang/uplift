@@ -1,0 +1,44 @@
+[
+  {
+    "file": "front-face-convergent-stage-1.png",
+    "query": {
+      "boundary": "convergent",
+      "stage": "1",
+      "ghosts": "0",
+      "zoom": "1.5"
+    },
+    "note": "Front face, convergent at stage 1, zoomed: the layered cover rock bends up under the range, over the crust band and its root.",
+    "renderer": "ANGLE (Intel, Intel(R) Arc(TM) 140V GPU (16GB) (0x000064A0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "backend": "webgl2",
+    "mode": "tilted",
+    "text": "Convergent boundary, late stage. The plates move towards each other. A high range stands along the boundary, with snow on its highest ground. On the front face the rock layers bend up with it and the crust thickens into a root beneath it."
+  },
+  {
+    "file": "front-face-divergent-stage-1.png",
+    "query": {
+      "boundary": "divergent",
+      "stage": "1",
+      "ghosts": "0",
+      "zoom": "1.5"
+    },
+    "note": "Front face, divergent at stage 1, zoomed: the cover steps down at each rift fault; the crust thins beneath.",
+    "renderer": "ANGLE (Intel, Intel(R) Arc(TM) 140V GPU (16GB) (0x000064A0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "backend": "webgl2",
+    "mode": "tilted",
+    "text": "Divergent boundary, late stage. The plates move apart. The land has sunk into a rift valley between stepped fault scarps, and the shoulders rise slightly. On the front face the layers drop at each fault and the crust thins beneath the rift."
+  },
+  {
+    "file": "front-face-transform-stage-1.png",
+    "query": {
+      "boundary": "transform",
+      "stage": "1",
+      "ghosts": "0",
+      "zoom": "1.5"
+    },
+    "note": "Front face, transform at stage 1, zoomed: cover, crust and mantle unchanged.",
+    "renderer": "ANGLE (Intel, Intel(R) Arc(TM) 140V GPU (16GB) (0x000064A0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "backend": "webgl2",
+    "mode": "tilted",
+    "text": "Transform boundary, late stage. The plates slide past each other. The ridges and stream valleys that cross the boundary are clearly offset sideways: looking across the boundary, the far side has moved to the right. The relief and the crust do not change."
+  }
+]

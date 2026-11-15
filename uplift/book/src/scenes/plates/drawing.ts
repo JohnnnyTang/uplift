@@ -56,14 +56,6 @@ export interface PlatesDrawingOptions {
 
 const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 const f1 = (v: number) => v.toFixed(1);
-/**
- * An optional per-cell field read structurally, so the drawing works with or without later additions to
- * the snapshot (for example D-W7-7R's cover base, which the engine may not carry yet).
- */
-function optionalField(s: LandscapeSnapshot, name: string): ArrayLike<number> | undefined {
-  const v = (s as unknown as Record<string, unknown>)[name];
-  return v && typeof v === "object" && "length" in v ? (v as ArrayLike<number>) : undefined;
-}
 const pathOf = (points: readonly P2[]) => `M${points.map((p) => `${f1(p.x)} ${f1(p.y)}`).join("L")}`;
 
 /** The SVG markup of Fig. 2. Deterministic: the same options give the same string. */
@@ -135,7 +127,7 @@ export function platesDrawingSvg(o: PlatesDrawingOptions): string {
     }
     if (run.length > 1) strata.push(pathOf(run));
   };
-  const cover = optionalField(s, "coverBaseM");
+  const cover = s.coverBaseM;
   const coverBase = (c: number, r: number) => cover?.[r * columns + c];
   for (const h of o.strataM) {
     faceLine(

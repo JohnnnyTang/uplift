@@ -26,7 +26,7 @@ One seeded continental block, about 160 km square, shared by all three boundarie
 for each):
 
 - **Surface.** Rolling lowland at about 400 m, tilted gently down to the right so streams have a
-  direction. Low ridges (500 m crest to trough, 20 km apart) and stream valleys run left to right across
+  direction. Ridges 20 km apart and 1,500 m crest to trough (raised from 7A's 500 m at the look review, D-W7-7R) and stream valleys run left to right across
   the block, so they cross the boundary nearly at right angles. Each valley has a shallow channel for the
   stream dressing. A little seeded noise breaks up the regularity.
 - **Boundary.** A straight line from the back of the block to the front, through the middle. The front
@@ -39,11 +39,11 @@ for each):
 
 ## Per boundary, stage 0 → 1
 
-| Boundary   | Surface                                                                                                                                        | Front face                                                                                           |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| Convergent | A range rises along the boundary and widens from 40 to 80 km; crest about 5,500 m, peaks to about 7,000 m; snow above 5,700 m near stage 1     | Layers bend up with the range; the crust thickens into a root 5.6 times as deep as the range is high |
-| Divergent  | A 50 km rift sinks between three stepped fault scarps per side; floor down 1,200 m, shoulders up 500 m; ridges and streams drop with the floor | Layers drop in steps at each fault; the crust thins from 35 to 25 km beneath the rift                |
-| Transform  | The two sides slide in opposite directions (right-lateral) until crossing ridges and streams are offset by 8 km                                | Unchanged                                                                                            |
+| Boundary   | Surface                                                                                                                                                  | Front face                                                                                           |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Convergent | A range rises along the boundary and widens from 40 to 80 km; crest about 5,500 m, peaks to about 7,500 m; snow above 5,700 m near stage 1               | Layers bend up with the range; the crust thickens into a root 5.6 times as deep as the range is high |
+| Divergent  | A 50 km rift sinks between three stepped fault scarps per side; floor down 1,500 m, shoulders up 600 m (D-W7-7R); ridges and streams drop with the floor | Layers drop in steps at each fault; the crust thins from 35 to 25 km beneath the rift                |
+| Transform  | The two sides slide in opposite directions (right-lateral) until crossing ridges and streams are offset by 8 km                                          | Unchanged                                                                                            |
 
 ## Guardrails this brief answers
 

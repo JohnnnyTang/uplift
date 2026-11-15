@@ -31,6 +31,7 @@ const sameSnapshot = (a: PlatesReliefSnapshot, b: PlatesReliefSnapshot) => {
   sameBits(a.bedM, b.bedM);
   sameBits(a.crustBaseM, b.crustBaseM);
   sameBits(a.layerOffsetM, b.layerOffsetM);
+  sameBits(a.coverBaseM, b.coverBaseM);
 };
 const maxAbsDiff = (a: Float32Array, b: Float32Array) => {
   let m = 0;
@@ -57,7 +58,8 @@ describe("config", () => {
     };
     const p = readJson<Json>("docs/science/plates/parameters.json");
     const c = PLATES_RELIEF_CONFIG;
-    expect(p.version).toBe("7A-1");
+    // 7A's table as revised at the owner's look review (D-W7-7R: rows 10, 28, 29).
+    expect(p.version).toBe("7R-1");
     expect(p.stage.ease).toBe("linear");
     expect(c.seed).toBe(p.seed);
     expect(c.grid).toEqual(p.grid);
@@ -72,6 +74,14 @@ describe("config", () => {
     expect(c.divergent).toEqual(p.divergent);
     expect(c.transform).toEqual(p.transform);
     expect(c.dressing).toEqual(p.dressing);
+  });
+
+  it("carries the owner's look-review values (D-W7-7R)", () => {
+    const { start, divergent } = PLATES_RELIEF_CONFIG;
+    expect(start.ridgeReliefM).toBe(1_500); // row 10, ARTISTIC
+    // Rows 28 + 29: shoulder-to-floor relief at the top of the cited 0.5–2.1 km range (Cho05).
+    expect(divergent.floorDropM + divergent.shoulderHeightM).toBe(2_100);
+    expect(divergent.crustThicknessAtAxisM).toBe(25_000); // row 32 stays cited
   });
 
   it("keeps the derived Airy proportion consistent with the densities (row 18)", () => {
@@ -107,7 +117,7 @@ describe("snapshot shape", () => {
     for (const b of PLATE_BOUNDARIES) {
       const s = relief(b, 0.5) as PlatesReliefSnapshot & { modelTimeYr?: number };
       expect([s.columns, s.rows, s.metresPerCell]).toEqual([160, 160, 1000]);
-      for (const f of [s.bedM, s.crustBaseM, s.layerOffsetM]) {
+      for (const f of [s.bedM, s.crustBaseM, s.layerOffsetM, s.coverBaseM]) {
         expect(f.length).toBe(160 * 160);
         expect(f.every(Number.isFinite)).toBe(true);
       }
@@ -126,6 +136,7 @@ describe("snapshot shape", () => {
       const g = toBlockGrid(s);
       expect(g.crustBaseM).toBeDefined();
       expect(g.layerOffsetM).toBeDefined();
+      expect(g.coverBaseM).toBeDefined();
       expect(g.modelTimeYr).toBeNull();
       const r = elevationRange(g);
       expect(r.minM).toBeGreaterThanOrEqual(frame.minM);
@@ -164,6 +175,7 @@ describe("determinism", () => {
             if (snap.bedM[k] !== f32(cell.bedM)) mismatches++;
             if (snap.crustBaseM[k] !== f32(-cell.mohoDepthM * 0.1875)) mismatches++;
             if (!Object.is(snap.layerOffsetM[k], f32(cell.layerOffsetM))) mismatches++;
+            if (!Object.is(snap.coverBaseM[k], f32(cell.coverBaseM))) mismatches++;
           }
         expect(mismatches, `${b} @ ${s}`).toBe(0);
       }
@@ -176,6 +188,7 @@ describe("determinism", () => {
     expect(maxAbsDiff(a.bedM, b.bedM)).toBeGreaterThan(1);
     sameBits(a.crustBaseM, b.crustBaseM); // the root follows the smooth envelope only
     sameBits(a.layerOffsetM, b.layerOffsetM);
+    sameBits(a.coverBaseM, b.coverBaseM);
   });
 });
 
@@ -217,6 +230,7 @@ describe("continuity in the stage", () => {
         expect(df, `${b} @ ${s}`).toBeLessThanOrEqual(dc / 4 + 0.01);
         expect(maxAbsDiff(a.crustBaseM, coarse.crustBaseM)).toBeLessThan(10);
         expect(maxAbsDiff(a.layerOffsetM, coarse.layerOffsetM)).toBeLessThan(10);
+        expect(maxAbsDiff(a.coverBaseM, coarse.coverBaseM)).toBeLessThan(10);
       }
   });
 });
@@ -261,8 +275,10 @@ describe("convergent: a collision range and its root", () => {
 
   it("reaches the 7A extremes and keeps peaks below Everest", () => {
     const top = maxOf(fs[10]!.bedM);
-    expect(top).toBeGreaterThan(6_000);
-    expect(top).toBeLessThan(7_100); // 7A: peaks about 7,000 m (computed maximum 7,037 m on its samples)
+    expect(top).toBeGreaterThan(6_500);
+    // 7A drew peaks to about 7,000 m; the 1,500 m starting ridges of D-W7-7R add 500 m at their crests
+    // (maximum 7,534 m), still below Everest's 8,849 m.
+    expect(top).toBeLessThan(7_600);
     expect(minOf(fs[10]!.crustBaseM)).toBeCloseTo(-11_842, -1); // deepest crust base, scene metres
   });
 });
@@ -296,9 +312,9 @@ describe("divergent: a rift valley between stepped scarps", () => {
     const counts = new Map<number, number>();
     for (const v of offsets) counts.set(Math.round(v), (counts.get(Math.round(v)) ?? 0) + 1);
     const levels = [...counts].filter(([v, n]) => v < 0 && n >= 3).map(([v]) => v);
-    expect(levels.sort((a, b) => a - b)).toEqual([-1200, -840, -480]); // 0.4, 0.3, 0.3 of row 28
-    expect(maxOf(s.layerOffsetM)).toBeGreaterThan(300);
-    expect(maxOf(s.layerOffsetM)).toBeLessThanOrEqual(500);
+    expect(levels.sort((a, b) => a - b)).toEqual([-1500, -1050, -600]); // 0.4, 0.3, 0.3 of row 28
+    expect(maxOf(s.layerOffsetM)).toBeGreaterThan(400);
+    expect(maxOf(s.layerOffsetM)).toBeLessThanOrEqual(600); // row 29
   });
 });
 
@@ -334,11 +350,15 @@ describe("transform: offset ridges and streams", () => {
       expect(s1.bedM[r * columns + right]).toBe(start.bedM[(r - half) * columns + right]);
   });
 
-  it("leaves the crust and the layers exactly unchanged", () => {
+  it("leaves the crust, the layers and the cover base exactly unchanged", () => {
     for (const s of fs) {
       sameBits(s.crustBaseM, start.crustBaseM);
       expect(s.layerOffsetM.every((v) => v === 0)).toBe(true);
+      sameBits(s.coverBaseM, start.coverBaseM);
     }
+    // So the distribution of cover-base elevations is unchanged too (the weaker, distributional form).
+    const sorted = (a: Float32Array) => Float32Array.from(a).sort();
+    sameBits(sorted(fs[10]!.coverBaseM), sorted(start.coverBaseM));
   });
 
   it("keeps the distribution of elevations (up to edge effects)", () => {
@@ -395,6 +415,71 @@ describe("the 7A crust geometry (docs/review/plates/brief/crust-geometry.json)",
       expect(Math.abs(f.startSmoothM(x) + s.layerOffsetM[k]! - r.smoothSurfaceM)).toBeLessThanOrEqual(0.51);
     },
   );
+});
+
+describe("cover rock above the crust (D-W7-7R2)", () => {
+  const r = createPlatesRelief();
+  const layers = PLATES_RELIEF_CONFIG.start.layers;
+  const stackM = layers.reduce((sum, l) => sum + l.thicknessM, 0);
+  const riftHalfWidthM = PLATES_RELIEF_CONFIG.divergent.riftWidthM / 2 - 500;
+
+  it("starts at the base of the start's layer stack (row 14), under the ridge troughs", () => {
+    const start = startingLandscape();
+    expect(stackM).toBe(1_800);
+    for (let c = 0; c < columns; c += 7) {
+      const x = xOf(c);
+      const expected = r.field.startSmoothM(x) - PLATES_RELIEF_CONFIG.start.ridgeReliefM / 2 - stackM;
+      expect(r.field.coverBaseStartM(x)).toBeCloseTo(expected, 6);
+      for (let row = 0; row < rows; row += 31)
+        expect(start.coverBaseM[row * columns + c]).toBe(Math.fround(expected));
+    }
+  });
+
+  it("bends with the layer offset: cover base = start cover base + layerOffsetM, for every boundary", () => {
+    const start = startingLandscape();
+    for (const b of PLATE_BOUNDARIES)
+      for (const s of [0.5, 1]) {
+        const snap = relief(b, s);
+        let worst = 0;
+        for (let k = 0; k < snap.coverBaseM.length; k++)
+          worst = Math.max(
+            worst,
+            Math.abs(snap.coverBaseM[k]! - start.coverBaseM[k]! - snap.layerOffsetM[k]!),
+          );
+        expect(worst, `${b} @ ${s}`).toBeLessThan(0.01);
+      }
+    // Up under the range, down in steps in the rift.
+    const mid = columns / 2;
+    expect(relief("convergent", 1).coverBaseM[mid]! - start.coverBaseM[mid]!).toBeGreaterThan(5_000);
+    expect(relief("divergent", 1).coverBaseM[mid]! - start.coverBaseM[mid]!).toBeCloseTo(-1_500, 0);
+  });
+
+  it("always lies between the crust base and the surface", () => {
+    const { reliefScale } = platesSceneScales();
+    for (const b of PLATE_BOUNDARIES)
+      for (const s of [0, 0.5, 1]) {
+        const snap = relief(b, s);
+        for (let k = 0; k < snap.bedM.length; k++) {
+          expect(snap.coverBaseM[k]!).toBeLessThan(snap.bedM[k]!);
+          // Both are drawn ×reliefScale; the cover sits well above the (scene-metre) crust base.
+          expect(snap.coverBaseM[k]!).toBeGreaterThan(snap.crustBaseM[k]! + 1_000 / reliefScale);
+        }
+      }
+  });
+
+  it("rises monotonically under the range and sinks monotonically in the rift", () => {
+    for (const b of ["convergent", "divergent"] as const) {
+      const fs = frames(b);
+      for (let i = 1; i < fs.length; i++) {
+        let violations = 0;
+        for (let k = 0; k < fs[i]!.coverBaseM.length; k++) {
+          const d = fs[i]!.coverBaseM[k]! - fs[i - 1]!.coverBaseM[k]!;
+          if (b === "convergent" ? d < 0 : Math.abs(xOf(k % columns)) < riftHalfWidthM && d > 0) violations++;
+        }
+        expect(violations, `${b} stage ${STAGES[i]}`).toBe(0);
+      }
+    }
+  });
 });
 
 describe("fixed elevation frame", () => {

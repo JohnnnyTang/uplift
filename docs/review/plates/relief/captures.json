@@ -3,6 +3,7 @@
     "file": "start.png",
     "query": {},
     "note": "The shared starting landscape (no boundary chosen).",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "The starting landscape, the same for every boundary: rolling lowland with low ridges and stream valleys running across the boundary. On the front face, flat rock layers over a crust band of even thickness, with the mantle beneath."
@@ -15,6 +16,7 @@
       "ghosts": "0"
     },
     "note": "convergent, stage 0",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Convergent boundary, early stage. The starting landscape, the same for every boundary: rolling lowland with low ridges and stream valleys running across the boundary. On the front face, flat rock layers over a crust band of even thickness, with the mantle beneath."
@@ -27,6 +29,7 @@
       "ghosts": "0"
     },
     "note": "convergent, stage 0.5",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Convergent boundary, middle stage. The plates move towards each other. A range is rising along the boundary. On the front face the rock layers bend up with it and the crust thickens into a root beneath it."
@@ -39,6 +42,7 @@
       "ghosts": "0"
     },
     "note": "convergent, stage 1",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Convergent boundary, late stage. The plates move towards each other. A high range stands along the boundary, with snow on its highest ground. On the front face the rock layers bend up with it and the crust thickens into a root beneath it."
@@ -51,6 +55,7 @@
       "ghosts": "0"
     },
     "note": "divergent, stage 0",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Divergent boundary, early stage. The starting landscape, the same for every boundary: rolling lowland with low ridges and stream valleys running across the boundary. On the front face, flat rock layers over a crust band of even thickness, with the mantle beneath."
@@ -63,6 +68,7 @@
       "ghosts": "0"
     },
     "note": "divergent, stage 0.5",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Divergent boundary, middle stage. The plates move apart. The land is sinking into a rift valley between stepped fault scarps, and the shoulders rise slightly. On the front face the layers drop at each fault and the crust thins beneath the rift."
@@ -75,6 +81,7 @@
       "ghosts": "0"
     },
     "note": "divergent, stage 1",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Divergent boundary, late stage. The plates move apart. The land has sunk into a rift valley between stepped fault scarps, and the shoulders rise slightly. On the front face the layers drop at each fault and the crust thins beneath the rift."
@@ -87,6 +94,7 @@
       "ghosts": "0"
     },
     "note": "transform, stage 0",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Transform boundary, early stage. The starting landscape, the same for every boundary: rolling lowland with low ridges and stream valleys running across the boundary. On the front face, flat rock layers over a crust band of even thickness, with the mantle beneath."
@@ -99,6 +107,7 @@
       "ghosts": "0"
     },
     "note": "transform, stage 0.5",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Transform boundary, middle stage. The plates slide past each other. The ridges and stream valleys that cross the boundary are slightly offset sideways: looking across the boundary, the far side has moved to the right. The relief and the crust do not change."
@@ -111,46 +120,52 @@
       "ghosts": "0"
     },
     "note": "transform, stage 1",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Transform boundary, late stage. The plates slide past each other. The ridges and stream valleys that cross the boundary are clearly offset sideways: looking across the boundary, the far side has moved to the right. The relief and the crust do not change."
   },
   {
-    "file": "ghosts-stage-1.png",
+    "file": "front-face-convergent-stage-1.png",
     "query": {
       "boundary": "convergent",
       "stage": "1",
-      "viewed": "divergent,transform"
+      "ghosts": "0",
+      "zoom": "1.5"
     },
-    "note": "Convergent at stage 1 with the divergent and transform profiles at the same stage (ghosts).",
+    "note": "Front face, convergent at stage 1, zoomed: the layered cover rock bends up under the range, over the crust band and its root.",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Convergent boundary, late stage. The plates move towards each other. A high range stands along the boundary, with snow on its highest ground. On the front face the rock layers bend up with it and the crust thickens into a root beneath it."
   },
   {
-    "file": "ghosts-stage-05.png",
+    "file": "front-face-divergent-stage-1.png",
     "query": {
       "boundary": "divergent",
-      "stage": "0.5",
-      "viewed": "convergent,transform"
+      "stage": "1",
+      "ghosts": "0",
+      "zoom": "1.5"
     },
-    "note": "Divergent at stage 0.5 with the convergent and transform profiles (ghosts).",
+    "note": "Front face, divergent at stage 1, zoomed: the cover steps down at each rift fault; the crust thins beneath.",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
-    "text": "Divergent boundary, middle stage. The plates move apart. The land is sinking into a rift valley between stepped fault scarps, and the shoulders rise slightly. On the front face the layers drop at each fault and the crust thins beneath the rift."
+    "text": "Divergent boundary, late stage. The plates move apart. The land has sunk into a rift valley between stepped fault scarps, and the shoulders rise slightly. On the front face the layers drop at each fault and the crust thins beneath the rift."
   },
   {
-    "file": "convergent-stage-1-cut-half.png",
+    "file": "front-face-transform-stage-1.png",
     "query": {
-      "boundary": "convergent",
+      "boundary": "transform",
       "stage": "1",
-      "cut": "0.5",
-      "ghosts": "0"
+      "ghosts": "0",
+      "zoom": "1.5"
     },
-    "note": "Convergent at stage 1, front face slid halfway along the boundary.",
+    "note": "Front face, transform at stage 1, zoomed: cover, crust and mantle unchanged.",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
-    "text": "Convergent boundary, late stage. The plates move towards each other. A high range stands along the boundary, with snow on its highest ground. On the front face the rock layers bend up with it and the crust thickens into a root beneath it."
+    "text": "Transform boundary, late stage. The plates slide past each other. The ridges and stream valleys that cross the boundary are clearly offset sideways: looking across the boundary, the far side has moved to the right. The relief and the crust do not change."
   },
   {
     "file": "transform-stage-1-top.png",
@@ -160,7 +175,23 @@
       "ghosts": "0",
       "tilt": "20"
     },
-    "note": "Transform at stage 1 from a steeper camera (the offset reads best from above).",
+    "note": "Transform at stage 1 from a steep camera (from above).",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "backend": "webgl2",
+    "mode": "tilted",
+    "text": "Transform boundary, late stage. The plates slide past each other. The ridges and stream valleys that cross the boundary are clearly offset sideways: looking across the boundary, the far side has moved to the right. The relief and the crust do not change."
+  },
+  {
+    "file": "transform-stage-1-oblique.png",
+    "query": {
+      "boundary": "transform",
+      "stage": "1",
+      "ghosts": "0",
+      "orbit": "-30",
+      "zoom": "1.2"
+    },
+    "note": "Transform at stage 1, camera turned to an oblique view along the ridges.",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Transform boundary, late stage. The plates slide past each other. The ridges and stream valleys that cross the boundary are clearly offset sideways: looking across the boundary, the far side has moved to the right. The relief and the crust do not change."
@@ -174,118 +205,48 @@
       "tilt": "20",
       "trees": "0"
     },
-    "note": "Transform at stage 1 from the steep camera, without trees (look question: tree density).",
+    "note": "Transform at stage 1 from above, without trees (tree density is 7D's).",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Transform boundary, late stage. The plates slide past each other. The ridges and stream valleys that cross the boundary are clearly offset sideways: looking across the boundary, the far side has moved to the right. The relief and the crust do not change."
   },
   {
-    "file": "divergent-stage-1-bare.png",
-    "query": {
-      "boundary": "divergent",
-      "stage": "1",
-      "ghosts": "0",
-      "trees": "0"
-    },
-    "note": "Divergent at stage 1 without trees (look question: tree density).",
-    "backend": "webgl2",
-    "mode": "tilted",
-    "text": "Divergent boundary, late stage. The plates move apart. The land has sunk into a rift valley between stepped fault scarps, and the shoulders rise slightly. On the front face the layers drop at each fault and the crust thins beneath the rift."
-  },
-  {
-    "file": "transform-stage-1-hachure.png",
-    "query": {
-      "boundary": "transform",
-      "stage": "1",
-      "ghosts": "0",
-      "trees": "0",
-      "hachure": "1"
-    },
-    "note": "Transform at stage 1, no trees, full-strength slope hachures (look question: does ink make the offset read?).",
-    "backend": "webgl2",
-    "mode": "tilted",
-    "text": "Transform boundary, late stage. The plates slide past each other. The ridges and stream valleys that cross the boundary are clearly offset sideways: looking across the boundary, the far side has moved to the right. The relief and the crust do not change."
-  },
-  {
-    "file": "divergent-stage-1-hachure.png",
-    "query": {
-      "boundary": "divergent",
-      "stage": "1",
-      "ghosts": "0",
-      "trees": "0",
-      "hachure": "1"
-    },
-    "note": "Divergent at stage 1, no trees, full-strength slope hachures.",
-    "backend": "webgl2",
-    "mode": "tilted",
-    "text": "Divergent boundary, late stage. The plates move apart. The land has sunk into a rift valley between stepped fault scarps, and the shoulders rise slightly. On the front face the layers drop at each fault and the crust thins beneath the rift."
-  },
-  {
-    "file": "probe-ridge-1500-transform-stage-1.png",
-    "query": {
-      "boundary": "transform",
-      "stage": "1",
-      "ghosts": "0",
-      "trees": "0",
-      "ridge": "1500"
-    },
-    "note": "LOOK PROBE, not the 7A table: starting ridges 1,500 m (row 10 is 500 m), transform at stage 1, no trees.",
-    "backend": "webgl2",
-    "mode": "tilted",
-    "text": "Transform boundary, late stage. The plates slide past each other. The ridges and stream valleys that cross the boundary are clearly offset sideways: looking across the boundary, the far side has moved to the right. The relief and the crust do not change."
-  },
-  {
-    "file": "layers-side-wall-convergent-stage-1.png",
+    "file": "ghosts-stage-1.png",
     "query": {
       "boundary": "convergent",
       "stage": "1",
-      "ghosts": "0",
-      "orbit": "-24",
-      "zoom": "1.3"
+      "viewed": "divergent,transform"
     },
-    "note": "Convergent at stage 1, camera turned to show the right-hand side wall: far from the boundary, the layer offset is near zero, so the layers there are flat; the front face is covered by the crust band.",
+    "note": "Convergent at stage 1 with the divergent and transform profiles at the same stage (ghosts).",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Convergent boundary, late stage. The plates move towards each other. A high range stands along the boundary, with snow on its highest ground. On the front face the rock layers bend up with it and the crust thickens into a root beneath it."
   },
   {
-    "file": "probe-no-crust-convergent-stage-1.png",
-    "query": {
-      "boundary": "convergent",
-      "stage": "1",
-      "ghosts": "0",
-      "crust": "0",
-      "zoom": "1.3"
-    },
-    "note": "LOOK PROBE: crust band off, so the front face shows the rock layers bent up by the layer offset under the range.",
-    "backend": "webgl2",
-    "mode": "tilted",
-    "text": "Convergent boundary, late stage. The plates move towards each other. A high range stands along the boundary, with snow on its highest ground. On the front face the rock layers bend up with it and the crust thickens into a root beneath it."
-  },
-  {
-    "file": "probe-no-crust-divergent-stage-1.png",
+    "file": "ghosts-stage-05.png",
     "query": {
       "boundary": "divergent",
-      "stage": "1",
-      "ghosts": "0",
-      "crust": "0",
-      "zoom": "1.3",
-      "trees": "0"
+      "stage": "0.5",
+      "viewed": "convergent,transform"
     },
-    "note": "LOOK PROBE: crust band off, divergent at stage 1: the layers drop in steps at each rift fault.",
+    "note": "Divergent at stage 0.5 with the convergent and transform profiles (ghosts).",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
-    "text": "Divergent boundary, late stage. The plates move apart. The land has sunk into a rift valley between stepped fault scarps, and the shoulders rise slightly. On the front face the layers drop at each fault and the crust thins beneath the rift."
+    "text": "Divergent boundary, middle stage. The plates move apart. The land is sinking into a rift valley between stepped fault scarps, and the shoulders rise slightly. On the front face the layers drop at each fault and the crust thins beneath the rift."
   },
   {
-    "file": "convergent-stage-1-zoom.png",
+    "file": "convergent-stage-1-cut-half.png",
     "query": {
       "boundary": "convergent",
       "stage": "1",
-      "ghosts": "0",
-      "zoom": "1.5"
+      "cut": "0.5",
+      "ghosts": "0"
     },
-    "note": "Convergent at stage 1, camera zoomed in on the front face.",
+    "note": "Convergent at stage 1, front face slid halfway along the boundary.",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "tilted",
     "text": "Convergent boundary, late stage. The plates move towards each other. A high range stands along the boundary, with snow on its highest ground. On the front face the rock layers bend up with it and the crust thickens into a root beneath it."
@@ -298,7 +259,8 @@
       "ghosts": "0",
       "mode": "flat"
     },
-    "note": "Convergent at stage 1 on the flat (untilted) page, for a closer look at the front face.",
+    "note": "Convergent at stage 1 on the flat (untilted) page.",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
     "backend": "webgl2",
     "mode": "flat",
     "text": "Convergent boundary, late stage. The plates move towards each other. A high range stands along the boundary, with snow on its highest ground. On the front face the rock layers bend up with it and the crust thickens into a root beneath it."

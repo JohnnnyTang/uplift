@@ -139,15 +139,29 @@ export function buildIce(g: BlockGrid, f: BlockFrame, iceThresholdM: number): Me
  * ground) and `soilM` (soil thickness at that column), all in metres. `soil(k)` gives the soil thickness at
  * grid cell k. The rock layers are drawn by `wallV`, so with a layer offset a layer boundary at h sits at
  * elevation h + offset (D-W7-7B2); the offset never moves the wall itself.
+ *
+ * With a crust band (the grid has `crustBaseM`), the front side stops at the top of the band (the drawn
+ * cover base, or the bed without one; `drawnCoverBaseM`), so the wall never lies behind the band's meshes:
+ * the two were nearly coplanar there and z-fought (D-W7-7R2). Without a crust base the walls are unchanged.
  */
 export function buildWalls(g: BlockGrid, f: BlockFrame, soil: (k: number) => number): MeshArrays {
   const m = f.metresPerCell;
   const last = f.cutRow;
   const layerOffset = g.layerOffsetM;
-  const sides: { cells: number[]; normal: [number, number, number]; u: (i: number) => number }[] = [];
+  const sides: {
+    cells: number[];
+    normal: [number, number, number];
+    u: (i: number) => number;
+    bottom?: (k: number) => number;
+  }[] = [];
   const range = (n: number) => Array.from({ length: n }, (_, i) => i);
   // Front (cut face), left, right and back, each listed in a consistent order along the wall.
-  sides.push({ cells: range(g.across).map((a) => last * g.across + a), normal: [0, 0, 1], u: (i) => i * m });
+  sides.push({
+    cells: range(g.across).map((a) => last * g.across + a),
+    normal: [0, 0, 1],
+    u: (i) => i * m,
+    ...(g.crustBaseM ? { bottom: (k: number) => drawnCoverBaseM(g, f, k)! } : {}),
+  });
   sides.push({ cells: range(last + 1).map((l) => l * g.across), normal: [-1, 0, 0], u: (i) => i * m });
   sides.push({
     cells: range(last + 1).map((l) => l * g.across + g.across - 1),
@@ -171,9 +185,10 @@ export function buildWalls(g: BlockGrid, f: BlockFrame, soil: (k: number) => num
       const z = blockZ(f, l);
       const top = g.bedM[k]!;
       const offsetM = layerOffset ? layerOffset[k]! : 0;
+      const bottom = side.bottom ? side.bottom(k) : f.baseM;
       for (const [y, elev] of [
         [blockY(f, top), top],
-        [0, f.baseM],
+        [side.bottom ? blockY(f, bottom) : 0, bottom],
       ] as const) {
         position.push(x, y, z);
         normal.push(...side.normal);
@@ -400,19 +415,36 @@ export function drawnCrustBaseM(g: BlockGrid, f: BlockFrame, k: number): number 
   return Math.max(f.baseM, Math.min(g.bedM[k]!, g.crustBaseM[k]!));
 }
 
+/**
+ * Top of the crust band drawn at block cell `k` (unit: metres): the cover base (D-W7-7R2) kept between the
+ * drawn crust base and the bed, or the bed when the grid has no cover base. Null without a crust field.
+ */
+export function drawnCoverBaseM(g: BlockGrid, f: BlockFrame, k: number): number | null {
+  const crustBase = drawnCrustBaseM(g, f, k);
+  if (crustBase === null) return null;
+  if (!g.coverBaseM) return g.bedM[k]!;
+  return Math.max(crustBase, Math.min(g.bedM[k]!, g.coverBaseM[k]!));
+}
+
 /** The crust band and the mantle below it on the front (cut) face (D-W7-7B). */
 export interface CrustSection {
-  /** From the bed down to the crust base. */
+  /** From the top of the band (the cover base, or the bed without one) down to the crust base. */
   readonly crust: MeshArrays;
   /** From the crust base down to the block's base. */
   readonly mantle: MeshArrays;
   /** The crust base along the face as one polyline (`x, z, y` triples, the stroke buffer's terrain order). */
   readonly basePolyline: number[];
+  /**
+   * The cover base along the face, in the same form (present only when the grid has `coverBaseM`): the
+   * contact between the layered cover rock above and the crust band below (D-W7-7R2).
+   */
+  readonly coverBasePolyline?: number[];
 }
 
 /**
  * Front-face meshes for the crust band and the mantle, just in front of the wall, or null when the grid has
- * no crust field. Attributes match the wall material (`wallU`, `wallV`, `depthM`, `soilM`), with `wallU`
+ * no crust field. With a cover base the band starts at it (`drawnCoverBaseM`) and the layered rock of the
+ * wall shows above it. Attributes match the wall material (`wallU`, `wallV`, `depthM`, `soilM`), with `wallU`
  * and `wallV` in block-local metres (vertical already scaled) so a pattern keeps its proportions under
  * vertical exaggeration; `depthM` is large and `soilM` zero, so no soil band is drawn.
  */
@@ -453,12 +485,20 @@ export function buildCrustSection(g: BlockGrid, f: BlockFrame): CrustSection | n
       },
     };
   };
-  const bedY = (k: number) => blockY(f, g.bedM[k]!);
+  const topY = (k: number) => blockY(f, drawnCoverBaseM(g, f, k)!);
   const baseY = (k: number) => blockY(f, drawnCrustBaseM(g, f, k)!);
-  const basePolyline: number[] = [];
-  for (let a = 0; a < g.across; a++)
-    basePolyline.push(blockX(f, a), z + g.metresPerCell * 0.01, baseY(l * g.across + a));
-  return { crust: strip(bedY, baseY), mantle: strip(baseY, () => 0), basePolyline };
+  const polyline = (y: (k: number) => number) => {
+    const out: number[] = [];
+    for (let a = 0; a < g.across; a++)
+      out.push(blockX(f, a), z + g.metresPerCell * 0.01, y(l * g.across + a));
+    return out;
+  };
+  return {
+    crust: strip(topY, baseY),
+    mantle: strip(baseY, () => 0),
+    basePolyline: polyline(baseY),
+    ...(g.coverBaseM ? { coverBasePolyline: polyline(topY) } : {}),
+  };
 }
 
 /**

@@ -37,6 +37,15 @@ export interface LandscapeSnapshot {
    * layers are drawn flat, exactly as without it.
    */
   readonly layerOffsetM?: Field;
+  /**
+   * Elevation of the base of the layered cover rock per cell (unit: metres; same grid and units as `bedM`,
+   * scaled by the stage's vertical exaggeration exactly as the bed is). Used only with `crustBaseM`: on the
+   * front face the layered rock (the wall's lithology, moved by `layerOffsetM`) shows from the bed down to
+   * this elevation, and the crust band runs from here down to the crust base (D-W7-7R2). Values above the
+   * bed are drawn at the bed and values below the crust base at the crust base. Absent: the band starts at
+   * the bed, exactly as without it.
+   */
+  readonly coverBaseM?: Field;
 }
 
 /** How the model grid maps onto the block: which grid axis runs along the valley, and which way is down. */
@@ -71,6 +80,8 @@ export interface BlockGrid {
   readonly crustBaseM?: Float32Array;
   /** Rock-layer offset in block order (unit: metres). Present only when the snapshot has one. */
   readonly layerOffsetM?: Float32Array;
+  /** Cover-base elevation in block order (unit: metres). Present only when the snapshot has one. */
+  readonly coverBaseM?: Float32Array;
 }
 
 /** Throws a `RangeError` naming the first problem with a snapshot. */
@@ -89,6 +100,7 @@ export function validateSnapshot(s: LandscapeSnapshot): void {
   check("iceVelocityMPerYr.y", s.iceVelocityMPerYr?.y);
   check("crustBaseM", s.crustBaseM);
   check("layerOffsetM", s.layerOffsetM);
+  check("coverBaseM", s.coverBaseM);
 }
 
 /** Resamples a snapshot into block order. Pure; copies every field. */
@@ -120,6 +132,7 @@ export function toBlockGrid(
   const vel = s.iceVelocityMPerYr ? { across: new Float32Array(n), along: new Float32Array(n) } : null;
   const crust = s.crustBaseM ? new Float32Array(n) : null;
   const layers = s.layerOffsetM ? new Float32Array(n) : null;
+  const cover = s.coverBaseM ? new Float32Array(n) : null;
   const sign = flip ? -1 : 1;
   for (let l = 0; l < along; l++) {
     for (let a = 0; a < across; a++) {
@@ -129,6 +142,7 @@ export function toBlockGrid(
       iceM[k] = Math.max(0, s.iceThicknessM?.[src] ?? 0);
       if (crust) crust[k] = s.crustBaseM![src]!;
       if (layers) layers[k] = s.layerOffsetM![src]!;
+      if (cover) cover[k] = s.coverBaseM![src]!;
       rockId[k] = typeof s.rockId === "number" ? s.rockId : (s.rockId?.[src] ?? 0);
       if (vel && s.iceVelocityMPerYr) {
         const vx = s.iceVelocityMPerYr.x[src]!;
@@ -154,10 +168,14 @@ export function toBlockGrid(
     modelTimeYr: s.modelTimeYr ?? null,
     ...(crust ? { crustBaseM: crust } : {}),
     ...(layers ? { layerOffsetM: layers } : {}),
+    ...(cover ? { coverBaseM: cover } : {}),
   };
 }
 
-/** Lowest and highest of bed, ice surface and (when present) crust base (unit: metres). */
+/**
+ * Lowest and highest of bed, ice surface and (when present) crust base (unit: metres). The cover base is
+ * drawn between the bed and the crust base, so it never widens the range.
+ */
 export function elevationRange(g: BlockGrid): { minM: number; maxM: number } {
   let minM = Infinity;
   let maxM = -Infinity;

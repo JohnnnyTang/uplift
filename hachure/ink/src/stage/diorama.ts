@@ -63,6 +63,7 @@ import {
   type CrustBandLook,
   type CrustLayer,
   type CrustLayerLook,
+  COVER_BASE_LINE_WIDTH_PX,
   CRUST_BAND_LOOK,
   paintCrustTile,
 } from "./crust";
@@ -177,6 +178,11 @@ export interface DioramaDescription {
   readonly crustShown: boolean;
   /** Whether the rock layers on the walls follow a layer offset (the snapshot has `layerOffsetM`). */
   readonly layersOffset: boolean;
+  /**
+   * Whether the front face shows layered cover rock above the crust band (the snapshot has both
+   * `crustBaseM` and `coverBaseM`; D-W7-7R2).
+   */
+  readonly coverShown: boolean;
 }
 
 export interface Footprint {
@@ -190,7 +196,16 @@ export interface Footprint {
 }
 
 type StrokeKind =
-  "edge" | "iceEdge" | "hachure" | "flow" | "dash" | "ghostHalo" | "ghost" | "crustBase" | "inkLine";
+  | "edge"
+  | "iceEdge"
+  | "hachure"
+  | "flow"
+  | "dash"
+  | "ghostHalo"
+  | "ghost"
+  | "crustBase"
+  | "coverBase"
+  | "inkLine";
 
 /** Most comparison profiles drawn at once. */
 export const MAX_GHOSTS = 3;
@@ -369,6 +384,7 @@ export class ValleyDiorama {
       ghostHalo: new Strokes(this.ink, NATURAL_TOKENS.ghostHalo),
       ghost: new Strokes(this.ink, NATURAL_TOKENS.ghost),
       crustBase: new Strokes(this.ink, this.crustLook.baseLine),
+      coverBase: new Strokes(this.ink, this.crustLook.coverBaseLine ?? this.crustLook.baseLine),
       inkLine: new Strokes(this.ink),
     };
     this.strokes.ghost.layer.mesh.renderOrder = 3;
@@ -484,6 +500,7 @@ export class ValleyDiorama {
     this.strokes.ghost.fade.value = reveal.ink;
     this.strokes.ghostHalo.fade.value = reveal.ink;
     this.strokes.crustBase.fade.value = reveal.ink;
+    this.strokes.coverBase.fade.value = reveal.ink;
     this.strokes.inkLine.fade.value = reveal.ink;
     this.strokes.hachure.fade.value = reveal.hachure;
     this.strokes.flow.fade.value = reveal.colour;
@@ -539,6 +556,7 @@ export class ValleyDiorama {
       ghostCount: this.ghosts.length,
       crustShown: g.crustBaseM !== undefined,
       layersOffset: g.layerOffsetM !== undefined,
+      coverShown: g.crustBaseM !== undefined && g.coverBaseM !== undefined,
     };
   }
 
@@ -671,7 +689,7 @@ export class ValleyDiorama {
     if (this.reference?.crustBaseM && g.crustBaseM)
       dash.buffer.pushStrokes(dashedProfile(this.reference, f, 0.9, 0.7, this.reference.crustBaseM), 1.4);
 
-    const { ghost, ghostHalo, crustBase } = this.strokes;
+    const { ghost, ghostHalo, crustBase, coverBase } = this.strokes;
     ghost.buffer.reset();
     ghostHalo.buffer.reset();
     this.ghosts.forEach((gh, i) => {
@@ -686,10 +704,13 @@ export class ValleyDiorama {
       }
     });
 
-    // The crust base: a solid ink line along the front face.
+    // The crust base: a solid ink line along the front face; the cover base above it, lighter (D-W7-7R2).
     crustBase.buffer.reset();
+    coverBase.buffer.reset();
     const section = g.crustBaseM ? buildCrustSection(g, f) : null;
     if (section) crustBase.buffer.pushPolyline(section.basePolyline, false, INK_TOKENS.indexContourWidthPx);
+    if (section?.coverBasePolyline)
+      coverBase.buffer.pushPolyline(section.coverBasePolyline, false, COVER_BASE_LINE_WIDTH_PX);
 
     // Extra ink lines from the dressing rules (D-W7-7D), draped on the surface.
     const { inkLine } = this.strokes;
