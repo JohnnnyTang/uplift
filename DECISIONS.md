@@ -2568,3 +2568,156 @@ stay lesson content in Uplift.
 
 **Revisit if.** The owner later wants the lesson to claim that landforms "form" in the scene. That claim
 needs a process model, and the kinematic option in decision 2 is the smallest one.
+
+## D-W7-7B — Engine primitives for lesson 2: authored-sequence source and crust band (contract, session 7B)
+
+**Context.** D-L2-1 raised two Hachure primitives for the plate-boundaries lesson (wave plan §4, 7B brief):
+(a) a source that feeds the book stage from an authored `(stage) → LandscapeSnapshot` generator with no model
+time, and (b) an optional crust-base field drawn as a band on the front face and in the section lens. This
+entry is the contract 7C and 7D code against; it was pushed before the implementation. Both primitives are
+additive: no existing signature changes meaning, and a caller that passes none of the new fields sees
+today's behaviour and rendering.
+
+**(a) Authored-sequence source — `@hachure/runtime` (`hachure/runtime/src/sequence/`).**
+
+The seam is the one the glacial host already uses to drive the stage (`GlacialHost` + `driveGlacialHost`):
+an animation-frame driver calls `advance(viewSeconds)`; the page subscribes, re-reads the shown frame when
+`frameSerial` changes, and hands that frame to the diorama (`setSnapshot`, `setGhost(s)`). Leaving and
+returning use the same names as the glacial host and the reader spread (`pauseAndSettle`, `resume`). The
+source is generic in its frame type, because `@hachure/runtime` does not depend on `@hachure/ink`; the book
+instantiates it with `LandscapeSnapshot`. Keys are generic strings (Hachure has no boundary vocabulary).
+
+```ts
+/** A pure, deterministic generator: the same stage gives an equal frame. Stage ∈ [0, 1], unitless. */
+export type SequenceGenerator<TFrame> = (stage: number) => TFrame;
+
+export interface AuthoredSequenceOptions<TFrame> {
+  /** Registered sequences in display order. Keys are non-empty and unique. */
+  readonly sequences: readonly { readonly key: string; readonly generate: SequenceGenerator<TFrame> }[];
+  /** Frame shown when no sequence is chosen. Default: the first sequence at stage 0. */
+  readonly start?: () => TFrame;
+  /** Play rate on the view clock (unit: stage per view second; 1/12 = early → late in 12 s). */
+  readonly stagePerViewSecond: number;
+  /** Reduced-motion stops, evenly spaced from 0 to 1 inclusive (unit: count, 3–5). Default 5. */
+  readonly reducedMotionStops?: number;
+  /** Reduced-motion dwell at each stop while playing (unit: view seconds). Default 1.5. */
+  readonly reducedMotionStepSeconds?: number;
+  /** Start in reduced motion. Default false. */
+  readonly reducedMotion?: boolean;
+  /** Longest view-clock gap accepted from one `advance`; longer gaps are not caught up (unit: s). Default 0.25. */
+  readonly maxFrameSeconds?: number;
+}
+
+export type SequenceCommand =
+  /** Page picker and on-block gesture alike: show `key` from stage 0, paused; `key` joins `viewed`. */
+  | { readonly kind: "choose"; readonly key: string }
+  /** Play from the current stage (from 0 when at 1). No-op with no sequence chosen. */
+  | { readonly kind: "play" }
+  | { readonly kind: "pause" }
+  /** Scrub: pause and set the stage directly (clamped to [0, 1]; NaN is refused). */
+  | { readonly kind: "set-stage"; readonly stage: number }
+  /** Pause and move to the next (+1) or previous (−1) reduced-motion stop (keyboard stepping). */
+  | { readonly kind: "step"; readonly direction: 1 | -1 }
+  /** Preference: continuous play or stop-to-stop play. Never changes the stage. */
+  | { readonly kind: "set-reduced-motion"; readonly reduced: boolean }
+  /** No sequence chosen, stage 0, paused, `viewed` cleared (so no ghosts). */
+  | { readonly kind: "reset" };
+
+export type SequenceCommandResult =
+  { readonly kind: "done" } | { readonly kind: "unchanged"; readonly reason: string };
+
+export interface SequenceState {
+  readonly key: string | null;
+  /** Stage shown (unit: none, 0 = early, 1 = late). */
+  readonly stage: number;
+  readonly playing: boolean;
+  /** Left the page: paused; `resume` restores the play intent. Commands other than the reduced-motion
+   *  preference are refused ("unchanged") while departed. */
+  readonly departed: boolean;
+  readonly reducedMotion: boolean;
+  /** Stops used by reduced-motion play and by `step` (unit: stage). */
+  readonly stops: readonly number[];
+  /** Keys chosen since the last reset, in first-chosen order (includes the current key). */
+  readonly viewed: readonly string[];
+  /** Increments whenever the shown frame changes (key or stage); re-read `frame()` then. */
+  readonly frameSerial: number;
+}
+
+export interface SequenceGhost<TFrame> {
+  readonly key: string;
+  readonly stage: number;
+  readonly frame: TFrame;
+}
+
+export interface AuthoredSequenceSource<TFrame> {
+  readonly keys: readonly string[];
+  state(): SequenceState;
+  subscribe(listener: (state: SequenceState) => void): () => void;
+  dispatch(command: SequenceCommand): SequenceCommandResult;
+  /** View-clock advance from the driver (unit: seconds). Ignored when paused or departed. */
+  advance(viewSeconds: number): void;
+  /** The frame shown now: the chosen sequence at the current stage, or `start` when none is chosen. */
+  frame(): TFrame;
+  /** Any registered sequence at any stage ∈ [0, 1] (RangeError otherwise). */
+  frameAt(key: string, stage: number): TFrame;
+  /** Viewed sequences other than the current one, at the current stage, in `viewed` order. */
+  ghosts(): readonly SequenceGhost<TFrame>[];
+  /** Leaving the page: pause and remember the play intent. Resolves at once (nothing to drain). */
+  pauseAndSettle(): Promise<void>;
+  /** Returning: restore key, stage, ghosts and play intent; the first advance after it is dropped. */
+  resume(): void;
+  dispose(): void;
+}
+
+export function createAuthoredSequence<TFrame>(o: AuthoredSequenceOptions<TFrame>): AuthoredSequenceSource<TFrame>;
+/** Drives `advance` from animation frames (injectable scheduler, as `driveGlacialHost`). Returns stop. */
+export function driveSequence(target: { advance(viewSeconds: number): void }, scheduler?: AnimationScheduler): () => void;
+```
+
+Semantics. Holds **no model time, no runs and no years**; the stage is the only position. Play adds
+`viewSeconds × stagePerViewSecond` per advance (each advance capped at `maxFrameSeconds`) and stops at 1; in
+reduced motion it dwells `reducedMotionStepSeconds` at a stop, then jumps to the next stop, and stops at 1.
+Determinism: no `Math.random()`, no `Date`/`performance` reads; the only time input is the injected view
+clock (`advance`). Frames are computed lazily and memoised per key for the last stage asked, so a paused
+source never calls a generator again; the source never mutates a frame. Choosing a key always starts it at
+stage 0 (re-choosing the current key too). Level, camera, cut and ghost display are not source state.
+
+**(b) Crust band — `@hachure/ink/stage` (and the section lens in `@hachure/ink/glacial`).**
+
+```ts
+interface LandscapeSnapshot {
+  // … unchanged fields …
+  /** Crust-base elevation per cell: surface minus crust thickness (unit: metres; same grid as bedM).
+   *  Absent: no crust band, and rendering is identical to before. Values above the bed are drawn at the bed. */
+  readonly crustBaseM?: ArrayLike<number>;
+}
+interface BlockGrid { /* … */ readonly crustBaseM?: Float32Array }   // present only when the snapshot has it
+```
+
+- `validateSnapshot` checks its length; `toBlockGrid` resamples it like `bedM`; `elevationRange` includes it,
+  so the block's base sits below the deepest crust base (a mantle margin) only when the field is present.
+- `buildCrustSection(g, f)` (`block-geometry.ts`, pure): front-face meshes for the crust band (bed → crust
+  base) and the mantle below it (crust base → block base), or null without the field. `dashedProfile` and
+  `solidProfile` take an optional last argument, the height field to follow (default `bedM`), so ghost and
+  starting crust bases reuse them.
+- Diorama: the band is drawn on the **front (cut) face only**, in its own textbook pattern (crust: small
+  "v" ticks; mantle: sparse rings), natural colours (`CRUST_BAND_LOOK`, overridable by
+  `DioramaOptions.crustBand`), with a solid ink line at the crust base. The starting snapshot's crust base is
+  drawn dashed, and each ghost's crust base dotted under a paper halo, as their beds are today.
+- New, additive: `ValleyDiorama.setGhosts(snapshots)` draws up to three comparison snapshots, each with its
+  own dash pattern (index 0 is exactly today's ghost style); `setGhost(s)` is `setGhosts(s ? [s] : [])`.
+  `DioramaDescription` gains `crustShown` and `ghostCount`.
+- Section lens: `SectionLensProfile` gains optional `crustBaseM`, `startCrustBaseM`, `ghost.crustBaseM` and
+  `ghosts` (more labelled comparison profiles); `SectionLensWords` gains optional `crust` and `mantle`
+  labels. With `crustBaseM` the lens frames the whole face down to below the deepest crust base and draws the
+  band and mantle in the same patterns; without it the output is byte-identical to before.
+
+**What old callers see.** Nothing: the glacial snapshot, diorama calls, ghost calls and lens calls are
+unchanged, and their tests are not edited. The section lens lives in `hachure/ink/src/glacial/` (outside
+7B's owned paths); its change is additive and minimal, recorded in the 7B PR.
+
+**For 7C/7D.** The generator returns `LandscapeSnapshot` with `bedM`, `rockId` and `crustBaseM` (no
+`modelTimeYr`). Fix the block's frame with `setElevationRange` over every key at stages 0 and 1 (including
+crust bases), or the block resizes as the root deepens. A 35–70 km crust at the surface's vertical
+exaggeration makes a very tall block; whether the crust depth is drawn at true scale or compressed is a
+7A/7C presentation choice, to be labelled as artistic if compressed.
