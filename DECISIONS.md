@@ -2927,15 +2927,15 @@ authored illustrations (D-L2-1); nothing in the scene is simulated or claims to 
 ```ts
 export function createPlatesSpreadScene(o: {
   level: Level;
-  folio: number;                    // left page number, as lesson 1
-  copy?: PlatesSceneCopy;           // 7E's words; default: clearly marked placeholder copy
-  probes?: readonly Probe[];        // the spread's probes (7E); the scene serves the kinds below
+  folio: number; // left page number, as lesson 1
+  copy?: PlatesSceneCopy; // 7E's words; default: clearly marked placeholder copy
+  probes?: readonly Probe[]; // the spread's probes (7E); the scene serves the kinds below
   mode?: "flat" | "tilted" | "auto"; // ?mode=, as lesson 1
-  reducedMotion?: boolean;           // ?motion=reduce, as lesson 1
+  reducedMotion?: boolean; // ?motion=reduce, as lesson 1
 }): ReaderSceneController;
 export function mountPlatesScene(root: HTMLElement, o: PlatesSceneOptions): Promise<MountedPlatesScene>;
 export const PLATES_PROBE_KINDS = ["plates-scene", "plates-config"] as const;
-export type { PlatesSceneCopy };    // the words the scene renders (see below)
+export type { PlatesSceneCopy }; // the words the scene renders (see below)
 ```
 
 7F wires it in `scenes/entries.ts` exactly like lesson 1: `{ spread: <7E spread>, layout: "stage", createScene:

@@ -1,0 +1,303 @@
+/*
+ * Lesson 2's scene (session 7D). The desk, book, pages, timeline and controls are lesson 1's (`gs-` styles,
+ * imported with them) so both lessons stand on the same book. This sheet adds only what lesson 2 has:
+ * the boundary picker with its arrow glyphs, the plate arrows on the block, the ghost key and labels, and
+ * the one label line. Boundaries are told apart by glyph and line pattern, never by colour alone.
+ */
+.ps-scene {
+  --ps-arrow: var(--gs-ink);
+  --ps-halo: var(--gs-paper);
+}
+
+/* The one label line (guardrail): quiet, italic, under the lesson text. */
+.ps-label-line {
+  margin: 0.8cqi 0 0;
+  font-style: italic;
+  font-size: max(12px, 0.95cqi);
+  color: var(--gs-ink-soft);
+}
+
+/* ---- Boundary picker: three choices, each a glyph of the plates seen from above. ---------------- */
+.ps-picker {
+  margin: 1cqi 0 0;
+  border: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5cqi;
+  font-size: max(12px, 1cqi);
+}
+.ps-picker legend {
+  margin-bottom: 0.3cqi;
+  font-style: italic;
+  color: var(--gs-ink-soft);
+}
+.ps-choice {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 44px;
+  padding: 0.2em 0.4em 0.2em 0.3em;
+  border: 1px solid var(--gs-rule);
+  border-radius: 4px;
+  cursor: pointer;
+  line-height: 1.2;
+}
+.ps-choice input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.ps-choice-words {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.ps-choice-name {
+  font-weight: 600;
+}
+/* The help line is the option's description for assistive technology; the glyph says it visually. */
+.ps-choice-help {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.ps-choice:hover {
+  background: #f1eee5;
+}
+.ps-choice:has(input:checked) {
+  border-color: var(--gs-ink);
+  box-shadow: inset 0 0 0 1px var(--gs-ink);
+}
+.ps-choice:has(input:checked) .ps-choice-name {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ps-choice:has(input:focus-visible) {
+  outline: 3px solid var(--gs-focus);
+  outline-offset: 2px;
+}
+.ps-glyph {
+  flex: none;
+  width: 30px;
+  height: 24px;
+  overflow: visible;
+}
+.ps-glyph path {
+  fill: none;
+  stroke: var(--gs-ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.ps-glyph .ps-glyph-head {
+  fill: var(--gs-ink);
+  stroke-width: 1;
+}
+.ps-glyph .ps-glyph-boundary {
+  stroke-width: 1.2;
+  stroke-dasharray: 3 2.5;
+}
+.ps-invite {
+  margin: 0.5cqi 0 0;
+  font-style: italic;
+  font-size: max(12px, 0.95cqi);
+  color: var(--gs-ink-soft);
+}
+.ps-invite[hidden] {
+  display: none;
+}
+.ps-stage {
+  margin-top: 0.6cqi;
+}
+
+/* ---- Ghost key under the figure, and labels beside the profiles on the block. -------------------- */
+.ps-ghost-key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2em 1.2em;
+  margin-top: 0.4cqi;
+  font-size: max(11px, 0.92cqi);
+}
+.ps-ghost-key[hidden] {
+  display: none;
+}
+.ps-ghost-key-title {
+  font-style: italic;
+  color: var(--gs-ink-soft);
+}
+.ps-ghost-item,
+.ps-ghost-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+.ps-ghost-sample {
+  width: 34px;
+  height: 8px;
+}
+.ps-ghost-sample path {
+  fill: none;
+  stroke-linecap: round;
+}
+.ps-ghost-sample .ps-ghost-halo {
+  stroke: var(--gs-paper);
+  stroke-width: 6;
+}
+.ps-ghost-sample .ps-ghost-line {
+  stroke: var(--gs-ink);
+  stroke-width: 2;
+}
+.ps-ghost-key .ps-glyph,
+.ps-ghost-label .ps-glyph {
+  width: 24px;
+  height: 18px;
+}
+
+/* ---- The overlay over the stage: plate arrows and ghost labels follow the block. ----------------- */
+.ps-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 18;
+  pointer-events: none;
+}
+.ps-overlay .hb-arrows {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.ps-overlay .hb-arrow-shaft {
+  fill: none;
+  stroke-linecap: round;
+}
+.ps-overlay .hb-arrow-halo {
+  stroke: var(--ps-halo);
+  stroke-width: 9;
+  fill: var(--ps-halo);
+  stroke-linejoin: round;
+}
+.ps-overlay .hb-arrow-ink.hb-arrow-shaft {
+  stroke: var(--ps-arrow);
+  stroke-width: 4;
+}
+.ps-overlay .hb-arrow-ink.hb-arrow-head {
+  fill: var(--ps-arrow);
+  stroke: var(--ps-arrow);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+/* No boundary chosen yet: an open, double-headed hint. */
+.ps-overlay .hb-arrow[data-neutral] .hb-arrow-ink.hb-arrow-head {
+  fill: var(--ps-halo);
+}
+.ps-overlay .hb-arrow[data-neutral] .hb-arrow-ink.hb-arrow-shaft {
+  stroke-width: 3;
+}
+.ps-overlay .hb-handle {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: grab;
+  pointer-events: auto;
+  touch-action: none;
+}
+.ps-overlay .hb-handle::after {
+  content: "";
+  position: absolute;
+  inset: 17px;
+  border-radius: 50%;
+  background: var(--ps-halo);
+  border: 2px solid var(--ps-arrow);
+}
+.ps-overlay .hb-handle:hover::after,
+.ps-overlay .hb-handle-dragging::after {
+  inset: 14px;
+}
+.ps-overlay .hb-handle-dragging {
+  cursor: grabbing;
+}
+.ps-overlay .hb-handle:focus-visible {
+  outline: 3px solid var(--gs-focus);
+  outline-offset: -4px;
+}
+.ps-overlay .hb-handle[hidden] {
+  display: none;
+}
+.ps-ghost-labels {
+  position: absolute;
+  inset: 0;
+}
+.ps-ghost-label {
+  position: absolute;
+  transform: translate(10px, -50%);
+  padding: 1px 6px 1px 3px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--gs-paper) 88%, transparent);
+  font:
+    italic 12px/1.3 Georgia,
+    serif;
+  color: var(--gs-ink);
+  white-space: nowrap;
+}
+.ps-desk.ps-dragging-arrow * {
+  cursor: grabbing !important;
+}
+
+/* The enlarged front face, in the static fallback only. */
+.ps-lens {
+  margin-top: 0.6cqi;
+}
+.ps-lens svg {
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+}
+.ps-static-note {
+  font-style: italic;
+}
+
+@media (max-width: 60rem) {
+  .gs-desk[data-stage-mode="flat"] .ps-picker,
+  .gs-desk[data-stage-mode="flat"] .ps-invite,
+  .gs-desk[data-stage-mode="flat"] .ps-ghost-key,
+  .gs-desk[data-stage-mode="flat"] .ps-label-line {
+    font-size: 15px;
+  }
+}
+@media (max-width: 34rem) {
+  .ps-picker {
+    grid-template-columns: 1fr;
+  }
+}
+@media (forced-colors: active) {
+  .ps-glyph path,
+  .ps-ghost-sample .ps-ghost-line,
+  .ps-overlay .hb-arrow-ink {
+    stroke: CanvasText;
+  }
+  .ps-glyph .ps-glyph-head,
+  .ps-overlay .hb-arrow-ink.hb-arrow-head {
+    fill: CanvasText;
+  }
+}
+
+/* The figure page is tall with controls; keep their rows tight so the block keeps its size. */
+.ps-scene .gs-page-figure .gs-controls {
+  margin-top: 0.4cqi;
+}
+.ps-scene .gs-page-figure .gs-controls input[type="range"] {
+  width: 7em;
+}

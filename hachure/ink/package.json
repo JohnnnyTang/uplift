@@ -10,7 +10,8 @@
     "./view": "./src/view/index.ts",
     "./stage": "./src/stage/index.ts",
     "./transition": "./src/transition/index.ts",
-    "./glacial": "./src/glacial/index.ts"
+    "./glacial": "./src/glacial/index.ts",
+    "./plates": "./src/plates/index.ts"
   },
   "scripts": {
     "dev": "vite dev --config dev/vite.config.ts",
