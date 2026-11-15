@@ -791,7 +791,7 @@ discovery, so PB7 returns to its original form. Order: 6A/6A2 → 7A–7G → 6B
 
 ## Wave 6 · Hardening and release review
 
-**Split by owner decision D-L2-1 (2026-11-14):** 6A finishes as planned. **6B, 6C and 6D are
+**Split by owner decision D-L2-1 (2026-11-14):** 6A and 6A2 are merged (D-W6-6A2). **6B, 6C and 6D are
 deferred until Wave 7 (lesson 2) has merged**, and then audit, review and retro the two-lesson book.
 Their briefs below apply to both lessons; 6D no longer selects the next lesson (the owner did).
 

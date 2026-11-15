@@ -2443,6 +2443,64 @@ to the owner of `hachure/runtime/src/glacial-host` and `runs`.
 for this one device and browser (visible target integrated GPU measured; three narrow misses as above). 6B owns
 the ledger. Other hardware, battery, mobile and other browsers stay **pending**, never inferred.
 
+## D-W6-6A2 — Per-backend glacier batch size: a small CPU batch, chained while behind schedule; WebGPU unchanged
+
+2026-11-15. Session 6A2 (`s1/w6/6a2-cpu-batch`, from main 05a547a). The owner authorised this bounded follow-up
+after merging 6A (PR #41). It addresses D-W6-6A-RESULTS miss 1. Evidence: `docs/perf/README.md` § 6A2 and
+`docs/perf/results/6a2/`.
+
+**Problem.** On the CPU worker path an automatic glacier batch was up to 1 model year (400 fixed steps, about 300 ms
+on the 6A laptop). Pause, scrubbing and leaving for the research route wait for the batch already in flight
+(D-W5-5J item 8). Scrubbing right after Pause took p90 185 ms in 6A (344 ms in 6A2's baseline) against the 100 ms target.
+
+**Decision.**
+
+1. **Config.** `GlacialRunConfig.cpuMaxBatchModelYears` (unit: model years), default **0.2** (80 steps, about 60 ms
+   here), beside `maxBatchModelYears` (1 model year, which now applies only to WebGPU). `maxBatchSteps(plan, backend)` picks
+   the batch, and `planGlacialRuns` validates both. Book wiring is unchanged: the book uses the defaults.
+2. **Host.** The fixed-step clock is sized for the live run's backend whenever a run starts (`useBackendBatch` in
+   `adoptLive`). A run that changes backend (a halted GPU run restarted on the CPU) gets the CPU batch.
+3. **Chaining on the CPU.** When a CPU batch lands and the clock already holds a full batch (the backend is behind
+   schedule), the host sends the next batch at once instead of idling until the next animation frame. Only one batch is
+   ever in flight. WebGPU is not chained. This needed a read-only `pendingSteps` getter on `FixedStepClock`
+   (`hachure/runtime/src/sim-host/clock.ts`, outside the owned paths, additive).
+4. **Results do not change.** This is scheduling only: the step `dtYears` and the solvers are untouched, and the
+   engine still advances whole fixed steps split at record boundaries. A new unit test plays one rock to its horizon
+   with 1-, 7- and 40-step CPU batches. The 9 recorded state hashes, the recorded bytes and the final live hash are
+   bitwise identical across the three, and the test checks that the batches really were those sizes. A second test
+   covers the per-backend selection and chaining. The CPU/GPU comparison tests were not touched and pass.
+
+**Why 0.2 and not smaller.** The candidates were measured with 2 CPU repetitions each:
+
+| Candidate        | 1× model years/s | Scrub after Pause, p90 | Main thread at 1× |
+| ---------------- | ---------------- | ---------------------- | ----------------- |
+| 0.1, no chaining | −13 %            | 43 ms                  | 24 %              |
+| 0.1, chained     | −7 %             | 40 ms                  | 25 %              |
+| 0.2, chained     | −2 %             | 64 ms                  | 17 %              |
+
+With 0.2 the target holds with a small cost. With 0.1 the target holds with more margin, at a larger cost.
+
+**Results** (5 repetitions per path, before = main 05a547a, after = 44951a3, same laptop and Chrome as 6A). On the
+CPU path, scrub right after Pause went from p90 344 ms (max 358) to **67 ms (max 96)**. Pause to the final live frame
+went from 370 to **75 ms**. Repeat research departure while playing went from p90 481 to **265 ms**. WebGPU is
+unchanged: 1× stays at 10 model years per second, 4× has a median of 37 (35 before, inside its 33–41 spread), and its
+scrub and departure times are unchanged. Frames stay smooth on both paths. **Cost:** in an interleaved A/B on the
+CPU path (3 pairs), 1× throughput was about 6 % lower (median 3.76 against 3.99 model years per second) and 4× within 2 %.
+The main thread at 1× went from 10 % to 17 % busy, because each batch publishes host state. In the unpaired 5-repetition
+sets the CPU 1× rate was higher afterwards (3.53 against 2.99), but that comparison is confounded by thermal state.
+
+**Not done / open.**
+
+- (a) **Owner decision: the value.** 0.2 keeps the scrub target on this laptop. On a CPU about 1.6 times slower per
+  step, scrubbing after Pause would take about 100 ms again. 0.1 would hold the target, at about 7 % throughput here.
+  An adaptive, time-bounded CPU batch (the host already knows the last batch's compute time) would adapt to any CPU,
+  but it adds machine-dependent scheduling and was not built. Other hardware is **pending**.
+- (b) Repeat research departure on the CPU path (median 177 ms) is still about 4 times WebGPU's (44 ms). The glacier
+  settle now waits for at most one batch, so the rest of the delay lies elsewhere on the CPU path. It meets 6A's target and
+  was not investigated.
+- (c) The `step` command still advances to the next recorded time in one request (up to 20 model years, several
+  seconds on the CPU), and nothing can interrupt it. This is unchanged and was not part of 6A's measured journey.
+
 ## D-L2-1 — Second lesson: plate boundaries and the topography they make; authored relief allowed for this lesson (owner, 2026-11-14)
 
 **Context.** After D-W5-5N2 the book holds one lesson, so PB7 ("two working interactive spreads") was

@@ -4,7 +4,7 @@
 This file is the **single source** for the second lesson. Other plan files only point here. If
 they disagree with this file, this file wins.
 
-**Order in Stage 1.** Wave 6 is split: 6A (and its follow-up 6A2) finishes first, then Wave 7,
+**Order in Stage 1.** Wave 6 is split: 6A and its follow-up 6A2 are merged (D-W6-6A-RESULTS, D-W6-6A2), then Wave 7,
 then 6B → 6C → 6D audit, review and retro the two-lesson book. 6B–6D keep their IDs and briefs; only
 their entry moves (D-L2-1, decision 10).
 
@@ -272,7 +272,8 @@ pick divergent → compare ghosts → transform by dragging an arrow → change 
 (state intact) → reset.
 
 Run a bounded performance check of the new spread and the page turn with the 6A harness on the same
-target laptop: no regression in lesson 1's measured journey.
+target laptop: no regression in lesson 1's journey against the 6A2 baseline (`docs/perf/results/6a2/`, with
+the current per-backend batch defaults).
 
 **Exit:** `pnpm check`, build, bundle budget and the browser regression suite pass on the default route,
 including phone, reduced motion and navigation while lesson 1 is running.
