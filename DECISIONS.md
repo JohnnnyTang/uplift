@@ -3002,3 +3002,107 @@ question).
 
 **Revisit if.** The owner finds the front face too busy at page size (D-W7-7R's revisit clause), or 7D needs
 the starting or ghost cover base drawn.
+
+## D-W7-7E — Lesson 2 content: binding contract for the plates scene (session 7E, contract first, 2026-11-15)
+
+**Context.** 7E writes the copy of lesson 2 (`uplift/spreads/tectonics.plate-boundaries/`) in parallel with
+7D's production scene. This entry fixes, before the copy, every value the page binds, so 7D can serve it.
+The rest of the 7E decisions (title, year facts, layout) are appended below when the copy lands.
+
+**Binding namespace: `probe`, not `scene`.** The runtime's `scene.*` keys are a closed Hachure list
+(`SCENE_BINDING_KEYS`: time scale, sim years, scale bar, cell size, …) derived for the terrain engine, and
+the validator rejects any other `scene.` key. As in lesson 1, the spread declares probes and the host
+serves them. The spread is `modelScope: { kind: "static-geometry" }` (no clock: `scene.timeScale`,
+`scene.simYears*` and durations are rejected by the validator) and `engine: "scene"`.
+
+**Probe kinds 7D's plates host serves** (ids are the binding keys, `{{probe.<id>}}`):
+
+| Request kind     | Probe id        | Field (value)                                                                  | Unit  | Levels |
+| ---------------- | --------------- | ------------------------------------------------------------------------------ | ----- | ------ |
+| `plates-config`  | `reliefScale`   | `display.surfaceVerticalExaggeration` of `PLATES_RELIEF_CONFIG` (number)       | none  | both   |
+| `plates-config`  | `crustScale`    | `display.crustVerticalExaggeration` (number)                                   | none  | both   |
+| `plates-config`  | `airyRatio`     | `crust.airyRootPerMetreOfUplift` (number)                                      | none  | uni    |
+| `plates-config`  | `crustDensity`  | `crust.crustDensityKgPerM3` (number)                                           | kg/m³ | uni    |
+| `plates-config`  | `mantleDensity` | `crust.mantleDensityKgPerM3` (number)                                          | kg/m³ | uni    |
+| `plates-config`  | `snowline`      | `dressing.snowlineM` (number)                                                  | m     | uni    |
+| `plates-display` | `blockWidth`    | `blockWidthKm` = `grid.columns × grid.metresPerCell / 1000` (number)           | km    | uni    |
+| `plates-view`    | `boundaryName`  | `boundaryName`: the lesson's `boundaries[key].name` for the shown key (string) | —     | both   |
+| `plates-view`    | `stageLabel`    | `stageLabel`: the lesson's `stageWordFor(stage)` word at the level (string)    | —     | both   |
+| `plates-view`    | `ghostNames`    | `ghostNames`: names of the other viewed boundaries, joined "x and y" (string)  | —     | both   |
+| `plates-view`    | `scaleBar`      | `scaleBarLabel`: the scale bar's own label as the scene draws it (string)      | —     | both   |
+
+`plates-config` fields are dotted paths into `PLATES_RELIEF_CONFIG`, the same keys as
+`docs/science/plates/parameters.json` (the lesson test checks they exist there). The host reads the config
+(`uplift/book/src/scenes/plates/relief/config.ts`); the spread package cannot import the book, so it never
+holds these numbers. Texts write `×{{probe.reliefScale}}` (the unit is empty, so 4 renders as "×4").
+
+**What the lesson exports for 7D/7F (names fixed now, words land with the copy):** `boundaries` (`id` in
+picker order convergent, divergent, transform; `name`, `glyph`, `glyphLabel`, `motion`, `help`,
+`example`), `stageWordFor(stage)` and `stageWords` (start, early, middle, late; the scrubber itself shows
+only "early" and "late"), `controlsCopy`, `figure` (`label` = the one label line "Illustration: shapes
+drawn from real examples", `caption`, `labels`, `scaleNote`, `drawingAlternative`), `textAlternatives`
+(templates per boundary using only the bindings above), `shows`, and the spread's `page.ignores`.
+
+**Cited figures are typed, not bound.** Real-world figures (Everest's height, crust thicknesses, rift
+widths, the Wallace Creek offset) are not scene values, so they are not probes. They appear only in the
+deeper level and teacher notes, never in a schema-validated field, and the lesson test allows a typed
+number there only if it is in the lesson's cited-figure register (claim id and source). Scene values are
+never stated as facts (7A's NT5).
+
+**Schema gap (for the lead).** The schema's `tier` has no "illustration" value (`TIERS`: physical law,
+process model, stylised theory, agent / stochastic). The spread sets `tier: "stylised-theory"` only to
+validate; the shell must show the lesson's `figure.label` as this spread's tier label, not a "stylised
+theory" badge (D-L2-1: "Its tier label reads 'Illustration: shapes drawn from real examples'"). Adding an
+`"illustration"` tier to Hachure is a one-line additive change for the lead or 7F.
+
+**Alignment with D-W7-7D (session 7E, later the same day).** 7D pushed its scene contract four seconds
+before this one, with request kinds `plates-scene` and `plates-config`. 7E adopts 7D's kinds, so the table
+above changes only in its first column and one field: `blockWidth`, `boundaryName`, `stageLabel`,
+`ghostNames` (field **`viewedNames`**) and `scaleBar` are `plates-scene` probes; the `plates-config` probes
+are unchanged (7D serves any numeric leaf). `plates-display` and `plates-view` are withdrawn. **One field
+for 7D to add:** `plates-scene` `scaleBarLabel` (string, the scale bar's label as drawn). The probe ids, the
+binding keys, are unchanged.
+
+**Content decisions (session 7E).**
+
+1. **Final title: _Where plates meet_.** The working title is kept: short, concrete, a reader's question
+   rather than a term, and parallel to _From V to U_. Running heads: "Plate tectonics" (left), "Plate
+   boundaries shape the land" (right).
+2. **Year facts (7A's PC18, PC19, and PC15's plate speed).** Kept out of the school level, out of every page
+   field, caption, control, text alternative and the disclosure. At university level they appear in **one
+   deeper-level paragraph**, headed "Real time scales, not in the drawing", which first says the drawing has
+   no clock and its stage goes only from early to late, then gives the facts as "cited facts about the real
+   Earth" with their sources. PC18 drops 7A's earthquake clause (NT6). The lesson test enforces all of it:
+   any sentence with a year or rate must sit in that paragraph, with those framing words.
+3. **Cited figures stay in the deeper level and teacher notes.** The school page names the real examples
+   (in each boundary's help: "Shapes drawn from the Himalaya and Tibet", …) but types no figure. Everest's
+   and Tibet's heights (PC4, PC5) are moved from "taught" to "explained": next to the figure they could read
+   as the drawn range's height (NT5). Where a scene value lies inside a cited range (crust 35 km, rift
+   50 km), the text gives the cited range or the cited place's value, never the scene's.
+   **Difference from D-W7-7D's note** that "every cited figure on the page is bound to the config": real-world
+   figures are facts about real places, not values of the drawing, so binding them to the config would claim
+   the drawing is the real place. Values the drawing actually uses and the text quotes (the Airy ratio and
+   densities, the snowline, both scales, the block width) are bound.
+4. **Scrubber label "Stage", ends "early" and "late"**, not the plan's "stage of formation": "formation"
+   invites reading the scrubber as the landform forming in the scene. The spoken value is "<word> stage"
+   (`stageWords`: starting, early, middle, late, by thirds).
+5. **The uni prediction asks for the real root depth ("several times the range's height")**, and the flap
+   explains why the front face shows a root only about as deep as the range is high (×4 heights, ×0.75 crust
+   depths). A test keeps that sentence true for the bound scales (on-screen root ÷ height in 0.8–1.3).
+6. **Sentence register.** `register.ts` turns the copy into a sentence → claims → sources table;
+   `docs/science/plates/lesson/README.md` carries it (208 sentences), regenerated by
+   `docs/science/plates/lesson/register.mjs`, and the lesson test fails if any row is missing or stale.
+7. **Layout (7R review spread, 7C's review.css).** No overflow or horizontal scroll at 1440 × 900,
+   1280 × 720 or 390 × 844 (`docs/review/plates/content/`). School copy fits the spread's height with the
+   flap open; university copy with the flap open makes the flat spread about 4 % taller (905 vs 867 px at
+   1440 wide), which the flat layout absorbs. On the fixed-height tilted page 7F should let the left page
+   scroll or collapse the key words when the flap is open at university level.
+
+**For the lead and 7F.** Add an `"illustration"` tier to Hachure (see above) or keep `spread.tier` unbadged.
+7F registers the spread in `uplift/spreads/index.ts` (7E did not touch it) and maps the lesson's exports to
+7D's `PlatesSceneCopy`. `parameters.json` still has row 10 at 500 m; D-W7-7R's 1,500 m ridges are an
+artistic choice, and no copy states a ridge height.
+
+**Revisit if.** 7D cannot serve `scaleBarLabel` (drop the scale-bar sentence from `textAlternatives.scale`);
+the owner wants a figure on the school page (then a cited figure next to the picker needs an explicit "in
+the real world" frame); or the display scales change (the flap's drawn-root sentence test will fail first).

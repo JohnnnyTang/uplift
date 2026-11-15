@@ -1,0 +1,92 @@
+[
+  {
+    "variant": "hs",
+    "size": "desktop",
+    "horizontalScroll": false,
+    "textPageHeight": 867,
+    "figurePageHeight": 867,
+    "textContentBottom": 631,
+    "spreadMinHeight": 794,
+    "stacked": false
+  },
+  {
+    "variant": "hs",
+    "size": "laptop",
+    "horizontalScroll": false,
+    "textPageHeight": 847,
+    "figurePageHeight": 847,
+    "textContentBottom": 615,
+    "spreadMinHeight": 774,
+    "stacked": false
+  },
+  {
+    "variant": "hs",
+    "size": "phone",
+    "horizontalScroll": false,
+    "textPageHeight": 567,
+    "figurePageHeight": 662,
+    "textContentBottom": 531,
+    "spreadMinHeight": 222,
+    "stacked": true
+  },
+  {
+    "variant": "hs-flap",
+    "size": "desktop",
+    "horizontalScroll": false,
+    "textPageHeight": 867,
+    "figurePageHeight": 867,
+    "textContentBottom": 745,
+    "spreadMinHeight": 794,
+    "stacked": false
+  },
+  {
+    "variant": "hs-flap",
+    "size": "laptop",
+    "horizontalScroll": false,
+    "textPageHeight": 847,
+    "figurePageHeight": 847,
+    "textContentBottom": 726,
+    "spreadMinHeight": 774,
+    "stacked": false
+  },
+  {
+    "variant": "hs-flap",
+    "size": "phone",
+    "horizontalScroll": false,
+    "textPageHeight": 696,
+    "figurePageHeight": 662,
+    "textContentBottom": 660,
+    "spreadMinHeight": 222,
+    "stacked": true
+  },
+  {
+    "variant": "uni-flap",
+    "size": "desktop",
+    "horizontalScroll": false,
+    "textPageHeight": 905,
+    "figurePageHeight": 905,
+    "textContentBottom": 848,
+    "spreadMinHeight": 794,
+    "stacked": false
+  },
+  {
+    "variant": "uni-flap",
+    "size": "laptop",
+    "horizontalScroll": false,
+    "textPageHeight": 882,
+    "figurePageHeight": 882,
+    "textContentBottom": 827,
+    "spreadMinHeight": 774,
+    "stacked": false
+  },
+  {
+    "variant": "uni-flap",
+    "size": "phone",
+    "horizontalScroll": false,
+    "textPageHeight": 786,
+    "figurePageHeight": 645,
+    "textContentBottom": 750,
+    "spreadMinHeight": 222,
+    "stacked": true
+  }
+]
