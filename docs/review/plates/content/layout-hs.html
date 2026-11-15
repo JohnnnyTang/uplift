@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Where plates meet, 7E layout check (hs)</title>
+    <link rel="stylesheet" href="../../../../uplift/book/src/scenes/plates/relief/review/review.css" />
+    <style>
+      .pc-body {
+        margin: 0 0 1cqi;
+        max-width: 34em;
+        line-height: 1.55;
+      }
+      .pc-predict {
+        margin: 1.2cqi 0 0;
+        border: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5cqi 0.8cqi;
+        font-size: max(12px, 1.05cqi);
+      }
+      .pc-predict legend {
+        margin-bottom: 0.4cqi;
+        font-style: italic;
+        color: var(--pr-ink-soft);
+      }
+      .pc-flap {
+        margin: 1cqi 0 0;
+        font-size: max(12px, 1.05cqi);
+      }
+      .pc-flap summary {
+        cursor: pointer;
+        color: var(--pr-pen);
+      }
+      .pc-flap-text {
+        margin: 0.5cqi 0 0;
+        max-width: 36em;
+      }
+      .pc-key {
+        margin: 1.4cqi 0 0;
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 0.2cqi 1cqi;
+        font-size: max(11px, 1cqi);
+      }
+      .pc-key dt {
+        font-weight: bold;
+      }
+      .pc-key dd {
+        margin: 0;
+        color: var(--pr-ink-soft);
+      }
+      .pc-help {
+        margin: 0.8cqi 0 0;
+        font-size: max(11px, 1cqi);
+        color: var(--pr-ink-soft);
+        max-width: 40em;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="pr-review">
+      <div class="pr-desk">
+        <div class="pr-book">
+          <div class="pr-boards" aria-hidden="true"></div>
+          <article class="pr-spread" aria-labelledby="pr-title">
+            <section class="pr-page pr-page-text">
+              <p class="pr-running-head">Lesson 2 · Plate tectonics</p>
+              <h1 id="pr-title">Where plates meet</h1>
+              <p class="pc-body">Earth's outer shell is broken into huge plates that move very slowly.</p>
+              <p class="pc-body">
+                Where two plates meet, they push together, pull apart or slide past each other, and each kind
+                of boundary shapes the land in its own way.
+              </p>
+              <p class="pc-body">
+                Choose a boundary and press Play to see the landform it makes, from early to late.
+              </p>
+              <p class="pr-label">Illustration: shapes drawn from real examples</p>
+              <fieldset class="pc-predict">
+                <legend>
+                  When two continents push together, what happens to the crust under the mountains?
+                </legend>
+                <label class="pr-choice"><input type="radio" name="q" /> It gets thicker</label
+                ><label class="pr-choice"><input type="radio" name="q" /> It gets thinner</label
+                ><label class="pr-choice"><input type="radio" name="q" /> It stays the same</label>
+              </fieldset>
+              <details class="pc-flap">
+                <summary>Lift the flap</summary>
+                <p class="pc-flap-text">
+                  Thicker. When two continents collide, neither sinks, because continental rock is light. The
+                  crust crumples and piles up, so under the mountains it is much thicker than elsewhere: a
+                  deep root.
+                </p>
+                <p class="pc-flap-text">
+                  Choose the convergent boundary and look at the front face: the drawing shows the crust
+                  thicker under the range, as it is under the real Himalaya.
+                </p>
+              </details>
+              <dl class="pc-key">
+                <dt>plate</dt>
+                <dd>one of the huge pieces of Earth's outer shell, moving slowly</dd>
+                <dt>plate boundary</dt>
+                <dd>the place where two plates meet</dd>
+                <dt>convergent</dt>
+                <dd>a boundary where plates move towards each other</dd>
+                <dt>divergent</dt>
+                <dd>a boundary where plates move apart</dd>
+                <dt>transform</dt>
+                <dd>a boundary where plates slide past each other</dd>
+                <dt>crust</dt>
+                <dd>the outermost layer of rock, thickest under high mountains</dd>
+              </dl>
+              <p class="pr-folio">44</p>
+            </section>
+            <section class="pr-page pr-page-figure">
+              <p class="pr-running-head">Plate boundaries shape the land</p>
+              <figure class="pr-figure" aria-labelledby="pr-caption">
+                <div class="pr-frame"><p class="pr-fallback">3D block (7D)</p></div>
+                <figcaption id="pr-caption">
+                  <b>Fig. 2</b> Two continental plates meet along a boundary from back to front. The front
+                  face is a cut through the rock layers and the crust. Not to scale: heights ×4, crust depths
+                  ×0.75.
+                </figcaption>
+              </figure>
+              <fieldset class="pr-picker">
+                <legend>Plate boundary</legend>
+                <label class="pr-choice"
+                  ><input type="radio" name="b" checked /><span class="pr-glyph" aria-hidden="true">→ ←</span
+                  ><span>Convergent</span></label
+                ><label class="pr-choice"
+                  ><input type="radio" name="b" /><span class="pr-glyph" aria-hidden="true">← →</span
+                  ><span>Divergent</span></label
+                ><label class="pr-choice"
+                  ><input type="radio" name="b" /><span class="pr-glyph" aria-hidden="true">⇅</span
+                  ><span>Transform</span></label
+                >
+              </fieldset>
+              <p class="pc-help">
+                The plates move towards each other. Two continents collide. Neither sinks: the crust crumples
+                and is pushed up into mountains, with a deep root below. Shapes drawn from the Himalaya and
+                Tibet.
+              </p>
+              <fieldset class="pr-stage">
+                <legend>Stage</legend>
+                <button class="pr-play" type="button">Play</button>
+                <div class="pr-ruler">
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0.5"
+                    aria-label="Stage, early to late"
+                  /><span class="pr-ends" aria-hidden="true"><span>early</span><span>late</span></span>
+                </div>
+              </fieldset>
+              <div class="pr-view">
+                <label><span>Front face</span><input type="range" /></label
+                ><span>Ghost outlines: boundaries you viewed before, at the same stage.</span
+                ><button type="button">Start again</button>
+              </div>
+              <p class="pr-folio">45</p>
+            </section>
+          </article>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

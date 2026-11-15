@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Where plates meet, 7E layout check (uni)</title>
+    <link rel="stylesheet" href="../../../../uplift/book/src/scenes/plates/relief/review/review.css" />
+    <style>
+      .pc-body {
+        margin: 0 0 1cqi;
+        max-width: 34em;
+        line-height: 1.55;
+      }
+      .pc-predict {
+        margin: 1.2cqi 0 0;
+        border: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5cqi 0.8cqi;
+        font-size: max(12px, 1.05cqi);
+      }
+      .pc-predict legend {
+        margin-bottom: 0.4cqi;
+        font-style: italic;
+        color: var(--pr-ink-soft);
+      }
+      .pc-flap {
+        margin: 1cqi 0 0;
+        font-size: max(12px, 1.05cqi);
+      }
+      .pc-flap summary {
+        cursor: pointer;
+        color: var(--pr-pen);
+      }
+      .pc-flap-text {
+        margin: 0.5cqi 0 0;
+        max-width: 36em;
+      }
+      .pc-key {
+        margin: 1.4cqi 0 0;
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 0.2cqi 1cqi;
+        font-size: max(11px, 1cqi);
+      }
+      .pc-key dt {
+        font-weight: bold;
+      }
+      .pc-key dd {
+        margin: 0;
+        color: var(--pr-ink-soft);
+      }
+      .pc-help {
+        margin: 0.8cqi 0 0;
+        font-size: max(11px, 1cqi);
+        color: var(--pr-ink-soft);
+        max-width: 40em;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="pr-review">
+      <div class="pr-desk">
+        <div class="pr-book">
+          <div class="pr-boards" aria-hidden="true"></div>
+          <article class="pr-spread" aria-labelledby="pr-title">
+            <section class="pr-page pr-page-text">
+              <p class="pr-running-head">Lesson 2 · Plate tectonics</p>
+              <h1 id="pr-title">Where plates meet</h1>
+              <p class="pc-body">
+                Lithospheric plates move apart at divergent boundaries, together at convergent ones and past
+                each other at transform ones.
+              </p>
+              <p class="pc-body">
+                Between continents, collision thickens the crust beneath a high range, stretching thins it
+                beneath a faulted rift, and a transform moves the land sideways without raising or lowering
+                it.
+              </p>
+              <p class="pc-body">
+                Choose a boundary, then compare all three, crust included, at the same stage.
+              </p>
+              <p class="pr-label">Illustration: shapes drawn from real examples</p>
+              <fieldset class="pc-predict">
+                <legend>Under a high collision range, how deep does the crust's root reach?</legend>
+                <label class="pr-choice"
+                  ><input type="radio" name="q" checked /> Several times the range's height</label
+                ><label class="pr-choice"><input type="radio" name="q" /> About the range's height</label
+                ><label class="pr-choice"><input type="radio" name="q" /> No deeper: a flat base</label>
+              </fieldset>
+              <details class="pc-flap" open>
+                <summary>Lift the flap</summary>
+                <p class="pc-flap-text">
+                  Several times deeper. Thick, light crust floats on the denser mantle, like an iceberg in
+                  water (isostasy): the root reaches about 5.6 times as deep as the range stands high (TS14;
+                  Fia).
+                </p>
+                <p class="pc-flap-text">
+                  On the front face the root looks only about as deep as the range is high: heights are drawn
+                  ×4, crust depths ×0.75. Real crust beneath southern Tibet is about twice the usual thickness
+                  (Nab09; CM95).
+                </p>
+              </details>
+              <dl class="pc-key">
+                <dt>plate</dt>
+                <dd>a large piece of the lithosphere, moving slowly relative to its neighbours</dd>
+                <dt>plate boundary</dt>
+                <dd>where two plates meet: in reality a zone of many faults, not one line</dd>
+                <dt>convergent</dt>
+                <dd>plates moving together; between continents, collision thickens the crust</dd>
+                <dt>divergent</dt>
+                <dd>plates moving apart; a stretched continent breaks into a faulted rift valley</dd>
+                <dt>transform</dt>
+                <dd>plates sliding past each other; crust is neither made nor destroyed</dd>
+                <dt>crust</dt>
+                <dd>the outermost rock layer, above the denser mantle; its base is the Moho</dd>
+              </dl>
+              <p class="pr-folio">44</p>
+            </section>
+            <section class="pr-page pr-page-figure">
+              <p class="pr-running-head">Plate boundaries shape the land</p>
+              <figure class="pr-figure" aria-labelledby="pr-caption">
+                <div class="pr-frame"><p class="pr-fallback">3D block (7D)</p></div>
+                <figcaption id="pr-caption">
+                  <b>Fig. 2</b> Two continental plates meet along a boundary from back to front. The front
+                  face is a section through the layered rock, the crust and the mantle. Not to scale: heights
+                  ×4, crust depths ×0.75.
+                </figcaption>
+              </figure>
+              <fieldset class="pr-picker">
+                <legend>Plate boundary</legend>
+                <label class="pr-choice"
+                  ><input type="radio" name="b" /><span class="pr-glyph" aria-hidden="true">→ ←</span
+                  ><span>Convergent</span></label
+                ><label class="pr-choice"
+                  ><input type="radio" name="b" checked /><span class="pr-glyph" aria-hidden="true">← →</span
+                  ><span>Divergent</span></label
+                ><label class="pr-choice"
+                  ><input type="radio" name="b" /><span class="pr-glyph" aria-hidden="true">⇅</span
+                  ><span>Transform</span></label
+                >
+              </fieldset>
+              <p class="pc-help">
+                The plates move apart. Continental rifting: stretched crust breaks along normal faults, blocks
+                drop into a rift valley, and the crust beneath it is thinner. Shapes drawn from the East
+                African Rift.
+              </p>
+              <fieldset class="pr-stage">
+                <legend>Stage</legend>
+                <button class="pr-play" type="button">Play</button>
+                <div class="pr-ruler">
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0.5"
+                    aria-label="Stage, early to late"
+                  /><span class="pr-ends" aria-hidden="true"><span>early</span><span>late</span></span>
+                </div>
+              </fieldset>
+              <div class="pr-view">
+                <label><span>Front face</span><input type="range" /></label
+                ><span>Ghost outlines: boundaries you viewed before, at the same stage.</span
+                ><button type="button">Start again</button>
+              </div>
+              <p class="pr-folio">45</p>
+            </section>
+          </article>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
