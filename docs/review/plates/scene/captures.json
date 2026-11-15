@@ -1,0 +1,155 @@
+{
+  "gpu": "SwiftShader",
+  "captures": [
+    {
+      "file": "drawing-static.png",
+      "note": "Fig. 2 as the static fallback, with the enlarged front face.",
+      "boundary": "none",
+      "stage": "0",
+      "ghosts": "",
+      "mode": "flat",
+      "backend": "",
+      "text": "No boundary chosen. The starting landscape, the same for every boundary: rolling lowland with low ridges and stream valleys that cross the boundary. On the front face, flat rock layers lie over a band of crust of even thickness, with the mantle below. The front face stands at the front of the block."
+    },
+    {
+      "file": "transition-ink.png",
+      "note": "Mid-transition: the block rising in ink over the fading drawing.",
+      "boundary": "none",
+      "stage": "0",
+      "ghosts": "",
+      "mode": "tilted",
+      "backend": "webgl2",
+      "text": "No boundary chosen. The starting landscape, the same for every boundary: rolling lowland with low ridges and stream valleys that cross the boundary. On the front face, flat rock layers lie over a band of crust of even thickness, with the mantle below. The front face stands at the front of the block."
+    },
+    {
+      "file": "start.png",
+      "note": "The starting landscape on the tilted book, no boundary chosen (neutral arrows).",
+      "boundary": "none",
+      "stage": "0",
+      "ghosts": "",
+      "mode": "tilted",
+      "backend": "webgl2",
+      "text": "No boundary chosen. The starting landscape, the same for every boundary: rolling lowland with low ridges and stream valleys that cross the boundary. On the front face, flat rock layers lie over a band of crust of even thickness, with the mantle below. The front face stands at the front of the block."
+    },
+    {
+      "file": "convergent-stage-05.png",
+      "note": "Convergent, middle stage.",
+      "boundary": "convergent",
+      "stage": "0.5",
+      "ghosts": "",
+      "mode": "tilted",
+      "backend": "webgl2",
+      "text": "Convergent boundary, middle stage. The plates move towards each other. A mountain range stands along the boundary. On the front face the rock layers bend up under the range, and the crust beneath it is thicker: a deep root, reaching much deeper than the range stands high. The front face stands at the front of the block."
+    },
+    {
+      "file": "convergent-stage-1.png",
+      "note": "Convergent, late stage: range, snow, layers bent up, root.",
+      "boundary": "convergent",
+      "stage": "1",
+      "ghosts": "",
+      "mode": "tilted",
+      "backend": "webgl2",
+      "text": "Convergent boundary, late stage. The plates move towards each other. A high mountain range stands along the boundary, with snow on its highest ground. On the front face the rock layers bend up under the range, and the crust beneath it is thicker: a deep root, reaching much deeper than the range stands high. The front face stands at the front of the block."
+    },
+    {
+      "file": "convergent-stage-1-block.png",
+      "note": "Convergent, late stage, the block at 2×.",
+      "boundary": "convergent",
+      "stage": "1",
+      "ghosts": "",
+      "mode": "tilted",
+      "backend": "webgl2",
+      "text": "Convergent boundary, late stage. The plates move towards each other. A high mountain range stands along the boundary, with snow on its highest ground. On the front face the rock layers bend up under the range, and the crust beneath it is thicker: a deep root, reaching much deeper than the range stands high. The front face stands at the front of the block."
+    },
+    {
+      "file": "divergent-stage-1.png",
+      "note": "Divergent, late stage: rift, inked scarps with ticks, lakes.",
+      "boundary": "divergent",
+      "stage": "1",
+      "ghosts": "",
+      "mode": "tilted",
+      "backend": "webgl2",
+      "text": "Divergent boundary, late stage. The plates move apart. A deep rift valley lies along the boundary between stepped fault scarps, with slightly raised shoulders on either side and lakes on its floor. On the front face the rock layers drop at each fault, and the crust beneath the rift is thinner. The front face stands at the front of the block."
+    },
+    {
+      "file": "divergent-stage-1-block.png",
+      "note": "Divergent, late stage, the block at 2×.",
+      "boundary": "divergent",
+      "stage": "1",
+      "ghosts": "",
+      "mode": "tilted",
+      "backend": "webgl2",
+      "text": "Divergent boundary, late stage. The plates move apart. A deep rift valley lies along the boundary between stepped fault scarps, with slightly raised shoulders on either side and lakes on its floor. On the front face the rock layers drop at each fault, and the crust beneath the rift is thinner. The front face stands at the front of the block."
+    },
+    {
+      "file": "transform-stage-1.png",
+      "note": "Transform, late stage, default camera.",
+      "boundary": "transform",
+      "stage": "1",
+      "ghosts": "",
+      "mode": "tilted",
+      "backend": "webgl2",
+      "text": "Transform boundary, late stage. The plates slide past each other. The ridges and stream valleys that cross the boundary are clearly offset sideways along a straight fault: looking across the boundary, the far side has moved to the right. The land is not raised or lowered, and on the front face the rock layers and the crust are unchanged. The front face stands at the front of the block."
+    },
+    {
+      "file": "transform-stage-1-block.png",
+      "note": "Transform, late stage, default camera, the block at 2×: ridges and streams offset at the fault.",
+      "boundary": "transform",
+      "stage": "1",
+      "ghosts": "",
+      "mode": "tilted",
+      "backend": "webgl2",
+      "text": "Transform boundary, late stage. The plates slide past each other. The ridges and stream valleys that cross the boundary are clearly offset sideways along a straight fault: looking across the boundary, the far side has moved to the right. The land is not raised or lowered, and on the front face the rock layers and the crust are unchanged. The front face stands at the front of the block."
+    },
+    {
+      "file": "transform-stage-1-above.png",
+      "note": "Transform, late stage, from above (view height at its top).",
+      "boundary": "transform",
+      "stage": "1",
+      "ghosts": "",
+      "mode": "tilted",
+      "backend": "webgl2",
+      "text": "Transform boundary, late stage. The plates slide past each other. The ridges and stream valleys that cross the boundary are clearly offset sideways along a straight fault: looking across the boundary, the far side has moved to the right. The land is not raised or lowered, and on the front face the rock layers and the crust are unchanged. The front face stands at the front of the block."
+    },
+    {
+      "file": "ghosts-stage-075.png",
+      "note": "Divergent at stage ¾ with convergent (dotted) and transform (dash-dot) ghosts, labelled on the block and in the key.",
+      "boundary": "divergent",
+      "stage": "0.75",
+      "ghosts": "convergent,transform",
+      "mode": "tilted",
+      "backend": "webgl2",
+      "text": "Divergent boundary, late stage. The plates move apart. A deep rift valley lies along the boundary between stepped fault scarps, with slightly raised shoulders on either side and lakes on its floor. On the front face the rock layers drop at each fault, and the crust beneath the rift is thinner. The front face stands at the front of the block. The dotted line on the front face is the convergent profile at the same stage: there the land stands high in a range over a deep root. The dash-dot line on the front face is the transform profile at the same stage: there the land keeps the starting height and crust."
+    },
+    {
+      "file": "phone-convergent.png",
+      "note": "Phone (390 × 844): one readable page.",
+      "boundary": "convergent",
+      "stage": "1",
+      "ghosts": "",
+      "mode": "flat",
+      "backend": "webgl2",
+      "text": "Convergent boundary, late stage. The plates move towards each other. A high mountain range stands along the boundary, with snow on its highest ground. On the front face the rock layers bend up under the range, and the crust beneath it is thicker: a deep root, reaching much deeper than the range stands high. The front face stands at the front of the block."
+    },
+    {
+      "file": "reduced-motion.png",
+      "note": "Reduced motion: the flat page; the stage steps in quarters.",
+      "boundary": "divergent",
+      "stage": "0.75",
+      "ghosts": "",
+      "mode": "flat",
+      "backend": "webgl2",
+      "text": "Divergent boundary, late stage. The plates move apart. A deep rift valley lies along the boundary between stepped fault scarps, with slightly raised shoulders on either side and lakes on its floor. On the front face the rock layers drop at each fault, and the crust beneath the rift is thinner. The front face stands at the front of the block."
+    },
+    {
+      "file": "university.png",
+      "note": "University level: words change, the scene does not.",
+      "boundary": "transform",
+      "stage": "1",
+      "ghosts": "",
+      "mode": "tilted",
+      "backend": "webgl2",
+      "text": "Transform boundary, late stage. The plates slide past each other. The ridges and stream valleys that cross the boundary are clearly offset sideways along a straight fault: looking across the boundary, the far side has moved to the right. The land is not raised or lowered, and on the front face the rock layers and the crust are unchanged. The front face stands at the front of the block."
+    }
+  ]
+}

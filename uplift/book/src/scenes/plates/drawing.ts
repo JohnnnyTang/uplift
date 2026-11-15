@@ -264,7 +264,7 @@ export function platesDrawingSvg(o: PlatesDrawingOptions): string {
     const b = P(c + dc, r + dr, h(c + dc, r + dr));
     const head = (from: P2, to: P2) => {
       const ang = Math.atan2(to.y - from.y, to.x - from.x);
-      const L = 30;
+      const L = 40;
       const w = 0.42;
       return `M${f1(to.x)} ${f1(to.y)}L${f1(to.x - L * Math.cos(ang - w))} ${f1(to.y - L * Math.sin(ang - w))}L${f1(to.x - L * Math.cos(ang + w))} ${f1(to.y - L * Math.sin(ang + w))}Z`;
     };
@@ -275,7 +275,7 @@ export function platesDrawingSvg(o: PlatesDrawingOptions): string {
   const arrowRow = Math.round(last * 0.62);
   const left = Math.round(columns * 0.24);
   const rightC = Math.round(columns * 0.76);
-  const span = columns * 0.1;
+  const span = columns * 0.13;
   const motion = o.arrows ?? null;
   const arrowsSvg =
     motion === null
@@ -316,7 +316,7 @@ export function platesDrawingSvg(o: PlatesDrawingOptions): string {
       "scale",
       `M${f1(a.x)} ${f1(a.y + dy - 6)}V${f1(a.y + dy)}L${f1(b.x)} ${f1(b.y + dy)}V${f1(b.y + dy - 6)}`,
     );
-    labels.push(`<text x="${f1(b.x + 8)}" y="${f1(b.y + dy + 10)}">${esc(o.scaleBar.label)}</text>`);
+    labels.push(`<text x="${f1(b.x + 10)}" y="${f1(b.y + dy + 28)}">${esc(o.scaleBar.label)}</text>`);
   }
 
   const title = o.title ?? "Fig. 2 · Two plates meeting along a boundary";
@@ -330,8 +330,8 @@ export function platesDrawingSvg(o: PlatesDrawingOptions): string {
     `.plates-drawing .strata path{stroke-width:.5;stroke-dasharray:5 3}.plates-drawing .cover{stroke-width:.7}`,
     `.plates-drawing .moho{stroke-width:1.1}.plates-drawing .tick,.plates-drawing .ring{stroke-width:.6}`,
     `.plates-drawing .stream{stroke-width:1.3}.plates-drawing .boundary{stroke-width:1.2;stroke-dasharray:7 5}`,
-    `.plates-drawing .plate-arrow .halo{stroke:${PAPER};stroke-width:10}`,
-    `.plates-drawing .plate-arrow .shaft{stroke-width:3.6}.plates-drawing .plate-arrow .head{fill:${INK};stroke-width:1}`,
+    `.plates-drawing .plate-arrow .halo{stroke:${PAPER};stroke-width:12}`,
+    `.plates-drawing .plate-arrow .shaft{stroke-width:4.6}.plates-drawing .plate-arrow .head{fill:${INK};stroke-width:1}`,
     `.plates-drawing .plate-arrow.neutral .head{fill:${PAPER}}`,
     `.plates-drawing .leader{stroke-width:.6}.plates-drawing .scale{stroke-width:1.4}`,
     `.plates-drawing text{font:italic 36px Georgia,serif;fill:${INK};stroke:${PAPER};stroke-width:8px;paint-order:stroke;stroke-linejoin:round}`,

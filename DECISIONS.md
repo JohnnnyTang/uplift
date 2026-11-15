@@ -3062,3 +3062,46 @@ carries `data-ready`, `data-transition`, `data-boundary` (`none` | key), `data-s
 exposed on it for browser tests, as in lesson 1.
 
 **Revisit if.** 7E publishes different binding keys first (7D adopts them), or 7F needs another entry shape.
+
+**Implementation (session 7D, after the contract).** Built as recorded, with these additions:
+
+1. **Bindings.** `plates-scene` also serves `scaleBarLabel` (D-W7-7E's request: the label of the scale bar the
+   scene draws along the block's front edge and on Fig. 2, a round length near a quarter of the block's width
+   from config row 1, today "40 km"). `stageLabel` follows 7E's `stageWordFor`: "starting" at stage 0, then
+   early / middle / late by thirds. 7E's probe ids (`reliefScale`, `crustScale`, `airyRatio`, `crustDensity`,
+   `mantleDensity`, `snowline` as `plates-config` paths; `blockWidth`, `boundaryName`, `stageLabel`,
+   `ghostNames` (field `viewedNames`), `scaleBar` (field `scaleBarLabel`) as `plates-scene`) are all served.
+2. **Copy.** `PlatesSceneCopy` gained `controls.start`, optional `figure.labels` (features `plate`,
+   `plate-boundary`, `rock-layers`, `crust`, `mantle`, as 7E's `figure.labels`) and optional
+   `textAlternatives { start, boundary }` (7E's templates, rendered through the bindings). **For 7F, the
+   mapping from 7E's lesson exports:** `title`, `runningHeads`, `LESSON_NUMBER`, `FIGURE_NUMBER`, `keyWords`,
+   `predict`, flap → `flap.answer`; `figure.label` → `labelLine`; `figure.caption`, `figure.scaleNote` →
+   `figure.scale`, `figure.drawingAlternative`, `figure.labels`; `boundaries[i].name/help` →
+   `boundaries[id]`; `controlsCopy.boundaryLegend` → `pickerLegend`, `stageLegend` ("Stage"), `stageEarly`,
+   `stageLate`, `play`, `pause`, `frontFace`, `reset`, `ghostLegend` → `ghostsLegend`, `boundaryHelp` →
+   `invite`; `stageWords.start/middle` → `controls.start/middle`; `textAlternatives.start/boundary`;
+   `shows`, `page.ignores` → `showsIgnores`. The arrow-handle names and help (`leftPlateArrow`,
+   `rightPlateArrow`, `arrowHelp`) and `noBoundary`, `replay` have no 7E words yet: 7F keeps the placeholder's
+   or 7E adds them.
+3. **Generic engine additions (additive, lesson 1 byte-identical: it passes none of them).** `DressingRules`
+   gains `streams`, `lakes`, `hachures`, `inkLines` and `keepTree` (`hachure/ink/src/stage/diorama.ts`, a new
+   `inkLine` stroke kind beside 7R2's `coverBase`); stream ribbons and lake surfaces are plain geometry in
+   `hachure/ink/src/stage/water.ts`. `@hachure/ink/plates` (a new package export) holds
+   `attachBlockArrows`: handles anchored on the block that report drags and arrow keys as block-axis
+   directions; Hachure has no plate vocabulary.
+4. **Dressing** (`scenes/plates/dressing.ts`, pure, tested): streams on the filled surface where 140 cells
+   drain (every valley crossing the boundary gets one; they jog at the transform fault); lakes only on dropped
+   ground (negative layer offset), at most 70 m deep below the spill level; fault scarps found where the layer
+   offset steps sharply, inked 2.2 px with the textbook tick symbol towards the dropped side; hachures by
+   drawn slope (×4) over 38°; trees at 0.03 density and none within 16 km of the boundary (the owner's
+   2026-11-15 requirement that the transform offset read at page size); the transform's fault trace as ink.
+5. **Camera.** Book tilt 42° (lesson 1: 48°), so the offset reads from the default view; the turntable limits
+   are lesson 1's.
+6. **Playback.** Frames quantised to 1/100 of the stage and memoised (LRU of 48), the next frame prefetched in
+   idle time; the source's own stage is never rounded. On the dev laptop's GPU, continuous play holds the
+   display rate (median 8.3 ms, p90 8.5 ms, p99 25–33 ms) with 101 block rebuilds from early to late at a
+   median 26 ms each. Deterministic: the same stage always gives the same frame.
+7. **Static view reports "ready".** The drawing plus the enlarged front face is a complete page that says so;
+   the shell words its "fallback" status for lesson 1's recorded runs, which this lesson does not have.
+
+**For the lead.** `hachure/ink/package.json` gained the `./plates` export (outside 7D's owned paths, one line).
