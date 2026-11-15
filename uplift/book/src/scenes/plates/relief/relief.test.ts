@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import { elevationRange, toBlockGrid, validateSnapshot } from "@hachure/ink/stage";
 import {
   PLATES_RELIEF_CONFIG,
   PLATE_BOUNDARIES,
@@ -114,6 +115,21 @@ describe("snapshot shape", () => {
       expect("modelTimeYr" in s).toBe(false);
       // The crust base always lies far below the surface.
       for (let k = 0; k < s.bedM.length; k++) expect(s.crustBaseM[k]!).toBeLessThan(s.bedM[k]! - 1000);
+    }
+  });
+
+  it("passes the stage's own snapshot checks and resamples with its crust base and layer offset", () => {
+    const frame = createPlatesRelief().elevationFrame();
+    for (const b of PLATE_BOUNDARIES) {
+      const s = relief(b, 1);
+      expect(() => validateSnapshot(s)).not.toThrow();
+      const g = toBlockGrid(s);
+      expect(g.crustBaseM).toBeDefined();
+      expect(g.layerOffsetM).toBeDefined();
+      expect(g.modelTimeYr).toBeNull();
+      const r = elevationRange(g);
+      expect(r.minM).toBeGreaterThanOrEqual(frame.minM);
+      expect(r.maxM).toBeLessThanOrEqual(frame.maxM);
     }
   });
 

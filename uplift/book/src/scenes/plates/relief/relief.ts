@@ -16,16 +16,14 @@ import {
   platesSceneScales,
 } from "./config";
 import { type PlatesField, platesField } from "./field";
+import type { LandscapeSnapshot } from "@hachure/ink/stage";
 
 /**
- * One frame of the sequence. Structurally a `LandscapeSnapshot` (`@hachure/ink/stage`, with D-W7-7B's
- * `crustBaseM` and its follow-up `layerOffsetM`), with no `modelTimeYr`: an authored, timeless state.
+ * One frame of the sequence: a `LandscapeSnapshot` (`@hachure/ink/stage`, with D-W7-7B's `crustBaseM` and
+ * D-W7-7B2's `layerOffsetM`) whose fields are always present, and no `modelTimeYr`: an authored, timeless
+ * state.
  */
-export interface PlatesReliefSnapshot {
-  readonly columns: number;
-  readonly rows: number;
-  /** Horizontal cell size (unit: metres). */
-  readonly metresPerCell: number;
+export interface PlatesReliefSnapshot extends LandscapeSnapshot {
   /** Surface elevation per cell (unit: metres, real). The stage applies `reliefScale`. */
   readonly bedM: Float32Array;
   /** Without erosion the surface is always the top layer: one id for the whole grid. */
