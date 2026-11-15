@@ -382,15 +382,17 @@ describe("the 7A crust geometry (docs/review/plates/brief/crust-geometry.json)",
 });
 
 describe("fixed elevation frame", () => {
-  it("is one frame for every boundary and stage, from the block base to the highest peak", () => {
+  it("is one frame for every boundary and stage, from the deepest crust base to the highest peak", () => {
     const frame = createPlatesRelief().elevationFrame();
-    expect(frame.minM).toBe(-13_500);
+    expect(frame.minM).toBe(minOf(relief("convergent", 1).crustBaseM));
+    expect(frame.minM).toBeCloseTo(-11_842, -1); // 7A: deepest crust base, scene metres
     expect(frame.maxM).toBe(maxOf(relief("convergent", 1).bedM));
     for (const b of PLATE_BOUNDARIES)
       for (const s of [0, 0.5, 1]) {
         const snap = relief(b, s);
         expect(maxOf(snap.bedM)).toBeLessThanOrEqual(frame.maxM);
-        expect(minOf(snap.crustBaseM)).toBeGreaterThan(frame.minM);
+        expect(minOf(snap.crustBaseM)).toBeGreaterThanOrEqual(frame.minM);
+        expect(minOf(snap.bedM)).toBeGreaterThan(frame.minM);
       }
   });
 });

@@ -44,9 +44,13 @@ export interface PlatesReliefSnapshot {
   readonly layerOffsetM: Float32Array;
 }
 
-/** The block's fixed elevation frame, the same for every boundary and stage, so ghosts compare (row 4). */
+/**
+ * The block's fixed elevation frame, the same for every boundary and stage, so ghosts compare (7A row 4).
+ * Every field of every boundary lies inside it (the extremes are at stages 0 and 1, by monotonicity), so the
+ * stage never re-frames the block when the boundary or stage changes. Hand it to `setElevationRange`.
+ */
 export interface PlatesElevationFrame {
-  /** Block base (unit: scene metres; real metres on the crust's scale). */
+  /** Deepest crust base over every boundary at stages 0 and 1 (unit: scene metres). */
   readonly minM: number;
   /** Highest bed over every boundary at stages 0 and 1 (unit: metres). */
   readonly maxM: number;
@@ -72,7 +76,7 @@ export function createPlatesRelief(config: PlatesReliefConfig = PLATES_RELIEF_CO
   if (!(metresPerCell > 0)) throw new RangeError("metresPerCell must be positive");
 
   const field = platesField(config);
-  const { crustSceneFactor, blockBaseSceneM } = platesSceneScales(config);
+  const { crustSceneFactor } = platesSceneScales(config);
   const rockId = config.start.layers[0]?.rockId ?? config.start.basement.rockId;
   // Cell centres in metres from the block's middle: the boundary `x = 0` runs down the middle of the block.
   const xs = Float64Array.from({ length: columns }, (_, c) => (c - (columns - 1) / 2) * metresPerCell);
@@ -119,10 +123,17 @@ export function createPlatesRelief(config: PlatesReliefConfig = PLATES_RELIEF_CO
   let frame: PlatesElevationFrame | null = null;
   const elevationFrame = (): PlatesElevationFrame => {
     if (!frame) {
+      let minM = Infinity;
       let maxM = -Infinity;
       for (const b of ["convergent", "divergent", "transform"] as const)
-        for (const s of [0, 1]) for (const v of relief(b, s).bedM) maxM = Math.max(maxM, v);
-      frame = Object.freeze({ minM: blockBaseSceneM, maxM });
+        for (const s of [0, 1]) {
+          const snap = relief(b, s);
+          for (let k = 0; k < snap.bedM.length; k++) {
+            minM = Math.min(minM, snap.bedM[k]!, snap.crustBaseM[k]!);
+            maxM = Math.max(maxM, snap.bedM[k]!);
+          }
+        }
+      frame = Object.freeze({ minM, maxM });
     }
     return frame;
   };
