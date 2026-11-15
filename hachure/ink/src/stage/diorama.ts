@@ -133,6 +133,11 @@ export interface DressingRules {
    */
   readonly hachures?: (g: BlockGrid, cfg: DressingConfig, lastRow: number) => number[];
   /**
+   * Thins the trees (D-W7-7D): false drops the tree placed at fractional cell (a, l), for example to keep a
+   * strip clear where small relief must read. Absent: every tree the dressing config places is drawn.
+   */
+  readonly keepTree?: (g: BlockGrid, a: number, l: number) => boolean;
+  /**
    * Extra ink lines draped on the surface (D-W7-7D), for example fault traces or scarp crests: polylines in
    * fractional cell coordinates, at full ink strength. Absent: none.
    */
@@ -590,7 +595,8 @@ export class ValleyDiorama {
 
     this.rebuildWater(g, f, riverSet);
 
-    const sites = treeSites(g, cfg, riverSet, f.cutRow);
+    const keep = this.rules.keepTree;
+    const sites = treeSites(g, cfg, riverSet, f.cutRow).filter((t) => !keep || keep(g, t.a, t.l));
     const m = g.metresPerCell;
     const matrix = new Matrix4();
     const count = Math.min(sites.length, this.trees.instanceMatrix.count);
@@ -712,7 +718,7 @@ export class ValleyDiorama {
     for (const p of paths)
       for (let i = 0; i + 1 < p.length; i += 2)
         riverSet.add(Math.round(p[i + 1]!) * g.across + Math.round(p[i]!));
-    const streams = paths.length ? buildStreams(g, f, paths, 0.9) : null;
+    const streams = paths.length ? buildStreams(g, f, paths, 1.3) : null;
     this.streams.geometry.dispose();
     this.streams.geometry = streams ? toGeometry(streams) : new BufferGeometry();
     this.streams.visible = streams !== null;

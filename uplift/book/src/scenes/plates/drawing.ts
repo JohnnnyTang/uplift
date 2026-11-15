@@ -31,7 +31,7 @@ interface P2 {
 export type PlateArrowMotion = "towards" | "apart" | "along" | null;
 
 export interface PlatesDrawingLabel {
-  readonly feature: "boundary" | "plate" | "crust" | "mantle";
+  readonly feature: "plate" | "plate-boundary" | "rock-layers" | "crust" | "mantle";
   readonly text: string;
 }
 
@@ -46,6 +46,8 @@ export interface PlatesDrawingOptions {
   readonly strataM: readonly number[];
   readonly arrows?: PlateArrowMotion;
   readonly labels?: readonly PlatesDrawingLabel[];
+  /** A scale bar along the front edge: its length (unit: grid cells) and its label. */
+  readonly scaleBar?: { readonly cells: number; readonly label: string };
   /** id prefix for `<title>`/`<desc>`. */
   readonly idPrefix?: string;
   readonly title?: string;
@@ -95,7 +97,7 @@ export function platesDrawingSvg(o: PlatesDrawingOptions): string {
   const minX = Math.min(...corners.map((p) => p.x), project(0, 0, bed(0, 0)).x) - 30;
   const maxX = Math.max(...corners.map((p) => p.x)) + 190;
   const minY = top - 70;
-  const maxY = Math.max(...corners.map((p) => p.y)) + 14;
+  const maxY = Math.max(...corners.map((p) => p.y)) + (o.scaleBar ? 50 : 14);
   const W = Math.ceil(maxX - minX);
   const H = Math.ceil(maxY - minY);
   const T = (p: P2): P2 => ({ x: p.x - minX, y: p.y - minY });
@@ -300,14 +302,29 @@ export function platesDrawingSvg(o: PlatesDrawingOptions): string {
         `<text x="${f1(p.x + dx)}" y="${f1(p.y + dy)}" text-anchor="${anchor}">${esc(text)}</text>`,
     );
   for (const l of o.labels ?? []) {
-    if (l.feature === "boundary") label(l.text, P(mid, 6, bed(cMid, 6) + 40), -20, -42, "end");
+    if (l.feature === "plate-boundary") label(l.text, P(mid, 6, bed(cMid, 6) + 40), -20, -42, "end");
     if (l.feature === "plate") label(l.text, P(left, 22, bed(left, 22)), -10, -38, "end");
     if (l.feature === "crust") {
       const c = right;
       const h = ((coverBase(c, last) ?? bed(c, last)) + crust(c, last)) / 2;
       label(l.text, P(c, last - 6, h), 22, 4);
     }
+    if (l.feature === "rock-layers" && o.strataM.length) {
+      const h = (bed(right, last - 10) + o.strataM.at(-1)!) / 2;
+      label(l.text, P(right, last - 10, h), 22, -6);
+    }
     if (l.feature === "mantle") label(l.text, P(right, last - 6, (crust(right, last) + baseM) / 2), 22, 4);
+  }
+
+  if (o.scaleBar) {
+    const a = P(0, last, baseM);
+    const b = P(o.scaleBar.cells, last, baseM);
+    const dy = 16;
+    add(
+      "scale",
+      `M${f1(a.x)} ${f1(a.y + dy - 6)}V${f1(a.y + dy)}L${f1(b.x)} ${f1(b.y + dy)}V${f1(b.y + dy - 6)}`,
+    );
+    labels.push(`<text x="${f1(b.x + 8)}" y="${f1(b.y + dy + 10)}">${esc(o.scaleBar.label)}</text>`);
   }
 
   const title = o.title ?? "Fig. 2 · Two plates meeting along a boundary";
@@ -324,7 +341,7 @@ export function platesDrawingSvg(o: PlatesDrawingOptions): string {
     `.plates-drawing .plate-arrow .halo{stroke:${PAPER};stroke-width:10}`,
     `.plates-drawing .plate-arrow .shaft{stroke-width:3.6}.plates-drawing .plate-arrow .head{fill:${INK};stroke-width:1}`,
     `.plates-drawing .plate-arrow.neutral .head{fill:${PAPER}}`,
-    `.plates-drawing .leader{stroke-width:.6}`,
+    `.plates-drawing .leader{stroke-width:.6}.plates-drawing .scale{stroke-width:1.4}`,
     `.plates-drawing text{font:italic 36px Georgia,serif;fill:${INK};stroke:${PAPER};stroke-width:8px;paint-order:stroke;stroke-linejoin:round}`,
     `</style>`,
     `<g class="plates-drawing-lines">${lines.join("")}</g>`,

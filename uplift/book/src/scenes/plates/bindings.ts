@@ -4,7 +4,8 @@
  * agree; nothing here is a measurement of the drawing.
  *
  * - `plates-scene` probes, by `field`: `boundaryName`, `stageLabel`, `viewedNames` (strings),
- *   `surfaceVerticalExaggeration`, `crustVerticalExaggeration`, `blockWidthKm`, `blockLengthKm` (numbers).
+ *   `surfaceVerticalExaggeration`, `crustVerticalExaggeration`, `blockWidthKm`, `blockLengthKm` (numbers),
+ *   `scaleBarLabel` (string, the scale bar's label as drawn, D-W7-7E).
  * - `plates-config` probes: any numeric leaf of the relief config, by dotted path (`crust.normalThicknessM`).
  */
 import type { BoundValue, Probe } from "@hachure/runtime";
@@ -24,7 +25,18 @@ export const PLATES_SCENE_FIELDS = [
   "crustVerticalExaggeration",
   "blockWidthKm",
   "blockLengthKm",
+  "scaleBarLabel",
 ] as const;
+
+/**
+ * The scale bar drawn along the front edge of the block (and of Fig. 2): a round length near a quarter of
+ * the block's width (unit: km), from the config's grid. A scale, not a measurement of a landform.
+ */
+export function scaleBarKm(config: PlatesReliefConfig): number {
+  const widthKm = ((config.grid.columns - 1) * config.grid.metresPerCell) / 1000;
+  const nice = [1, 2, 5, 10, 20, 25, 40, 50, 100, 200, 250, 500];
+  return nice.filter((v) => v <= widthKm * 0.3).at(-1) ?? nice[0]!;
+}
 
 /** A numeric leaf of the config by dotted path, or undefined. */
 export function configValue(config: PlatesReliefConfig, path: string): number | undefined {
@@ -67,6 +79,7 @@ export function platesSceneValues(
     crustVerticalExaggeration: config.display.crustVerticalExaggeration,
     blockWidthKm: ((columns - 1) * metresPerCell) / 1000,
     blockLengthKm: ((rows - 1) * metresPerCell) / 1000,
+    scaleBarLabel: `${scaleBarKm(config)} km`,
   };
 }
 
@@ -119,4 +132,5 @@ export const PLATES_DEFAULT_PROBES: readonly Probe[] = Object.freeze([
   sceneProbe("crustVerticalExaggeration", "", "Vertical scale of crust depths"),
   sceneProbe("blockWidthKm", "km", "Width of the block"),
   sceneProbe("blockLengthKm", "km", "Length of the block"),
+  sceneProbe("scaleBarLabel", "", "Scale bar"),
 ]);

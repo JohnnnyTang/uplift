@@ -22,7 +22,7 @@ import type { AttachedBlockArrows, BlockDirection } from "@hachure/ink/plates";
 import type * as GlacialInk from "@hachure/ink/glacial";
 import { createReadingPanel } from "../glacial/reading-panel";
 import { createViewControls } from "../glacial/view-controls";
-import { PLATES_DEFAULT_PROBES, platesProbeValues } from "./bindings";
+import { PLATES_DEFAULT_PROBES, platesProbeValues, scaleBarKm } from "./bindings";
 import { type LevelText, type PlatesSceneCopy, PLATES_PLACEHOLDER_COPY } from "./copy";
 import { platesDressingRules } from "./dressing";
 import { type PlateArrowMotion, type PlatesDrawingLabel, platesDrawingSvg } from "./drawing";
@@ -40,13 +40,25 @@ import { GHOST_PATTERN_WORDS, cutWords, describeScene, stageWord } from "./words
 /** Book tilt (unit: degrees). Lesson 1 freezes 48°; a slightly higher view lets the transform offset read. */
 export const PLATES_TILT_DEG = 42;
 /** Fraction of eligible low, gentle cells with a tree (unit: none). Sparse, so ridges and streams read. */
-const TREE_DENSITY = 0.04;
+const TREE_DENSITY = 0.03;
+/**
+ * No trees within this many cells of the boundary (unit: cells, 1 km each): the owner's requirement that the
+ * transform offset reads at page size (2026-11-15). The strip is a look choice, not a claim.
+ */
+const TREE_CLEAR_HALF_WIDTH_CELLS = 16;
 /** Trees only on ground gentler than this (unit: degrees, true slope). */
 const MAX_TREE_SLOPE_DEG = 9;
 /** Resting strength of the slope hachures once colour is in (unit: none). Lesson 1 rests at 0.22. */
 const RESTING_HACHURE = 0.45;
 /** The front face on opening, as a fraction along the boundary from the back (unit: none). */
 const DEFAULT_CUT = 1;
+
+/** Leader labels of Fig. 2 when the copy names none (words only). */
+const DEFAULT_DRAWING_LABELS: NonNullable<PlatesSceneCopy["figure"]["labels"]> = [
+  { feature: "plate-boundary", text: { hs: "plate boundary", uni: "plate boundary" } },
+  { feature: "crust", text: { hs: "crust", uni: "crust" } },
+  { feature: "mantle", text: { hs: "mantle", uni: "mantle" } },
+];
 
 /** Plate motions shown by the arrows for each boundary (drawing and on-block arrows alike). */
 const MOTION: Readonly<Record<PlateBoundary, PlateArrowMotion>> = {
@@ -144,6 +156,7 @@ export async function mountPlatesScene(
   const config = relief.config;
   const frame = relief.elevationFrame();
   const reliefScale = config.display.surfaceVerticalExaggeration;
+  const scaleKm = scaleBarKm(config);
   let level: Level = o.level ?? "hs";
   let presentation: PlatesPagePresentation = o.presentation ?? { prediction: null, flapOpen: false };
   let cut = DEFAULT_CUT;
@@ -211,7 +224,8 @@ export async function mountPlatesScene(
   caption.append(captionText, scaleLine);
   const ghostKey = el("div", "ps-ghost-key");
   ghostKey.hidden = true;
-  figure.append(frameEl, caption, lens, ghostKey);
+  // The ghost key: one line under the caption (the labels on the block carry the same name, glyph and line).
+  figure.append(frameEl, caption, ghostKey, lens);
 
   const picker = el("fieldset", "ps-picker");
   const pickerLegend = el("legend");
@@ -334,22 +348,8 @@ export async function mountPlatesScene(
     });
 
   // ---- Words (level-dependent; the sequence never changes here) ----
-  const drawingLabels = (): PlatesDrawingLabel[] => [
-    {
-      feature: "boundary",
-      text: t(
-        copy.keyWords.find((k) => /boundary/i.test(k.term.hs))?.term ?? {
-          hs: "plate boundary",
-          uni: "plate boundary",
-        },
-      ),
-    },
-    {
-      feature: "crust",
-      text: t(copy.keyWords.find((k) => /crust/i.test(k.term.hs))?.term ?? { hs: "crust", uni: "crust" }),
-    },
-    { feature: "mantle", text: "mantle" },
-  ];
+  const drawingLabels = (): PlatesDrawingLabel[] =>
+    (copy.figure.labels ?? DEFAULT_DRAWING_LABELS).map((l) => ({ feature: l.feature, text: t(l.text) }));
   let drawnMotion: string | undefined;
   const renderDrawing = () => {
     const b = shownBoundary();
@@ -367,6 +367,7 @@ export async function mountPlatesScene(
       ),
       arrows: motion,
       labels: drawingLabels(),
+      scaleBar: { cells: (scaleKm * 1000) / config.grid.metresPerCell, label: `${scaleKm} km` },
       idPrefix: "ps-fig",
       title: `Fig. ${copy.figure.number}: ${t(copy.figure.caption)}`,
       description: t(copy.figure.drawingAlternative),
@@ -532,6 +533,7 @@ export async function mountPlatesScene(
       ghosts: ghostBoundaries(),
       copy,
       level,
+      render: bound,
     });
   };
 
@@ -678,7 +680,12 @@ export async function mountPlatesScene(
       treeDensity: TREE_DENSITY,
       maxTreeSlopeDeg: MAX_TREE_SLOPE_DEG,
     },
-    rules: platesDressingRules({ reliefScale, faultTraceColumn: () => traceColumn }),
+    rules: platesDressingRules({
+      reliefScale,
+      faultTraceColumn: () => traceColumn,
+      clearColumn: (config.grid.columns - 1) / 2,
+      treeClearHalfWidthCells: TREE_CLEAR_HALF_WIDTH_CELLS,
+    }),
   });
   diorama = dio;
   dio.setElevationRange(frame);
@@ -954,7 +961,9 @@ export async function mountPlatesScene(
       ]);
       if (!pt) return;
       let y = pt.y - at.top;
-      while (used.some((u) => Math.abs(u - y) < 22)) y -= 22;
+      // Below the profile point, on the front face; stacked downwards so labels never cover the top.
+      y += 12;
+      while (used.some((u) => Math.abs(u - y) < 22)) y += 22;
       used.push(y);
       const tag = el("span", "ps-ghost-label");
       tag.dataset.boundary = b;
@@ -966,6 +975,30 @@ export async function mountPlatesScene(
       items.push(tag);
     });
     ghostLabels.replaceChildren(...items);
+  };
+  // ---- The scale bar along the block's front edge (its label is the bound `scaleBarLabel`) ----
+  const scaleSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  scaleSvg.setAttribute("class", "ps-scale-bar");
+  scaleSvg.setAttribute("aria-hidden", "true");
+  overlay.append(scaleSvg);
+  const placeScaleBar = () => {
+    const p = fp();
+    if (!p || !transitionDone) {
+      scaleSvg.replaceChildren();
+      return;
+    }
+    const x0 = -p.widthM / 2;
+    const [a, b] = bookStage.projectBlockPoints([
+      [x0, 0, p.frontZ],
+      [x0 + scaleKm * 1000, 0, p.frontZ],
+    ]);
+    if (!a || !b) return;
+    const at = overlay.getBoundingClientRect();
+    const f = (v: number) => v.toFixed(1);
+    const [ax, ay, bx, by] = [a.x - at.left, a.y - at.top + 12, b.x - at.left, b.y - at.top + 12];
+    scaleSvg.innerHTML =
+      `<path d="M${f(ax)} ${f(ay - 5)}V${f(ay)}L${f(bx)} ${f(by)}V${f(by - 5)}"/>` +
+      `<text x="${f(bx + 6)}" y="${f(by + 4)}">${scaleKm} km</text>`;
   };
   let overlayKey = "";
   const placeOverlay = (force = false) => {
@@ -979,6 +1012,7 @@ export async function mountPlatesScene(
     overlay.style.clipPath = `inset(${Math.max(0, d.top)}px ${Math.max(0, innerWidth - d.right)}px ${Math.max(0, innerHeight - d.bottom)}px ${Math.max(0, d.left)}px)`;
     arrows?.update();
     placeGhostLabels();
+    placeScaleBar();
   };
   let overlayFrame = 0;
   const overlayLoop = () => {

@@ -9,6 +9,9 @@
  */
 import type { PlateBoundary } from "./relief/index";
 
+/** Features of Fig. 2 a leader label can point at. */
+export type PlatesDrawingFeature = "plate" | "plate-boundary" | "rock-layers" | "crust" | "mantle";
+
 export interface LevelText {
   readonly hs: string;
   readonly uni: string;
@@ -34,6 +37,8 @@ export interface PlatesSceneCopy {
     readonly drawingAlternative: LevelText;
     /** Scale line under the figure; bindings for the two display scales. */
     readonly scale: LevelText;
+    /** Leader-line words on the drawing (words only); default: plate boundary, crust, mantle. */
+    readonly labels?: readonly { readonly feature: PlatesDrawingFeature; readonly text: LevelText }[];
   };
   readonly boundaries: Readonly<
     Record<
@@ -48,6 +53,8 @@ export interface PlatesSceneCopy {
   readonly controls: {
     readonly pickerLegend: LevelText;
     readonly noBoundary: LevelText;
+    /** The stage word at the shared starting landscape (stage 0). */
+    readonly start: LevelText;
     readonly stageLegend: LevelText;
     readonly early: LevelText;
     readonly middle: LevelText;
@@ -66,6 +73,15 @@ export interface PlatesSceneCopy {
     readonly invite: LevelText;
     /** Heading of the ghost key. */
     readonly ghostsLegend: LevelText;
+  };
+  /**
+   * Text-alternative templates (7E), rendered through the bindings: the starting landscape, and one per
+   * boundary after the start. Absent: the scene's own draft sentences (`words.ts`). The front-face position
+   * and the ghost lines are always described by the scene.
+   */
+  readonly textAlternatives?: {
+    readonly start: LevelText;
+    readonly boundary: Readonly<Record<PlateBoundary, LevelText>>;
   };
   /** "What this shows / ignores" (fuller limits behind the one label line). */
   readonly showsIgnores: { readonly shows: readonly LevelText[]; readonly ignores: readonly LevelText[] };
@@ -126,7 +142,8 @@ export const PLATES_PLACEHOLDER_COPY: PlatesSceneCopy = Object.freeze({
   controls: {
     pickerLegend: both("How the plates move"),
     noBoundary: both("No boundary chosen"),
-    stageLegend: both("Stage of formation"),
+    start: both("starting"),
+    stageLegend: both("Stage"),
     early: both("early"),
     middle: both("middle"),
     late: both("late"),
@@ -141,7 +158,7 @@ export const PLATES_PLACEHOLDER_COPY: PlatesSceneCopy = Object.freeze({
       "Drag a plate's arrow towards the boundary, away from it or along it. With the arrow focused, use the arrow keys.",
     ),
     invite: both("Drag a plate's arrow on the block, or choose below."),
-    ghostsLegend: both("Boundaries already viewed, at this stage"),
+    ghostsLegend: both("Viewed before, at this stage:"),
   },
   showsIgnores: {
     shows: [both("Placeholder: what the illustration shows (session 7E).")],

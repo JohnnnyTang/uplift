@@ -38,6 +38,13 @@ export interface PlatesDressingOptions {
   readonly hachureMinDrawnSlopeDeg?: number;
   /** Lattice spacing of the hachures (unit: cells). */
   readonly hachureSpacingCells?: number;
+  /**
+   * Keep trees out of a strip this many cells either side of `clearColumn` (unit: cells), so the ridges,
+   * streams and offsets near the boundary read at page size (D-W7-7R, owner, 2026-11-15). 0: no strip.
+   */
+  readonly treeClearHalfWidthCells?: number;
+  /** Centre column of the tree-free strip (the boundary; fractional block-grid column). */
+  readonly clearColumn?: number;
   /** A straight fault trace along this block-grid column (fractional), or null for none. Read per call. */
   readonly faultTraceColumn?: () => number | null;
 }
@@ -50,6 +57,9 @@ const DEFAULTS = {
   scarpMinStepM: 45,
   hachureMinDrawnSlopeDeg: 38,
   hachureSpacingCells: 2,
+  treeClearHalfWidthCells: 0,
+  scarpTickSpacingRows: 3,
+  scarpTickLengthCells: 1.6,
 } as const;
 
 /** A binary min-heap of cells by level, ties by insertion order (deterministic). Fixed capacity. */
@@ -331,6 +341,32 @@ export function scarpLines(g: BlockGrid, minStepM: number, lastRow: number): num
 }
 
 /**
+ * The textbook fault-scarp symbol: short ink ticks hanging from each scarp line down its face, towards the
+ * dropped side (where the layer offset is lower), every `spacingRows`. Segments `a0, l0, a1, l1`.
+ */
+export function scarpTicks(
+  g: BlockGrid,
+  lines: readonly (readonly number[])[],
+  spacingRows: number,
+  lengthCells: number,
+): number[] {
+  const offset = g.layerOffsetM;
+  if (!offset) return [];
+  const out: number[] = [];
+  for (const line of lines)
+    for (let i = 0; i + 1 < line.length; i += 2 * spacingRows) {
+      const x = line[i]!;
+      const l = line[i + 1]!;
+      const a = Math.floor(x);
+      const k = l * g.across + a;
+      // The step lies between columns a and a + 1: ticks point towards the lower side.
+      const down = offset[k + 1]! < offset[k]! ? 1 : -1;
+      out.push(x, l, x + down * lengthCells, l);
+    }
+  return out;
+}
+
+/**
  * Hachures on ground steep as drawn: on a lattice of `spacing` cells, a stroke pointing downslope, longer
  * on steeper ground. Segments `a0, l0, a1, l1` in fractional cells.
  */
@@ -381,8 +417,17 @@ export function platesDressingRules(options: PlatesDressingOptions): DressingRul
       ),
     hachures: (g: BlockGrid, _cfg: DressingConfig, lastRow: number) =>
       drawnSlopeHachures(g, o.reliefScale, o.hachureMinDrawnSlopeDeg, o.hachureSpacingCells, lastRow),
+    keepTree: (_g: BlockGrid, a: number) =>
+      o.clearColumn === undefined || Math.abs(a - o.clearColumn) > o.treeClearHalfWidthCells,
     inkLines: (g: BlockGrid, _cfg: DressingConfig, lastRow: number) => {
-      const lines = scarpLines(g, o.scarpMinStepM, lastRow).map((points) => ({ points, widthPx: 1.6 }));
+      const scarps = scarpLines(g, o.scarpMinStepM, lastRow);
+      const lines: { points: number[]; widthPx: number }[] = scarps.map((points) => ({
+        points,
+        widthPx: 2.2,
+      }));
+      const ticks = scarpTicks(g, scarps, o.scarpTickSpacingRows, o.scarpTickLengthCells);
+      for (let i = 0; i < ticks.length; i += 4)
+        lines.push({ points: ticks.slice(i, i + 4).concat(), widthPx: 1.4 });
       const trace = o.faultTraceColumn?.() ?? null;
       if (trace !== null) {
         const points: number[] = [];

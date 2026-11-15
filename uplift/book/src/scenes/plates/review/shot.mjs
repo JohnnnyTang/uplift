@@ -6,7 +6,10 @@ import { chromium } from "playwright";
 const [query = "", out = "shot.png", actions = "[]"] = process.argv.slice(2);
 const origin = process.env.ORIGIN ?? "http://127.0.0.1:4194";
 const browser = await chromium.launch({ args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"] });
-const page = await browser.newPage({ viewport: { width: 1366, height: 900 } });
+const page = await browser.newPage({
+  viewport: { width: Number(process.env.W ?? 1366), height: Number(process.env.H ?? 900) },
+  deviceScaleFactor: Number(process.env.DPR ?? 1),
+});
 page.on(
   "console",
   (m) => (m.type() === "error" || m.type() === "warning") && console.log("console:", m.text()),
@@ -27,7 +30,14 @@ for (const a of JSON.parse(actions)) {
   if (a.wait) await page.waitForTimeout(a.wait);
 }
 await page.waitForTimeout(800);
-await page.screenshot({ path: out });
+const clip = process.env.CLIP ? JSON.parse(process.env.CLIP) : undefined;
+if (process.env.SCROLL)
+  await page.evaluate(
+    (sel) => document.querySelector(sel)?.scrollIntoView({ block: "center" }),
+    process.env.SCROLL,
+  );
+await page.waitForTimeout(400);
+await page.screenshot({ path: out, fullPage: !!process.env.FULL, ...(clip ? { clip } : {}) });
 console.log(
   await page.evaluate(() =>
     JSON.stringify({

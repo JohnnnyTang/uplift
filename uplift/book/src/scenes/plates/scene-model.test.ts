@@ -10,7 +10,7 @@ import { boundaryGlyphSvg } from "./scene-glyphs";
 
 describe("stage words and the text alternative", () => {
   it("names only early, middle and late", () => {
-    expect([0, 0.25, 0.5, 0.75, 1].map(stageWord)).toEqual(["early", "early", "middle", "late", "late"]);
+    expect([0, 0.25, 0.5, 0.75, 1].map(stageWord)).toEqual(["start", "early", "middle", "late", "late"]);
   });
 
   it("describes boundary, stage and front face, and never claims simulation or prints a figure", () => {
@@ -21,15 +21,16 @@ describe("stage words and the text alternative", () => {
         expect(text).toMatch(/front face/);
         if (boundary)
           expect(text).toMatch(
-            new RegExp(`${copy.boundaries[boundary].name.hs} boundary, (early|middle|late) stage`),
+            new RegExp(`${copy.boundaries[boundary].name.hs} boundary, (starting|early|middle|late) stage`),
           );
+        expect(text).not.toMatch(/(rising|sinking|thickens|forms?|grows?)/);
       }
     expect(
       describeScene({ boundary: "convergent", stage: 1, cutFraction: 1, ghosts: [], copy, level: "hs" }),
     ).toMatch(/root/);
     expect(
       describeScene({ boundary: "divergent", stage: 1, cutFraction: 1, ghosts: [], copy, level: "hs" }),
-    ).toMatch(/thins/);
+    ).toMatch(/thinner/);
     expect(
       describeScene({ boundary: "transform", stage: 1, cutFraction: 1, ghosts: [], copy, level: "hs" }),
     ).toMatch(/unchanged/);
@@ -156,7 +157,7 @@ describe("Fig. 2, the flat drawing", () => {
       reliefScale: 4,
       strataM: [-200, -800],
       arrows,
-      labels: [{ feature: "boundary", text: "plate boundary" }],
+      labels: [{ feature: "plate-boundary", text: "plate boundary" }],
     });
   it("is deterministic and labelled, with a dashed boundary and two plate arrows", () => {
     expect(draw("towards")).toBe(draw("towards"));
