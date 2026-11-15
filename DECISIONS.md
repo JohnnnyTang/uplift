@@ -2568,3 +2568,53 @@ stay lesson content in Uplift.
 
 **Revisit if.** The owner later wants the lesson to claim that landforms "form" in the scene. That claim
 needs a process model, and the kinematic option in decision 2 is the smallest one.
+
+## D-W7-7A — Science and art brief for the plate-boundaries lesson: parameter table, crust display scale, layer offset (session 7A, 2026-11-14)
+
+**Context.** 7A delivers the cited parameter table that 7C's authored `relief(boundary, stage)` generators
+follow (`docs/science/plates/parameters.md` and `parameters.json`), the reference landforms, the claim
+register and the storyboard (`docs/review/plates/brief/`). Shapes are authored illustrations under D-L2-1;
+nothing here is simulated.
+
+**Decisions (session; 7R may change the look, not the sourcing).**
+
+1. **One block for all three boundaries:** 160 × 160 cells × 1,000 m (about 160 km square), boundary from
+   back to front through the middle. ARTISTIC: the rift fits at its real width (50 km, cited); the
+   collision range is compressed to 80 km (the Himalaya is about 250 km across); the transform offset is
+   8 km (Wallace Creek 128 m; San Andreas total about 300 km).
+2. **Two vertical scales, both bound into the page.** Surface and rock layers ×4. **Crust depths compressed
+   to ×0.75 (option (a) of 7B's question, adopted).** All crust depths (normal crust, root, rift thinning)
+   shrink by one factor, so the Airy ratios survive. The page cites only real thicknesses. Option (b), true
+   depth with a wide block and low exaggeration, was rejected because the range, rift and offset stop
+   reading at page size. The crust scale must stay ≥ surface scale / 5.6 (0.71 at ×4), or the root reads
+   shallower than the range is high. That would contradict the root claim (PC6/PC9). An options table
+   (1, 0.75, 0.5, 0.35) is in `parameters.md`, "Crust display scale".
+3. **Crust base on the snapshot (7B's `crustBaseM`):** 7C writes `crustBaseM = −mohoDepth × 0.75 / 4`
+   (scene metres), so the stage's single `reliefScale` of 4 draws the Moho at ×0.75. Deepest at stage 1:
+   −11,842 scene metres (Moho 63,160 m below sea level; root 28,560 m below the normal Moho). Highest bed
+   7,037 m; lowest −1,108 m. **One fixed frame for every boundary and stage** (block base −13,500 scene
+   metres), so ghosts compare.
+4. **Airy root:** `root = 5.6 × uplift`, from ρc / (ρm − ρc) with 2,800 / 3,300 kg/m³. It is applied only
+   under the range's smooth envelope, an artistic simplification of regional support. Cross-check: crest
+   5,500 m gives a crust 68.7 km thick with its base 63.2 km below sea level; Hi-CLIMB gives 65–70 km below
+   sea level under Tibet.
+5. **Rift:** a symmetric stepped graben (3 scarps per side), 1,700 m from shoulder to floor (cited range
+   about 0.5–2.1 km), crust 35 → 25 km at the axis (Kenya rift 20–35 km). Real basins are often asymmetric
+   half-grabens; the claim register forbids "rifts are symmetric".
+6. **Transform:** right-lateral, as on the San Andreas. Relief and crust are exactly unchanged. Any fault
+   trace is drawn as ink, not cut into the relief, so "relief unchanged" stays testable.
+7. **Snowline 5,700 m** (present equilibrium-line altitude, Khumbu, south side of Everest). Snow appears
+   only near stage 1.
+
+**Fact for 7B (open).** The walls draw rock layers by elevation. For layers to bend up under the range and
+drop at each rift fault, as the storyboard's front faces do, the stage needs a per-cell vertical **layer
+offset** relative to the start (optional, like `crustBaseM`). 7C can supply it from the same generator
+(`layer offset` in the formulas). Without it the layers stay flat, and the range looks carved from flat beds
+rather than raised. If 7B does not add it, 7R should judge the flat-layer look.
+
+**Not sourced, so not on the page:** opening rates for the East African Rift and convergence rates for
+India and Asia (Saria et al. 2014 was not read for rates); the treeline (dressing only, ARTISTIC). Values
+for which only the abstract was read are marked in `docs/science/plates/sources.md`.
+
+**Revisit if.** 7R rejects the tall front face (lower both vertical scales together); or 7B's layer offset
+is declined.

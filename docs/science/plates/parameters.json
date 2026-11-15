@@ -1,0 +1,71 @@
+{
+  "about": "Session 7A parameter table for the plate-boundaries lesson, machine-readable. Every key is explained, sourced or labelled ARTISTIC in parameters.md (same folder). 7C transcribes this into its typed config; the 7A storyboard (docs/review/plates/brief/storyboard.mjs) draws from it. Shapes are authored illustrations, not simulations.",
+  "version": "7A-1",
+  "seed": 7,
+  "grid": {
+    "columns": 160,
+    "rows": 160,
+    "metresPerCell": 1000
+  },
+  "display": {
+    "surfaceVerticalExaggeration": 4,
+    "crustVerticalExaggeration": 0.75,
+    "blockBaseDepthBelowSeaLevelM": 72000
+  },
+  "stage": {
+    "ease": "linear"
+  },
+  "start": {
+    "lowlandElevationM": 400,
+    "regionalTiltMPerKm": 1.5,
+    "ridgeSpacingM": 20000,
+    "ridgeReliefM": 500,
+    "ridgeMeanderAmplitudeM": 1000,
+    "ridgeMeanderWavelengthM": 60000,
+    "streamChannelDepthM": 40,
+    "streamChannelWidthM": 2000,
+    "surfaceNoiseAmplitudeM": 30,
+    "surfaceNoiseWavelengthM": 6000,
+    "layers": [
+      { "name": "sandstone", "thicknessM": 600 },
+      { "name": "shale", "thicknessM": 600 },
+      { "name": "limestone", "thicknessM": 600 }
+    ],
+    "basementName": "crystalline crust"
+  },
+  "crust": {
+    "normalThicknessM": 35000,
+    "crustDensityKgPerM3": 2800,
+    "mantleDensityKgPerM3": 3300,
+    "airyRootPerMetreOfUplift": 5.6
+  },
+  "convergent": {
+    "rangeCrestElevationM": 5500,
+    "rangeWidthM": 80000,
+    "rangeFlankWidthM": 25000,
+    "rangeWidthAtStageZeroFraction": 0.5,
+    "peakNoiseFraction": 0.3,
+    "peakNoiseWavelengthM": 12000
+  },
+  "divergent": {
+    "riftWidthM": 50000,
+    "riftFloorWidthM": 20000,
+    "scarpsPerSide": 3,
+    "scarpDropFractions": [0.4, 0.3, 0.3],
+    "floorDropM": 1200,
+    "shoulderHeightM": 500,
+    "shoulderDecayM": 20000,
+    "scarpFaceWidthM": 1000,
+    "crustThicknessAtAxisM": 25000,
+    "thinningHalfWidthM": 40000
+  },
+  "transform": {
+    "offsetM": 8000,
+    "sense": "right-lateral",
+    "faultZoneHalfWidthM": 1000
+  },
+  "dressing": {
+    "snowlineM": 5700,
+    "treelineM": 4000
+  }
+}
