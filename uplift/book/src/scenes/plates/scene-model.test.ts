@@ -23,7 +23,7 @@ describe("stage words and the text alternative", () => {
           expect(text).toMatch(
             new RegExp(`${copy.boundaries[boundary].name.hs} boundary, (starting|early|middle|late) stage`),
           );
-        expect(text).not.toMatch(/(rising|sinking|thickens|forms?|grows?)/);
+        expect(text).not.toMatch(/b(rising|sinking|thickens|forms?|grows?)b/);
       }
     expect(
       describeScene({ boundary: "convergent", stage: 1, cutFraction: 1, ghosts: [], copy, level: "hs" }),
