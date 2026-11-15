@@ -8,7 +8,7 @@
  * `viewed=<boundary>,…` (boundaries viewed before, drawn as ghost profiles), `cut=0..1` (front face position),
  * `mode=tilted|flat`, `backend=webgl2|webgpu`, `tilt=`, `orbit=`, `zoom=` (camera), `trees=0..1` (tree
  * density), `hachure=0..1` (slope hachure strength), `ridge=<m>` (a labelled look probe of 7A row 10),
- * `crust=0` (a look probe: no crust band, so the bent layers show on the front face), `tile=<m>`
+ * `crust=0` (a look probe: no crust band, so the bent layers fill the front face), `tile=<m>`
  * (wall pattern tile).
  */
 import { createAuthoredSequence, driveSequence } from "@hachure/runtime";
@@ -98,7 +98,7 @@ const stageWord = (s: number) => (s < 0.25 ? STAGE_WORDS[0] : s < 0.75 ? STAGE_W
 function describeScene(boundary: PlateBoundary | null, stage: number): string {
   if (!boundary || stage === 0)
     return (
-      "The starting landscape, the same for every boundary: rolling lowland with low ridges and stream valleys " +
+      "The starting landscape, the same for every boundary: rolling lowland with ridges and stream valleys " +
       "running across the boundary. On the front face, flat rock layers over a crust band of even thickness, " +
       "with the mantle beneath."
     );
@@ -235,12 +235,12 @@ async function main(root: HTMLElement): Promise<void> {
   root.append(desk);
 
   // ---- The authored sequence (7B source): one generator per boundary, no model time ----
-  // Look probe `crust=0`: leave the crust band off, so the front face shows the rock layers that
-  // layerOffsetM bends (D-W7-7B2: with the band on, it covers the front face from the surface down).
+  // Look probe `crust=0`: leave the crust band off, so the whole front face shows the rock layers that
+  // layerOffsetM bends. With the band on, the layers show above it, down to the cover base (D-W7-7R2).
   const withCrust = params.get("crust") !== "0";
   const shown = (s: LandscapeSnapshot): LandscapeSnapshot => {
     if (withCrust) return s;
-    const { crustBaseM: _omit, ...rest } = s;
+    const { crustBaseM: _omit, coverBaseM: _cover, ...rest } = s;
     return rest;
   };
   const start = shown(relief.start());
