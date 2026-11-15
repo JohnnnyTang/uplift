@@ -1,4 +1,5 @@
 // Frame times during continuous play: node uplift/book/src/scenes/plates/review/perf.mjs [boundary] [gpu]
+// Needs the e2e fixture server: pnpm exec vite --config e2e/fixture.config.ts --port 4194 (or set ORIGIN).
 // Reports animation-frame intervals while the chosen boundary plays early → late (12 view seconds).
 /* global document, performance, requestAnimationFrame, setTimeout -- used only inside page.evaluate (browser) */
 import console from "node:console";
