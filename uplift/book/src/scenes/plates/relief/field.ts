@@ -71,6 +71,11 @@ export interface CellField {
   readonly mohoDepthM: number;
   /** Vertical displacement of the rock-layer stack relative to the start (unit: metres). */
   readonly layerOffsetM: number;
+  /**
+   * Base of the layered cover rock (unit: metres above sea level): the base of the start's layer stack
+   * (row 14) moved by the layer offset (D-W7-7R2).
+   */
+  readonly coverBaseM: number;
 }
 
 /** What a boundary does to one column across the block (everything here depends on `x` only). */
@@ -98,6 +103,8 @@ export interface PlatesField {
   startM(xM: number, zM: number): number;
   /** Undeformed base of start layer `i` (0 = top) (unit: metres). Row 14. */
   layerBaseM(i: number, xM: number): number;
+  /** Undeformed base of the whole start layer stack, the cover base at stage 0 (unit: metres). Row 14. */
+  coverBaseStartM(xM: number): number;
   /** Smooth uplift envelope of the range, `E(x)` (unit: metres). Rows 19–22. */
   rangeEnvelopeM(xM: number, stage: number): number;
   /** Smooth surface change of the rift, `Δ(x)` (unit: metres). Rows 25–31. */
@@ -153,6 +160,8 @@ export function platesField(config: PlatesReliefConfig): PlatesField {
   for (const l of S.layers) layerTops.push(layerTops[layerTops.length - 1]! + l.thicknessM);
   const layerBaseM = (i: number, x: number) =>
     startSmoothM(x) - S.ridgeReliefM / 2 - layerTops[clamp(i, 0, S.layers.length - 1) + 1]!;
+
+  const coverBaseStartM = (x: number) => layerBaseM(S.layers.length - 1, x);
 
   const rangeEnvelopeM = (x: number, stage: number) => {
     const e = ease(stage);
@@ -227,12 +236,24 @@ export function platesField(config: PlatesReliefConfig): PlatesField {
           bedM: startM(x, z) + p.liftM * (1 + G.peakNoiseFraction * peakNoise(x, z)),
           mohoDepthM: p.mohoDepthM,
           layerOffsetM: p.liftM,
+          coverBaseM: coverBaseStartM(x) + p.liftM,
         };
       case "divergent":
-        return { bedM: startM(x, z) + p.liftM, mohoDepthM: p.mohoDepthM, layerOffsetM: p.liftM };
+        return {
+          bedM: startM(x, z) + p.liftM,
+          mohoDepthM: p.mohoDepthM,
+          layerOffsetM: p.liftM,
+          coverBaseM: coverBaseStartM(x) + p.liftM,
+        };
       case "transform":
         // Relief only moves sideways; the fault trace is ink (7D), never cut into the relief (D-W7-7A, 6).
-        return { bedM: startM(x, z - p.shiftM), mohoDepthM: p.mohoDepthM, layerOffsetM: 0 };
+        // The cover base depends on x only, so the along-boundary shift leaves it exactly unchanged.
+        return {
+          bedM: startM(x, z - p.shiftM),
+          mohoDepthM: p.mohoDepthM,
+          layerOffsetM: 0,
+          coverBaseM: coverBaseStartM(x) + 0,
+        };
     }
   };
 
@@ -248,6 +269,7 @@ export function platesField(config: PlatesReliefConfig): PlatesField {
     startSmoothM,
     startM,
     layerBaseM,
+    coverBaseStartM,
     rangeEnvelopeM,
     riftChangeM,
     riftMohoRiseM,

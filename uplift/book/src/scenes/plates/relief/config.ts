@@ -134,7 +134,10 @@ const freezeDeep = <T>(o: T): T => {
   return o;
 };
 
-/** The 7A parameter table (version `7A-1`). Row numbers refer to `docs/science/plates/parameters.md`. */
+/**
+ * The 7A parameter table as revised at the owner's look review (version `7R-1`, D-W7-7R: rows 10, 28 and
+ * 29). Row numbers refer to `docs/science/plates/parameters.md`.
+ */
 export const PLATES_RELIEF_CONFIG: PlatesReliefConfig = freezeDeep({
   seed: 7, // row 6, ARTISTIC CHOICE
   grid: { columns: 160, rows: 160, metresPerCell: 1000 }, // row 1, ARTISTIC CHOICE (block scale; Nab09, TDE-H, Kel94, TDE-U)
@@ -147,7 +150,7 @@ export const PLATES_RELIEF_CONFIG: PlatesReliefConfig = freezeDeep({
     lowlandElevationM: 400, // row 7, ARTISTIC CHOICE
     regionalTiltMPerKm: 1.5, // row 8, ARTISTIC CHOICE
     ridgeSpacingM: 20_000, // row 9, ARTISTIC CHOICE
-    ridgeReliefM: 500, // row 10, ARTISTIC CHOICE
+    ridgeReliefM: 1_500, // row 10, ARTISTIC CHOICE (owner, D-W7-7R: 500 → 1,500 m so the transform offset reads)
     ridgeMeanderAmplitudeM: 1_000, // row 11, ARTISTIC CHOICE
     ridgeMeanderWavelengthM: 60_000, // row 11, ARTISTIC CHOICE
     streamChannelDepthM: 40, // row 12, ARTISTIC CHOICE
@@ -181,8 +184,8 @@ export const PLATES_RELIEF_CONFIG: PlatesReliefConfig = freezeDeep({
     riftFloorWidthM: 20_000, // row 26, ARTISTIC CHOICE
     scarpsPerSide: 3, // row 27, ARTISTIC CHOICE (symmetric stepped graben; Cho05)
     scarpDropFractions: [0.4, 0.3, 0.3], // row 27, ARTISTIC CHOICE
-    floorDropM: 1_200, // row 28, CITED total relief with row 29 (Cho05); split ARTISTIC
-    shoulderHeightM: 500, // row 29, ARTISTIC CHOICE (share of row 28; Cho05)
+    floorDropM: 1_500, // row 28, CITED total relief with row 29: 2,100 m, top of the range (Cho05; D-W7-7R); split ARTISTIC
+    shoulderHeightM: 600, // row 29, ARTISTIC CHOICE (share of the 2,100 m relief, as before about 2/7; Cho05)
     shoulderDecayM: 20_000, // row 30, ARTISTIC CHOICE
     scarpFaceWidthM: 1_000, // row 31, ARTISTIC CHOICE
     crustThicknessAtAxisM: 25_000, // row 32, CITED inside the range (Kel94, Cho05)

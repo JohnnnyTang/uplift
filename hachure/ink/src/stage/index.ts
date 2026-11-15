@@ -42,6 +42,7 @@ export {
   type CrustBandLook,
   type CrustLayer,
   type CrustLayerLook,
+  COVER_BASE_LINE_WIDTH_PX,
   CRUST_BAND_LOOK,
   crustPatternMarks,
   crustPatternSvg,
