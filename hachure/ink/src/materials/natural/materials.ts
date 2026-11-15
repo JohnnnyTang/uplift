@@ -130,7 +130,7 @@ export interface WallMaterialOptions {
 /**
  * The block sides and cut face: the rock's lithology pattern (texture tiled in model metres, so the marks
  * keep their size as the block is cut), with a soil band of per-vertex thickness `soilM` at the top.
- * Attributes: `wallU` (distance along the wall, metres), `wallV` (elevation, metres), `depthM` (depth below
+ * Attributes: `wallU` (distance along the wall, metres), `wallV` (layer elevation, metres), `depthM` (depth below
  * the ground surface, metres) and `soilM` (soil thickness at that column, metres).
  */
 export function createWallMaterial(

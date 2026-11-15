@@ -14,6 +14,7 @@ export {
   speedFlowLines,
 } from "./dressing";
 export {
+  type SectionLensGhost,
   type SectionLensOptions,
   type SectionLensProfile,
   type SectionLensWindow,

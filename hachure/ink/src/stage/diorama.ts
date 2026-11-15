@@ -9,12 +9,15 @@
 import {
   BufferAttribute,
   BufferGeometry,
+  CanvasTexture,
   Color,
   ConeGeometry,
   Group,
   InstancedMesh,
   Matrix4,
   Mesh,
+  RepeatWrapping,
+  SRGBColorSpace,
 } from "three";
 import type { Material, Texture } from "three";
 import { color, uniform } from "three/tsl";
@@ -46,13 +49,22 @@ import {
   blockZ,
   buildGround,
   buildIce,
+  buildCrustSection,
   buildIceSection,
   buildRibbon,
   buildWalls,
   clampCutRow,
   dashedProfile,
+  patternedProfile,
   solidProfile,
 } from "./block-geometry";
+import {
+  type CrustBandLook,
+  type CrustLayer,
+  type CrustLayerLook,
+  CRUST_BAND_LOOK,
+  paintCrustTile,
+} from "./crust";
 import {
   type DressingConfig,
   DEFAULT_DRESSING,
@@ -89,6 +101,13 @@ export interface DioramaOptions {
    * presentation only. Absent rules keep the 5H defaults.
    */
   readonly rules?: DressingRules;
+  /** Look of the crust band and mantle on the front face (D-W7-7B). Default `CRUST_BAND_LOOK`. */
+  readonly crustBand?: CrustBandLook;
+  /**
+   * Crust and mantle pattern tile size on the front face (unit: block-local metres, vertical scale applied,
+   * so marks keep their shape). Default: a twelfth of the block's width.
+   */
+  readonly crustPatternTileM?: number;
 }
 
 /** Pluggable dressing rules: pure functions of a block grid, deterministic, never changing state. */
@@ -122,6 +141,12 @@ export interface DioramaDescription {
   readonly iceShown: boolean;
   /** Whether a comparison profile (a kept run's bed) is drawn on the front face. */
   readonly ghostShown: boolean;
+  /** Number of comparison profiles drawn on the front face (0–3). */
+  readonly ghostCount: number;
+  /** Whether the front face shows the crust band (the snapshot has a crust base). */
+  readonly crustShown: boolean;
+  /** Whether the rock layers on the walls follow a layer offset (the snapshot has `layerOffsetM`). */
+  readonly layersOffset: boolean;
 }
 
 export interface Footprint {
@@ -134,7 +159,35 @@ export interface Footprint {
   readonly frontZ: number;
 }
 
-type StrokeKind = "edge" | "iceEdge" | "hachure" | "flow" | "dash" | "ghostHalo" | "ghost";
+type StrokeKind = "edge" | "iceEdge" | "hachure" | "flow" | "dash" | "ghostHalo" | "ghost" | "crustBase";
+
+/** Most comparison profiles drawn at once. */
+export const MAX_GHOSTS = 3;
+/**
+ * Dash patterns of comparison profiles after the first (in cells): dash-dot, dash-dot-dot. The first keeps
+ * the dotted kept-run style, so lesson 1 draws exactly as before.
+ */
+const GHOST_PATTERNS: readonly (readonly number[])[] = [
+  [0.7, 0.3, 0.1, 0.3],
+  [0.7, 0.25, 0.1, 0.25, 0.1, 0.25],
+];
+
+/** A repeating canvas texture of a crust layer's pattern (browser only). */
+function createCrustTexture(layer: CrustLayer, look: CrustLayerLook, sizePx = 128): Texture {
+  const canvas =
+    typeof OffscreenCanvas !== "undefined"
+      ? new OffscreenCanvas(sizePx, sizePx)
+      : Object.assign(document.createElement("canvas"), { width: sizePx, height: sizePx });
+  const ctx = canvas.getContext("2d") as CanvasRenderingContext2D | null;
+  if (!ctx) throw new Error("2D canvas is not available for the crust texture");
+  paintCrustTile(ctx, layer, look, sizePx);
+  const t = new CanvasTexture(canvas as HTMLCanvasElement);
+  t.wrapS = RepeatWrapping;
+  t.wrapT = RepeatWrapping;
+  t.colorSpace = SRGBColorSpace;
+  t.anisotropy = 4;
+  return t;
+}
 
 class Strokes {
   readonly buffer = new StrokeBuffer();
@@ -214,7 +267,17 @@ export class ValleyDiorama {
   private readonly strokes: Record<StrokeKind, Strokes>;
   private grid: BlockGrid | null = null;
   private reference: BlockGrid | null = null;
-  private ghost: BlockGrid | null = null;
+  private ghosts: BlockGrid[] = [];
+  private readonly crustLook: CrustBandLook;
+  private readonly crustTileOption: number | undefined;
+  private readonly crustMesh: Mesh;
+  private readonly mantleMesh: Mesh;
+  private crustMaterials: {
+    tileM: number;
+    crust: ReturnType<typeof createWallMaterial>;
+    mantle: ReturnType<typeof createWallMaterial>;
+    textures: Texture[];
+  } | null = null;
   private readonly rules: DressingRules;
   private frame: BlockFrame | null = null;
   private cutFraction = 1;
@@ -233,6 +296,8 @@ export class ValleyDiorama {
     this.reliefScale = options.reliefScale ?? 1;
     this.soilDepthM = options.soilDepthM ?? 40;
     this.rules = options.rules ?? {};
+    this.crustLook = options.crustBand ?? CRUST_BAND_LOOK;
+    this.crustTileOption = options.crustPatternTileM;
     const u = this.uniforms;
     this.ground = new Mesh(new BufferGeometry(), createGroundMaterial(u));
     this.ice = new Mesh(new BufferGeometry(), createIceMaterial(u));
@@ -243,6 +308,11 @@ export class ValleyDiorama {
     this.walls = new Mesh(new BufferGeometry(), this.wallMaterial.material);
     this.river = new Mesh(new BufferGeometry(), createWaterMaterial(u));
     this.trees = new InstancedMesh(treeGeometry(), createTreeMaterial(u), 4096);
+    // The crust band and mantle: built only for snapshots with a crust base (materials made on first use).
+    this.crustMesh = new Mesh(new BufferGeometry());
+    this.mantleMesh = new Mesh(new BufferGeometry());
+    this.crustMesh.visible = false;
+    this.mantleMesh.visible = false;
     this.trees.count = 0;
     for (const mesh of [this.ground, this.ice, this.iceSection, this.walls, this.trees])
       mesh.castShadow = true;
@@ -260,9 +330,11 @@ export class ValleyDiorama {
       // The comparison profile: a paper halo under a dotted ink line, so it reads on any lithology pattern.
       ghostHalo: new Strokes(this.ink, NATURAL_TOKENS.ghostHalo),
       ghost: new Strokes(this.ink, NATURAL_TOKENS.ghost),
+      crustBase: new Strokes(this.ink, this.crustLook.baseLine),
     };
     this.strokes.ghost.layer.mesh.renderOrder = 3;
     this.body.add(this.ground, this.ice, this.iceSection, this.walls, this.river, this.trees);
+    this.body.add(this.crustMesh, this.mantleMesh);
     for (const s of Object.values(this.strokes)) this.body.add(s.layer.mesh);
     this.group.add(this.body);
     this.group.visible = false;
@@ -316,13 +388,22 @@ export class ValleyDiorama {
    * time). Same grid as the snapshot. `null` removes it. View-only.
    */
   setGhost(snapshot: LandscapeSnapshot | null): void {
-    this.ghost = snapshot ? toBlockGrid(snapshot, this.orientation) : null;
-    if (
-      this.ghost &&
-      this.grid &&
-      (this.ghost.across !== this.grid.across || this.ghost.along !== this.grid.along)
-    )
+    this.setGhosts(snapshot ? [snapshot] : []);
+  }
+
+  /**
+   * Draws up to `MAX_GHOSTS` comparison snapshots on the front face (D-W7-7B): the first dotted (as
+   * `setGhost`), the next dash-dot and dash-dot-dot, each over a paper halo; their crust bases too when both
+   * they and the shown snapshot have one. Same grid as the snapshot. An empty list removes them. View-only.
+   */
+  setGhosts(snapshots: readonly LandscapeSnapshot[]): void {
+    if (snapshots.length > MAX_GHOSTS)
+      throw new RangeError(`At most ${MAX_GHOSTS} comparison snapshots can be drawn`);
+    const ghosts = snapshots.map((s) => toBlockGrid(s, this.orientation));
+    const grid = this.grid;
+    if (grid && ghosts.some((g) => g.across !== grid.across || g.along !== grid.along))
       throw new RangeError("Ghost snapshot must share the snapshot's grid");
+    this.ghosts = ghosts;
     if (this.grid && this.frame) {
       this.packStrokes(this.grid, this.frame);
       this.applyVisibility();
@@ -362,6 +443,7 @@ export class ValleyDiorama {
     this.strokes.dash.fade.value = reveal.ink;
     this.strokes.ghost.fade.value = reveal.ink;
     this.strokes.ghostHalo.fade.value = reveal.ink;
+    this.strokes.crustBase.fade.value = reveal.ink;
     this.strokes.hachure.fade.value = reveal.hachure;
     this.strokes.flow.fade.value = reveal.colour;
     this.applyVisibility();
@@ -412,7 +494,10 @@ export class ValleyDiorama {
       rockName: this.look.name,
       modelTimeYr: g.modelTimeYr,
       iceShown: this.iceShown,
-      ghostShown: this.ghost !== null,
+      ghostShown: this.ghosts.length > 0,
+      ghostCount: this.ghosts.length,
+      crustShown: g.crustBaseM !== undefined,
+      layersOffset: g.layerOffsetM !== undefined,
     };
   }
 
@@ -454,6 +539,7 @@ export class ValleyDiorama {
     this.iceSection.geometry = section ? toGeometry(section) : new BufferGeometry();
     const soil = (k: number) => (cover.meadow[k]! > 0.5 ? this.soilDepthM : 0);
     this.walls.geometry = toGeometry(buildWalls(g, f, soil), this.walls.geometry);
+    this.rebuildCrust(g, f);
 
     const river = (this.rules.river ?? riverCells)(g, cfg);
     const riverSet = new Set(river);
@@ -537,15 +623,72 @@ export class ValleyDiorama {
     dash.buffer.reset();
     if (this.reference) dash.buffer.pushStrokes(dashedProfile(this.reference, f), 1.4);
 
-    const { ghost, ghostHalo } = this.strokes;
+    // The starting crust base, dashed like the starting bed.
+    if (this.reference?.crustBaseM && g.crustBaseM)
+      dash.buffer.pushStrokes(dashedProfile(this.reference, f, 0.9, 0.7, this.reference.crustBaseM), 1.4);
+
+    const { ghost, ghostHalo, crustBase } = this.strokes;
     ghost.buffer.reset();
     ghostHalo.buffer.reset();
-    if (this.ghost) {
-      ghostHalo.buffer.pushPolyline(solidProfile(this.ghost, f, 0.05), false, 3);
-      ghost.buffer.pushStrokes(dashedProfile(this.ghost, f, 0.18, 0.34), 1.6);
-    }
+    this.ghosts.forEach((gh, i) => {
+      const fields = gh.crustBaseM && g.crustBaseM ? [gh.bedM, gh.crustBaseM] : [gh.bedM];
+      for (const field of fields) {
+        ghostHalo.buffer.pushPolyline(solidProfile(gh, f, 0.05, field), false, 3);
+        const dots =
+          i === 0
+            ? dashedProfile(gh, f, 0.18, 0.34, field)
+            : patternedProfile(gh, f, GHOST_PATTERNS[i - 1]!, field);
+        ghost.buffer.pushStrokes(dots, 1.6);
+      }
+    });
+
+    // The crust base: a solid ink line along the front face.
+    crustBase.buffer.reset();
+    const section = g.crustBaseM ? buildCrustSection(g, f) : null;
+    if (section) crustBase.buffer.pushPolyline(section.basePolyline, false, INK_TOKENS.indexContourWidthPx);
 
     for (const s of Object.values(this.strokes)) s.upload();
+  }
+
+  /** The crust band and mantle on the front face; hidden (and never built) without a crust base. */
+  private rebuildCrust(g: BlockGrid, f: BlockFrame): void {
+    const section = buildCrustSection(g, f);
+    for (const mesh of [this.crustMesh, this.mantleMesh]) {
+      mesh.geometry.dispose();
+      mesh.geometry = new BufferGeometry();
+      mesh.visible = false;
+    }
+    if (!section) return;
+    const tileM = this.crustTileOption ?? Math.max(1, ((g.across - 1) * g.metresPerCell) / 12);
+    if (!this.crustMaterials || this.crustMaterials.tileM !== tileM) {
+      this.disposeCrustMaterials();
+      const textures = [
+        createCrustTexture("crust", this.crustLook.crust),
+        createCrustTexture("mantle", this.crustLook.mantle),
+      ];
+      this.crustMaterials = {
+        tileM,
+        crust: createWallMaterial(this.uniforms, textures[0]!, { tileM }),
+        mantle: createWallMaterial(this.uniforms, textures[1]!, { tileM }),
+        textures,
+      };
+      this.crustMesh.material = this.crustMaterials.crust.material;
+      this.mantleMesh.material = this.crustMaterials.mantle.material;
+      this.crustMesh.castShadow = true;
+      this.mantleMesh.castShadow = true;
+    }
+    this.crustMesh.geometry = toGeometry(section.crust);
+    this.mantleMesh.geometry = toGeometry(section.mantle);
+    this.crustMesh.visible = true;
+    this.mantleMesh.visible = true;
+  }
+
+  private disposeCrustMaterials(): void {
+    if (!this.crustMaterials) return;
+    this.crustMaterials.crust.material.dispose();
+    this.crustMaterials.mantle.material.dispose();
+    for (const t of this.crustMaterials.textures) t.dispose();
+    this.crustMaterials = null;
   }
 
   dispose(): void {
@@ -553,6 +696,9 @@ export class ValleyDiorama {
       mesh.geometry.dispose();
       (mesh.material as MeshBasicNodeMaterial).dispose();
     }
+    this.crustMesh.geometry.dispose();
+    this.mantleMesh.geometry.dispose();
+    this.disposeCrustMaterials();
     for (const s of Object.values(this.strokes)) s.dispose();
     for (const t of this.textures.values()) t.dispose();
     this.textures.clear();

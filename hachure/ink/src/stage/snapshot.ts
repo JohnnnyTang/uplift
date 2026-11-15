@@ -23,6 +23,20 @@ export interface LandscapeSnapshot {
   readonly iceVelocityMPerYr?: { readonly x: Field; readonly y: Field };
   /** Model time of this snapshot (unit: years). Absent for an authored, timeless state. */
   readonly modelTimeYr?: number;
+  /**
+   * Crust-base elevation per cell: the surface minus the crust thickness (unit: metres; same grid as
+   * `bedM`). Drawn as a band on the front face (D-W7-7B). Absent: no band, and the block draws exactly as
+   * without it. Values above the bed are drawn at the bed.
+   */
+  readonly crustBaseM?: Field;
+  /**
+   * Vertical displacement of the rock-layer stack per cell, relative to its starting position (unit:
+   * metres; same grid as `bedM`, and scaled by the stage's vertical exaggeration exactly as the bed is).
+   * A layer boundary that lies at elevation h in the undeformed stack is drawn at h + layerOffsetM at that
+   * cell: positive where the layers are raised, negative where they have dropped (D-W7-7B2). Absent: the
+   * layers are drawn flat, exactly as without it.
+   */
+  readonly layerOffsetM?: Field;
 }
 
 /** How the model grid maps onto the block: which grid axis runs along the valley, and which way is down. */
@@ -53,6 +67,10 @@ export interface BlockGrid {
   /** Ice velocity in block axes (across, along), or null when the snapshot has none. */
   readonly velocity: { readonly across: Float32Array; readonly along: Float32Array } | null;
   readonly modelTimeYr: number | null;
+  /** Crust-base elevation in block order (unit: metres). Present only when the snapshot has one. */
+  readonly crustBaseM?: Float32Array;
+  /** Rock-layer offset in block order (unit: metres). Present only when the snapshot has one. */
+  readonly layerOffsetM?: Float32Array;
 }
 
 /** Throws a `RangeError` naming the first problem with a snapshot. */
@@ -69,6 +87,8 @@ export function validateSnapshot(s: LandscapeSnapshot): void {
   if (typeof s.rockId !== "number") check("rockId", s.rockId);
   check("iceVelocityMPerYr.x", s.iceVelocityMPerYr?.x);
   check("iceVelocityMPerYr.y", s.iceVelocityMPerYr?.y);
+  check("crustBaseM", s.crustBaseM);
+  check("layerOffsetM", s.layerOffsetM);
 }
 
 /** Resamples a snapshot into block order. Pure; copies every field. */
@@ -98,6 +118,8 @@ export function toBlockGrid(
   const iceM = new Float32Array(n);
   const rockId = new Uint8Array(n);
   const vel = s.iceVelocityMPerYr ? { across: new Float32Array(n), along: new Float32Array(n) } : null;
+  const crust = s.crustBaseM ? new Float32Array(n) : null;
+  const layers = s.layerOffsetM ? new Float32Array(n) : null;
   const sign = flip ? -1 : 1;
   for (let l = 0; l < along; l++) {
     for (let a = 0; a < across; a++) {
@@ -105,6 +127,8 @@ export function toBlockGrid(
       const src = source(a, l);
       bedM[k] = s.bedM[src]!;
       iceM[k] = Math.max(0, s.iceThicknessM?.[src] ?? 0);
+      if (crust) crust[k] = s.crustBaseM![src]!;
+      if (layers) layers[k] = s.layerOffsetM![src]!;
       rockId[k] = typeof s.rockId === "number" ? s.rockId : (s.rockId?.[src] ?? 0);
       if (vel && s.iceVelocityMPerYr) {
         const vx = s.iceVelocityMPerYr.x[src]!;
@@ -128,10 +152,12 @@ export function toBlockGrid(
     rockId,
     velocity: vel,
     modelTimeYr: s.modelTimeYr ?? null,
+    ...(crust ? { crustBaseM: crust } : {}),
+    ...(layers ? { layerOffsetM: layers } : {}),
   };
 }
 
-/** Lowest and highest of bed and ice surface (unit: metres). */
+/** Lowest and highest of bed, ice surface and (when present) crust base (unit: metres). */
 export function elevationRange(g: BlockGrid): { minM: number; maxM: number } {
   let minM = Infinity;
   let maxM = -Infinity;
@@ -139,6 +165,7 @@ export function elevationRange(g: BlockGrid): { minM: number; maxM: number } {
     minM = Math.min(minM, g.bedM[k]!);
     maxM = Math.max(maxM, g.bedM[k]! + g.iceM[k]!);
   }
+  if (g.crustBaseM) for (let k = 0; k < g.crustBaseM.length; k++) minM = Math.min(minM, g.crustBaseM[k]!);
   return { minM, maxM };
 }
 

@@ -33,3 +33,6 @@ export * from "./a11y/index";
 
 // Anonymous, explicitly opt-in local classroom observation (session 4F).
 export * from "./instrumentation/index";
+
+// Authored-sequence source for authored, timeless scenes (session 7B, D-W7-7B).
+export * from "./sequence/index";
