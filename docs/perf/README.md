@@ -287,3 +287,94 @@ JS profile of an unminified build; instructions in the file).
 | `trace-playback.mjs`, `playback-ab.mjs`, `profile-playback.mjs` | Diagnostics behind findings 4, 5 and 7                                                   |
 | `results/playback-ab-*.json`, `profile-playback-webgpu.json`    | Their results                                                                            |
 | `results/diagnostics/`                                          | The unreproduced trial repetition (finding 7) and the startup trace analysis (finding 5) |
+
+## 6A2: per-backend glacier batch size (follow-up to 6A finding 1)
+
+Session 6A2 (`s1/w6/6a2-cpu-batch`), authorised by the owner after 6A. Decision and reading: `DECISIONS.md` **D-W6-6A2**.
+6A's numbers above are unchanged. This section adds measurements of what the batch size can change.
+
+**Change.** `GlacialRunConfig.cpuMaxBatchModelYears` (0.2 model years = 80 fixed steps, about 60 ms of CPU here)
+sits beside `maxBatchModelYears` (1 model year = 400 steps, now WebGPU only). The host sizes its batches for the
+live run's backend. A CPU run that already holds a full batch of wall time sends the next batch as soon as the last
+one lands, instead of idling until the next animation frame. WebGPU scheduling is unchanged. Fixed-step results do
+not depend on any of this. A unit test shows bitwise-identical recorded hashes, bytes and live state for 1-, 7- and
+40-step CPU batches.
+
+**Setup.** The same machine and browser as 6A: ASUS Zenbook S 14, Intel Core Ultra 7 258V, Intel Arc 140V (driver
+32.0.101.8860), Windows 11 10.0.26300, 2880 × 1800 at 120 Hz. Visible installed Chrome 157.0.8103.78, maximised.
+AC power, "Best performance" mode. Thermal zones read 60–96 °C across all runs. Runs: 2026-11-14 23:24 to
+2026-11-15 00:28 UTC. Harness: `batch-latency.mjs` (6A's `instrument.js`, fresh browser and profile per repetition,
+times on the page clock, window watchdog and frame-rate guard).
+
+| Set                     | Build served                                                | Commit recorded in the files                                          | Repetitions, paths    |
+| ----------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------- | --------------------- |
+| `before`                | main `05a547a`                                              | `05a547a` (clean)                                                     | 5 × both, alternating |
+| `after`                 | this branch, `cpuMaxBatchModelYears: 0.2`                   | `44951a3` (clean)                                                     | 5 × both, alternating |
+| `ab-before`, `ab-after` | `05a547a` (a saved copy of its `dist`), `44951a3`           | `44951a3` for both (the harness records `HEAD`, not the build served) | 3 × CPU, interleaved  |
+| `trial-*`               | candidates: 0.1 without chaining, 0.1 and 0.2 with chaining | `05a547a`, working tree dirty (the candidate edits)                   | 2 × CPU each          |
+
+During the `after` set, something on the machine minimised the window eight times, and the watchdog restored it
+each time. The 5 overlapping samples and 1 playback window were dropped. No repetition had a page or console error.
+After every one of the 120 research returns the run and rock were the same, and the glacier was still playing.
+
+**Results** (pooled; median / p90 / max, n samples). Targets from D-W6-6A.
+
+| Measure                                       | CPU before             | CPU after                | WebGPU before             | WebGPU after            | Target      |
+| --------------------------------------------- | ---------------------- | ------------------------ | ------------------------- | ----------------------- | ----------- |
+| Scrub right after Pause, kept run (ms)        | 249 / 344 / 358 (30)   | **39 / 67 / 96** (30)    | 27 / 32 / 35 (30)         | 25 / 30 / 33 (30)       | p90 ≤ 100   |
+| Scrub 1.5 s after Pause, kept run (ms)        | 27 / 31 / 38 (30)      | 25 / 38 / 48 (29)        | 27 / 31 / 34 (30)         | 26 / 33 / 38 (30)       | p90 ≤ 100   |
+| Pause: click to Play label shown (ms)         | 8 / 12 / 32 (35)       | 8 / 14 / 29 (34)         | 12 / 27 / 31 (35)         | 11 / 23 / 30 (35)       | p90 ≤ 200   |
+| Pause: click to final live frame shown (ms)   | 254 / 370 / 448 (35)   | **57 / 75 / 96** (34)    | 34 / 46 / 59 (35)         | 35 / 43 / 57 (35)       | p90 ≤ 200   |
+| Research departure while playing, first (ms)  | 264 / 456 / 456 (5)    | 176 / 222 / 222 (5)      | 161 / 189 / 189 (5)       | 159 / 247 / 247 (5)     | ≤ 2 500     |
+| Research departure while playing, repeat (ms) | 305 / 481 / 657 (30)   | **177 / 265 / 317** (28) | 48 / 55 / 65 (30)         | 44 / 63 / 67 (30)       | ≤ 1 000     |
+| Glacier model years per second, 1×            | 2.99 / 3.33 / 3.33 (5) | 3.53 / 3.82 / 3.82 (5)   | 10.01 / 10.11 / 10.11 (5) | 9.95 / 9.98 / 9.98 (4)  | 10 (WebGPU) |
+| Glacier model years per second, 4×            | 2.74 / 2.99 / 2.99 (5) | 3.14 / 3.34 / 3.34 (5)   | 34.97 / 38.48 / 38.48 (5) | 37.05 / 41.1 / 41.1 (5) | reported    |
+| Playback 1×: frames per second                | 118 / 118.8 (5)        | 118.7 / 119.8 (5)        | 118.3 / 119.3 (5)         | 117.8 / 119.8 (4)       | ≥ 30        |
+| Playback 1×: longest frame (ms)               | 24.6 / 25.1 (5)        | 16.7 / 33.2 (5)          | 25.3 / 33.7 (5)           | 25.1 / 34.3 (4)         | none > 100  |
+| Playback 4×: longest frame (ms)               | 16.8 / 50 (5)          | 25 / 49.9 (5)            | 16.8 / 41.6 (5)           | 16.7 / 41.6 (5)         | none > 100  |
+| Playback 1×: main thread busy (%)             | 10 / 10 (5)            | 19 / 20 (5)              | 56 / 58 (5)               | 49 / 57 (4)             | reported    |
+| Playback 1×: landform updates per second      | 3 / 3.3 (5)            | 4.5 / 4.7 (5)            | 4.8 / 4.8 (5)             | 4.8 / 4.8 (4)           | reported    |
+
+**CPU throughput, paired.** Machine state confounds the 5-repetition sets. The later `after` repetitions ran cooler
+(84–85 °C against 88–92 °C), and the 1× rate of single repetitions ranged from 2.3 to 3.8 model years per second. The fair
+comparison is the interleaved A/B, which alternates the two builds under the same conditions:
+
+| CPU path, interleaved (3 pairs)             | `ab-before` (05a547a) | `ab-after` (0.2, chained) |
+| ------------------------------------------- | --------------------- | ------------------------- |
+| Model years per second, 1× (per repetition) | 3.99, 3.99, 3.99      | 3.76, 3.40, 3.86          |
+| Model years per second, 4× (per repetition) | 3.24, 3.48, 3.24      | 3.19, 3.34, 3.14          |
+| Scrub right after Pause (ms)                | 110 / 272 / 276 (18)  | 43 / 70 / 72 (18)         |
+| Pause: click to final live frame shown (ms) | 166 / 258 / 283 (21)  | 50 / 73 / 95 (21)         |
+| Research departure, repeat (ms)             | 281 / 437 / 463 (18)  | 167 / 231 / 250 (18)      |
+| Main thread busy at 1× (%)                  | 10, 10, 11            | 17, 17, 17                |
+
+**Candidates** (2 CPU repetitions each; these set the shipped value):
+
+| CPU path                    | 1× model years/s (median / p90) | Scrub right after Pause (ms) | Pause to final frame (ms) | Main thread 1× |
+| --------------------------- | ------------------------------- | ---------------------------- | ------------------------- | -------------- |
+| `before` (1 year, 5 reps)   | 2.99 / 3.33                     | 249 / 344 / 358              | 254 / 370 / 448           | 10 %           |
+| 0.1 year, no chaining       | 2.61 / 2.81                     | 25 / 43 / 49                 | 38 / 52 / 81              | 24 %           |
+| 0.1 year, chained           | 2.77 / 2.96                     | 26 / 40 / 41                 | 35 / 48 / 48              | 25 %           |
+| 0.2 year, chained (shipped) | 2.93 / 3.12                     | 27 / 64 / 72                 | 64 / 81 / 114             | 17 %           |
+
+**Reading.**
+
+1. On this machine 6A miss 1 is fixed. On the CPU path, scrubbing right after Pause now takes p90 67 ms (max 96)
+   against the 100 ms target, down from p90 344. Pause settles (final live frame shown) in p90 75 ms, down from 370.
+2. Repeat research departures while a CPU run plays take about half as long (p90 481 → 265 ms). They still take
+   much longer than on WebGPU (63 ms). The glacier settle now waits for at most one 60 ms batch, so the rest of the
+   delay comes from elsewhere on the CPU path. It already met 6A's 1 000 ms target and was not investigated here.
+3. **Cost on the CPU path:** at 1×, about 6 % fewer model years per second in the paired A/B (median 3.76 against
+   3.99, n = 3 pairs) and about 2 % in the candidate trial. At 4× the difference is within 2 %. Every batch
+   publishes host state, so publishes are about 2.5 times as frequent, and the main thread at 1× goes from 10 % to
+   17–20 % busy. Frames are unaffected (no frame over 50 ms at 1×). Without chaining, 0.1 year cost 13 %.
+4. **WebGPU unchanged:** it runs the same code path with the same batch (400 steps). At 1× it keeps the scheduled 10
+   model years per second. At 4× the median is 37.05 against 34.97, within its usual spread (33.4–41.1).
+5. The margin depends on CPU speed. On a CPU about 1.6 times slower per step than this laptop, scrubbing after
+   Pause with 0.2 would take about 100 ms again. With 0.1 it would stay within target, at a cost of about 7 %
+   throughput here. Other hardware is **pending**.
+
+**Reproduce.** Serve the build with `pnpm --filter @uplift/book preview --host 127.0.0.1 --port 4190 --strictPort`.
+Run `node docs/perf/batch-latency.mjs --label=NAME --backend=both --reps=5`, then
+`node docs/perf/batch-latency.mjs --summarize` for the pooled tables and `results/6a2/summary.json`. One repetition
+takes about 1.8 minutes per path. Raw files are in `results/6a2/<set>/`.

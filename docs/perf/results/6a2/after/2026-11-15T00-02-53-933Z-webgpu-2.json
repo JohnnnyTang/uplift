@@ -1,0 +1,348 @@
+{
+  "session": "6A2",
+  "sha": "44951a3ec26060d8752c828577c9a2da22117ee1",
+  "workingTreeClean": true,
+  "backend": "webgpu",
+  "rep": 2,
+  "url": "http://127.0.0.1:4191/",
+  "headless": false,
+  "startedAt": "2026-11-15T00:02:53.933Z",
+  "machine": {
+    "gpu": "Intel(R) Arc(TM) 140V GPU (16GB)",
+    "gpuDriver": "32.0.101.8860",
+    "display": "2880x1800@120Hz",
+    "cpu": "Intel(R) Core(TM) Ultra 7 258V",
+    "batteryStatus": 2,
+    "batteryPercent": 100,
+    "powerScheme": "381b4222-f694-41f0-9685-ff5bb260df2e",
+    "powerOverlayAc": "ded574b5-45a0-4f42-8737-46345c09c238",
+    "os": "Microsoft Windows NT 10.0.26300.0",
+    "onAcPower": true
+  },
+  "thermalStart": {
+    "\\_tz.thrm": 93,
+    "\\_tz.thz0": 63
+  },
+  "steps": {
+    "play1x": {
+      "origin": 1794700979301.4,
+      "t0": 8034,
+      "t1": 14062,
+      "spanS": 6,
+      "fps": 117.7,
+      "frameMs": {
+        "p50": 8.3,
+        "p95": 8.5,
+        "p99": 16.6,
+        "max": 41.7
+      },
+      "over33": 1,
+      "over50": 0,
+      "over100": 0,
+      "frames": 709,
+      "loafCount": 1,
+      "loafMaxMs": 50.6,
+      "loafBlockingMs": 0,
+      "loafTop": [
+        {
+          "duration": 50.6,
+          "render": 44.4,
+          "scripts": []
+        }
+      ],
+      "updates": 30,
+      "updatesPerS": 5,
+      "valueStart": 12.3325,
+      "valueEnd": 74.9975,
+      "valuePerS": 10.4,
+      "mainThreadBusyPct": 64
+    },
+    "speedMax": "4",
+    "play4x": {
+      "origin": 1794700979301.4,
+      "t0": 14641,
+      "t1": 18663,
+      "spanS": 4,
+      "fps": 117.3,
+      "frameMs": {
+        "p50": 8.3,
+        "p95": 8.5,
+        "p99": 16.6,
+        "max": 41.6
+      },
+      "over33": 1,
+      "over50": 0,
+      "over100": 0,
+      "frames": 471,
+      "loafCount": 0,
+      "loafMaxMs": 0,
+      "loafBlockingMs": 0,
+      "loafTop": [],
+      "updates": 19,
+      "updatesPerS": 4.7,
+      "valueStart": 96.9175,
+      "valueEnd": 245.91750000000002,
+      "valuePerS": 37.05,
+      "mainThreadBusyPct": 42
+    },
+    "speedAfter": "1",
+    "ghostAtScrub": "sandstone"
+  },
+  "samples": {
+    "pause": [
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 18705,
+        "visibleMs": 10,
+        "value": "false",
+        "settledMs": 51
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 22976,
+        "visibleMs": 23,
+        "value": "false",
+        "settledMs": 41
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 28519,
+        "visibleMs": 18,
+        "value": "false",
+        "settledMs": 39
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 34616,
+        "visibleMs": 30,
+        "value": "false",
+        "settledMs": 31
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 39910,
+        "visibleMs": 11,
+        "value": "false",
+        "settledMs": 27
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 45707,
+        "visibleMs": 10,
+        "value": "false",
+        "settledMs": 43
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 51346,
+        "visibleMs": 16,
+        "value": "false",
+        "settledMs": 36
+      }
+    ],
+    "scrubAfterSettledPause": [
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 24583,
+        "visibleMs": 36,
+        "value": "0"
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 30089,
+        "visibleMs": 33,
+        "value": "0"
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 36184,
+        "visibleMs": 38,
+        "value": "0"
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 41469,
+        "visibleMs": 33,
+        "value": "0"
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 47286,
+        "visibleMs": 26,
+        "value": "0"
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 52908,
+        "visibleMs": 30,
+        "value": "0"
+      }
+    ],
+    "scrubAfterPause": [
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 26532,
+        "visibleMs": 33,
+        "value": "0"
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 32315,
+        "visibleMs": 30,
+        "value": "0"
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 38017,
+        "visibleMs": 30,
+        "value": "0"
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 43550,
+        "visibleMs": 27,
+        "value": "0"
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 49630,
+        "visibleMs": 28,
+        "value": "0"
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 54843,
+        "visibleMs": 28,
+        "value": "0"
+      }
+    ],
+    "departFirst": [
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 58080,
+        "visibleMs": 167,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      }
+    ],
+    "departRepeat": [
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 70396,
+        "visibleMs": 67,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 75524,
+        "visibleMs": 63,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 80183,
+        "visibleMs": 63,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 85087,
+        "visibleMs": 58,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 90190,
+        "visibleMs": 59,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      },
+      {
+        "origin": 1794700979301.4,
+        "inputAt": 94889,
+        "visibleMs": 59,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      }
+    ]
+  },
+  "guards": [
+    {
+      "phase": "playback",
+      "fps": 120,
+      "throttled": false
+    },
+    {
+      "phase": "scrub after pause",
+      "fps": 118.3,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 0",
+      "fps": 118.3,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 1",
+      "fps": 118.3,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 2",
+      "fps": 118.3,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 3",
+      "fps": 106.7,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 4",
+      "fps": 116.6,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 5",
+      "fps": 116.6,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 6",
+      "fps": 118.3,
+      "throttled": false
+    }
+  ],
+  "interruptions": [
+    {
+      "from": 1794700980329,
+      "to": 1794700982433
+    },
+    {
+      "from": 1794700986580,
+      "to": 1794700988636
+    }
+  ],
+  "errors": [],
+  "chrome": "157.0.8103.78",
+  "device": {
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+    "origin": 1794700979301.4
+  },
+  "thermalEnd": {
+    "\\_tz.thrm": 96,
+    "\\_tz.thz0": 66
+  },
+  "finishedAt": "2026-11-15T00:04:40.803Z"
+}

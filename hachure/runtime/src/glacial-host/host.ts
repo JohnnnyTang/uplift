@@ -199,7 +199,8 @@ export class GlacialHost {
   private readonly options: GlacialHostOptions;
   private readonly defaultRockId: RockId;
   private readonly store: RunStore;
-  private readonly clock: FixedStepClock;
+  /** Wall-clock scheduling of automatic batches, sized for the live run's backend (`useBackendBatch`). */
+  private clock: FixedStepClock;
   private readonly listeners = new Set<(state: GlacialHostState) => void>();
   private chain: Promise<unknown> = Promise.resolve();
   private readiness: GlacialHostState["readiness"] = "loading";
@@ -238,10 +239,29 @@ export class GlacialHost {
     this.defaultRockId = options.defaultRockId ?? DEFAULT_GLACIER_CONFIG.rockId;
     if (!isRockId(this.defaultRockId)) throw new RangeError(`Unknown rock ${String(this.defaultRockId)}`);
     this.store = new RunStore(this.plan);
-    this.clock = new FixedStepClock(
+    this.clock = this.clockFor("webgpu");
+  }
+
+  /** Largest automatic batch for the live run's backend (unit: steps). Scheduling only; diagnostic. */
+  get maxBatchSteps(): number {
+    return this.clock.maxBatchSteps;
+  }
+
+  private clockFor(backend: RunBackend): FixedStepClock {
+    return new FixedStepClock(
       this.plan.config.modelYearsPerRealSecond / this.plan.dtYears,
-      maxBatchSteps(this.plan),
+      maxBatchSteps(this.plan, backend),
     );
+  }
+
+  /**
+   * Sizes automatic batches for a new live run's backend (D-W6-6A2): a CPU batch is small, so Pause, scrubbing
+   * and leaving never wait long for the batch in flight; WebGPU keeps its larger batch. Called when a run
+   * starts. A new clock drops wall time accumulated for the previous run (as the host does whenever playback
+   * stops); fixed-step results never depend on batching.
+   */
+  private useBackendBatch(backend: RunBackend): void {
+    if (maxBatchSteps(this.plan, backend) !== this.clock.maxBatchSteps) this.clock = this.clockFor(backend);
   }
 
   // ── Lifecycle ───────────────────────────────────────────────────────────────────────────────────────
@@ -482,7 +502,14 @@ export class GlacialHost {
     const seconds = Math.min(Math.max(Number.isFinite(realSeconds) ? realSeconds : 0, 0), MAX_FRAME_SECONDS);
     this.clock.add(seconds, this.speed);
     this.frameElapsed += seconds;
-    if (this.batchInFlight) return;
+    this.sendBatch();
+  }
+
+  // ── Internals ───────────────────────────────────────────────────────────────────────────────────────
+
+  /** Sends one automatic batch of the accumulated steps, unless one is already in flight. */
+  private sendBatch(): void {
+    if (this.batchInFlight || !this.playing || this.departed || this.readiness !== "ready") return;
     const steps = this.clock.take();
     if (!steps) return;
     const wantFrame = this.frameElapsed >= this.plan.config.frameIntervalSeconds;
@@ -495,10 +522,12 @@ export class GlacialHost {
       .catch((error: unknown) => this.fail(error))
       .finally(() => {
         this.batchInFlight = false;
+        // A CPU run behind schedule (a full batch already waiting) goes on at once instead of idling until the
+        // next animation frame, so small CPU batches keep their throughput (D-W6-6A2). WebGPU is unchanged.
+        if (this.store.live?.backend === "cpu" && this.clock.pendingSteps >= this.clock.maxBatchSteps)
+          this.sendBatch();
       });
   }
-
-  // ── Internals ───────────────────────────────────────────────────────────────────────────────────────
 
   private exclusive<T>(task: () => Promise<T>): Promise<T> {
     const result = this.chain.then(task);
@@ -680,6 +709,7 @@ export class GlacialHost {
     });
     for (const record of reply.records ?? []) run.append(record);
     const handoff = this.store.startLive(run);
+    this.useBackendBatch(run.backend);
     this.frame = reply.frame;
     this.frameSerial++;
     this.view = { kind: "live" };

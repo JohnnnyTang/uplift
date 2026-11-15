@@ -6,6 +6,7 @@
  * and its fixed step `dtYears` is never changed by anything here.
  */
 import { GLACIER_LAYERS, type GlacierConfig } from "@hachure/glacier";
+import type { RunBackend } from "./recorded-run";
 
 export interface GlacialRunConfig {
   /**
@@ -28,8 +29,20 @@ export interface GlacialRunConfig {
    * drops wall-clock time and never changes the step or the results.
    */
   readonly modelYearsPerRealSecond: number;
-  /** Largest automatic batch sent to the solver at once (unit: model years). Scheduling only. */
+  /**
+   * Largest automatic batch sent to a WebGPU solver at once (unit: model years). Scheduling only. A batch
+   * already sent is never interrupted: Pause, scrubbing and leaving wait for it.
+   */
   readonly maxBatchModelYears: number;
+  /**
+   * Largest automatic batch sent to the CPU solver at once (unit: model years). Scheduling only. Smaller than
+   * the WebGPU batch because a CPU batch is much slower (one model year took about 300 ms on the 6A laptop)
+   * and Pause, scrubbing and leaving wait for the batch in flight. 0.2 (about 60 ms there) keeps scrubbing
+   * right after Pause within 100 ms at a 2 % throughput cost; 0.1 halves the wait for about 7 % (D-W6-6A2).
+   * Fixed-step results do not depend on it: the engine advances whole fixed steps and splits batches at
+   * record boundaries (D-W5-5J).
+   */
+  readonly cpuMaxBatchModelYears: number;
   /** Real time between live view frames while playing (unit: seconds). Scheduling only. */
   readonly frameIntervalSeconds: number;
 }
@@ -44,6 +57,7 @@ export const DEFAULT_GLACIAL_RUN_CONFIG: GlacialRunConfig = Object.freeze({
   maxKeptRuns: 2,
   modelYearsPerRealSecond: 10,
   maxBatchModelYears: 1,
+  cpuMaxBatchModelYears: 0.2,
   frameIntervalSeconds: 0.2,
 });
 
@@ -93,6 +107,7 @@ export function planGlacialRuns(
     "memoryBudgetBytes",
     "modelYearsPerRealSecond",
     "maxBatchModelYears",
+    "cpuMaxBatchModelYears",
     "frameIntervalSeconds",
   ] as const)
     positive(key);
@@ -103,8 +118,9 @@ export function planGlacialRuns(
   if (recordEverySteps === null) problems.push("snapshotIntervalYears must be a whole number of fixed steps");
   const intervals = wholeMultiple(config.horizonYears, config.snapshotIntervalYears);
   if (intervals === null) problems.push("horizonYears must be a whole number of snapshot intervals");
-  const maxBatchSteps = Math.round(config.maxBatchModelYears / model.dtYears);
-  if (maxBatchSteps < 1) problems.push("maxBatchModelYears must cover at least one fixed step");
+  for (const key of ["maxBatchModelYears", "cpuMaxBatchModelYears"] as const)
+    if (Math.round(config[key] / model.dtYears) < 1)
+      problems.push(`${key} must cover at least one fixed step`);
   const bytesPerSnapshot = GLACIER_LAYERS.length * model.nx * model.ny * 2;
   const snapshotsPerRun = (intervals ?? 0) + 1;
   const worstCaseBytes = (config.maxKeptRuns + 1) * snapshotsPerRun * bytesPerSnapshot;
@@ -124,7 +140,11 @@ export function planGlacialRuns(
   });
 }
 
-/** Steps per automatic batch for a plan (unit: steps). */
-export function maxBatchSteps(plan: GlacialRunPlan): number {
-  return Math.max(1, Math.round(plan.config.maxBatchModelYears / plan.dtYears));
+/**
+ * Largest automatic batch for a plan on a backend (unit: steps): `maxBatchModelYears` on WebGPU,
+ * `cpuMaxBatchModelYears` on the CPU. Scheduling only.
+ */
+export function maxBatchSteps(plan: GlacialRunPlan, backend: RunBackend): number {
+  const years = backend === "cpu" ? plan.config.cpuMaxBatchModelYears : plan.config.maxBatchModelYears;
+  return Math.max(1, Math.round(years / plan.dtYears));
 }

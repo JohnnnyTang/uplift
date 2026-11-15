@@ -15,6 +15,7 @@ import {
   RecordedRun,
   RunStore,
   encodeRunRecord,
+  maxBatchSteps,
   planGlacialRuns,
   runQuantization,
   type RunBackend,
@@ -48,6 +49,18 @@ describe("run plan", () => {
     expect(() => planGlacialRuns({ maxKeptRuns: 1.5 }, DEFAULT_GLACIER_CONFIG)).toThrow(/maxKeptRuns/);
     expect(() => planGlacialRuns({ frameIntervalSeconds: 0.01 }, DEFAULT_GLACIER_CONFIG)).toThrow(
       /frameInterval/,
+    );
+  });
+
+  it("sizes automatic batches per backend: 1 model year on WebGPU, 0.2 on the CPU (D-W6-6A2)", () => {
+    const plan = planGlacialRuns({}, DEFAULT_GLACIER_CONFIG);
+    expect(maxBatchSteps(plan, "webgpu")).toBe(400);
+    expect(maxBatchSteps(plan, "cpu")).toBe(80);
+    expect(() => planGlacialRuns({ cpuMaxBatchModelYears: 0.001 }, DEFAULT_GLACIER_CONFIG)).toThrow(
+      /cpuMaxBatchModelYears must cover at least one fixed step/,
+    );
+    expect(() => planGlacialRuns({ cpuMaxBatchModelYears: 0 }, DEFAULT_GLACIER_CONFIG)).toThrow(
+      /cpuMaxBatchModelYears must be a positive/,
     );
   });
 
