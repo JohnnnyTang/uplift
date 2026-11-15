@@ -23,6 +23,7 @@ export {
   type DioramaReveal,
   type DressingRules,
   type Footprint,
+  MAX_GHOSTS,
   ValleyDiorama,
   createValleyDiorama,
 } from "./diorama";
@@ -37,6 +38,14 @@ export {
   valleyGridIndex,
 } from "./snapshot";
 export { type DressingConfig, DEFAULT_DRESSING } from "./dressing";
+export {
+  type CrustBandLook,
+  type CrustLayer,
+  type CrustLayerLook,
+  CRUST_BAND_LOOK,
+  crustPatternMarks,
+  crustPatternSvg,
+} from "./crust";
 export {
   type Rect,
   type StageCamera,
