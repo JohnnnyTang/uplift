@@ -2878,6 +2878,43 @@ real GPU.
 **Revisit if.** 7R changes rows 2, 3, 10 or 28–29, or asks for a cover field: the config and tests change in
 one place.
 
+## D-W7-7R — Owner look review of lesson 2: presentation frozen for 7D and 7E (owner, 2026-11-15)
+
+**Context.** The owner reviewed the 7C build on the real 7B stage (`docs/review/plates/relief/`, PR #46,
+merged at 82a2ff7) and answered the look questions raised in D-W7-7C and D-W7-7B2. These answers freeze the
+presentation for 7D and 7E. Shapes stay authored illustrations under D-L2-1.
+
+**Decisions (owner).**
+
+1. **Transform legibility: taller ridges and streams.** The starting ridges rise from 500 m to **1,500 m**
+   (parameter row 10), labelled ARTISTIC CHOICE. This changes the shared starting landscape for all three
+   boundaries. 7D also draws streams in the valleys that cross the boundary, so the offset reads twice.
+2. **Rift legibility: shading and a deeper rift.** The rift's shoulder-to-floor relief goes from 1,700 m to
+   **2,100 m**, the top of the cited range (about 0.5–2.1 km, Chorowicz 2005), so it stays a cited value.
+   The crust under the rift axis stays at the cited 25 km. 7D adds ink or shading so scarps facing the
+   light still read.
+3. **Bent layers: cover rock above the crust.** The front face shows a band of layered cover rock, bending
+   up under the range and stepping down at each rift fault, above the crust band and its root, as in the
+   approved storyboard. Engine follow-up: an optional per-cell field **`coverBaseM`** on
+   `LandscapeSnapshot` (the elevation of the base of the layered cover, metres, same grid and units as
+   `bedM`). Between the bed and `coverBaseM` the front face draws the layered rock (with `layerOffsetM`);
+   the crust band runs from `coverBaseM` down to `crustBaseM`. Absent: the band starts at the bed, exactly
+   as today. 7C's generator emits it.
+4. **Scales accepted:** heights and rock layers ×4, crust depths ×0.75, and the resulting block height
+   (front face about half the block's width).
+
+**Lead decisions within the frozen look (technical, inside the plan).**
+
+- Block base: the fixed frame from `elevationFrame()` plus the stage's own margin is accepted; 7A's stray
+  −18,000 in the mapping section is corrected to match row 4 / the frame actually drawn.
+- Tree density, stream dressing and the wall pattern tile are 7D's (7C's review values are a starting point).
+- The tan streaks in the mantle band (possible z-fighting, seen on SwiftShader) are checked and fixed in the
+  cover-rock follow-up, verified on a real GPU where available.
+- Colours: as in the review build and the approved storyboard.
+
+**Revisit if.** The cover-rock follow-up shows the front face too busy at page size, or the 1,500 m ridges
+crowd the range and rift at stage 1; either goes back to the owner.
+
 ## D-W7-7D — Lesson 2 production scene: entry point, bindings and events (contract, session 7D, 2026-11-15)
 
 **Context.** 7D builds the production scene for _Where plates meet_ (wave plan §1, 7D brief) on the 7B stage,
