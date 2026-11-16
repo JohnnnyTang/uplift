@@ -3288,3 +3288,78 @@ reviewed 7D on 2026-11-15 and handed 7F these decisions and leftovers.
 **Revisit if.** The owner wants a rift lake back (then 7E's disclosure changes with it); the book's fit scale
 should be equal for both lessons (each spread's page height sets it today, see the PR); 6B–6D add the
 three-colour cover rock (owner item 3).
+
+## D-W7-7G — Acceptance of the two-lesson book; ghost labels off the front face; a higher default block view (session 7G, 2026-11-15)
+
+**Context.** 7G walks PB1–PB9 for the two-lesson book (PB7 in its original form, D-L2-1 decision 6) and PL1–PL9
+on the default app, prepares the owner scene review and the expert-review packet, and fixes the code, science
+and product defects it finds (wave plan, 7G brief). Ledger: `docs/review/plates/acceptance/README.md`. The owner
+reviewed 7F on 2026-11-15 and handed 7G the decisions below.
+
+**Owner decisions (2026-11-15, after reviewing 7F), as given.**
+
+1. Ghost labels (the names and glyphs of boundaries already viewed) sat over the block's front face and were
+   clipped at the page edge. Move them off the front face and keep them fully inside the page at desktop and
+   phone sizes, still legible and still tied to their profiles (for example a leader line or a legend beside
+   the face).
+2. A higher default view of the block for lesson 2, so the transform offset reads from the default view. The
+   book tilt stays 48°, the same as lesson 1. Use the block or camera view, not the book tilt.
+3. No rift lakes, matching 7E's disclosure ("no erosion, sediment or rift lakes"). 7F already set this; verify
+   and keep.
+
+**Session decisions.**
+
+1. **Ghost labels → the ghost key under the face, with leaders.** The key (one entry per ghost: dash sample,
+   boundary glyph, name; the pattern words stay for listeners) moves from under the caption to right under the
+   block's front face, on the page, so it is inside the page at every size and reflows on phones. A fine ink
+   leader (1 px, paper halo, open dot on the profile) runs from each ghost profile on the face down to its
+   entry. It ends where the ghost clearly differs from the shown profile (at least 60 % of their largest
+   difference), at the point nearest its entry, so leaders stay short. No label covers the face. The key's
+   type now matches the caption (it is the labels). At 1440 × 900 the whole book sits at a small fit scale, so
+   the key is as legible as the caption, no more (see PB1/O1 in the ledger); the on-block labels it replaces
+   were larger, but they covered the face and were clipped.
+2. **The higher view comes from the block: a 12° tip about its front edge.** On the tilted book the camera
+   is matched to the paper, and "View height" is the book's own tilt (`90° − tilt`), so a different "View
+   height" default would tilt the book at the turn, which owner item 1 of D-W7-7F rules out. Hachure's book
+   stage gains a generic, view-only `pitchDeg` option (default 0; lesson 1 passes none and draws exactly as
+   before): on the tilted book the block turns about its own front edge, so the whole front edge stays on the
+   paper while its top shows more; on the flat stage (phones, reduced motion) the camera rises by the same
+   angle. Lesson 2 uses 12° (`PLATES_BLOCK_PITCH_DEG`). Measured top-to-face ratio on screen: 1.2–1.4 untipped,
+   2.0–2.2 tipped (1366–1920 wide). The book stays at 48° and "View height" still reads 42°.
+3. **No rift lakes:** verified (`maxLakes` 0 by default, unit test "draws no lakes in the production look";
+   no lake in any 7G capture). Kept.
+
+**Defects found and fixed here (each listed in the PR).**
+
+- Lesson 1 at either level with its flap open ran off the desk at 1440 × 900 and 1366 × 768 (7F's surprise 3).
+  With the flap open only, its column now grows as far as the tilted book fits and scrolls inside the page,
+  as lesson 2's does (`glacial/review.css`). The closed-flap spread is unchanged.
+- Lesson 2's left page kept lesson 1's empty margin-notes column, so its text used about 55 % of the page and
+  the spread was taller than needed (7F's handover). It is one column now (measure under about 75 characters).
+  The book fits at a larger scale at 1440 × 900 (0.75, was the 0.55 minimum), and at 1920 × 1080 both lessons'
+  spreads are now the same height (830 px), so the turn no longer changes the book's size there.
+- The 7D fixture's static view said "Simplified view: …"; it now mounts lesson 2 with the book's "Drawing
+  only: …" wording, and its spec checks it.
+- Turning on reduced motion while lesson 2 was open made the stage flat but kept continuous play; the scene now
+  follows the media setting live (`set-reduced-motion`).
+- The school page said "press Play to see the landform it makes", which reads as the landform forming in the
+  scene (guardrail 1). It now says "press Play: the drawing shows its landform from early to late"; the
+  sentence register was regenerated.
+
+**Known and recorded, not changed.** At 1440 × 900 lesson 2 now fits at a larger scale than lesson 1 (0.75 vs
+0.60), so the book grows a little at the turn (before 7G it shrank, 0.60 → 0.55). Equal fit scales would need
+the stage to fit both lessons to one page height; the bigger lesson-2 page serves PL3 better. At 1366 × 768 and
+below both lessons sit at the minimum scale (owner's O1, accepted in D-W5-5N2).
+
+**Pending, never inferred (6B–6D take them over).** Owner review of the 7G look decisions and of lesson 2 as a
+whole; expert sign-off (packet `docs/review/plates/acceptance/expert-review.md`); first-time readers;
+screen-reader listening; colour-vision and projector checks; other GPUs, browsers and classroom machines.
+
+**Revisit if.** The owner wants the key back on the block (it would cover the face again), a different tip, or
+equal book sizes at the turn (an engine fit change).
+
+**Owner review of 7G (2026-11-16).** The owner approved the two 7G look decisions (the ghost key under the
+front face with leaders; the block tipped 12° towards the reader with the book at 48°) and closed Wave 7.
+**F1 accepted as is:** each lesson fits its own page height, so at 1440 × 900 the book grows slightly at the
+turn (0.60 → 0.75) while the camera tilt stays the same. No engine fit change is planned for 6B. F2 (block
+size at laptop widths) stays with the owner's look review in 6B–6D.

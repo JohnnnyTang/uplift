@@ -339,20 +339,24 @@ test("the left page fits the tilted book at university level with the flap open:
     await bar(page).getByRole("button", { name: "University level" }).click();
     await page.locator(".ps-desk .gs-flap summary").click();
     await expect(page.locator(".ps-desk .gs-flap")).toHaveAttribute("open", "");
-    const fit = await page.evaluate(() => {
-      const column = document.querySelector<HTMLElement>(".ps-text-column")!;
-      const spread = document.querySelector(".ps-desk .gs-spread")!.getBoundingClientRect();
-      const deskBox = document.querySelector(".ps-desk")!.getBoundingClientRect();
-      column.scrollTop = column.scrollHeight;
-      const last = column.querySelector(".gs-deeper-triggers")!.getBoundingClientRect();
-      const box = column.getBoundingClientRect();
-      return {
-        scrolls: column.scrollHeight > column.clientHeight,
-        inDesk: spread.bottom <= deskBox.bottom + 1,
-        lastVisible: last.bottom <= box.bottom + 2,
-      };
-    });
-    expect(fit, `${width}×${height}`).toEqual({ scrolls: true, inDesk: true, lastVisible: true });
+    // The stage refits the book on its next frame after the page grows (one slow frame on SwiftShader), so poll.
+    const fit = () =>
+      page.evaluate(() => {
+        const column = document.querySelector<HTMLElement>(".ps-text-column")!;
+        const spread = document.querySelector(".ps-desk .gs-spread")!.getBoundingClientRect();
+        const deskBox = document.querySelector(".ps-desk")!.getBoundingClientRect();
+        column.scrollTop = column.scrollHeight;
+        const last = column.querySelector(".gs-deeper-triggers")!.getBoundingClientRect();
+        const box = column.getBoundingClientRect();
+        return {
+          scrolls: column.scrollHeight > column.clientHeight,
+          inDesk: spread.bottom <= deskBox.bottom + 1,
+          lastVisible: last.bottom <= box.bottom + 2,
+        };
+      });
+    await expect
+      .poll(fit, { message: `${width}×${height}` })
+      .toEqual({ scrolls: true, inDesk: true, lastVisible: true });
     // Focus reaches the last control of the column (keyboard readers scroll it by tabbing).
     await page.locator(".ps-desk .gs-deeper-triggers button").last().focus();
     await expect(page.locator(".ps-desk .gs-deeper-triggers button").last()).toBeInViewport();

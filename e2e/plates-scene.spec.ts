@@ -138,19 +138,20 @@ test.describe("plates production scene (lesson 2)", () => {
     await expect(desk(page)).toHaveAttribute("data-ghosts", "convergent");
     await expect(page.locator(".ps-ghost-key")).toBeVisible();
     await expect(page.locator(".ps-ghost-key [data-boundary=convergent]")).toContainText("Convergent");
-    await expect(page.locator(".ps-ghost-label[data-boundary=convergent]")).toBeVisible();
-    await expect(page.locator(".ps-ghost-label[data-boundary=convergent] .ps-glyph")).toHaveCount(1);
+    // The labels are the key's entries, on the page under the face; a leader ties each to its profile (7G).
+    await expect(page.locator(".ps-ghost-key [data-boundary=convergent] .ps-glyph")).toHaveCount(1);
+    await expect(page.locator(".ps-ghost-leaders [data-boundary=convergent] .ps-leader")).toHaveCount(1);
     await expect(status(page)).toContainText("dotted line on the front face is the convergent profile");
     await page.locator(".ps-choice[data-boundary=transform]").click();
     await scrub(page, 0.75);
     await expect(desk(page)).toHaveAttribute("data-ghosts", "convergent,divergent");
-    await expect(page.locator(".ps-ghost-label")).toHaveCount(2);
+    await expect(page.locator(".ps-ghost-leaders g")).toHaveCount(2);
     await page.locator(".gs-reset").click();
     await expect(desk(page)).toHaveAttribute("data-boundary", "none");
     await expect(desk(page)).toHaveAttribute("data-ghosts", "");
     await expect(desk(page)).toHaveAttribute("data-viewed", "");
     await expect(page.locator(".ps-ghost-key")).toBeHidden();
-    await expect(page.locator(".ps-ghost-label")).toHaveCount(0);
+    await expect(page.locator(".ps-ghost-leaders g")).toHaveCount(0);
   });
 
   test("the front face moves along the boundary by keyboard, and the camera is view-only", async ({
@@ -250,6 +251,8 @@ test.describe("plates production scene (lesson 2)", () => {
     await scrub(page, 1);
     await expect(status(page)).toContainText("Convergent boundary, late stage");
     await expect(page.locator(".gs-drawing .plate-arrow.neutral")).toHaveCount(0);
+    // Mounted as the book mounts it: the static view says it shows the drawing only (7G, not "Simplified view").
+    await expect(page.locator(".reader-scene-status")).toHaveText(/^Drawing only: /);
   });
 
   test("phone: one readable page, no horizontal scroll, arrows still reachable", async ({ browser }) => {

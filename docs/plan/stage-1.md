@@ -774,7 +774,7 @@ as specified in the wave. No standalone demo or unchanged default app can close 
 
 ## Wave 7 · Lesson 2 · Where plates meet (runs between 6A and 6B)
 
-**Status:** planned 2026-11-14 (D-L2-1), not started. **Single source:**
+**Status:** done 2026-11-15 (7A–7F merged; 7G acceptance is the wave's last PR, D-W7-7G). **Single source:**
 [the Wave 7 plan](stage-1-wave-7-plates.md). The owner chose plate boundaries as Stage 1's second
 discovery, so PB7 returns to its original form. Order: 6A/6A2 → 7A–7G → 6B → 6C → 6D.
 
@@ -791,8 +791,10 @@ discovery, so PB7 returns to its original form. Order: 6A/6A2 → 7A–7G → 6B
 
 ## Wave 6 · Hardening and release review
 
-**Split by owner decision D-L2-1 (2026-11-14):** 6A and 6A2 are merged (D-W6-6A2). **6B, 6C and 6D are
-deferred until Wave 7 (lesson 2) has merged**, and then audit, review and retro the two-lesson book.
+**Split by owner decision D-L2-1 (2026-11-14):** 6A and 6A2 are merged (D-W6-6A2). **6B, 6C and 6D were
+deferred until Wave 7 (lesson 2) merged**; with 7G (2026-11-15) the wave is done, so 6B → 6C → 6D can start and
+audit, review and retro the two-lesson book, taking over the pending checks in the
+[7G ledger](../review/plates/acceptance/README.md).
 Their briefs below apply to both lessons; 6D no longer selects the next lesson (the owner did).
 
 These are the unfinished former 5A–5D, renumbered **6A–6D**. Historical references

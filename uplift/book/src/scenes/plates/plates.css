@@ -116,14 +116,17 @@
   margin-top: 0.6cqi;
 }
 
-/* ---- Ghost key under the figure, and labels beside the profiles on the block. -------------------- */
+/*
+ * ---- The ghost key: on the page right under the block's front face, one entry per boundary already viewed.
+ * A leader line on the overlay ties each entry to its profile, so no label covers the face (D-W7-7G). ----
+ */
 .ps-ghost-key {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0 1em;
-  margin-top: 0.2cqi;
-  font-size: max(11px, 0.88cqi);
+  gap: 0.15em 1.1em;
+  margin: 0.5cqi 0 0.3cqi;
+  font-size: max(12px, 1.05cqi); /* as the caption: the key is the labels now */
   line-height: 1.3;
 }
 .ps-ghost-key[hidden] {
@@ -132,9 +135,19 @@
 .ps-ghost-key-title {
   font-style: italic;
   color: var(--gs-ink-soft);
+  /* Shown after the entries (read first), so the leaders reach the entries without crossing words. */
+  order: 1;
+  flex-basis: 100%;
 }
-.ps-ghost-item,
-.ps-ghost-label {
+.ps-ghost-pattern {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.ps-ghost-item {
   display: inline-flex;
   align-items: center;
   gap: 0.35em;
@@ -155,8 +168,7 @@
   stroke: var(--gs-ink);
   stroke-width: 2;
 }
-.ps-ghost-key .ps-glyph,
-.ps-ghost-label .ps-glyph {
+.ps-ghost-key .ps-glyph {
   width: 24px;
   height: 18px;
 }
@@ -258,21 +270,29 @@
   stroke: var(--gs-paper);
   stroke-width: 4px;
 }
-.ps-ghost-labels {
+.ps-ghost-leaders {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
-.ps-ghost-label {
-  position: absolute;
-  transform: translate(8px, -50%);
-  padding: 1px 6px 1px 3px;
-  border-radius: 3px;
-  background: color-mix(in srgb, var(--gs-paper) 88%, transparent);
-  font:
-    italic 12px/1.3 Georgia,
-    serif;
-  color: var(--gs-ink);
-  white-space: nowrap;
+.ps-ghost-leaders .ps-leader {
+  fill: none;
+  stroke: var(--gs-ink);
+  stroke-width: 1;
+}
+.ps-ghost-leaders .ps-leader-halo {
+  fill: none;
+  stroke: var(--gs-paper);
+  stroke-width: 3.5;
+  stroke-opacity: 0.85;
+  stroke-linecap: round;
+}
+.ps-ghost-leaders .ps-leader-dot {
+  fill: var(--gs-paper);
+  stroke: var(--gs-ink);
+  stroke-width: 1.4;
 }
 .ps-desk.ps-dragging-arrow * {
   cursor: grabbing !important;
@@ -307,6 +327,8 @@
 @media (forced-colors: active) {
   .ps-glyph path,
   .ps-ghost-sample .ps-ghost-line,
+  .ps-ghost-leaders .ps-leader,
+  .ps-ghost-leaders .ps-leader-dot,
   .ps-overlay .hb-arrow-ink {
     stroke: CanvasText;
   }
@@ -342,4 +364,16 @@
   scrollbar-color: var(--gs-rule) transparent;
   /* Room for the scrollbar without the text touching it. */
   padding-right: 0.6cqi;
+}
+
+/*
+ * Lesson 2 has no margin notes, so its lesson column takes the page's whole measure instead of lesson 1's
+ * text-and-notes grid (7G: the inherited empty notes column left the text ~55 % of the page and made the left
+ * page taller than it needs to be). The measure stays under about 75 characters.
+ */
+.ps-text-column {
+  grid-template-columns: minmax(0, 1fr);
+}
+.ps-text-column .gs-lesson {
+  max-width: 36em;
 }

@@ -25,9 +25,9 @@ Quote the relevant GV row in the session handover; record deviations before depe
 
 ## Wave 7 direction (lesson 2)
 
-The second lesson, plate boundaries, is planned in docs/plan/stage-1-wave-7-plates.md (the single source).
-It runs after 6A; 6B–6D are deferred until it merges. Its relief is authored under the scoped exception
-below; quote the relevant PL row in the session handover.
+The second lesson, plate boundaries, is docs/plan/stage-1-wave-7-plates.md (the single source). The wave is
+done (7G acceptance, D-W7-7G); 6B → 6C → 6D can start on the two-lesson book. Its relief is authored under the
+scoped exception below; quote the relevant PL row in the session handover.
 
 ## Non-negotiables
 

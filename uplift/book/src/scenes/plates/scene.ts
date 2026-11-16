@@ -45,9 +45,16 @@ import { GHOST_PATTERN_WORDS, cutWords, describeScene, stageWord } from "./words
 
 /**
  * Book tilt (unit: degrees): lesson 1's 48°, so turning the page between the lessons never moves the camera
- * (owner, 2026-11-15, D-W7-7F; 7D had 42°). A higher view of the transform comes from turning the block.
+ * (owner, 2026-11-15, D-W7-7F; 7D had 42°). The higher view of the block comes from the block's tip below.
  */
 export const PLATES_TILT_DEG = 48;
+/**
+ * The block's tip towards the reader on the page (unit: degrees), about its front edge: a higher default view
+ * of the block, so the transform offset reads without turning it, while the book keeps lesson 1's tilt
+ * (owner, 2026-11-15, D-W7-7G item 2). On the tilted book "View height" is the book's own tilt (the camera is
+ * matched to the paper), so the higher view comes from the block. View-only.
+ */
+export const PLATES_BLOCK_PITCH_DEG = 12;
 /** Fraction of eligible low, gentle cells with a tree (unit: none). Sparse, so ridges and streams read. */
 const TREE_DENSITY = 0.03;
 /**
@@ -238,8 +245,9 @@ export async function mountPlatesScene(
   caption.append(captionText, scaleLine);
   const ghostKey = el("div", "ps-ghost-key");
   ghostKey.hidden = true;
-  // The ghost key: one line under the caption (the labels on the block carry the same name, glyph and line).
-  figure.append(frameEl, caption, ghostKey, lens);
+  // The ghost key sits right under the block's front face, on the page: each boundary already viewed, with its
+  // dash sample, glyph and name; a leader line ties each entry to its profile (D-W7-7G, owner item 1).
+  figure.append(frameEl, ghostKey, caption, lens);
 
   const picker = el("fieldset", "ps-picker");
   const pickerLegend = el("legend");
@@ -524,7 +532,11 @@ export async function mountPlatesScene(
           item.dataset.boundary = g;
           item.insertAdjacentHTML("beforeend", ghostSampleSvg(i));
           item.insertAdjacentHTML("beforeend", boundaryGlyphSvg(g));
-          item.append(el("span", undefined, `${t(copy.boundaries[g].name)} (${GHOST_PATTERN_WORDS[i]})`));
+          // The pattern words are for listeners; the sample beside the name shows the pattern to the eye.
+          item.append(
+            el("span", undefined, t(copy.boundaries[g].name)),
+            el("span", "ps-ghost-pattern", ` (${GHOST_PATTERN_WORDS[i]})`),
+          );
           ghostKey.append(item);
         });
       }
@@ -615,6 +627,9 @@ export async function mountPlatesScene(
   };
   let unsubscribe = source.subscribe(() => undefined);
   let lastPlaying = source.state().playing;
+  // The reader's motion setting can change while the page is open; the stage then steps, or plays, to match (7G).
+  const onMotion = () => source.dispatch({ kind: "set-reduced-motion", reduced: reducedMotion() });
+  motionQuery.addEventListener("change", onMotion);
 
   // ---- Static fallback when 3D is off or unavailable ----
   const stageModule = o.staticOnly ? null : await import("@hachure/ink/stage").catch(() => null);
@@ -623,6 +638,7 @@ export async function mountPlatesScene(
   const disposeAll = async () => {
     if (disposed) return;
     disposed = true;
+    motionQuery.removeEventListener("change", onMotion);
     binding?.dispose();
     reading.dispose();
     unsubscribe();
@@ -715,6 +731,7 @@ export async function mountPlatesScene(
     anchor: frameEl,
     diorama: dio,
     tiltDeg: PLATES_TILT_DEG,
+    pitchDeg: PLATES_BLOCK_PITCH_DEG,
     mode: o.mode ?? "auto",
     backend: o.backend ?? "auto",
     onContextLost: () => {
@@ -943,60 +960,60 @@ export async function mountPlatesScene(
       "Drag a plate's arrow to choose how the plates move · Drag the scene to turn · Drag the front face to move it";
   replay.onclick = () => play();
 
-  // ---- Ghost labels on the front face (name and glyph beside each profile; the diorama draws profiles only) ----
-  const ghostLabels = el("div", "ps-ghost-labels");
-  ghostLabels.setAttribute("aria-hidden", "true");
-  overlay.append(ghostLabels);
-  const placeGhostLabels = () => {
+  // ---- Ghost leaders: a fine ink line from each ghost profile on the front face to its entry in the ghost key,
+  // which sits on the page under the face, so the labels never cover the face or leave the page (D-W7-7G). ----
+  const leaderSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  leaderSvg.setAttribute("class", "ps-ghost-leaders");
+  leaderSvg.setAttribute("aria-hidden", "true");
+  overlay.append(leaderSvg);
+  const placeGhostLeaders = () => {
     const p = fp();
     const snap = shownFrame;
     const ghosts = source.ghosts();
-    if (!p || !snap || !transitionDone || !ghosts.length) {
-      ghostLabels.replaceChildren();
+    if (!p || !snap || !transitionDone || !ghosts.length || ghostKey.hidden) {
+      leaderSvg.replaceChildren();
       return;
     }
     const r = cutRow();
     const at = overlay.getBoundingClientRect();
-    const items: HTMLElement[] = [];
-    const used: number[] = [];
+    const f = (v: number) => v.toFixed(1);
+    let paths = "";
     ghosts.forEach((g, i) => {
       const b = asBoundary(g.key);
-      if (!b) return;
-      // Beside the profile where it differs most from the shown one (else at the right of the face).
-      let best = Math.round(0.85 * (snap.columns - 1));
+      const sample = b && ghostKey.querySelector(`.ps-ghost-item[data-boundary="${b}"] .ps-ghost-sample`);
+      if (!b || !sample) return;
+      // The leader ends on the profile where it clearly differs from the shown one (at least 60 % of its
+      // largest difference), at the point nearest its key entry, so leaders stay short and steep; where the
+      // profiles coincide, it ends along the right of the face.
+      const box = sample.getBoundingClientRect();
+      const keyX = box.left + box.width / 2;
+      const diff = (col: number) =>
+        Math.abs(g.frame.bedM[r * snap.columns + col]! - snap.bedM[r * snap.columns + col]!);
       let gap = 0;
-      for (let c = 4; c < snap.columns - 4; c += 2) {
-        const d = Math.abs(g.frame.bedM[r * snap.columns + c]! - snap.bedM[r * snap.columns + c]!);
-        if (d > gap + 1) {
-          gap = d;
-          best = c;
-        }
-      }
-      if (gap < 80) best = Math.round((0.72 + 0.1 * i) * (snap.columns - 1));
-      const h = g.frame.bedM[r * snap.columns + best]!;
-      const [pt] = bookStage.projectBlockPoints([
-        [
-          (best - (snap.columns - 1) / 2) * snap.metresPerCell,
-          blockY(h),
-          (r - (snap.rows - 1) / 2) * snap.metresPerCell,
-        ],
-      ]);
+      for (let col = 4; col < snap.columns - 4; col += 2) gap = Math.max(gap, diff(col));
+      const cols: number[] = [];
+      if (gap >= 80) {
+        for (let col = 4; col < snap.columns - 4; col += 2) if (diff(col) >= gap * 0.6) cols.push(col);
+      } else cols.push(Math.round((0.6 + 0.12 * i) * (snap.columns - 1)));
+      const z = (r - (snap.rows - 1) / 2) * snap.metresPerCell;
+      const pts = bookStage.projectBlockPoints(
+        cols.map((col) => [
+          (col - (snap.columns - 1) / 2) * snap.metresPerCell,
+          blockY(g.frame.bedM[r * snap.columns + col]!),
+          z,
+        ]),
+      );
+      let pt: { x: number; y: number } | null = null;
+      for (const q of pts) if (q && (!pt || Math.abs(q.x - keyX) < Math.abs(pt.x - keyX))) pt = q;
       if (!pt) return;
-      let y = pt.y - at.top;
-      // Below the profile point, on the front face; stacked downwards so labels never cover the top.
-      y += 12;
-      while (used.some((u) => Math.abs(u - y) < 22)) y += 22;
-      used.push(y);
-      const tag = el("span", "ps-ghost-label");
-      tag.dataset.boundary = b;
-      tag.insertAdjacentHTML("beforeend", ghostSampleSvg(i));
-      tag.insertAdjacentHTML("beforeend", boundaryGlyphSvg(b));
-      tag.append(el("span", undefined, t(copy.boundaries[b].name)));
-      tag.style.left = `${(pt.x - at.left).toFixed(1)}px`;
-      tag.style.top = `${y.toFixed(1)}px`;
-      items.push(tag);
+      const [ax, ay] = [pt.x - at.left, pt.y - at.top];
+      const [bx, by] = [box.left + box.width / 2 - at.left, box.top - at.top];
+      const d = `M${f(ax)} ${f(ay)}L${f(bx)} ${f(by)}`;
+      paths +=
+        `<g data-boundary="${b}"><path class="ps-leader-halo" d="${d}"/><path class="ps-leader" d="${d}"/>` +
+        `<circle class="ps-leader-dot" cx="${f(ax)}" cy="${f(ay)}" r="2.6"/></g>`;
     });
-    ghostLabels.replaceChildren(...items);
+    leaderSvg.innerHTML = paths;
   };
   // ---- The scale bar along the block's front edge (its label is the bound `scaleBarLabel`) ----
   const scaleSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -1026,14 +1043,14 @@ export async function mountPlatesScene(
   const placeOverlay = (force = false) => {
     const r = bookStage.canvas.getBoundingClientRect();
     const v = bookStage.view;
-    const key = `${r.left.toFixed(0)},${r.top.toFixed(0)},${r.width.toFixed(0)},${r.height.toFixed(0)},${v.tiltDeg},${v.orbitDeg},${v.zoom},${bookStage.mode},${transitionDone},${cut},${source.state().frameSerial},${level}`;
+    const key = `${r.left.toFixed(0)},${r.top.toFixed(0)},${r.width.toFixed(0)},${r.height.toFixed(0)},${v.tiltDeg},${v.orbitDeg},${v.zoom},${bookStage.mode},${transitionDone},${cut},${source.state().frameSerial},${level},${ghostKey.dataset.key ?? ""},${ghostKey.hidden}`;
     if (!force && key === overlayKey) return;
     overlayKey = key;
     // Keep the overlay to the desk's visible box, so handles never sit over the reader's chrome.
     const d = desk.getBoundingClientRect();
     overlay.style.clipPath = `inset(${Math.max(0, d.top)}px ${Math.max(0, innerWidth - d.right)}px ${Math.max(0, innerHeight - d.bottom)}px ${Math.max(0, d.left)}px)`;
     arrows?.update();
-    placeGhostLabels();
+    placeGhostLeaders();
     placeScaleBar();
   };
   let overlayFrame = 0;
