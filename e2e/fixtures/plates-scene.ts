@@ -62,6 +62,8 @@ const entries: ReaderEntry[] = [
   {
     spread: spreadOf("tectonics.plate-boundaries", "Where plates meet"),
     layout: "stage",
+    // The book's wording (`scenes/entries.ts`): this lesson has no recorded runs, only the drawing.
+    fallbackStatus: (reason) => `Drawing only: ${reason}`,
     createScene: (level, { folio }) =>
       createPlatesSpreadScene({
         level,

@@ -10,4 +10,4 @@ Where two plates meet, they push together, pull apart or slide past each other, 
 
 <!-- claims: PD1, PD7 | sources: Params; Claims -->
 
-Choose a boundary and press Play to see the landform it makes, from early to late.
+Choose a boundary and press Play: the drawing shows its landform from early to late.

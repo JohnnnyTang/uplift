@@ -953,6 +953,22 @@
   margin-bottom: 2.2cqi;
 }
 
+/*
+ * 7G: with the flap open (an optional answer), lesson 1's column could grow the tilted page off the desk
+ * (1440 × 900 and 1366 × 768, both levels). As lesson 2 does (7F), the column then grows only as far as the
+ * tilted book still fits and scrolls inside the page beyond that. The closed-flap spread is unchanged and the
+ * flat page flows as before.
+ */
+.gs-desk[data-stage-mode="tilted"]:not(.ps-desk):has(.gs-page-text .gs-flap[open])
+  .gs-page-text
+  .gs-text-column {
+  max-height: calc((100dvh - var(--gs-controls-height, 0px) - var(--reader-bar-space, 0px)) * 1.15);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gs-rule) transparent;
+}
+
 /* ---- 5M: live runtime controls and the 5L lesson pieces ---------------------------------------------- */
 .gs-timeline {
   display: flex;

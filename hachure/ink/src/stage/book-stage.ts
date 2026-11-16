@@ -100,6 +100,13 @@ export interface BookStageOptions {
    * Default −24. View-only.
    */
   readonly yawDeg?: number;
+  /**
+   * Tip of the block towards the reader (unit: degrees): a higher view of the block that leaves the book's
+   * tilt, and so the page and every other spread, unchanged. On the tilted book the block turns about its
+   * front edge on the page, so its top shows more and its front face less; on the flat stage the camera
+   * rises by the same angle instead. Bounded to 0–30. Default 0 (no tip). View-only.
+   */
+  readonly pitchDeg?: number;
   /** Default "auto": flat when `flatQuery` matches or the tilted book does not fit. */
   readonly mode?: StageModeRequest;
   readonly flatQuery?: string;
@@ -419,10 +426,13 @@ class BookStageImpl implements BookStage {
     if (!fp || !this.renderer) return;
     const fill = this.o.footprintFill ?? 1;
     const yaw = ((this.o.yawDeg ?? -24) * Math.PI) / 180;
-    this.holder.rotation.set(0, yaw, 0);
     // Footprint of the turned block, for fitting it to the frame.
     const spanX = fp.widthM * Math.abs(Math.cos(yaw)) + fp.depthM * Math.abs(Math.sin(yaw));
     const spanZ = fp.widthM * Math.abs(Math.sin(yaw)) + fp.depthM * Math.abs(Math.cos(yaw));
+    // The tip turns the block about its own front edge (Euler order YXZ: the tip about the block's X axis,
+    // then the turn about the page normal), on the tilted book only; the flat stage raises its camera instead.
+    const pitch = this.currentMode === "tilted" ? this.pitchRad() : 0;
+    this.holder.rotation.set(pitch, yaw, 0, "YXZ");
     let scale: number;
     let centre: Vector3;
     if (this.currentMode === "tilted") {
@@ -442,6 +452,13 @@ class BookStageImpl implements BookStage {
       this.catcher.position.set(0, 0, 0);
       this.fitFlatCamera({ widthM: spanX, heightM: fp.heightM, depthM: spanZ });
     }
+    // Keep the block's whole front edge on the paper while it tips: lift it by its front half-depth and
+    // move it forward along its own (turned) front direction.
+    const front = (fp.depthM / 2) * scale;
+    const forward = front * (1 - Math.cos(pitch));
+    centre.y += front * Math.sin(pitch);
+    centre.x += forward * Math.sin(yaw);
+    centre.z += forward * Math.cos(yaw);
     this.holder.position.copy(centre);
     this.holder.scale.setScalar(scale);
     // Contact shadow under the visible (cut) block, in block-local metres.
@@ -464,6 +481,12 @@ class BookStageImpl implements BookStage {
     this.light.shadow.normalBias = radius * 0.002;
   }
 
+  /** The block's tip towards the reader (`pitchDeg`) in radians, bounded to 0–30°. */
+  private pitchRad(): number {
+    const deg = this.o.pitchDeg ?? 0;
+    return (Math.min(30, Math.max(0, Number.isFinite(deg) ? deg : 0)) * Math.PI) / 180;
+  }
+
   private fitFlatCamera(fp: { widthM: number; heightM: number; depthM: number }): void {
     const w = this.canvas.clientWidth || 1;
     const h = this.canvas.clientHeight || 1;
@@ -476,7 +499,7 @@ class BookStageImpl implements BookStage {
     const hFov = 2 * Math.atan(Math.tan(vFov / 2) * this.camera.aspect);
     const distance = (radius / Math.sin(Math.min(vFov, hFov) / 2)) * 0.88;
     // From the front and above; the block's yaw gives the three-quarter view, as on the tilted page.
-    const elevation = ((90 - this.currentView.tiltDeg) * Math.PI) / 180;
+    const elevation = ((90 - this.currentView.tiltDeg) * Math.PI) / 180 + this.pitchRad();
     const azimuth = (-this.currentView.orbitDeg * Math.PI) / 180;
     this.camera.position.set(
       centre.x + distance * Math.cos(elevation) * Math.sin(azimuth),
