@@ -58,7 +58,8 @@ export async function createReaderShell(
   const narrow = matchMedia("(max-width: 60rem)");
   const motion = matchMedia("(prefers-reduced-motion: reduce)");
   const root = node("div", undefined, "reader-shell");
-  const book = node("main", undefined, "reader-book");
+  // The app host already supplies the main landmark on both reader and research routes.
+  const book = node("div", undefined, "reader-book");
   // The quiet bottom bar (5M, after the owner's reference): contents, previous, title, next, contrast, level.
   const nav = node("nav", undefined, "reader-navigation reader-bar");
   nav.setAttribute("aria-label", "Book pages");

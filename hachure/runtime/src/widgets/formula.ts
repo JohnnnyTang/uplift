@@ -4,6 +4,8 @@ import { el } from "./controls";
 /** Preserve semantic MathML alongside visual HTML; never paint equations into a texture. */
 export function createDisplayFormula(tex: string): HTMLElement {
   const root = el("div", undefined, "widget-formula");
+  // Display equations may overflow narrow reading panels; keyboard users must be able to scroll them.
+  root.tabIndex = 0;
   katex.render(tex, root, {
     displayMode: true,
     output: "htmlAndMathml",

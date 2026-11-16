@@ -51,6 +51,12 @@ export function createGlacialSpreadScene(options: GlacialSpreadOptions): ReaderS
   let mounted: MountedGlacialScene | null = null;
   let stopDrive: (() => void) | null = null;
   let unsubscribeHost: (() => void) | null = null;
+  let unsubscribeFallback: (() => void) | null = null;
+  let startupFailure: string | null = null;
+  let recordingsFailure: string | null = null;
+  let staticReason: string | null = null;
+  let fallbackSuspended = false;
+  let fallbackPlayIntent = false;
   let readiness: SceneReadiness = { kind: "loading" };
   let attached = false;
   let seen = false;
@@ -64,7 +70,12 @@ export function createGlacialSpreadScene(options: GlacialSpreadOptions): ReaderS
     return {
       readiness,
       gesture: "idle",
-      activity: activity === "playing" ? "playing" : activity === "settling" ? "settling" : "paused",
+      activity:
+        activity === "playing" || (!host && source?.timeline().playing)
+          ? "playing"
+          : activity === "settling"
+            ? "settling"
+            : "paused",
       attached,
     };
   };
@@ -78,12 +89,32 @@ export function createGlacialSpreadScene(options: GlacialSpreadOptions): ReaderS
         transport: (options.createTransport ?? defaultTransport)(),
         prefer: options.prefer ?? "auto",
       });
-      await h.initialize();
+      try {
+        await h.initialize();
+      } catch (error) {
+        await h.dispose();
+        throw error;
+      }
       host = h;
       unsubscribeHost = h.subscribe(() => emit());
       return h;
     })();
     return hostReady;
+  };
+
+  const updateReadiness = () => {
+    if (staticReason) readiness = { kind: "fallback", reason: `Drawing only: ${staticReason}` };
+    else if (source?.kind === "fixture")
+      readiness = {
+        kind: "fallback",
+        reason: `Illustration preview only: no live model or recorded runs are available.${recordingsFailure ? ` Recorded runs could not load (${recordingsFailure}).` : ""}`,
+      };
+    else if (source?.kind === "recorded")
+      readiness = {
+        kind: "fallback",
+        reason: `Showing recorded runs: the live model could not start (${startupFailure ?? "unavailable"}); no live simulation is running.`,
+      };
+    else readiness = { kind: "ready" };
   };
 
   const presentation = (): ReaderPresentation => ({
@@ -112,6 +143,7 @@ export function createGlacialSpreadScene(options: GlacialSpreadOptions): ReaderS
       const root = document.createElement("div");
       root.className = "reader-stage-root";
       container.replaceChildren(root);
+      staticReason = null;
       const common = {
         embedded: true,
         level,
@@ -125,27 +157,36 @@ export function createGlacialSpreadScene(options: GlacialSpreadOptions): ReaderS
         ...(options.mode ? { mode: options.mode } : {}),
         ...(options.reducedMotion ? { reducedMotion: true } : {}),
       };
-      try {
-        mounted = await mountGlacialScene(root, {
-          ...common,
-          ownsSource: false,
-          createSource: async (context) => {
+      mounted = await mountGlacialScene(root, {
+        ...common,
+        ownsSource: false,
+        createSource: async (context) => {
+          if (source) return source;
+          try {
             const h = await ensureHost();
-            source ??= createLiveSource(h, context.lookIdFor);
-            return source;
-          },
-        });
-        readiness = { kind: "ready" };
-      } catch (error) {
-        // The live runtime could not start: show the recorded runs instead, and say so on the page.
-        const reason = error instanceof Error ? error.message : String(error);
-        mounted = await mountGlacialScene(root, common);
-        readiness = {
-          kind: "fallback",
-          reason: `the live model could not start (${reason}); showing recorded runs`,
-        };
-      }
-      if (host) stopDrive = driveGlacialHost(host);
+            return createLiveSource(h, context.lookIdFor);
+          } catch (error) {
+            // Load the fallback in this same mount, without abandoning a half-built scene.
+            startupFailure = error instanceof Error ? error.message : String(error);
+            return null;
+          }
+        },
+        onSource: (next, loadError) => {
+          if (source !== next) {
+            unsubscribeFallback?.();
+            source = next;
+            unsubscribeFallback = next.kind === "live" ? null : next.subscribe(emit);
+          }
+          if (loadError) recordingsFailure = loadError;
+        },
+        onStatic: (reason) => {
+          staticReason = reason;
+          updateReadiness();
+          if (attached) emit();
+        },
+      });
+      updateReadiness();
+      if (host && !staticReason) stopDrive = driveGlacialHost(host);
       attached = true;
       seen = true;
       emit();
@@ -163,7 +204,14 @@ export function createGlacialSpreadScene(options: GlacialSpreadOptions): ReaderS
       }
     },
     async pauseAndSettle() {
-      await host?.pauseAndSettle();
+      if (host) await host.pauseAndSettle();
+      else if (source) {
+        if (!fallbackSuspended) {
+          fallbackPlayIntent = source.timeline().playing;
+          fallbackSuspended = true;
+        }
+        await source.pause();
+      }
       emit();
     },
     detach() {
@@ -176,7 +224,12 @@ export function createGlacialSpreadScene(options: GlacialSpreadOptions): ReaderS
       emit();
     },
     resume() {
-      host?.resume();
+      if (!staticReason) {
+        host?.resume();
+        if (fallbackSuspended && fallbackPlayIntent) void source?.play();
+      }
+      fallbackSuspended = false;
+      fallbackPlayIntent = false;
       emit();
     },
     async reset() {
@@ -186,6 +239,9 @@ export function createGlacialSpreadScene(options: GlacialSpreadOptions): ReaderS
         host.resume();
         await host.dispatch({ kind: "pause" });
         await host.dispatch({ kind: "reset", confirmed: true });
+      } else {
+        fallbackPlayIntent = false;
+        await source?.reset(true);
       }
       emit();
     },
@@ -196,6 +252,7 @@ export function createGlacialSpreadScene(options: GlacialSpreadOptions): ReaderS
       await mounted?.dispose();
       mounted = null;
       attached = false;
+      unsubscribeFallback?.();
       source?.dispose();
       unsubscribeHost?.();
       const h = host ?? (hostReady ? await hostReady.catch(() => null) : null);
