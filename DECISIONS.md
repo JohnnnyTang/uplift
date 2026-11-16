@@ -3403,3 +3403,33 @@ abandoning a partially constructed scene, and a failed initialized host is dispo
 paths: app/glacial-spread.ts, scenes/glacial/review.ts, scenes/entries.ts and
 e2e/glacial-fallbacks.spec.ts. This corrects PB7/PL8 state retention and truthful fallback disclosure;
 it does not change a solver or promote the authored preview into a simulated landform.
+
+## D-W6-6C-PREP · Review packet for the integrated two-lesson book (2026-11-16)
+
+**Context.** The owner asked to start 6B → 6C → 6D and authorized independent subagent
+work. Human checks are to remain pending with assigned roles; Stage 2 planning is
+deferred until current work is complete. This 6C preparation uses merged main
+`cd856bc` only, while 6B audits the same book. It does not close the 6C review gate.
+
+**Decision.** Keep one current review entry at `docs/review/book-revision/release/README.md`.
+It indexes both lessons' existing claim/source/sentence registers and expert packets,
+the retained research comparison and failed morphology evidence, the teacher journey
+and existing short recording. It assigns pending expert, product, reader, accessibility
+and hardware work to roles without inventing a reviewer, appointment or approval.
+The 2026-11-16 owner addition to D-W7-7G already approves the ghost key, block tip and
+F1 page-size change; F2 remains pending. Do not reopen the accepted fit change.
+
+The top-level README now describes the two lessons on main and distinguishes `pnpm check`
+from the separate production build. The research teacher note no longer requires a
+prediction before playback or reveal: its instructions now match the integrated app.
+No scientific claim, solver, authored relief, threshold or evidence is changed.
+
+**Integration condition.** Reconcile the final merged 6B audit, any bounded fixes and
+remaining issues before 6C merges; keep the order 6B → 6C → 6D. This preparation is not
+permission to publish reviewed science or claim classroom validation. All expert-review
+marks remain. No Stage 2 plan or new lesson is included.
+
+**Traceability.** PL5: "Honesty: the illustration label, authored-shapes disclosure, no
+computed-looking numbers, cited figures, expert-review marks." Existing scientific
+packets remain authoritative. The handover records what is done and all unperformed
+human checks explicitly.

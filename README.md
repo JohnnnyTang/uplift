@@ -8,24 +8,28 @@ model at different depths.
 Underneath the book is **Hachure**, the terrain and ink engine. Hachures are the short ink strokes old maps
 used to show slope, which is the look the engine draws.
 
-> **Wave 5 base:** `s1/w5/integration` contains completed A–F work, references and the
-> current G–N plan. Future Wave 5 sessions branch from and target this branch.
-> [Integration handover](docs/review/wave-5-integration/README.md).
->
-> **Status:** The book is a single playable lesson, _From V to U_ (glacial valley formation), with a
-> labelled erosion research route. The earlier contour-lift lesson was removed on 2026-11-13
-> (D-W5-5M2) and the prepared-terrain water lesson on 2026-11-14 (D-W5-5N2).
-> Main remains at 5A. Implementation verification and pending owner, human accessibility,
-> expert and hardware review are tracked in the [acceptance ledger](docs/plan/stage-1-acceptance.md)
-> and [review packet](docs/review/book-revision/acceptance/README.md). Wave 6 completes those gates;
-> local integration does not establish release readiness.
+The default book has two playable lessons: **From V to U**, a glacial process model,
+and **Where plates meet**, an authored illustration of continental plate boundaries.
+Both are on `main` after Wave 7 (PR #52). The labelled erosion research example remains
+available through Contents. The earlier contour and prepared-terrain water lessons were
+removed (D-W5-5M2 and D-W5-5N2).
 
-The latest review branch includes Wave 5B–5F; main remains at 5A. The first lesson is
-**From V to U**: a textbook drawing of a glaciated valley turns into a naturally coloured
-3D diorama standing on a tilted book page. The reader picks a rock type, watches the
-glacier reshape the valley, scrubs back through the run and compares separate runs.
-[Wave 5 sessions 5G–5N](docs/plan/stage-1-wave-5-glacial.md) are planned, not started. [Saved references](docs/references/owner-2026-11-09/README.md)
-and [branch audit](docs/review/book-revision/current-direction-review.md).
+**Review status:** implementation is integrated; Stage 1 is not released as scientifically
+reviewed or classroom validated. Expert sign-off, first-time-reader observations, human
+accessibility and broader hardware checks remain pending with assigned roles. Start with
+the [two-lesson review packet](docs/review/book-revision/release/README.md) and
+[current acceptance ledger](docs/plan/stage-1-acceptance.md).
+
+In _From V to U_, choose a rock, play, pause and inspect, then compare separate runs at
+matched model time. In _Where plates meet_, choose a boundary and play or scrub its
+illustrated sequence; its shapes are authored, with no simulation clock. Reading level,
+answer reveal and navigation remain independent of play.
+
+The [product story](docs/product-story.md),
+[glacial brief](docs/plan/stage-1-wave-5-glacial.md),
+[plate-boundaries brief](docs/plan/stage-1-wave-7-plates.md) and
+[saved owner references](docs/references/owner-2026-11-09/README.md) describe the intended experience.
+The `s1/w5/integration` base exception applies only to further Wave 5 sessions; Wave 6 targets `main`.
 
 ## Why this exists
 
@@ -59,12 +63,19 @@ AGENTS.md           rules for coding agents (CLAUDE.md points here)
 Requires Node 22+ (24 recommended, see `.nvmrc`) and pnpm 11 (`corepack enable`).
 
 ```sh
-pnpm install
+pnpm install --frozen-lockfile
 pnpm dev          # book shell at http://localhost:5173
 pnpm test         # Vitest: solver and spread logic
-pnpm check        # typecheck + lint + format check + tests (what CI runs, plus build)
-pnpm build        # production build of the book
+pnpm check        # typecheck + lint + format check + unit tests
+pnpm build        # production build of the book (separate from check)
+pnpm test:e2e     # builds and audits production routes in Playwright
 ```
+
+For the browser suite, install its Chromium once with `pnpm exec playwright install chromium`.
+See the [browser-test guide](e2e/README.md) for fixtures, backends and hardware evidence.
+To inspect the production build, run `pnpm --filter @uplift/book preview --host 127.0.0.1`.
+The [short teacher journey](docs/review/book-revision/release/teacher-journey.md) includes both
+lessons, the research route and an existing recording; it is a review guide, not a sign-off.
 
 ## How the work is organised
 

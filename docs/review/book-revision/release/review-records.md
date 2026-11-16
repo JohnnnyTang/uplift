@@ -1,0 +1,65 @@
+# Review roles, decisions and observation record
+
+**Status, 2026-11-16:** no new human review performed. The owner requested that these
+checks remain pending with assigned roles. No named participant, appointment, result
+or approval is invented. The lead nominates people when review becomes available.
+
+## Decision register
+
+| Item                                                                                  | Current status and evidence                                                                                                                         | Accountable role                                         | Closure evidence                                                                                               |
+| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Lesson 1 scene/look, O1 and O2                                                        | Approved in D-W5-5N2; [owner packet](../../glacial/acceptance/owner-scene-review.md)                                                                | Product owner                                            | Already recorded; do not reopen without a new observed issue or owner direction                                |
+| Lesson 2 ghost key and block tip; F1 size change at the turn                          | Approved in the 2026-11-16 addition to D-W7-7G, [decision log](../../../../DECISIONS.md)                                                            | Product owner                                            | Already recorded for that scope only                                                                           |
+| F2: lesson 2 recognisability at laptop size                                           | Pending; [7G owner packet](../../plates/acceptance/owner-scene-review.md)                                                                           | Product owner with 6C lead                               | Actual default view at laptop sizes, decision and any required adjustment                                      |
+| Glacier scientific mechanism, qualifications and wording                              | Pending; eight questions in [expert packet](../../glacial/acceptance/expert-review.md)                                                              | SCI lead → geomorphologist/glaciologist                  | Reviewer/date/commit, claim IDs, answers, approved scope or requested edits                                    |
+| Plate scientific wording, real figures and illustrated scope                          | Pending; seven questions in [expert packet](../../plates/acceptance/expert-review.md)                                                               | SCI lead → geologist/geophysicist                        | Reviewer/date/commit, PC/PD/NT IDs and approval or revisions; full-text checks where source access was limited |
+| Research comparison and limits                                                        | Pending; [comparison evidence](../../../science/validation/rain-comparison/README.md), [historical failures](../../../science/validation/README.md) | SCI lead → geomorphology/hydrology reviewer              | Sign-off limited to supported gross-erosion comparison, with failed morphology preserved                       |
+| First-time-reader observations                                                        | Pending; no participants                                                                                                                            | Product/research lead → first-time readers               | Uncoached observations using the protocol below; no inferred learning gain                                     |
+| Screen-reader listening, real browser zoom, colour-vision and projector/classroom use | Pending; automated structure is not listening evidence                                                                                              | 6B QA lead → accessibility tester and classroom educator | 6B's exact setup, tasks, observed pass/fail and remediation record                                             |
+| Broader browser/device/hardware coverage                                              | Pending; one target-laptop performance record exists                                                                                                | QA/performance lead → device testers                     | Exact device, browser, driver, power, commit and repeated measurements                                         |
+| 6B audit reconciliation before 6C integration                                         | Pending; concurrent 6B work is not consumed here                                                                                                    | 6C lead                                                  | Merged 6B commit, final evidence and unresolved items reconciled into this packet                              |
+| Publication/release decision                                                          | Pending                                                                                                                                             | Project lead with product owner and SCI/QA leads         | Linked decisions satisfying the Stage 1 gate; implementation merge alone is insufficient                       |
+
+## First-time-reader protocol
+
+Keep this separate from the guided teacher demonstration. Record practical setup,
+not identifying personal details, and obtain appropriate permission before recording
+a person. Do not enable or broaden the existing rain-only instrumentation.
+
+Give the reader the default book with the neutral invitation: "Explore this book as
+you normally would." Observe before prompting. Record what actually happens:
+
+1. Do they find a rock choice and Play, and what do they expect those controls to do?
+2. Do they notice the visible change, the front face and the distinction between the
+   current run and a kept run? Can they describe what their comparison holds constant?
+3. Do they discover the explanation without treating the question as a gate?
+4. Do they find the next page? What do they think the plate scene represents, and do
+   they distinguish its illustrated stage from the glacier's model time?
+5. Do the ghost names, patterns and front face help them compare boundaries?
+6. Can they return to the first lesson and recognise its retained state?
+7. What do they want to explore next, if anything? Record their words without making
+   continued use or completion into a learning score.
+
+If assistance becomes necessary, log the exact prompt and its timing. Separate
+unprompted observations from what the facilitator demonstrated. This small usability
+record does not measure learning gains or establish population-wide outcomes.
+
+## Blank result record
+
+Copy this for each actual review; until completed it is a template, not evidence.
+
+- **Record ID / role:** pending.
+- **Date and reviewed commit:** pending.
+- **Task / criterion / claim IDs:** pending.
+- **Device, OS, browser/version, viewport/zoom, assistive technology/version:** pending.
+- **Starting state and instructions given:** pending.
+- **Observed action or exact reviewer feedback:** pending.
+- **Result:** pending (pass / fail / mixed only after observation).
+- **Evidence location and permission to retain it:** pending.
+- **Limitations / assistance given:** pending.
+- **Required change, accountable role and retest criterion:** pending.
+- **Decision entry / approval scope:** pending.
+
+Expert and owner decisions are appended to `DECISIONS.md`, with the precise reviewed
+scope. Keep draft marks until the applicable scientific review is actually approved.
+A partial decision closes only its listed items.
