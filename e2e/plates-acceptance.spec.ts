@@ -272,11 +272,14 @@ test("D-W7-7G owner item 1: ghost labels sit on the page under the front face, n
 });
 
 test("D-W7-7G owner item 2: the book keeps lesson 1's 48° tilt and the block is tipped up for a higher view", async () => {
-  expect(
-    await l2()
-      .locator(".gs-book")
-      .evaluate((b) => (b as HTMLElement).style.transform),
-  ).toMatch(/rotateX\(48deg\)/);
+  // The stage applies the book pose a frame after mount; on SwiftShader that can lag the spread's ready state.
+  await expect
+    .poll(() =>
+      l2()
+        .locator(".gs-book")
+        .evaluate((b) => (b as HTMLElement).style.transform),
+    )
+    .toMatch(/rotateX\(48deg\)/);
   await expect(page.locator(".gs-view-controls input").first()).toHaveAttribute(
     "aria-valuetext",
     /^42 degrees/,
