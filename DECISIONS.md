@@ -3403,3 +3403,56 @@ abandoning a partially constructed scene, and a failed initialized host is dispo
 paths: app/glacial-spread.ts, scenes/glacial/review.ts, scenes/entries.ts and
 e2e/glacial-fallbacks.spec.ts. This corrects PB7/PL8 state retention and truthful fallback disclosure;
 it does not change a solver or promote the authored preview into a simulated landform.
+
+## D-W6-6C-PREP · Review packet for the integrated two-lesson book (2026-11-16)
+
+**Context.** The owner asked to start 6B → 6C → 6D and authorized independent subagent
+work. Human checks are to remain pending with assigned roles; Stage 2 planning is
+deferred until current work is complete. This 6C preparation uses merged main
+`cd856bc` only, while 6B audits the same book. It does not close the 6C review gate.
+
+**Decision.** Keep one current review entry at `docs/review/book-revision/release/README.md`.
+It indexes both lessons' existing claim/source/sentence registers and expert packets,
+the retained research comparison and failed morphology evidence, the teacher journey
+and existing short recording. It assigns pending expert, product, reader, accessibility
+and hardware work to roles without inventing a reviewer, appointment or approval.
+The 2026-11-16 owner addition to D-W7-7G already approves the ghost key, block tip and
+F1 page-size change; F2 remains pending. Do not reopen the accepted fit change.
+
+The top-level README now describes the two lessons on main and distinguishes `pnpm check`
+from the separate production build. The research teacher note no longer requires a
+prediction before playback or reveal: its instructions now match the integrated app.
+No scientific claim, solver, authored relief, threshold or evidence is changed.
+
+**Integration condition.** Reconcile the final merged 6B audit, any bounded fixes and
+remaining issues before 6C merges; keep the order 6B → 6C → 6D. This preparation is not
+permission to publish reviewed science or claim classroom validation. All expert-review
+marks remain. No Stage 2 plan or new lesson is included.
+
+**Traceability.** PL5: "Honesty: the illustration label, authored-shapes disclosure, no
+computed-looking numbers, cited figures, expert-review marks." Existing scientific
+packets remain authoritative. The handover records what is done and all unperformed
+human checks explicitly.
+
+## D-W6-6C · Review packet reconciled with merged 6B (2026-11-16)
+
+**Authorization and base.** The owner requested review/merge of 6B, reconciliation/merge of 6C, then the
+6D retrospective, in that order. Human checks remain pending with assigned roles; Stage 2 planning is
+still deferred. 6B merged as `d1fdae5` (PR #53); 6C is rebased on that main. The append-only rebase
+conflict retained both D-W6-6B and D-W6-6C-PREP in full.
+
+**Completed reconciliation.** The release packet now links the merged PB/foundation ledger, final
+accessibility scans and human procedures. It records the keyboard/landmark fixes, retained recorded
+fallback state and hidden-playback intent, and distinct recorded, preview-only and drawing-only labels.
+The teacher journey includes those paths. Final 6B browser CI passed 116 with 1 skipped on its own
+setup; the local 886-unit/19-affected-browser and 16-scan results keep their original scope. CI solver
+comparison success is not broader device, classroom, listening or expert evidence.
+
+**Decisions still pending.** Expert claims, first-time readers, actual listening/zoom/projector checks,
+F2 and broader hardware remain assigned in the review register. Existing owner approval of labels,
+block tip and F1 stays closed. This completes packet preparation and audit reconciliation, not the
+human review or Stage 1 release gate. No new scientific claims, model changes or Stage 2 plan.
+
+**Traceability.** PL5: "Honesty: the illustration label, authored-shapes disclosure, no computed-looking
+numbers, cited figures, expert-review marks." PL7's human checks remain pending; 6D records these facts
+without choosing a new lesson or treating pending work as passed.
