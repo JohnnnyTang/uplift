@@ -1,0 +1,913 @@
+{
+  "utc": "2026-11-16T08:04:11.002Z",
+  "commit": "11feceaa7089a861ce20bc856fe09c5c421aca7f",
+  "diff": "docs/plan/stage-1-acceptance.md          |  61 ++++++++++++++++++++++++++-----\n e2e/fixtures/reader-runtime-keyboard.png | Bin 38620 -> 40998 bytes\n 2 files changed, 52 insertions(+), 9 deletions(-)",
+  "os": "win32 10.0.26300",
+  "cpu": "Intel(R) Core(TM) Ultra 7 258V",
+  "browser": "158.0.8127.18",
+  "scope": "Headless bundled Chromium, SwiftShader, CPU worker, automated axe and focus checks. No human listening, browser UI zoom, projector or hardware acceptance.",
+  "scans": [
+    {
+      "name": "glacial-school",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=geomorph.u-valley&page=spread",
+      "viewport": { "width": 1440, "height": 900 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["#gs-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-lens-title"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ["text[x=\"115.6\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".lens-bar-label"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            }
+          ]
+        }
+      ],
+      "passedRules": 39,
+      "desk": {
+        "stageMode": "flat",
+        "cutColumn": "51",
+        "liveRock": "sandstone",
+        "ghost": "",
+        "overdeepened": "false",
+        "view": "live",
+        "modelYears": "0",
+        "runId": "run-1",
+        "playing": "false",
+        "runStatus": "active",
+        "backend": "webgl2",
+        "ready": "true",
+        "source": "live",
+        "transition": "done"
+      }
+    },
+    {
+      "name": "glacial-answer-open",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=geomorph.u-valley&page=spread",
+      "viewport": { "width": 1440, "height": 900 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["#gs-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-lens-title"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ["text[x=\"115.6\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".lens-bar-label"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            }
+          ]
+        }
+      ],
+      "passedRules": 39,
+      "desk": {
+        "stageMode": "flat",
+        "cutColumn": "51",
+        "liveRock": "sandstone",
+        "ghost": "",
+        "overdeepened": "false",
+        "view": "live",
+        "modelYears": "0",
+        "runId": "run-1",
+        "playing": "false",
+        "runStatus": "active",
+        "backend": "webgl2",
+        "ready": "true",
+        "source": "live",
+        "transition": "done"
+      }
+    },
+    {
+      "name": "glacial-university",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=geomorph.u-valley&page=spread",
+      "viewport": { "width": 1440, "height": 900 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["#gs-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-lens-title"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ["text[x=\"115.6\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".lens-bar-label"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            }
+          ]
+        }
+      ],
+      "passedRules": 39,
+      "desk": {
+        "stageMode": "flat",
+        "cutColumn": "51",
+        "liveRock": "sandstone",
+        "ghost": "",
+        "overdeepened": "false",
+        "view": "live",
+        "modelYears": "0",
+        "runId": "run-1",
+        "playing": "false",
+        "runStatus": "active",
+        "backend": "webgl2",
+        "ready": "true",
+        "source": "live",
+        "transition": "done"
+      }
+    },
+    {
+      "name": "glacial-panel-Read deeper level",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=geomorph.u-valley&page=spread",
+      "viewport": { "width": 1440, "height": 900 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["#gs-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-lens-title"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ["text[x=\"115.6\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".lens-bar-label"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            }
+          ]
+        }
+      ],
+      "passedRules": 40,
+      "desk": {
+        "stageMode": "flat",
+        "cutColumn": "51",
+        "liveRock": "sandstone",
+        "ghost": "",
+        "overdeepened": "false",
+        "view": "live",
+        "modelYears": "0",
+        "runId": "run-1",
+        "playing": "false",
+        "runStatus": "active",
+        "backend": "webgl2",
+        "ready": "true",
+        "source": "live",
+        "transition": "done"
+      }
+    },
+    {
+      "name": "glacial-panel-Read .*sources.*teacher notes",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=geomorph.u-valley&page=spread",
+      "viewport": { "width": 1440, "height": 900 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["#gs-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-lens-title"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ["text[x=\"115.6\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".lens-bar-label"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            }
+          ]
+        }
+      ],
+      "passedRules": 43,
+      "desk": {
+        "stageMode": "flat",
+        "cutColumn": "51",
+        "liveRock": "sandstone",
+        "ghost": "",
+        "overdeepened": "false",
+        "view": "live",
+        "modelYears": "0",
+        "runId": "run-1",
+        "playing": "false",
+        "runStatus": "active",
+        "backend": "webgl2",
+        "ready": "true",
+        "source": "live",
+        "transition": "done"
+      }
+    },
+    {
+      "name": "glacial-university-390",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=geomorph.u-valley&page=spread",
+      "viewport": { "width": 390, "height": 844 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["#gs-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ["text[x=\"115.6\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".lens-bar-label"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            }
+          ]
+        }
+      ],
+      "passedRules": 38,
+      "desk": {
+        "stageMode": "flat",
+        "cutColumn": "51",
+        "liveRock": "sandstone",
+        "ghost": "",
+        "overdeepened": "false",
+        "view": "live",
+        "modelYears": "0",
+        "runId": "run-1",
+        "playing": "false",
+        "runStatus": "active",
+        "backend": "webgl2",
+        "ready": "true",
+        "source": "live",
+        "transition": "done"
+      }
+    },
+    {
+      "name": "glacial-university-320",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=geomorph.u-valley&page=spread",
+      "viewport": { "width": 320, "height": 844 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["#gs-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ["text[x=\"115.6\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".lens-bar-label"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            }
+          ]
+        }
+      ],
+      "passedRules": 38,
+      "desk": {
+        "stageMode": "flat",
+        "cutColumn": "51",
+        "liveRock": "sandstone",
+        "ghost": "",
+        "overdeepened": "false",
+        "view": "live",
+        "modelYears": "0",
+        "runId": "run-1",
+        "playing": "false",
+        "runStatus": "active",
+        "backend": "webgl2",
+        "ready": "true",
+        "source": "live",
+        "transition": "done"
+      }
+    },
+    {
+      "name": "plates-school",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=tectonics.plate-boundaries&page=spread",
+      "viewport": { "width": 1440, "height": 900 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["text[x=\"504.7\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ["text[x=\"743.7\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ["text[x=\"898.5\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ["text[y=\"809.3\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ["text[y=\"934.2\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ["text[x=\"247.7\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": ["#ps-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            }
+          ]
+        }
+      ],
+      "passedRules": 39,
+      "desk": {
+        "stageMode": "flat",
+        "boundary": "none",
+        "stage": "0",
+        "stageWord": "start",
+        "playing": "false",
+        "ghosts": "",
+        "viewed": "",
+        "reducedMotion": "true",
+        "backend": "webgl2",
+        "mode": "flat",
+        "ready": "true",
+        "transition": "running"
+      }
+    },
+    {
+      "name": "plates-answer-open",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=tectonics.plate-boundaries&page=spread",
+      "viewport": { "width": 1440, "height": 900 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["#ps-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": ["text[x=\"923.4\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            },
+            {
+              "target": [".reader-position-number"],
+              "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content"
+            },
+            {
+              "target": [".reader-position-title"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            },
+            {
+              "target": [".reader-bar-text"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            }
+          ]
+        }
+      ],
+      "passedRules": 39,
+      "desk": {
+        "stageMode": "flat",
+        "boundary": "none",
+        "stage": "0",
+        "stageWord": "start",
+        "playing": "false",
+        "ghosts": "",
+        "viewed": "",
+        "reducedMotion": "true",
+        "backend": "webgl2",
+        "mode": "flat",
+        "ready": "true",
+        "transition": "done"
+      }
+    },
+    {
+      "name": "plates-university",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=tectonics.plate-boundaries&page=spread",
+      "viewport": { "width": 1440, "height": 900 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["#ps-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": ["text[x=\"903.2\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            },
+            {
+              "target": [".reader-position-number"],
+              "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content"
+            },
+            {
+              "target": [".reader-position-title"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            }
+          ]
+        }
+      ],
+      "passedRules": 39,
+      "desk": {
+        "stageMode": "flat",
+        "boundary": "none",
+        "stage": "0",
+        "stageWord": "start",
+        "playing": "false",
+        "ghosts": "",
+        "viewed": "",
+        "reducedMotion": "true",
+        "backend": "webgl2",
+        "mode": "flat",
+        "ready": "true",
+        "transition": "done"
+      }
+    },
+    {
+      "name": "plates-panel-Read deeper level",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=tectonics.plate-boundaries&page=spread",
+      "viewport": { "width": 1440, "height": 900 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["#ps-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": ["text[x=\"902.0\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            },
+            {
+              "target": [".reader-position-number"],
+              "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content"
+            },
+            {
+              "target": [".reader-position-title"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            }
+          ]
+        }
+      ],
+      "passedRules": 40,
+      "desk": {
+        "stageMode": "flat",
+        "boundary": "none",
+        "stage": "0",
+        "stageWord": "start",
+        "playing": "false",
+        "ghosts": "",
+        "viewed": "",
+        "reducedMotion": "true",
+        "backend": "webgl2",
+        "mode": "flat",
+        "ready": "true",
+        "transition": "done"
+      }
+    },
+    {
+      "name": "plates-panel-Read .*sources.*teacher notes",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=tectonics.plate-boundaries&page=spread",
+      "viewport": { "width": 1440, "height": 900 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["#ps-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": ["text[x=\"902.0\"]"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            },
+            {
+              "target": [".reader-position-number"],
+              "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content"
+            },
+            {
+              "target": [".reader-position-title"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            }
+          ]
+        }
+      ],
+      "passedRules": 43,
+      "desk": {
+        "stageMode": "flat",
+        "boundary": "none",
+        "stage": "0",
+        "stageWord": "start",
+        "playing": "false",
+        "ghosts": "",
+        "viewed": "",
+        "reducedMotion": "true",
+        "backend": "webgl2",
+        "mode": "flat",
+        "ready": "true",
+        "transition": "done"
+      }
+    },
+    {
+      "name": "plates-university-390",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=tectonics.plate-boundaries&page=spread",
+      "viewport": { "width": 390, "height": 844 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["#ps-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".reader-position-number"],
+              "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content"
+            },
+            {
+              "target": [".reader-position-title"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            }
+          ]
+        }
+      ],
+      "passedRules": 38,
+      "desk": {
+        "stageMode": "flat",
+        "boundary": "none",
+        "stage": "0",
+        "stageWord": "start",
+        "playing": "false",
+        "ghosts": "",
+        "viewed": "",
+        "reducedMotion": "true",
+        "backend": "webgl2",
+        "mode": "flat",
+        "ready": "true",
+        "transition": "done"
+      }
+    },
+    {
+      "name": "plates-university-320",
+      "url": "http://127.0.0.1:4273/?backend=cpu-worker&glacier=cpu&spread=tectonics.plate-boundaries&page=spread",
+      "viewport": { "width": 320, "height": 844 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodes": [
+            {
+              "target": ["#ps-fig-caption > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-fig-number"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(1)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".gs-ruler-ends > span:nth-child(2)"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            },
+            {
+              "target": [".reader-position-number"],
+              "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content"
+            },
+            {
+              "target": [".reader-position-title"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+            }
+          ]
+        }
+      ],
+      "passedRules": 38,
+      "desk": {
+        "stageMode": "flat",
+        "boundary": "none",
+        "stage": "0",
+        "stageWord": "start",
+        "playing": "false",
+        "ghosts": "",
+        "viewed": "",
+        "reducedMotion": "true",
+        "backend": "webgl2",
+        "mode": "flat",
+        "ready": "true",
+        "transition": "done"
+      }
+    },
+    {
+      "name": "research-school",
+      "url": "http://127.0.0.1:4273/?view=research&backend=cpu-worker",
+      "viewport": { "width": 1366, "height": 900 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 46,
+      "desk": {
+        "backend": "cpu-worker",
+        "grid": "128",
+        "backendReady": "true",
+        "step": "0",
+        "stateHash": "55fa29e96a44fd62",
+        "viewStep": "0",
+        "workerMs": "23.799999952316284",
+        "transferSchedulingMs": "0",
+        "snapshotMs": "5",
+        "batchSteps": "0",
+        "batchMs": "0",
+        "backendFailures": "[]"
+      }
+    },
+    {
+      "name": "research-university-answer-open",
+      "url": "http://127.0.0.1:4273/?view=research&backend=cpu-worker",
+      "viewport": { "width": 1366, "height": 900 },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.8127.18 Safari/537.36",
+      "axeVersion": "4.14.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 46,
+      "desk": {
+        "backend": "cpu-worker",
+        "grid": "128",
+        "backendReady": "true",
+        "step": "0",
+        "stateHash": "55fa29e96a44fd62",
+        "viewStep": "0",
+        "workerMs": "23.799999952316284",
+        "transferSchedulingMs": "0",
+        "snapshotMs": "5",
+        "batchSteps": "0",
+        "batchMs": "0",
+        "backendFailures": "[]"
+      }
+    }
+  ]
+}

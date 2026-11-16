@@ -1,16 +1,61 @@
 # Stage 1 integrated acceptance ledger
 
-Reviewed 2026-11-09 on the local Wave 5 review stack, based on `d01f631`
-(5E integrated). Main remains at 5A. This is an implementation/evidence review;
-product acceptance and release remain open. [Review packet](../review/book-revision/acceptance/README.md).
+## Current audit · 6B · 2026-11-16
 
-**Owner clarification after this evidence:** the existing PB3 mechanics do not close
-the intended complete-scene experience; the selected opening has changed to glacial
-U-shaped valley formation. Prior test results remain valid for their original scope,
-not evidence of glacial erosion or approval of the old lesson. See the
-[current review](../review/book-revision/current-direction-review.md).
+Baseline: merged main `cd856bcbf459c88f6e08cf4308d8c80bfb160a0a` (7G), with the bounded 6B accessibility fixes.
+The default book contains **From V to U** and **Where plates meet**; the erosion research route is separate.
+[6B audit, findings and reproducible evidence](../review/book-revision/accessibility/README.md).
+**Publication/release remains open.** At the owner's direction, human checks remain pending with assigned
+roles in the [human-check register](../review/book-revision/accessibility/human-checks.md). Stage 2 planning
+waits until current work is complete. The historical sections below do not override this current scope.
 
-## Two-lesson book acceptance (7G, 2026-11-15) — current
+D-W7-7G's final owner review (2026-11-16) **approved the ghost key, 12° block tip and F1's page-size change**.
+Do not reopen those decisions. **F2 (recognisability at laptop size) remains pending.** The ledger separates
+mechanical checks from human interpretation; a green browser suite cannot close the latter.
+
+Verification: `pnpm check` passes (886 tests, 7 skipped); the full browser audit passed 109 with 4
+hardware-only skips. After the final fallback fixes, 19 affected production tests passed on `11fecea`.
+The 16-state axe scan has zero violations; its incomplete contrast results remain manual review.
+See the audit packet for exact revision boundaries, setup, prior failures and skipped scope.
+
+| Criterion                             | Automated / recorded evidence                                                                                       | Current disposition and remaining owner                                                                                                    |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| PB1 · Recognisable book               | `glacial-acceptance` and `plates-acceptance` viewport fits; 7G captures                                             | Mechanical checks; O1 and F1 owner-accepted. F2 / actual legibility pending owner and classroom reviewer (H2/H3/H5)                        |
+| PB2 · Readable adaptation             | `book-acceptance`, `plates-acceptance`, expanded 390/320 px scans                                                   | Reflow checked; actual browser UI 200% zoom and reading pending accessibility reviewer (H2)                                                |
+| PB3 · Drawing becomes space           | Both acceptance suites and [two-lesson recording](../review/plates/acceptance/captures/journey-turn-transform.webm) | Transition/reduced-motion mechanics checked; human spatial reading pending product researcher (H4)                                         |
+| PB4 · Immediate play                  | Fresh-entry actions in both acceptance suites, no prediction/logging prerequisite                                   | Mechanical checks; uncoached discoverability pending product researcher (H4)                                                               |
+| PB5 · One visible lesson              | Live glacier run/state checks, plates authored-shapes/text-alternative checks; linked expert packets                | Taught evidence retains its scope; expert decisions pending specialists (H6/H7)                                                            |
+| PB6 · Pressure-free reflection        | Both suites reveal immediately with unanswered questions                                                            | Automated behavior checked; no score/endpoint gate introduced                                                                              |
+| PB7 · Two working spreads             | `plates-book`, `plates-acceptance`, `book-shell`, new accessibility regressions                                     | Original two-lesson criterion applies; keyboard/turn/focus/return-state mechanics checked. Listening and gesture usability pending (H1/H4) |
+| PB8 · Human review                    | Latest D-W7-7G decisions; assigned H1–H8 procedures, no new human observations                                      | Pending; approved owner sub-decisions do not close readers, science, listening or hardware                                                 |
+| PB9 · Intervene and observe formation | `glacial-acceptance` separate rock runs, past inspection and matched-time comparison                                | Lesson 1 only. Lesson 2 intentionally has authored stages, no runs/model time (D-L2-1); PL1/PL2 cover its loop                             |
+
+### Foundation, scientific and release obligations
+
+| Check                              | Evidence / applicable interpretation                                                                                                                                       | Status and owner                                                                                                                                                                      |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AC1 · Performance                  | [6A/6A2](../perf/README.md), [7F two-lesson check](../perf/plates/README.md)                                                                                               | Recorded single-device evidence only. Other hardware, CPU glacier page-turn performance and two-lesson cold loads pending performance QA (H8); narrow historical GPU misses preserved |
+| AC2 · Determinism                  | Unit suite and `glacial-runtime` CPU Worker/main replay; existing per-adapter GPU evidence                                                                                 | No solver change. Skipped hardware-only cases are not new passes; performance QA owns broader devices                                                                                 |
+| AC3 · Historical morphology        | [Glacial validation](../science/validation/glacial-valley/README.md), [rain comparison](../science/validation/rain-comparison/README.md)                                   | Glacier 39 registered verdicts retain 16 pass / 23 fail; unsupported full-U/wider-floor claims not taught. Research waterfall unvalidated; no new release gate inferred               |
+| AC4 · Mass / numerical checks      | Existing CPU/GPU numerical unit and browser comparison records                                                                                                             | No numerical changes; scientific expert review still pending H6/H7                                                                                                                    |
+| AC5 · Drawing / scene entrance     | PB3 and PL6; owner artistic-transition clarification supersedes exact geometric mapping                                                                                    | Approved art scope; scientific evolution still model-driven in lesson 1, authored illustration only in lesson 2                                                                       |
+| AC6 · Page/model agreement         | Spread bindings, cited-figure/claim register tests; acceptance page-state assertions                                                                                       | No independently typed model quantities introduced                                                                                                                                    |
+| AC7 · Honest scope/time/limits     | Both acceptance suites and research `science` / `smoke` guards                                                                                                             | Glacier model time is uncalibrated; plates illustration early–late, no model time; research rates/waterfall limitations retained                                                      |
+| AC8 · Two levels, one model        | `glacial-book`, `plates-book`, `university`, backend state-preservation tests                                                                                              | Level/panel changes preserve scientific state                                                                                                                                         |
+| AC9 · Keyboard / motion / clamping | Existing input tests; new all-severity reading-panel axe and keyboard scroll regressions                                                                                   | Landmark and equation failures fixed. Listening, colour contrast incomplete nodes, projector legibility pending H1–H3                                                                 |
+| AC10 · Teacher notes / sources     | [Glacier guide](../../uplift/spreads/geomorph.u-valley/teacher-notes.md), [plates guide](../../uplift/spreads/tectonics.plate-boundaries/teacher-notes.md), research guide | 6C consolidates current review/teacher packet; specialist decisions H6/H7 still pending                                                                                               |
+| Supported fallback paths           | Backend chain tests, glacier runtime/scene cases, plates drawing-only case; 6B audit record                                                                                | Read actual backend/labels; recorded evidence and drawings never called a live solver or hardware pass                                                                                |
+| Privacy / research truthfulness    | `instrumentation`, `comparison`, `science`, `smoke` suites                                                                                                                 | Collection remains off by default and rain-only; no learner outcomes inferred                                                                                                         |
+| Release review / retro             | 6C packet preparation, later 6D retrospective                                                                                                                              | Expert/product decisions pending. No Stage 2 plan or new lesson authorized here                                                                                                       |
+
+## Historical A–F baseline introduction · 2026-11-09
+
+Reviewed on the local Wave 5 stack based on `d01f631` (5E integrated); at that time main remained at 5A.
+This earlier contour/water evidence does not establish glacial or plates acceptance.
+[Original packet](../review/book-revision/acceptance/README.md) and
+[direction correction](../review/book-revision/current-direction-review.md).
+
+## Historical two-lesson acceptance · 7G · 2026-11-15
 
 Walked on the default app at `27f033c` (all of Wave 7 merged) plus 7G's fixes, on Windows 11 with an Intel Arc
 140V; full ledger with evidence links: [docs/review/plates/acceptance](../review/plates/acceptance/README.md)
