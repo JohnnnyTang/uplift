@@ -1,7 +1,8 @@
+import { fixtureOrigin } from "./helpers";
 import type { SimHost } from "../hachure/runtime/src/index";
 import { expect, test, type Page } from "@playwright/test";
 test.use({ launchOptions: { args: ["--enable-unsafe-webgpu"] } });
-const origin = process.env.READER_FIXTURE_ORIGIN ?? "http://127.0.0.1:4174";
+const origin = process.env.READER_FIXTURE_ORIGIN ?? fixtureOrigin;
 async function ready(page: Page, backend = "worker") {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));

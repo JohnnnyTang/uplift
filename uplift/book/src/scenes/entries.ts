@@ -27,8 +27,8 @@ export function createPlayableEntries(
       spread: uValleySpread,
       layout: "stage",
       createScene: (level, { folio }) => createGlacialSpreadScene({ level, folio, prefer, ...view }),
-      // Lesson 1's fallback swaps the live model for its recorded runs (D-W5-5M).
-      fallbackStatus: (reason) => `Showing recorded runs: ${reason}`,
+      // The controller distinguishes recorded runs, an illustration preview and unavailable 3D.
+      fallbackStatus: (reason) => reason,
     },
     {
       spread: platesSpread,

@@ -3363,3 +3363,43 @@ front face with leaders; the block tipped 12° towards the reader with the book 
 **F1 accepted as is:** each lesson fits its own page height, so at 1440 × 900 the book grows slightly at the
 turn (0.60 → 0.75) while the camera tilt stays the same. No engine fit change is planned for 6B. F2 (block
 size at laptop widths) stays with the owner's look review in 6B–6D.
+
+## D-W6-6B · Two-lesson accessibility audit and pending human checks (2026-11-16)
+
+**Context.** Start 6B from merged 7G on main `cd856bc`, then 6C review and 6D retro. The owner requests
+parallel subagents for independent work, explicitly keeps human checks pending with assigned roles, and
+instructs that Stage 2 planning wait until current tasks are complete. 6C prepares its packet against
+merged evidence; it must incorporate merged 6B before integration. No expert or participant is invented.
+
+**Audit findings and bounded fixes.** Expanded axe scans cover school/answer/university, both reading
+panels, phone/reflow and the research route. Both lessons had nested duplicate main landmarks (three
+moderate violations). The glacier deeper panel also had a serious inaccessible overflow equation.
+The reader shell now uses a div inside the existing main app host; the shared formula widget is
+keyboard-focusable while retaining MathML. A browser regression reaches the equation with Tab, scrolls
+with ArrowRight, closes with Escape and checks one main landmark through the research return. Two older
+fixture suites now honor the shared configured port, preserving their suite-specific overrides.
+These are justified minimal paths outside the documentation ownership: reader/shell.ts,
+runtime/src/widgets/formula.ts and the three e2e specs. No solver or scientific claim changed.
+
+**Review disposition.** Preserve final D-W7-7G approval of labels, tip and F1; F2 remains for the owner.
+Axe contrast-incomplete nodes are manual-review tasks, not passes or confirmed failures. Current human
+procedures/roles are in docs/review/book-revision/accessibility/human-checks.md; the ledger records PB1–PB9
+and applicable foundation obligations against the two-lesson book. Historical failed morphology,
+uncalibrated time and the unavailable waterfall remain unchanged. No stage release or science sign-off
+is inferred from integration. Stage 2 planning is deferred by the owner.
+
+**Traceability.** PL7: "Keyboard equivalents, text alternatives, reduced motion, glyph and pattern cues
+for boundary types, reflow and phone." PL8: "Two-lesson book: real page turn, contents, deep links; lesson
+1 state preserved across turns; research route retained." Verification results are recorded in the 6B
+packet and PR handover; pending roles remain pending until actual evidence is supplied.
+
+**Fallback audit follow-up in 6B.** The default glacier's unavailable-worker and unavailable-3D paths
+had only fixture-level coverage. Recorded fallback state was rebuilt at every mount and its shell
+label assumed recordings even when their download failed and only an authored fixture remained.
+The book now retains the actual source across turns, pauses recorded playback while away and resumes
+its prior intent, and distinguishes recorded runs, an illustration preview and drawing-only rendering.
+The scene reports source/static status to its controller; initialization failure is handled without
+abandoning a partially constructed scene, and a failed initialized host is disposed. Additional bounded
+paths: app/glacial-spread.ts, scenes/glacial/review.ts, scenes/entries.ts and
+e2e/glacial-fallbacks.spec.ts. This corrects PB7/PL8 state retention and truthful fallback disclosure;
+it does not change a solver or promote the authored preview into a simulated landform.

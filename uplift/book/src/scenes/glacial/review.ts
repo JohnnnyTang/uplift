@@ -131,7 +131,11 @@ export interface GlacialSceneOptions {
   readonly createRockCommand?:
     ((runs: readonly ReviewRun[], initial: ReviewRun, kept: readonly ReviewRun[]) => RockCommand) | undefined;
   /** The source of what is shown (the book passes the live runtime, 5M). Default: the recorded runs. */
-  readonly createSource?: ((context: GlacialSceneContext) => Promise<GlacialSceneSource>) | undefined;
+  readonly createSource?: ((context: GlacialSceneContext) => Promise<GlacialSceneSource | null>) | undefined;
+  /** Reports the actual source so the book retains recorded/fixture fallbacks too. */
+  readonly onSource?: ((source: GlacialSceneSource, loadError: string | null) => void) | undefined;
+  /** Reports unavailable or lost 3D to the reader shell. */
+  readonly onStatic?: ((reason: string) => void) | undefined;
   /** Disposes the source with the scene. Default true; the book keeps its live source across page turns. */
   readonly ownsSource?: boolean | undefined;
   readonly level?: Level | undefined;
@@ -561,10 +565,9 @@ export async function mountGlacialScene(
     if (!look) throw new Error(`no lithology look for rock "${rockKey}"`);
     return look.id;
   };
-  let source: GlacialSceneSource;
+  let selectedSource = o.createSource && lithologyModule ? await o.createSource({ looks, lookIdFor }) : null;
   let loadError: string | null = null;
-  if (o.createSource && lithologyModule) source = await o.createSource({ looks, lookIdFor });
-  else {
+  if (!selectedSource) {
     const loaded =
       o.fixture || !lithologyModule ? { runs: [fixtureRun()], error: null } : await loadReviewRuns(lookIdFor);
     loadError = loaded.error;
@@ -573,8 +576,13 @@ export async function mountGlacialScene(
     const initialRun: ReviewRun = runs.find((r) => r.rockKey === requestedRock) ?? runs[0]!;
     const keptRuns = (o.kept ?? []).flatMap((k) => runs.filter((r) => r.rockKey === k && r !== initialRun));
     const command = (o.createRockCommand ?? createLocalRockCommand)(runs, initialRun, keptRuns);
-    source = createRecordedSource(runs, command, { frame: o.frame, combinedRange: combinedRange(runs) });
+    selectedSource = createRecordedSource(runs, command, {
+      frame: o.frame,
+      combinedRange: combinedRange(runs),
+    });
   }
+  const source = selectedSource;
+  o.onSource?.(source, loadError);
   const ownsSource = o.ownsSource ?? true;
   const measured = source.kind !== "fixture";
 
@@ -947,6 +955,7 @@ export async function mountGlacialScene(
     tray.disabled = true;
     trayNote.textContent = why;
     desk.dataset.static = "true";
+    o.onStatic?.(why);
     status.textContent = `Fig. ${L.FIGURE_NUMBER}: ${t(L.figure.drawingAlternative) || GLACIAL_DRAWING_DESCRIPTION}`;
   };
   const handle = (dispose: () => Promise<void>): MountedGlacialScene => ({

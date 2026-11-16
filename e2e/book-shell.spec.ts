@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
-const fixture = `${process.env.BOOK_SHELL_FIXTURE_ORIGIN ?? "http://127.0.0.1:4174"}/e2e/fixtures/book-shell.html`;
+import { fixtureOrigin } from "./helpers";
+const fixture = `${process.env.BOOK_SHELL_FIXTURE_ORIGIN ?? fixtureOrigin}/e2e/fixtures/book-shell.html`;
 test("settles before an attached page turn, coalesces, retains model and restores focus", async ({
   page,
 }) => {
