@@ -10,7 +10,8 @@ used to show slope, which is the look the engine draws.
 
 The default book has two playable lessons: **From V to U**, a glacial process model,
 and **Where plates meet**, an authored illustration of continental plate boundaries.
-Both are on `main` after Wave 7 (PR #52). The labelled erosion research example remains
+Both are on `main` after Wave 7 (PR #52), with the 6B accessibility and fallback audit merged
+(PR #53). The labelled erosion research example remains
 available through Contents. The earlier contour and prepared-terrain water lessons were
 removed (D-W5-5M2 and D-W5-5N2).
 

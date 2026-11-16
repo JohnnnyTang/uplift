@@ -1,9 +1,9 @@
 # 6C · Two-lesson scientific and product review packet
 
-Prepared 2026-11-16 from merged `main` at `cd856bc` (Wave 7, PR #52). This packet is
-independent preparation for 6C while 6B audits that baseline. Integrate in the order
-**6B → 6C → 6D**; reconcile 6B's final evidence before merging 6C. No audit result,
-expert decision or participant observation is inferred by preparing this packet.
+Reconciled 2026-11-16 against merged **6B**, main `d1fdae5` ([PR #53](https://github.com/JohnnnyTang/uplift/pull/53)).
+The two lessons and current audit are now the review baseline. The original 7G preparation is recorded
+in D-W6-6C-PREP; D-W6-6C records this integration. Sequence remains **6B → 6C → 6D**.
+No expert decision or participant observation is inferred from the merge.
 
 **Publication status: review candidate; Stage 1 release gate remains open.** The owner
 requested that human checks remain pending with assigned roles. Role assignments below
@@ -19,6 +19,26 @@ No reviewer has been contacted by this work.
    and expert packets remain authoritative; this index does not replace or approve them.
 4. Record each decision or observation in [review records](review-records.md), with the
    exact commit, setup, scope and evidence. Unperformed checks remain pending.
+
+## Merged acceptance evidence
+
+The [current acceptance ledger](../../../plan/stage-1-acceptance.md) and
+[6B audit](../accessibility/README.md) reconcile PB1–PB9 and the applicable foundation checks.
+The audit fixed nested main landmarks, keyboard scrolling of an overflowing equation, and the actual
+glacier fallback's source lifetime and disclosure. Its final application revision is `11fecea`,
+contained in the merged 6B head `80ab409`.
+
+- Local `pnpm check`: 886 tests passed, 7 skipped; final affected production browser rerun: 19/19 passed.
+- Final [6B browser CI](https://github.com/JohnnnyTang/uplift/actions/runs/43828808448/job/133168856784):
+  116 passed, 1 skipped. This supersedes neither the recorded local setup nor its different skipped cases.
+- [Sixteen axe scans](../accessibility/axe-results.json): zero violations; 14 lesson states retain
+  incomplete contrast checks. These require human examination, not an inferred pass or failure.
+- CI check and solver-comparison jobs passed on the PR head. CI execution does not establish
+  classroom hardware performance, human listening or reviewed scientific claims.
+
+[Human procedures H1–H8](../accessibility/human-checks.md) provide the listening, real-zoom,
+colour/projector, reader, owner, expert and hardware tasks. Their roles and release status remain
+pending in [review records](review-records.md); the research specialist review is also retained.
 
 ## Claims, sources, evidence and draft scope
 
@@ -56,13 +76,14 @@ first-time-reader checks.
 
 ## Fallbacks and measured hardware scope
 
-| Path                                   | What the reader receives                                                                                    | Evidence boundary                                                                                                                                  |
-| -------------------------------------- | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Glacier WebGPU unavailable             | Live CPU worker fallback; backend detail is disclosed in the deeper view                                    | Existing runtime/backend tests and 6A/6A2 measurements. CPU playback throughput differs; it does not change the fixed-step claim.                  |
-| Glacier live host cannot start         | Labelled recorded runs, not a live result                                                                   | `glacial-spread.ts` fallback implementation; 6B owns current-route verification. Do not call a recorded choice a new simulation.                   |
-| Glacier 3D cannot render               | Drawing and enlarged front face with an explicit static-view disclosure                                     | Scene fallback path; 6B owns current-route verification. A flat layout for phone/reduced motion is separate from a drawing-only renderer fallback. |
-| Plate illustration cannot render in 3D | "Drawing only" with the enlarged front face; no claim of recorded simulation runs                           | `plates-book.spec.ts` fallback test and 7G drawing-only capture.                                                                                   |
-| Research backend unavailable           | The backend chain exposes its selected tier/failure; the flat tier disables unavailable simulation controls | `backends.spec.ts`; do not infer GPU availability from a forced-WebGPU fallback pass.                                                              |
+| Path                                               | What the reader receives                                                                                    | Evidence boundary                                                                                                                                                             |
+| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Glacier WebGPU unavailable                         | Live CPU worker fallback; backend detail is disclosed in the deeper view                                    | Existing runtime/backend tests and 6A/6A2 measurements. CPU playback throughput differs; it does not change the fixed-step claim.                                             |
+| Glacier live host cannot start                     | Labelled recorded runs, not a live result                                                                   | `glacial-fallbacks.spec.ts` verifies recorded choice/time/ghost retention across levels and turns, hidden pause and restored play intent. No new simulation is implied.       |
+| Glacier live host and recorded downloads both fail | Explicit illustration preview only; no live model or recorded run is available                              | `glacial-fallbacks.spec.ts` faults the actual capture fetches and verifies the label and return state. Never present the fixture as process evidence.                         |
+| Glacier 3D cannot render                           | Drawing and enlarged front face with an explicit static-view disclosure                                     | `glacial-fallbacks.spec.ts` disables 3D on the default route and checks disclosure, immediate reveal and keyboard turns. Phone/reduced-motion layout is a separate condition. |
+| Plate illustration cannot render in 3D             | "Drawing only" with the enlarged front face; no claim of recorded simulation runs                           | `plates-book.spec.ts` fallback test and 7G drawing-only capture.                                                                                                              |
+| Research backend unavailable                       | The backend chain exposes its selected tier/failure; the flat tier disables unavailable simulation controls | `backends.spec.ts`; do not infer GPU availability from a forced-WebGPU fallback pass.                                                                                         |
 
 Measured performance is on one target laptop, not a browser/device support matrix:
 [6A and 6A2](../../../perf/README.md), [7F two-lesson measurements](../../../perf/plates/README.md).
@@ -70,21 +91,21 @@ The CPU scrub-after-Pause issue was fixed in 6A2; the original failure is histor
 The initial GPU rock-choice and research-return marginal target misses were not reworked.
 7F did not measure CPU glacier across the turn, two-lesson cold network loads or other
 hardware. Current evidence links, exact configurations and outstanding checks belong in
-6B's acceptance ledger; this packet carries no new hardware pass.
+[6B's acceptance ledger](../../../plan/stage-1-acceptance.md); this packet carries no new hardware pass.
 
 ## Decision state and handover
 
 [Review records](review-records.md) assigns each pending item and provides recording
 fields for actual review. No first-time readers or experts participated in this 6C
-preparation. Do not infer learning gains from completing the journey or from telemetry.
+review work. Do not infer learning gains from completing the journey or from telemetry.
 The existing rain-only, opt-in local instrumentation is not extended.
 
 **Done:** current two-lesson README, claim/source/evidence index, existing recording and
 teacher journey, review roles and result templates. Research teacher instructions now
-match optional prediction and immediate reveal in the integrated app.
+match optional prediction and immediate reveal in the integrated app. Merged 6B evidence, fallback behavior
+and pending human tasks are reconciled.
 
-**Not done:** 6B's final merged audit reconciliation, human/expert review, publication
-approval or new evidence collection. No Stage 2 work is included.
+**Not done:** human/expert review, publication approval or new human/hardware evidence collection. No Stage 2 work is included.
 
 **Surprise:** the repository's top-level README and research teacher instructions still
 described superseded states despite the implemented two-lesson, ungated journey.

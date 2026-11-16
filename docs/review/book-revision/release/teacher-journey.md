@@ -2,7 +2,7 @@
 
 # Two-lesson review and teacher journey
 
-This guide matches the book integrated at `cd856bc`. It is a facilitator's route
+This guide matches the book integrated through 6B at `d1fdae5`. It is a facilitator's route
 through existing content, not classroom validation or scientific approval. The
 [review packet](README.md) links the scientific drafts and limitations.
 
@@ -60,6 +60,19 @@ The [research teacher notes](../../../../uplift/spreads/geomorph.v-valley/teache
 and [evidence packet](../../../science/validation/rain-comparison/README.md) distinguish
 gross material lifted from net incision or export. Failed morphology and the unvalidated
 waterfall challenge stay explicit. Do not turn on local collection to run this review.
+
+## When a fallback is shown
+
+Follow the page's actual label. **Showing recorded runs** offers existing captures rather than a new
+simulation; the chosen rock, time and comparison survive page turns, and recorded playback pauses
+while away. If recordings cannot load, **Illustration preview only** is not scientific process evidence.
+**Drawing only** means 3D is unavailable: keep reading, reveal the answer or turn the page; unavailable
+scene controls are disabled. These paths are checked on the default app in the
+[6B audit](../accessibility/README.md).
+
+For a wide equation in the university reading panel, Tab reaches the equation and arrow keys scroll
+it. Escape closes the panel and returns focus to its trigger. These mechanical checks do not replace
+actual screen-reader listening.
 
 ## Recording and accessible alternatives
 
