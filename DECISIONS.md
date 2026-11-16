@@ -3357,3 +3357,9 @@ screen-reader listening; colour-vision and projector checks; other GPUs, browser
 
 **Revisit if.** The owner wants the key back on the block (it would cover the face again), a different tip, or
 equal book sizes at the turn (an engine fit change).
+
+**Owner review of 7G (2026-11-16).** The owner approved the two 7G look decisions (the ghost key under the
+front face with leaders; the block tipped 12° towards the reader with the book at 48°) and closed Wave 7.
+**F1 accepted as is:** each lesson fits its own page height, so at 1440 × 900 the book grows slightly at the
+turn (0.60 → 0.75) while the camera tilt stays the same. No engine fit change is planned for 6B. F2 (block
+size at laptop widths) stays with the owner's look review in 6B–6D.

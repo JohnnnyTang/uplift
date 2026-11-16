@@ -78,7 +78,7 @@ inferred from screenshots or tests). An automated pass never closes a human, exp
 | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | (a) Lesson 1, university level, flap open, off the desk at 1440 | fixed (defect 1)                                                                                                                                   |
 | (b) Whole book at minimum scale at 1440 × 900                   | improved for lesson 2 (0.75, defect 2); lesson 1 unchanged at 0.60 (O1, accepted). PL3 judged honestly at laptop size: pass with note, F2 to owner |
-| (c) Book size changes at the turn at 1920 × 1080                | fixed at 1920 (equal spread heights). At 1440 the book now grows at the turn (0.60 → 0.75); recorded as F1 for the owner (an engine fit change)    |
+| (c) Book size changes at the turn at 1920 × 1080                | fixed at 1920 (equal spread heights). At 1440 the book now grows at the turn (0.60 → 0.75); recorded as F1; owner accepted as is (2026-11-16)      |
 | (d) Lesson 2's left page uses about 60 % of its width           | fixed (defect 2)                                                                                                                                   |
 | (e) The plates-scene fixture shows "Simplified view"            | fixed (defect 4)                                                                                                                                   |
 
