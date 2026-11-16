@@ -1,14 +1,31 @@
 # Implementation plan: framework
 
+## Current status · 2026-11-16
+
+The two-lesson book is integrated on main: _From V to U_ and _Where plates meet_.
+6A/6A2 and Wave 7 are delivered; **6B** merged as `d1fdae5`
+([PR #53](https://github.com/JohnnnyTang/uplift/pull/53)), and **6C** merged as `83f0ba6`
+([PR #54](https://github.com/JohnnnyTang/uplift/pull/54)). **6D now records the retrospective**
+against those merged results. The [acceptance ledger](stage-1-acceptance.md),
+[review packet](../review/book-revision/release/README.md) and
+[retrospective](stage-1-retro.md) preserve the evidence and remaining responsibilities.
+
+**Stage 1's release gate remains open.** Human, expert and broader hardware checks stay
+pending with assigned roles. By owner direction, **Stage 2 planning and next-lesson
+selection are deferred**; this 6D session supplies no Stage 2 plan or launch authorization.
+
 ## Canonical Wave 5 integration branch
 
 The owner consolidated completed work and current plans into **s1/w5/integration**.
 Future Wave 5 sessions branch from and target PRs to this branch, consuming only
-merged dependencies. Main remains unchanged. This explicit Wave 5 exception
+merged dependencies. This exception applies only to Wave 5; other waves target main.
+This explicit Wave 5 exception
 supersedes earlier instructions to merge the reviewed baseline into main before 5G.
 See [integration provenance and workflow](../review/wave-5-integration/README.md).
 
-## Latest owner review · 2026-11-09
+## Historical owner review · 2026-11-09
+
+The following records the state on that date, not the current implementation status.
 
 Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
 (8069a7f). Their implementation is real and retained; prior wording saying these
@@ -31,10 +48,13 @@ taught us.
 
 The owner corrected the direction on 2026-11-09: Uplift is a playable 3D book with
 bounded pages, immediate interaction, optional questions/reveals and page turning.
-[Wave 5](stage-1-wave-5.md) revises the built app and delivers a new two-spread example;
+[Wave 5](stage-1-wave-5.md) revised the book foundations and delivered the glacial opening;
+[Wave 7](stage-1-wave-7-plates.md) supplied the current second lesson.
 [PB1–PB9](product-realignment.md#product-acceptance-gate) defines product acceptance.
-Hardening moves to Wave 6. Existing engine work and evidence remain foundations;
-implementation integration does not establish product acceptance. 5B–5F are now locally integrated on the review stack; main remains at 5A. See the [acceptance ledger](stage-1-acceptance.md) and [drift audit](../review/book-revision/acceptance/README.md#drift-audit-and-handover).
+Wave 6 has delivered performance work, the acceptance audit and the reconciled review packet.
+The current task is the retrospective; implementation integration does not establish release acceptance.
+See the [acceptance ledger](stage-1-acceptance.md) and retain the
+[historical drift audit](../review/book-revision/acceptance/README.md#drift-audit-and-handover) in its original scope.
 Read the updated [product story](../product-story.md) before starting a new session.
 
 ## The work model: stages → waves → sessions
@@ -164,6 +184,10 @@ You are running session {ID} ({title}) of Uplift, Stage {S}, Wave {W}.
       must change).
 - [ ] Next stage planned in detail: `docs/plan/stage-(N+1).md`.
 
+**Scoped owner direction for 6D (2026-11-16):** write the Stage 1 retrospective now;
+leave next-stage planning deferred. Do not check off the Stage 1 release gate or create
+`stage-2.md` as part of this session.
+
 ## Tracks
 
 Sessions are tagged with a track so ownership stays legible across stages:
@@ -204,20 +228,24 @@ recognisable book, with direct manipulation and page turning.
 **Exit gate.** Product criteria PB1–PB9, applicable scientific and technical checks, expert review of
 the shipped lessons, and an honest record of pending human/hardware checks.
 **Detailed plan:** [stage-1.md](stage-1.md). Waves 1–4 record the engine and research-example work.
-The active [Wave 5 revision](stage-1-wave-5.md) replaces the coarse P1/P2 outline.
-Wave 5 now includes [G–N](stage-1-wave-5-glacial.md) for the glacial opening.
-Wave 6 follows 5N and hardens that book, preserving the existing research surface.
-The second lesson, plate boundaries, is [Wave 7](stage-1-wave-7-plates.md) (D-L2-1), done 2026-11-15 with 7G;
-6B → 6C → 6D can now start and cover both lessons.
+The delivered [Wave 5 revision](stage-1-wave-5.md) replaced the coarse P1/P2 outline;
+[G–N](stage-1-wave-5-glacial.md) delivered the glacial opening.
+The second lesson, plate boundaries, is [Wave 7](stage-1-wave-7-plates.md) (D-L2-1),
+merged through 7G. Wave 6's 6A/6A2 performance work, 6B audit and 6C review packet are
+merged; 6D records their [retrospective](stage-1-retro.md). Release gates remain open.
 
-### Stage 2 · Grow the book and extract proven reuse (provisional)
+### Stage 2 · Grow the book and extract proven reuse (deferred)
+
+**Owner deferral, 2026-11-16:** retain this historical outline for context; do not select
+a lesson or develop a Stage 2 plan during 6D.
 
 **Goal.** Add one further small discovery that readers can play and understand, using
 shared capabilities demonstrated by the first two spreads.
 **Likely scope.** Refine the schema from authored examples; extract a primitive only
 where a real next lesson repeats or needs it; write a short authoring guide. Deltas/fans
 remain candidates, conditional on a prompt, visible and supported process outcome.
-Contours and page turning are already Stage 1 obligations.
+Page turning is delivered in Stage 1. Contours remain an optional engine capability,
+not a required reader lesson.
 **Exit gate.** A new spread passes the same product/science/accessibility criteria, works
 inside the existing book and reuses the engine without heavy bespoke spread code.
 Engine modularity alone cannot close the stage.
@@ -256,15 +284,17 @@ records limitations, and selects improvements rather than merely counting featur
 
 ## Status
 
-| Stage                     | State                                                   | Plan                     | Retro |
-| ------------------------- | ------------------------------------------------------- | ------------------------ | ----- |
-| 0 · Bootstrap             | Done                                                    | —                        | —     |
-| 1 · Demo 1                | **W5 A–F reviewed; G–N planned; release gates pending** | [stage-1.md](stage-1.md) | —     |
-| 2 · Book growth and reuse | Outline only                                            | —                        | —     |
-| 3 · Meaningful comparison | Outline only                                            | —                        | —     |
-| 4 · Pilot                 | Outline only                                            | —                        | —     |
+| Stage                     | State                                                                               | Plan                     | Retro                             |
+| ------------------------- | ----------------------------------------------------------------------------------- | ------------------------ | --------------------------------- |
+| 0 · Bootstrap             | Done                                                                                | —                        | —                                 |
+| 1 · Playable book proof   | Two lessons, 6B audit and 6C packet merged; 6D retrospective; release gates pending | [stage-1.md](stage-1.md) | [Retrospective](stage-1-retro.md) |
+| 2 · Book growth and reuse | Deferred by owner; historical outline retained                                      | —                        | —                                 |
+| 3 · Meaningful comparison | Outline only                                                                        | —                        | —                                 |
+| 4 · Pilot                 | Outline only                                                                        | —                        | —                                 |
 
-### Next-stage selection after 5F
+### Historical next-stage selection after 5F
+
+The principles below remain context, not authorization to begin the deferred Stage 2 plan.
 
 The [5F drift audit](../review/book-revision/acceptance/README.md#drift-audit-and-handover)
 requires each candidate to name action, visible consequence, evidence and shared

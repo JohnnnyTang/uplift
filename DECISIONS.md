@@ -3456,3 +3456,35 @@ human review or Stage 1 release gate. No new scientific claims, model changes or
 **Traceability.** PL5: "Honesty: the illustration label, authored-shapes disclosure, no computed-looking
 numbers, cited figures, expert-review marks." PL7's human checks remain pending; 6D records these facts
 without choosing a new lesson or treating pending work as passed.
+
+## D-W6-6D · Stage 1 retrospective; Stage 2 planning deferred (2026-11-16)
+
+**Context.** The owner authorized completion in order: merge 6B, reconcile and merge 6C,
+then write the retrospective. Human checks remain pending with assigned roles. The owner
+explicitly asked that Stage 2 planning wait until the current tasks are complete.
+
+**Decision.** 6B #53 merged at `d1fdae5`; reconciled 6C #54 merged at `83f0ba6`,
+after all four CI jobs passed. 6C's fresh browser suite passed 116 tests with one skip.
+6D starts from that merged main in its own worktree. Its authorized scope is
+`docs/plan/stage-1-retro.md` plus minimal plan-framework/status corrections and this
+decision record. The original 6D Stage 2 planning deliverable is deferred; no
+`docs/plan/stage-2.md`, next-lesson selection or new implementation programme is created.
+
+**Result.** The retrospective records actual visual/accessibility fixes, scoped performance
+and its CPU throughput tradeoff, public primitives demonstrated by the lessons, shared
+Uplift code, and the limits of the evidence. Historical scientific outcomes remain
+16 pass / 23 fail; the authored-relief exception remains limited to the plate lesson.
+Current plan headings now distinguish merged implementation from historical launch notes.
+The broken performance reference points to the actual 6A/6A2 and 7F packets.
+
+**Open gate and roles.** H1–H8, research specialist review and publication approval retain
+their accountable roles and closure evidence in the 6B/6C registers and retrospective.
+Prior owner approvals remain approved; F2 remains pending. No new participant observation,
+expert approval or hardware measurement is claimed. Completing this scoped retrospective
+does not close the Stage 1 release gate or authorize Stage 2.
+
+**Handover.** PL9: “Reuse: no heavy spread code; lesson 1 and engine behaviour unchanged;
+new primitives recorded in `DECISIONS.md`.” GV6: “Keyboard equivalents for every gesture,
+text alternatives, reduced motion, lithology patterns as non-colour cue, reflow.”
+The retrospective inventories existing reuse and carries pending human access checks;
+this documentation session changes neither simulation nor reader behavior.
