@@ -11,6 +11,12 @@ export interface ReaderEntry {
    * paging, history and settlement. A stage spread is one page on narrow screens; it reflows itself.
    */
   readonly layout?: "pages" | "stage";
+  /**
+   * How a "stage" spread words its fallback status (`readiness.kind === "fallback"`), given the scene's
+   * reason. Each lesson says what its fallback really shows: lesson 1 its recorded runs, lesson 2 its
+   * drawing (D-W7-7F). Default: a generic "Simplified view: <reason>".
+   */
+  readonly fallbackStatus?: (reason: string) => string;
 }
 
 export interface ReaderSceneContext {

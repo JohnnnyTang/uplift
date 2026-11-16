@@ -26,8 +26,8 @@ number the illustration configures is a binding, and every real-world figure is 
   `PLATES_RELIEF_CONFIG` field by dotted path) and `plates-scene` (`boundaryName`, `stageLabel`,
   `viewedNames`, `scaleBarLabel` as strings; `blockWidthKm` as a number). `scaleBarLabel` is the one field
   7E adds to 7D's list.
-- **Label line.** `figure.label` is the page's one label line, and the spread's tier label: the schema has
-  no "illustration" tier yet, so `spread.tier` is a placeholder the shell must not badge (D-W7-7E).
+- **Label line.** `figure.label` is the page's one label line, and the spread's visible tier label.
+  `spread.tier` is `"illustration"` (added to the schema in 7F, D-W7-7F); no model-tier badge is shown.
 - **Boundaries.** `boundaries` in picker order with `name`, `glyph`, `glyphLabel`, `motion`, `help` and
   `example`. The host serves `name` as `{{probe.boundaryName}}`; ghost labels use `name` and `glyph`.
 - **Stage.** The scrubber shows `controlsCopy.stageEarly` → `controlsCopy.stageLate` only; its spoken

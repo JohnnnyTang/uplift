@@ -145,8 +145,10 @@ export async function createReaderShell(
     (visible ? saved : active?.heading)?.focus({ preventScroll: true });
   }
   function makeStage(target: ReaderTarget) {
-    const spread = entries.find((e) => e.spread.id === target.spreadId)!.spread;
+    const entry = entries.find((e) => e.spread.id === target.spreadId)!;
+    const spread = entry.spread;
     const scene = sceneFor(spread.id);
+    const fallbackStatus = entry.fallbackStatus ?? ((reason: string) => `Simplified view: ${reason}`);
     const article = node("article", undefined, "reader-spread reader-stage");
     article.dataset.spread = spread.id;
     article.setAttribute("aria-label", scene.bindings.render(spread.title[level]));
@@ -159,7 +161,7 @@ export async function createReaderShell(
     const unsubscribeStatus = scene.subscribe((state) => {
       status.textContent =
         state.readiness.kind === "fallback"
-          ? `Showing recorded runs: ${state.readiness.reason}`
+          ? fallbackStatus(state.readiness.reason)
           : state.readiness.kind === "error"
             ? `Illustration unavailable: ${state.readiness.reason}`
             : "";
@@ -264,7 +266,7 @@ export async function createReaderShell(
     const surface = node("div", undefined, "reader-scene");
     surface.setAttribute("data-reader-gesture-surface", "");
     const scope = node("p", undefined, "reader-scope");
-    scope.textContent = `${spread.tier.replaceAll("-", " ")} · ${scene.scope.kind === "static-geometry" ? "Static geometry; no model clock" : scene.scope.time === "uncalibrated" ? "Simplified model; time is not calibrated" : "Calibrated process model"}`;
+    scope.textContent = `${spread.tier === "illustration" ? "Illustration" : spread.tier.replaceAll("-", " ")} · ${scene.scope.kind === "static-geometry" ? "Static geometry; no model clock" : scene.scope.time === "uncalibrated" ? "Simplified model; time is not calibrated" : "Calibrated process model"}`;
     const status = node("p", undefined, "reader-scene-status");
     const reset = node("button", "Reset illustration");
     reset.id = `${spread.id}-reset`;

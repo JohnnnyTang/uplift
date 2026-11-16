@@ -16,7 +16,8 @@
  *   node docs/perf/batch-latency.mjs --summarize                             # pooled tables, every label
  *
  * Options: --backend=webgpu|cpu|both, --reps=N, --base=URL, --label=NAME (results/6a2/NAME/), --headless
- * (diagnostics only, never reported as a target-hardware result).
+ * (diagnostics only, never reported as a target-hardware result), --root=DIR (results root instead of
+ * results/6a2/; 7F writes its lesson-1 regression check to docs/perf/plates/).
  */
 import { execFileSync } from "node:child_process";
 import {
@@ -39,7 +40,10 @@ const arg = (name, fallback) => {
   if (!hit) return fallback;
   return hit.includes("=") ? hit.slice(hit.indexOf("=") + 1) : true;
 };
-const ROOT = fileURLToPath(new URL("./results/6a2/", import.meta.url));
+const ROOT =
+  typeof arg("root") === "string"
+    ? join(process.cwd(), arg("root"))
+    : fileURLToPath(new URL("./results/6a2/", import.meta.url));
 const QUERY = { webgpu: "/", cpu: "/?glacier=cpu&backend=cpu-worker" };
 /** Pause-and-scrub cycles per repetition; each plays a different, fixed time so Pause lands at varied batch phases. */
 const SCRUB_CYCLES = 12;

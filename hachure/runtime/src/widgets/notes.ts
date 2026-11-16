@@ -14,9 +14,11 @@ const TIERS: Record<Tier, string> = {
   "process-model": "Process model",
   "stylised-theory": "Stylised theory",
   "agent-stochastic": "Agent / stochastic",
+  illustration: "Illustration",
 };
+/** An illustration runs no model, so its badge never says "Model tier" (D-L2-1). */
 export function createTierBadge(tier: Tier) {
-  return el("span", `Model tier: ${TIERS[tier]}`, "widget-tier");
+  return el("span", tier === "illustration" ? TIERS[tier] : `Model tier: ${TIERS[tier]}`, "widget-tier");
 }
 /** Caller supplies a resolved binding including calibration status and units. */
 export function createTimeScale(label: string) {

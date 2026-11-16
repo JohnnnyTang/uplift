@@ -186,6 +186,18 @@ describe("validateReaderSpread migration", () => {
     expect(validateReaderSpread(s).ok).toBe(false);
   });
 
+  it("accepts the illustration tier only as static geometry", () => {
+    const s = reader();
+    s.tier = "illustration";
+    expect(validateReaderSpread(s, catalogue).issues.map((i) => i.path)).toContain("scene.modelScope.kind");
+    s.scene.modelScope = { kind: "static-geometry" };
+    delete s.scene.stepsPerRealSecond;
+    delete s.scene.durations;
+    s.controls = [];
+    s.page.body = { hs: "{{scene.scaleBar}}", uni: "{{scene.terrainWidthM}}" };
+    expect(validateReaderSpread(s, catalogue).issues).toEqual([]);
+  });
+
   it("requires explicit scope and forbids geological-year claims without calibration", () => {
     const s = reader();
     delete s.scene.modelScope;

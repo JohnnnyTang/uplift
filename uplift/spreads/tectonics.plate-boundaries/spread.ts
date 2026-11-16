@@ -9,9 +9,9 @@
  *   cut, the camera and ghosts are commands of the authored-sequence source (7B), not schema controls, as
  *   lesson 1's rock choice is a command of its host.
  * - `engine: "scene"`: a special-purpose scene; no engine parameter can be set.
- * - `tier: "stylised-theory"`: placeholder only. The schema has no "illustration" tier (raised in D-W7-7E);
- *   the shell shows `figure.label` ("Illustration: shapes drawn from real examples") as this spread's tier
- *   label, never a "stylised theory" badge.
+ * - `tier: "illustration"`: the tier added to the schema in 7F for authored, model-free figures (D-W7-7E
+ *   raised it; D-W7-7F). The page's visible tier label is `figure.label` ("Illustration: shapes drawn from
+ *   real examples"); no model-tier badge is shown.
  */
 import { type EngineCatalogue, type ReaderSpread, validateReaderSpread } from "@hachure/runtime";
 import { PLATES_PROBE_KINDS, platesProbes } from "./bindings";
@@ -39,7 +39,7 @@ export const platesSpread: ReaderSpread = {
     courses: ["physical-geography", "geomorphology"],
     levels: ["hs", "uni"],
   },
-  tier: "stylised-theory",
+  tier: "illustration",
   engine: "scene",
   scene: {
     preset: "plates-start",

@@ -88,6 +88,39 @@ describe("plates dressing rules (read the field, never change it)", () => {
     expect(start).toBeLessThan(drawnSlopeHachures(grid("divergent", 1), 4, 38, 2, 159).length);
   });
 
+  it("draws few streams on the rift floor: only large catchments start there (owner look note)", () => {
+    const g = grid("divergent", 1);
+    const d = drainage(g);
+    const all = streamPaths(g, d, 140, g.along - 1);
+    const fewer = streamPaths(g, d, 140, g.along - 1, { droppedBelowM: -150, minDrainageCells: 1200 });
+    const onFloor = (paths: number[][]) =>
+      paths.filter((p) => {
+        const k = Math.round(p[1]!) * g.across + Math.round(p[0]!);
+        return g.layerOffsetM![k]! < -150;
+      }).length;
+    expect(onFloor(fewer)).toBeLessThan(onFloor(all));
+    expect(onFloor(fewer)).toBeLessThanOrEqual(3);
+    // The streams crossing from the shoulders are kept.
+    expect(fewer.length).toBeGreaterThanOrEqual(all.length - onFloor(all));
+  });
+
+  it("draws no lakes in the production look, and at most maxLakes when asked", () => {
+    const g = grid("divergent", 1);
+    const rules = platesDressingRules({ reliefScale: 4 });
+    expect(rules.lakes!(g, DEFAULT_DRESSING, g.along - 1)).toBeNull();
+    const o = { minDepthM: 40, maxDepthM: 70, droppedBelowM: -150 };
+    const count = (levels: Float32Array | null) => new Set([...(levels ?? [])].filter(Number.isFinite)).size;
+    const one = lakeLevels(g, drainage(g), { ...o, maxLakes: 1 }, g.along - 1);
+    expect(count(one)).toBe(1);
+    expect(count(lakeLevels(g, drainage(g), o, g.along - 1))).toBeGreaterThanOrEqual(count(one));
+  });
+
+  it("puts no hachures on the starting ridges at the production threshold (no rows of dots)", () => {
+    expect(drawnSlopeHachures(grid("transform", 0), 4, 46, 2, 159).length).toBe(0);
+    expect(drawnSlopeHachures(grid("divergent", 1), 4, 46, 2, 159).length).toBeGreaterThan(0);
+    expect(drawnSlopeHachures(grid("convergent", 1), 4, 46, 2, 159).length).toBeGreaterThan(0);
+  });
+
   it("is deterministic and leaves the grid untouched", () => {
     const g = grid("divergent", 0.6);
     const before = Float32Array.from(g.bedM);

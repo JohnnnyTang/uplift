@@ -87,6 +87,8 @@ export interface PlatesSceneCopy {
   readonly showsIgnores: { readonly shows: readonly LevelText[]; readonly ignores: readonly LevelText[] };
   /** University level only; bindings allowed. */
   readonly deeper: string;
+  /** University level only: display equations (TeX) after the deeper text. */
+  readonly equations?: readonly string[];
   readonly teacherNotes: string;
   readonly sources: readonly { readonly citation: string; readonly url?: string }[];
 }

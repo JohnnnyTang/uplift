@@ -3209,3 +3209,77 @@ exposed on it for browser tests, as in lesson 1.
    the shell words its "fallback" status for lesson 1's recorded runs, which this lesson does not have.
 
 **For the lead.** `hachure/ink/package.json` gained the `./plates` export (outside 7D's owned paths, one line).
+
+## D-W7-7F — Lesson 2 in the book: spread 2, page turn, owner look decisions, illustration tier (session 7F, 2026-11-15)
+
+**Context.** 7F makes _Where plates meet_ spread 2 of the default book after _From V to U_ (D-L2-1 decision 6:
+two working spreads and a real page turn), on 7D's scene (D-W7-7D) with 7E's words (D-W7-7E). The owner
+reviewed 7D on 2026-11-15 and handed 7F these decisions and leftovers.
+
+**Owner decisions (2026-11-15, after reviewing 7D), quoted.**
+
+1. "Book tilt: lesson 2 uses lesson 1's tilt (48°), not 7D's 42°, so the page turn does not change the
+   camera. The higher camera that helps the transform comes from the block view, not the book."
+2. "Light look tuning: fewer streams and lakes on the rift floor, softer ridge hachures (they read as dotted
+   rows on the 1,500 m ridges). The transform offset and rift scarps must still read at page size — compare
+   against docs/review/plates/scene/ captures."
+3. "Cover rock stays one lithology (three-colour layers deferred to 6B–6D). No engine work for it."
+4. "Wire 7E's copy into the scene (replacing 7D's placeholder left page); write the few missing strings 7E did
+   not provide (plate-arrow handle names and help, 'no boundary chosen', 'Replay the drawing') into 7E's spread
+   content following its conventions, marked for expert review where scientific; keep 7E's sentence register
+   test passing."
+5. "Illustration tier: the spread schema has no 'illustration' tier, so 7E used `stylised-theory` as a
+   placeholder. Add an `illustration` tier to the Hachure spread schema (minimal, generic), switch lesson 2 to
+   it, and make sure no tier badge mislabels it; the page's label line is the visible tier label."
+6. "Left page height: at university level with the flap open the left page is ~4% taller than the fixed tilted
+   page — let the left page scroll or collapse key words, no clipping, at desktop and phone."
+7. "Fallback wording: the shell words a stage spread's fallback as 'Showing recorded runs: …', wrong for a
+   lesson with no runs. Make it generic or per-spread so lesson 2's static view says something honest (e.g.
+   'Drawing only'), lesson 1 unchanged."
+
+**Session decisions.**
+
+1. **Book.** `spreads = [uValleySpread, platesSpread]` (`@uplift/spreads`, which now also exports 7E's lesson,
+   page, probes, sources and teacher notes). `scenes/entries.ts` mounts lesson 2 as a `layout: "stage"` entry
+   with `createPlatesSpreadScene`, 7E's copy and probes, and the same `?mode=` / `?motion=reduce` flags as
+   lesson 1. The shell already paged two retained scenes (5A), so the page turn, contents, deep links
+   (`?spread=…&page=spread`), history and the research route needed no shell change. Folios run 1–2, 3–4.
+2. **Copy mapping** lives in `scenes/plates/lesson-copy.ts` (D-W7-7D's field list; no words written there).
+   `PlatesSceneCopy` gained optional `equations` (the Airy formula, university level, under the deeper text, as
+   lesson 1 does). Per-level lists of unequal length skip empty entries. The scene's own headings already
+   match 7E's ("This illustration shows", "It leaves out or simplifies").
+3. **Missing strings** (owner item 4) added to 7E's `controlsCopy`: `flapSummary` (lesson 1's "Lift the flap for
+   the answer"), `noBoundary`, `replay`, `leftPlateArrow` / `rightPlateArrow` (7D's "Left plate's arrow" wording,
+   so its handle tests read the same), `arrowHelp` (16 words, inside 7E's budget). View words only (claims PD1,
+   PD8 of the `controlsCopy` group); the sentence register was regenerated (214 sentences).
+4. **Tilt** 48° (owner item 1). The reader's turntable (view height 20–68°) still gives the higher view.
+5. **Look** (owner item 2). Streams that start on dropped ground (the rift floor) need 1,200 draining cells
+   instead of 140, so the stepped floor shows a few streams, not a braid; streams entering from the shoulders
+   still cross it. Hachures start at a drawn slope of 46° (was 38°), above the starting ridges' steepest drawn
+   flank (about 43° at ×4), so the ridges carry no rows of dots while scarps and range flanks keep theirs;
+   their resting strength is 0.34 (was 0.45; lesson 1 0.22). **Lakes: none** (`maxLakes` 0, new option): 7E's
+   disclosure says "No erosion, sediment or rift lakes" (university) and that real rifts fill with lakes while
+   "here the land is only raised, lowered or moved" (school), so any lake contradicted the page. The option
+   stays (largest first) if the owner wants one lake back with a copy change. Captures:
+   `docs/review/plates/integration/look-*.png` against `docs/review/plates/scene/*-block.png`.
+6. **Illustration tier** (owner item 5): `TIERS` gains `"illustration"`; a reader spread with it must be
+   static geometry (validator, tested); `createTierBadge` reads "Illustration", never "Model tier: …"; the
+   shell's page-layout scope line says "Illustration". Lesson 2 is a stage spread and shows no badge: its label
+   line is the visible tier label.
+7. **Left page** (owner item 6): on the tilted book the lesson column may grow the page only up to 1.15 × the
+   desk's height (`--ps-column-max`), measured so the tilted book stays inside the desk at 1920 × 1080,
+   1440 × 900, 1366 × 768 and 1280 × 720; beyond that the column scrolls inside the page (thin ink scrollbar,
+   keyboard focus scrolls it). The upright reading copies ("Read lesson", "Read key words", …) stay. The flat
+   page (phones, reduced motion) flows as before. At 1440 × 900 the school copy with the flap closed fits
+   without scrolling.
+8. **Fallback wording** (owner item 7): `ReaderEntry.fallbackStatus(reason)`, per spread; the default is a
+   generic "Simplified view: <reason>". Lesson 1's entry keeps "Showing recorded runs: <reason>" (unchanged).
+   Lesson 2's static view now reports `fallback` (7D reported `ready`) with a short reason, worded
+   "Drawing only: 3D is not available here" (or "3D is off here", "3D stopped on this device").
+9. **Lesson 1 on leave** is unchanged: the shell settles it (`pauseAndSettle`), it holds its runs, kept runs
+   and model time while away and resumes its play intent on return with the first advance dropped (5J). The
+   e2e journey bounds the advance on return against the play rate.
+
+**Revisit if.** The owner wants a rift lake back (then 7E's disclosure changes with it); the book's fit scale
+should be equal for both lessons (each spread's page height sets it today, see the PR); 6B–6D add the
+three-colour cover rock (owner item 3).

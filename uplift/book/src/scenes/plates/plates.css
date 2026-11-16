@@ -323,3 +323,23 @@
 .ps-scene .gs-page-figure .gs-controls input[type="range"] {
   width: 7em;
 }
+
+/*
+ * The left page on the tilted book (7F, owner item 6). The lesson column may grow the page only as far as
+ * the tilted book still fits the desk (`--ps-column-max`, a share of the desk's height, checked at 1920,
+ * 1440, 1366 and 1280 wide); beyond that, as with the university copy and the flap open (D-W7-7E), the
+ * column scrolls inside the page instead of pushing the book off the desk. A thin ink scrollbar is the only
+ * cue. The flat page (phones, reduced motion) flows as before.
+ */
+.ps-desk[data-stage-mode="tilted"] {
+  --ps-column-max: calc((100dvh - var(--gs-controls-height, 0px) - var(--reader-bar-space, 0px)) * 1.15);
+}
+.ps-desk[data-stage-mode="tilted"] .gs-page-text .ps-text-column {
+  max-height: var(--ps-column-max);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gs-rule) transparent;
+  /* Room for the scrollbar without the text touching it. */
+  padding-right: 0.6cqi;
+}

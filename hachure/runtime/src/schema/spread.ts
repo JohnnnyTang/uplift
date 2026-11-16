@@ -22,8 +22,18 @@ export type Level = (typeof LEVELS)[number];
  */
 export type LevelText = Readonly<Record<Level, string>>;
 
-export const TIERS = ["physical-law", "process-model", "stylised-theory", "agent-stochastic"] as const;
-/** The model's rigour tier, shown as a badge (handoff, "Scientific rigour policy"). */
+export const TIERS = [
+  "physical-law",
+  "process-model",
+  "stylised-theory",
+  "agent-stochastic",
+  "illustration",
+] as const;
+/**
+ * The model's rigour tier, shown as a badge (handoff, "Scientific rigour policy"). `illustration`: authored
+ * shapes and no model at all (owner exception D-L2-1). A reader spread with it must be static geometry, and
+ * its page names it with its own label line, never a "model tier" badge.
+ */
 export type Tier = (typeof TIERS)[number];
 
 export const ENGINES = ["terrain", "human", "scene"] as const;
