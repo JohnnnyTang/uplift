@@ -210,6 +210,9 @@ function validateDefinition<T extends Spread | ReaderSpread>(
         } else if (scope.time !== undefined)
           c.issue("scene.modelScope.time", "type", "Static geometry has no clock");
       }
+      // An illustration runs no model, so it has no clock to scope (D-L2-1).
+      if (s.tier === "illustration" && !staticGeometry)
+        c.issue("scene.modelScope.kind", "enum", "An illustration must be static geometry");
     }
     c.str("scene.preset", scene.preset);
     c.num("scene.seed", scene.seed, { integer: true, min: 0 });

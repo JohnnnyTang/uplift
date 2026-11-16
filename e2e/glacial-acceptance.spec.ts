@@ -236,14 +236,17 @@ test("PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard f
   await page.getByRole("button", { name: "University level" }).click();
   await expect(desk(page)).toHaveAttribute("data-run-id", run!);
 
-  // PB7 (one-lesson book since D-W5-5N2): previous and next end the book; PageDown/PageUp from the heading
-  // stay on the lesson. Leaving for the research route and returning loses nothing.
+  // PB7 (two-lesson book again since 7F): PageDown from the heading turns to lesson 2 and PageUp back.
+  // Leaving for the research route and returning loses nothing.
   const atTurn = await years(page);
   await expect(page.getByRole("button", { name: "Beginning of book" })).toBeDisabled();
-  await expect(page.getByRole("button", { name: "End of book" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Turn to Where plates meet" })).toBeEnabled();
   await page.locator("h1").focus();
   await page.keyboard.press("PageDown");
+  await expect(page.locator(".ps-desk")).toHaveAttribute("data-ready", "true", { timeout: 60_000 });
+  await page.locator("h1").focus();
   await page.keyboard.press("PageUp");
+  await expect(desk(page)).toHaveAttribute("data-source", "live", { timeout: 60_000 });
   await expect(page.getByRole("heading", { name: "From V to U", exact: true })).toBeVisible();
   await expect(desk(page)).toHaveAttribute("data-run-id", run!);
   await page.getByRole("button", { name: "Contents" }).click();
@@ -404,9 +407,9 @@ test("PB2 GV6: phone — the journey on a flat single page, no horizontal scroll
   await page.getByRole("button", { name: "University level" }).click();
   await expect(desk(page)).toHaveAttribute("data-run-id", run!);
   expect(await noScroll()).toBe(true);
-  // One-lesson book (D-W5-5N2): the bar's previous and next end the book on the phone too.
+  // Two-lesson book (7F): the bar's previous begins the book and next turns to lesson 2 on the phone too.
   await expect(page.getByRole("button", { name: "Beginning of book" })).toBeDisabled();
-  await expect(page.getByRole("button", { name: "End of book" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Turn to Where plates meet" })).toBeEnabled();
   expect(await noScroll()).toBe(true);
   await expect(desk(page)).toHaveAttribute("data-run-id", run!);
   await expect(desk(page)).toHaveAttribute("data-ghost", "shale");
@@ -447,8 +450,8 @@ test("GV7 PB7: one-lesson book; the research route and privacy safeguards are re
   });
   const errors = await openBook(page);
   await page.getByRole("button", { name: "Contents" }).click();
-  // The water lesson was removed (D-W5-5N2): the contents list From V to U and the research route only.
-  await expect(page.locator(".reader-contents .reader-contents-link")).toHaveCount(1);
+  // The water lesson was removed (D-W5-5N2): the contents list the two lessons (7F) and the research route.
+  await expect(page.locator(".reader-contents .reader-contents-link")).toHaveCount(2);
   await expect(page.locator(".reader-contents")).toContainText("From V to U");
   await expect(page.locator(".reader-contents")).not.toContainText("Where will the water go?");
   await page.getByRole("button", { name: "Research example" }).click();

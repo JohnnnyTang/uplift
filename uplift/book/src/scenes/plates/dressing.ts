@@ -9,7 +9,8 @@
  *   boundary get their streams, so a transform offset reads in the streams as well as the ridges (D-W7-7R,
  *   decision 1).
  * - **Lakes** in closed hollows of ground that has dropped along faults (a negative layer offset: the rift
- *   floor), filled part-way, never to the brim (a look choice).
+ *   floor), filled part-way, never to the brim (a look choice). Off in the production look (`maxLakes` 0,
+ *   D-W7-7F): the lesson's disclosure says the drawing has no rift lakes.
  * - **Fault scarps** as ink lines where the rock-layer offset steps sharply across a short distance (the
  *   rift's normal faults), so scarps that face the light still read (D-W7-7R, decision 2).
  * - **Hachures** on ground that is steep as drawn (with the vertical exaggeration), denser and longer on
@@ -26,6 +27,17 @@ export interface PlatesDressingOptions {
   readonly reliefScale: number;
   /** Cells draining through a cell before a stream is drawn there (unit: cells). */
   readonly streamMinDrainageCells?: number;
+  /**
+   * The same, for a stream that starts on dropped ground (the rift floor; unit: cells). Larger, so the
+   * stepped floor shows a few streams rather than a braid (owner, 2026-11-15, D-W7-7F). Streams that enter
+   * the rift from the shoulders still run on across it.
+   */
+  readonly riftStreamMinDrainageCells?: number;
+  /**
+   * Most lakes drawn, largest first (unit: count). Default 0: lesson 2's disclosure says the drawing has no
+   * rift lakes (7E, "No erosion, sediment or rift lakes"), so the production look draws none (D-W7-7F).
+   */
+  readonly maxLakes?: number;
   /** Shallowest hollow drawn as a lake (unit: metres, real). */
   readonly lakeMinDepthM?: number;
   /** Deepest water drawn in a lake, below its spill level (unit: metres, real). Look choice. */
@@ -51,11 +63,15 @@ export interface PlatesDressingOptions {
 
 const DEFAULTS = {
   streamMinDrainageCells: 140,
+  riftStreamMinDrainageCells: 1200,
+  maxLakes: 0,
   lakeMinDepthM: 40,
   lakeMaxDepthM: 70,
   droppedBelowM: -150,
   scarpMinStepM: 45,
-  hachureMinDrawnSlopeDeg: 38,
+  // Above the starting ridges' steepest drawn flank (about 43° at ×4 for 1,500 m ridges 20 km apart), so
+  // the ridges carry no rows of dots; scarps and range flanks keep theirs (owner, 2026-11-15, D-W7-7F).
+  hachureMinDrawnSlopeDeg: 46,
   hachureSpacingCells: 2,
   treeClearHalfWidthCells: 0,
   scarpTickSpacingRows: 3,
@@ -216,10 +232,14 @@ export function streamPaths(
   d: Drainage,
   minDrainageCells: number,
   lastRow: number,
+  rift?: { readonly droppedBelowM: number; readonly minDrainageCells: number },
 ): number[][] {
   const { across } = g;
   const n = d.drainage.length;
-  const channel = (k: number) => d.drainage[k]! >= minDrainageCells;
+  const offset = g.layerOffsetM;
+  const channel = (k: number) =>
+    d.drainage[k]! >=
+    (rift && offset && offset[k]! < rift.droppedBelowM ? rift.minDrainageCells : minDrainageCells);
   const hasChannelAbove = new Uint8Array(n);
   for (let k = 0; k < n; k++) {
     const r = d.receiver[k]!;
@@ -260,9 +280,10 @@ export function streamPaths(
 export function lakeLevels(
   g: BlockGrid,
   d: Drainage,
-  o: { minDepthM: number; maxDepthM: number; droppedBelowM: number },
+  o: { minDepthM: number; maxDepthM: number; droppedBelowM: number; maxLakes?: number },
   lastRow: number,
 ): Float32Array | null {
+  if (o.maxLakes === 0) return null;
   const offset = g.layerOffsetM;
   if (!offset) return null;
   const { across, along } = g;
@@ -272,7 +293,7 @@ export function lakeLevels(
     d.filledM[k]! - g.bedM[k]! >= o.minDepthM && offset[k]! < o.droppedBelowM && k < rows * across;
   const levels = new Float32Array(n).fill(NaN);
   const seen = new Uint8Array(n);
-  let any = false;
+  const lakes: { cells: number[]; level: number }[] = [];
   for (let s = 0; s < n; s++) {
     if (seen[s] || !hollow(s)) continue;
     // One hollow: the connected cells sharing (about) one spill level.
@@ -300,13 +321,16 @@ export function lakeLevels(
       }
     }
     const level = Math.min(spill, deepest + o.maxDepthM);
-    for (const c of cells)
-      if (g.bedM[c]! < level) {
-        levels[c] = level;
-        any = true;
-      }
+    const wet = cells.filter((c) => g.bedM[c]! < level);
+    if (wet.length) lakes.push({ cells: wet, level });
   }
-  return any ? levels : null;
+  // Largest first (ties: first found), at most `maxLakes`.
+  const kept = lakes
+    .map((l, i) => ({ ...l, i }))
+    .sort((p, q) => q.cells.length - p.cells.length || p.i - q.i)
+    .slice(0, o.maxLakes ?? Infinity);
+  for (const l of kept) for (const c of l.cells) levels[c] = l.level;
+  return kept.length ? levels : null;
 }
 
 /**
@@ -407,12 +431,20 @@ export function platesDressingRules(options: PlatesDressingOptions): DressingRul
     // The lesson-1 meltwater river does not apply here.
     river: () => [],
     streams: (g: BlockGrid, _cfg: DressingConfig, lastRow: number) =>
-      streamPaths(g, routed(g), o.streamMinDrainageCells, lastRow),
+      streamPaths(g, routed(g), o.streamMinDrainageCells, lastRow, {
+        droppedBelowM: o.droppedBelowM,
+        minDrainageCells: o.riftStreamMinDrainageCells,
+      }),
     lakes: (g: BlockGrid, _cfg: DressingConfig, lastRow: number) =>
       lakeLevels(
         g,
         routed(g),
-        { minDepthM: o.lakeMinDepthM, maxDepthM: o.lakeMaxDepthM, droppedBelowM: o.droppedBelowM },
+        {
+          minDepthM: o.lakeMinDepthM,
+          maxDepthM: o.lakeMaxDepthM,
+          droppedBelowM: o.droppedBelowM,
+          maxLakes: o.maxLakes,
+        },
         lastRow,
       ),
     hachures: (g: BlockGrid, _cfg: DressingConfig, lastRow: number) =>

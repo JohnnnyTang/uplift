@@ -109,7 +109,7 @@ test("default book: unanswered play and a research return keep the lesson state"
   await expect(page.locator(".gs-flap")).toHaveAttribute("open", "");
   await page.getByRole("radio", { name: /Granite/ }).check();
   await expect(desk).toHaveAttribute("data-live-rock", "granite");
-  await expect(page.getByRole("button", { name: "End of book" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Turn to Where plates meet" })).toBeEnabled();
   await page.getByRole("button", { name: "Contents" }).click();
   await page.getByRole("button", { name: "Research example", exact: true }).click();
   await expect(page.locator(".book")).toHaveAttribute("data-backend-ready", "true");

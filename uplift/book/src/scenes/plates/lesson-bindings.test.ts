@@ -1,10 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { BindingEngine } from "@hachure/runtime";
-// 7E's lesson (D-W7-7E). Not yet in @uplift/spreads' public index (7F registers it), so imported by path.
-import { platesProbes } from "../../../../spreads/tectonics.plate-boundaries/bindings";
-import { platesSpread } from "../../../../spreads/tectonics.plate-boundaries/spread";
-import * as lesson from "../../../../spreads/tectonics.plate-boundaries/lesson";
-import { PLATES_PLACEHOLDER_COPY as copy } from "./copy";
+// 7E's lesson (D-W7-7E), through @uplift/spreads' public index (registered in 7F).
+import { platesProbes, platesSpread, platesLesson as lesson } from "@uplift/spreads";
+import { PLATES_LESSON_COPY as copy } from "./lesson-copy";
 import { PLATES_PROBE_KINDS, platesProbeValues } from "./bindings";
 import { PLATES_RELIEF_CONFIG } from "./relief/index";
 import type { PlateBoundary } from "./relief/index";

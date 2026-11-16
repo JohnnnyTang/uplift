@@ -192,6 +192,19 @@ export const controlsCopy = {
   disclosureHeading: both("What this illustration shows and leaves out"),
   showsHeading: both("This illustration shows"),
   ignoresHeading: both("It leaves out or simplifies"),
+  // Added in 7F (D-W7-7F, owner item 4), following the conventions above: the words 7D's scene needs that
+  // 7E had not written. View words only; no claim beyond PD1 (the scene is a drawing) and PD8 (view-only).
+  /** The flap's summary line, as lesson 1's. */
+  flapSummary: both("Lift the flap for the answer"),
+  /** Spoken stage value and picker state before any boundary is chosen. */
+  noBoundary: both("No boundary chosen"),
+  /** Plays the drawing → block transition again (a view action; the boundary and stage stay). */
+  replay: both("Replay the drawing"),
+  /** Accessible names of the two arrow handles on the block. */
+  leftPlateArrow: both("Left plate's arrow"),
+  rightPlateArrow: both("Right plate's arrow"),
+  /** How to use the handles, by pointer and keyboard (their description). */
+  arrowHelp: both("Drag a plate's arrow towards, away from or along the boundary, or use the arrow keys."),
 } as const;
 
 /** Fig. 2. The caption follows "Fig. <number>". */

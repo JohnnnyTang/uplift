@@ -15,7 +15,13 @@
  */
 import "../glacial/review.css";
 import "./plates.css";
-import { BindingEngine, type BoundValue, type Level, type Probe } from "@hachure/runtime";
+import {
+  BindingEngine,
+  type BoundValue,
+  type Level,
+  type Probe,
+  createDisplayFormula,
+} from "@hachure/runtime";
 import type { LandscapeSnapshot, LithologyLook, ValleyDiorama } from "@hachure/ink/stage";
 import type { TransitionRun, TransitionState } from "@hachure/ink/transition";
 import type { AttachedBlockArrows, BlockDirection } from "@hachure/ink/plates";
@@ -37,8 +43,11 @@ import {
 import { boundaryGlyphSvg, ghostSampleSvg } from "./scene-glyphs";
 import { GHOST_PATTERN_WORDS, cutWords, describeScene, stageWord } from "./words";
 
-/** Book tilt (unit: degrees). Lesson 1 freezes 48°; a slightly higher view lets the transform offset read. */
-export const PLATES_TILT_DEG = 42;
+/**
+ * Book tilt (unit: degrees): lesson 1's 48°, so turning the page between the lessons never moves the camera
+ * (owner, 2026-11-15, D-W7-7F; 7D had 42°). A higher view of the transform comes from turning the block.
+ */
+export const PLATES_TILT_DEG = 48;
 /** Fraction of eligible low, gentle cells with a tree (unit: none). Sparse, so ridges and streams read. */
 const TREE_DENSITY = 0.03;
 /**
@@ -48,8 +57,11 @@ const TREE_DENSITY = 0.03;
 const TREE_CLEAR_HALF_WIDTH_CELLS = 16;
 /** Trees only on ground gentler than this (unit: degrees, true slope). */
 const MAX_TREE_SLOPE_DEG = 9;
-/** Resting strength of the slope hachures once colour is in (unit: none). Lesson 1 rests at 0.22. */
-const RESTING_HACHURE = 0.45;
+/**
+ * Resting strength of the slope hachures once colour is in (unit: none). Lesson 1 rests at 0.22; 7D had
+ * 0.45, softened for the owner's 2026-11-15 look note (D-W7-7F).
+ */
+const RESTING_HACHURE = 0.34;
 /** The front face on opening, as a fraction along the boundary from the back (unit: none). */
 const DEFAULT_CUT = 1;
 
@@ -112,6 +124,8 @@ export interface PlatesSceneOptions {
   readonly onPresentation?: (p: PlatesPagePresentation) => void;
   /** Called when what the scene shows changes (boundary, stage, playing), for the controller's status. */
   readonly onChange?: () => void;
+  /** Called when the scene shows the drawing only (no 3D here, or 3D stopped), with the reason in words. */
+  readonly onStatic?: (reason: string) => void;
 }
 
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string) => {
@@ -374,10 +388,11 @@ export async function mountPlatesScene(
     });
   };
   const renderSources = () => {
+    // A list may be longer at one level than the other; empty entries are skipped.
     const shows = el("ul");
-    for (const s of copy.showsIgnores.shows) shows.append(el("li", undefined, bound(t(s))));
+    for (const s of copy.showsIgnores.shows) if (t(s)) shows.append(el("li", undefined, bound(t(s))));
     const ignores = el("ul");
-    for (const s of copy.showsIgnores.ignores) ignores.append(el("li", undefined, bound(t(s))));
+    for (const s of copy.showsIgnores.ignores) if (t(s)) ignores.append(el("li", undefined, bound(t(s))));
     const sources = el("ul", "gs-source-list");
     for (const s of copy.sources) {
       const li = el("li");
@@ -448,7 +463,9 @@ export async function mountPlatesScene(
     resetButton.textContent = t(copy.controls.reset);
     arrowHelp.textContent = t(copy.controls.arrowHelp);
     deeperTrigger.hidden = level !== "uni";
-    deeper.replaceChildren(...(level === "uni" ? paragraphs(copy.deeper, bound) : []));
+    const equations = el("div", "gs-equations");
+    if (level === "uni") for (const tex of copy.equations ?? []) equations.append(createDisplayFormula(tex));
+    deeper.replaceChildren(...(level === "uni" ? [...paragraphs(copy.deeper, bound), equations] : []));
     drawnMotion = undefined;
     renderDrawing();
     renderSources();
@@ -623,7 +640,8 @@ export async function mountPlatesScene(
       announce();
     },
   });
-  const showStatic = async (why: string) => {
+  const showStatic = async (why: string, short: string) => {
+    o.onStatic?.(short);
     drawing.style.opacity = "1";
     drawing.style.filter = "";
     controls.hidden = true;
@@ -649,6 +667,7 @@ export async function mountPlatesScene(
   if (!stageModule) {
     await showStatic(
       "Drawing only. The enlarged front face below shows the boundary chosen, at the stage shown.",
+      "3D is off here",
     );
     subscribeStatic();
     const stopStatic = (await import("@hachure/runtime")).driveSequence(source);
@@ -703,6 +722,7 @@ export async function mountPlatesScene(
       bookStage.dispose();
       void showStatic(
         "3D stopped on this device; the drawing and the enlarged front face show the same scene.",
+        "3D stopped on this device",
       );
     },
   });
@@ -742,6 +762,7 @@ export async function mountPlatesScene(
     overlay.remove();
     await showStatic(
       `3D is not available here (${error instanceof Error ? error.message : String(error)}); the drawing and the enlarged front face show the same scene.`,
+      "3D is not available here",
     );
     subscribeStatic();
     const stopStatic = (await import("@hachure/runtime")).driveSequence(source);

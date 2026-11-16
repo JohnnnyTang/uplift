@@ -1,0 +1,103 @@
+{
+  "session": "7F",
+  "sha": "ebe4d865b2f6d5fd1f2a8ca507c6427c32fc4725",
+  "chrome": "157.0.8103.78",
+  "headless": false,
+  "startedAt": "2026-11-16T02:14:59.634Z",
+  "samples": {
+    "turnDrawingFirstMs": [448],
+    "turnStageFirstMs": [731],
+    "turnUsableFirstMs": [3387],
+    "chooseConvergentMs": [85],
+    "playToPlayingMs": [14],
+    "scrubEndMs": [40],
+    "scrubStepMs": [33, 29, 46, 35, 35, 35],
+    "chooseDivergentMs": [90],
+    "arrowKeyTransformMs": [81],
+    "returnUsableFirstMs": [1047],
+    "turnDrawingRepeatMs": [434, 449, 446],
+    "turnStageRepeatMs": [703, 718, 703],
+    "turnUsableRepeatMs": [1127, 1119, 1120],
+    "returnUsableRepeatMs": [1102, 1086, 1048]
+  },
+  "frames": {
+    "transitionFirst": {
+      "fps": 114.8,
+      "p95Ms": 8.5,
+      "maxMs": 116.7,
+      "over50": 1
+    },
+    "play": {
+      "fps": 101,
+      "p95Ms": 24.9,
+      "maxMs": 33.4,
+      "over50": 0
+    },
+    "ghostsIdle": {
+      "fps": 120.4,
+      "p95Ms": 8.4,
+      "maxMs": 10.7,
+      "over50": 0
+    }
+  },
+  "checks": {
+    "viewport": [1440, 709, 2],
+    "glacier": "webgpu",
+    "stageAfterPlay": 0.5020916666666666,
+    "returns": [
+      {
+        "sameRun": true,
+        "yearsAtLeave": 6.3325000000000005,
+        "yearsOnReturn": 10.58,
+        "playing": true
+      },
+      {
+        "sameRun": true,
+        "yearsAtLeave": 24.665,
+        "yearsOnReturn": 27.8275,
+        "playing": true
+      },
+      {
+        "sameRun": true,
+        "yearsAtLeave": 45.160000000000004,
+        "yearsOnReturn": 50.6575,
+        "playing": true
+      },
+      {
+        "sameRun": true,
+        "yearsAtLeave": 64.9075,
+        "yearsOnReturn": 70.325,
+        "playing": true
+      }
+    ]
+  },
+  "memory": [
+    {
+      "label": "lesson 1 playing",
+      "heapMB": 19.3,
+      "dom": 620
+    },
+    {
+      "label": "after turn cycle 1",
+      "heapMB": 42.9,
+      "dom": 622
+    },
+    {
+      "label": "after turn cycle 2",
+      "heapMB": 59.3,
+      "dom": 622
+    },
+    {
+      "label": "after turn cycle 3",
+      "heapMB": 67.4,
+      "dom": 622
+    },
+    {
+      "label": "after turn cycle 4",
+      "heapMB": 56.4,
+      "dom": 625
+    }
+  ],
+  "errors": [],
+  "finishedAt": "2026-11-16T02:15:33.076Z"
+}

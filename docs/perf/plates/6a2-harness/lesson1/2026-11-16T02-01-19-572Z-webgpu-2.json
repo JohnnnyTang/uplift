@@ -1,0 +1,333 @@
+{
+  "session": "6A2",
+  "sha": "ebe4d865b2f6d5fd1f2a8ca507c6427c32fc4725",
+  "workingTreeClean": false,
+  "backend": "webgpu",
+  "rep": 2,
+  "url": "http://127.0.0.1:4190/",
+  "headless": false,
+  "startedAt": "2026-11-16T02:01:19.572Z",
+  "machine": {
+    "gpu": "Intel(R) Arc(TM) 140V GPU (16GB)",
+    "gpuDriver": "32.0.101.8860",
+    "display": "2880x1800@120Hz",
+    "cpu": "Intel(R) Core(TM) Ultra 7 258V",
+    "batteryStatus": 2,
+    "batteryPercent": 100,
+    "powerScheme": "381b4222-f694-41f0-9685-ff5bb260df2e",
+    "powerOverlayAc": "ded574b5-45a0-4f42-8737-46345c09c238",
+    "os": "Microsoft Windows NT 10.0.26300.0",
+    "onAcPower": true
+  },
+  "thermalStart": {
+    "\\_tz.thrm": 96,
+    "\\_tz.thz0": 65
+  },
+  "steps": {
+    "play1x": {
+      "origin": 1794794484677,
+      "t0": 7936,
+      "t1": 13952,
+      "spanS": 6,
+      "fps": 119,
+      "frameMs": {
+        "p50": 8.3,
+        "p95": 8.5,
+        "p99": 8.8,
+        "max": 25
+      },
+      "over33": 0,
+      "over50": 0,
+      "over100": 0,
+      "frames": 715,
+      "loafCount": 0,
+      "loafMaxMs": 0,
+      "loafBlockingMs": 0,
+      "loafTop": [],
+      "updates": 29,
+      "updatesPerS": 4.8,
+      "valueStart": 14.5,
+      "valueEnd": 74.165,
+      "valuePerS": 9.92,
+      "mainThreadBusyPct": 54
+    },
+    "speedMax": "4",
+    "play4x": {
+      "origin": 1794794484677,
+      "t0": 14492,
+      "t1": 18513,
+      "spanS": 4,
+      "fps": 119.8,
+      "frameMs": {
+        "p50": 8.3,
+        "p95": 8.5,
+        "p99": 8.5,
+        "max": 16.5
+      },
+      "over33": 0,
+      "over50": 0,
+      "over100": 0,
+      "frames": 481,
+      "loafCount": 0,
+      "loafMaxMs": 0,
+      "loafBlockingMs": 0,
+      "loafTop": [],
+      "updates": 19,
+      "updatesPerS": 4.7,
+      "valueStart": 93.91,
+      "valueEnd": 250.915,
+      "valuePerS": 39.05,
+      "mainThreadBusyPct": 30
+    },
+    "speedAfter": "1",
+    "ghostAtScrub": "sandstone"
+  },
+  "samples": {
+    "pause": [
+      {
+        "origin": 1794794484677,
+        "inputAt": 18542,
+        "visibleMs": 6,
+        "value": "false",
+        "settledMs": 25
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 22686,
+        "visibleMs": 7,
+        "value": "false",
+        "settledMs": 30
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 27993,
+        "visibleMs": 8,
+        "value": "false",
+        "settledMs": 32
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 33892,
+        "visibleMs": 6,
+        "value": "false",
+        "settledMs": 22
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 39055,
+        "visibleMs": 8,
+        "value": "false",
+        "settledMs": 26
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 44642,
+        "visibleMs": 6,
+        "value": "false",
+        "settledMs": 26
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 50073,
+        "visibleMs": 8,
+        "value": "false",
+        "settledMs": 28
+      }
+    ],
+    "scrubAfterSettledPause": [
+      {
+        "origin": 1794794484677,
+        "inputAt": 24241,
+        "visibleMs": 24,
+        "value": "0"
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 29547,
+        "visibleMs": 23,
+        "value": "0"
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 35441,
+        "visibleMs": 20,
+        "value": "0"
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 40613,
+        "visibleMs": 20,
+        "value": "0"
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 46179,
+        "visibleMs": 23,
+        "value": "0"
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 51619,
+        "visibleMs": 27,
+        "value": "0"
+      }
+    ],
+    "scrubAfterPause": [
+      {
+        "origin": 1794794484677,
+        "inputAt": 26080,
+        "visibleMs": 17,
+        "value": "0"
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 31684,
+        "visibleMs": 24,
+        "value": "0"
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 37200,
+        "visibleMs": 28,
+        "value": "0"
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 42564,
+        "visibleMs": 20,
+        "value": "0"
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 48422,
+        "visibleMs": 22,
+        "value": "0"
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 53490,
+        "visibleMs": 25,
+        "value": "0"
+      }
+    ],
+    "departFirst": [
+      {
+        "origin": 1794794484677,
+        "inputAt": 56753,
+        "visibleMs": 144,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      }
+    ],
+    "departRepeat": [
+      {
+        "origin": 1794794484677,
+        "inputAt": 68928,
+        "visibleMs": 41,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 73933,
+        "visibleMs": 42,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 78508,
+        "visibleMs": 51,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 83245,
+        "visibleMs": 41,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 88229,
+        "visibleMs": 57,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      },
+      {
+        "origin": 1794794484677,
+        "inputAt": 92795,
+        "visibleMs": 50,
+        "sameRun": true,
+        "sameRock": true,
+        "playingAfterReturn": true
+      }
+    ]
+  },
+  "guards": [
+    {
+      "phase": "playback",
+      "fps": 120,
+      "throttled": false
+    },
+    {
+      "phase": "scrub after pause",
+      "fps": 120,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 0",
+      "fps": 120,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 1",
+      "fps": 120,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 2",
+      "fps": 116.7,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 3",
+      "fps": 118.4,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 4",
+      "fps": 120,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 5",
+      "fps": 116.7,
+      "throttled": false
+    },
+    {
+      "phase": "navigation 6",
+      "fps": 118.4,
+      "throttled": false
+    }
+  ],
+  "interruptions": [],
+  "errors": [],
+  "chrome": "157.0.8103.78",
+  "device": {
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+    "origin": 1794794484677
+  },
+  "thermalEnd": {
+    "\\_tz.thrm": 96,
+    "\\_tz.thz0": 66
+  },
+  "finishedAt": "2026-11-16T02:03:03.410Z"
+}

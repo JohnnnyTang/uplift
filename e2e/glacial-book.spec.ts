@@ -73,8 +73,8 @@ test("the default book opens on From V to U in the tilted stage, with the quiet 
   await expect(bar.getByRole("button", { name: "Contents" })).toBeVisible();
   await expect(bar.locator(".reader-position")).toHaveText(/1\s*From V to U/);
   await expect(bar.getByRole("button", { name: "Beginning of book" })).toBeDisabled();
-  // One-lesson book (D-W5-5N2): next ends the book as previous begins it.
-  await expect(bar.getByRole("button", { name: "End of book" })).toBeDisabled();
+  // Two-lesson book (7F): next turns to lesson 2, previous begins the book.
+  await expect(bar.getByRole("button", { name: "Turn to Where plates meet" })).toBeEnabled();
   await expect(bar.getByRole("button", { name: "More contrast" })).toBeVisible();
   await expect(bar.getByRole("button", { name: "University level" })).toHaveAttribute(
     "aria-pressed",
@@ -90,9 +90,9 @@ test("the default book opens on From V to U in the tilted stage, with the quiet 
   await expect(desk(page)).toHaveAttribute("data-model-years", "0");
   await expect(page.locator(".gs-time-now")).toHaveText("model time 0 model years");
   await expect(page.locator(".gs-margin")).toContainText("0 model years in sandstone");
-  // Contents lists the one lesson and the research route (the water lesson was removed, D-W5-5N2).
+  // Contents lists both lessons and the research route (the water lesson was removed, D-W5-5N2; 7F).
   await bar.getByRole("button", { name: "Contents" }).click();
-  await expect(page.locator(".reader-contents .reader-contents-link")).toHaveCount(1);
+  await expect(page.locator(".reader-contents .reader-contents-link")).toHaveCount(2);
   await expect(page.locator(".reader-contents")).toContainText("From V to U");
   await expect(page.locator(".reader-contents")).not.toContainText("Where will the water go?");
   await expect(page.getByRole("button", { name: "Research example" })).toBeVisible();
@@ -236,7 +236,7 @@ test("the full journey on the live runtime, with the model never reset by view o
   expect(errors).toEqual([]);
 });
 
-test("phone: flat page, rock choice and play work, no horizontal scroll, the bar ends the one-lesson book", async ({
+test("phone: flat page, rock choice and play work, no horizontal scroll, the bar turns to lesson 2", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -249,7 +249,7 @@ test("phone: flat page, rock choice and play work, no horizontal scroll, the bar
   await expect(page.locator(".gs-lens svg")).toBeVisible();
   await expect(page.locator(".reader-bar")).toBeVisible();
   await expect(page.getByRole("button", { name: "Beginning of book" })).toBeDisabled();
-  await expect(page.getByRole("button", { name: "End of book" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Turn to Where plates meet" })).toBeEnabled();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   await expect(desk(page)).toHaveAttribute("data-live-rock", "granite");
   expect(await years(page)).toBeGreaterThanOrEqual(20);

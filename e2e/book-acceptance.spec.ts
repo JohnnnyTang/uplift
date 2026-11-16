@@ -22,9 +22,9 @@ test("integrated recording: rock choice, flap, research departure and retained r
   await expect(page.locator(".gs-desk")).toHaveAttribute("data-live-rock", "granite");
   await flap(page).locator("summary").click();
   await expect(flap(page)).toHaveAttribute("open", "");
-  // One-lesson book (D-W5-5N2): previous and next end the book.
+  // Two-lesson book (7F): previous begins the book, next turns to lesson 2.
   await expect(page.getByRole("button", { name: "Beginning of book" })).toBeDisabled();
-  await expect(page.getByRole("button", { name: "End of book" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Turn to Where plates meet" })).toBeEnabled();
   await page.getByRole("button", { name: "Contents" }).click();
   await page.getByRole("button", { name: "Research example", exact: true }).click();
   await expect(page.locator(".book")).toHaveAttribute("data-backend-ready", "true");
@@ -50,7 +50,7 @@ for (const [lesson, spreadId, title] of [
       await expect(page.getByRole("heading", { name: "From V to U", exact: true })).toBeVisible();
       await page.getByRole("button", { name: "Contents" }).click();
       const contents = page.locator("#reader-contents");
-      await expect(contents.locator(".reader-contents-link")).toHaveCount(1);
+      await expect(contents.locator(".reader-contents-link")).toHaveCount(2);
       await expect(contents).toContainText("From V to U");
       await expect(contents).not.toContainText(title);
     }
@@ -102,10 +102,13 @@ test("actual keyboard reduced-motion journey and serious accessibility audit", a
   await page.getByRole("radio", { name: /Shale/ }).focus();
   await page.keyboard.press("ArrowRight");
   await expect(page.locator(".gs-desk")).toHaveAttribute("data-live-rock", "sandstone");
-  // One-lesson book (D-W5-5N2): PageDown and PageUp from the heading stay on the lesson.
+  // Two-lesson book (7F): PageDown from the heading turns to lesson 2, PageUp from its heading turns back.
   await page.locator("h1").focus();
   await page.keyboard.press("PageDown");
+  await expect(page.locator(".ps-desk")).toHaveAttribute("data-ready", "true", { timeout: 60_000 });
+  await page.locator("h1").focus();
   await page.keyboard.press("PageUp");
+  await expect(page.locator(".gs-desk")).toHaveAttribute("data-source", "live", { timeout: 60_000 });
   await expect(page.getByRole("heading", { name: "From V to U", exact: true })).toBeFocused();
   await page.addScriptTag({ path: "node_modules/axe-core/axe.min.js" });
   const violations = await page.evaluate(async () => {

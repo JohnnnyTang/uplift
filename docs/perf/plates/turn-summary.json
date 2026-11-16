@@ -1,0 +1,213 @@
+{
+  "reps": 5,
+  "errors": 0,
+  "sha": ["ebe4d86"],
+  "chrome": ["157.0.8103.78"],
+  "samples": {
+    "turnDrawingFirstMs": {
+      "n": 5,
+      "median": 456,
+      "p90": 466,
+      "max": 466
+    },
+    "turnStageFirstMs": {
+      "n": 5,
+      "median": 737,
+      "p90": 771,
+      "max": 771
+    },
+    "turnUsableFirstMs": {
+      "n": 5,
+      "median": 3389,
+      "p90": 3432,
+      "max": 3432
+    },
+    "chooseConvergentMs": {
+      "n": 5,
+      "median": 103,
+      "p90": 108,
+      "max": 108
+    },
+    "playToPlayingMs": {
+      "n": 5,
+      "median": 16,
+      "p90": 27,
+      "max": 27
+    },
+    "scrubEndMs": {
+      "n": 5,
+      "median": 40,
+      "p90": 47,
+      "max": 47
+    },
+    "scrubStepMs": {
+      "n": 30,
+      "median": 35,
+      "p90": 44,
+      "max": 46
+    },
+    "chooseDivergentMs": {
+      "n": 5,
+      "median": 84,
+      "p90": 90,
+      "max": 90
+    },
+    "arrowKeyTransformMs": {
+      "n": 5,
+      "median": 84,
+      "p90": 89,
+      "max": 89
+    },
+    "returnUsableFirstMs": {
+      "n": 5,
+      "median": 1079,
+      "p90": 1091,
+      "max": 1091
+    },
+    "turnDrawingRepeatMs": {
+      "n": 15,
+      "median": 470,
+      "p90": 486,
+      "max": 494
+    },
+    "turnStageRepeatMs": {
+      "n": 15,
+      "median": 712,
+      "p90": 744,
+      "max": 747
+    },
+    "turnUsableRepeatMs": {
+      "n": 15,
+      "median": 1127,
+      "p90": 1152,
+      "max": 1157
+    },
+    "returnUsableRepeatMs": {
+      "n": 15,
+      "median": 1099,
+      "p90": 1137,
+      "max": 1145
+    }
+  },
+  "frames": {
+    "transitionFirst.fps": {
+      "n": 5,
+      "median": 115,
+      "p90": 115.6,
+      "max": 115.6
+    },
+    "transitionFirst.p95Ms": {
+      "n": 5,
+      "median": 8.5,
+      "p90": 8.5,
+      "max": 8.5
+    },
+    "transitionFirst.maxMs": {
+      "n": 5,
+      "median": 108.2,
+      "p90": 124.9,
+      "max": 124.9
+    },
+    "transitionFirst.over50": {
+      "n": 5,
+      "median": 1,
+      "p90": 1,
+      "max": 1
+    },
+    "play.fps": {
+      "n": 5,
+      "median": 101,
+      "p90": 101.5,
+      "max": 101.5
+    },
+    "play.p95Ms": {
+      "n": 5,
+      "median": 25,
+      "p90": 25,
+      "max": 25
+    },
+    "play.maxMs": {
+      "n": 5,
+      "median": 33.5,
+      "p90": 41.7,
+      "max": 41.7
+    },
+    "play.over50": {
+      "n": 5,
+      "median": 0,
+      "p90": 0,
+      "max": 0
+    },
+    "ghostsIdle.fps": {
+      "n": 5,
+      "median": 120.2,
+      "p90": 120.4,
+      "max": 120.4
+    },
+    "ghostsIdle.p95Ms": {
+      "n": 5,
+      "median": 8.4,
+      "p90": 8.5,
+      "max": 8.5
+    },
+    "ghostsIdle.maxMs": {
+      "n": 5,
+      "median": 8.6,
+      "p90": 10.7,
+      "max": 10.7
+    },
+    "ghostsIdle.over50": {
+      "n": 5,
+      "median": 0,
+      "p90": 0,
+      "max": 0
+    }
+  },
+  "returns": {
+    "sameRun": 20,
+    "of": 20,
+    "advanceOnReturnYears": {
+      "n": 20,
+      "median": 4.2475,
+      "p90": 5.664999999999999,
+      "max": 6.247500000000002
+    }
+  },
+  "memory": [
+    [
+      "18.4 MB / 620 nodes",
+      "41.1 MB / 622 nodes",
+      "57.3 MB / 622 nodes",
+      "55.2 MB / 622 nodes",
+      "42.2 MB / 625 nodes"
+    ],
+    [
+      "18.9 MB / 620 nodes",
+      "43.2 MB / 622 nodes",
+      "59.3 MB / 622 nodes",
+      "56.2 MB / 622 nodes",
+      "68.1 MB / 625 nodes"
+    ],
+    [
+      "18.2 MB / 620 nodes",
+      "43 MB / 622 nodes",
+      "57.3 MB / 622 nodes",
+      "55.4 MB / 622 nodes",
+      "42.2 MB / 625 nodes"
+    ],
+    [
+      "18 MB / 620 nodes",
+      "42.7 MB / 622 nodes",
+      "57.5 MB / 622 nodes",
+      "56.4 MB / 622 nodes",
+      "56.7 MB / 625 nodes"
+    ],
+    [
+      "19.3 MB / 620 nodes",
+      "42.9 MB / 622 nodes",
+      "59.3 MB / 622 nodes",
+      "67.4 MB / 622 nodes",
+      "56.4 MB / 625 nodes"
+    ]
+  ]
+}

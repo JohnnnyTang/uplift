@@ -108,6 +108,7 @@ export function createPlatesSpreadScene(options: PlatesSpreadOptions): ReaderSce
       const root = document.createElement("div");
       root.className = "reader-stage-root";
       container.replaceChildren(root);
+      let staticReason: string | null = null;
       mounted = await mountPlatesScene(root, {
         sequence: s,
         copy,
@@ -121,15 +122,23 @@ export function createPlatesSpreadScene(options: PlatesSpreadOptions): ReaderSce
           page = next;
         },
         onChange: changed,
+        onStatic: (reason) => {
+          staticReason = reason;
+          // 3D stopped after mounting: say so now (the shell words it as this spread's "drawing only").
+          if (attached) {
+            readiness = { kind: "fallback", reason };
+            emit();
+          }
+        },
         ...(options.mode ? { mode: options.mode } : {}),
         ...(options.reducedMotion ? { reducedMotion: true } : {}),
         ...(options.staticOnly ? { staticOnly: true } : {}),
         ...(options.backend ? { backend: options.backend } : {}),
       });
-      // The drawing with the enlarged front face is a complete page, and the scene says so on the page itself,
-      // so the static view also reports "ready". (The shell words its "fallback" status for lesson 1's
-      // recorded runs; this lesson has no runs.) The desk carries data-static="true" for tests.
-      readiness = { kind: "ready" };
+      // The drawing with the enlarged front face is a complete page; the static view reports "fallback" with
+      // its reason, which the book words as "Drawing only" for this spread (its entry's `fallbackStatus`,
+      // D-W7-7F): this lesson has no recorded runs. The desk carries data-static="true" for tests.
+      readiness = staticReason ? { kind: "fallback", reason: staticReason } : { kind: "ready" };
       attached = true;
       seen = true;
       publish();
