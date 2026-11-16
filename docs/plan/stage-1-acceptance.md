@@ -10,7 +10,28 @@ U-shaped valley formation. Prior test results remain valid for their original sc
 not evidence of glacial erosion or approval of the old lesson. See the
 [current review](../review/book-revision/current-direction-review.md).
 
-## Glacial acceptance (5N, 2026-11-14) — current
+## Two-lesson book acceptance (7G, 2026-11-15) — current
+
+Walked on the default app at `27f033c` (all of Wave 7 merged) plus 7G's fixes, on Windows 11 with an Intel Arc
+140V; full ledger with evidence links: [docs/review/plates/acceptance](../review/plates/acceptance/README.md)
+(D-W7-7G). The book has two lessons again, _From V to U_ and _Where plates meet_, so **PB7 is back in its
+original form** (two working interactive spreads and a genuine page turn; D-L2-1 decision 6). Lesson 2 is an
+authored illustration (D-L2-1): it has no runs or model time, so PB9 applies to lesson 1 and lesson 2's reader
+loop is PL1–PL2. 6B → 6C → 6D take over every pending check.
+
+| Row | Status                                                                                                    | Row | Status                                                                                      |
+| --- | --------------------------------------------------------------------------------------------------------- | --- | ------------------------------------------------------------------------------------------- |
+| PB1 | pass with note (book small at ≤ 1440, O1; size change at the turn, F1); fail → fixed (lesson 1 flap open) | PL1 | pass                                                                                        |
+| PB2 | pass; human legibility and real browser zoom pending                                                      | PL2 | pass                                                                                        |
+| PB3 | pass; human spatial reading pending                                                                       | PL3 | pass with note; owner judgement at laptop size pending (F2)                                 |
+| PB4 | pass; first-time reader pending                                                                           | PL4 | pass                                                                                        |
+| PB5 | pass; expert sign-off pending                                                                             | PL5 | pass; fail → fixed (one sentence implied formation); expert sign-off pending                |
+| PB6 | pass                                                                                                      | PL6 | pass; owner look of the 12° block tip pending                                               |
+| PB7 | pass (original form); listening and gesture usability pending                                             | PL7 | pass; fail → fixed (live reduced motion, fixture wording); listening, colour vision pending |
+| PB8 | pending-human (owner review of the 7G decisions, readers, listening, expert, hardware)                    | PL8 | pass                                                                                        |
+| PB9 | pass (lesson 1); not applicable to lesson 2 by D-L2-1 decision 8                                          | PL9 | pass with note (one lesson-1 CSS fix, one generic engine option recorded)                   |
+
+## Glacial acceptance (5N, 2026-11-14) — superseded by the two-lesson ledger above for PB1–PB9
 
 Walked on the default app at `b82dae5` plus 5N fixes; full ledger with evidence links:
 [docs/review/glacial/acceptance](../review/glacial/acceptance/README.md) (D-W5-5N). The registered protocol

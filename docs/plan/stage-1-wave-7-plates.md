@@ -1,6 +1,10 @@
 # Wave 7 · Lesson 2 · Where plates meet · sessions 7A–7G
 
-**Status:** planned 2026-11-14, not started. Owner decisions are in D-L2-1 (`DECISIONS.md`).
+**Status:** done 2026-11-15. 7A–7F are merged on main (PRs #44–#51, with the owner look review 7R and its
+follow-up 7R2); 7G, the acceptance, is the last PR of the wave
+([ledger](../review/plates/acceptance/README.md), D-W7-7G). Once 7G merges, **6B → 6C → 6D can start** on the
+two-lesson book, taking over the pending human, expert and hardware checks. Owner decisions are in D-L2-1
+(`DECISIONS.md`).
 This file is the **single source** for the second lesson. Other plan files only point here. If
 they disagree with this file, this file wins.
 
@@ -318,3 +322,10 @@ plan belong to the session.
 Done: owner decisions 1–10 recorded (D-L2-1), and the wave planned around the page. Not done: no session
 has started; the title is a working title; the base branch is `main` unless the lead opens an integration
 branch. Plan-changing facts: PB7 returns to its original form; 6B–6D move after this wave.
+
+## Wave handover (7G, 2026-11-15)
+
+Done: all sessions (7A–7G, 7R, 7R2). Lesson 2 is spread 2 of the default book; PL1–PL9 and PB1–PB9 are walked
+in the [ledger](../review/plates/acceptance/README.md). Pending, never inferred: owner review of the 7G look
+decisions, expert sign-off, first-time readers, screen-reader listening, colour-vision and projector checks, and
+other hardware. 6B → 6C → 6D take these over; no code work is passed to them.
