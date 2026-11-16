@@ -149,12 +149,15 @@ async function rep(index) {
       });
       await page.getByRole("button", { name: "Turn to Where plates meet" }).click();
       const t0 = await lastInput();
-      const transitionFrames = ev(async () => {
-        await window.__plates.until(
-          () => document.querySelector(".ps-desk")?.dataset.transition === "running",
-        );
-        return window.__plates.frameWindow(c === 0 ? 2400 : 400);
-      });
+      const transitionFrames = ev(
+        async (ms) => {
+          await window.__plates.until(() =>
+            ["running", "done"].includes(document.querySelector(".ps-desk")?.dataset.transition),
+          );
+          return window.__plates.frameWindow(ms);
+        },
+        c === 0 ? 2400 : 400,
+      );
       const [drawn, stage, usable] = await marks;
       add(c === 0 ? "turnDrawingFirstMs" : "turnDrawingRepeatMs", drawn - t0);
       add(c === 0 ? "turnStageFirstMs" : "turnStageRepeatMs", stage - t0);

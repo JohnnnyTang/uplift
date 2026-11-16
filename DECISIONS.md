@@ -3279,6 +3279,11 @@ reviewed 7D on 2026-11-15 and handed 7F these decisions and leftovers.
 9. **Lesson 1 on leave** is unchanged: the shell settles it (`pauseAndSettle`), it holds its runs, kept runs
    and model time while away and resumes its play intent on return with the first advance dropped (5J). The
    e2e journey bounds the advance on return against the play rate.
+10. **Bounded performance check** (`docs/perf/plates/`, same laptop and method as 6A/6A2). Lesson 1 with 6A2's
+    harness (3 repetitions per path, `--root` option added): no regression against 6A2 "after" on either
+    path. Lesson 2 and the turn (5 repetitions, WebGPU): drawing 456 ms and 3D stage 737 ms after the click,
+    first transition 115 fps (one frame over 50 ms), every lesson-2 gesture answered within about 100 ms,
+    playing at about 100 fps (p95 25 ms), back to lesson 1 in about 1.1 s with the same run in 20 of 20 returns.
 
 **Revisit if.** The owner wants a rift lake back (then 7E's disclosure changes with it); the book's fit scale
 should be equal for both lessons (each spread's page height sets it today, see the PR); 6B–6D add the
