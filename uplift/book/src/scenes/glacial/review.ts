@@ -1,3 +1,5 @@
+import { localizeUnits, translate, onLanguageChange, refreshLanguage } from "../../i18n";
+import { writeText, textNode, writeMarkup, writeAttribute } from "../../i18n";
 /**
  * The glacial scene (session 5K production scene, on the 5H book stage approved at R1; joined to the live
  * runtime and the 5L lesson by session 5M): the lesson spread on a desk, the book tilted in 3D, Fig. 1 as a
@@ -153,20 +155,20 @@ export interface GlacialSceneOptions {
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string) => {
   const node = document.createElement(tag);
   if (className) node.className = className;
-  if (text !== undefined) node.textContent = text;
+  if (text !== undefined) writeText(node, text);
   return node;
 };
 
 /** Reader paragraphs from 5L's markdown: blank-line paragraphs, **bold** runs. */
 function paragraphs(text: string, render: (t: string) => string): HTMLElement[] {
-  return text
+  return translate(text)
     .split(/\n{2,}/)
     .map((block) => block.trim())
     .filter(Boolean)
     .map((block) => {
       const p = el("p");
       for (const [k, part] of render(block).split(/\*\*/).entries())
-        p.append(k % 2 ? el("b", undefined, part) : document.createTextNode(part));
+        p.append(k % 2 ? el("b", undefined, part) : textNode(part));
       return p;
     });
 }
@@ -185,10 +187,12 @@ function sketchFilter(): SVGSVGElement {
   svg.setAttribute("height", "0");
   svg.setAttribute("aria-hidden", "true");
   svg.style.position = "absolute";
-  svg.innerHTML =
+  writeMarkup(
+    svg,
     '<filter id="gs-sketch" x="-5%" y="-5%" width="110%" height="110%">' +
-    '<feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>' +
-    '<feDisplacementMap in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter>';
+      '<feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>' +
+      '<feDisplacementMap in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter>',
+  );
   return svg;
 }
 
@@ -242,7 +246,7 @@ function seriesGraph(
   });
   svg += "</svg>";
   const holder = el("div");
-  holder.innerHTML = svg;
+  writeMarkup(holder, svg);
   figure.append(holder);
   return figure;
 }
@@ -282,10 +286,10 @@ export async function mountGlacialScene(
   let cut = Number.isFinite(o.cutFraction) ? Math.min(1, Math.max(0, o.cutFraction!)) : 1;
   let level: Level = o.level ?? "hs";
   let presentation: GlacialPagePresentation = o.presentation ?? { prediction: null, flapOpen: false };
-  const t = (text: { readonly hs: string; readonly uni: string }) => text[level];
+  const t = (text: { readonly hs: string; readonly uni: string }) => translate(text[level]);
   const [folioText, folioFigure] = o.folios ?? [2, 3];
   const bindings = new BindingEngine({ probes: uValleyProbes, controls: [] });
-  const bound = (template: string) => bindings.render(template);
+  const bound = (template: string) => localizeUnits(bindings.render(translate(template)));
 
   root.replaceChildren();
   root.classList.add("gs-review");
@@ -322,7 +326,7 @@ export async function mountGlacialScene(
   const deeperTriggers = el("div", "gs-deeper-triggers");
   lesson.append(introduction, keywords, question, flap, deeperTriggers);
   const margin = el("aside", "gs-margin");
-  margin.setAttribute("aria-label", "Margin notes");
+  writeAttribute(margin, "aria-label", "Margin notes");
   const challenge = el("p", "gs-challenge");
   const marginColumn = el("div", "gs-margin-column");
   marginColumn.append(margin, challenge);
@@ -375,7 +379,7 @@ export async function mountGlacialScene(
   timeInput.min = "0";
   timeInput.step = "1";
   timeInput.id = "gs-time";
-  timeInput.setAttribute("aria-label", "Recorded time");
+  writeAttribute(timeInput, "aria-label", "Recorded time");
   const ruler = el("div", "gs-ruler");
   const rulerEnds = el("div", "gs-ruler-ends");
   rulerEnds.setAttribute("aria-hidden", "true");
@@ -491,23 +495,23 @@ export async function mountGlacialScene(
         const a = el("a", undefined, s.citation);
         a.href = href;
         li.append(a);
-      } else li.textContent = s.citation;
+      } else writeText(li, s.citation);
       sources.append(li);
     }
     sourcesRegion.replaceChildren(
       el("h3", undefined, "What this model ignores"),
       list,
       el("h3", undefined, "Teacher notes"),
-      ...paragraphs(uValleyTeacherNotes.replace(/^#.*$/gm, ""), (x) => x),
+      ...paragraphs(translate(uValleyTeacherNotes).replace(/^#.*$/gm, ""), (x) => x),
       el("h3", undefined, "Sources"),
       sources,
     );
   }
   const renderWords = () => {
-    textHead.textContent = `Lesson ${L.LESSON_NUMBER} · ${t(L.runningHeads.text)}`;
-    figureHead.textContent = t(L.runningHeads.figure);
-    lessonNumber.textContent = `Lesson ${L.LESSON_NUMBER}`;
-    h1.textContent = t(L.title);
+    writeText(textHead, `Lesson ${L.LESSON_NUMBER} · ${t(L.runningHeads.text)}`);
+    writeText(figureHead, t(L.runningHeads.figure));
+    writeText(lessonNumber, `Lesson ${L.LESSON_NUMBER}`);
+    writeText(h1, t(L.title));
     body.replaceChildren(...paragraphs(t(uValleyPage.body), bound));
     keywords.replaceChildren();
     for (const k of L.keyWords)
@@ -523,27 +527,27 @@ export async function mountGlacialScene(
       label.append(input, el("span", undefined, t(option)));
       question.append(label);
     });
-    flapSummary.textContent = "Lift the flap for the answer";
+    writeText(flapSummary, "Lift the flap for the answer");
     flapAnswer.replaceChildren(...paragraphs(t(uValleyPage.flap), bound));
     flap.open = presentation.flapOpen;
-    challenge.textContent = t(L.challenge);
+    writeText(challenge, t(L.challenge));
     captionText.replaceChildren(el("span", "gs-fig-number", `Fig. ${L.FIGURE_NUMBER}`), t(L.figure.caption));
-    drawing.innerHTML = glacialDrawingSvg({ idPrefix: "gs-fig", labels: drawingLabels() });
-    trayLegend.textContent = t(L.controlsCopy.rockLegend);
-    timeLegend.textContent = t(L.controlsCopy.timeLegend);
-    playInvite.textContent = t(L.controlsCopy.playInvite);
-    liveButton.textContent = t(L.controlsCopy.backToLive);
-    cutName.textContent = t(L.controlsCopy.frontFace);
-    iceName.textContent = t(L.controlsCopy.underIce);
-    resetButton.textContent = uValleySpread.controls.find((c) => c.id === "reset")?.label[level] ?? "";
+    writeMarkup(drawing, glacialDrawingSvg({ idPrefix: "gs-fig", labels: drawingLabels() }));
+    writeText(trayLegend, t(L.controlsCopy.rockLegend));
+    writeText(timeLegend, t(L.controlsCopy.timeLegend));
+    writeText(playInvite, t(L.controlsCopy.playInvite));
+    writeText(liveButton, t(L.controlsCopy.backToLive));
+    writeText(cutName, t(L.controlsCopy.frontFace));
+    writeText(iceName, t(L.controlsCopy.underIce));
+    writeText(resetButton, uValleySpread.controls.find((c) => c.id === "reset")?.label[level] ?? "");
     stepButton.hidden = level !== "uni";
     deeperTrigger.hidden = level !== "uni";
     for (const label of tray.querySelectorAll<HTMLElement>(".gs-specimen")) {
       const rock = L.rocks.find((r) => r.id === label.dataset.rock);
       if (!rock) continue;
-      label.querySelector(".gs-rock-name")!.textContent = t(rock.name);
-      label.querySelector(".gs-rock-hardness")!.textContent = t(rock.hardness);
-      label.title = t(rock.help);
+      writeText(label.querySelector(".gs-rock-name")!, t(rock.name));
+      writeText(label.querySelector(".gs-rock-hardness")!, t(rock.hardness));
+      writeAttribute(label, "title", t(rock.help));
     }
     renderSources();
   };
@@ -625,9 +629,9 @@ export async function mountGlacialScene(
     input.type = "radio";
     input.name = "gs-rock";
     input.value = String(look.id);
-    label.innerHTML = specimenSvg(
-      look,
-      lithologyModule!.lithologyPatternSvg(look, `gs-litho-${look.key}`, 9),
+    writeMarkup(
+      label,
+      specimenSvg(look, lithologyModule!.lithologyPatternSvg(look, `gs-litho-${look.key}`, 9)),
     );
     label.prepend(input);
     const words = el("span", "gs-rock-words");
@@ -642,7 +646,9 @@ export async function mountGlacialScene(
   let pendingRock: string | null = null;
   const lookFor = (rockId: number) => looks.find((l) => l.id === rockId);
   const rockName = (rockKey: string, rockId: number) =>
-    (L.rocks.find((r) => r.id === rockKey)?.name[level] ?? lookFor(rockId)?.name ?? rockKey).toLowerCase();
+    translate(
+      L.rocks.find((r) => r.id === rockKey)?.name[level] ?? lookFor(rockId)?.name ?? rockKey,
+    ).toLowerCase();
   const publish = (shown: SceneShown, ghost: SceneGhost | null) => {
     const col = cutColumn();
     const values: Record<string, BoundValue> = {};
@@ -785,15 +791,20 @@ export async function mountGlacialScene(
     const ghostNote = source.ghostNote();
     if (ghostNote) notes.push(el("p", "gs-note-kept", ghostNote));
     margin.replaceChildren(...notes);
-    scale.textContent = RELIEF_SCALE === 1 ? "True vertical scale" : `Vertical scale ×${RELIEF_SCALE}`;
+    writeText(scale, RELIEF_SCALE === 1 ? "True vertical scale" : `Vertical scale ×${RELIEF_SCALE}`);
     // The page's single limitation line (guardrail): the spread's own words, once.
-    provenance.textContent =
+    writeText(
+      provenance,
       source.kind === "fixture"
         ? `${source.provenance}. ${shown.label}.${loadError ? ` Recorded runs did not load: ${loadError}.` : ""}`
-        : `${source.provenance}, ${rockName(shown.run.rockKey, shown.run.rockId)}. ${t(L.figure.limitation)}`;
-    trayNote.textContent = !measured
-      ? "Rock look preview. In the lesson a rock choice starts a new run from the same starting valley."
-      : `${t(L.controlsCopy.rockHelp)} ${t(L.controlsCopy.newRun)}`;
+        : `${source.provenance}, ${rockName(shown.run.rockKey, shown.run.rockId)}. ${t(L.figure.limitation)}`,
+    );
+    writeText(
+      trayNote,
+      !measured
+        ? "Rock look preview. In the lesson a rock choice starts a new run from the same starting valley."
+        : `${t(L.controlsCopy.rockHelp)} ${t(L.controlsCopy.newRun)}`,
+    );
     // While a rock command is in flight the reader's choice stays checked (the run follows when it starts).
     for (const input of tray.querySelectorAll<HTMLInputElement>("input[name=gs-rock]"))
       input.checked = pendingRock
@@ -805,22 +816,30 @@ export async function mountGlacialScene(
     lens.hidden = !profile || !look;
     if (profile && look) {
       const ghostProfile = ghost ? ghost.profile(col) : null;
-      lensTitle.textContent = `Front face, enlarged · ${LENS_VERTICAL_SCALE === 1 ? "true scale" : `vertical ×${LENS_VERTICAL_SCALE}`}`;
-      lensDrawing.innerHTML = sectionLensSvg(
-        {
-          acrossM: profile.acrossM,
-          bedM: profile.bedM,
-          iceM: d && !d.iceShown ? undefined : profile.iceM,
-          startBedM: profile.startBedM,
-          ghost:
-            ghost && ghostProfile ? { bedM: ghostProfile.bedM, label: bound(t(L.controlsCopy.ghost)) } : null,
-          look,
-        },
-        {
-          idPrefix: "gs-lens",
-          verticalScale: LENS_VERTICAL_SCALE,
-          words: { start: "starting V", ice: "ice" },
-        },
+      writeText(
+        lensTitle,
+        `Front face, enlarged · ${LENS_VERTICAL_SCALE === 1 ? "true scale" : `vertical ×${LENS_VERTICAL_SCALE}`}`,
+      );
+      writeMarkup(
+        lensDrawing,
+        sectionLensSvg(
+          {
+            acrossM: profile.acrossM,
+            bedM: profile.bedM,
+            iceM: d && !d.iceShown ? undefined : profile.iceM,
+            startBedM: profile.startBedM,
+            ghost:
+              ghost && ghostProfile
+                ? { bedM: ghostProfile.bedM, label: bound(t(L.controlsCopy.ghost)) }
+                : null,
+            look,
+          },
+          {
+            idPrefix: "gs-lens",
+            verticalScale: LENS_VERTICAL_SCALE,
+            words: { start: "starting V", ice: "ice" },
+          },
+        ),
       );
     }
     desk.dataset.cutColumn = String(col);
@@ -836,24 +855,29 @@ export async function mountGlacialScene(
     timeInput.max = String(Math.max(0, tl.times.length - 1));
     timeInput.value = String(tl.index);
     timeInput.disabled = tl.times.length < 2;
-    timeInput.setAttribute("aria-valuetext", shown.label);
+    writeAttribute(timeInput, "aria-valuetext", shown.label);
     timeline.style.setProperty("--gs-ticks", String(Math.max(1, tl.times.length - 1)));
     rulerEnds.replaceChildren(
       el("span", undefined, String(tl.times[0] ?? "")),
       el("span", undefined, String(tl.times.at(-1) ?? "")),
     );
-    timeOutput.textContent =
-      shown.past && source.kind === "live" ? bound(t(L.controlsCopy.earlier)) : shown.label;
+    writeText(
+      timeOutput,
+      shown.past && source.kind === "live" ? bound(t(L.controlsCopy.earlier)) : shown.label,
+    );
     liveButton.hidden = tl.atLive || source.kind !== "live";
     desk.dataset.playing = String(tl.playing);
     desk.dataset.runStatus = tl.status;
-    playButton.textContent = tl.playing ? "Pause" : "Play";
+    writeText(playButton, tl.playing ? "Pause" : "Play");
     playButton.setAttribute("aria-pressed", String(tl.playing));
     playButton.disabled = source.kind === "live" && tl.status !== "active" && tl.atLive;
-    playButton.title =
+    writeAttribute(
+      playButton,
+      "title",
       source.kind === "live" && tl.status === "complete"
         ? "This run is complete. Choose another rock or start again."
-        : "";
+        : "",
+    );
     stepButton.disabled = playButton.disabled;
     const invite =
       source.kind === "live" && tl.atLive && !tl.playing && tl.status === "active" && !shown.modelYears;
@@ -863,7 +887,7 @@ export async function mountGlacialScene(
     else playButton.removeAttribute("aria-describedby");
     speedLabel.hidden = source.kind !== "live";
     speedInput.value = String(source.speed());
-    speedInput.setAttribute("aria-valuetext", `${source.speed()} times`);
+    writeAttribute(speedInput, "aria-valuetext", `${source.speed()} times`);
     iceInput.disabled = !d || d.iceReachFraction === 0;
     if (iceInput.disabled && iceInput.checked) {
       iceInput.checked = false;
@@ -871,7 +895,8 @@ export async function mountGlacialScene(
     }
     cutInput.value = String(cut);
     const where = km(cutRow() * shown.snapshot.metresPerCell);
-    cutInput.setAttribute(
+    writeAttribute(
+      cutInput,
       "aria-valuetext",
       `${where} down the valley, ${throughIce ? "through the ice" : "below the snout"}`,
     );
@@ -901,7 +926,7 @@ export async function mountGlacialScene(
     const n = source.notice();
     notice.hidden = !n;
     notice.replaceChildren();
-    if (n?.kind === "dropped") notice.textContent = t(L.controlsCopy.droppedRun);
+    if (n?.kind === "dropped") writeText(notice, t(L.controlsCopy.droppedRun));
     if (n?.kind === "halted") {
       notice.append(n.message, " ");
       if (source.offersCpuRestart()) {
@@ -939,14 +964,16 @@ export async function mountGlacialScene(
     if (ghost && ghost.section(col)) parts.push(bound(t(L.textAlternatives.compare)));
     if (shown.past) parts.push(bound(t(L.textAlternatives.earlier)));
     if (shown.overdeepening(col)?.overdeepened) parts.push(bound(t(L.textAlternatives.overdeepened)));
-    status.textContent = parts.join(" ");
+    writeText(status, parts.map(translate).join(" "));
   };
   describe();
 
   // ---- Static fallback when 3D is off or unavailable ----
   const staticOnly = o.staticOnly || !lithologyModule;
   let unsubscribe = () => {};
+  let unsubscribeLanguage = () => {};
   const disposeAll = async () => {
+    unsubscribeLanguage();
     syncFlap();
     binding?.dispose();
     studyDesk.dispose();
@@ -962,11 +989,24 @@ export async function mountGlacialScene(
     controls.hidden = true;
     timeline.hidden = true;
     tray.disabled = true;
-    trayNote.textContent = why;
+    writeText(trayNote, why);
     desk.dataset.static = "true";
     o.onStatic?.(why);
-    status.textContent = `Fig. ${L.FIGURE_NUMBER}: ${t(L.figure.drawingAlternative) || GLACIAL_DRAWING_DESCRIPTION}`;
+    writeText(
+      status,
+      `Fig. ${L.FIGURE_NUMBER}: ${t(L.figure.drawingAlternative) || GLACIAL_DRAWING_DESCRIPTION}`,
+    );
   };
+  unsubscribeLanguage = onLanguageChange(() => {
+    syncFlap();
+    delete compare.dataset.runs;
+    renderWords();
+    describe();
+    renderDeeper(true);
+    announce();
+    refreshLanguage(root);
+  });
+  refreshLanguage(root);
   const handle = (dispose: () => Promise<void>): MountedGlacialScene => ({
     dispose,
     setLevel(next) {
@@ -1105,7 +1145,7 @@ export async function mountGlacialScene(
   };
   const act = (work: Promise<unknown>) =>
     void work.catch((error: unknown) => {
-      status.textContent = `That did not work: ${error instanceof Error ? error.message : String(error)}`;
+      writeText(status, `That did not work: ${error instanceof Error ? error.message : String(error)}`);
     });
   replay.onclick = () => play();
   playButton.onclick = () => act(source.timeline().playing ? source.pause() : source.play());
@@ -1146,7 +1186,7 @@ export async function mountGlacialScene(
     act(
       source.reset(false).then((result) => {
         if (result === "done") {
-          status.textContent = "Back to the starting valley.";
+          writeText(status, "Back to the starting valley.");
           return;
         }
         const yes = el("button", undefined, "Remove them and start again");
@@ -1155,7 +1195,7 @@ export async function mountGlacialScene(
         no.type = "button";
         const count = source.kept().length;
         confirmRow.replaceChildren(
-          `Starting again removes ${count === 1 ? "the kept run" : `all ${count} kept runs`}. `,
+          textNode(`Starting again removes ${count === 1 ? "the kept run" : `all ${count} kept runs`}. `),
           yes,
           " ",
           no,
@@ -1167,7 +1207,7 @@ export async function mountGlacialScene(
             source.reset(true).then(() => {
               hideConfirm();
               resetButton.focus();
-              status.textContent = "Back to the starting valley.";
+              writeText(status, "Back to the starting valley.");
             }),
           );
         no.onclick = () => {

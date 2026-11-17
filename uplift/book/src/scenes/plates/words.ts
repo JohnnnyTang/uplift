@@ -1,3 +1,4 @@
+import { translate } from "../../i18n";
 /**
  * The scene's own words (session 7D): stage words and the live text alternative that describes the current
  * boundary, stage and front-face profile, and the ghost profiles drawn beside it. Draft wording from the 7A
@@ -92,7 +93,7 @@ export const GHOST_PATTERN_WORDS = ["dotted", "dash-dot", "dash-dot-dot"] as con
  * scene's own words, since only the scene knows them.
  */
 export function describeScene(i: DescribeInput): string {
-  const t = (x: LevelText) => x[i.level];
+  const t = (x: LevelText) => translate(x[i.level]);
   const render = i.render ?? ((x: string) => x);
   const alt = i.copy.textAlternatives;
   const parts: string[] = [];
@@ -115,7 +116,7 @@ export function describeScene(i: DescribeInput): string {
     parts.push(
       "At the start the profiles of the boundaries already viewed match this one: every boundary starts the same.",
     );
-    return parts.join(" ");
+    return parts.map(translate).join(" ");
   }
   i.ghosts.forEach((g, k) => {
     const what = comparison(i.boundary, g);
@@ -124,5 +125,5 @@ export function describeScene(i: DescribeInput): string {
       `The ${GHOST_PATTERN_WORDS[k] ?? "dotted"} line on the front face is the ${t(i.copy.boundaries[g].name).toLowerCase()} profile at the same stage: there the land ${what}.`,
     );
   });
-  return parts.join(" ");
+  return parts.map(translate).join(" ");
 }

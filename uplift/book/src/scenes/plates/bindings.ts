@@ -1,3 +1,4 @@
+import { translate, getLanguage } from "../../i18n";
 /**
  * The values lesson 2's page may bind (D-W7-7D, "Bindings served"). Every number comes from the relief
  * config the block is drawn from, and every word from the copy and the sequence state, so page and scene
@@ -57,6 +58,7 @@ export interface PlatesBindingState {
 
 /** Joins names as "a", "a and b", "a, b and c". */
 function listWords(names: readonly string[]): string {
+  if (getLanguage() === "zh-CN") return names.join("、");
   if (names.length <= 1) return names[0] ?? "";
   return `${names.slice(0, -1).join(", ")} and ${names.at(-1)!}`;
 }
@@ -68,7 +70,7 @@ export function platesSceneValues(
   level: "hs" | "uni",
   s: PlatesBindingState,
 ): Record<(typeof PLATES_SCENE_FIELDS)[number], BoundValue> {
-  const t = (x: LevelText) => x[level];
+  const t = (x: LevelText) => translate(x[level]);
   const scales = platesSceneScales(config);
   const { columns, rows, metresPerCell } = config.grid;
   return {

@@ -1,3 +1,4 @@
+import { writeAttribute, writeText } from "../../i18n";
 import type { BookStage, BookView, BOOK_VIEW_LIMITS } from "@hachure/ink/stage";
 
 /** Mouse gestures on the scene, with equivalent native keyboard controls. */
@@ -14,7 +15,7 @@ export function createViewControls(
   const controls = document.createElement("div");
   controls.className = "gs-view-controls";
   controls.setAttribute("role", "group");
-  controls.setAttribute("aria-label", "Camera view");
+  writeAttribute(controls, "aria-label", "Camera view");
   const initial = stage.view;
   const makeRange = (text: string, min: number, max: number, step = 1) => {
     const label = document.createElement("label");
@@ -24,7 +25,7 @@ export function createViewControls(
     input.max = String(max);
     input.step = String(step);
     const name = document.createElement("span");
-    name.textContent = text;
+    writeText(name, text);
     label.append(name, input);
     controls.append(label);
     return input;
@@ -36,9 +37,9 @@ export function createViewControls(
     height.value = String(90 - stage.view.tiltDeg);
     turn.value = String(stage.view.orbitDeg);
     zoom.value = String(stage.view.zoom);
-    height.setAttribute("aria-valuetext", `${height.value} degrees above the page`);
-    turn.setAttribute("aria-valuetext", `${turn.value} degrees from centre`);
-    zoom.setAttribute("aria-valuetext", `${Math.round(stage.view.zoom * 100)} percent`);
+    writeAttribute(height, "aria-valuetext", `${height.value} degrees above the page`);
+    writeAttribute(turn, "aria-valuetext", `${turn.value} degrees from centre`);
+    writeAttribute(zoom, "aria-valuetext", `${Math.round(stage.view.zoom * 100)} percent`);
   };
   const update = (view: Partial<BookView>) => {
     stage.setView(view);
@@ -49,12 +50,14 @@ export function createViewControls(
   zoom.oninput = () => update({ zoom: Number(zoom.value) });
   const reset = document.createElement("button");
   reset.type = "button";
-  reset.textContent = "Reset view";
+  writeText(reset, "Reset view");
   reset.onclick = () => update(initial);
   const hint = document.createElement("p");
   hint.className = "gs-view-hint";
-  hint.textContent =
-    "Drag the scene to turn · Scroll over it to zoom · Drag the block's front face to move the cut";
+  writeText(
+    hint,
+    "Drag the scene to turn · Scroll over it to zoom · Drag the block's front face to move the cut",
+  );
   controls.append(reset, hint);
   host.prepend(controls);
 

@@ -1,3 +1,13 @@
+import {
+  initializeLanguage,
+  getLanguage,
+  setLanguage,
+  onLanguageChange,
+  refreshLanguage,
+  translate,
+} from "../i18n";
+import "../i18n/language.css";
+import { writeText, writeAttribute, writeMarkup } from "../i18n";
 import { createDisplayFormula } from "@hachure/runtime";
 import type { Level, ReaderSceneController } from "@hachure/runtime";
 import { READER_SCENE_LIMIT } from "./contracts";
@@ -17,7 +27,7 @@ export interface MountedReaderShell extends ReaderShellController {
 }
 const node = <K extends keyof HTMLElementTagNameMap>(tag: K, text?: string, className?: string) => {
   const result = document.createElement(tag);
-  if (text !== undefined) result.textContent = text;
+  if (text !== undefined) writeText(result, text);
   if (className) result.className = className;
   return result;
 };
@@ -35,10 +45,10 @@ function iconButton(icon: keyof typeof ICONS, label: string) {
   button.type = "button";
   button.className = `reader-bar-button reader-bar-${icon}`;
   if (label) {
-    button.setAttribute("aria-label", label);
-    button.title = label;
+    writeAttribute(button, "aria-label", label);
+    writeAttribute(button, "title", label);
   }
-  button.innerHTML = `<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">${ICONS[icon]}</svg>`;
+  writeMarkup(button, `<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">${ICONS[icon]}</svg>`);
   return button;
 }
 
@@ -54,6 +64,7 @@ export async function createReaderShell(
     new Set(entries.map((e) => e.spread.id)).size !== entries.length
   )
     throw new Error("The reader requires one or two uniquely named lessons");
+  initializeLanguage();
   let level: Level = options.initialLevel ?? "hs";
   const narrow = matchMedia("(max-width: 60rem)");
   const motion = matchMedia("(prefers-reduced-motion: reduce)");
@@ -62,7 +73,7 @@ export async function createReaderShell(
   const book = node("div", undefined, "reader-book");
   // The quiet bottom bar (5M, after the owner's reference): contents, previous, title, next, contrast, level.
   const nav = node("nav", undefined, "reader-navigation reader-bar");
-  nav.setAttribute("aria-label", "Book pages");
+  writeAttribute(nav, "aria-label", "Book pages");
   const contentsButton = iconButton("contents", "Contents");
   contentsButton.setAttribute("aria-expanded", "false");
   contentsButton.setAttribute("aria-controls", "reader-contents");
@@ -85,9 +96,35 @@ export async function createReaderShell(
   levelButton.id = "reader-level";
   const levelText = node("span", undefined, "reader-bar-text");
   levelButton.append(levelText);
+  const languageSelect = document.createElement("select");
+  languageSelect.id = "reader-language";
+  languageSelect.className = "reader-language";
+  languageSelect.setAttribute("aria-label", "Language / 语言");
+  for (const [value, label] of [
+    ["en", "English"],
+    ["zh-CN", "简体中文"],
+  ] as const) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    option.lang = value;
+    languageSelect.append(option);
+  }
+  languageSelect.value = getLanguage();
+  languageSelect.onchange = () => setLanguage(languageSelect.value === "zh-CN" ? "zh-CN" : "en");
   const divider = node("span", undefined, "reader-bar-divider");
   divider.setAttribute("aria-hidden", "true");
-  nav.append(contentsButton, previous, position, next, divider, contrastButton, levelButton, contents);
+  nav.append(
+    contentsButton,
+    previous,
+    position,
+    next,
+    divider,
+    contrastButton,
+    levelButton,
+    languageSelect,
+    contents,
+  );
   const live = node("p", undefined, "reader-sr");
   live.setAttribute("role", "status");
   live.setAttribute("aria-live", "polite");
@@ -153,7 +190,7 @@ export async function createReaderShell(
     const fallbackStatus = entry.fallbackStatus ?? ((reason: string) => `Simplified view: ${reason}`);
     const article = node("article", undefined, "reader-spread reader-stage");
     article.dataset.spread = spread.id;
-    article.setAttribute("aria-label", scene.bindings.render(spread.title[level]));
+    writeAttribute(article, "aria-label", scene.bindings.render(spread.title[level]));
     // Focus target until the scene has drawn its own title (not a heading, so the page keeps one h1).
     const fallbackHeading = node("p", scene.bindings.render(spread.title[level]), "reader-sr");
     fallbackHeading.tabIndex = -1;
@@ -161,12 +198,14 @@ export async function createReaderShell(
     const status = node("p", undefined, "reader-scene-status");
     article.append(fallbackHeading, surface, status);
     const unsubscribeStatus = scene.subscribe((state) => {
-      status.textContent =
+      writeText(
+        status,
         state.readiness.kind === "fallback"
           ? fallbackStatus(state.readiness.reason)
           : state.readiness.kind === "error"
             ? `Illustration unavailable: ${state.readiness.reason}`
-            : "";
+            : "",
+      );
       if (state.gesture === "idle" && queued && !turning) pump();
     });
     return {
@@ -180,7 +219,7 @@ export async function createReaderShell(
       surface,
       scene,
       refresh: () => {
-        article.setAttribute("aria-label", scene.bindings.render(spread.title[level]));
+        writeAttribute(article, "aria-label", scene.bindings.render(spread.title[level]));
       },
       cleanup: () => unsubscribeStatus(),
     };
@@ -215,7 +254,7 @@ export async function createReaderShell(
     depth.id = `${spread.id}-depth`;
     const reading = node("section", undefined, "reader-depth");
     reading.hidden = true;
-    reading.setAttribute("aria-label", "Sources and depth");
+    writeAttribute(reading, "aria-label", "Sources and depth");
     const close = node("button", "Return to the spread");
     const depthHeading = node("h2", "Sources and depth");
     depthHeading.tabIndex = -1;
@@ -237,7 +276,7 @@ export async function createReaderShell(
         })
         .catch(() => {
           close.disabled = false;
-          live.textContent = "The illustration could not reopen. Turn the page to continue.";
+          writeText(live, "The illustration could not reopen. Turn the page to continue.");
         });
     };
     depth.onclick = () => {
@@ -255,7 +294,7 @@ export async function createReaderShell(
         })
         .catch(() => {
           depth.disabled = false;
-          live.textContent = "The reading surface could not open. Try again.";
+          writeText(live, "The reading surface could not open. Try again.");
         });
     };
     const back = node("button", "Read the explanation", "reader-phone-link");
@@ -268,7 +307,10 @@ export async function createReaderShell(
     const surface = node("div", undefined, "reader-scene");
     surface.setAttribute("data-reader-gesture-surface", "");
     const scope = node("p", undefined, "reader-scope");
-    scope.textContent = `${spread.tier === "illustration" ? "Illustration" : spread.tier.replaceAll("-", " ")} · ${scene.scope.kind === "static-geometry" ? "Static geometry; no model clock" : scene.scope.time === "uncalibrated" ? "Simplified model; time is not calibrated" : "Calibrated process model"}`;
+    writeText(
+      scope,
+      `${spread.tier === "illustration" ? "Illustration" : spread.tier.replaceAll("-", " ")} · ${scene.scope.kind === "static-geometry" ? "Static geometry; no model clock" : scene.scope.time === "uncalibrated" ? "Simplified model; time is not calibrated" : "Calibrated process model"}`,
+    );
     const status = node("p", undefined, "reader-scene-status");
     const reset = node("button", "Reset illustration");
     reset.id = `${spread.id}-reset`;
@@ -276,19 +318,19 @@ export async function createReaderShell(
       void scene
         .reset()
         .then(() => {
-          live.textContent = "Illustration reset.";
+          writeText(live, "Illustration reset.");
         })
         .catch(() => {
-          live.textContent = "The illustration could not reset. Try again.";
+          writeText(live, "The illustration could not reset. Try again.");
         });
     };
     const folio = entries.indexOf(entry) * 2 + 1;
     const textHead = node("p", undefined, "reader-running-head");
     textHead.setAttribute("aria-hidden", "true");
-    textHead.textContent = `Lesson ${entries.indexOf(entry) + 1}`;
+    writeText(textHead, `Lesson ${entries.indexOf(entry) + 1}`);
     const figureHead = node("p", undefined, "reader-running-head");
     figureHead.setAttribute("aria-hidden", "true");
-    figureHead.textContent = scene.bindings.render(spread.title[level]);
+    writeText(figureHead, scene.bindings.render(spread.title[level]));
     illustration.prepend(figureHead);
     text.append(
       textHead,
@@ -316,10 +358,10 @@ export async function createReaderShell(
     let unsubscribers: (() => void)[] = [];
     function bind(element: HTMLElement, template: string) {
       template = template.replace(/<!--.*?-->/gs, "").trim();
-      element.textContent = scene.bindings.render(template);
+      writeText(element, scene.bindings.render(template));
       unsubscribers.push(
         scene.bindings.subscribeText(template, (value) => {
-          element.textContent = value;
+          writeText(element, value);
         }),
       );
     }
@@ -332,7 +374,7 @@ export async function createReaderShell(
       bind(panel, spread.page.flap[level]);
       panel.hidden = !presentation.explanationOpen;
       answer.setAttribute("aria-expanded", String(presentation.explanationOpen));
-      answer.textContent = presentation.explanationOpen ? "Close explanation" : "Reveal explanation";
+      writeText(answer, presentation.explanationOpen ? "Close explanation" : "Reveal explanation");
       question.hidden = !spread.page.predict;
       question.replaceChildren(legend);
       if (spread.page.predict) {
@@ -386,18 +428,20 @@ export async function createReaderShell(
       scene.present({ ...scene.presentation(), explanationOpen: !scene.presentation().explanationOpen });
       panel.hidden = !scene.presentation().explanationOpen;
       answer.setAttribute("aria-expanded", String(!panel.hidden));
-      answer.textContent = panel.hidden ? "Reveal explanation" : "Close explanation";
+      writeText(answer, panel.hidden ? "Reveal explanation" : "Close explanation");
     };
     let previousPresentation = JSON.stringify(scene.presentation());
     const unsubscribeStatus = scene.subscribe((state) => {
-      status.textContent =
+      writeText(
+        status,
         state.readiness.kind === "fallback"
           ? `Flat illustration: ${state.readiness.reason}`
           : state.readiness.kind === "error"
             ? `Illustration unavailable: ${state.readiness.reason}`
             : state.readiness.kind === "loading"
               ? "Preparing the illustration…"
-              : "";
+              : "",
+      );
       const nextPresentation = JSON.stringify(scene.presentation());
       // Rebuilding focused radio controls on each gesture would interrupt keyboard use.
       if (nextPresentation !== previousPresentation) {
@@ -408,7 +452,7 @@ export async function createReaderShell(
         });
         panel.hidden = !scene.presentation().explanationOpen;
         answer.setAttribute("aria-expanded", String(!panel.hidden));
-        answer.textContent = panel.hidden ? "Reveal explanation" : "Close explanation";
+        writeText(answer, panel.hidden ? "Reveal explanation" : "Close explanation");
       }
       if (state.gesture === "idle" && queued && !turning) pump();
     });
@@ -442,25 +486,26 @@ export async function createReaderShell(
   function updateNavigation() {
     const label = (target: ReaderTarget | undefined, fallback: string) =>
       target
-        ? `${target.page === "text" ? "Read" : target.page === "illustration" ? "Explore" : "Turn to"} ${sceneFor(target.spreadId).bindings.render(entries.find((e) => e.spread.id === target.spreadId)!.spread.title[level])}`
+        ? `${target.page === "text" ? "Read" : target.page === "illustration" ? "Explore" : "Turn to"} ${sceneFor(target.spreadId).bindings.render(translate(entries.find((e) => e.spread.id === target.spreadId)!.spread.title[level]))}`
         : fallback;
     previous.disabled = !destination("previous");
     next.disabled = !destination("next");
-    previous.setAttribute("aria-label", label(destination("previous"), "Beginning of book"));
-    next.setAttribute("aria-label", label(destination("next"), "End of book"));
-    previous.title = previous.getAttribute("aria-label")!;
-    next.title = next.getAttribute("aria-label")!;
+    writeAttribute(previous, "aria-label", label(destination("previous"), "Beginning of book"));
+    writeAttribute(next, "aria-label", label(destination("next"), "End of book"));
+    writeAttribute(previous, "title", previous.getAttribute("aria-label")!);
+    writeAttribute(next, "title", next.getAttribute("aria-label")!);
     const index = entries.findIndex((e) => e.spread.id === current.spreadId);
-    positionNumber.textContent = String(index + 1);
-    positionTitle.textContent = sceneFor(current.spreadId).bindings.render(
-      entries[index]!.spread.title[level],
-    );
+    writeText(positionNumber, String(index + 1));
+    writeText(positionTitle, sceneFor(current.spreadId).bindings.render(entries[index]!.spread.title[level]));
     levelButton.setAttribute("aria-pressed", String(level === "uni"));
-    levelText.textContent = "University";
-    levelButton.title =
+    writeText(levelText, "University");
+    writeAttribute(
+      levelButton,
+      "title",
       level === "uni"
         ? "Reading level: university. Press for high school."
-        : "Reading level: high school. Press for university.";
+        : "Reading level: high school. Press for university.",
+    );
     renderContents();
     root.dataset.page = current.page;
     root.dataset.turning = String(turning);
@@ -531,7 +576,10 @@ export async function createReaderShell(
       }
       if (request.history) writeHistory();
       restoreFocus();
-      live.textContent = `${sceneFor(current.spreadId).bindings.render(entries.find((e) => e.spread.id === current.spreadId)!.spread.title[level])}, ${current.page === "spread" ? "spread" : current.page === "text" ? "explanation" : "illustration"}.`;
+      writeText(
+        live,
+        `${sceneFor(current.spreadId).bindings.render(entries.find((e) => e.spread.id === current.spreadId)!.spread.title[level])}, ${current.page === "spread" ? "spread" : current.page === "text" ? "explanation" : "illustration"}.`,
+      );
       request.resolve(true);
     } catch (error) {
       activeRequest?.reject(error);
@@ -540,7 +588,7 @@ export async function createReaderShell(
         queued = undefined;
       }
       if (active) active.article.inert = false;
-      live.textContent = "This page could not turn. Try again.";
+      writeText(live, "This page could not turn. Try again.");
     } finally {
       activeRequest?.resolve(false);
       animation?.cancel();
@@ -670,6 +718,12 @@ export async function createReaderShell(
     if (!contents.hidden && event.target instanceof Node && !nav.contains(event.target)) closeContents(false);
   };
   document.addEventListener("pointerdown", outsideContents);
+  const unsubscribeLanguage = onLanguageChange(() => {
+    languageSelect.value = getLanguage();
+    active?.refresh();
+    updateNavigation();
+    refreshLanguage(root);
+  });
   const controller: MountedReaderShell = {
     navigation: (): ReaderNavigation => ({ ...current, turning }),
     turn,
@@ -713,6 +767,7 @@ export async function createReaderShell(
     async dispose() {
       if (disposed) return;
       disposed = true;
+      unsubscribeLanguage();
       generation++;
       queued?.resolve(false);
       queued = undefined;

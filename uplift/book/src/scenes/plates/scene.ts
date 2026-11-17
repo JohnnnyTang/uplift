@@ -1,3 +1,5 @@
+import { translate, getLanguage, onLanguageChange, refreshLanguage } from "../../i18n";
+import { writeText, textNode, writeMarkup, writeAttribute } from "../../i18n";
 /**
  * Lesson 2's production scene, _Where plates meet_ (session 7D): the spread on lesson 1's tilted book stage,
  * Fig. 2 as a textbook line drawing (the static fallback) that transitions into the naturally coloured block,
@@ -139,13 +141,13 @@ export interface PlatesSceneOptions {
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string) => {
   const node = document.createElement(tag);
   if (className) node.className = className;
-  if (text !== undefined) node.textContent = text;
+  if (text !== undefined) writeText(node, text);
   return node;
 };
 
 /** Paragraphs from copy markdown: blank-line paragraphs, **bold** and _italic_ runs. */
 function paragraphs(text: string, render: (t: string) => string): HTMLElement[] {
-  return text
+  return translate(text)
     .split(/\n{2,}/)
     .map((b) => b.trim())
     .filter(Boolean)
@@ -157,7 +159,7 @@ function paragraphs(text: string, render: (t: string) => string): HTMLElement[] 
           continue;
         }
         for (const [j, bit] of part.split(/(?<![\w])_(?=\S)|(?<=\S)_(?![\w])/).entries())
-          p.append(j % 2 ? el("i", undefined, bit) : document.createTextNode(bit));
+          p.append(j % 2 ? el("i", undefined, bit) : textNode(bit));
       }
       return p;
     });
@@ -182,12 +184,12 @@ export async function mountPlatesScene(
   let level: Level = o.level ?? "hs";
   let presentation: PlatesPagePresentation = o.presentation ?? { prediction: null, flapOpen: false };
   let cut = DEFAULT_CUT;
-  const t = (x: LevelText) => x[level];
+  const t = (x: LevelText) => translate(x[level]);
   const [folioText, folioFigure] = o.folios ?? [4, 5];
   const bindings = new BindingEngine({ probes, controls: [] });
   const bound = (template: string) => {
     try {
-      return bindings.render(template);
+      return bindings.render(translate(template));
     } catch {
       return template.replace(/\{\{[^}]*\}\}/g, "—");
     }
@@ -333,8 +335,10 @@ export async function mountPlatesScene(
   sketch.setAttribute("height", "0");
   sketch.setAttribute("aria-hidden", "true");
   sketch.style.position = "absolute";
-  sketch.innerHTML =
-    '<filter id="ps-sketch" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter>';
+  writeMarkup(
+    sketch,
+    '<filter id="ps-sketch" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter>',
+  );
   desk.append(sketch);
   root.append(desk);
 
@@ -380,21 +384,24 @@ export async function mountPlatesScene(
     const key = `${motion}|${level}`;
     if (key === drawnMotion) return;
     drawnMotion = key;
-    drawing.innerHTML = platesDrawingSvg({
-      snapshot: sequence.start,
-      frame,
-      reliefScale,
-      strataM: config.start.layers.reduce<number[]>(
-        (acc, l) => [...acc, (acc.at(-1) ?? config.start.lowlandElevationM) - l.thicknessM],
-        [],
-      ),
-      arrows: motion,
-      labels: drawingLabels(),
-      scaleBar: { cells: (scaleKm * 1000) / config.grid.metresPerCell, label: `${scaleKm} km` },
-      idPrefix: "ps-fig",
-      title: `Fig. ${copy.figure.number}: ${t(copy.figure.caption)}`,
-      description: t(copy.figure.drawingAlternative),
-    });
+    writeMarkup(
+      drawing,
+      platesDrawingSvg({
+        snapshot: sequence.start,
+        frame,
+        reliefScale,
+        strataM: config.start.layers.reduce<number[]>(
+          (acc, l) => [...acc, (acc.at(-1) ?? config.start.lowlandElevationM) - l.thicknessM],
+          [],
+        ),
+        arrows: motion,
+        labels: drawingLabels(),
+        scaleBar: { cells: (scaleKm * 1000) / config.grid.metresPerCell, label: `${scaleKm} km` },
+        idPrefix: "ps-fig",
+        title: `Fig. ${copy.figure.number}: ${t(copy.figure.caption)}`,
+        description: t(copy.figure.drawingAlternative),
+      }),
+    );
   };
   const renderSources = () => {
     // A list may be longer at one level than the other; empty entries are skipped.
@@ -409,7 +416,7 @@ export async function mountPlatesScene(
         const a = el("a", undefined, s.citation);
         a.href = s.url;
         li.append(a);
-      } else li.textContent = s.citation;
+      } else writeText(li, s.citation);
       sources.append(li);
     }
     sourcesRegion.replaceChildren(
@@ -418,16 +425,26 @@ export async function mountPlatesScene(
       el("h3", undefined, "It leaves out or simplifies"),
       ignores,
       el("h3", undefined, "Teacher notes"),
-      ...paragraphs(copy.teacherNotes.replace(/^#.*$/gm, ""), (x) => x),
+      ...paragraphs(translate(copy.teacherNotes).replace(/^#.*$/gm, ""), (x) => x),
       el("h3", undefined, "Sources"),
       sources,
     );
   };
+  const renderArrowLabels = () => {
+    for (const [id, words] of [
+      ["left", copy.controls.leftPlateArrow],
+      ["right", copy.controls.rightPlateArrow],
+    ] as const) {
+      const handle = root.querySelector('button[data-handle="' + id + '"]');
+      if (handle) writeAttribute(handle, "aria-label", words[level]);
+    }
+  };
   const renderWords = () => {
-    textHead.textContent = `Lesson ${copy.lessonNumber} · ${t(copy.runningHeads.text)}`;
-    figureHead.textContent = t(copy.runningHeads.figure);
-    lessonNumber.textContent = `Lesson ${copy.lessonNumber}`;
-    h1.textContent = t(copy.title);
+    renderArrowLabels();
+    writeText(textHead, `Lesson ${copy.lessonNumber} · ${t(copy.runningHeads.text)}`);
+    writeText(figureHead, t(copy.runningHeads.figure));
+    writeText(lessonNumber, `Lesson ${copy.lessonNumber}`);
+    writeText(h1, t(copy.title));
     body.replaceChildren(...paragraphs(t(copy.body), bound));
     keywords.replaceChildren();
     for (const k of copy.keyWords)
@@ -447,30 +464,30 @@ export async function mountPlatesScene(
         question.append(label);
       });
     }
-    flapSummary.textContent = t(copy.flap.summary);
+    writeText(flapSummary, t(copy.flap.summary));
     flapAnswer.replaceChildren(...paragraphs(t(copy.flap.answer), bound));
     flap.open = presentation.flapOpen;
-    labelLine.textContent = t(copy.labelLine);
+    writeText(labelLine, t(copy.labelLine));
     captionText.replaceChildren(
       el("span", "gs-fig-number", `Fig. ${copy.figure.number}`),
       t(copy.figure.caption),
     );
-    scaleLine.textContent = bound(t(copy.figure.scale));
-    pickerLegend.textContent = t(copy.controls.pickerLegend);
+    writeText(scaleLine, bound(t(copy.figure.scale)));
+    writeText(pickerLegend, t(copy.controls.pickerLegend));
     for (const [b, input] of pickerInputs) {
       const option = input.parentElement!;
-      option.querySelector(".ps-choice-name")!.textContent = t(copy.boundaries[b].name);
-      option.querySelector(".ps-choice-help")!.textContent = t(copy.boundaries[b].help);
-      option.title = t(copy.boundaries[b].help);
+      writeText(option.querySelector(".ps-choice-name")!, t(copy.boundaries[b].name));
+      writeText(option.querySelector(".ps-choice-help")!, t(copy.boundaries[b].help));
+      writeAttribute(option, "title", t(copy.boundaries[b].help));
     }
-    invite.textContent = t(copy.controls.invite);
-    stageLegend.textContent = t(copy.controls.stageLegend);
-    earlyEnd.textContent = t(copy.controls.early);
-    lateEnd.textContent = t(copy.controls.late);
-    replay.textContent = t(copy.controls.replay);
-    cutName.textContent = t(copy.controls.frontFace);
-    resetButton.textContent = t(copy.controls.reset);
-    arrowHelp.textContent = t(copy.controls.arrowHelp);
+    writeText(invite, t(copy.controls.invite));
+    writeText(stageLegend, t(copy.controls.stageLegend));
+    writeText(earlyEnd, t(copy.controls.early));
+    writeText(lateEnd, t(copy.controls.late));
+    writeText(replay, t(copy.controls.replay));
+    writeText(cutName, t(copy.controls.frontFace));
+    writeText(resetButton, t(copy.controls.reset));
+    writeText(arrowHelp, t(copy.controls.arrowHelp));
     deeperTrigger.hidden = level !== "uni";
     const equations = el("div", "gs-equations");
     if (level === "uni") for (const tex of copy.equations ?? []) equations.append(createDisplayFormula(tex));
@@ -510,19 +527,20 @@ export async function mountPlatesScene(
     stageInput.value = String(st.stage);
     stageInput.disabled = !b;
     const word = t(copy.controls[stageWord(st.stage)]);
-    stageInput.setAttribute("aria-valuetext", b ? `${word} stage` : t(copy.controls.noBoundary));
-    stageInput.setAttribute(
+    writeAttribute(stageInput, "aria-valuetext", b ? `${word} stage` : t(copy.controls.noBoundary));
+    writeAttribute(
+      stageInput,
       "aria-label",
       `${t(copy.controls.stageLegend)}, ${t(copy.controls.early)} to ${t(copy.controls.late)}`,
     );
-    stageOutput.textContent = b ? word : "";
-    playButton.textContent = st.playing ? t(copy.controls.pause) : t(copy.controls.play);
+    writeText(stageOutput, b ? word : "");
+    writeText(playButton, st.playing ? t(copy.controls.pause) : t(copy.controls.play));
     playButton.setAttribute("aria-pressed", String(st.playing));
     playButton.disabled = !b;
     invite.hidden = b !== null;
-    scaleLine.textContent = bound(t(copy.figure.scale));
+    writeText(scaleLine, bound(t(copy.figure.scale)));
     // Ghost key: one line per ghost, in the diorama's drawing order, with its glyph and dash sample.
-    const keyId = ghosts.join(",") + `|${level}`;
+    const keyId = ghosts.join(",") + `|${level}|${getLanguage()}`;
     if (ghostKey.dataset.key !== keyId) {
       ghostKey.dataset.key = keyId;
       ghostKey.replaceChildren();
@@ -556,15 +574,18 @@ export async function mountPlatesScene(
     if (!diorama) renderLens();
   };
   const announce = () => {
-    status.textContent = describeScene({
-      boundary: shownBoundary(),
-      stage: source.state().stage,
-      cutFraction: cut,
-      ghosts: ghostBoundaries(),
-      copy,
-      level,
-      render: bound,
-    });
+    writeText(
+      status,
+      describeScene({
+        boundary: shownBoundary(),
+        stage: source.state().stage,
+        cutFraction: cut,
+        ghosts: ghostBoundaries(),
+        copy,
+        level,
+        render: bound,
+      }),
+    );
   };
 
   // The enlarged front face, shown only in the static fallback (the block's front face shows it otherwise).
@@ -577,27 +598,30 @@ export async function mountPlatesScene(
       f ? Array.from({ length: s.columns }, (_, c) => f[row * s.columns + c]!) : undefined;
     const acrossM = Array.from({ length: snap.columns }, (_, c) => c * snap.metresPerCell);
     const ghosts = source.ghosts();
-    lens.innerHTML = lensModule.sectionLensSvg(
-      {
-        acrossM,
-        bedM: pick(snap, snap.bedM)!,
-        startBedM: pick(sequence.start, sequence.start.bedM)!,
-        crustBaseM: pick(snap, snap.crustBaseM),
-        coverBaseM: pick(snap, snap.coverBaseM),
-        startCrustBaseM: pick(sequence.start, sequence.start.crustBaseM),
-        ghosts: ghosts.map((g) => ({
-          bedM: pick(g.frame, g.frame.bedM)!,
-          crustBaseM: pick(g.frame, g.frame.crustBaseM),
-          label: t(copy.boundaries[asBoundary(g.key)!].name),
-        })),
-        look: { id: 10, key: "sandstone", ...LAYER_LOOKS.sandstone! },
-      },
-      {
-        idPrefix: "ps-lens",
-        verticalScale: reliefScale,
-        title: `${t(copy.controls.frontFace)}, ${t(copy.controls.stageLegend).toLowerCase()}`,
-        words: { start: "start", cover: "rock layers", crust: "crust", mantle: "mantle" },
-      },
+    writeMarkup(
+      lens,
+      lensModule.sectionLensSvg(
+        {
+          acrossM,
+          bedM: pick(snap, snap.bedM)!,
+          startBedM: pick(sequence.start, sequence.start.bedM)!,
+          crustBaseM: pick(snap, snap.crustBaseM),
+          coverBaseM: pick(snap, snap.coverBaseM),
+          startCrustBaseM: pick(sequence.start, sequence.start.crustBaseM),
+          ghosts: ghosts.map((g) => ({
+            bedM: pick(g.frame, g.frame.bedM)!,
+            crustBaseM: pick(g.frame, g.frame.crustBaseM),
+            label: t(copy.boundaries[asBoundary(g.key)!].name),
+          })),
+          look: { id: 10, key: "sandstone", ...LAYER_LOOKS.sandstone! },
+        },
+        {
+          idPrefix: "ps-lens",
+          verticalScale: reliefScale,
+          title: `${t(copy.controls.frontFace)}, ${t(copy.controls.stageLegend).toLowerCase()}`,
+          words: { start: "start", cover: "rock layers", crust: "crust", mantle: "mantle" },
+        },
+      ),
     );
   };
 
@@ -638,7 +662,9 @@ export async function mountPlatesScene(
   const stageModule = o.staticOnly ? null : await import("@hachure/ink/stage").catch(() => null);
   const binding = stageModule?.createBookBinding(book);
   let disposed = false;
+  let unsubscribeLanguage = () => {};
   const disposeAll = async () => {
+    unsubscribeLanguage();
     if (disposed) return;
     disposed = true;
     motionQuery.removeEventListener("change", onMotion);
@@ -650,6 +676,15 @@ export async function mountPlatesScene(
     root.replaceChildren();
     root.classList.remove("gs-review", "ps-scene");
   };
+  unsubscribeLanguage = onLanguageChange(() => {
+    presentation = { ...presentation, flapOpen: flap.open };
+    o.onPresentation?.(presentation);
+    renderWords();
+    sync();
+    announce();
+    refreshLanguage(root);
+  });
+  refreshLanguage(root);
   const handle = (dispose: () => Promise<void>): MountedPlatesScene => ({
     dispose,
     setLevel(next) {
@@ -809,7 +844,7 @@ export async function mountPlatesScene(
     cutInput.value = String(cut);
   }
   const cutRow = () => Math.min(along() - 1, Math.max(2, Math.round(cut * (along() - 1))));
-  const describeCut = () => cutInput.setAttribute("aria-valuetext", cutWords(cut));
+  const describeCut = () => writeAttribute(cutInput, "aria-valuetext", cutWords(cut));
   describeCut();
   dio.setCut(cut);
   applyState(transition.DRAWING_STATE);
@@ -937,6 +972,7 @@ export async function mountPlatesScene(
     },
     onGesture: (id, d) => choose(boundaryFor(id as "left" | "right", d)),
   });
+  renderArrowLabels();
   const cutDragModule = await import("@hachure/ink/glacial");
   const setCut = (fraction: number, speak: boolean) => {
     cut = fraction;
@@ -965,8 +1001,10 @@ export async function mountPlatesScene(
   });
   const hint = root.querySelector(".gs-view-hint");
   if (hint)
-    hint.textContent =
-      "Drag a plate's arrow to choose how the plates move · Drag the scene to turn · Drag the front face to move it";
+    writeText(
+      hint,
+      "Drag a plate's arrow to choose how the plates move · Drag the scene to turn · Drag the front face to move it",
+    );
   replay.onclick = () => play();
 
   // ---- Ghost leaders: a fine ink line from each ghost profile on the front face to its entry in the ghost key,
@@ -1022,7 +1060,7 @@ export async function mountPlatesScene(
         `<g data-boundary="${b}"><path class="ps-leader-halo" d="${d}"/><path class="ps-leader" d="${d}"/>` +
         `<circle class="ps-leader-dot" cx="${f(ax)}" cy="${f(ay)}" r="2.6"/></g>`;
     });
-    leaderSvg.innerHTML = paths;
+    writeMarkup(leaderSvg, paths);
   };
   // ---- The scale bar along the block's front edge (its label is the bound `scaleBarLabel`) ----
   const scaleSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -1044,9 +1082,11 @@ export async function mountPlatesScene(
     const at = overlay.getBoundingClientRect();
     const f = (v: number) => v.toFixed(1);
     const [ax, ay, bx, by] = [a.x - at.left, a.y - at.top + 12, b.x - at.left, b.y - at.top + 12];
-    scaleSvg.innerHTML =
+    writeMarkup(
+      scaleSvg,
       `<path d="M${f(ax)} ${f(ay - 5)}V${f(ay)}L${f(bx)} ${f(by)}V${f(by - 5)}"/>` +
-      `<text x="${f(bx + 6)}" y="${f(by + 4)}">${scaleKm} km</text>`;
+        `<text x="${f(bx + 6)}" y="${f(by + 4)}">${scaleKm} km</text>`,
+    );
   };
   let overlayKey = "";
   const placeOverlay = (force = false) => {
