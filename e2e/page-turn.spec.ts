@@ -92,3 +92,24 @@ test("switching to reduced motion during departure finishes navigation without a
   await expect(page.locator(".reader-turn-snapshot")).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Where plates meet", level: 1 })).toBeFocused();
 });
+
+test("browser Back during the sheet animation returns to the previous lesson without leaving the book", async ({
+  page,
+}) => {
+  await page.goto("/?glacier=cpu");
+  await expect(page.locator(".gs-desk")).toHaveAttribute("data-ready", "true", { timeout: 90_000 });
+  await page.keyboard.press("Escape");
+  const run = await page.locator(".gs-desk").getAttribute("data-run-id");
+  await page.locator(".reader-bar-next").click();
+  const leaf = page.locator(".reader-turn-leaf");
+  await expect(leaf).toBeVisible({ timeout: 90_000 });
+  await leaf.evaluate((element) => element.getAnimations()[0]!.pause());
+  await expect(page).toHaveURL(/spread=tectonics\.plate-boundaries/);
+  await page.goBack();
+  await expect(page).toHaveURL(/spread=geomorph\.u-valley/);
+  await leaf.evaluate((element) => element.getAnimations()[0]!.finish());
+  await expect(page.getByRole("heading", { name: "From V to U", level: 1 })).toBeFocused();
+  await expect(page.locator(".reader-shell")).toHaveAttribute("data-turning", "false");
+  await expect(page.locator(".reader-book > .reader-stage .gs-desk")).toHaveAttribute("data-run-id", run!);
+  await expect(page.locator(".reader-turn-snapshot")).toHaveCount(0);
+});

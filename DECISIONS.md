@@ -3748,3 +3748,12 @@ change simulation behavior. A frame-sampled browser regression covers forward an
 backward mounting and turning. The release keeps the prior tag and publishes a new
 immutable update tag at the merged commit; the main push drives Pages deployment.
 Release-facing README/packet edits are minimal glue authorized by this request.
+
+### D-W6-6IJ-SCROLL follow-up — history during the sheet turn
+
+Full PR CI found four legacy selectors matching inert decorative copies and a real
+history race when Back was pressed after destination readiness but before the sheet
+completed. Scope tests to the live article/accessibility tree and commit successful
+navigation history before the decorative turn. Add a paused-sheet browser Back
+regression; preserve all state and science assertions. Full browser CI must pass
+before the authorized merge/release proceeds.

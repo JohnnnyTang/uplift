@@ -576,6 +576,13 @@ export async function createReaderShell(
       queued = undefined;
       const target = normalize(request.target);
       await display(target, true);
+      if (disposed || suspended || token !== generation) {
+        request.resolve(false);
+        return;
+      }
+      // The incoming destination is mounted and shown in the navigation bar.
+      // Commit it before the decorative turn so Back during that turn can undo it.
+      if (request.history) writeHistory();
       active!.article.inert = true;
       if (!disposed && !suspended && !motion.matches && turnSnapshot) {
         const order = (destination: ReaderTarget) =>
@@ -596,7 +603,7 @@ export async function createReaderShell(
         active!.scene.startEntrance?.();
         active!.scene.resume();
       }
-      if (request.history) writeHistory();
+
       restoreFocus();
       writeText(
         live,

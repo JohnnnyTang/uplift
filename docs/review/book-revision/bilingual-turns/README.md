@@ -95,3 +95,14 @@ scrolling or suppress real reflow-page scrollbars. After the fix the document st
 1366 × 900 through every sampled phase in both directions. The browser regression
 now samples document dimensions for the entire page turn, including incoming mount,
 and checks that containment is released afterward.
+
+### Full-suite integration follow-up
+
+The first full PR browser run passed 117 checks, skipped one and failed five.
+Four older tests queried all scene/heading DOM and also matched the inert decorative
+sheet; they now scope model observations to the live article and focus accessible
+headings. The fifth exposed a history timing race: the new destination was mounted
+but its history entry waited until the sheet finished. A Back press during that
+interval could leave the book. History now commits after successful mounting and
+before the decorative sheet animation, with a regression that pauses the sheet and
+presses browser Back. No scientific or timing assertion was removed or relaxed.

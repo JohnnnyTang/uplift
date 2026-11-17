@@ -15,8 +15,8 @@ test.describe.configure({ timeout: 240_000 });
 
 const L1 = "From V to U";
 const L2 = "Where plates meet";
-const desk = (page: Page) => page.locator(".gs-desk");
-const plates = (page: Page) => page.locator(".ps-desk");
+const desk = (page: Page) => page.locator(".reader-book > .reader-stage .gs-desk");
+const plates = (page: Page) => page.locator(".reader-book > .reader-stage .ps-desk");
 const bar = (page: Page) => page.getByRole("navigation", { name: "Book pages" });
 const years = async (page: Page) => Number(await desk(page).getAttribute("data-model-years"));
 const stage = async (page: Page) => Number(await plates(page).getAttribute("data-stage"));
