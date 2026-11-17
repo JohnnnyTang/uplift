@@ -422,8 +422,7 @@ class BookStageImpl implements BookStage {
         tiltDeg: this.defaultTiltDeg,
         orbitDeg: 0,
       });
-      const fitAt = (y: number) =>
-        fitBookScale(pose(y), insets, fit.furniture, fit.minScale, fit.maxScale);
+      const fitAt = (y: number) => fitBookScale(pose(y), insets, fit.furniture, fit.minScale, fit.maxScale);
       let scale = fitAt(laidOutY + offset);
       if (fit.centre) {
         // Shifting the book changes its perspective, and so the best scale: a few rounds settle both.

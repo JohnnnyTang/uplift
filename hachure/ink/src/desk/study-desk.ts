@@ -372,9 +372,15 @@ export function createStudyDesk(book: HTMLElement, options: StudyDeskOptions = {
         transform: `translateZ(${-depth}px)`,
         transformStyle: "preserve-3d",
       });
-      const sleeve = box(eraser.x, eraser.y, eraser.w * 0.56, eraser.d + 1.5, eraser.h + 1, eraser.turn, [
-        52, 86, 128,
-      ]);
+      const sleeve = box(
+        eraser.x,
+        eraser.y,
+        eraser.w * 0.56,
+        eraser.d + 1.5,
+        eraser.h + 1,
+        eraser.turn,
+        [52, 86, 128],
+      );
       standing.append(
         box(eraser.x, eraser.y, eraser.w, eraser.d, eraser.h, eraser.turn, [232, 228, 218]),
         sleeve,
