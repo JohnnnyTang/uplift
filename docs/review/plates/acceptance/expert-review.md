@@ -2,7 +2,11 @@
 
 # Expert-review packet: _Where plates meet_ (session 7G)
 
-**Status: pending.** No geologist or geophysicist has reviewed this lesson, and nothing below is signed off.
+**Status: reviewed (owner-reported, 2026-11-16, D-W6-6F).** The owner reported that the project team
+completed expert review of this lesson. Reviewer names, reviewed commit and answers to the questions
+below were not supplied and are not recorded here. The packet text below is the pre-review record.
+
+_Earlier status:_ pending; no specialist had reviewed this lesson and nothing below was signed off.
 The packet gathers what a reviewer needs, in reading order: what the reader sees, every claim with its sources,
 the cited figures, the artistic choices in the drawing, and the questions. It points to the authoritative
 registers and does not replace them:

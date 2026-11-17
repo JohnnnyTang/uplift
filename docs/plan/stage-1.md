@@ -2,17 +2,23 @@
 
 ## Current status · 2026-11-16
 
-The two-lesson book is integrated on main: _From V to U_ and _Where plates meet_.
-6A/6A2 and Wave 7 are delivered; **6B** merged as `d1fdae5`
-([PR #53](https://github.com/JohnnnyTang/uplift/pull/53)), and **6C** merged as `83f0ba6`
-([PR #54](https://github.com/JohnnnyTang/uplift/pull/54)). **6D now records the retrospective**
-against those merged results. The [acceptance ledger](stage-1-acceptance.md),
-[review packet](../review/book-revision/release/README.md) and
-[retrospective](stage-1-retro.md) preserve the evidence and remaining responsibilities.
+**Stage 1 is released** (D-W6-6F). The two-lesson book, _From V to U_ and _Where plates
+meet_, is on main and published with GitHub Pages. 6A/6A2, Wave 7, 6B
+([PR #53](https://github.com/JohnnnyTang/uplift/pull/53)), 6C
+([PR #54](https://github.com/JohnnnyTang/uplift/pull/54)), the 6D retrospective
+([PR #55](https://github.com/JohnnnyTang/uplift/pull/55)) and the 6E owner refinements
+([PR #56](https://github.com/JohnnnyTang/uplift/pull/56)) are merged.
 
-**Stage 1's release gate remains open.** Human, expert and broader hardware checks stay
-pending with assigned roles. By owner direction, **Stage 2 planning and next-lesson
-selection are deferred**; this 6D session supplies no Stage 2 plan or launch authorization.
+The exit gate is met on owner-reported evidence: human checks H1–H5 including F2
+(D-W6-6E), team expert review of both lessons and the research comparison (H6, H7), and
+the group review of the working book (D-W6-6F). The [acceptance ledger](stage-1-acceptance.md),
+[review packet](../review/book-revision/release/README.md) and
+[retrospective](stage-1-retro.md) preserve the evidence. H8's measured multi-device
+matrix and the narrow 6A latency misses remain recorded limitations. Failed morphology
+verdicts and the unvalidated waterfall keep their status.
+
+**Stage 2 planning and next-lesson selection still need owner direction**; closing
+Stage 1 does not authorize them. Status wording further down this file is historical.
 
 ## Canonical Wave 5 integration branch
 
@@ -98,15 +104,15 @@ Waves 1–4 below record the foundation work. Wave 5 delivered the glacial openi
 Wave 7 delivered the second lesson between 6A/6A2 and 6B. Wave 6 has reached the
 retrospective; historical technical dependencies remain in their briefs.
 
-| Wave | Theme                                  | Sessions                            | Status / purpose                                                                   |
-| ---- | -------------------------------------- | ----------------------------------- | ---------------------------------------------------------------------------------- |
-| W1   | Contracts and spikes                   | 1A–1E                               | Foundation history; contracts and initial risks                                    |
-| W2   | Foundations                            | 2A–2F                               | CPU, rendering, runtime, shell and probes                                          |
-| W3   | Integration and science                | 3A–3F                               | CPU integration, actual science results and recorded comparison                    |
-| W4   | GPU, depth and supporting capabilities | 4A–4F                               | Implementations integrated; human/science acceptance accurately retained           |
-| W5   | Book revision and glacial opening      | A–F foundations; G–N opening lesson | Delivered; glacial evidence and review limits retained                             |
-| W6   | Hardening and review                   | 6A/6A2 → 6B → 6C → 6D               | Performance, audit and review packet merged; retrospective now; release gates open |
-| W7   | Plate-boundaries second lesson         | 7A–7G, 7R/7R2                       | Merged between 6A/6A2 and 6B                                                       |
+| Wave | Theme                                  | Sessions                            | Status / purpose                                                         |
+| ---- | -------------------------------------- | ----------------------------------- | ------------------------------------------------------------------------ |
+| W1   | Contracts and spikes                   | 1A–1E                               | Foundation history; contracts and initial risks                          |
+| W2   | Foundations                            | 2A–2F                               | CPU, rendering, runtime, shell and probes                                |
+| W3   | Integration and science                | 3A–3F                               | CPU integration, actual science results and recorded comparison          |
+| W4   | GPU, depth and supporting capabilities | 4A–4F                               | Implementations integrated; human/science acceptance accurately retained |
+| W5   | Book revision and glacial opening      | A–F foundations; G–N opening lesson | Delivered; glacial evidence and review limits retained                   |
+| W6   | Hardening and review                   | 6A/6A2 → 6B → 6C → 6D → 6E, 6F      | Merged; exit gate met and Stage 1 released (D-W6-6F)                     |
+| W7   | Plate-boundaries second lesson         | 7A–7G, 7R/7R2                       | Merged between 6A/6A2 and 6B                                             |
 
 Historical implementation sequence through the glacial opening:
 
@@ -135,8 +141,8 @@ flowchart LR
     N5 --> W6[Wave 6 Hardening and release review]
 ```
 
-**Current path:** merged 6B → merged 6C → 6D retrospective. Human/expert/hardware review
-remains pending with assigned roles; Stage 2 planning is deferred.
+**Current path:** 6B → 6C → 6D → 6E → 6F release, all complete. Stage 1 is released;
+Stage 2 planning waits for owner direction.
 
 **Historical Wave 5 path:** verified s1/w5/integration → 5G glacier model ∥ 5H book stage
 → R1 owner review → 5I GPU / 5J runs / 5K scene / 5L content → 5M integration → 5N acceptance

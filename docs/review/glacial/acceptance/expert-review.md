@@ -2,8 +2,11 @@
 
 # Expert-review packet: _From V to U_ (session 5N)
 
-**Status: pending.** No geomorphologist or glaciologist has reviewed this lesson. Nothing below is signed
-off. This packet gathers what an expert needs in one place: every scientific claim the reader sees, where
+**Status: reviewed (owner-reported, 2026-11-16, D-W6-6F).** The owner reported that the project team
+completed expert review of this lesson. Reviewer names, reviewed commit and answers to the questions
+below were not supplied and are not recorded here. The packet text below is the pre-review record.
+
+_Earlier status:_ pending; no specialist had reviewed this lesson and nothing below was signed off. This packet gathers what an expert needs in one place: every scientific claim the reader sees, where
 it is marked `<!-- expert-review -->`, the source it cites, the model evidence (re-run by 5N on production
 code), and the open questions. The authoritative claim register is
 [docs/science/glacial/lesson/README.md](../../../science/glacial/lesson/README.md) (`claims.ts` in code,
