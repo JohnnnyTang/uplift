@@ -3699,3 +3699,18 @@ now explicitly `3 * MODEL_RUN_TIMEOUT_MS + 60_000` (660 seconds). The per-run
 replay assertions remain unchanged; named test steps expose each run's duration.
 Other test budgets are unchanged. This is a functional journey check, not a hardware
 performance benchmark; software-renderer and hardware-validation limits still apply.
+
+## D-W6-6IJ — Bilingual reading and one-sheet page turns (2026-11-17)
+
+Owner asks for Chinese bilingual support and corrects the page-turn effect: first
+return the 3D scene to flat line art, then flip one paper page, with the book itself
+stationary. The owner confirms English ↔ Simplified Chinese switching with a saved
+preference. Both lessons, their controls and accessible text are in scope; model
+state is independent of locale. Original sources and scientific caveats survive.
+
+Plan: two isolated sibling worktrees from merged origin/main 7556f84, sessions 6I
+and 6J, integrated in that order into s1/w6/6i-bilingual-turns. The existing working
+checkout and unrelated edits remain intact. Minimal shared-file glue is reviewed
+centrally. New reverse/leaf animation is presentation only, reduced motion skips
+spatial effects, and simulations settle before departure and retain their state.
+See docs/plan/stage-1-bilingual-page-turn.md for ownership and acceptance anchors.

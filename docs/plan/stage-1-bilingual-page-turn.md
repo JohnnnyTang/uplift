@@ -46,6 +46,7 @@ Chinese, phone and reduced-motion journeys in both directions. Record actual
 results and limitations; no inferred expert or human acceptance.
 
 Acceptance anchors to quote in the handover:
+
 - GV4: Drawing → ink → colour transition into a complete, naturally coloured diorama standing on a tilted book page.
 - GV6: Keyboard equivalents for every gesture, text alternatives, reduced motion, lithology patterns as non-colour cue, reflow.
 - PL7: Keyboard equivalents, text alternatives, reduced motion, glyph and pattern cues for boundary types, reflow and phone.
