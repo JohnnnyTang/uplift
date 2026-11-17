@@ -70,6 +70,15 @@ plate acceptance run: **12 passed in 58.8 s**, including full replay, keyboard,
 phone/reflow/reduced motion and retained state. The glacial full entrance test and
 previously failing plate drag/return checks passed in that focused run. Final
 repository check results are appended below. The full e2e suite is
-not run; the six affected lesson and book specs are the selected regression scope.
+not run locally; the six affected lesson and book specs are the selected regression scope.
 The original Claude work retains attribution; the continuation and PR provenance
 identify Codex accurately. 6G should merge first, followed by a 6H rebase and checks.
+
+## Final pre-integration checks
+
+- `pnpm check`: 901 passed, 7 skipped; typecheck, lint and formatting passed.
+- `pnpm build`: passed. `pnpm check:bundle`: 6,782,287 / 10,000,000 bytes.
+- Local full six-spec attempt and focused corrections are described above; the final complete plate acceptance run passed all 12 checks.
+- Hosted initial full suite (run 44053856115): 113 passed, one skipped, three failed (glacial phase skipping and two plate gesture/return time budgets). The phase clock and explicit non-animation skip setup address those findings; final-head hosted validation is required before integration.
+- Native evidence: Chrome 157.0.8103.79, WebGPU, both fresh/replay sequences around 8.5 s. No multi-device performance claim.
+- Pending: rebase onto merged 6G, repeat checks and inspect the combined enlarged book at mid-lift.
