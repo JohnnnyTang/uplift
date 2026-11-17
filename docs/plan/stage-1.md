@@ -1,14 +1,31 @@
 # Stage 1 · Playable book proof on the Hachure foundations
 
+## Current status · 2026-11-16
+
+The two-lesson book is integrated on main: _From V to U_ and _Where plates meet_.
+6A/6A2 and Wave 7 are delivered; **6B** merged as `d1fdae5`
+([PR #53](https://github.com/JohnnnyTang/uplift/pull/53)), and **6C** merged as `83f0ba6`
+([PR #54](https://github.com/JohnnnyTang/uplift/pull/54)). **6D now records the retrospective**
+against those merged results. The [acceptance ledger](stage-1-acceptance.md),
+[review packet](../review/book-revision/release/README.md) and
+[retrospective](stage-1-retro.md) preserve the evidence and remaining responsibilities.
+
+**Stage 1's release gate remains open.** Human, expert and broader hardware checks stay
+pending with assigned roles. By owner direction, **Stage 2 planning and next-lesson
+selection are deferred**; this 6D session supplies no Stage 2 plan or launch authorization.
+
 ## Canonical Wave 5 integration branch
 
 The owner consolidated completed work and current plans into **s1/w5/integration**.
 Future Wave 5 sessions branch from and target PRs to this branch, consuming only
-merged dependencies. Main remains unchanged. This explicit Wave 5 exception
+merged dependencies. This exception applies only to Wave 5; other waves target main.
+This explicit Wave 5 exception
 supersedes earlier instructions to merge the reviewed baseline into main before 5G.
 See [integration provenance and workflow](../review/wave-5-integration/README.md).
 
-## Latest owner review · 2026-11-09
+## Historical owner review · 2026-11-09
+
+The following records the state on that date, not the current implementation status.
 
 Remote review head e7e7f0a contains B/C/D, E (39ab5fb) and F. Main remains at 5A
 (8069a7f). Their implementation is real and retained; prior wording saying these
@@ -24,18 +41,21 @@ A–F remain foundations; their evidence is not glacial lesson acceptance.
 
 Detailed plan for the current stage. The work model and rules are in [README.md](README.md). The product
 reasoning and the brief's internal tensions (referred to below as **T1–T9**) are in
-[product-story.md](../product-story.md#tensions-in-the-brief-and-how-the-plan-resolves-them). The source of
-truth for requirements is the handoff's
-["Demo 1 spec"](../handoff.md#demo-1-spec-the-erosion-sandbox-spread).
+[product-story.md](../product-story.md#tensions-in-the-brief-and-how-the-plan-resolves-them). Requirements follow the handoff's
+[pedagogical principles](../handoff.md#pedagogical-design-principles) and
+[scientific rigour policy](../handoff.md#scientific-rigour-policy), with the current
+[glacial](stage-1-wave-5-glacial.md) and [plate-boundaries](stage-1-wave-7-plates.md) briefs.
 
 ## Active correction — product before further engine scope
 
-The owner's 2026-11-09 request changes the next milestone to a bounded, playable book:
+The owner's 2026-11-09 request established the bounded, playable book milestone:
 drawings lift into directly manipulable 3D, questions and answer flaps are optional,
 and page turning connects small discoveries. The direction commit is merged to main.
 Read [Wave 5](stage-1-wave-5.md) for the complete revision-wave briefs and owned paths;
 [PB1–PB9](product-realignment.md#product-acceptance-gate) defines product acceptance.
-The old P1/P2 outline is superseded. 5B–5F are integrated on the local review stack; main remains at 5A. See the [acceptance ledger](stage-1-acceptance.md) for evidence and pending release gates.
+The old P1/P2 outline is superseded. The glacial and plates lessons, 6B audit and 6C review
+packet are merged on main. See the [acceptance ledger](stage-1-acceptance.md) for evidence
+and pending release gates; 6D records the retrospective without starting Stage 2.
 
 The Wave 1–4 briefs below retain the record of how the foundations were built. Their
 mandatory prediction/endpoint gates, mandatory challenge/stamp flow and page-turn
@@ -74,17 +94,21 @@ catalogue and accounts. Page turning between two interactive spreads is now requ
 
 ## Shape of the stage
 
-Waves 1–4 below record the foundation work. Wave 5 is the next implementation wave;
-Wave 6 is revised hardening. Historical technical dependencies remain in their briefs.
+Waves 1–4 below record the foundation work. Wave 5 delivered the glacial opening and
+Wave 7 delivered the second lesson between 6A/6A2 and 6B. Wave 6 has reached the
+retrospective; historical technical dependencies remain in their briefs.
 
-| Wave   | Theme                                         | Sessions                                                  | Status / purpose                                                         |
-| ------ | --------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------ |
-| W1     | Contracts and spikes                          | 1A–1E                                                     | Foundation history; contracts and initial risks                          |
-| W2     | Foundations                                   | 2A–2F                                                     | CPU, rendering, runtime, shell and probes                                |
-| W3     | Integration and science                       | 3A–3F                                                     | CPU integration, actual science results and recorded comparison          |
-| W4     | GPU, depth and supporting capabilities        | 4A–4F                                                     | Implementations integrated; human/science acceptance accurately retained |
-| **W5** | **Revise the book and build the new example** | **A–F foundations retained; G–N glacial opening planned** | **Current; rock-type runs plus formation over time**                     |
-| W6     | Hardening and review                          | 6A performance → 6B audit → 6C review → 6D retro          | Finish current book's release gates and lesson-led next plan             |
+| Wave | Theme                                  | Sessions                            | Status / purpose                                                                   |
+| ---- | -------------------------------------- | ----------------------------------- | ---------------------------------------------------------------------------------- |
+| W1   | Contracts and spikes                   | 1A–1E                               | Foundation history; contracts and initial risks                                    |
+| W2   | Foundations                            | 2A–2F                               | CPU, rendering, runtime, shell and probes                                          |
+| W3   | Integration and science                | 3A–3F                               | CPU integration, actual science results and recorded comparison                    |
+| W4   | GPU, depth and supporting capabilities | 4A–4F                               | Implementations integrated; human/science acceptance accurately retained           |
+| W5   | Book revision and glacial opening      | A–F foundations; G–N opening lesson | Delivered; glacial evidence and review limits retained                             |
+| W6   | Hardening and review                   | 6A/6A2 → 6B → 6C → 6D               | Performance, audit and review packet merged; retrospective now; release gates open |
+| W7   | Plate-boundaries second lesson         | 7A–7G, 7R/7R2                       | Merged between 6A/6A2 and 6B                                                       |
+
+Historical implementation sequence through the glacial opening:
 
 ```mermaid
 flowchart LR
@@ -111,7 +135,10 @@ flowchart LR
     N5 --> W6[Wave 6 Hardening and release review]
 ```
 
-**Current critical path:** verified s1/w5/integration → 5G glacier model ∥ 5H book stage
+**Current path:** merged 6B → merged 6C → 6D retrospective. Human/expert/hardware review
+remains pending with assigned roles; Stage 2 planning is deferred.
+
+**Historical Wave 5 path:** verified s1/w5/integration → 5G glacier model ∥ 5H book stage
 → R1 owner review → 5I GPU / 5J runs / 5K scene / 5L content → 5M integration → 5N acceptance
 → Wave 6 hardening/review. [Full briefs](stage-1-wave-5-glacial.md).
 The historical solver chain explains the foundations, not the current product priority.
@@ -126,18 +153,18 @@ AC7 follows the updated compact scope/scale/time and limitation disclosure polic
 AC10 applies to each shipped lesson. AC3 is historical morphology evidence, not a claim
 supported by the recorded gross-erosion comparison or a requirement to teach that outcome.
 
-| #    | Acceptance criterion                                                                                                              | Built by           | Evidence at the gate                                                                        |
-| ---- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------- |
-| AC1  | 30 fps at 256² on an integrated GPU with WebGPU; WebGL2 fallback at 128²                                                          | 1B, 3C, 4A, 6A     | `docs/perf/stage-1.md` with device, browser, fps and ms per step; debug overlay screenshot  |
-| AC2  | Same seed and inputs give the same terrain after N steps                                                                          | 1A, 2A, 2B, 4A     | `determinism.test.ts` (CPU, same JavaScript engine); same-device/driver GPU test in browser |
-| AC3  | Qualitative tests: more rain → more incision; hard band → knickpoint upstream and narrower channel; lower slope → more deposition | 1E, 2F, 3B         | `qualitative/*.test.ts` passing; plots in `docs/science/validation/`                        |
-| AC4  | Mass conserved within 1% (closed boundaries except outlet)                                                                        | 2A, 4A             | `mass-budget.test.ts` on CPU and GPU                                                        |
-| AC5  | Flat drawing generated from the heightfield; lift animates from it                                                                | 1C, 2C, 3A         | Contour extraction tests; recording of the lift                                             |
-| AC6  | Every number on the page comes from a binding                                                                                     | 1A, 2D, 3D         | `no-typed-numbers.test.ts` over all page text, including question text (T3)                 |
-| AC7  | Time-scale label, scale bar, tier badge and "ignores" box visible                                                                 | 2E, 3D             | End-to-end visibility assertions (4E)                                                       |
-| AC8  | Level toggle switches text and controls without resetting or changing the simulation                                              | 2D, 4B, 4E         | End-to-end test: state hash equal before and after toggling (T7)                            |
-| AC9  | Controls clamped and keyboard operable; reduced motion pauses autoplay                                                            | 1E, 2B, 2E, 3E, 4D | Clamp unit tests; keyboard-only end-to-end run; reduced-motion end-to-end run               |
-| AC10 | Source links and a one-page teacher note                                                                                          | 1E, 3D, 6C         | `teacher-notes.md`, `sources.md`, rendered in the book                                      |
+| #    | Acceptance criterion                                                                                                              | Built by           | Evidence at the gate                                                                                                              |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| AC1  | 30 fps at 256² on an integrated GPU with WebGPU; WebGL2 fallback at 128²                                                          | 1B, 3C, 4A, 6A     | [6A/6A2 measurements](../perf/README.md) and [two-lesson measurements](../perf/plates/README.md), scoped to their recorded setups |
+| AC2  | Same seed and inputs give the same terrain after N steps                                                                          | 1A, 2A, 2B, 4A     | `determinism.test.ts` (CPU, same JavaScript engine); same-device/driver GPU test in browser                                       |
+| AC3  | Qualitative tests: more rain → more incision; hard band → knickpoint upstream and narrower channel; lower slope → more deposition | 1E, 2F, 3B         | `qualitative/*.test.ts` passing; plots in `docs/science/validation/`                                                              |
+| AC4  | Mass conserved within 1% (closed boundaries except outlet)                                                                        | 2A, 4A             | `mass-budget.test.ts` on CPU and GPU                                                                                              |
+| AC5  | Flat drawing generated from the heightfield; lift animates from it                                                                | 1C, 2C, 3A         | Contour extraction tests; recording of the lift                                                                                   |
+| AC6  | Every number on the page comes from a binding                                                                                     | 1A, 2D, 3D         | `no-typed-numbers.test.ts` over all page text, including question text (T3)                                                       |
+| AC7  | Time-scale label, scale bar, tier badge and "ignores" box visible                                                                 | 2E, 3D             | End-to-end visibility assertions (4E)                                                                                             |
+| AC8  | Level toggle switches text and controls without resetting or changing the simulation                                              | 2D, 4B, 4E         | End-to-end test: state hash equal before and after toggling (T7)                                                                  |
+| AC9  | Controls clamped and keyboard operable; reduced motion pauses autoplay                                                            | 1E, 2B, 2E, 3E, 4D | Clamp unit tests; keyboard-only end-to-end run; reduced-motion end-to-end run                                                     |
+| AC10 | Source links and a one-page teacher note                                                                                          | 1E, 3D, 6C         | `teacher-notes.md`, `sources.md`, rendered in the book                                                                            |
 
 Also required at the current gate: CPU/GPU agreement (3C, 4A), run/build/test instructions (6C),
 and a short recording of the playable sequence. Advanced theory and diagnostics are optional
@@ -734,7 +761,7 @@ science remains pending and cannot produce a successful challenge event.
 
 ## Wave 5 · Book revision and new playable example
 
-**Status:** A–F implemented on the review stack; G–N planned in [the glacial extension](stage-1-wave-5-glacial.md). Main integration and human/product review remain open. **Entry:** the product-direction commit is on main;
+**Status:** A–F foundations and G–N's glacial opening are delivered; see [the glacial extension](stage-1-wave-5-glacial.md) and [current acceptance](stage-1-acceptance.md). Human/expert release checks remain open. **Historical entry:** the product-direction commit is on main;
 W4 engine integrations are retained and their human/scientific limitations remain recorded.
 **Briefs:** [the complete six-session wave](stage-1-wave-5.md).
 
@@ -747,7 +774,7 @@ W4 engine integrations are retained and their human/scientific limitations remai
 | [5E](stage-1-wave-5.md#5e) | Default app migration and revision of the existing research example/tests                       | 5B, 5C, 5D merged |
 | [5F](stage-1-wave-5.md#5f) | Integrated acceptance, review packet and unfinished-plan reconciliation                         | 5E merged         |
 
-The table above records A–F foundations. The current-wave additions are:
+The table above records A–F foundations. The delivered glacial extension was:
 
 | Session                            | Deliverable                                                          | Starts after               |
 | ---------------------------------- | -------------------------------------------------------------------- | -------------------------- |
@@ -761,9 +788,9 @@ The table above records A–F foundations. The current-wave additions are:
 | [5M](stage-1-wave-5-glacial.md#5m) | Default-book integration and chrome                                  | 5J–5L; 5I or recorded gap  |
 | [5N](stage-1-wave-5-glacial.md#5n) | Registered acceptance and review packet                              | 5M                         |
 
-**Current execution:** 5G ∥ 5H → R1 → 5I (from 5G) / 5J / 5K / 5L → 5M → 5N.
-**Current merge order:** G → H → (R1) → I, J, K, L as ready → M → N.
-All additions are planned, not launched. Read the linked briefs for owned paths and gates.
+**Historical G–N execution:** 5G ∥ 5H → R1 → 5I (from 5G) / 5J / 5K / 5L → 5M → 5N.
+**Historical G–N merge order:** G → H → (R1) → I, J, K, L as ready → M → N.
+These sessions are delivered. The linked briefs retain their original owned paths and gates.
 
 **Historical A–F execution:** 5A alone → 5B/5C/5D in parallel → 5E alone → 5F alone.
 **Merge order:** 5A → 5B → 5C → 5D → 5E → 5F.
@@ -774,7 +801,7 @@ as specified in the wave. No standalone demo or unchanged default app can close 
 
 ## Wave 7 · Lesson 2 · Where plates meet (runs between 6A and 6B)
 
-**Status:** done 2026-11-15 (7A–7F merged; 7G acceptance is the wave's last PR, D-W7-7G). **Single source:**
+**Status:** merged through 7G (PR #52, D-W7-7G); the owner's 2026-11-16 look review approved the labels, block tip and F1. F2 remains pending. **Single source:**
 [the Wave 7 plan](stage-1-wave-7-plates.md). The owner chose plate boundaries as Stage 1's second
 discovery, so PB7 returns to its original form. Order: 6A/6A2 → 7A–7G → 6B → 6C → 6D.
 
@@ -791,13 +818,15 @@ discovery, so PB7 returns to its original form. Order: 6A/6A2 → 7A–7G → 6B
 
 ## Wave 6 · Hardening and release review
 
-**Split by owner decision D-L2-1 (2026-11-14):** 6A and 6A2 are merged (D-W6-6A2). **6B, 6C and 6D were
-deferred until Wave 7 (lesson 2) merged**; with 7G (2026-11-15) the wave is done, so 6B → 6C → 6D can start and
-audit, review and retro the two-lesson book, taking over the pending checks in the
-[7G ledger](../review/plates/acceptance/README.md).
-Their briefs below apply to both lessons; 6D no longer selects the next lesson (the owner did).
+**Split by owner decision D-L2-1 (2026-11-14):** 6A/6A2 preceded Wave 7; 6B and 6C
+followed its merge. **6B merged as `d1fdae5` (PR #53); 6C merged as `83f0ba6` (PR #54).**
+The [current audit](../review/book-revision/accessibility/README.md) and
+[review packet](../review/book-revision/release/README.md) supersede older current-status summaries,
+while preserving their evidence. Human, expert and broader hardware checks remain pending.
+**6D is now retrospective only** under the owner's 2026-11-16 direction; Stage 2 planning
+and next-lesson selection are deferred.
 
-These are the unfinished former 5A–5D, renumbered **6A–6D**. Historical references
+These session IDs were renumbered from the former 5A–5D to **6A–6D**. Historical references
 to "5A performance" or "5C review" in W1–W4 handovers mean these sessions; historical
 documents and scientific records are not rewritten.
 
@@ -867,19 +896,22 @@ field magnitudes/rates/years.
 and a short recording/teacher guide matching the final app. Pending sign-off remains
 pending; code integration is not permission to claim reviewed science.
 
-### 6D · Retro and a lesson-led Stage 2 plan — lead · S
+### 6D · Stage 1 retrospective — lead · S
 
-**Owned paths:** `docs/plan/stage-1-retro.md`, `docs/plan/stage-2.md`,
-minimal framework/status updates.
+**Owned paths:** `docs/plan/stage-1-retro.md`; minimal framework/status updates.
 
-Record actual reader/visual findings, performance, access issues and what was reused.
-Inventory only the primitives proved by the working spreads. Select the next small
-lesson based on its action, visible outcome and evidence; specify any required shared
-primitive, owned paths and bounded scope. Defer unmotivated engine extraction, new model
-families or real-data pipelines. Reconcile every unresolved ledger item with an owner.
+**Owner scope correction (2026-11-16):** complete the current retrospective after 6C
+merges; defer Stage 2 planning and next-lesson selection. Do not create
+`docs/plan/stage-2.md` in this session.
 
-**Exit:** a Stage 2 plan grounded in the book experience, without assuming a new engine,
-catalogue, mandatory assessment or unsupported landform is automatically next.
+Record actual visual findings, performance, accessibility issues, proven reuse and the
+merged 6B/6C results. Distinguish automated evidence from pending human review; do not
+invent reader observations. Inventory only primitives demonstrated by the working
+spreads. Reconcile every unresolved ledger item with an accountable role, preserving
+failed scientific evidence and accepted owner decisions.
+
+**Exit:** an evidence-linked Stage 1 retrospective and reconciled pending-work register.
+Completing the retrospective does not close the Stage 1 release gate or launch Stage 2.
 
 ---
 
@@ -908,6 +940,10 @@ for traceability rather than reopened as the current priority:
 | WebGPU is testable in CI                                                                                           | Run GPU tests locally and record the run at each wave close                | 3C          |
 
 ## Changelog
+
+- 2026-11-16: Reconcile merged 6B audit (PR #53) and 6C review packet (PR #54); scope
+  6D to the retrospective under owner direction. Defer Stage 2 planning and lesson
+  selection; retain pending human/expert/hardware release gates and historical evidence.
 
 - 2026-11-14: Owner chooses lesson 2, plate boundaries (D-L2-1), as Stage 1's second discovery, with
   authored relief as a scoped exception. Add Wave 7 (7A–7G, owner look review 7R); defer 6B–6D until
