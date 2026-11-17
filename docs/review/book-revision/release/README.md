@@ -1,5 +1,20 @@
 # 6C · Two-lesson scientific and product review packet
 
+## Owner update · presentation release · 2026-11-17
+
+The owner requested that sessions 6G and 6H be completed, merged in that order,
+and published to GitHub Pages, with the release updated. The release combines
+a larger fitted book on a procedural study desk with a held drawing, ordered
+construction sketch, lift and natural-colour entrance. Input skips the entrance;
+reduced motion shows the usable scene immediately. Neither change alters the
+scientific model or starts a simulation.
+
+The [6G evidence](../desk-refinement/README.md) records viewport-specific size
+gains and the fit/centring deviations. The [6H evidence](../uplift-transition/README.md)
+records phase timings, fallback behavior and verification. Publication authorization
+does not turn these presentation changes into new scientific or classroom validation,
+or establish a target-hardware frame-rate pass. Earlier records below are historical.
+
 ## Owner update · Stage 1 release · 2026-11-16
 
 The owner reported that **expert review is done by the project team** and directed that

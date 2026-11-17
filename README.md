@@ -15,9 +15,11 @@ Both are on `main` after Wave 7 (PR #52), with the 6B accessibility and fallback
 available through Contents. The earlier contour and prepared-terrain water lessons were
 removed (D-W5-5M2 and D-W5-5N2).
 
-**Review status:** implementation is integrated; Stage 1 is not released as scientifically
-reviewed or classroom validated. Expert sign-off, first-time-reader observations, human
-accessibility and broader hardware checks remain pending with assigned roles. Start with
+**Release status:** Stage 1 is released by owner direction (D-W6-6F). Play the
+[published book](https://johnnnytang.github.io/uplift/). The owner authorized publication
+of the 6G desk/book presentation and 6H drawing-to-3D entrance update on 2026-11-17.
+This does not establish classroom validation or a broader hardware performance pass;
+the recorded limitations and human follow-ups remain. Start with
 the [two-lesson review packet](docs/review/book-revision/release/README.md) and
 [current acceptance ledger](docs/plan/stage-1-acceptance.md).
 
