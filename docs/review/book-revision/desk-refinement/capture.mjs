@@ -1,3 +1,4 @@
+/* global document, getComputedStyle, console */
 /**
  * Session 6G evidence: screenshots and on-screen book measurements of both lessons.
  *
@@ -68,7 +69,10 @@ for (const view of VIEWS) {
         right: Math.max(...bs.map((b) => b.right)),
         bottom: Math.max(...bs.map((b) => b.bottom)),
       });
-      const paper = union(box(desk.querySelector(".gs-page-text")), box(desk.querySelector(".gs-page-figure")));
+      const paper = union(
+        box(desk.querySelector(".gs-page-text")),
+        box(desk.querySelector(".gs-page-figure")),
+      );
       const boards = box(desk.querySelector(".gs-boards"));
       const bar = box(document.querySelector(".reader-bar"));
       const d = box(desk);

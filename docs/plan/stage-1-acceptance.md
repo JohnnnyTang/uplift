@@ -1,5 +1,7 @@
 # Stage 1 integrated acceptance ledger
 
+**6G presentation update (2026-11-17):** the larger fitted book and study desk await owner review; see [desk evidence](../review/book-revision/desk-refinement/README.md) and D-W6-6G. Baseline release approval is retained.
+
 ## Owner update · Stage 1 release · 2026-11-16
 
 The owner reported that **expert review is done by the project team** and directed that

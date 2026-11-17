@@ -164,6 +164,19 @@ test("PB1 PB4: lesson 2 fits 1366×768 and 1440×900 with no page scroll; the pi
     const g = await figureGeometry();
     const xs = g.outline!.map((p) => p.x);
     const ys = g.outline!.map((p) => p.y);
+    const host = (await l2().boundingBox())!;
+    const paper = (await page.locator(".ps-desk .gs-spread").boundingBox())!;
+    const boards = (await page.locator(".ps-desk .gs-boards").boundingBox())!;
+    expect(paper.width).toBeGreaterThan(w === 1366 ? 850 : 1050);
+    expect(Math.min(...ys)).toBeGreaterThanOrEqual(host.y);
+    expect(boards.y + boards.height).toBeLessThanOrEqual(host.y + host.height);
+    const paperCentre = (paper.y + paper.height / 2 - host.y) / host.height;
+    expect(paperCentre).toBeGreaterThan(0.45);
+    expect(paperCentre).toBeLessThan(0.65);
+    const decoration = page.locator(".ps-desk .hachure-desk");
+    await expect(decoration).toHaveAttribute("aria-hidden", "true");
+    await expect(decoration).toHaveCSS("pointer-events", "none");
+    await expect(decoration.locator("button, input, a, [tabindex]")).toHaveCount(0);
     const block = `${Math.round(Math.max(...xs) - Math.min(...xs))}×${Math.round(Math.max(...ys) - Math.min(...ys))} px`;
     test
       .info()
