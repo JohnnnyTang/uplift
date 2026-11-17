@@ -1,0 +1,562 @@
+[
+  {
+    "view": "1366x768",
+    "lesson": "lesson1",
+    "mode": "tilted",
+    "transform": "rotateX(48deg) scale3d(0.726882, 0.726882, 0.726882)",
+    "desk": {
+      "left": 0,
+      "top": 86,
+      "right": 1366,
+      "bottom": 674
+    },
+    "paper": {
+      "left": 240,
+      "top": 200,
+      "right": 1126,
+      "bottom": 618
+    },
+    "boards": {
+      "left": 213,
+      "top": 221,
+      "right": 1153,
+      "bottom": 657
+    },
+    "paperWidth": 886,
+    "paperHeight": 419,
+    "verticalCentre": 0.578,
+    "gapAbove": 135,
+    "gapBelowToBar": 39,
+    "blockTopMargin": 67,
+    "titleHeightPx": 17,
+    "bodyCssFontPx": 13,
+    "scrollW": 1366,
+    "scrollH": 768,
+    "errors": []
+  },
+  {
+    "view": "1366x768",
+    "lesson": "lesson2",
+    "mode": "tilted",
+    "transform": "rotateX(48deg) scale3d(0.726882, 0.726882, 0.726882)",
+    "desk": {
+      "left": 0,
+      "top": 86,
+      "right": 1366,
+      "bottom": 674
+    },
+    "paper": {
+      "left": 240,
+      "top": 200,
+      "right": 1126,
+      "bottom": 618
+    },
+    "boards": {
+      "left": 213,
+      "top": 221,
+      "right": 1153,
+      "bottom": 657
+    },
+    "paperWidth": 886,
+    "paperHeight": 419,
+    "verticalCentre": 0.578,
+    "gapAbove": 135,
+    "gapBelowToBar": 39,
+    "blockTopMargin": 19,
+    "titleHeightPx": 17,
+    "bodyCssFontPx": 13,
+    "scrollW": 1366,
+    "scrollH": 768,
+    "errors": []
+  },
+  {
+    "view": "1440x900",
+    "lesson": "lesson1",
+    "mode": "tilted",
+    "transform": "rotateX(48deg) scale3d(0.909057, 0.909057, 0.909057)",
+    "desk": {
+      "left": 0,
+      "top": 86,
+      "right": 1440,
+      "bottom": 806
+    },
+    "paper": {
+      "left": 153,
+      "top": 218,
+      "right": 1287,
+      "bottom": 740
+    },
+    "boards": {
+      "left": 119,
+      "top": 245,
+      "right": 1321,
+      "bottom": 788
+    },
+    "paperWidth": 1135,
+    "paperHeight": 522,
+    "verticalCentre": 0.58,
+    "gapAbove": 158,
+    "gapBelowToBar": 40,
+    "blockTopMargin": 86,
+    "titleHeightPx": 20,
+    "bodyCssFontPx": 13,
+    "scrollW": 1440,
+    "scrollH": 900,
+    "errors": []
+  },
+  {
+    "view": "1440x900",
+    "lesson": "lesson2",
+    "mode": "tilted",
+    "transform": "rotateX(48deg) scale3d(0.909057, 0.909057, 0.909057)",
+    "desk": {
+      "left": 0,
+      "top": 86,
+      "right": 1440,
+      "bottom": 806
+    },
+    "paper": {
+      "left": 153,
+      "top": 218,
+      "right": 1287,
+      "bottom": 740
+    },
+    "boards": {
+      "left": 119,
+      "top": 245,
+      "right": 1321,
+      "bottom": 788
+    },
+    "paperWidth": 1135,
+    "paperHeight": 522,
+    "verticalCentre": 0.58,
+    "gapAbove": 158,
+    "gapBelowToBar": 40,
+    "blockTopMargin": 10,
+    "titleHeightPx": 20,
+    "bodyCssFontPx": 13,
+    "scrollW": 1440,
+    "scrollH": 900,
+    "errors": []
+  },
+  {
+    "view": "1920x1080",
+    "lesson": "lesson1",
+    "mode": "tilted",
+    "transform": "rotateX(48deg) scale3d(1.15018, 1.15018, 1.15018)",
+    "desk": {
+      "left": 0,
+      "top": 86,
+      "right": 1920,
+      "bottom": 986
+    },
+    "paper": {
+      "left": 254,
+      "top": 251,
+      "right": 1666,
+      "bottom": 907
+    },
+    "boards": {
+      "left": 212,
+      "top": 284,
+      "right": 1708,
+      "bottom": 967
+    },
+    "paperWidth": 1412,
+    "paperHeight": 656,
+    "verticalCentre": 0.585,
+    "gapAbove": 198,
+    "gapBelowToBar": 41,
+    "blockTopMargin": 107,
+    "titleHeightPx": 26,
+    "bodyCssFontPx": 13,
+    "scrollW": 1920,
+    "scrollH": 1080,
+    "errors": []
+  },
+  {
+    "view": "1920x1080",
+    "lesson": "lesson2",
+    "mode": "tilted",
+    "transform": "rotateX(48deg) scale3d(1.15018, 1.15018, 1.15018)",
+    "desk": {
+      "left": 0,
+      "top": 86,
+      "right": 1920,
+      "bottom": 986
+    },
+    "paper": {
+      "left": 254,
+      "top": 251,
+      "right": 1666,
+      "bottom": 907
+    },
+    "boards": {
+      "left": 212,
+      "top": 284,
+      "right": 1708,
+      "bottom": 967
+    },
+    "paperWidth": 1412,
+    "paperHeight": 656,
+    "verticalCentre": 0.585,
+    "gapAbove": 198,
+    "gapBelowToBar": 41,
+    "blockTopMargin": 14,
+    "titleHeightPx": 26,
+    "bodyCssFontPx": 13,
+    "scrollW": 1920,
+    "scrollH": 1080,
+    "errors": []
+  },
+  {
+    "view": "2560x1440",
+    "lesson": "lesson1",
+    "mode": "tilted",
+    "transform": "rotateX(48deg) scale3d(1.64091, 1.64091, 1.64091)",
+    "desk": {
+      "left": 0,
+      "top": 86,
+      "right": 2560,
+      "bottom": 1346
+    },
+    "paper": {
+      "left": 268,
+      "top": 309,
+      "right": 2292,
+      "bottom": 1239
+    },
+    "boards": {
+      "left": 208,
+      "top": 356,
+      "right": 2352,
+      "bottom": 1325
+    },
+    "paperWidth": 2024,
+    "paperHeight": 930,
+    "verticalCentre": 0.589,
+    "gapAbove": 270,
+    "gapBelowToBar": 43,
+    "blockTopMargin": 141,
+    "titleHeightPx": 36,
+    "bodyCssFontPx": 13,
+    "scrollW": 2560,
+    "scrollH": 1440,
+    "errors": []
+  },
+  {
+    "view": "2560x1440",
+    "lesson": "lesson2",
+    "mode": "tilted",
+    "transform": "rotateX(48deg) scale3d(1.64091, 1.64091, 1.64091)",
+    "desk": {
+      "left": 0,
+      "top": 86,
+      "right": 2560,
+      "bottom": 1346
+    },
+    "paper": {
+      "left": 268,
+      "top": 309,
+      "right": 2292,
+      "bottom": 1239
+    },
+    "boards": {
+      "left": 208,
+      "top": 356,
+      "right": 2352,
+      "bottom": 1325
+    },
+    "paperWidth": 2024,
+    "paperHeight": 930,
+    "verticalCentre": 0.589,
+    "gapAbove": 270,
+    "gapBelowToBar": 43,
+    "blockTopMargin": 5,
+    "titleHeightPx": 36,
+    "bodyCssFontPx": 13,
+    "scrollW": 2560,
+    "scrollH": 1440,
+    "errors": []
+  },
+  {
+    "view": "phone-390",
+    "lesson": "lesson1",
+    "mode": "flat",
+    "transform": "",
+    "desk": {
+      "left": 0,
+      "top": 236,
+      "right": 390,
+      "bottom": 2779
+    },
+    "paper": {
+      "left": 10,
+      "top": 246,
+      "right": 380,
+      "bottom": 2687
+    },
+    "boards": {
+      "left": 4,
+      "top": 240,
+      "right": 386,
+      "bottom": 2693
+    },
+    "paperWidth": 370,
+    "paperHeight": 2440,
+    "verticalCentre": 2.263,
+    "gapAbove": 4,
+    "gapBelowToBar": -1913,
+    "blockTopMargin": 1344,
+    "titleHeightPx": 34,
+    "bodyCssFontPx": 16,
+    "scrollW": 390,
+    "scrollH": 2779,
+    "errors": []
+  },
+  {
+    "view": "phone-390",
+    "lesson": "lesson2",
+    "mode": "flat",
+    "transform": "",
+    "desk": {
+      "left": 0,
+      "top": 236,
+      "right": 390,
+      "bottom": 2263
+    },
+    "paper": {
+      "left": 10,
+      "top": 246,
+      "right": 380,
+      "bottom": 2171
+    },
+    "boards": {
+      "left": 4,
+      "top": 240,
+      "right": 386,
+      "bottom": 2177
+    },
+    "paperWidth": 370,
+    "paperHeight": 1925,
+    "verticalCentre": 1.789,
+    "gapAbove": 4,
+    "gapBelowToBar": -1397,
+    "blockTopMargin": 1128,
+    "titleHeightPx": 34,
+    "bodyCssFontPx": 16,
+    "scrollW": 390,
+    "scrollH": 2263,
+    "errors": []
+  },
+  {
+    "view": "reflow-320",
+    "lesson": "lesson1",
+    "mode": "flat",
+    "transform": "",
+    "desk": {
+      "left": 0,
+      "top": 236,
+      "right": 320,
+      "bottom": 2974
+    },
+    "paper": {
+      "left": 10,
+      "top": 246,
+      "right": 310,
+      "bottom": 2882
+    },
+    "boards": {
+      "left": 4,
+      "top": 240,
+      "right": 316,
+      "bottom": 2888
+    },
+    "paperWidth": 300,
+    "paperHeight": 2635,
+    "verticalCentre": 2.657,
+    "gapAbove": 4,
+    "gapBelowToBar": -2152,
+    "blockTopMargin": 1576,
+    "titleHeightPx": 34,
+    "bodyCssFontPx": 16,
+    "scrollW": 320,
+    "scrollH": 2974,
+    "errors": []
+  },
+  {
+    "view": "reflow-320",
+    "lesson": "lesson2",
+    "mode": "flat",
+    "transform": "",
+    "desk": {
+      "left": 0,
+      "top": 255,
+      "right": 320,
+      "bottom": 2508
+    },
+    "paper": {
+      "left": 10,
+      "top": 265,
+      "right": 310,
+      "bottom": 2416
+    },
+    "boards": {
+      "left": 4,
+      "top": 259,
+      "right": 316,
+      "bottom": 2422
+    },
+    "paperWidth": 300,
+    "paperHeight": 2151,
+    "verticalCentre": 2.255,
+    "gapAbove": 4,
+    "gapBelowToBar": -1686,
+    "blockTopMargin": 1343,
+    "titleHeightPx": 34,
+    "bodyCssFontPx": 16,
+    "scrollW": 320,
+    "scrollH": 2508,
+    "errors": []
+  },
+  {
+    "view": "reduced-motion-1440",
+    "lesson": "lesson1",
+    "mode": "flat",
+    "transform": "",
+    "desk": {
+      "left": 0,
+      "top": 86,
+      "right": 1440,
+      "bottom": 1229
+    },
+    "paper": {
+      "left": 80,
+      "top": 102,
+      "right": 1360,
+      "bottom": 1129
+    },
+    "boards": {
+      "left": 74,
+      "top": 96,
+      "right": 1366,
+      "bottom": 1135
+    },
+    "paperWidth": 1280,
+    "paperHeight": 1027,
+    "verticalCentre": 0.714,
+    "gapAbove": 10,
+    "gapBelowToBar": -307,
+    "blockTopMargin": 170,
+    "titleHeightPx": 48,
+    "bodyCssFontPx": 16,
+    "scrollW": 1440,
+    "scrollH": 1229,
+    "errors": []
+  },
+  {
+    "view": "reduced-motion-1440",
+    "lesson": "lesson2",
+    "mode": "flat",
+    "transform": "",
+    "desk": {
+      "left": 0,
+      "top": 86,
+      "right": 1440,
+      "bottom": 1128
+    },
+    "paper": {
+      "left": 80,
+      "top": 102,
+      "right": 1360,
+      "bottom": 1028
+    },
+    "boards": {
+      "left": 74,
+      "top": 96,
+      "right": 1366,
+      "bottom": 1034
+    },
+    "paperWidth": 1280,
+    "paperHeight": 926,
+    "verticalCentre": 0.646,
+    "gapAbove": 10,
+    "gapBelowToBar": -206,
+    "blockTopMargin": 150,
+    "titleHeightPx": 48,
+    "bodyCssFontPx": 16,
+    "scrollW": 1440,
+    "scrollH": 1128,
+    "errors": []
+  },
+  {
+    "view": "more-contrast-1440",
+    "lesson": "lesson1",
+    "mode": "tilted",
+    "transform": "rotateX(48deg) scale3d(0.909057, 0.909057, 0.909057)",
+    "desk": {
+      "left": 0,
+      "top": 86,
+      "right": 1440,
+      "bottom": 806
+    },
+    "paper": {
+      "left": 153,
+      "top": 218,
+      "right": 1287,
+      "bottom": 740
+    },
+    "boards": {
+      "left": 119,
+      "top": 245,
+      "right": 1321,
+      "bottom": 788
+    },
+    "paperWidth": 1135,
+    "paperHeight": 522,
+    "verticalCentre": 0.58,
+    "gapAbove": 158,
+    "gapBelowToBar": 40,
+    "blockTopMargin": 86,
+    "titleHeightPx": 20,
+    "bodyCssFontPx": 13,
+    "scrollW": 1440,
+    "scrollH": 900,
+    "errors": []
+  },
+  {
+    "view": "more-contrast-1440",
+    "lesson": "lesson2",
+    "mode": "tilted",
+    "transform": "rotateX(48deg) scale3d(0.909057, 0.909057, 0.909057)",
+    "desk": {
+      "left": 0,
+      "top": 86,
+      "right": 1440,
+      "bottom": 806
+    },
+    "paper": {
+      "left": 153,
+      "top": 218,
+      "right": 1287,
+      "bottom": 740
+    },
+    "boards": {
+      "left": 119,
+      "top": 245,
+      "right": 1321,
+      "bottom": 788
+    },
+    "paperWidth": 1135,
+    "paperHeight": 522,
+    "verticalCentre": 0.58,
+    "gapAbove": 158,
+    "gapBelowToBar": 40,
+    "blockTopMargin": 10,
+    "titleHeightPx": 20,
+    "bodyCssFontPx": 13,
+    "scrollW": 1440,
+    "scrollH": 900,
+    "errors": []
+  }
+]

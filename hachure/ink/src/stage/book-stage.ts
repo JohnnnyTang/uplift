@@ -32,10 +32,14 @@ import { MeshBasicNodeMaterial, ShadowNodeMaterial, WebGPURenderer } from "three
 import type { TransitionState } from "../transition/index";
 import { NATURAL_TOKENS } from "../materials/natural/palette";
 import {
+  type BookFurniture,
   type Rect,
   type StageGeometry,
+  type StageInsets,
   bookTransformCss,
+  fitBookScale,
   pageFrameMatrix,
+  projectedBookBounds,
   stageCamera,
   tiltedBookFits,
 } from "./camera-match";
@@ -80,6 +84,29 @@ export type StageBackendRequest = "auto" | "webgpu" | "webgl2";
 export const FLAT_STAGE_QUERY =
   "(max-width: 60rem), (max-height: 34rem), (prefers-reduced-motion: reduce), (forced-colors: active)";
 
+/**
+ * A "contain" fit of the tilted book: the stage picks the largest view scale in `[minScale, maxScale]` at
+ * which the book and its furniture stay inside the stage less the insets, at the default pose (the book's
+ * opening tilt, no turn). The reader's own turn, tilt and zoom then act on that size. View-only.
+ */
+export interface BookStageFit {
+  /** Screen space kept clear around the book (unit: CSS pixels); read at every relayout. */
+  readonly insets: () => StageInsets;
+  /** Boards and page block beyond the paper (unit: book layout pixels). Default: none. */
+  readonly furniture?: BookFurniture;
+  /**
+   * Centre the tilted book's projected box between the insets. Under the tilt a book centred in layout
+   * looks low (its near edge is magnified, its far edge shrunk), so the stage moves it by a layout offset
+   * (`top` on the book element, not a transform): the camera match, the drawing and hit tests all read
+   * the same laid-out position. Default false.
+   */
+  readonly centre?: boolean;
+  /** Default 0.4. */
+  readonly minScale?: number;
+  /** Default 2. */
+  readonly maxScale?: number;
+}
+
 export interface BookStageOptions {
   /** The stage viewport: the desk. Gets `perspective`; the canvas covers it in tilted mode. */
   readonly host: HTMLElement;
@@ -107,6 +134,11 @@ export interface BookStageOptions {
    * rises by the same angle instead. Bounded to 0–30. Default 0 (no tip). View-only.
    */
   readonly pitchDeg?: number;
+  /**
+   * Fits the tilted book to the stage (see `BookStageFit`). Without it the book keeps its layout size and
+   * only shrinks, in steps, until its paper corners clear a fixed margin (the behaviour before 6G).
+   */
+  readonly fit?: BookStageFit;
   /** Default "auto": flat when `flatQuery` matches or the tilted book does not fit. */
   readonly mode?: StageModeRequest;
   readonly flatQuery?: string;
@@ -196,6 +228,9 @@ class BookStageImpl implements BookStage {
   private currentMode: StageMode = "flat";
   private request: StageModeRequest;
   private currentView: BookView;
+  private readonly defaultTiltDeg: number;
+  /** The layout offset (`top`, CSS pixels) that centres the fitted book; 0 when not centring. */
+  private centreOffsetPx = 0;
   private media: MediaQueryList | null = null;
   private observer: ResizeObserver | null = null;
   private frameHandle = 0;
@@ -210,6 +245,7 @@ class BookStageImpl implements BookStage {
   constructor(options: BookStageOptions) {
     this.o = options;
     this.currentView = clampBookView({ tiltDeg: options.tiltDeg ?? 48, orbitDeg: 0, zoom: 1 });
+    this.defaultTiltDeg = this.currentView.tiltDeg;
     this.request = options.mode ?? "auto";
     this.canvas = document.createElement("canvas");
     this.canvas.className = "hachure-stage-canvas";
@@ -320,6 +356,7 @@ class BookStageImpl implements BookStage {
       host.style.perspectiveOrigin = "";
       book.style.transform = "";
       book.style.transformOrigin = "";
+      this.clearCentreOffset();
       host.dataset.stageMode = "flat";
       // Slightly larger than the frame so the cast shadow is not clipped at the frame edge.
       Object.assign(this.canvas.style, { inset: "-3% auto auto -6%", width: "116%", height: "109%" });
@@ -329,6 +366,12 @@ class BookStageImpl implements BookStage {
     this.currentMode = mode;
     this.relayout();
     if (changed) this.o.onModeChange?.(mode);
+  }
+
+  private clearCentreOffset(): void {
+    if (!this.centreOffsetPx) return;
+    this.centreOffsetPx = 0;
+    this.o.book.style.top = "";
   }
 
   private prefersFlat(): boolean {
@@ -366,8 +409,44 @@ class BookStageImpl implements BookStage {
       pivotHeightPx: Math.min(book.offsetWidth, book.offsetHeight) * 0.06,
       viewScale: 1,
     };
-    // Reserve space for the physical binding beyond the DOM paper rectangle.
-    while (geometry.viewScale > 0.55 && !tiltedBookFits(geometry, 64, 0)) geometry.viewScale *= 0.98;
+    const fit = this.o.fit;
+    if (fit) {
+      // Fitted and centred at the default pose, so turning or tilting the book does not resize or move it
+      // under the reader's hand.
+      const insets = fit.insets();
+      const laidOutY = geometry.book.y - this.centreOffsetPx;
+      let offset = fit.centre ? this.centreOffsetPx : 0;
+      const pose = (y: number) => ({
+        ...geometry,
+        book: { ...geometry.book, y },
+        tiltDeg: this.defaultTiltDeg,
+        orbitDeg: 0,
+      });
+      const fitAt = (y: number) =>
+        fitBookScale(pose(y), insets, fit.furniture, fit.minScale, fit.maxScale);
+      let scale = fitAt(laidOutY + offset);
+      if (fit.centre) {
+        // Shifting the book changes its perspective, and so the best scale: a few rounds settle both.
+        const middle = (insets.top + heightPx - insets.bottom) / 2;
+        for (let i = 0; i < 6; i++) {
+          const b = projectedBookBounds({ ...pose(laidOutY + offset), viewScale: scale }, fit.furniture);
+          const error = middle - (b.top + b.bottom) / 2;
+          if (Math.abs(error) < 0.5) break;
+          offset += error;
+          scale = fitAt(laidOutY + offset);
+        }
+        offset = Math.round(offset);
+      }
+      if (offset !== this.centreOffsetPx) {
+        this.centreOffsetPx = offset;
+        book.style.top = offset ? `${offset}px` : "";
+      }
+      geometry.book = layoutRect(book, host);
+      geometry.viewScale = scale;
+    } else {
+      // Reserve space for the physical binding beyond the DOM paper rectangle.
+      while (geometry.viewScale > 0.55 && !tiltedBookFits(geometry, 64, 0)) geometry.viewScale *= 0.98;
+    }
     geometry.viewScale *= this.currentView.zoom;
     return geometry;
   }
@@ -569,6 +648,7 @@ class BookStageImpl implements BookStage {
     host.style.perspectiveOrigin = "";
     book.style.transform = "";
     book.style.transformOrigin = "";
+    this.clearCentreOffset();
     delete host.dataset.stageMode;
     this.canvas.remove();
     this.catcher.geometry.dispose();

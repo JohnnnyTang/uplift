@@ -10,6 +10,7 @@ export {
   clampBookView,
   type BookView,
   type BookStage,
+  type BookStageFit,
   type BookStageOptions,
   type StageBackendRequest,
   type StageMode,
@@ -48,11 +49,15 @@ export {
   crustPatternSvg,
 } from "./crust";
 export {
+  type BookFurniture,
   type Rect,
   type StageCamera,
   type StageGeometry,
+  type StageInsets,
   bookTransformCss,
   cssProjectBookPoint,
+  fitBookScale,
+  projectedBookBounds,
   pageFrameMatrix,
   pageToWorld,
   stageCamera,

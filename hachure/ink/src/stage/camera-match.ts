@@ -154,6 +154,82 @@ export function tiltedBookFits(g: StageGeometry, marginPx = 8, minScale = 0.72):
   return (r - l) / g.book.width >= minScale;
 }
 
+/** Screen margins the fitted book keeps clear inside the stage (unit: CSS pixels). */
+export interface StageInsets {
+  readonly top: number;
+  readonly right: number;
+  readonly bottom: number;
+  readonly left: number;
+}
+
+/**
+ * The book's physical extent beyond its paper rectangle, in book layout pixels: boards past the page edges
+ * and the page block below the paper. Scales with the book, unlike `StageInsets`.
+ */
+export interface BookFurniture {
+  readonly sidePx: number;
+  readonly topPx: number;
+  readonly bottomPx: number;
+  /** Thickness below the paper (unit: book layout pixels). */
+  readonly depthPx: number;
+}
+
+const NO_FURNITURE: BookFurniture = { sidePx: 0, topPx: 0, bottomPx: 0, depthPx: 0 };
+
+/** Stage-pixel bounding box of the book and its furniture, as the camera from `stageCamera` sees it. */
+export function projectedBookBounds(
+  g: StageGeometry,
+  furniture: BookFurniture = NO_FURNITURE,
+): { left: number; top: number; right: number; bottom: number } {
+  let left = Infinity;
+  let top = Infinity;
+  let right = -Infinity;
+  let bottom = -Infinity;
+  for (const X of [-furniture.sidePx, g.book.width + furniture.sidePx])
+    for (const Z of [-furniture.topPx, g.book.height + furniture.bottomPx])
+      for (const Y of furniture.depthPx ? [0, -furniture.depthPx] : [0]) {
+        const [sx, sy] = worldToStage(g, pageToWorld(g, X, Y, Z));
+        left = Math.min(left, sx);
+        right = Math.max(right, sx);
+        top = Math.min(top, sy);
+        bottom = Math.max(bottom, sy);
+      }
+  return { left, top, right, bottom };
+}
+
+/**
+ * The largest view scale in `[minScale, maxScale]` at which the tilted book and its furniture stay inside
+ * the stage less `insets` ("contain"). Returns `minScale` when even that does not fit. The book scales
+ * about its own centre, so the fit is monotonic and found by bisection; deterministic.
+ */
+export function fitBookScale(
+  g: StageGeometry,
+  insets: StageInsets,
+  furniture: BookFurniture = NO_FURNITURE,
+  minScale = 0.4,
+  maxScale = 2,
+): number {
+  const fits = (viewScale: number) => {
+    const b = projectedBookBounds({ ...g, viewScale }, furniture);
+    return (
+      b.left >= insets.left &&
+      b.top >= insets.top &&
+      b.right <= g.widthPx - insets.right &&
+      b.bottom <= g.heightPx - insets.bottom
+    );
+  };
+  if (!(maxScale > minScale) || !fits(minScale)) return minScale;
+  if (fits(maxScale)) return maxScale;
+  let lo = minScale;
+  let hi = maxScale;
+  for (let i = 0; i < 28; i++) {
+    const mid = (lo + hi) / 2;
+    if (fits(mid)) lo = mid;
+    else hi = mid;
+  }
+  return lo;
+}
+
 function sub(a: Vec3, b: Vec3): Vec3 {
   return [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
 }

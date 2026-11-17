@@ -28,6 +28,7 @@ import type { AttachedBlockArrows, BlockDirection } from "@hachure/ink/plates";
 import type * as GlacialInk from "@hachure/ink/glacial";
 import { createReadingPanel } from "../glacial/reading-panel";
 import { createViewControls } from "../glacial/view-controls";
+import { BOOK_FIT, mountStudyDesk } from "../glacial/desk";
 import { PLATES_DEFAULT_PROBES, platesProbeValues, scaleBarKm } from "./bindings";
 import { type LevelText, type PlatesSceneCopy, PLATES_PLACEHOLDER_COPY } from "./copy";
 import { platesDressingRules } from "./dressing";
@@ -632,6 +633,8 @@ export async function mountPlatesScene(
   motionQuery.addEventListener("change", onMotion);
 
   // ---- Static fallback when 3D is off or unavailable ----
+  // The study desk under the book (6G): decoration, the same desk as lesson 1.
+  const studyDesk = mountStudyDesk(book);
   const stageModule = o.staticOnly ? null : await import("@hachure/ink/stage").catch(() => null);
   const binding = stageModule?.createBookBinding(book);
   let disposed = false;
@@ -640,6 +643,7 @@ export async function mountPlatesScene(
     disposed = true;
     motionQuery.removeEventListener("change", onMotion);
     binding?.dispose();
+    studyDesk.dispose();
     reading.dispose();
     unsubscribe();
     if (ownsSequence) source.dispose();
@@ -732,6 +736,8 @@ export async function mountPlatesScene(
     diorama: dio,
     tiltDeg: PLATES_TILT_DEG,
     pitchDeg: PLATES_BLOCK_PITCH_DEG,
+    // D-W6-6G: the same fit as lesson 1, so the book keeps its size at the turn.
+    fit: BOOK_FIT,
     mode: o.mode ?? "auto",
     backend: o.backend ?? "auto",
     onContextLost: () => {

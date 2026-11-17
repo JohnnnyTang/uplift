@@ -9,6 +9,7 @@
     ".": "./src/index.ts",
     "./view": "./src/view/index.ts",
     "./stage": "./src/stage/index.ts",
+    "./desk": "./src/desk/index.ts",
     "./transition": "./src/transition/index.ts",
     "./glacial": "./src/glacial/index.ts",
     "./plates": "./src/plates/index.ts"

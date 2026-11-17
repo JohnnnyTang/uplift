@@ -36,6 +36,7 @@ import {
   uValleyTeacherNotes,
 } from "@uplift/spreads";
 import { createViewControls } from "./view-controls";
+import { BOOK_FIT, mountStudyDesk } from "./desk";
 import { createReadingPanel } from "./reading-panel";
 import type { LithologyLook, ValleyDiorama } from "@hachure/ink/stage";
 import {
@@ -556,6 +557,9 @@ export async function mountGlacialScene(
     o.onPresentation?.(presentation);
   });
 
+  // The study desk under the book (6G): decoration, drawn with the page, before three.js.
+  const studyDesk = mountStudyDesk(book);
+
   // ---- three.js loads only now, after the page and its drawing have painted. ----
   const lithologyModule = await import("@hachure/ink/stage").catch(() => null);
   const binding = lithologyModule?.createBookBinding(book);
@@ -941,6 +945,7 @@ export async function mountGlacialScene(
   let unsubscribe = () => {};
   const disposeAll = async () => {
     binding?.dispose();
+    studyDesk.dispose();
     reading.dispose();
     unsubscribe();
     if (ownsSource) source.dispose();
@@ -1002,6 +1007,8 @@ export async function mountGlacialScene(
     tiltDeg: TILT_DEG,
     // D-W6-6E: a larger valley on the paper; flat layouts retain their fitted camera.
     footprintFill: 1.5,
+    // D-W6-6G: the book fills the desk between the view controls and the bar.
+    fit: BOOK_FIT,
     mode: o.mode ?? "auto",
     backend: o.backend ?? "auto",
     onContextLost: () => {

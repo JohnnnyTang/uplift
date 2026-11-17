@@ -6,9 +6,11 @@
 /* The tilted book stage (spread 1) fills the viewport itself; the bottom bar floats over the desk. */
 #app[data-view="reader"]:has(.reader-stage) {
   padding: 0;
+  /* D-W6-6G: the study desk's wood (painted by the scene) around and behind the book. */
+  background: var(--reader-desk, #4a3324) var(--uplift-desk-wood, none) center / 1600px 1000px;
 }
 :root[data-contrast="more"] #app[data-view="reader"] {
-  background: #4b4945;
+  background: #2b211a;
 }
 @media (min-width: 60.001rem) and (min-height: 740px) {
   #app[data-view="reader"] .playable-drawing {
