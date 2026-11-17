@@ -1,0 +1,62 @@
+[WebServer] (node:20460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ pnpm --filter @uplift/book build
+[WebServer] (node:30348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ vite build
+[WebServer] (node:21176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] [plugin builtin:vite-reporter] 
+[WebServer] (!) Some chunks are larger than 500 kB after minification. Consider:
+[WebServer] - Using dynamic import() to code-split the application
+[WebServer] - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+[WebServer] - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[WebServer] (node:18792) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ vite preview "--host" "127.0.0.1" "--port" "4183" "--strictPort"
+[WebServer] (node:25152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:5124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:29288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:13568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › e2e\glacial-acceptance.spec.ts:125:1 › PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard first (5.0m)
+
+
+  1) [chromium] › e2e\glacial-acceptance.spec.ts:125:1 › PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard first 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 100
+    Received:    88.365
+
+    Call Log:
+    - Test timeout of 300000ms exceeded
+
+      50 |   await page.getByRole("button", { name: "Play", exact: true }).click();
+      51 |   await expect(desk(page)).toHaveAttribute("data-playing", "true");
+    > 52 |   await expect.poll(() => years(page), { timeout: 200_000 }).toBeGreaterThanOrEqual(atLeast);
+         |                                                              ^
+      53 |   const pause = page.getByRole("button", { name: "Pause", exact: true });
+      54 |   if (await pause.isVisible()) await pause.click();
+      55 |   await expect(desk(page)).toHaveAttribute("data-playing", "false");
+        at playUntil (D:\code\uplift\.claude\worktrees\agent-a2555015925ca70b1\e2e\glacial-acceptance.spec.ts:52:62)
+        at D:\code\uplift\.claude\worktrees\agent-a2555015925ca70b1\e2e\glacial-acceptance.spec.ts:275:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\glacial-acceptance-PB4-PB9-3050f-efault-route-keyboard-first-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\glacial-acceptance-PB4-PB9-3050f-efault-route-keyboard-first-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\glacial-acceptance-PB4-PB9-3050f-efault-route-keyboard-first-chromium\error-context.md
+
+  1 failed
+    [chromium] › e2e\glacial-acceptance.spec.ts:125:1 › PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard first 

@@ -4,7 +4,11 @@
  * Natural colour lives only in the figure.
  */
 .gs-review {
-  --gs-desk: #7a776f;
+  /* D-W6-6G: the desk is oiled walnut; --gs-desk is its colour where the wood texture is not drawn. */
+  --gs-desk: #4a3324;
+  --gs-book-width: 1040px;
+  /* Tallest the left column may grow on the tilted book before it scrolls inside the page. */
+  --gs-column-max: 640px;
   --gs-desk-line: #6c6962;
   /* Cloth of the boards and cover: a dark warm neutral carrying no hue (D-W5-R1 item 8). */
   --gs-board: #3b352f;
@@ -17,7 +21,7 @@
   --gs-rule: #d8d4c8;
   --gs-focus: #0072b2;
   color: var(--gs-ink);
-  background: var(--gs-desk);
+  background: var(--gs-desk) var(--uplift-desk-wood, none) center / 1600px 1000px;
   font:
     16px/1.5 Georgia,
     "Times New Roman",
@@ -58,11 +62,12 @@
   container-type: inline-size;
 }
 .gs-desk[data-stage-mode="tilted"] .gs-book {
-  /* Page proportions of a large-format textbook; the tilt foreshortens the height. */
-  width: min(
-    78vw,
-    calc((100dvh - var(--gs-controls-height, 0px) - var(--reader-bar-space, 0px) - 70px) * 1.25)
-  );
+  /*
+   * D-W6-6G: one layout width at every viewport (BOOK_DESIGN_WIDTH_PX in desk.ts); the stage scales the
+   * whole tilted book to fill the desk, so its text scales with it and is never squeezed to fit.
+   */
+  width: var(--gs-book-width);
+  flex: none;
   aspect-ratio: auto;
   transform-style: flat;
 }
@@ -430,7 +435,7 @@
   display: flow-root;
   padding: 0;
   min-height: 100svh;
-  background: var(--gs-desk);
+  background: var(--gs-desk) var(--uplift-desk-wood, none) center / 1600px 1000px;
 }
 .gs-review canvas.hachure-stage-canvas {
   border: 0;
@@ -693,13 +698,6 @@
 
 /* Short laptop screens keep a full book: definitions expand through the reading panel. */
 @media (min-width: 60.01rem) and (max-height: 820px) {
-  .gs-desk[data-stage-mode="tilted"] .gs-book {
-    width: min(
-      78vw,
-      calc((100dvh - var(--gs-controls-height, 0px) - var(--reader-bar-space, 0px) - 70px) * 1.5)
-    );
-    aspect-ratio: auto;
-  }
   .gs-desk[data-stage-mode="tilted"] .gs-keywords {
     grid-template-columns: 1fr 1fr;
     gap: 0.2em 0.6em;
@@ -743,6 +741,28 @@
 }
 .gs-desk[data-stage-mode="flat"] .hachure-book-binding {
   display: none;
+}
+/* D-W6-6G: the 3D study desk lies under the tilted book only; the flat page keeps the plain wood. */
+.gs-desk:not([data-stage-mode="tilted"]) .hachure-desk {
+  display: none;
+}
+@media (forced-colors: active) {
+  .hachure-desk {
+    display: none;
+  }
+}
+/* More contrast: a plain dark desk with only the book's shadow; no grain, lamp or objects. */
+:root[data-contrast="more"] .hachure-desk-top {
+  background: #2b211a !important;
+}
+:root[data-contrast="more"] .hachure-desk-light,
+:root[data-contrast="more"] .hachure-desk-objects,
+:root[data-contrast="more"] .hachure-desk-shadows {
+  display: none;
+}
+:root[data-contrast="more"] .gs-review,
+:root[data-contrast="more"] #app.gs-review {
+  background: #2b211a;
 }
 
 .gs-review {
@@ -967,7 +987,8 @@
 .gs-desk[data-stage-mode="tilted"]:not(.ps-desk):has(.gs-page-text .gs-flap[open])
   .gs-page-text
   .gs-text-column {
-  max-height: calc((100dvh - var(--gs-controls-height, 0px) - var(--reader-bar-space, 0px)) * 1.15);
+  /* D-W6-6G: a share of the fixed book width, so the page keeps the spread's height. */
+  max-height: var(--gs-column-max);
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;

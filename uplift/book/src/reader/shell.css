@@ -5,7 +5,7 @@
  * header and no form controls in the chrome. Legacy research and widget fixtures keep their own styles.
  */
 .reader-shell {
-  --reader-desk: #7a776f;
+  --reader-desk: #4a3324;
   --reader-paper: #faf8f2;
   --reader-ink: #292b2c;
   --reader-ink-soft: #5d5f5c;
@@ -21,7 +21,7 @@
   margin: auto;
 }
 :root[data-contrast="more"] .reader-shell {
-  --reader-desk: #4b4945;
+  --reader-desk: #2b211a;
   --reader-paper: #ffffff;
   --reader-ink: #000000;
   --reader-ink-soft: #2b2b2b;
@@ -473,7 +473,7 @@
   background: transparent;
 }
 :root[data-contrast="more"] .reader-stage-root.gs-review {
-  --gs-desk: #4b4945;
+  --gs-desk: #2b211a;
   --gs-paper: #ffffff;
   --gs-ink: #000000;
   --gs-ink-soft: #2b2b2b;

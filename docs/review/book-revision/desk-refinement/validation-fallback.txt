@@ -1,0 +1,34 @@
+[WebServer] (node:24552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ pnpm --filter @uplift/book build
+[WebServer] (node:29664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ vite build
+[WebServer] (node:17828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] [plugin builtin:vite-reporter] 
+[WebServer] (!) Some chunks are larger than 500 kB after minification. Consider:
+[WebServer] - Using dynamic import() to code-split the application
+[WebServer] - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+[WebServer] - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[WebServer] (node:12772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ vite preview "--host" "127.0.0.1" "--port" "4183" "--strictPort"
+[WebServer] (node:26716) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3956) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:24092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › e2e\glacial-fallbacks.spec.ts:37:1 › default glacier startup failure shows recorded runs and preserves the comparison across levels and turns (19.4s)
+  ok 2 [chromium] › e2e\glacial-fallbacks.spec.ts:91:1 › a native flap toggle queued before a level change survives recorded-scene remount (20.3s)
+  ok 3 [chromium] › e2e\glacial-fallbacks.spec.ts:111:1 › without 3D the default glacier keeps a labelled drawing, immediate reveal and keyboard page turns (2.1s)
+  ok 4 [chromium] › e2e\glacial-fallbacks.spec.ts:151:1 › recorded fallback pauses while another lesson is open and resumes the reader's playback intent (24.0s)
+  ok 5 [chromium] › e2e\glacial-fallbacks.spec.ts:202:1 › when live startup and recorded downloads both fail the book labels the illustration preview truthfully (12.4s)
+
+  5 passed (1.4m)

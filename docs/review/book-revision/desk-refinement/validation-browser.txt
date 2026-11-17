@@ -1,0 +1,133 @@
+[WebServer] (node:32232) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ pnpm --filter @uplift/book build
+[WebServer] (node:2184) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ vite build
+[WebServer] (node:2224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] [plugin builtin:vite-reporter] 
+[WebServer] (!) Some chunks are larger than 500 kB after minification. Consider:
+[WebServer] - Using dynamic import() to code-split the application
+[WebServer] - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+[WebServer] - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[WebServer] (node:16180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ vite preview "--host" "127.0.0.1" "--port" "4183" "--strictPort"
+[WebServer] (node:3068) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:31816) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 56 tests using 1 worker
+
+(node:35472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › e2e\book-acceptance.spec.ts:15:1 › integrated recording: rock choice, flap, research departure and retained return (11.5s)
+  ok  2 [chromium] › e2e\book-acceptance.spec.ts:43:3 › removed contour lesson (5M2): old deep links open the book's first spread (22.4s)
+  ok  3 [chromium] › e2e\book-acceptance.spec.ts:43:3 › removed water lesson (5N2): old deep links open the book's first spread (24.4s)
+  ok  4 [chromium] › e2e\book-acceptance.spec.ts:69:3 › actual book composition desktop-1366: the lesson and its immediate answer (5.9s)
+  ok  5 [chromium] › e2e\book-acceptance.spec.ts:69:3 › actual book composition desktop-1440: the lesson and its immediate answer (6.0s)
+  ok  6 [chromium] › e2e\book-acceptance.spec.ts:69:3 › actual book composition tablet: the lesson and its immediate answer (6.0s)
+  ok  7 [chromium] › e2e\book-acceptance.spec.ts:69:3 › actual book composition phone: the lesson and its immediate answer (5.3s)
+  ok  8 [chromium] › e2e\book-acceptance.spec.ts:69:3 › actual book composition reflow-320: the lesson and its immediate answer (4.2s)
+  ok  9 [chromium] › e2e\book-acceptance.spec.ts:69:3 › actual book composition zoom-200-equivalent: the lesson and its immediate answer (6.9s)
+  ok 10 [chromium] › e2e\book-acceptance.spec.ts:85:1 › actual keyboard reduced-motion journey and serious accessibility audit (11.6s)
+(node:9480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 [chromium] › e2e\book-shell.spec.ts:4:1 › settles before an attached page turn, coalesces, retains model and restores focus (5.7s)
+  ok 12 [chromium] › e2e\book-shell.spec.ts:37:1 › keyboard shortcuts respect fields and gestures; absolute history waits for release (4.0s)
+  ok 13 [chromium] › e2e\book-shell.spec.ts:57:1 › phone pages settle hidden scenes, disclosures, level and resize preserve state (3.3s)
+  ok 14 [chromium] › e2e\book-shell.spec.ts:80:1 › reduced motion, suspension and disposal interrupt turns coherently (1.0s)
+  ok 15 [chromium] › e2e\book-shell.spec.ts:105:1 › viewport evidence (7.7s)
+  ok 16 [chromium] › e2e\book-shell.spec.ts:138:1 › failed and delayed mounts settle navigation promises and suspension (3.9s)
+  ok 17 [chromium] › e2e\book-shell.spec.ts:171:1 › reading surface drains scene work and remains safe across navigation and disposal (2.3s)
+  ok 18 [chromium] › e2e\book-shell.spec.ts:195:1 › large reading scale reflows and remains operable (1.0s)
+  ok 19 [chromium] › e2e\book-shell.spec.ts:206:1 › reset clears visible choice and explanation without moving reset focus (1.1s)
+  x  20 [chromium] › e2e\glacial-acceptance.spec.ts:125:1 › PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard first (5.2m)
+(node:18500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 21 [chromium] › e2e\glacial-acceptance.spec.ts:290:1 › PB3 GV4: drawing → ink → colour transition into a scene standing on the tilted page (14.6s)
+  ok 22 [chromium] › e2e\glacial-acceptance.spec.ts:324:3 › PB1: the tilted spread and the bar fit 1366×768 without page scrolling (6.6s)
+  ok 23 [chromium] › e2e\glacial-acceptance.spec.ts:324:3 › PB1: the tilted spread and the bar fit 1440×900 without page scrolling (6.5s)
+  ok 24 [chromium] › e2e\glacial-acceptance.spec.ts:389:1 › PB6: the question can be skipped and the flap opens without an answer; nothing gates the book (6.7s)
+  ok 25 [chromium] › e2e\glacial-acceptance.spec.ts:406:1 › PB2 GV6: phone — the journey on a flat single page, no horizontal scroll (1.2m)
+  ok 26 [chromium] › e2e\glacial-acceptance.spec.ts:435:1 › PB3 GV6: reduced motion — flat page, crossfade, keyboard journey, nothing animating (53.4s)
+  ok 27 [chromium] › e2e\glacial-acceptance.spec.ts:460:1 › GV7 PB7: one-lesson book; the research route and privacy safeguards are retained (11.3s)
+  ok 28 [chromium] › e2e\glacial-book.spec.ts:64:1 › the default book opens on From V to U in the tilted stage, with the quiet bottom bar (6.6s)
+  ok 29 [chromium] › e2e\glacial-book.spec.ts:105:1 › the full journey on the live runtime, with the model never reset by view or level (1.9m)
+  ok 30 [chromium] › e2e\glacial-book.spec.ts:239:1 › phone: flat page, rock choice and play work, no horizontal scroll, the bar turns to lesson 2 (25.3s)
+  ok 31 [chromium] › e2e\glacial-book.spec.ts:259:1 › reduced motion: flat page, no running animations, the figure still describes its profile (5.9s)
+  ok 32 [chromium] › e2e\glacial-book.spec.ts:279:1 › serious accessibility audit of the opening spread passes (5.6s)
+  ok 33 [chromium] › e2e\plates-acceptance.spec.ts:113:1 › PB7 PL8: lesson 1 turns to lesson 2 with a real page turn, on the same tilt, focus on its title (13.7s)
+  ok 34 [chromium] › e2e\plates-acceptance.spec.ts:144:1 › PB1 PB4: lesson 2 fits 1366×768 and 1440×900 with no page scroll; the picker works before any answer (4.1s)
+  ok 35 [chromium] › e2e\plates-acceptance.spec.ts:197:1 › PL1: the picker, a dragged plate arrow and the arrow keys each choose a boundary from the shared start (1.8s)
+  ok 36 [chromium] › e2e\plates-acceptance.spec.ts:215:1 › PL2: play, pause and scrub early → late, with no time or years; viewed boundaries as labelled ghosts (5.1s)
+  ok 37 [chromium] › e2e\plates-acceptance.spec.ts:245:1 › D-W7-7G owner item 1: ghost labels sit on the page under the front face, never over it, and stay inside the page (7.0s)
+  ok 38 [chromium] › e2e\plates-acceptance.spec.ts:287:1 › D-W7-7G owner item 2: the book keeps lesson 1's 48° tilt and the block is tipped up for a higher view (65ms)
+  ok 39 [chromium] › e2e\plates-acceptance.spec.ts:314:1 › PL4 PL5: the text alternative names each crust change; one label line; authored-shapes disclosure; marks (3.2s)
+  ok 40 [chromium] › e2e\plates-acceptance.spec.ts:348:1 › PL6: Replay the drawing runs drawing → ink → colour on the tilted page and keeps boundary, stage and ghosts (8.9s)
+  ok 41 [chromium] › e2e\plates-acceptance.spec.ts:362:1 › PL7: the keyboard alone chooses, plays and scrubs; the text alternative follows (514ms)
+  ok 42 [chromium] › e2e\plates-acceptance.spec.ts:386:1 › PL7 PB2: phone, 320 px reflow and reduced motion: one flat page, no sideways scroll, stage in steps (7.4s)
+  ok 43 [chromium] › e2e\plates-acceptance.spec.ts:412:1 › PB6: the prediction can be skipped, and the flap opens without an answer (282ms)
+  ok 44 [chromium] › e2e\plates-acceptance.spec.ts:420:1 › PB7 PL8 PL9: turning back finds lesson 1 exactly as left; lesson 2's choices never touched it (6.7s)
+  ok 45 [chromium] › e2e\plates-book.spec.ts:75:1 › the book has two lessons: next turns to lesson 2, contents lists both, deep links and history work (31.1s)
+  ok 46 [chromium] › e2e\plates-book.spec.ts:116:1 › a deep link opens lesson 2 on the same tilted book, labelled an illustration, with no run words (7.5s)
+  ok 47 [chromium] › e2e\plates-book.spec.ts:142:1 › the journey across both lessons: lesson 1's run survives the turn, lesson 2 keeps its boundaries (1.1m)
+  ok 48 [chromium] › e2e\plates-book.spec.ts:258:1 › navigation while lesson 1 is running: keyboard turns, rapid turns and history never lose its run (20.5s)
+  ok 49 [chromium] › e2e\plates-book.spec.ts:284:1 › phone: one readable page per lesson, the bar turns between them, no horizontal scroll (21.9s)
+  ok 50 [chromium] › e2e\plates-book.spec.ts:312:1 › reduced motion: the turn and both lessons run without animations (15.0s)
+  ok 51 [chromium] › e2e\plates-book.spec.ts:329:1 › the left page fits the tilted book at university level with the flap open: it scrolls, never clips (16.1s)
+  ok 52 [chromium] › e2e\plates-book.spec.ts:366:1 › without 3D, lesson 2 says it is showing the drawing only (not recorded runs) (1.2s)
+  ok 53 [chromium] › e2e\plates-book.spec.ts:381:1 › serious accessibility audit of lesson 2's spread passes (6.6s)
+(node:34984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 54 [chromium] › e2e\reader-runtime.spec.ts:16:1 › keyboard reveals before play, skips a question, preserves settled state across level/return, resets explicitly (959ms)
+  ok 55 [chromium] › e2e\reader-runtime.spec.ts:72:1 › authored Worker and CPU initialization, source replacement and reset agree (750ms)
+  -  56 [chromium] › e2e\reader-runtime.spec.ts:78:3 › native WebGPU authored transport › matches CPU through authored initialization, source replacement and reset
+
+
+  1) [chromium] › e2e\glacial-acceptance.spec.ts:125:1 › PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard first 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 100
+    Received:    77.165
+
+    Call Log:
+    - Test timeout of 300000ms exceeded
+
+      50 |   await page.getByRole("button", { name: "Play", exact: true }).click();
+      51 |   await expect(desk(page)).toHaveAttribute("data-playing", "true");
+    > 52 |   await expect.poll(() => years(page), { timeout: 200_000 }).toBeGreaterThanOrEqual(atLeast);
+         |                                                              ^
+      53 |   const pause = page.getByRole("button", { name: "Pause", exact: true });
+      54 |   if (await pause.isVisible()) await pause.click();
+      55 |   await expect(desk(page)).toHaveAttribute("data-playing", "false");
+        at playUntil (D:\code\uplift\.claude\worktrees\agent-a2555015925ca70b1\e2e\glacial-acceptance.spec.ts:52:62)
+        at D:\code\uplift\.claude\worktrees\agent-a2555015925ca70b1\e2e\glacial-acceptance.spec.ts:275:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\glacial-acceptance-PB4-PB9-3050f-efault-route-keyboard-first-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\glacial-acceptance-PB4-PB9-3050f-efault-route-keyboard-first-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\glacial-acceptance-PB4-PB9-3050f-efault-route-keyboard-first-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\glacial-acceptance-PB4-PB9-3050f-efault-route-keyboard-first-chromium\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results\glacial-acceptance-PB4-PB9-3050f-efault-route-keyboard-first-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e\glacial-acceptance.spec.ts:125:1 › PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard first 
+  1 skipped
+  54 passed (17.4m)

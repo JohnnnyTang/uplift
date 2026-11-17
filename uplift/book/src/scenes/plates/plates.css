@@ -354,7 +354,8 @@
  * cue. The flat page (phones, reduced motion) flows as before.
  */
 .ps-desk[data-stage-mode="tilted"] {
-  --ps-column-max: calc((100dvh - var(--gs-controls-height, 0px) - var(--reader-bar-space, 0px)) * 1.15);
+  /* D-W6-6G: a share of the fixed book width (both lessons), not of the viewport. */
+  --ps-column-max: var(--gs-column-max);
 }
 .ps-desk[data-stage-mode="tilted"] .gs-page-text .ps-text-column {
   max-height: var(--ps-column-max);

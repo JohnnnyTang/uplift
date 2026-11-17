@@ -3576,3 +3576,36 @@ lesson copy; changing them needs agreed wording and regenerated sentence registe
 
 **Handover.** GV7 and PL9 are unaffected: this session changes no reader behaviour,
 simulation, lesson copy or engine code. The only code change is the build's public path.
+
+## D-W6-6G · Larger book and study desk (2026-11-17)
+
+**Owner request:** "the whole book now is too small inside the whole view with 100% zoom of the browser. the book size should be larger for 1.5x at least (with a proper one based on your trials) and the book should be moved more to the vertical middle of the scene. And the background of the scene should be like really on a desk, with some textures of a wood table, some light and shadows or some real 3d objects that may appear on a study table maybe to make the whole scene more real."
+
+The generic `BookStageFit` options (`insets`, `furniture`, `centre`, `minScale`,
+`maxScale`) contain the projected book and reserved block headroom. The layout
+anchor is shared by projection, drawing and picking. The generic `@hachure/ink/desk`
+entry point supplies a seeded procedural walnut texture and CSS 3D desk objects,
+directional lighting and shadows. Both lessons select the same options. Flat,
+reflow, reduced-motion and contrast modes simplify the desk. Model state, lesson
+copy and level switching are unchanged.
+
+This supersedes O1/F1 only for book size and placement. It does not reopen scientific
+acceptance or change the transition. The [evidence packet](docs/review/book-revision/desk-refinement/README.md)
+records exact sizes, scale factors and before/after captures. At 1366×768 the glacial
+paper grows 477×319 → 886×419; at 1440×900, 559×373 → 1135×522;
+at 1920×1080, 1200×579 → 1412×656; at 2560×1440, 1741×833 → 2024×930.
+The viewport fit prevents uniform 1.5× growth, especially on the already larger
+desktop baseline. The paper midpoint remains below the available-space midpoint;
+the centred envelope includes the raised block headroom. These are explicit
+fit/placement deviations awaiting owner review, not a claim of exact centring.
+
+Existing WIP implementation and evidence were resumed, not discarded. Local browser
+verification required running outside the network-restricted sandbox. New work is
+attributed to Codex; inherited Claude attribution is retained accurately.
+
+**Retention follow-up.** Hosted regression exposed a queued native `details` toggle
+race: changing level before the toggle event could restore the old closed flap state.
+Flush native flap state before the glacial page rerenders words or is disposed. The
+same-task open/level-change regression fails without the flush and passes with it;
+all five recorded/drawing fallback tests pass. This is a minimal correctness repair
+required by the presentation acceptance gate, with no model or lesson-copy change.

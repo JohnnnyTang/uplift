@@ -357,7 +357,12 @@ for (const [width, height] of [
       const text = r(".gs-page-text");
       const figure = r(".gs-page-figure");
       const h1 = r(".gs-page-text h1");
+      const host = r(".gs-desk");
+      const boards = r(".gs-boards");
       return {
+        blockTopMargin: Math.min(...ys) - host.top,
+        boardsBottomMargin: host.bottom - boards.bottom,
+        paperCentreFraction: ((text.top + figure.bottom) / 2 - host.top) / host.height,
         spreadWidthPx: Math.round(figure.right - text.left),
         blockWidthPx: Math.round(Math.max(...xs) - Math.min(...xs)),
         blockHeightPx: Math.round(Math.max(...ys) - Math.min(...ys)),
@@ -366,6 +371,17 @@ for (const [width, height] of [
       };
     });
     await testInfo.attach("view-metrics", { body: JSON.stringify(metrics), contentType: "application/json" });
+    // 6G: meaningful enlargement, with room above for the raised block. Paper alone sits slightly
+    // below the desk midpoint; the complete book + raised scene is the centred composition.
+    expect(metrics.spreadWidthPx).toBeGreaterThan(width === 1366 ? 850 : 1050);
+    expect(metrics.blockTopMargin).toBeGreaterThanOrEqual(0);
+    expect(metrics.boardsBottomMargin).toBeGreaterThanOrEqual(0);
+    expect(metrics.paperCentreFraction).toBeGreaterThan(0.45);
+    expect(metrics.paperCentreFraction).toBeLessThan(0.65);
+    const decoration = page.locator(".hachure-desk");
+    await expect(decoration).toHaveAttribute("aria-hidden", "true");
+    await expect(decoration).toHaveCSS("pointer-events", "none");
+    await expect(decoration.locator("button, input, a, [tabindex]")).toHaveCount(0);
     expect(errors).toEqual([]);
   });
 }
