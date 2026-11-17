@@ -3488,3 +3488,41 @@ new primitives recorded in `DECISIONS.md`.” GV6: “Keyboard equivalents for e
 text alternatives, reduced motion, lithology patterns as non-colour cue, reflow.”
 The retrospective inventories existing reuse and carries pending human access checks;
 this documentation session changes neither simulation nor reader behavior.
+
+## D-W6-6E · Owner human-check pass and larger opening valley (2026-11-16)
+
+**Owner report.** After reviewing the production book at main `83f0ba6`, the owner
+reported: "all passed for human checks", requested that 6D be merged, and asked for
+the first lesson's 3D valley to be about 1.5 times larger relative to the book and
+lesson 2. PR #55 merged at `6161c74` after check, e2e, water and glacier passed on
+`6c3493b`. The pass is owner-reported evidence, not an agent-observed session.
+
+**Review scope.** Accept the prepared human checks (H1–H5, including F2) as passed
+on the reviewed baseline. No tester identities, utterances, device configurations,
+recordings or measurements were supplied; do not invent them. H8's human usability
+review is included in the owner's general pass report, but a measured multi-device
+performance matrix is not established. Specialist approvals H6/H7 and retained
+research science review remain separate: this report supplies no scientific
+reviewer, claim-level decisions or full-text source verification. Publication and
+Stage 2 planning remain separate decisions.
+
+**Refinement scope.** This is a Wave 6 post-review refinement from merged main,
+not a new Wave 5 session. Owned paths are the glacial scene presentation,
+`docs/review/book-revision/**`, the integrated acceptance ledger and this decision
+record. Enlarge the tilted-page valley uniformly using the existing stage footprint
+option. Keep true vertical proportions, model state, simulation, book size and
+lesson 2 unchanged; preserve the fitted flat layout on phone/reduced-motion views.
+The owner request supersedes O1's earlier acceptance only for valley scene size.
+The new presentation requires bounded visual/interaction regression checks; the
+baseline human pass does not claim a repeat review of the subsequent enlargement.
+
+> GV4: "Drawing → ink → colour transition into a complete, naturally coloured
+> diorama standing on a tilted book page"
+
+> GV6: "Keyboard equivalents for every gesture, text alternatives, reduced motion,
+> lithology patterns as non-colour cue, reflow"
+
+**Placement follow-up.** The owner also requested that the valley move lower on the
+book. Offset the glacial figure anchor down by 4cqi in tilted mode, preserving the
+existing caption/control layout and the plate lesson's placement. Use a layout
+offset so the scene projection, drawing and pointer hit tests share the same anchor.

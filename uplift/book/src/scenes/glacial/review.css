@@ -211,6 +211,11 @@
   flex: 1;
   min-height: 220px;
 }
+/* D-W6-6E: lower the enlarged valley on the page, keeping the controls in place.
+   A layout offset (not a transform) keeps the stage anchor and hit testing aligned. */
+.gs-desk[data-stage-mode="tilted"]:not(.ps-desk) .gs-frame {
+  top: 4cqi;
+}
 .gs-drawing {
   position: absolute;
   inset: 0;

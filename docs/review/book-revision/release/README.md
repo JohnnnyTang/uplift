@@ -1,5 +1,19 @@
 # 6C · Two-lesson scientific and product review packet
 
+## Owner update · 2026-11-16
+
+The owner reported **"all passed for human checks"** on the production review at
+`83f0ba6`. H1–H5, including F2, are **passed (owner-reported)**. The general pass also
+covers human device-usability feedback; it does not supply H8's measured hardware
+matrix. Exact setups, tester details and raw observations were not supplied.
+Scientific specialist sign-offs H6/H7 and the retained research review remain
+separate and pending; no publication or Stage 2 authorization is inferred.
+See D-W6-6E in [DECISIONS](../../../../DECISIONS.md).
+
+6D #55 is merged. The requested 1.5× opening-valley refinement follows this review;
+the baseline pass is not a claim of human retesting after that change. Earlier
+pending-human records below describe the audit before this owner report.
+
 Reconciled 2026-11-16 against merged **6B**, main `d1fdae5` ([PR #53](https://github.com/JohnnnyTang/uplift/pull/53)).
 The two lessons and current audit are now the review baseline. The original 7G preparation is recorded
 in D-W6-6C-PREP; D-W6-6C records this integration. Sequence remains **6B → 6C → 6D**.

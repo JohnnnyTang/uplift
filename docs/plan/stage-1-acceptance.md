@@ -1,6 +1,20 @@
 # Stage 1 integrated acceptance ledger
 
-## Current audit · 6B · 2026-11-16
+## Owner update · 2026-11-16
+
+The owner reported **"all passed for human checks"** on the production review at
+`83f0ba6`. H1–H5, including F2, are **passed (owner-reported)**. The general pass also
+covers human device-usability feedback; it does not supply H8's measured hardware
+matrix. Exact setups, tester details and raw observations were not supplied.
+Scientific specialist sign-offs H6/H7 and the retained research review remain
+separate and pending; no publication or Stage 2 authorization is inferred.
+See D-W6-6E in [DECISIONS](../../DECISIONS.md).
+
+6D #55 is merged. The requested 1.5× opening-valley refinement follows this review;
+the baseline pass is not a claim of human retesting after that change. Earlier
+pending-human records below describe the audit before this owner report.
+
+## Recorded audit · 6B · 2026-11-16
 
 Baseline: merged main `cd856bcbf459c88f6e08cf4308d8c80bfb160a0a` (7G), with the bounded 6B accessibility fixes.
 The default book contains **From V to U** and **Where plates meet**; the erosion research route is separate.
