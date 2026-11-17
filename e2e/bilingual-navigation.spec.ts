@@ -73,10 +73,24 @@ test("Chinese preference survives reload and the reduced-motion phone book reflo
   await expect(page.locator("#reader-language")).toHaveValue("zh-CN");
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    const menu = await page.locator("#reader-language").boundingBox();
+    expect(menu!.x).toBeGreaterThanOrEqual(0);
+    expect(menu!.x + menu!.width).toBeLessThanOrEqual(width);
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.locator(".reader-bar-previous").click();
   await expect(page.locator(".reader-shell")).toHaveAttribute("data-turning", "false");
   await expect(page.locator(".gs-page-text h1")).toContainText(/[\u3400-\u9fff]/);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    const menu = await page.locator("#reader-language").boundingBox();
+    expect(menu!.x).toBeGreaterThanOrEqual(0);
+    expect(menu!.x + menu!.width).toBeLessThanOrEqual(width);
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
   expect(
     await page.evaluate(() => document.getAnimations().filter((a) => a.playState === "running").length),
   ).toBe(0);

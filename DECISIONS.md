@@ -3714,3 +3714,25 @@ checkout and unrelated edits remain intact. Minimal shared-file glue is reviewed
 centrally. New reverse/leaf animation is presentation only, reduced motion skips
 spatial effects, and simulations settle before departure and retain their state.
 See docs/plan/stage-1-bilingual-page-turn.md for ownership and acceptance anchors.
+
+### D-W6-6IJ implementation and verification
+
+Integrated the independent 6I and 6J commits with minimal shared-file glue.
+Localization uses explicit message catalogs and registered text/attribute updates;
+no scene or model is recreated. A coverage test checks compiled authored content and
+every binding token. Research remains explicitly English. Chinese scientific draft
+translations retain expert-review provenance and original sources.
+
+Added optional presentation-only departure/deferred-entrance hooks. Departure
+washes the current scene into ink and lowers it to paper; an inert decorative sheet
+turns about the stationary spine before the incoming scene rises. Vertical reflow
+uses a brief fade; reduced motion skips spatial movement. At narrow widths the
+language menu gets a second control row rather than clipping navigation targets.
+
+Evidence and GV4/GV6/PL7/PL8 handover:
+`docs/review/book-revision/bilingual-turns/README.md`. Integrated check: 916 tests
+passed, 7 skipped; production build and budget pass; 12 combined browser tests pass,
+plus the strengthened narrow-menu check. Initial concurrent browser/unit execution
+hit three timeouts in unchanged CPU-heavy tests; the standalone full check passed
+without changing limits or science code. Owner visual and Chinese expert-language
+acceptance are not inferred from automated checks.

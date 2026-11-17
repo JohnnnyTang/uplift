@@ -37,3 +37,43 @@
     display: none;
   }
 }
+
+/* Keep the language menu and full-size navigation targets inside narrow viewports. */
+@media (max-width: 34rem) {
+  html .reader-shell {
+    --reader-bar-space: 124px;
+  }
+  .reader-shell .reader-bar {
+    display: grid;
+    grid-template-columns: 44px 44px minmax(0, 1fr) 44px;
+    grid-template-areas:
+      "contents previous position next"
+      "contrast level language language";
+    gap: 2px;
+    border-radius: 20px;
+  }
+  .reader-bar-contents {
+    grid-area: contents;
+  }
+  .reader-bar-previous {
+    grid-area: previous;
+  }
+  .reader-position {
+    grid-area: position;
+  }
+  .reader-bar-next {
+    grid-area: next;
+  }
+  .reader-bar-contrast {
+    grid-area: contrast;
+  }
+  .reader-bar-level {
+    grid-area: level;
+  }
+  .reader-language {
+    grid-area: language;
+    justify-self: end;
+    min-height: 44px;
+    max-width: 7.5rem;
+  }
+}

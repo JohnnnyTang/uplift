@@ -22,7 +22,7 @@ test("settles to ink, turns one sheet in both directions, then restores the live
       animation.currentTime = 420;
     });
     await expect(snapshot).toHaveAttribute("aria-hidden", "true");
-    expect(await snapshot.evaluate((element) => element.inert)).toBe(true);
+    expect(await snapshot.evaluate((element) => element instanceof HTMLElement && element.inert)).toBe(true);
     await expect(snapshot.locator("canvas")).toHaveCount(0);
     await expect(snapshot.locator(".gs-desk")).toHaveAttribute("data-transition", "flat");
     await expect(page.locator(".reader-book > .reader-stage .gs-desk")).toHaveAttribute(
