@@ -243,7 +243,7 @@ test("the journey across both lessons: lesson 1's run survives the turn, lesson 
   await expect(plates(page)).toHaveAttribute("data-boundary", "transform");
   await expect(plates(page)).toHaveAttribute("data-stage", "1");
   await expect(plates(page)).toHaveAttribute("data-ghosts", "convergent,divergent");
-  await page.locator(".gs-reset").click();
+  await plates(page).getByRole("button", { name: "Start again", exact: true }).click();
   await expect(plates(page)).toHaveAttribute("data-boundary", "none");
   await expect(plates(page)).toHaveAttribute("data-ghosts", "");
   await expect(plates(page)).toHaveAttribute("data-viewed", "");
