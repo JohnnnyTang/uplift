@@ -11,6 +11,11 @@ The [6C review packet](../review/book-revision/release/README.md) connects the a
 claims, sources, teacher guide and outstanding decisions. No new reader, expert or hardware observation
 was collected for this retrospective.
 
+> **Update after this retrospective, 2026-11-16.** The owner later reported the human checks
+> H1–H5 passed (D-W6-6E) and that the project team completed expert review; Stage 1 is
+> released and published with GitHub Pages (D-W6-6F). The text below is the 6D record as
+> written, when those gates were still open. H8's measured device matrix remains open.
+
 ## What the book now demonstrates
 
 _From V to U_ lets readers choose a rock, play a separate glacier run, inspect earlier states and compare

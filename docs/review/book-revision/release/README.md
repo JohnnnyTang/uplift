@@ -1,5 +1,19 @@
 # 6C · Two-lesson scientific and product review packet
 
+## Owner update · Stage 1 release · 2026-11-16
+
+The owner reported that **expert review is done by the project team** and directed that
+the group review of the working book be recorded as met, and that Stage 1 be published
+and released. H6 (glacier), H7 (plates) and the retained research review are
+**passed (owner-reported, team review)**. Reviewer names, reviewed commit, claim-level
+answers and requested edits were not supplied and are not invented here. With H1–H5
+already passed (D-W6-6E), the Stage 1 exit gate is met and **Stage 1 is released**.
+H8's measured multi-device matrix and the narrow 6A latency misses stay recorded as
+known limitations, not release blockers. Publication is by GitHub Pages. Stage 2
+planning still needs its own owner direction. See D-W6-6F in [DECISIONS](../../../../DECISIONS.md).
+
+Records below this block describe earlier states and keep their original wording.
+
 ## Owner update · 2026-11-16
 
 The owner reported **"all passed for human checks"** on the production review at

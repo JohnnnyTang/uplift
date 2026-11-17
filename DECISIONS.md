@@ -3526,3 +3526,53 @@ baseline human pass does not claim a repeat review of the subsequent enlargement
 book. Offset the glacial figure anchor down by 4cqi in tilted mode, preserving the
 existing caption/control layout and the plate lesson's placement. Use a layout
 offset so the scene projection, drawing and pointer hit tests share the same anchor.
+
+## D-W6-6F · Team expert review recorded; Stage 1 released; GitHub Pages publication (2026-11-16)
+
+**Owner report.** After D-W6-6E the owner stated: "expert review is done by our team,
+record it", asked that the group review of the working book also be marked as met, and
+directed: "we should do the publication and stage 1 release". These are owner-reported
+results, not sessions observed by an agent.
+
+**Expert review.** H6 (glacier claims and qualifications), H7 (plate wording and
+illustrated scope) and the retained research claim/limits review are recorded as
+**passed (owner-reported, team review)**. No reviewer identities, reviewed commit,
+claim-level answers, requested edits or full-text source follow-ups were supplied; none
+are invented. No scientific outcome changes: the glacier keeps 16 pass / 23 fail
+registered verdicts, the unsupported full-U and floor-width claims stay untaught, the
+waterfall challenge stays unvalidated, and plate relief stays a labelled illustration
+under D-L2-1. `<!-- expert-review -->` markers and the reader-facing "await expert
+review" status sentences in the teacher notes and research banner are not edited by
+this record (see the open item below).
+
+**Group review.** The exit gate's "group reviews the working book and a short
+recording" is recorded as met on the owner's report. This is read as covering current
+main, including the 6E valley enlargement and placement that the owner requested and
+merged in PR #56.
+
+**Release decision.** The Stage 1 exit gate is met: PB1–PB9 and foundation checks have
+linked evidence, the shipped lessons have owner-reported expert review, human checks
+are reported, the group review is recorded and the retrospective is written.
+**Stage 1 is released.** Carried forward as known limitations, not blockers: H8's
+measured multi-device performance matrix, CPU glacier page-turn and cold-load
+measurements, and the narrow 6A misses (GPU rock-choice p90 204 ms against 200; GPU
+research return p90 1,051 ms against 1,000). Stage 2 planning and next-lesson selection
+are not authorized by this decision.
+
+**Publication.** GitHub Pages, deployed by `.github/workflows/pages.yml` from main.
+The repository is public and the book is a static Vite build with no server
+requirements: no cross-origin isolation headers, and routing uses query parameters.
+`uplift/book/vite.config.ts` reads `UPLIFT_BASE` (default `/`, so local runs and CI are
+unchanged); the workflow sets it to the repository sub-path. Checked locally with a
+production build served at `/uplift/`: both lessons, the page turn and the research
+route load with no console errors or failed requests. HTTPS on Pages satisfies WebGPU's
+secure-context requirement; the existing WebGL2 and recorded fallbacks are unchanged.
+Pages must be enabled once with GitHub Actions as its source.
+
+**Open item for the owner.** Four reader-visible sentences still say the science awaits
+expert review: the status lines in the u-valley, plate-boundaries and v-valley teacher
+notes, and the research banner in `uplift/book/src/app/book.ts`. They are registered
+lesson copy; changing them needs agreed wording and regenerated sentence registers.
+
+**Handover.** GV7 and PL9 are unaffected: this session changes no reader behaviour,
+simulation, lesson copy or engine code. The only code change is the build's public path.

@@ -1,0 +1,48 @@
+name: Publish book to GitHub Pages
+
+# Stage 1 publication (D-W6-6F). Builds the production book from main and deploys it to GitHub Pages.
+# Needs Pages enabled once with "GitHub Actions" as the source (Settings → Pages).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/configure-pages@v5
+      - run: pnpm build
+        env:
+          UPLIFT_BASE: /${{ github.event.repository.name }}/
+      - run: pnpm check:bundle
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: uplift/book/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
