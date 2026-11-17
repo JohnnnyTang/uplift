@@ -551,11 +551,14 @@ export async function mountGlacialScene(
     presentation = { ...presentation, prediction: Number((event.target as HTMLInputElement).value) };
     o.onPresentation?.(presentation);
   });
-  flap.addEventListener("toggle", () => {
+  // Native details toggles are queued. A level change or page turn can happen before that event,
+  // so flush the actual disclosure state before rendering words or disposing this page.
+  const syncFlap = () => {
     if (flap.open === presentation.flapOpen) return;
     presentation = { ...presentation, flapOpen: flap.open };
     o.onPresentation?.(presentation);
-  });
+  };
+  flap.addEventListener("toggle", syncFlap);
 
   // The study desk under the book (6G): decoration, drawn with the page, before three.js.
   const studyDesk = mountStudyDesk(book);
@@ -944,6 +947,7 @@ export async function mountGlacialScene(
   const staticOnly = o.staticOnly || !lithologyModule;
   let unsubscribe = () => {};
   const disposeAll = async () => {
+    syncFlap();
     binding?.dispose();
     studyDesk.dispose();
     reading.dispose();
@@ -966,6 +970,7 @@ export async function mountGlacialScene(
   const handle = (dispose: () => Promise<void>): MountedGlacialScene => ({
     dispose,
     setLevel(next) {
+      syncFlap();
       if (next === level) return;
       level = next;
       renderWords();

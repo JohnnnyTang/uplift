@@ -47,7 +47,7 @@ desk without introducing lesson content. Scientific copy and simulations are unc
 
 ## Verification and limits
 
-The final repository check passes: 95 test files and 893 tests pass, with 7 capability-dependent skips. Typecheck, lint and formatting pass; the e2e TypeScript check also passes. Production builds pass, and `pnpm check:bundle` reports **6,785,141 / 10,000,000 bytes**. Captures
+The final repository check passes: 95 test files and 893 tests pass, with 7 capability-dependent skips. Typecheck, lint and formatting pass; the e2e TypeScript check also passes. Production builds pass, and `pnpm check:bundle` reports **6,785,162 / 10,000,000 bytes**. Captures
 use Playwright Chromium with SwiftShader; they are not hardware GPU performance
 measurements. No frame-rate regression claim is made without a before/after timing
 comparison. No new network assets or dependency changes are introduced.
@@ -82,3 +82,20 @@ A focused rerun disables Playwright trace recording only (the failed trace was 1
 with the same assertions and 300-second test budget. It also timed out at the final replay (line 275), reaching **88.365 / 100 model years** at the unchanged 300-second budget; see `validation-retry.txt`. There was no competing 6H browser workload during this rerun. Local browser validation therefore retains a timing failure; do not describe the local suite as fully passing.
 The full repository-wide browser suite was not run locally; only the named affected specs.
 No hardware frame-rate comparison or native WebGPU run was performed in this resumption.
+
+### Hosted failure and bounded retention fix
+
+Hosted CI on `935785a` passed 115 browser tests (including the long glacial journey),
+skipped one native WebGPU test and failed one recorded-fallback disclosure retention
+check. The native `details` toggle event is asynchronous: an immediate level change
+could render the old cached `flapOpen` value before that event was handled. The scene
+now flushes native flap state before a level rerender or disposal. This small
+correctness fix is necessary to complete the presentation regression gate; it changes
+neither lesson copy nor model state.
+
+The new same-task native-open/level-change regression fails without the two flush
+calls (expected `open`, received `null`) and passes with them. All five production
+`glacial-fallbacks.spec.ts` tests pass with the fix. `validation-fallback.txt` and
+`validation-fallback-red.txt` preserve both sides. Hosted full-suite rerun is required
+on the final branch; the earlier green long-journey result is not claimed as a pass
+for every test on the updated commit.

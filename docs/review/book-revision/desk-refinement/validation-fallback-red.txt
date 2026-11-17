@@ -1,0 +1,75 @@
+[WebServer] (node:13588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ pnpm --filter @uplift/book build
+[WebServer] (node:10644) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ vite build
+[WebServer] (node:29968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] [plugin builtin:vite-reporter] 
+[WebServer] (!) Some chunks are larger than 500 kB after minification. Consider:
+[WebServer] - Using dynamic import() to code-split the application
+[WebServer] - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+[WebServer] - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[WebServer] (node:6344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] $ vite preview "--host" "127.0.0.1" "--port" "4183" "--strictPort"
+[WebServer] (node:19232) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:27256) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:29912) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › e2e\glacial-fallbacks.spec.ts:91:1 › a native flap toggle queued before a level change survives recorded-scene remount (23.9s)
+
+
+  1) [chromium] › e2e\glacial-fallbacks.spec.ts:91:1 › a native flap toggle queued before a level change survives recorded-scene remount 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('.gs-flap')
+    Expected: ""
+    Received: serializes to the same string
+    Timeout:  15000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('.gs-flap') with timeout 15000ms
+      - waiting for locator('.gs-flap')
+        33 × locator resolved to <details class="gs-flap">…</details>
+           - unexpected value "null"
+
+
+      103 |     document.querySelector<HTMLButtonElement>('button[aria-label="University level"]')!.click();
+      104 |   });
+    > 105 |   await expect(page.locator(".gs-flap")).toHaveAttribute("open", "");
+          |                                          ^
+      106 |   await turnWithKeyboard(page, lessonTwo);
+      107 |   await turnWithKeyboard(page, lessonOne);
+      108 |   await expect(page.locator(".gs-flap")).toHaveAttribute("open", "");
+        at D:\code\uplift\.claude\worktrees\agent-a2555015925ca70b1\e2e\glacial-fallbacks.spec.ts:105:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\glacial-fallbacks-a-native-3e2bf-ives-recorded-scene-remount-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\glacial-fallbacks-a-native-3e2bf-ives-recorded-scene-remount-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\glacial-fallbacks-a-native-3e2bf-ives-recorded-scene-remount-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\glacial-fallbacks-a-native-3e2bf-ives-recorded-scene-remount-chromium\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results\glacial-fallbacks-a-native-3e2bf-ives-recorded-scene-remount-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e\glacial-fallbacks.spec.ts:91:1 › a native flap toggle queued before a level change survives recorded-scene remount 

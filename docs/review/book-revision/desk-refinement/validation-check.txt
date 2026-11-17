@@ -11,9 +11,9 @@ $ vitest run
 
  Test Files  95 passed | 7 skipped (102)
       Tests  893 passed | 7 skipped (900)
-   Start at  04:26:10
-   Duration  20.75s (tests 78%, import 13%, transform 7%, worker 2%)
+   Start at  05:05:41
+   Duration  22.24s (tests 78%, import 14%, transform 7%, worker 2%)
 
-    Isolate  102 workers spawned · ~386ms startup each (spawn + environment, per file)
-             at least ~5.24s faster with isolate: false — reuses workers across files instead of one per file
+    Isolate  102 workers spawned · ~406ms startup each (spawn + environment, per file)
+             at least ~5.51s faster with isolate: false — reuses workers across files instead of one per file
 

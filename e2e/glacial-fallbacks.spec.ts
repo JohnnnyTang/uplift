@@ -88,6 +88,26 @@ test("default glacier startup failure shows recorded runs and preserves the comp
   expect(errors).toEqual([]);
 });
 
+test("a native flap toggle queued before a level change survives recorded-scene remount", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await failGlacierWorker(page);
+  await page.goto("/?glacier=cpu");
+  await expect(desk(page)).toHaveAttribute("data-source", "recorded", { timeout: 60_000 });
+  await expect(desk(page)).toHaveAttribute("data-transition", "done");
+  // Keep these native activations in one task: details.open changes synchronously but its toggle
+  // event is queued. A fast level change must not restore the previous cached disclosure state.
+  await page.evaluate(() => {
+    document.querySelector<HTMLElement>(".gs-flap summary")!.click();
+    document.querySelector<HTMLButtonElement>('button[aria-label="University level"]')!.click();
+  });
+  await expect(page.locator(".gs-flap")).toHaveAttribute("open", "");
+  await turnWithKeyboard(page, lessonTwo);
+  await turnWithKeyboard(page, lessonOne);
+  await expect(page.locator(".gs-flap")).toHaveAttribute("open", "");
+});
+
 test("without 3D the default glacier keeps a labelled drawing, immediate reveal and keyboard page turns", async ({
   browser,
   baseURL,

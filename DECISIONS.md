@@ -3602,3 +3602,10 @@ fit/placement deviations awaiting owner review, not a claim of exact centring.
 Existing WIP implementation and evidence were resumed, not discarded. Local browser
 verification required running outside the network-restricted sandbox. New work is
 attributed to Codex; inherited Claude attribution is retained accurately.
+
+**Retention follow-up.** Hosted regression exposed a queued native `details` toggle
+race: changing level before the toggle event could restore the old closed flap state.
+Flush native flap state before the glacial page rerenders words or is disposed. The
+same-task open/level-change regression fails without the flush and passes with it;
+all five recorded/drawing fallback tests pass. This is a minimal correctness repair
+required by the presentation acceptance gate, with no model or lesson-copy change.
