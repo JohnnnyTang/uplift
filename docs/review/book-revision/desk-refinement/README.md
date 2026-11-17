@@ -47,7 +47,7 @@ desk without introducing lesson content. Scientific copy and simulations are unc
 
 ## Verification and limits
 
-Verification results are recorded below when the final commands finish. Captures
+The final repository check passes: 95 test files and 893 tests pass, with 7 capability-dependent skips. Typecheck, lint and formatting pass; the e2e TypeScript check also passes. Production builds pass, and `pnpm check:bundle` reports **6,785,141 / 10,000,000 bytes**. Captures
 use Playwright Chromium with SwiftShader; they are not hardware GPU performance
 measurements. No frame-rate regression claim is made without a before/after timing
 comparison. No new network assets or dependency changes are introduced.
@@ -62,3 +62,23 @@ comparison. No new network assets or dependency changes are introduced.
 Merge 6G first, then integrate/rebase 6H with both intents retained. Owner review
 of the new presentation is pending. Existing author attribution is preserved;
 new resumption work uses accurate Codex provenance instead of a Claude-generated footer.
+
+### Browser regression results
+
+The local combined run executed `glacial-acceptance.spec.ts`, `plates-acceptance.spec.ts`,
+`glacial-book.spec.ts`, `plates-book.spec.ts`, `book-shell.spec.ts`, `book-acceptance.spec.ts`
+and `reader-runtime.spec.ts`: **54 passed, 1 skipped, 1 failed** in 17.4 minutes.
+The skip is native WebGPU authored transport, unavailable in bundled Chromium.
+The failure was the longest glacial acceptance journey's final granite replay:
+`Expected: >= 100; Received: 77.165; Test timeout of 300000ms exceeded`.
+The model was still advancing (later snapshot 89.37), rather than failing a state assertion.
+Other live-runtime and cross-lesson journeys passed, as did both lessons' new fit assertions.
+Brief 6H diagnostics overlapped part of this run, so it is not a clean hardware timing measurement.
+The retained log is `validation-browser.txt`; `local-timeout.txt` preserves its failure context.
+An earlier concurrent run also timed out an unchanged relief unit test at 5 seconds;
+the isolated complete `pnpm check` then passed (`validation-check.txt`).
+
+A focused rerun disables Playwright trace recording only (the failed trace was 124 MB),
+with the same assertions and 300-second test budget. It also timed out at the final replay (line 275), reaching **88.365 / 100 model years** at the unchanged 300-second budget; see `validation-retry.txt`. There was no competing 6H browser workload during this rerun. Local browser validation therefore retains a timing failure; do not describe the local suite as fully passing.
+The full repository-wide browser suite was not run locally; only the named affected specs.
+No hardware frame-rate comparison or native WebGPU run was performed in this resumption.

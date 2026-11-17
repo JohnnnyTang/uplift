@@ -1,0 +1,19 @@
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test
+$ tsc -p tsconfig.json
+$ eslint .
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ vitest run
+
+ RUN  v5.1.0 D:/code/uplift/.claude/worktrees/agent-a2555015925ca70b1
+
+
+ Test Files  95 passed | 7 skipped (102)
+      Tests  893 passed | 7 skipped (900)
+   Start at  04:26:10
+   Duration  20.75s (tests 78%, import 13%, transform 7%, worker 2%)
+
+    Isolate  102 workers spawned · ~386ms startup each (spawn + environment, per file)
+             at least ~5.24s faster with isolate: false — reuses workers across files instead of one per file
+

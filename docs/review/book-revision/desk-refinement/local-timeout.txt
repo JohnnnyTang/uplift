@@ -1,0 +1,324 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: glacial-acceptance.spec.ts >> PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard first
+- Location: e2e\glacial-acceptance.spec.ts:125:1
+
+# Error details
+
+```
+Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+Expected: >= 100
+Received:    77.165
+
+Call Log:
+- Test timeout of 300000ms exceeded
+```
+
+# Page snapshot
+
+```yaml
+- main [ref=e2]:
+  - generic [ref=e4]:
+    - article "From V to U" [ref=e6]:
+      - paragraph [ref=e7]: From V to U
+      - generic [ref=e9]:
+        - group "Camera view" [ref=e10]:
+          - generic [ref=e11]:
+            - generic [ref=e12]: View height
+            - slider "View height" [ref=e13]: "42"
+          - generic [ref=e14]:
+            - generic [ref=e15]: Turn
+            - slider "Turn" [ref=e16]: "0"
+          - generic [ref=e17]:
+            - generic [ref=e18]: Zoom
+            - slider "Zoom" [ref=e19]: "1"
+          - button "Reset view" [ref=e20] [cursor=pointer]
+          - paragraph [ref=e21]: Drag the scene to turn · Scroll over it to zoom · Drag the block's front face to move the cut
+        - article [ref=e25]:
+          - generic [ref=e26]:
+            - paragraph [ref=e27]: Lesson 1 · Glaciers
+            - generic [ref=e28]:
+              - generic [ref=e29]:
+                - generic [ref=e30] [cursor=pointer]:
+                  - button "Read lesson ↗" [ref=e31]
+                  - generic [ref=e32]:
+                    - paragraph [ref=e33]: Lesson 1
+                    - heading "From V to U" [level=1] [ref=e34]
+                    - generic [ref=e35]:
+                      - paragraph [ref=e36]: A river cuts a narrow valley shaped like a V.
+                      - paragraph [ref=e37]: "When a glacier fills the valley, the sliding ice wears the rock away: the floor is lowered and the lower walls are cut back, towards a U."
+                      - paragraph [ref=e38]: "Choose the rock: soft rock wears away faster and deeper; hard rock keeps steeper walls."
+                - generic [ref=e39] [cursor=pointer]:
+                  - button "Read key words ↗" [ref=e40]
+                  - generic [ref=e41]:
+                    - term [ref=e42]: glacier
+                    - term [ref=e43]: V-shaped valley
+                    - term [ref=e44]: U-shaped valley
+                    - term [ref=e45]: glacial erosion
+                    - term [ref=e46]: rock type
+                - group "After the same model time, which valley will the ice have worn deeper?" [ref=e47]:
+                  - generic [ref=e49]:
+                    - radio "Soft shale" [ref=e50]
+                    - generic [ref=e51]: Soft shale
+                  - generic [ref=e52]:
+                    - radio "Hard granite" [ref=e53]
+                    - generic [ref=e54]: Hard granite
+                  - generic [ref=e55]:
+                    - radio "Both the same" [ref=e56]
+                    - generic [ref=e57]: Both the same
+                - generic [ref=e58] [cursor=pointer]:
+                  - button "Read question and explanation ↗" [ref=e59]
+                  - group [ref=e60]:
+                    - generic "Lift the flap for the answer" [ref=e61]
+                - button "Read sources, limits and teacher notes ↗" [ref=e64] [cursor=pointer]
+              - generic [ref=e65]:
+                - generic [ref=e66] [cursor=pointer]:
+                  - button "Read live notes ↗" [ref=e67]
+                  - complementary "Margin notes" [ref=e68]:
+                    - paragraph [ref=e69]: 89.37 model years in granite
+                    - paragraph [ref=e70]: front face 4.3 km down the valley, under 150 m of ice
+                    - paragraph [ref=e71]: floor 140 m wide, valley 220 m deep
+                    - paragraph [ref=e72]: floor lowered 0 m since the start
+                    - paragraph [ref=e73]: steepest wall 28 degrees
+                - paragraph [ref=e74]: "Try this: slide the front face past the end of the glacier. Where does the U turn back into a V?"
+            - paragraph [ref=e75]: "1"
+          - generic [ref=e76]:
+            - paragraph [ref=e77]: Glaciers shape valleys
+            - figure "Fig. 1A mountain valley with a glacier. The front of the block is a cross-section; the dashed line is the valley before the ice. True vertical scale" [ref=e78]:
+              - img "Fig. 1 · A mountain valley with a glacier Line drawing of a block of mountains cut open at the front. A glacier fills the upper valley from a bowl-shaped cirque below the peaks down to its snout. Under the glacier the valley is a broad U with steep sides. Below the snout a meltwater river runs on through a narrower V-shaped valley with conifers on its lower slopes. The front face shows the rock in section." [ref=e81]:
+                - generic [ref=e217]:
+                  - generic [ref=e219]: valley head
+                  - generic [ref=e221]: glacier
+                  - generic [ref=e223]: snout
+                  - generic [ref=e225]: U-shaped valley
+                  - generic [ref=e227]: V-shaped valley
+                  - generic [ref=e229]: valley floor
+              - generic [ref=e230]:
+                - generic [ref=e231]:
+                  - generic [ref=e232]: Fig. 1A mountain valley with a glacier. The front of the block is a cross-section; the dashed line is the valley before the ice.
+                  - generic [ref=e233]: True vertical scale
+                - generic:
+                  - paragraph: Front face, enlarged · vertical ×2
+                  - generic:
+                    - img [aria-hidden]:
+                      - generic:
+                        - generic: starting V
+                        - generic: ice
+                        - generic: 200 m
+            - group "Rock" [ref=e234]:
+              - generic "Soft rock made of mud, in thin layers. It wears away easily, and its walls slump to gentle slopes." [ref=e236]:
+                - radio "Shale soft" [ref=e237] [cursor=pointer]
+                - generic [ref=e241]:
+                  - generic [ref=e242]: Shale
+                  - generic [ref=e243]: soft
+              - 'generic "Sand grains cemented together. Medium hard: it wears more slowly than shale." [ref=e244]':
+                - radio "Sandstone medium" [ref=e245] [cursor=pointer]
+                - generic [ref=e249]:
+                  - generic [ref=e250]: Sandstone
+                  - generic [ref=e251]: medium
+              - generic "Hard rock made of interlocking crystals, with few cracks. It wears slowly and stands in steep walls." [ref=e252]:
+                - radio "Granite hard" [checked] [ref=e253] [cursor=pointer]
+                - generic [ref=e257]:
+                  - generic [ref=e258]: Granite
+                  - generic [ref=e259]: hard
+            - paragraph [ref=e260]: Drag a rock onto the block, or choose one here. Each rock starts a separate run from the same starting valley. Earlier runs are kept.
+            - group "Time" [ref=e261]:
+              - button "Pause" [active] [pressed] [ref=e263] [cursor=pointer]
+              - generic [ref=e264]:
+                - slider "Recorded time" [ref=e265] [cursor=pointer]: "5"
+                - generic [aria-hidden] [ref=e266]:
+                  - generic [ref=e267]: "0"
+                  - generic [ref=e268]: "89.565"
+              - status [ref=e269]: model time 89.37 model years
+              - generic [ref=e270]:
+                - generic [ref=e271]: Speed
+                - slider "Speed" [ref=e272]: "1"
+            - generic [ref=e273]:
+              - button "Replay the drawing" [ref=e274] [cursor=pointer]
+              - generic [ref=e275]:
+                - generic [ref=e276]: Front face
+                - slider "Front face" [ref=e277]: "0.679245283018868"
+              - generic [ref=e278]:
+                - checkbox "See under the ice" [ref=e279]
+                - generic [ref=e280]: See under the ice
+              - button "Start again" [ref=e281] [cursor=pointer]
+            - paragraph [ref=e282]: Live run of the glacier model, granite. Simplified model; time is compressed.
+            - status [ref=e283]: The figure is now a 3D block of the valley standing on the page, cut into granite, after 0 model years. There is no ice in this view. The front face of the block stands 4.3 km down the valley. The front face cuts the valley below the glacier's snout, where the river's V is unchanged. Its cross-section is closer to a V than a U (shape 1.2; a V is about 1, a U about 2).
+            - paragraph [ref=e284]: "2"
+    - navigation "Book pages" [ref=e285]:
+      - button "Contents" [ref=e286] [cursor=pointer]
+      - button "Beginning of book" [disabled] [ref=e289]
+      - generic [ref=e292]:
+        - generic [ref=e293]: "1"
+        - generic [ref=e294]: From V to U
+      - button "Turn to Where plates meet" [ref=e295] [cursor=pointer]
+      - button "More contrast" [ref=e299] [cursor=pointer]
+      - button "University level" [ref=e303] [cursor=pointer]:
+        - generic [ref=e307]: University
+    - status [ref=e308]: From V to U, spread.
+```
+
+# Test source
+
+```ts
+  1   | /**
+  2   |  * Session 5N acceptance walk on the default route (no query string): the evidence behind the PB1–PB9 and
+  3   |  * GV1–GV9 ledger in docs/review/glacial/acceptance/README.md. Each test names the rows it supplies.
+  4   |  *
+  5   |  * The journey: open → transition → pick rock (page selector, keyboard alternative to the specimen drop, and
+  6   |  * the drop itself) → play → scrub back → return to live → slide the cut → see under the ice → second rock →
+  7   |  * compare at matched model time → change level (the model must not reset) → the bar ends at both sides of the
+  8   |  * one-lesson book (D-W5-5N2) → leave for the research route and come back → reset.
+  9   |  * Plus: the page claim read off the live page at the registered section, same-rock replay, phone, reduced
+  10  |  * motion, pressure-free reflection, research route and privacy.
+  11  |  *
+  12  |  * Backend: whatever auto selection picks. Playwright's bundled Chromium has no WebGPU adapter, so it runs the
+  13  |  * labelled CPU worker; `UPLIFT_E2E_CHANNEL=chrome` exercises WebGPU on a hardware adapter.
+  14  |  */
+  15  | import { type Page, expect, test } from "@playwright/test";
+  16  | 
+  17  | test.describe.configure({ timeout: 300_000 });
+  18  | 
+  19  | interface Geometry {
+  20  |   outline: { x: number; y: number }[];
+  21  | }
+  22  | 
+  23  | /** The registered teaching section (PROTOCOL_SECTIONS.underIce) and the spread's default cut (D-W5-R1 4). */
+  24  | const REGISTERED_COLUMN = 74;
+  25  | const DEFAULT_COLUMN = 51;
+  26  | 
+  27  | const desk = (page: Page) => page.locator(".gs-desk");
+  28  | const years = async (page: Page) => Number(await desk(page).getAttribute("data-model-years"));
+  29  | const margin = (page: Page) => page.locator(".gs-margin");
+  30  | const metres = (text: string, label: RegExp) => {
+  31  |   const m = label.exec(text);
+  32  |   if (!m) throw new Error(`no ${label} in "${text}"`);
+  33  |   return Number(m[1]);
+  34  | };
+  35  | 
+  36  | async function openBook(page: Page) {
+  37  |   const errors: string[] = [];
+  38  |   page.on("pageerror", (error) => errors.push(String(error)));
+  39  |   // A clean console too: 5N found a favicon 404 logged on every load of the default route.
+  40  |   page.on("console", (message) => {
+  41  |     if (message.type() === "error") errors.push(`console: ${message.text()}`);
+  42  |   });
+  43  |   await page.goto("/");
+  44  |   await expect(desk(page)).toHaveAttribute("data-source", "live", { timeout: 60_000 });
+  45  |   await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 30_000 });
+  46  |   return errors;
+  47  | }
+  48  | 
+  49  | async function playUntil(page: Page, atLeast: number) {
+  50  |   await page.getByRole("button", { name: "Play", exact: true }).click();
+  51  |   await expect(desk(page)).toHaveAttribute("data-playing", "true");
+> 52  |   await expect.poll(() => years(page), { timeout: 200_000 }).toBeGreaterThanOrEqual(atLeast);
+      |                                                              ^ Error: expect(received).toBeGreaterThanOrEqual(expected)
+  53  |   const pause = page.getByRole("button", { name: "Pause", exact: true });
+  54  |   if (await pause.isVisible()) await pause.click();
+  55  |   await expect(desk(page)).toHaveAttribute("data-playing", "false");
+  56  | }
+  57  | 
+  58  | /** Scrubs the recorded-time slider to `target` model years (snapshots every 20 model years). */
+  59  | async function scrubTo(page: Page, target: number) {
+  60  |   const time = page.getByRole("slider", { name: "Recorded time" });
+  61  |   await time.focus();
+  62  |   await page.keyboard.press("Home");
+  63  |   for (let t = 0; t < target; t += 20) await page.keyboard.press("ArrowRight");
+  64  |   await expect(desk(page)).toHaveAttribute("data-model-years", String(target));
+  65  | }
+  66  | 
+  67  | /** Moves the front face to a grid column with the slider's keyboard twin (one cell per arrow). */
+  68  | async function cutTo(page: Page, column: number) {
+  69  |   const cut = page.getByRole("slider", { name: "Front face" });
+  70  |   await cut.focus();
+  71  |   for (let k = 0; k < 200; k++) {
+  72  |     const now = Number(await desk(page).getAttribute("data-cut-column"));
+  73  |     if (now === column) return;
+  74  |     // ArrowRight moves the face down-valley (smaller grid column), ArrowLeft up-valley.
+  75  |     await page.keyboard.press(now > column ? "ArrowRight" : "ArrowLeft");
+  76  |   }
+  77  |   throw new Error(`front face did not reach column ${column}`);
+  78  | }
+  79  | 
+  80  | async function dropSpecimen(page: Page, rock: string) {
+  81  |   const chip = (await page.locator(`.gs-specimen[data-rock="${rock}"]`).boundingBox())!;
+  82  |   const outline = (
+  83  |     await page.evaluate(() =>
+  84  |       (
+  85  |         document.querySelector(".gs-desk") as unknown as { blockScreenGeometry(): Geometry }
+  86  |       ).blockScreenGeometry(),
+  87  |     )
+  88  |   ).outline;
+  89  |   const target = {
+  90  |     x: outline.reduce((s, p) => s + p.x, 0) / outline.length,
+  91  |     y: outline.reduce((s, p) => s + p.y, 0) / outline.length,
+  92  |   };
+  93  |   const from = { x: chip.x + 12, y: chip.y + chip.height / 2 };
+  94  |   await page.mouse.move(from.x, from.y);
+  95  |   await page.mouse.down();
+  96  |   for (let i = 1; i <= 10; i++)
+  97  |     await page.mouse.move(from.x + ((target.x - from.x) * i) / 10, from.y + ((target.y - from.y) * i) / 10);
+  98  |   await expect(page.locator(".gs-drop-overlay")).toHaveAttribute("data-active", "");
+  99  |   await page.mouse.up();
+  100 | }
+  101 | 
+  102 | /** GV5: the time label, the margin note and the figure's own state name the same run, rock and time. */
+  103 | async function expectOneRunOneTime(page: Page) {
+  104 |   // Read everything in one frame (a pause may still be settling onto its final frame).
+  105 |   await expect
+  106 |     .poll(
+  107 |       () =>
+  108 |         page.evaluate(() => {
+  109 |           const d = document.querySelector<HTMLElement>(".gs-desk")!;
+  110 |           const y = Number(d.dataset.modelYears);
+  111 |           const note = document.querySelector('.gs-margin [data-note="time"]')?.textContent ?? "";
+  112 |           const now = document.querySelector(".gs-time-now")?.textContent ?? "";
+  113 |           const m = /^([\d.]+) model years in (\w+)$/.exec(note.trim());
+  114 |           const n = /^model time ([\d.]+) model years$/.exec(now.trim());
+  115 |           // The note binds four significant figures (5L bindings.ts), the label two decimals (5J labels.ts).
+  116 |           const noteOk = !!m && Math.abs(Number(m[1]) - y) <= 0.05 && m[2] === d.dataset.liveRock;
+  117 |           const nowOk = d.dataset.view === "past" || (!!n && Math.abs(Number(n[1]) - y) <= 0.005);
+  118 |           return noteOk && nowOk ? "consistent" : `y ${y} note "${note}" label "${now}"`;
+  119 |         }),
+  120 |       { timeout: 15_000 },
+  121 |     )
+  122 |     .toBe("consistent");
+  123 | }
+  124 | 
+  125 | test("PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard first", async ({ page }) => {
+  126 |   const errors = await openBook(page);
+  127 | 
+  128 |   // PB4: immediate play, nothing to answer or configure first; the page invites Play (D-W5-5M2).
+  129 |   await expect(page).toHaveURL(/spread=geomorph\.u-valley/);
+  130 |   await expect(page.getByRole("heading", { level: 1, name: "From V to U" })).toBeVisible();
+  131 |   await expect(desk(page)).toHaveAttribute("data-model-years", "0");
+  132 |   await expect(page.getByRole("button", { name: "Play", exact: true })).toBeEnabled();
+  133 |   await expect(page.locator(".gs-play-invite")).toBeVisible();
+  134 |   await expect(page.locator('input[name="gs-prediction"]:checked')).toHaveCount(0);
+  135 |   await expectOneRunOneTime(page);
+  136 | 
+  137 |   // GV1 + GV6: the keyboard alternative to the specimen drop — the same rock radios, by arrow keys.
+  138 |   await page.getByRole("radio", { name: /Sandstone/ }).focus();
+  139 |   await page.keyboard.press("ArrowLeft");
+  140 |   await expect(page.getByRole("radio", { name: /Shale/ })).toBeChecked();
+  141 |   await expect(desk(page)).toHaveAttribute("data-live-rock", "shale");
+  142 |   // Before any advance a choice replaces the unadvanced run: nothing is kept.
+  143 |   await expect(desk(page)).toHaveAttribute("data-ghost", "");
+  144 | 
+  145 |   // Play (keyboard: Space on the focused button), then pause at the live head.
+  146 |   await page.getByRole("button", { name: "Play", exact: true }).focus();
+  147 |   await page.keyboard.press("Space");
+  148 |   await expect(desk(page)).toHaveAttribute("data-playing", "true");
+  149 |   await expect.poll(() => years(page), { timeout: 200_000 }).toBeGreaterThanOrEqual(100);
+  150 |   await page.getByRole("button", { name: "Pause", exact: true }).focus();
+  151 |   await page.keyboard.press("Space");
+  152 |   await expect(desk(page)).toHaveAttribute("data-playing", "false");
+```
