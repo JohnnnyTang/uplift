@@ -3668,3 +3668,19 @@ The top-level README's unreleased status is corrected to agree with D-W6-6F.
 The release packet links the two presentation evidence reports. These documentation
 changes are within the owner's additional release scope; they change no lesson copy,
 model parameters or scientific claims.
+
+## D-W6-6H-integration · Retain measurable mounting during departure · 2026-11-17
+
+6H rebased onto merged 6G (`9e3c713`), retaining both records, fit/desk and flap flush.
+Integrated peak screenshots for both lessons at 1366×768 and 2560×1440 show no clipped
+block or controls; numeric evidence covers settled hulls only. The 22 selected
+acceptance/fallback checks pass, including complete PB3/PL6 and the queued flap case.
+
+Hosted pre-rebase validation exposed a real lifecycle race: Research could be chosen
+while initial reader mounting was pending. Suspension hid the ancestor before stage
+layout, causing "The stage element is not positioned inside its ancestor" and
+rejecting route work. The minimal out-of-owned-path shell correction tracks and
+awaits mounting before settling/detaching/hiding; a gated initial-mount browser test
+checks visibility, eventual departure, detached state and absence of page errors.
+Glacial non-animation gesture tests now use the already-authorized Escape skip after
+readiness, preserving full animation assertions in PB3/PL6. No model or copy change.

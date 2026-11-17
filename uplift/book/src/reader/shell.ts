@@ -112,6 +112,7 @@ export async function createReaderShell(
       }
     | undefined;
   let running: Promise<void> | undefined;
+  let mounting: Promise<void> | undefined;
   let depthWork = Promise.resolve();
   const focusMemory = new Map<string, string>();
   const key = (target: ReaderTarget) => `${target.spreadId}:${target.page}`;
@@ -479,7 +480,12 @@ export async function createReaderShell(
     book.replaceChildren(active.article);
     updateNavigation();
     if (target.page !== "text" && !suspended) {
-      await active.scene.mount(active.surface);
+      mounting = active.scene.mount(active.surface);
+      try {
+        await mounting;
+      } finally {
+        mounting = undefined;
+      }
       if (!disposed && !suspended) active.scene.resume();
     }
     updateNavigation();
@@ -676,6 +682,9 @@ export async function createReaderShell(
       animation?.finish();
       await running;
       await depthWork;
+      // Contents is usable during initial loading. Keep the stage measurable until
+      // its async mount finishes, then settle/detach before hiding the reader.
+      await mounting;
       await active!.scene.pauseAndSettle();
       if (active!.scene.status().attached) active!.scene.detach();
       root.hidden = true;
@@ -689,8 +698,13 @@ export async function createReaderShell(
         active!.surface.getClientRects().length &&
         !active!.scene.status().attached
       ) {
-        await active!.scene.mount(active!.surface);
-        active!.scene.resume();
+        mounting = active!.scene.mount(active!.surface);
+        try {
+          await mounting;
+        } finally {
+          mounting = undefined;
+        }
+        if (!disposed && !suspended) active!.scene.resume();
       }
       resize();
       restoreFocus();

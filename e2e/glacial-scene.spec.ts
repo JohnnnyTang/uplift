@@ -17,8 +17,10 @@ async function open(page: Page, query = "") {
   await page.waitForSelector(".gs-desk[data-ready], .gs-tray[disabled]", { timeout: 60_000 });
 }
 
-/** Waits for the drawing → ink → colour transition to finish (the text alternative is then announced). */
+/** Gesture checks use the supported skip; PB3 separately checks the complete entrance. */
 async function settled(page: Page) {
+  await expect(desk(page)).toHaveAttribute("data-ready", "true", { timeout: 60_000 });
+  await page.keyboard.press("Escape");
   await expect(page.locator(".gs-sr")).toContainText("front face of the block", { timeout: 20_000 });
 }
 

@@ -82,3 +82,29 @@ identify Codex accurately. 6G should merge first, followed by a 6H rebase and ch
 - Hosted initial full suite (run 44053856115): 113 passed, one skipped, three failed (glacial phase skipping and two plate gesture/return time budgets). The phase clock and explicit non-animation skip setup address those findings; final-head hosted validation is required before integration.
 - Native evidence: Chrome 157.0.8103.79, WebGPU, both fresh/replay sequences around 8.5 s. No multi-device performance claim.
 - Pending: rebase onto merged 6G, repeat checks and inspect the combined enlarged book at mid-lift.
+
+## Combined integration verification
+
+6H was rebased onto main `9e3c713` after 6G merged. Both sessions' decision and
+acceptance records, the enlarged fit/desk, and the flap-state flush were retained.
+[Combined peak/settled captures](integration/README.md) cover both lessons at
+1366×768 and 2560×1440. Peak clearance was visually inspected; no fit change was needed.
+
+- Integrated lesson acceptance/fallback selection: **22 passed** (3.4 min), including
+  complete PB3/PL6 sequences, keyboard/reduced motion, fit and queued flap retention.
+- Glacial scene and research smoke specs: **12 passed** (1.4 min).
+- Hosted pre-rebase run 44062927193: 110 passed, one skipped, six failed. Five scene
+  gesture tests still assumed the old entrance duration; their setup now uses Escape
+  after readiness. Full PB3/PL6 passed. The sixth failure exposed research navigation
+  during initial reader mounting: hiding the stage before mount completed caused
+  layout errors and rejected navigation. The shell now waits for in-flight mounting
+  before settling, detaching and hiding; a gated-mount regression verifies this race.
+
+The full hosted suite must pass on the final rebased head before merging. Native
+phase media remain valid: the integration adds 6G layout and lifecycle coordination,
+without changing the authored entrance phases or stroke geometry.
+
+Final post-integration verification: `pnpm check` passed (908 tests, seven skipped;
+typecheck, lint and formatting passed). `pnpm build` passed; bundle is
+6,793,525 / 10,000,000 bytes. The complete shell + research smoke selection passed
+**14/14** (1.2 min), including the deterministic initial-mount departure regression.

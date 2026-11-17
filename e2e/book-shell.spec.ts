@@ -1,6 +1,23 @@
 import { test, expect } from "@playwright/test";
 import { fixtureOrigin } from "./helpers";
 const fixture = `${process.env.BOOK_SHELL_FIXTURE_ORIGIN ?? fixtureOrigin}/e2e/fixtures/book-shell.html`;
+test("research requested during initial mounting waits for a measurable stage before detaching", async ({
+  page,
+}) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto(`${fixture}?holdInitialMount`, { waitUntil: "commit" });
+  await page.getByRole("button", { name: "Contents", exact: true }).click();
+  await page.getByRole("button", { name: "Research example", exact: true }).click();
+  await expect(page.locator(".reader-shell")).toBeVisible();
+  await expect(page.locator("body")).not.toHaveAttribute("data-research", "true");
+  await page.evaluate(() => window.releaseMount());
+  await expect(page.locator("body")).toHaveAttribute("data-research", "true");
+  await expect(page.locator(".reader-shell")).toBeHidden();
+  expect(await page.evaluate(() => window.fixtures[0]!.controller.status().attached)).toBe(false);
+  expect(errors).toEqual([]);
+});
+
 test("settles before an attached page turn, coalesces, retains model and restores focus", async ({
   page,
 }) => {
