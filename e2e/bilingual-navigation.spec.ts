@@ -21,6 +21,7 @@ test("Chinese navigation retains both lessons and changing language keeps the mo
   await page.goto("/?glacier=cpu");
   await ready(page);
   await page.getByRole("radio", { name: /Shale/ }).check();
+  await expect(page.locator(".gs-desk")).toHaveAttribute("data-live-rock", "shale");
   const glacier = await page.locator(".gs-desk").evaluate((desk) => ({
     run: (desk as HTMLElement).dataset.runId,
     time: (desk as HTMLElement).dataset.modelYears,
@@ -43,6 +44,7 @@ test("Chinese navigation retains both lessons and changing language keeps the mo
     input.dispatchEvent(new Event("input", { bubbles: true }));
     input.dispatchEvent(new Event("change", { bubbles: true }));
   });
+  await expect(page.locator(".ps-desk")).toHaveAttribute("data-stage", "0.4");
   const stage = await page.locator(".ps-desk").getAttribute("data-stage");
   const platesCanvas = await page.locator(".ps-desk canvas").first().elementHandle();
   await chooseLanguage(page, "en");
