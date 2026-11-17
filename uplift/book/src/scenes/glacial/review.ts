@@ -1000,6 +1000,8 @@ export async function mountGlacialScene(
     anchor: frame,
     diorama: dio,
     tiltDeg: TILT_DEG,
+    // D-W6-6E: a larger valley on the paper; flat layouts retain their fitted camera.
+    footprintFill: 1.5,
     mode: o.mode ?? "auto",
     backend: o.backend ?? "auto",
     onContextLost: () => {
