@@ -16,6 +16,8 @@ import { type Page, expect, test } from "@playwright/test";
 
 test.describe.configure({ timeout: 300_000 });
 
+const MODEL_RUN_TIMEOUT_MS = 200_000;
+
 interface Geometry {
   outline: { x: number; y: number }[];
 }
@@ -42,6 +44,9 @@ async function openBook(page: Page) {
   });
   await page.goto("/");
   await expect(desk(page)).toHaveAttribute("data-source", "live", { timeout: 60_000 });
+  // Journey tests use immediate play; PB3/PL6 separately exercise the complete entrance.
+  await expect(desk(page)).toHaveAttribute("data-ready", "true", { timeout: 60_000 });
+  await page.keyboard.press("Escape");
   await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 30_000 });
   return errors;
 }
@@ -49,7 +54,7 @@ async function openBook(page: Page) {
 async function playUntil(page: Page, atLeast: number) {
   await page.getByRole("button", { name: "Play", exact: true }).click();
   await expect(desk(page)).toHaveAttribute("data-playing", "true");
-  await expect.poll(() => years(page), { timeout: 200_000 }).toBeGreaterThanOrEqual(atLeast);
+  await expect.poll(() => years(page), { timeout: MODEL_RUN_TIMEOUT_MS }).toBeGreaterThanOrEqual(atLeast);
   const pause = page.getByRole("button", { name: "Pause", exact: true });
   if (await pause.isVisible()) await pause.click();
   await expect(desk(page)).toHaveAttribute("data-playing", "false");
@@ -123,6 +128,10 @@ async function expectOneRunOneTime(page: Page) {
 }
 
 test("PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard first", async ({ page }) => {
+  // Three independent 100-year runs each have the existing model-progress budget.
+  // Preserve their shared navigation/reset history; the suite's 300 s default cannot
+  // cover all three 200 s waits. Other tests and each run's failure budget stay unchanged.
+  test.setTimeout(3 * MODEL_RUN_TIMEOUT_MS + 60_000);
   const errors = await openBook(page);
 
   // PB4: immediate play, nothing to answer or configure first; the page invites Play (D-W5-5M2).
@@ -146,7 +155,9 @@ test("PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard f
   await page.getByRole("button", { name: "Play", exact: true }).focus();
   await page.keyboard.press("Space");
   await expect(desk(page)).toHaveAttribute("data-playing", "true");
-  await expect.poll(() => years(page), { timeout: 200_000 }).toBeGreaterThanOrEqual(100);
+  await test.step("advance the original shale run to 100 model years", async () => {
+    await expect.poll(() => years(page), { timeout: MODEL_RUN_TIMEOUT_MS }).toBeGreaterThanOrEqual(100);
+  });
   await page.getByRole("button", { name: "Pause", exact: true }).focus();
   await page.keyboard.press("Space");
   await expect(desk(page)).toHaveAttribute("data-playing", "false");
@@ -189,7 +200,7 @@ test("PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard f
   await expect(desk(page)).toHaveAttribute("data-model-years", "0");
   await expect(desk(page)).toHaveAttribute("data-ghost", "shale");
   await expect(page.getByRole("radio", { name: /Granite/ })).toBeChecked();
-  await playUntil(page, 100);
+  await test.step("advance granite to the matched 100-year comparison", () => playUntil(page, 100));
 
   // GV2 + GV5: compare at matched model time; the ghost and the compare note name the kept run at that time.
   await scrubTo(page, 100);
@@ -272,7 +283,7 @@ test("PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard f
   // Determinism on the page: the same rock, config and backend reproduce the same recorded run.
   await page.getByRole("radio", { name: /Granite/ }).check();
   await expect(desk(page)).toHaveAttribute("data-live-rock", "granite");
-  await playUntil(page, 100);
+  await test.step("replay granite to 100 years after navigation and reset", () => playUntil(page, 100));
   await cutTo(page, REGISTERED_COLUMN);
   await scrubTo(page, 100);
   const replay = await margin(page).innerText();
@@ -297,7 +308,7 @@ test("PB3 GV4: drawing → ink → colour transition into a scene standing on th
   // The figure is a line drawing first; it also serves as the static fallback.
   await expect(page.locator(".gs-page-figure svg").first()).toBeVisible();
   await expect(desk(page)).toHaveAttribute("data-transition", /running|done/, { timeout: 60_000 });
-  await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 30_000 });
+  await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 60_000 });
   await expect(desk(page)).toHaveAttribute("data-stage-mode", "tilted");
   await expect(page.locator(".gs-desk canvas")).toBeVisible();
   // The block stands on the right page: its projected outline lies over the figure page.
@@ -312,9 +323,28 @@ test("PB3 GV4: drawing → ink → colour transition into a scene standing on th
   expect(cx).toBeGreaterThan(figure.x);
   expect(cx).toBeLessThan(figure.x + figure.width);
   // Replay the drawing: the transition is replayable and is presentation, not model time.
+  // It holds the complete drawing, then sketches the block in the air, then lifts it (D-W6-6H).
   await page.getByRole("button", { name: "Replay the drawing" }).click();
-  await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 30_000 });
+  await expect(desk(page)).toHaveAttribute("data-transition-phase", "hold");
+  await expect(page.locator(".gs-desk .gs-drawing")).toHaveCSS("opacity", "1");
+  await expect(desk(page)).toHaveAttribute("data-transition-phase", "sketch", { timeout: 60_000 });
+  await expect(desk(page)).toHaveAttribute("data-transition", "running");
+  await expect(desk(page)).toHaveAttribute("data-transition-phase", "lift", { timeout: 60_000 });
+  await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 60_000 });
+  await expect(desk(page)).toHaveAttribute("data-transition-phase", "done");
   await expect(desk(page)).toHaveAttribute("data-model-years", "0");
+  // The entrance never blocks the reader (PB4): any key ends it at once, while Tab still moves focus.
+  await page.getByRole("button", { name: "Replay the drawing" }).click();
+  await expect(desk(page)).toHaveAttribute("data-transition", "running");
+  await page.keyboard.press("Tab");
+  await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 1_000 });
+  // Pressing Play during the entrance ends it and plays: one press, not two.
+  await page.getByRole("button", { name: "Replay the drawing" }).click();
+  await expect(desk(page)).toHaveAttribute("data-transition", "running");
+  await page.getByRole("button", { name: "Play", exact: true }).click();
+  await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 1_000 });
+  await expect(desk(page)).toHaveAttribute("data-playing", "true");
+  await page.getByRole("button", { name: "Pause", exact: true }).click();
 });
 
 for (const [width, height] of [
@@ -432,7 +462,7 @@ test("PB2 GV6: phone — the journey on a flat single page, no horizontal scroll
   expect(errors).toEqual([]);
 });
 
-test("PB3 GV6: reduced motion — flat page, crossfade, keyboard journey, nothing animating", async ({
+test("PB3 GV6: reduced motion — flat page, immediate scene, keyboard journey, nothing animating", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });

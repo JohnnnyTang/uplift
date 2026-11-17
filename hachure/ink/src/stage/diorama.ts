@@ -12,7 +12,10 @@ import {
   CanvasTexture,
   Color,
   ConeGeometry,
+  Float32BufferAttribute,
   Group,
+  InstancedBufferAttribute,
+  InstancedBufferGeometry,
   InstancedMesh,
   Matrix4,
   Mesh,
@@ -58,6 +61,7 @@ import {
   patternedProfile,
   solidProfile,
 } from "./block-geometry";
+import { type SketchConfig, buildSketch, packSketch } from "./sketch";
 import { buildLakes, buildStreams } from "./water";
 import {
   type CrustBandLook,
@@ -110,6 +114,11 @@ export interface DioramaOptions {
    * so marks keep their shape). Default: a twelfth of the block's width.
    */
   readonly crustPatternTileM?: number;
+  /**
+   * The construction sketch drawn in the air before the block rises (D-W6-6H): seed, stroke counts, wobble
+   * and pacing. Default `DEFAULT_SKETCH`. Presentation only.
+   */
+  readonly sketch?: Partial<SketchConfig>;
 }
 
 /** Pluggable dressing rules: pure functions of a block grid, deterministic, never changing state. */
@@ -155,6 +164,10 @@ export interface DioramaReveal {
   readonly ink: number;
   readonly hachure: number;
   readonly colour: number;
+  /** How much of the construction sketch has been drawn (unit: none, 0–1). Default 0. */
+  readonly sketch?: number;
+  /** Opacity of the construction sketch (unit: none, 0–1). Default 0: no sketch is built or drawn. */
+  readonly pencil?: number;
 }
 
 /** A plain-language account of what the block currently shows, for text alternatives. */
@@ -256,6 +269,54 @@ class Strokes {
   }
 }
 
+/**
+ * The construction sketch (D-W6-6H): pencil strokes at the block’s full height, drawn on in order from one
+ * uniform. Built from the block’s current geometry only while it is shown.
+ */
+class SketchStrokes {
+  readonly mesh: Mesh;
+  readonly progress = uniform(0);
+  readonly fade = uniform(0);
+  constructor(ink: InkUniforms, colourHex: string) {
+    const material = createStrokeMaterial(ink, { reveal: this.progress });
+    material.colorNode = color(new Color(colourHex));
+    material.opacityNode = (material.opacityNode as Node<"float">).mul(this.fade);
+    this.mesh = new Mesh(new BufferGeometry(), material);
+    this.mesh.frustumCulled = false;
+    this.mesh.renderOrder = 4;
+    this.mesh.visible = false;
+    this.upload(packSketch([]));
+  }
+  upload(packed: ReturnType<typeof packSketch>): void {
+    const g = new InstancedBufferGeometry();
+    g.setAttribute("position", new Float32BufferAttribute([0, -1, 0, 1, -1, 0, 1, 1, 0, 0, 1, 0], 3));
+    g.setIndex([0, 1, 2, 0, 2, 3]);
+    for (const [name, size] of [
+      ["segPrev", 3],
+      ["segStart", 3],
+      ["segEnd", 3],
+      ["segNext", 3],
+      ["segWidth", 1],
+      ["segReveal", 2],
+    ] as const)
+      // Never an empty buffer: an empty sketch keeps one unused instance.
+      g.setAttribute(
+        name,
+        new InstancedBufferAttribute(packed.count ? packed[name] : new Float32Array(size), size),
+      );
+    g.instanceCount = packed.count;
+    this.mesh.geometry.dispose();
+    this.mesh.geometry = g;
+  }
+  get count(): number {
+    return (this.mesh.geometry as InstancedBufferGeometry).instanceCount;
+  }
+  dispose(): void {
+    this.mesh.geometry.dispose();
+    (this.mesh.material as Material).dispose();
+  }
+}
+
 /** Builds a tree: two stacked cones, base at y = 0, height 1, radius 0.32 (unit: none; scaled per tree). */
 function treeGeometry(): BufferGeometry {
   const parts = [
@@ -314,6 +375,10 @@ export class ValleyDiorama {
   private readonly trees: InstancedMesh;
   private readonly wallMaterial: ReturnType<typeof createWallMaterial>;
   private readonly strokes: Record<StrokeKind, Strokes>;
+  private readonly sketch: SketchStrokes;
+  private readonly sketchConfig: Partial<SketchConfig>;
+  /** The sketch no longer matches the block; rebuilt when next shown. */
+  private sketchStale = true;
   private grid: BlockGrid | null = null;
   private reference: BlockGrid | null = null;
   private ghosts: BlockGrid[] = [];
@@ -345,6 +410,7 @@ export class ValleyDiorama {
     this.reliefScale = options.reliefScale ?? 1;
     this.soilDepthM = options.soilDepthM ?? 40;
     this.rules = options.rules ?? {};
+    this.sketchConfig = options.sketch ?? {};
     this.crustLook = options.crustBand ?? CRUST_BAND_LOOK;
     this.crustTileOption = options.crustPatternTileM;
     const u = this.uniforms;
@@ -392,7 +458,9 @@ export class ValleyDiorama {
     this.body.add(this.streams, this.lakes);
     this.body.add(this.crustMesh, this.mantleMesh);
     for (const s of Object.values(this.strokes)) this.body.add(s.layer.mesh);
-    this.group.add(this.body);
+    // The sketch stands at the block’s full height: it is not in `body`, which the rise scales.
+    this.sketch = new SketchStrokes(this.ink, NATURAL_TOKENS.pencil);
+    this.group.add(this.body, this.sketch.mesh);
     this.group.visible = false;
   }
 
@@ -504,6 +572,11 @@ export class ValleyDiorama {
     this.strokes.inkLine.fade.value = reveal.ink;
     this.strokes.hachure.fade.value = reveal.hachure;
     this.strokes.flow.fade.value = reveal.colour;
+    // While the sketch stands alone, nothing of the block shows: it appears when it starts to rise.
+    this.body.visible = reveal.rise > 0 || (reveal.pencil ?? 0) <= 0;
+    this.sketch.progress.value = reveal.sketch ?? 0;
+    this.sketch.fade.value = reveal.pencil ?? 0;
+    this.applySketch();
     this.applyVisibility();
     this.onChange();
   }
@@ -575,6 +648,30 @@ export class ValleyDiorama {
       this.reveal.hachure > 0.01 && this.strokes.hachure.layer.count > 0;
   }
 
+  /** Builds the sketch from the block as it is now, only while the reveal shows it. */
+  private applySketch(): void {
+    const shown = (this.reveal.pencil ?? 0) > 0.003 && (this.reveal.sketch ?? 0) > 0;
+    const g = this.grid;
+    const f = this.frame;
+    if (shown && this.sketchStale && g && f) {
+      const cfg = this.dressing;
+      const section = g.crustBaseM ? buildCrustSection(g, f) : null;
+      const strokes = buildSketch(
+        g,
+        f,
+        {
+          iceThresholdM: cfg.iceThresholdM,
+          hachures: (this.rules.hachures ?? slopeHachures)(g, cfg, f.cutRow),
+          sectionLines: section ? [section.basePolyline] : [],
+        },
+        this.sketchConfig,
+      );
+      this.sketch.upload(packSketch(strokes));
+      this.sketchStale = false;
+    }
+    this.sketch.mesh.visible = shown && !this.sketchStale && this.sketch.count > 0;
+  }
+
   private rebuild(): void {
     const g = this.grid!;
     const range = this.range!;
@@ -630,6 +727,8 @@ export class ValleyDiorama {
     this.trees.computeBoundingSphere();
 
     this.packStrokes(g, f);
+    this.sketchStale = true;
+    this.applySketch();
     this.applyRock();
     this.applyVisibility();
     this.group.visible = true;
@@ -809,6 +908,7 @@ export class ValleyDiorama {
     this.mantleMesh.geometry.dispose();
     this.disposeCrustMaterials();
     for (const s of Object.values(this.strokes)) s.dispose();
+    this.sketch.dispose();
     for (const t of this.textures.values()) t.dispose();
     this.textures.clear();
   }

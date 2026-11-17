@@ -9,6 +9,13 @@ let release: (() => void) | undefined;
 let mountFailure = false,
   mountGate: Promise<void> | undefined,
   mountRelease: (() => void) | undefined;
+const holdInitialMount = new URLSearchParams(location.search).has("holdInitialMount");
+if (holdInitialMount) {
+  mountGate = new Promise<void>((resolve) => {
+    mountRelease = resolve;
+  });
+  window.releaseMount = () => mountRelease?.();
+}
 const entries: ReaderEntry[] = ["ink", "paper"].map((id, index) => {
   const spread: ReaderSpread = {
     schemaVersion: 0,
@@ -96,7 +103,7 @@ const entries: ReaderEntry[] = ["ink", "paper"].map((id, index) => {
         f.controller.present({ ...p, liftFraction: p.liftFraction ? 0 : 1 });
         drawing.style.transform = p.liftFraction ? "" : "skewY(-8deg)";
       };
-      if (index === 1) {
+      if (index === 1 || holdInitialMount) {
         const mount = f.controller.mount;
         f.controller.mount = async (container) => {
           if (mountFailure) {
@@ -104,6 +111,7 @@ const entries: ReaderEntry[] = ["ink", "paper"].map((id, index) => {
             throw new Error("Fixture mount failure");
           }
           await mountGate;
+          if (!container.getClientRects().length) throw new Error("Fixture mounted while hidden");
           return mount(container);
         };
       }
@@ -116,7 +124,9 @@ const shell = await createReaderShell(document.querySelector<HTMLElement>("#shel
   teacherNotes: {
     "fixture.ink": "Teaching notes remain readable in the separate reading surface. ".repeat(12),
   },
-  onResearch: () => {},
+  onResearch: () => {
+    document.body.dataset.research = "true";
+  },
 });
 Object.assign(window, {
   failMount: () => {

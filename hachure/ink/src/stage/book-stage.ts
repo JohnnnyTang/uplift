@@ -197,6 +197,9 @@ function layoutRect(el: HTMLElement, ancestor: HTMLElement): Rect {
   return { x, y, width: el.offsetWidth, height: el.offsetHeight };
 }
 
+/** Opacity of the contact shadow under the standing block (unit: none, 0–1). */
+const CONTACT_SHADOW_OPACITY = 0.32;
+
 /** A soft, blurred footprint used as the contact shadow right under the block. */
 function contactShadowTexture(): CanvasTexture {
   const size = 256;
@@ -235,6 +238,11 @@ class BookStageImpl implements BookStage {
   private observer: ResizeObserver | null = null;
   private frameHandle = 0;
   private disposed = false;
+  private transitionVisible = true;
+  /** Block height the contact shadow follows (unit: none, 0–1); 1 until a transition says otherwise. */
+  private shadowRise = 1;
+  private shadowWidthM = 0;
+  private shadowDepthM = 0;
   private readonly onResize = () => this.setMode(this.request);
   private readonly onMedia = () => this.setMode(this.request);
   private readonly onContextLostDom = (event: Event) => {
@@ -270,7 +278,7 @@ class BookStageImpl implements BookStage {
     const contactMaterial = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false });
     contactMaterial.color = new Color(NATURAL_TOKENS.shadow);
     contactMaterial.alphaMap = contactShadowTexture();
-    contactMaterial.opacity = 0.32;
+    contactMaterial.opacity = CONTACT_SHADOW_OPACITY;
     this.contact = new Mesh(new PlaneGeometry(1, 1).rotateX(-Math.PI / 2), contactMaterial);
     this.contact.renderOrder = -1;
     this.light.castShadow = true;
@@ -541,7 +549,11 @@ class BookStageImpl implements BookStage {
     this.holder.scale.setScalar(scale);
     // Contact shadow under the visible (cut) block, in block-local metres.
     const visibleDepth = fp.frontZ - fp.backZ;
-    this.contact.scale.set(fp.widthM * 1.3, 1, visibleDepth + fp.widthM * 0.3);
+    this.shadowWidthM = fp.widthM;
+    this.shadowDepthM = visibleDepth;
+    // The shadow parts from the block as it lifts (D-W6-6H): tight under it on the paper, wider at height.
+    const spread = fp.widthM * (0.08 + 0.22 * this.shadowRise);
+    this.contact.scale.set(fp.widthM + spread, 1, visibleDepth + spread);
     this.contact.position.set(0, fp.heightM * 0.001, (fp.frontZ + fp.backZ) / 2);
     // Light from the upper left, behind the page top: shadows fall right and towards the reader.
     const radius = Math.hypot(fp.widthM, fp.depthM, fp.heightM) * scale;
@@ -591,12 +603,20 @@ class BookStageImpl implements BookStage {
   }
 
   applyTransition(state: TransitionState): void {
+    this.transitionVisible = state.sceneOpacity > 0;
     this.canvas.style.opacity = String(state.sceneOpacity);
+    // No block, no shadow: the contact shadow gathers under the block and widens as it lifts.
+    this.shadowRise = Math.min(1, Math.max(0, state.rise));
+    (this.contact.material as MeshBasicNodeMaterial).opacity =
+      CONTACT_SHADOW_OPACITY * Math.sqrt(this.shadowRise);
+    this.contact.visible = this.shadowRise > 0;
+    const spread = this.shadowWidthM * (0.08 + 0.22 * this.shadowRise);
+    this.contact.scale.set(this.shadowWidthM + spread, 1, this.shadowDepthM + spread);
     this.o.diorama.setReveal(state);
   }
 
   requestRender(): void {
-    if (!this.renderer || this.frameHandle || this.disposed) return;
+    if (!this.renderer || this.frameHandle || this.disposed || !this.transitionVisible) return;
     this.frameHandle = requestAnimationFrame(() => {
       this.frameHandle = 0;
       this.draw();
@@ -604,7 +624,7 @@ class BookStageImpl implements BookStage {
   }
 
   private draw(): void {
-    if (!this.renderer || this.disposed) return;
+    if (!this.renderer || this.disposed || !this.transitionVisible) return;
     this.camera.updateProjectionMatrix();
     this.renderer.render(this.scene, this.camera);
   }

@@ -757,6 +757,7 @@ export async function mountPlatesScene(
     turbulence.setAttribute("scale", (s.drawingRoughness * 9).toFixed(2));
     drawing.style.filter = s.drawingRoughness > 0.01 && s.drawingOpacity > 0.01 ? "url(#ps-sketch)" : "";
     overlay.style.opacity = String(s.colour);
+    desk.dataset.transitionPhase = s.phase;
   };
   const overlay = el("div", "ps-overlay");
   overlay.setAttribute("aria-hidden", "false");
@@ -770,6 +771,8 @@ export async function mountPlatesScene(
       reducedMotion: quick || reducedMotion(),
       restingHachure: RESTING_HACHURE,
     });
+    // The entrance never makes the reader wait: the first press of a key or pointer ends it (D-W6-6H).
+    transition.skipOnInput(running);
     void running.done.then((completed) => {
       if (!completed) return;
       transitionDone = true;
@@ -1070,6 +1073,19 @@ export async function mountPlatesScene(
   Object.defineProperty(desk, "blockScreenGeometry", {
     configurable: true,
     value: () => cutDragModule.blockScreenGeometry(bookStage, dio),
+  });
+  // Freezes the entrance at a time after its start (unit: milliseconds); "Replay the drawing" plays again.
+  Object.defineProperty(desk, "seekEntrance", {
+    configurable: true,
+    value: (elapsedMs: number) => {
+      running?.cancel();
+      applyState(
+        transition.transitionStateAt(elapsedMs, {
+          ...transition.DEFAULT_TRANSITION_TIMING,
+          restingHachure: RESTING_HACHURE,
+        }),
+      );
+    },
   });
   Object.defineProperty(desk, "plateArrowTargets", { configurable: true, value: () => arrows!.targets() });
   Object.defineProperty(desk, "drawTimings", {

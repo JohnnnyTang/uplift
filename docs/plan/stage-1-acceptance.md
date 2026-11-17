@@ -2,6 +2,8 @@
 
 **6G presentation update (2026-11-17):** the larger fitted book and study desk await owner review; see [desk evidence](../review/book-revision/desk-refinement/README.md) and D-W6-6G. Baseline release approval is retained.
 
+**6H presentation update:** the slower drawing → sketch → lift entrance awaits owner review. See [the evidence packet](../review/book-revision/uplift-transition/README.md) and D-W6-6H. Existing scientific and hardware review statuses remain in force.
+
 ## Owner update · Stage 1 release · 2026-11-16
 
 The owner reported that **expert review is done by the project team** and directed that

@@ -14,8 +14,11 @@ async function open(page: Page, query = "") {
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(url(query));
   await expect(desk(page)).toHaveAttribute("data-ready", "true", { timeout: 60_000 });
-  if (!query.includes("static=1"))
+  if (!query.includes("static=1")) {
+    // Gesture/state checks use the reader skip path; full motion is covered by PL6 acceptance.
+    await page.keyboard.press("Escape");
     await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 60_000 });
+  }
   return errors;
 }
 

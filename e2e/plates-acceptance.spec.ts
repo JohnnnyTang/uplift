@@ -113,6 +113,8 @@ test.afterAll(async () => {
 test("PB7 PL8: lesson 1 turns to lesson 2 with a real page turn, on the same tilt, focus on its title", async () => {
   await page.goto("/");
   await expect(l1()).toHaveAttribute("data-source", "live", { timeout: 60_000 });
+  await expect(l1()).toHaveAttribute("data-ready", "true", { timeout: 60_000 });
+  await page.keyboard.press("Escape");
   await expect(l1()).toHaveAttribute("data-transition", "done", { timeout: 30_000 });
   // Leave lesson 1 with a state worth keeping: a shale run (a new run from the start).
   await page.getByRole("radio", { name: /Shale/ }).check();
@@ -125,6 +127,8 @@ test("PB7 PL8: lesson 1 turns to lesson 2 with a real page turn, on the same til
   await page.locator(".gs-page-text h1").first().focus();
   await page.keyboard.press("PageDown");
   await expect(l2()).toHaveAttribute("data-ready", "true", { timeout: 60_000 });
+  // PL6 below covers unskipped animation; navigation should be immediately operable.
+  await page.keyboard.press("Escape");
   await expect(page).toHaveURL(/spread=tectonics\.plate-boundaries/);
   await expect(page.getByRole("heading", { level: 1, name: L2 })).toBeFocused();
   await expect(bar().locator(".reader-position")).toHaveText(new RegExp(`2\\s*${L2}`));
@@ -352,7 +356,16 @@ test("PL6: Replay the drawing runs drawing → ink → colour on the tilted page
   await page.getByRole("button", { name: "Replay the drawing" }).click();
   await expect(l2()).toHaveAttribute("data-transition", "running");
   await expect(page.locator(".ps-desk .gs-drawing svg[role=img]")).toBeVisible();
+  // The complete drawing is held, then the block is sketched in the air and lifted (D-W6-6H).
+  await expect(l2()).toHaveAttribute("data-transition-phase", "hold");
+  await expect(l2()).toHaveAttribute("data-transition-phase", "sketch", { timeout: 60_000 });
+  await expect(l2()).toHaveAttribute("data-transition-phase", "lift", { timeout: 60_000 });
   await expect(l2()).toHaveAttribute("data-transition", "done", { timeout: 60_000 });
+  // A pointer press ends a replay at once; the scene is the same finished scene.
+  await page.getByRole("button", { name: "Replay the drawing" }).click();
+  await expect(l2()).toHaveAttribute("data-transition", "running");
+  await page.locator(".ps-desk").click({ position: { x: 5, y: 5 } });
+  await expect(l2()).toHaveAttribute("data-transition", "done", { timeout: 1_000 });
   await expect(l2()).toHaveAttribute("data-stage-mode", "tilted");
   expect(await l2().evaluate((d) => [d.dataset.boundary, d.dataset.stage, d.dataset.ghosts].join("|"))).toBe(
     before,
