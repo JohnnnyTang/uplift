@@ -1,0 +1,70 @@
+import { expect, test } from "@playwright/test";
+
+test.describe.configure({ timeout: 180_000 });
+
+test("settles to ink, turns one sheet in both directions, then restores the live page and focus", async ({
+  page,
+}, info) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(String(error)));
+  await page.goto("/?glacier=cpu");
+  await expect(page.locator(".gs-desk")).toHaveAttribute("data-ready", "true", { timeout: 90_000 });
+  await page.keyboard.press("Escape");
+  for (const direction of ["next", "previous"] as const) {
+    const before = await page.locator(".gs-book").boundingBox();
+    await page.locator(".reader-bar-" + direction).click();
+    const snapshot = page.locator(".reader-turn-snapshot");
+    const leaf = page.locator(".reader-turn-leaf");
+    await expect(leaf).toHaveAttribute("data-direction", direction, { timeout: 90_000 });
+    await leaf.evaluate((element) => {
+      const animation = element.getAnimations()[0]!;
+      animation.pause();
+      animation.currentTime = 420;
+    });
+    await expect(snapshot).toHaveAttribute("aria-hidden", "true");
+    expect(await snapshot.evaluate((element) => element.inert)).toBe(true);
+    await expect(snapshot.locator("canvas")).toHaveCount(0);
+    await expect(snapshot.locator(".gs-desk")).toHaveAttribute("data-transition", "flat");
+    await expect(page.locator(".reader-book > .reader-stage .gs-desk")).toHaveAttribute(
+      "data-transition",
+      "flat",
+    );
+    const during = await snapshot.locator(".gs-book").boundingBox();
+    for (const key of ["x", "y", "width", "height"] as const)
+      expect(Math.abs(during![key] - before![key])).toBeLessThan(1);
+    await expect(snapshot.locator(".reader-turn-back")).toContainText(
+      direction === "next" ? "Where plates meet" : "Fig. 1",
+    );
+    const duplicateIds = await page.evaluate(() => {
+      const ids = [...document.querySelectorAll("[id]")].map((element) => element.id);
+      return ids.filter((id, index) => ids.indexOf(id) !== index);
+    });
+    expect(duplicateIds).toEqual([]);
+    await page.screenshot({ path: info.outputPath(direction + "-leaf.png") });
+    await leaf.evaluate((element) => element.getAnimations()[0]!.finish());
+    await expect(snapshot).toHaveCount(0);
+    await expect(page.locator(".reader-shell")).toHaveAttribute("data-turning", "false");
+    await expect(
+      page.getByRole("heading", {
+        level: 1,
+        name: direction === "next" ? "Where plates meet" : "From V to U",
+      }),
+    ).toBeFocused();
+    await page.keyboard.press("Escape");
+  }
+  expect(errors).toEqual([]);
+});
+
+test("switching to reduced motion during departure finishes navigation without a stranded overlay", async ({
+  page,
+}) => {
+  await page.goto("/?glacier=cpu");
+  await expect(page.locator(".gs-desk")).toHaveAttribute("data-ready", "true", { timeout: 90_000 });
+  await page.keyboard.press("Escape");
+  await page.locator(".reader-bar-next").click();
+  await expect(page.locator(".reader-shell")).toHaveAttribute("data-turning", "true");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator(".reader-shell")).toHaveAttribute("data-turning", "false", { timeout: 90_000 });
+  await expect(page.locator(".reader-turn-snapshot")).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Where plates meet", level: 1 })).toBeFocused();
+});

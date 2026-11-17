@@ -1,0 +1,61 @@
+/* One paper leaf crosses a stationary binding. Existing book material and type are inherited. */
+.reader-book {
+  position: relative;
+}
+.reader-turn-snapshot {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+.reader-turn-snapshot > .reader-spread {
+  margin: 0;
+}
+.reader-turn-snapshot .reader-turn-book,
+.reader-turn-snapshot .reader-turn-spread {
+  transform-style: preserve-3d;
+}
+.reader-turn-leaf {
+  position: absolute;
+  z-index: 5;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.reader-turn-leaf[data-direction="previous"] {
+  transform-origin: right center;
+}
+.reader-turn-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  background: var(--gs-paper, var(--paper, #faf8f2));
+  box-shadow:
+    0 2px 2px #292b2c20,
+    6px 8px 24px #292b2c30;
+  overflow: hidden;
+}
+.reader-turn-face > .gs-page,
+.reader-turn-face > .reader-page {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.reader-turn-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, #292b2c12, transparent 12%, transparent 82%, #fff5);
+  border: 1px solid #d8d4c85c;
+}
+.reader-turn-back {
+  transform: rotateY(180deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reader-turn-snapshot {
+    display: none;
+  }
+}

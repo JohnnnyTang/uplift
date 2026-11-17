@@ -105,6 +105,8 @@ const LAYER_LOOKS: Readonly<Record<string, Omit<LithologyLook, "id" | "key">>> =
 export interface MountedPlatesScene {
   /** Changes words, visible controls and overlays only; never the sequence. */
   setLevel(level: Level): void;
+  returnToDrawing(options: { readonly reducedMotion: boolean; readonly signal: AbortSignal }): Promise<void>;
+  startEntrance(): void;
   dispose(): Promise<void>;
 }
 
@@ -129,6 +131,7 @@ export interface PlatesSceneOptions {
   /** Mounted inside the book shell (no document title). */
   readonly embedded?: boolean;
   /** Play the transition as a short crossfade (returning to an already-seen spread). */
+  readonly deferEntrance?: boolean;
   readonly quickTransition?: boolean;
   readonly presentation?: PlatesPagePresentation;
   readonly onPresentation?: (p: PlatesPagePresentation) => void;
@@ -685,7 +688,11 @@ export async function mountPlatesScene(
     refreshLanguage(root);
   });
   refreshLanguage(root);
+  let depart = async (_options: { readonly reducedMotion: boolean; readonly signal: AbortSignal }) => {};
+  let enter = () => {};
   const handle = (dispose: () => Promise<void>): MountedPlatesScene => ({
+    returnToDrawing: (options) => depart(options),
+    startEntrance: () => enter(),
     dispose,
     setLevel(next) {
       if (next === level) return;
@@ -786,7 +793,9 @@ export async function mountPlatesScene(
   });
   const turbulence = desk.querySelector("feDisplacementMap")!;
   let transitionDone = false;
+  let lastTransitionState: TransitionState = transition.DRAWING_STATE;
   const applyState = (s: TransitionState) => {
+    lastTransitionState = { ...s };
     bookStage.applyTransition(s);
     drawing.style.opacity = String(s.drawingOpacity);
     turbulence.setAttribute("scale", (s.drawingRoughness * 9).toFixed(2));
@@ -1134,7 +1143,22 @@ export async function mountPlatesScene(
   });
   desk.dataset.ready = "true";
   sync();
-  play(o.quickTransition === true);
+  enter = () => play(o.quickTransition === true);
+  depart = async (options) => {
+    running?.cancel();
+    transitionDone = false;
+    desk.dataset.transition = "returning";
+    running = transition.runReturnToDrawing(applyState, lastTransitionState, {
+      ...options,
+      reducedMotion: options.reducedMotion || reducedMotion(),
+    });
+    await running.done;
+    desk.dataset.transition = "flat";
+  };
+  if (o.deferEntrance) {
+    applyState(transition.DRAWING_STATE);
+    desk.dataset.transition = "flat";
+  } else enter();
 
   return handle(async () => {
     cancelAnimationFrame(overlayFrame);

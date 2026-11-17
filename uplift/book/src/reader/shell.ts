@@ -13,6 +13,7 @@ import type { Level, ReaderSceneController } from "@hachure/runtime";
 import { READER_SCENE_LIMIT } from "./contracts";
 import type { ReaderEntry, ReaderNavigation, ReaderShellController, ReaderTarget } from "./contracts";
 import "./shell.css";
+import { createPageTurnSnapshot, type PageTurnSnapshot } from "./page-turn";
 
 export interface ReaderShellOptions {
   readonly initialLevel?: Level;
@@ -139,6 +140,8 @@ export async function createReaderShell(
     suspended = false,
     generation = 0;
   let animation: Animation | undefined;
+  let turnSnapshot: PageTurnSnapshot | undefined;
+  let departure: AbortController | undefined;
   let active: ReturnType<typeof makePage> | undefined;
   let queued:
     | {
@@ -517,21 +520,25 @@ export async function createReaderShell(
     url.searchParams.set("page", current.page);
     history[replace ? "replaceState" : "pushState"]({ ...history.state, reader: current }, "", url);
   }
-  async function display(target: ReaderTarget) {
+  async function display(target: ReaderTarget, deferEntrance = false) {
     target = normalize(target);
     active?.cleanup();
     current = target;
     active = makePage(target);
     book.replaceChildren(active.article);
+    if (turnSnapshot) {
+      active.article.style.visibility = "hidden";
+      book.append(turnSnapshot.element);
+    }
     updateNavigation();
     if (target.page !== "text" && !suspended) {
-      mounting = active.scene.mount(active.surface);
+      mounting = active.scene.mount(active.surface, { deferEntrance });
       try {
         await mounting;
       } finally {
         mounting = undefined;
       }
-      if (!disposed && !suspended) active.scene.resume();
+      if (!disposed && !suspended && !deferEntrance) active.scene.resume();
     }
     updateNavigation();
   }
@@ -553,26 +560,37 @@ export async function createReaderShell(
       await active!.scene.pauseAndSettle();
       if (disposed || suspended || token !== generation) return;
       active!.article.inert = true;
-      if (!motion.matches) {
-        animation = active!.article.animate(
-          [
-            { transform: "rotateY(0deg)", opacity: 1 },
-            { transform: "rotateY(-78deg)", opacity: 0.25 },
-          ],
-          { duration: 340, easing: "ease-in", fill: "forwards" },
-        );
-        await animation.finished.catch(() => {});
-      }
+      departure = new AbortController();
+      await active!.scene.returnToDrawing?.({ reducedMotion: motion.matches, signal: departure.signal });
+      if (disposed || suspended || token !== generation) return;
+      if (!motion.matches) turnSnapshot = createPageTurnSnapshot(active!.article);
+      const before = current;
       if (active!.scene.status().attached) active!.scene.detach();
       if (disposed || suspended || token !== generation) return;
       const request = queued!;
       activeRequest = request;
       queued = undefined;
       const target = normalize(request.target);
-      await display(target);
+      await display(target, true);
+      active!.article.inert = true;
+      if (!disposed && !suspended && !motion.matches && turnSnapshot) {
+        const order = (destination: ReaderTarget) =>
+          entries.findIndex((entry) => entry.spread.id === destination.spreadId) * 2 +
+          (destination.page === "illustration" ? 1 : 0);
+        animation = turnSnapshot.play(active!.article, order(target) >= order(before) ? "next" : "previous");
+        await animation?.finished.catch(() => {});
+      }
+      turnSnapshot?.dispose();
+      turnSnapshot = undefined;
+      active!.article.style.visibility = "";
       if (disposed || suspended || token !== generation) {
         request.resolve(false);
         return;
+      }
+      active!.article.inert = false;
+      if (current.page !== "text" && active!.scene.status().attached) {
+        active!.scene.startEntrance?.();
+        active!.scene.resume();
       }
       if (request.history) writeHistory();
       restoreFocus();
@@ -588,13 +606,23 @@ export async function createReaderShell(
         queued = undefined;
       }
       if (active) active.article.inert = false;
+      if (!disposed && !suspended && current.page !== "text" && active?.scene.status().attached) {
+        active.scene.startEntrance?.();
+        active.scene.resume();
+      }
       writeText(live, "This page could not turn. Try again.");
     } finally {
       activeRequest?.resolve(false);
       animation?.cancel();
       animation = undefined;
+      departure = undefined;
+      turnSnapshot?.dispose();
+      turnSnapshot = undefined;
       turning = false;
-      if (active) active.article.inert = false;
+      if (active) {
+        active.article.inert = false;
+        active.article.style.visibility = "";
+      }
       updateNavigation();
     }
   }
@@ -655,7 +683,10 @@ export async function createReaderShell(
     if (key(normalize(current)) !== key(current)) void requestNavigation(normalize(current), false);
   }
   function reduceMotion() {
-    if (motion.matches) animation?.finish();
+    if (motion.matches) {
+      departure?.abort();
+      animation?.finish();
+    }
   }
   function setLevel(value: Level) {
     level = value;
@@ -733,6 +764,7 @@ export async function createReaderShell(
       suspended = true;
       queued?.resolve(false);
       queued = undefined;
+      departure?.abort();
       animation?.finish();
       await running;
       await depthWork;
@@ -771,6 +803,7 @@ export async function createReaderShell(
       generation++;
       queued?.resolve(false);
       queued = undefined;
+      departure?.abort();
       animation?.cancel();
       root.removeEventListener("keydown", keyboard);
       document.removeEventListener("pointerdown", outsideContents);

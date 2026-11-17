@@ -96,6 +96,8 @@ export interface MountedReview {
 export interface MountedGlacialScene extends MountedReview {
   /** Changes words, visible controls and overlays only; never the source or a run. */
   setLevel(level: Level): void;
+  returnToDrawing(options: { readonly reducedMotion: boolean; readonly signal: AbortSignal }): Promise<void>;
+  startEntrance(): void;
 }
 
 /** Reader choices on the left page, retained across page turns by the book. */
@@ -147,6 +149,7 @@ export interface GlacialSceneOptions {
   /** Mounted inside the book shell (no document title). */
   readonly embedded?: boolean | undefined;
   /** Play the drawing → scene transition as a short crossfade (returning to an already-seen spread). */
+  readonly deferEntrance?: boolean;
   readonly quickTransition?: boolean | undefined;
   readonly presentation?: GlacialPagePresentation | undefined;
   readonly onPresentation?: ((presentation: GlacialPagePresentation) => void) | undefined;
@@ -1007,7 +1010,11 @@ export async function mountGlacialScene(
     refreshLanguage(root);
   });
   refreshLanguage(root);
+  let depart = async (_options: { readonly reducedMotion: boolean; readonly signal: AbortSignal }) => {};
+  let enter = () => {};
   const handle = (dispose: () => Promise<void>): MountedGlacialScene => ({
+    returnToDrawing: (options) => depart(options),
+    startEntrance: () => enter(),
     dispose,
     setLevel(next) {
       syncFlap();
@@ -1064,7 +1071,9 @@ export async function mountGlacialScene(
   });
   const turbulence = desk.querySelector("feDisplacementMap")!;
   let transitionDone = false;
+  let lastTransitionState: TransitionState = transition.DRAWING_STATE;
   const applyState = (s: TransitionState) => {
+    lastTransitionState = { ...s };
     bookStage.applyTransition(s);
     drawing.style.opacity = String(s.drawingOpacity);
     turbulence.setAttribute("scale", (s.drawingRoughness * 9).toFixed(2));
@@ -1264,7 +1273,22 @@ export async function mountGlacialScene(
   });
   desk.dataset.ready = "true";
   desk.dataset.source = source.kind;
-  play(o.quickTransition === true);
+  enter = () => play(o.quickTransition === true);
+  depart = async (options) => {
+    running?.cancel();
+    transitionDone = false;
+    desk.dataset.transition = "returning";
+    running = transition.runReturnToDrawing(applyState, lastTransitionState, {
+      ...options,
+      reducedMotion: options.reducedMotion || reducedMotion(),
+    });
+    await running.done;
+    desk.dataset.transition = "flat";
+  };
+  if (o.deferEntrance) {
+    applyState(transition.DRAWING_STATE);
+    desk.dataset.transition = "flat";
+  } else enter();
 
   return handle(async () => {
     cutDrag.dispose();
