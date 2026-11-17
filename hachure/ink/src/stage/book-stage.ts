@@ -238,6 +238,7 @@ class BookStageImpl implements BookStage {
   private observer: ResizeObserver | null = null;
   private frameHandle = 0;
   private disposed = false;
+  private transitionVisible = true;
   /** Block height the contact shadow follows (unit: none, 0–1); 1 until a transition says otherwise. */
   private shadowRise = 1;
   private shadowWidthM = 0;
@@ -602,6 +603,7 @@ class BookStageImpl implements BookStage {
   }
 
   applyTransition(state: TransitionState): void {
+    this.transitionVisible = state.sceneOpacity > 0;
     this.canvas.style.opacity = String(state.sceneOpacity);
     // No block, no shadow: the contact shadow gathers under the block and widens as it lifts.
     this.shadowRise = Math.min(1, Math.max(0, state.rise));
@@ -614,7 +616,7 @@ class BookStageImpl implements BookStage {
   }
 
   requestRender(): void {
-    if (!this.renderer || this.frameHandle || this.disposed) return;
+    if (!this.renderer || this.frameHandle || this.disposed || !this.transitionVisible) return;
     this.frameHandle = requestAnimationFrame(() => {
       this.frameHandle = 0;
       this.draw();
@@ -622,7 +624,7 @@ class BookStageImpl implements BookStage {
   }
 
   private draw(): void {
-    if (!this.renderer || this.disposed) return;
+    if (!this.renderer || this.disposed || !this.transitionVisible) return;
     this.camera.updateProjectionMatrix();
     this.renderer.render(this.scene, this.camera);
   }

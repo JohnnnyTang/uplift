@@ -214,6 +214,7 @@ describe("drawing → sketch → lift → colour entrance", () => {
     const key = (k: string) => Object.assign(new Event("keydown"), { key: k });
     for (const press of [
       new Event("pointerdown"),
+      new Event("click"),
       key("Enter"),
       key(" "),
       key("ArrowRight"),
@@ -250,4 +251,34 @@ describe("drawing → sketch → lift → colour entrance", () => {
     target.dispatchEvent(new Event("pointerdown"));
     expect(applied).toBe(count);
   });
+});
+
+it("render stalls cannot erase an authored phase; input can still finish immediately", async () => {
+  const m = manualClock();
+  const phases: string[] = [];
+  const run = runTransition(
+    (s) => {
+      if (phases.at(-1) !== s.phase) phases.push(s.phase);
+    },
+    {},
+    m.clock,
+  );
+  m.run(20000);
+  expect(phases).toEqual([...TRANSITION_PHASES]);
+  expect(await run.done).toBe(true);
+  const skip = runTransition(() => undefined, {}, m.clock);
+  m.run(20000, 1);
+  skip.finish();
+  expect(await skip.done).toBe(true);
+});
+
+it("the still hold applies once instead of requesting repeated invisible renders", () => {
+  const m = manualClock();
+  let applied = 0;
+  const run = runTransition(() => applied++, {}, m.clock);
+  m.run(100, 20);
+  expect(applied).toBe(1);
+  m.run(100, 5);
+  expect(applied).toBeGreaterThan(1);
+  run.cancel();
 });

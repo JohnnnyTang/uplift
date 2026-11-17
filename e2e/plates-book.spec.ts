@@ -32,6 +32,9 @@ async function openLessonOne(page: Page, query = "") {
   const errors = collectErrors(page);
   await page.goto(`/${query}`);
   await expect(desk(page)).toHaveAttribute("data-source", "live", { timeout: 60_000 });
+  // Journey tests use immediate play; PB3/PL6 separately exercise the complete entrance.
+  await expect(desk(page)).toHaveAttribute("data-ready", "true", { timeout: 60_000 });
+  await page.keyboard.press("Escape");
   await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 30_000 });
   return errors;
 }

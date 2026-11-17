@@ -42,6 +42,9 @@ async function openBook(page: Page) {
   });
   await page.goto("/");
   await expect(desk(page)).toHaveAttribute("data-source", "live", { timeout: 60_000 });
+  // Journey tests use immediate play; PB3/PL6 separately exercise the complete entrance.
+  await expect(desk(page)).toHaveAttribute("data-ready", "true", { timeout: 60_000 });
+  await page.keyboard.press("Escape");
   await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 30_000 });
   return errors;
 }
@@ -297,7 +300,7 @@ test("PB3 GV4: drawing → ink → colour transition into a scene standing on th
   // The figure is a line drawing first; it also serves as the static fallback.
   await expect(page.locator(".gs-page-figure svg").first()).toBeVisible();
   await expect(desk(page)).toHaveAttribute("data-transition", /running|done/, { timeout: 60_000 });
-  await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 30_000 });
+  await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 60_000 });
   await expect(desk(page)).toHaveAttribute("data-stage-mode", "tilted");
   await expect(page.locator(".gs-desk canvas")).toBeVisible();
   // The block stands on the right page: its projected outline lies over the figure page.
@@ -316,10 +319,10 @@ test("PB3 GV4: drawing → ink → colour transition into a scene standing on th
   await page.getByRole("button", { name: "Replay the drawing" }).click();
   await expect(desk(page)).toHaveAttribute("data-transition-phase", "hold");
   await expect(page.locator(".gs-desk .gs-drawing")).toHaveCSS("opacity", "1");
-  await expect(desk(page)).toHaveAttribute("data-transition-phase", "sketch");
+  await expect(desk(page)).toHaveAttribute("data-transition-phase", "sketch", { timeout: 60_000 });
   await expect(desk(page)).toHaveAttribute("data-transition", "running");
-  await expect(desk(page)).toHaveAttribute("data-transition-phase", "lift");
-  await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 30_000 });
+  await expect(desk(page)).toHaveAttribute("data-transition-phase", "lift", { timeout: 60_000 });
+  await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 60_000 });
   await expect(desk(page)).toHaveAttribute("data-transition-phase", "done");
   await expect(desk(page)).toHaveAttribute("data-model-years", "0");
   // The entrance never blocks the reader (PB4): any key ends it at once, while Tab still moves focus.

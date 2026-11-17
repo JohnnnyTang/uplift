@@ -242,7 +242,10 @@ function browserClock(): TransitionClock {
   };
 }
 
-/** Plays the transition, calling `apply` once per frame with a reused read-only state. Copy it to retain a snapshot. Replay by calling again. */
+/** Maximum presentation-time advance per frame (milliseconds); stalls must not erase phases. */
+const MAX_PRESENTATION_FRAME_MS = 100;
+
+/** Plays the transition on a bounded presentation clock (unlike the exact-time sampler), calling `apply` once per frame with a reused read-only state. Copy it to retain a snapshot. Replay by calling again. */
 export function runTransition(
   apply: (state: TransitionState) => void,
   timing: Partial<TransitionTiming> = {},
@@ -259,13 +262,20 @@ export function runTransition(
     clock.cancel(handle);
     resolve(completed);
   };
-  const start = clock.now();
+  let previous = clock.now();
+  let elapsedMs = 0;
   const state: MutableState = { ...DRAWING_STATE };
   apply(updateState(0, t, state));
   const frame = () => {
     if (finished) return;
-    updateState(clock.now() - start, t, state);
-    apply(state);
+    const now = clock.now();
+    // Presentation time pauses across render stalls so an expensive frame cannot erase a whole phase.
+    elapsedMs += Math.min(MAX_PRESENTATION_FRAME_MS, Math.max(0, now - previous));
+    previous = now;
+    const previousPhase = state.phase;
+    updateState(elapsedMs, t, state);
+    // The held drawing is unchanged; do not queue invisible GPU work on every clock tick.
+    if (state.phase !== "hold" || previousPhase !== "hold") apply(state);
     if (state.phase === "done") stop(true);
     else handle = clock.request(frame);
   };
@@ -294,6 +304,7 @@ export function skipOnInput(
 ): () => void {
   const stop = () => {
     target.removeEventListener("pointerdown", onInput, true);
+    target.removeEventListener("click", onInput, true);
     target.removeEventListener("keydown", onInput, true);
   };
   const onInput = () => {
@@ -301,6 +312,7 @@ export function skipOnInput(
     run.finish();
   };
   target.addEventListener("pointerdown", onInput, true);
+  target.addEventListener("click", onInput, true);
   target.addEventListener("keydown", onInput, true);
   void run.done.then(stop);
   return stop;

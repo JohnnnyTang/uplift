@@ -7,6 +7,8 @@ import { test, expect, type Page } from "@playwright/test";
 
 const flap = (page: Page) => page.locator(".gs-flap");
 async function glacialReady(page: Page) {
+  await expect(page.locator(".gs-desk")).toHaveAttribute("data-ready", "true", { timeout: 60_000 });
+  await page.keyboard.press("Escape");
   await expect(page.locator(".gs-desk")).toHaveAttribute("data-transition", "done", { timeout: 60_000 });
 }
 
