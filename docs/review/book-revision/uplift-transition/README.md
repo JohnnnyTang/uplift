@@ -108,3 +108,17 @@ Final post-integration verification: `pnpm check` passed (908 tests, seven skipp
 typecheck, lint and formatting passed). `pnpm build` passed; bundle is
 6,793,525 / 10,000,000 bytes. The complete shell + research smoke selection passed
 **14/14** (1.2 min), including the deterministic initial-mount departure regression.
+
+The integrated hosted run on `b4d7fd3` subsequently passed 117 tests, skipped one,
+and exhausted the full glacial journey's aggregate 300-second budget during its
+third model advance. Each of its three existing 100-year waits already allowed
+200 seconds. The one test now has a calculated 660-second total (three run budgets
+plus 60 seconds for interactions), retaining every per-run limit, matched-time
+comparison, navigation/reset lineage and determinism assertion. Named steps report
+the individual advances. This functional check does not certify hardware performance.
+
+Isolated full-journey rerun passed in **278.138 seconds**. The named model advances
+took 88.049 seconds (shale), 80.990 seconds (matched granite), and 68.639 seconds
+(post-navigation/reset granite replay); each is within its unchanged 200-second
+limit. Remaining interactions and setup took 40.460 seconds on this run. Every
+matched-time, retained-state and replay comparison passed; no model change was made.

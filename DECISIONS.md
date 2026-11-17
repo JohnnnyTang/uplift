@@ -3684,3 +3684,18 @@ awaits mounting before settling/detaching/hiding; a gated initial-mount browser 
 checks visibility, eventual departure, detached state and absence of page errors.
 Glacial non-animation gesture tests now use the already-authorized Escape skip after
 readiness, preserving full animation assertions in PB3/PL6. No model or copy change.
+
+## D-W6-6H-validation-budget · Preserve full replay lineage · 2026-11-17
+
+Final integrated hosted run on `b4d7fd3` passed 117 tests, skipped one and failed only
+the full glacial journey's aggregate 300-second timeout. All entrance, mounting,
+keyboard and other regression checks passed. The final replay was still advancing
+(at 43.565 model years), rather than failing its own model-progress allowance.
+
+That one journey contains three sequential 100-year model advances, each already
+allowed 200 seconds, plus navigation, level changes and reset. Its total budget is
+now explicitly `3 * MODEL_RUN_TIMEOUT_MS + 60_000` (660 seconds). The per-run
+200-second bounds, all thresholds, full comparison/reset lineage and deterministic
+replay assertions remain unchanged; named test steps expose each run's duration.
+Other test budgets are unchanged. This is a functional journey check, not a hardware
+performance benchmark; software-renderer and hardware-validation limits still apply.

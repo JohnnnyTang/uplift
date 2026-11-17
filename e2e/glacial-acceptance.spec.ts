@@ -16,6 +16,8 @@ import { type Page, expect, test } from "@playwright/test";
 
 test.describe.configure({ timeout: 300_000 });
 
+const MODEL_RUN_TIMEOUT_MS = 200_000;
+
 interface Geometry {
   outline: { x: number; y: number }[];
 }
@@ -52,7 +54,7 @@ async function openBook(page: Page) {
 async function playUntil(page: Page, atLeast: number) {
   await page.getByRole("button", { name: "Play", exact: true }).click();
   await expect(desk(page)).toHaveAttribute("data-playing", "true");
-  await expect.poll(() => years(page), { timeout: 200_000 }).toBeGreaterThanOrEqual(atLeast);
+  await expect.poll(() => years(page), { timeout: MODEL_RUN_TIMEOUT_MS }).toBeGreaterThanOrEqual(atLeast);
   const pause = page.getByRole("button", { name: "Pause", exact: true });
   if (await pause.isVisible()) await pause.click();
   await expect(desk(page)).toHaveAttribute("data-playing", "false");
@@ -126,6 +128,10 @@ async function expectOneRunOneTime(page: Page) {
 }
 
 test("PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard first", async ({ page }) => {
+  // Three independent 100-year runs each have the existing model-progress budget.
+  // Preserve their shared navigation/reset history; the suite's 300 s default cannot
+  // cover all three 200 s waits. Other tests and each run's failure budget stay unchanged.
+  test.setTimeout(3 * MODEL_RUN_TIMEOUT_MS + 60_000);
   const errors = await openBook(page);
 
   // PB4: immediate play, nothing to answer or configure first; the page invites Play (D-W5-5M2).
@@ -149,7 +155,9 @@ test("PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard f
   await page.getByRole("button", { name: "Play", exact: true }).focus();
   await page.keyboard.press("Space");
   await expect(desk(page)).toHaveAttribute("data-playing", "true");
-  await expect.poll(() => years(page), { timeout: 200_000 }).toBeGreaterThanOrEqual(100);
+  await test.step("advance the original shale run to 100 model years", async () => {
+    await expect.poll(() => years(page), { timeout: MODEL_RUN_TIMEOUT_MS }).toBeGreaterThanOrEqual(100);
+  });
   await page.getByRole("button", { name: "Pause", exact: true }).focus();
   await page.keyboard.press("Space");
   await expect(desk(page)).toHaveAttribute("data-playing", "false");
@@ -192,7 +200,7 @@ test("PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard f
   await expect(desk(page)).toHaveAttribute("data-model-years", "0");
   await expect(desk(page)).toHaveAttribute("data-ghost", "shale");
   await expect(page.getByRole("radio", { name: /Granite/ })).toBeChecked();
-  await playUntil(page, 100);
+  await test.step("advance granite to the matched 100-year comparison", () => playUntil(page, 100));
 
   // GV2 + GV5: compare at matched model time; the ghost and the compare note name the kept run at that time.
   await scrubTo(page, 100);
@@ -275,7 +283,7 @@ test("PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard f
   // Determinism on the page: the same rock, config and backend reproduce the same recorded run.
   await page.getByRole("radio", { name: /Granite/ }).check();
   await expect(desk(page)).toHaveAttribute("data-live-rock", "granite");
-  await playUntil(page, 100);
+  await test.step("replay granite to 100 years after navigation and reset", () => playUntil(page, 100));
   await cutTo(page, REGISTERED_COLUMN);
   await scrubTo(page, 100);
   const replay = await margin(page).innerText();
