@@ -1,0 +1,79 @@
+.reader-language {
+  max-width: 7.5rem;
+  padding: 0.35rem 0.4rem;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 0.2rem;
+  font: inherit;
+  font-size: 0.8rem;
+}
+.reader-language:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+:lang(zh-CN) .reader-shell,
+:lang(zh-CN) .gs-review {
+  font-family: "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  line-height: 1.65;
+}
+:lang(zh-CN) button,
+:lang(zh-CN) select,
+:lang(zh-CN) .gs-view-controls {
+  font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+}
+:lang(zh-CN) .gs-text-column {
+  line-height: 1.65;
+}
+:lang(zh-CN) .gs-lesson h1 {
+  letter-spacing: 0;
+}
+@media (max-width: 40rem) {
+  .reader-language {
+    max-width: 5.6rem;
+    font-size: 0.75rem;
+  }
+  :lang(zh-CN) .reader-bar-text {
+    display: none;
+  }
+}
+
+/* Keep the language menu and full-size navigation targets inside narrow viewports. */
+@media (max-width: 34rem) {
+  html .reader-shell {
+    --reader-bar-space: 124px;
+  }
+  .reader-shell .reader-bar {
+    display: grid;
+    grid-template-columns: 44px 44px minmax(0, 1fr) 44px;
+    grid-template-areas:
+      "contents previous position next"
+      "contrast level language language";
+    gap: 2px;
+    border-radius: 20px;
+  }
+  .reader-bar-contents {
+    grid-area: contents;
+  }
+  .reader-bar-previous {
+    grid-area: previous;
+  }
+  .reader-position {
+    grid-area: position;
+  }
+  .reader-bar-next {
+    grid-area: next;
+  }
+  .reader-bar-contrast {
+    grid-area: contrast;
+  }
+  .reader-bar-level {
+    grid-area: level;
+  }
+  .reader-language {
+    grid-area: language;
+    justify-self: end;
+    min-height: 44px;
+    max-width: 7.5rem;
+  }
+}

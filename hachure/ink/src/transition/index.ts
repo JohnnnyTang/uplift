@@ -317,3 +317,66 @@ export function skipOnInput(
   void run.done.then(stop);
   return stop;
 }
+
+/** Presentation-only departure: wash to ink, lower to the paper, restore the flat drawing. */
+export function returnToDrawingStateAt(
+  progress: number,
+  from: TransitionState = sceneState(),
+): TransitionState {
+  const p = clamp01(progress);
+  if (p >= 1) return DRAWING_STATE;
+  const wash = smooth(p / 0.32);
+  const lower = smooth((p - 0.2) / 0.65);
+  const dissolve = smooth((p - 0.62) / 0.38);
+  return {
+    ...from,
+    phase: "drawing",
+    colour: from.colour * (1 - wash),
+    hachure: (from.hachure + (1 - from.hachure) * wash) * (1 - dissolve),
+    rise: from.rise * (1 - lower),
+    ink: from.ink * (1 - dissolve),
+    pencil: from.pencil * (1 - dissolve),
+    drawingRoughness: 0,
+    drawingOpacity: from.drawingOpacity + (1 - from.drawingOpacity) * dissolve,
+    sceneOpacity: from.sceneOpacity * (1 - dissolve),
+  };
+}
+
+export function runReturnToDrawing(
+  apply: (state: TransitionState) => void,
+  from: TransitionState,
+  options: { readonly reducedMotion?: boolean; readonly signal?: AbortSignal } = {},
+  clock: TransitionClock = browserClock(),
+): TransitionRun {
+  let handle = -1,
+    finished = false,
+    elapsed = 0,
+    previous = clock.now();
+  let resolve!: (completed: boolean) => void;
+  const done = new Promise<boolean>((r) => (resolve = r));
+  const stop = (completed: boolean) => {
+    if (finished) return;
+    finished = true;
+    clock.cancel(handle);
+    options.signal?.removeEventListener("abort", finish);
+    resolve(completed);
+  };
+  const finish = () => {
+    if (finished) return;
+    apply(DRAWING_STATE);
+    stop(true);
+  };
+  const frame = () => {
+    if (finished) return;
+    const now = clock.now();
+    elapsed += Math.min(MAX_PRESENTATION_FRAME_MS, Math.max(0, now - previous));
+    previous = now;
+    apply(returnToDrawingStateAt(elapsed / 850, from));
+    if (elapsed >= 850) stop(true);
+    else handle = clock.request(frame);
+  };
+  options.signal?.addEventListener("abort", finish, { once: true });
+  if (options.reducedMotion || options.signal?.aborted || from.sceneOpacity === 0) finish();
+  else handle = clock.request(frame);
+  return { done, finish, cancel: () => stop(false) };
+}

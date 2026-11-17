@@ -1,3 +1,5 @@
+import { onLanguageChange, refreshLanguage } from "../../i18n";
+import { writeText } from "../../i18n";
 /** An upright, live reading copy; the original always stays on the book. */
 export function createReadingPanel(host: HTMLElement) {
   const panel = document.createElement("dialog");
@@ -7,7 +9,7 @@ export function createReadingPanel(host: HTMLElement) {
   heading.id = "gs-reading-title";
   const close = document.createElement("button");
   close.type = "button";
-  close.textContent = "Back to the book";
+  writeText(close, "Back to the book");
   const content = document.createElement("div");
   content.className = "gs-reading-content";
   panel.append(heading, close, content);
@@ -87,12 +89,16 @@ export function createReadingPanel(host: HTMLElement) {
     if (panel.open && event.target instanceof Node && !panel.contains(event.target)) dismiss(false);
   };
   document.addEventListener("pointerdown", outside);
+  const unsubscribeLanguage = onLanguageChange(() => {
+    refreshLanguage(panel);
+    sync();
+  });
   return {
     add(source: HTMLElement, title: string, triggerHost?: HTMLElement) {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "gs-read-trigger";
-      button.textContent = `Read ${title.toLowerCase()} ↗`;
+      writeText(button, `Read ${title.toLowerCase()} ↗`);
       button.setAttribute("aria-haspopup", "dialog");
       button.setAttribute("aria-expanded", "false");
       // A trigger may live elsewhere when the source itself stays off the paper (5M: deeper level, sources).
@@ -101,7 +107,7 @@ export function createReadingPanel(host: HTMLElement) {
       const open = () => {
         restore(false);
         active = { source, button };
-        heading.textContent = title;
+        writeText(heading, title);
         sync();
         observer.observe(source, { subtree: true, childList: true, characterData: true, attributes: true });
         button.setAttribute("aria-expanded", "true");
@@ -121,6 +127,7 @@ export function createReadingPanel(host: HTMLElement) {
       });
     },
     dispose() {
+      unsubscribeLanguage();
       restore(false);
       document.removeEventListener("pointerdown", outside);
       document.removeEventListener("keydown", onKey);

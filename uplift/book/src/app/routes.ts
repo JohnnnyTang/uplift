@@ -1,3 +1,4 @@
+import { translate, getLanguage } from "../i18n";
 import type { mountLesson } from "./book";
 import "../book.css";
 import "./reader-layout.css";
@@ -15,6 +16,7 @@ export async function mountApp(root: HTMLElement) {
   for (const [key, value] of Object.entries(BOOK_PALETTE)) root.style.setProperty(`--${key}`, value);
   const readerRoot = document.createElement("div");
   const researchRoot = document.createElement("div");
+  researchRoot.lang = "en";
   root.replaceChildren(readerRoot, researchRoot);
   let reader: MountedReaderShell | undefined;
   let research: Awaited<ReturnType<typeof mountLesson>> | undefined;
@@ -35,7 +37,8 @@ export async function mountApp(root: HTMLElement) {
         ]);
         research = await mountLesson(researchRoot, valleySpread, valleyTeacherNotes);
         const back = document.createElement("button");
-        back.textContent = "Return to the book";
+        back.textContent = translate("Return to the book");
+        back.lang = getLanguage();
         back.onclick = () => {
           void navigate(false);
         };

@@ -1,5 +1,21 @@
 # 6C · Two-lesson scientific and product review packet
 
+## Owner update · bilingual reading and page turns · 2026-11-17
+
+The owner requested English/Simplified Chinese switching and a single-sheet turn
+preceded by the scene returning to line art, then explicitly requested the
+scrollbar-flash fix, commit, merge, release update and GitHub Pages publication.
+The follow-up contains both lessons' translated reader copy and controls, retained
+model state, the reverse-to-ink departure and stationary-book sheet turn.
+The incoming page's temporary flat layout is contained during navigation so it
+cannot briefly add a document scrollbar. Normal page scrolling remains available.
+
+See the [6I/6J evidence and handover](../bilingual-turns/README.md). Scientific models
+and original citations are unchanged; Chinese scientific copy retains its
+expert-review marker. Publication authorization is not a new classroom or hardware
+validation claim. Existing releases are preserved; the update gets its own tag at
+the merged commit.
+
 ## Owner update · presentation release · 2026-11-17
 
 The owner requested that sessions 6G and 6H be completed, merged in that order,

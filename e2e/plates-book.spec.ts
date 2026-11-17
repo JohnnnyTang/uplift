@@ -15,8 +15,8 @@ test.describe.configure({ timeout: 240_000 });
 
 const L1 = "From V to U";
 const L2 = "Where plates meet";
-const desk = (page: Page) => page.locator(".gs-desk");
-const plates = (page: Page) => page.locator(".ps-desk");
+const desk = (page: Page) => page.locator(".reader-book > .reader-stage .gs-desk");
+const plates = (page: Page) => page.locator(".reader-book > .reader-stage .ps-desk");
 const bar = (page: Page) => page.getByRole("navigation", { name: "Book pages" });
 const years = async (page: Page) => Number(await desk(page).getAttribute("data-model-years"));
 const stage = async (page: Page) => Number(await plates(page).getAttribute("data-stage"));
@@ -243,7 +243,7 @@ test("the journey across both lessons: lesson 1's run survives the turn, lesson 
   await expect(plates(page)).toHaveAttribute("data-boundary", "transform");
   await expect(plates(page)).toHaveAttribute("data-stage", "1");
   await expect(plates(page)).toHaveAttribute("data-ghosts", "convergent,divergent");
-  await page.locator(".gs-reset").click();
+  await plates(page).getByRole("button", { name: "Start again", exact: true }).click();
   await expect(plates(page)).toHaveAttribute("data-boundary", "none");
   await expect(plates(page)).toHaveAttribute("data-ghosts", "");
   await expect(plates(page)).toHaveAttribute("data-viewed", "");

@@ -100,7 +100,7 @@ export function createPlatesSpreadScene(options: PlatesSpreadOptions): ReaderSce
       listener(status());
       return () => listeners.delete(listener);
     },
-    async mount(container) {
+    async mount(container, mountOptions) {
       if (disposed) throw new Error("The plates spread is disposed");
       if (attached) return;
       const s = ensureSequence();
@@ -117,6 +117,7 @@ export function createPlatesSpreadScene(options: PlatesSpreadOptions): ReaderSce
         folios: [options.folio, options.folio + 1],
         embedded: true,
         quickTransition: seen,
+        deferEntrance: mountOptions?.deferEntrance === true,
         presentation: page,
         onPresentation: (next) => {
           page = next;
@@ -168,6 +169,10 @@ export function createPlatesSpreadScene(options: PlatesSpreadOptions): ReaderSce
         publish();
       }
     },
+    returnToDrawing: async (options) => {
+      await mounted?.returnToDrawing(options);
+    },
+    startEntrance: () => mounted?.startEntrance(),
     async pauseAndSettle() {
       await sequence?.source.pauseAndSettle();
       emit();

@@ -79,7 +79,11 @@ export interface ReaderSceneController {
   status(): ReaderSceneStatus;
   /** Immediately emits current status, then changes; unsubscribe is idempotent. */
   subscribe(listener: (status: ReaderSceneStatus) => void): () => void;
-  mount(container: HTMLElement): Promise<void>;
+  mount(container: HTMLElement, options?: { readonly deferEntrance?: boolean }): Promise<void>;
+  /** Presentation only: settle first, then return the scene to its flat ink drawing. */
+  returnToDrawing?(options: { readonly reducedMotion: boolean; readonly signal: AbortSignal }): Promise<void>;
+  /** Starts an entrance deferred by mount; never changes the model or its play intent. */
+  startEntrance?(): void;
   presentation(): ReaderPresentation;
   /**
    * Presentation changes work in loading, fallback and detached retained scenes too.

@@ -7,6 +7,8 @@ import {
   type TransitionState,
   liftCurve,
   runTransition,
+  runReturnToDrawing,
+  returnToDrawingStateAt,
   sceneState,
   skipOnInput,
   transitionDurationMs,
@@ -281,4 +283,65 @@ it("the still hold applies once instead of requesting repeated invisible renders
   m.run(100, 5);
   expect(applied).toBeGreaterThan(1);
   run.cancel();
+});
+
+describe("return to the flat drawing", () => {
+  it("washes colour away before lowering and ends exactly at the clean drawing", () => {
+    const ink = returnToDrawingStateAt(0.32);
+    expect(ink.colour).toBe(0);
+    expect(ink.rise).toBeGreaterThan(0.8);
+    const lowering = returnToDrawingStateAt(0.6);
+    expect(lowering.rise).toBeLessThan(ink.rise);
+    expect(lowering.sceneOpacity).toBe(1);
+    expect(returnToDrawingStateAt(1)).toEqual(DRAWING_STATE);
+    const partial = transitionStateAt(starts.lift + 300);
+    expect(returnToDrawingStateAt(0, partial)).toEqual({ ...partial, phase: "drawing", drawingRoughness: 0 });
+  });
+  it("finishes on abort, never leaves a hidden navigation awaiting another frame", async () => {
+    const c = manualClock();
+    const signal = new AbortController();
+    let last = sceneState();
+    const run = runReturnToDrawing(
+      (s) => {
+        last = s;
+      },
+      last,
+      { signal: signal.signal },
+      c.clock,
+    );
+    c.run(16, 4);
+    signal.abort();
+    await expect(run.done).resolves.toBe(true);
+    expect(last).toEqual(DRAWING_STATE);
+    c.run(100);
+    expect(last).toEqual(DRAWING_STATE);
+  });
+  it("reduced motion is immediate and cancellation keeps the current presentation", async () => {
+    const c = manualClock();
+    let last = sceneState();
+    const reduced = runReturnToDrawing(
+      (s) => {
+        last = s;
+      },
+      last,
+      { reducedMotion: true },
+      c.clock,
+    );
+    await expect(reduced.done).resolves.toBe(true);
+    expect(last).toEqual(DRAWING_STATE);
+    const run = runReturnToDrawing(
+      (s) => {
+        last = s;
+      },
+      sceneState(),
+      {},
+      c.clock,
+    );
+    c.run(16, 5);
+    const paused = last;
+    run.cancel();
+    c.run(100);
+    await expect(run.done).resolves.toBe(false);
+    expect(last).toEqual(paused);
+  });
 });

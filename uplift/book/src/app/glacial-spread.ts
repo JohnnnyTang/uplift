@@ -136,7 +136,7 @@ export function createGlacialSpreadScene(options: GlacialSpreadOptions): ReaderS
       listener(status());
       return () => listeners.delete(listener);
     },
-    async mount(container) {
+    async mount(container, mountOptions) {
       if (disposed) throw new Error("The glacial spread is disposed");
       if (attached) return;
       const { mountGlacialScene } = await import("../scenes/glacial/review");
@@ -150,6 +150,7 @@ export function createGlacialSpreadScene(options: GlacialSpreadOptions): ReaderS
         folios: [options.folio, options.folio + 1] as const,
         defaultCutColumn: U_VALLEY_VIEW.defaultFrontFace.gridColumn,
         quickTransition: seen,
+        deferEntrance: mountOptions?.deferEntrance === true,
         presentation: page,
         onPresentation: (next: GlacialPagePresentation) => {
           page = next;
@@ -203,6 +204,10 @@ export function createGlacialSpreadScene(options: GlacialSpreadOptions): ReaderS
         mounted?.setLevel(level);
       }
     },
+    returnToDrawing: async (options) => {
+      await mounted?.returnToDrawing(options);
+    },
+    startEntrance: () => mounted?.startEntrance(),
     async pauseAndSettle() {
       if (host) await host.pauseAndSettle();
       else if (source) {

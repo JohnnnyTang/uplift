@@ -995,3 +995,11 @@ for traceability rather than reopened as the current priority:
 
 - 2026-11-07: Wave 1 integration: fold science and spike handovers into 2A–2F, 3A–3C, 4A–4C and 5A; retain pending human accessibility, hardware and science approval checks.
 - 2026-11-06: first version (Stage 0 bootstrap).
+
+## Owner follow-up · 2026-11-17 · bilingual reader and page turning
+
+Sessions **6I** (English / Simplified Chinese) and **6J** (return to ink, then turn a
+single sheet) are specified in [the shared brief](stage-1-bilingual-page-turn.md).
+They start independently from merged main after 6G/6H. Integrate 6I then 6J, with
+shared text/transition glue reviewed centrally. This is presentation work on the
+existing two-lesson book, with no Stage 2 or new scientific model scope.

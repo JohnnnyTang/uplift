@@ -3699,3 +3699,61 @@ now explicitly `3 * MODEL_RUN_TIMEOUT_MS + 60_000` (660 seconds). The per-run
 replay assertions remain unchanged; named test steps expose each run's duration.
 Other test budgets are unchanged. This is a functional journey check, not a hardware
 performance benchmark; software-renderer and hardware-validation limits still apply.
+
+## D-W6-6IJ — Bilingual reading and one-sheet page turns (2026-11-17)
+
+Owner asks for Chinese bilingual support and corrects the page-turn effect: first
+return the 3D scene to flat line art, then flip one paper page, with the book itself
+stationary. The owner confirms English ↔ Simplified Chinese switching with a saved
+preference. Both lessons, their controls and accessible text are in scope; model
+state is independent of locale. Original sources and scientific caveats survive.
+
+Plan: two isolated sibling worktrees from merged origin/main 7556f84, sessions 6I
+and 6J, integrated in that order into s1/w6/6i-bilingual-turns. The existing working
+checkout and unrelated edits remain intact. Minimal shared-file glue is reviewed
+centrally. New reverse/leaf animation is presentation only, reduced motion skips
+spatial effects, and simulations settle before departure and retain their state.
+See docs/plan/stage-1-bilingual-page-turn.md for ownership and acceptance anchors.
+
+### D-W6-6IJ implementation and verification
+
+Integrated the independent 6I and 6J commits with minimal shared-file glue.
+Localization uses explicit message catalogs and registered text/attribute updates;
+no scene or model is recreated. A coverage test checks compiled authored content and
+every binding token. Research remains explicitly English. Chinese scientific draft
+translations retain expert-review provenance and original sources.
+
+Added optional presentation-only departure/deferred-entrance hooks. Departure
+washes the current scene into ink and lowers it to paper; an inert decorative sheet
+turns about the stationary spine before the incoming scene rises. Vertical reflow
+uses a brief fade; reduced motion skips spatial movement. At narrow widths the
+language menu gets a second control row rather than clipping navigation targets.
+
+Evidence and GV4/GV6/PL7/PL8 handover:
+`docs/review/book-revision/bilingual-turns/README.md`. Integrated check: 916 tests
+passed, 7 skipped; production build and budget pass; 12 combined browser tests pass,
+plus the strengthened narrow-menu check. Initial concurrent browser/unit execution
+hit three timeouts in unchanged CPU-heavy tests; the standalone full check passed
+without changing limits or science code. Owner visual and Chinese expert-language
+acceptance are not inferred from automated checks.
+
+## D-W6-6IJ-SCROLL — Contain incoming layout during a page turn (2026-11-17)
+
+The owner reported scrollbar flashing and authorized fix, commit, merge, release
+update and GitHub Pages publication. Reproduction showed the hidden incoming flat
+layout temporarily growing a 900 px document to 1042/1143 px before tilted-stage
+readiness. Preserve the outgoing reader-book height and clip its overflow during
+navigation; restore natural flow in finally. Do not globally hide scrollbars or
+change simulation behavior. A frame-sampled browser regression covers forward and
+backward mounting and turning. The release keeps the prior tag and publishes a new
+immutable update tag at the merged commit; the main push drives Pages deployment.
+Release-facing README/packet edits are minimal glue authorized by this request.
+
+### D-W6-6IJ-SCROLL follow-up — history during the sheet turn
+
+Full PR CI found four legacy selectors matching inert decorative copies and a real
+history race when Back was pressed after destination readiness but before the sheet
+completed. Scope tests to the live article/accessibility tree and commit successful
+navigation history before the decorative turn. Add a paused-sheet browser Back
+regression; preserve all state and science assertions. Full browser CI must pass
+before the authorized merge/release proceeds.

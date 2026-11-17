@@ -26,7 +26,7 @@ interface Geometry {
 const REGISTERED_COLUMN = 74;
 const DEFAULT_COLUMN = 51;
 
-const desk = (page: Page) => page.locator(".gs-desk");
+const desk = (page: Page) => page.locator(".reader-book > .reader-stage .gs-desk");
 const years = async (page: Page) => Number(await desk(page).getAttribute("data-model-years"));
 const margin = (page: Page) => page.locator(".gs-margin");
 const metres = (text: string, label: RegExp) => {
@@ -252,10 +252,10 @@ test("PB4 PB9 GV1 GV2 GV5 GV6: the full journey on the default route, keyboard f
   const atTurn = await years(page);
   await expect(page.getByRole("button", { name: "Beginning of book" })).toBeDisabled();
   await expect(page.getByRole("button", { name: "Turn to Where plates meet" })).toBeEnabled();
-  await page.locator("h1").focus();
+  await page.getByRole("heading", { level: 1 }).focus();
   await page.keyboard.press("PageDown");
   await expect(page.locator(".ps-desk")).toHaveAttribute("data-ready", "true", { timeout: 60_000 });
-  await page.locator("h1").focus();
+  await page.getByRole("heading", { level: 1 }).focus();
   await page.keyboard.press("PageUp");
   await expect(desk(page)).toHaveAttribute("data-source", "live", { timeout: 60_000 });
   await expect(page.getByRole("heading", { name: "From V to U", exact: true })).toBeVisible();
