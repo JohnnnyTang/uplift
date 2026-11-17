@@ -40,6 +40,18 @@ export {
 } from "./snapshot";
 export { type DressingConfig, DEFAULT_DRESSING } from "./dressing";
 export {
+  type PackedSketch,
+  type SketchConfig,
+  type SketchInput,
+  type SketchStroke,
+  type SketchStrokeKind,
+  DEFAULT_SKETCH,
+  SKETCH_ORDER,
+  buildSketch,
+  packSketch,
+  seededRandom,
+} from "./sketch";
+export {
   type CrustBandLook,
   type CrustLayer,
   type CrustLayerLook,

@@ -312,9 +312,28 @@ test("PB3 GV4: drawing → ink → colour transition into a scene standing on th
   expect(cx).toBeGreaterThan(figure.x);
   expect(cx).toBeLessThan(figure.x + figure.width);
   // Replay the drawing: the transition is replayable and is presentation, not model time.
+  // It holds the complete drawing, then sketches the block in the air, then lifts it (D-W6-6H).
   await page.getByRole("button", { name: "Replay the drawing" }).click();
+  await expect(desk(page)).toHaveAttribute("data-transition-phase", "hold");
+  await expect(page.locator(".gs-desk .gs-drawing")).toHaveCSS("opacity", "1");
+  await expect(desk(page)).toHaveAttribute("data-transition-phase", "sketch");
+  await expect(desk(page)).toHaveAttribute("data-transition", "running");
+  await expect(desk(page)).toHaveAttribute("data-transition-phase", "lift");
   await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 30_000 });
+  await expect(desk(page)).toHaveAttribute("data-transition-phase", "done");
   await expect(desk(page)).toHaveAttribute("data-model-years", "0");
+  // The entrance never blocks the reader (PB4): any key ends it at once, while Tab still moves focus.
+  await page.getByRole("button", { name: "Replay the drawing" }).click();
+  await expect(desk(page)).toHaveAttribute("data-transition", "running");
+  await page.keyboard.press("Tab");
+  await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 1_000 });
+  // Pressing Play during the entrance ends it and plays: one press, not two.
+  await page.getByRole("button", { name: "Replay the drawing" }).click();
+  await expect(desk(page)).toHaveAttribute("data-transition", "running");
+  await page.getByRole("button", { name: "Play", exact: true }).click();
+  await expect(desk(page)).toHaveAttribute("data-transition", "done", { timeout: 1_000 });
+  await expect(desk(page)).toHaveAttribute("data-playing", "true");
+  await page.getByRole("button", { name: "Pause", exact: true }).click();
 });
 
 for (const [width, height] of [
@@ -432,7 +451,7 @@ test("PB2 GV6: phone — the journey on a flat single page, no horizontal scroll
   expect(errors).toEqual([]);
 });
 
-test("PB3 GV6: reduced motion — flat page, crossfade, keyboard journey, nothing animating", async ({
+test("PB3 GV6: reduced motion — flat page, immediate scene, keyboard journey, nothing animating", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });

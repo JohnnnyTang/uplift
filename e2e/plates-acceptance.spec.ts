@@ -352,7 +352,16 @@ test("PL6: Replay the drawing runs drawing → ink → colour on the tilted page
   await page.getByRole("button", { name: "Replay the drawing" }).click();
   await expect(l2()).toHaveAttribute("data-transition", "running");
   await expect(page.locator(".ps-desk .gs-drawing svg[role=img]")).toBeVisible();
+  // The complete drawing is held, then the block is sketched in the air and lifted (D-W6-6H).
+  await expect(l2()).toHaveAttribute("data-transition-phase", "hold");
+  await expect(l2()).toHaveAttribute("data-transition-phase", "sketch");
+  await expect(l2()).toHaveAttribute("data-transition-phase", "lift");
   await expect(l2()).toHaveAttribute("data-transition", "done", { timeout: 60_000 });
+  // A pointer press ends a replay at once; the scene is the same finished scene.
+  await page.getByRole("button", { name: "Replay the drawing" }).click();
+  await expect(l2()).toHaveAttribute("data-transition", "running");
+  await page.locator(".ps-desk").click({ position: { x: 5, y: 5 } });
+  await expect(l2()).toHaveAttribute("data-transition", "done", { timeout: 1_000 });
   await expect(l2()).toHaveAttribute("data-stage-mode", "tilted");
   expect(await l2().evaluate((d) => [d.dataset.boundary, d.dataset.stage, d.dataset.ghosts].join("|"))).toBe(
     before,

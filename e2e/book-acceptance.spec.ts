@@ -41,6 +41,8 @@ for (const [lesson, spreadId, title] of [
   ["water lesson (5N2)", "hydrology.water-path", "Where will the water go?"],
 ] as const) {
   test(`removed ${lesson}: old deep links open the book's first spread`, async ({ page }) => {
+    // Route migration is independent of the long entrance; PB3 covers its full motion.
+    await page.emulateMedia({ reducedMotion: "reduce" });
     const errors: string[] = [];
     page.on("pageerror", (e) => errors.push(e.message));
     for (const page_ of ["", "&page=text", "&page=illustration", "&page=spread"]) {

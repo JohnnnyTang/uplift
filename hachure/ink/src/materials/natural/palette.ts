@@ -35,6 +35,8 @@ export const NATURAL_TOKENS = Object.freeze({
    */
   ghost: "#5A2D52",
   ghostHalo: "#FAF8F2",
+  /** Graphite of the construction sketch drawn before the block rises (D-W6-6H). */
+  pencil: "#66635D",
   /** Contact shadow on the paper (multiplied with low opacity). */
   shadow: "#3B3A36",
 });

@@ -1031,6 +1031,7 @@ export async function mountGlacialScene(
     drawing.style.filter = s.drawingRoughness > 0.01 && s.drawingOpacity > 0.01 ? "url(#gs-sketch)" : "";
     // The lens joins the scene when the colour arrives; the drawing alone stays uncluttered.
     lens.style.opacity = String(s.colour);
+    desk.dataset.transitionPhase = s.phase;
   };
   let running: TransitionRun | null = null;
   const play = (quick = false) => {
@@ -1038,6 +1039,8 @@ export async function mountGlacialScene(
     transitionDone = false;
     desk.dataset.transition = "running";
     running = transition.runTransition(applyState, { reducedMotion: quick || reducedMotion() });
+    // The entrance never makes the reader wait: the first press of a key or pointer ends it (D-W6-6H).
+    transition.skipOnInput(running);
     void running.done.then((completed) => {
       if (!completed) return;
       transitionDone = true;
@@ -1210,6 +1213,14 @@ export async function mountGlacialScene(
   Object.defineProperty(desk, "blockScreenGeometry", {
     configurable: true,
     value: () => blockScreenGeometry(bookStage, dio),
+  });
+  // Freezes the entrance at a time after its start (unit: milliseconds); "Replay the drawing" plays again.
+  Object.defineProperty(desk, "seekEntrance", {
+    configurable: true,
+    value: (elapsedMs: number) => {
+      running?.cancel();
+      applyState(transition.transitionStateAt(elapsedMs));
+    },
   });
   desk.dataset.ready = "true";
   desk.dataset.source = source.kind;

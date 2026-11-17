@@ -126,15 +126,33 @@ export function createTerrainMaterial(u: InkUniforms, channels: ChannelConfig): 
  * vertices exactly: no gaps and no double coverage. Edges are anti-aliased analytically (box-filter
  * coverage of the stroke across a one-pixel fringe), like the SVG renderer, rather than by MSAA alone:
  * four MSAA samples quantise a sub-pixel line into visible dashes as it drifts across sample rows.
+ *
+ * With `options.reveal` (a float node, 0–1) the strokes draw on progressively: the geometry also carries a
+ * per-instance `segReveal = (from, to)`, and a segment is absent before `from`, drawn part-way between and
+ * whole from `to` on. One uniform therefore draws a whole ordered sketch, with no per-frame geometry.
  */
-export function createStrokeMaterial(u: InkUniforms): MeshBasicNodeMaterial {
+export function createStrokeMaterial(
+  u: InkUniforms,
+  options: { readonly reveal?: Node<"float"> } = {},
+): MeshBasicNodeMaterial {
   const material = new MeshBasicNodeMaterial({ side: DoubleSide, transparent: true, depthWrite: false });
   const corner = attribute("position", "vec3");
   const prev = attribute("segPrev", "vec3");
   const start = attribute("segStart", "vec3");
-  const end = attribute("segEnd", "vec3");
-  const next = attribute("segNext", "vec3");
+  let end: Node<"vec3"> = attribute("segEnd", "vec3");
+  let next: Node<"vec3"> = attribute("segNext", "vec3");
   const width = attribute("segWidth", "float");
+  /** 0 collapses the quad to a point (a segment the pencil has not reached). */
+  let present: Node<"float"> = float(1);
+  if (options.reveal) {
+    // The pencil has reached `drawn` of this segment; a part-drawn segment ends square where it stands.
+    const span = attribute("segReveal", "vec2");
+    const drawn = clamp(options.reveal.sub(span.x).div(span.y.sub(span.x).max(1e-6)), 0, 1);
+    const wholeEnd = end;
+    end = mix(start, wholeEnd, drawn);
+    next = select(drawn.lessThan(1), end, next);
+    present = step(1e-5, drawn);
+  }
   /** Signed distance from the stroke centre line (unit: device pixels). */
   const side = varyingProperty("float", "vInkSide");
   const halfWidth = varyingProperty("float", "vInkHalfWidth");
@@ -167,7 +185,7 @@ export function createStrokeMaterial(u: InkUniforms): MeshBasicNodeMaterial {
     const reach = hw.add(1); // one device pixel of anti-aliasing fringe
     halfWidth.assign(hw);
     side.assign(corner.y.mul(reach));
-    const offsetPx = miter.mul(corner.y.mul(reach).div(cosHalf));
+    const offsetPx = miter.mul(corner.y.mul(reach).div(cosHalf)).mul(present);
     const clip = select(atEnd, b, a);
     const xy = clip.xy.add(offsetPx.div(halfRes).mul(clip.w));
     return vec4(xy, clip.z.sub(u.strokeDepthBias.mul(clip.w)), clip.w);
