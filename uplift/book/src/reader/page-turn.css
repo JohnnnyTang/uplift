@@ -2,6 +2,10 @@
 .reader-book {
   position: relative;
 }
+.reader-book-turning {
+  height: var(--reader-turn-height);
+  overflow: clip;
+}
 .reader-turn-snapshot {
   position: absolute;
   inset: 0;

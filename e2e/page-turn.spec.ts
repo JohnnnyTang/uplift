@@ -12,6 +12,22 @@ test("settles to ink, turns one sheet in both directions, then restores the live
   await page.keyboard.press("Escape");
   for (const direction of ["next", "previous"] as const) {
     const before = await page.locator(".gs-book").boundingBox();
+    const viewport = await page.evaluateHandle(() => {
+      const samples: { width: number; height: number; scrollWidth: number; scrollHeight: number }[] = [];
+      let frame = 0;
+      const sample = () => {
+        const root = document.documentElement;
+        samples.push({
+          width: root.clientWidth,
+          height: root.clientHeight,
+          scrollWidth: root.scrollWidth,
+          scrollHeight: root.scrollHeight,
+        });
+        frame = requestAnimationFrame(sample);
+      };
+      sample();
+      return { samples, stop: () => cancelAnimationFrame(frame) };
+    });
     await page.locator(".reader-bar-" + direction).click();
     const snapshot = page.locator(".reader-turn-snapshot");
     const leaf = page.locator(".reader-turn-leaf");
@@ -50,6 +66,14 @@ test("settles to ink, turns one sheet in both directions, then restores the live
         name: direction === "next" ? "Where plates meet" : "From V to U",
       }),
     ).toBeFocused();
+    const viewportSamples = await viewport.evaluate((state) => {
+      state.stop();
+      return state.samples;
+    });
+    await viewport.dispose();
+    expect(viewportSamples.length).toBeGreaterThan(2);
+    for (const sample of viewportSamples) expect(sample).toEqual(viewportSamples[0]);
+    await expect(page.locator(".reader-book")).not.toHaveClass(/reader-book-turning/);
     await page.keyboard.press("Escape");
   }
   expect(errors).toEqual([]);

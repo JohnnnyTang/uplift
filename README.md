@@ -17,7 +17,10 @@ removed (D-W5-5M2 and D-W5-5N2).
 
 **Release status:** Stage 1 is released by owner direction (D-W6-6F). Play the
 [published book](https://johnnnytang.github.io/uplift/). The owner authorized publication
-of the 6G desk/book presentation and 6H drawing-to-3D entrance update on 2026-11-17.
+of the 6G/6H presentation updates and the 6I/6J English–Simplified Chinese reader,
+single-sheet page turn and scrollbar-flash fix on 2026-11-17. The language menu
+remembers your choice; changing language or turning pages preserves lesson state.
+See the [bilingual and page-turn evidence](docs/review/book-revision/bilingual-turns/README.md).
 This does not establish classroom validation or a broader hardware performance pass;
 the recorded limitations and human follow-ups remain. Start with
 the [two-lesson review packet](docs/review/book-revision/release/README.md) and

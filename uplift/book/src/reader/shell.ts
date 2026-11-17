@@ -564,6 +564,10 @@ export async function createReaderShell(
       await active!.scene.returnToDrawing?.({ reducedMotion: motion.matches, signal: departure.signal });
       if (disposed || suspended || token !== generation) return;
       if (!motion.matches) turnSnapshot = createPageTurnSnapshot(active!.article);
+      // Incoming scenes briefly measure as flat pages before their stage is ready.
+      // Keep that hidden layout from adding a transient document scrollbar.
+      book.style.setProperty("--reader-turn-height", `${book.getBoundingClientRect().height}px`);
+      book.classList.add("reader-book-turning");
       const before = current;
       if (active!.scene.status().attached) active!.scene.detach();
       if (disposed || suspended || token !== generation) return;
@@ -618,6 +622,8 @@ export async function createReaderShell(
       departure = undefined;
       turnSnapshot?.dispose();
       turnSnapshot = undefined;
+      book.classList.remove("reader-book-turning");
+      book.style.removeProperty("--reader-turn-height");
       turning = false;
       if (active) {
         active.article.inert = false;

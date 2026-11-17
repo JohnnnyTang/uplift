@@ -3736,3 +3736,15 @@ plus the strengthened narrow-menu check. Initial concurrent browser/unit executi
 hit three timeouts in unchanged CPU-heavy tests; the standalone full check passed
 without changing limits or science code. Owner visual and Chinese expert-language
 acceptance are not inferred from automated checks.
+
+## D-W6-6IJ-SCROLL — Contain incoming layout during a page turn (2026-11-17)
+
+The owner reported scrollbar flashing and authorized fix, commit, merge, release
+update and GitHub Pages publication. Reproduction showed the hidden incoming flat
+layout temporarily growing a 900 px document to 1042/1143 px before tilted-stage
+readiness. Preserve the outgoing reader-book height and clip its overflow during
+navigation; restore natural flow in finally. Do not globally hide scrollbars or
+change simulation behavior. A frame-sampled browser regression covers forward and
+backward mounting and turning. The release keeps the prior tag and publishes a new
+immutable update tag at the merged commit; the main push drives Pages deployment.
+Release-facing README/packet edits are minimal glue authorized by this request.

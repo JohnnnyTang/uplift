@@ -79,3 +79,19 @@ The phone bar now uses two rows with full-size controls and reserved bottom spac
 The strengthened browser check passes at both 390 px and 320 px for both lessons.
 Final visible Chinese pages contained no untranslated English prose; the English
 language option remains named English. No browser errors were captured.
+
+## Scrollbar flash follow-up · 2026-11-17
+
+Owner reported a flash during page flips and requested the fix and publication.
+Frame-by-frame reproduction at 1366 × 900 found document height briefly growing
+from 900 to 1042 px going forward and 1143 px going back. The incoming hidden scene
+first mounts as a flat page, then acquires its tilted layout. The taller intermediate
+layout added a transient scrollbar before the sheet animation.
+
+The shell now preserves the outgoing book container's measured height and clips
+intermediate overflow while navigation is active. A finally block always restores
+natural layout, including failed/cancelled navigation. This does not disable body
+scrolling or suppress real reflow-page scrollbars. After the fix the document stayed
+1366 × 900 through every sampled phase in both directions. The browser regression
+now samples document dimensions for the entire page turn, including incoming mount,
+and checks that containment is released afterward.
