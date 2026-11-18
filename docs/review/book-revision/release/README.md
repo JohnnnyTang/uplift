@@ -6,7 +6,8 @@ The owner requested publication of **一页山河 / Uplift** and **岩墨引擎 
 a bold upper-left name, slogan between the camera controls and book, and a quieter
 engine credit in Contents. All brand copy follows the existing language selector.
 Restrained ivory relief lettering matches the walnut desk; enhanced contrast and
-forced colours remove the text shadow. The stage reserves the slogan's height.
+forced colours remove the text shadow. The slogan uses existing headroom above
+the tilted book, preserving its accepted desktop size; flat pages keep normal flow.
 
 The owner explicitly authorized commit, push, release update and GitHub Pages
 publication. The reconstructed development-prompt documents stay local and are

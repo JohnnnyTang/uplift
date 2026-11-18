@@ -38,6 +38,12 @@
   letter-spacing: 0.025em;
   text-wrap: balance;
 }
+/* Use the tilted scene's empty headroom; preserve its established book scale. */
+.reader-brand-slogan:has(+ .gs-desk[data-stage-mode="tilted"]) {
+  position: relative;
+  z-index: 2;
+  margin-bottom: calc(-1 * var(--reader-slogan-height, 0px));
+}
 :lang(zh-CN) .reader-brand-name,
 :lang(zh-CN) .reader-brand-slogan {
   font-family: "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;

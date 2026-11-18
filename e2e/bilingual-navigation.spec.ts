@@ -13,6 +13,43 @@ async function chooseLanguage(page: Page, locale: "en" | "zh-CN") {
   await expect(page.locator("html")).toHaveAttribute("lang", locale);
 }
 
+test("localized branding preserves the desktop book size and clears the camera controls", async ({
+  page,
+}) => {
+  for (const lesson of ["", "&spread=tectonics.plate-boundaries&page=spread"]) {
+    await page.goto(`/?glacier=cpu${lesson}`);
+    await ready(page);
+    for (const [width, height] of [
+      [1366, 768],
+      [1440, 900],
+    ]) {
+      await page.setViewportSize({ width, height });
+      for (const locale of ["en", "zh-CN"] as const) {
+        await chooseLanguage(page, locale);
+        await expect
+          .poll(
+            () =>
+              page.evaluate(() => {
+                const r = (s: string) => document.querySelector(s)!.getBoundingClientRect();
+                const controls = r(".gs-view-controls");
+                const slogan = r(".reader-brand-slogan");
+                const book = r(".gs-spread");
+                return (
+                  book.width > (innerWidth === 1366 ? 850 : 1050) &&
+                  slogan.top >= controls.bottom &&
+                  slogan.bottom <= book.top &&
+                  r(".reader-brand-name").right < controls.left &&
+                  document.documentElement.scrollHeight <= innerHeight
+                );
+              }),
+            { message: `${lesson || "glacier"}, ${width}×${height}, ${locale}` },
+          )
+          .toBe(true);
+      }
+    }
+  }
+});
+
 test("Chinese navigation retains both lessons and changing language keeps the mounted scene", async ({
   page,
 }) => {

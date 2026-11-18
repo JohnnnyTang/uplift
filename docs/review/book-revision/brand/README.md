@@ -95,5 +95,16 @@ GitHub Pages publication. No new scientific or hardware validation or native-rea
 user study is claimed. Release and deployment results are recorded on GitHub.
 Surprise: the supplied prompt document was untracked in the original checkout;
 its original stays untouched and the edited versions live in this session worktree.
-Plan implication: brand copy belongs to the existing language system, and any
-future text between the camera controls and book must be included in stage sizing.
+Plan implication: brand copy belongs to the existing language system. The tilted
+scene's existing headroom accommodates the slogan; reserving another full row
+would shrink the book below its desktop acceptance size. Flat pages retain the
+slogan in normal document flow.
+
+### Desktop acceptance correction
+
+The first full CI run found that reserving the slogan's full height reduced the
+book below the PB1 width requirements. The corrected layout uses existing tilted
+scene headroom and preserves those thresholds. A bilingual regression now checks
+both lessons at 1366 × 768 and 1440 × 900, including title/toolbar separation,
+slogan placement, minimum book width and absence of page scrolling. The existing
+glacial and plate acceptance checks remain unchanged.

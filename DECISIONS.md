@@ -3818,3 +3818,11 @@ neither prompt file appears in the history sent to GitHub. Existing public histo
 and release tags are unchanged. The release targets the merged, CI-checked commit;
 wait for Pages deployment and verify the public reader before declaring publication
 complete. Release-packet edits are minimal owner-authorized publication glue.
+
+### D-W6-6K publication correction — preserve desktop book scale
+
+Full PR CI exposed a PB1 regression: reserving a separate slogan row shrank the
+book below the accepted desktop widths. Use the tilted scene's existing headroom
+for the slogan, with its measured height offset from document flow; flat pages
+keep normal flow. Preserve the PB1 thresholds and add coverage for both languages
+and lessons at both acceptance viewports. No engine fit or scientific model changes.
