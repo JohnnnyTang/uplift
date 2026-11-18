@@ -3826,3 +3826,5 @@ book below the accepted desktop widths. Use the tilted scene's existing headroom
 for the slogan, with its measured height offset from document flow; flat pages
 keep normal flow. Preserve the PB1 thresholds and add coverage for both languages
 and lessons at both acceptance viewports. No engine fit or scientific model changes.
+The overlapping decorative slogan passes pointer events through to the desk, so
+click-to-finish drawing and camera gestures continue to work in that headroom.

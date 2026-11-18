@@ -43,6 +43,7 @@
   position: relative;
   z-index: 2;
   margin-bottom: calc(-1 * var(--reader-slogan-height, 0px));
+  pointer-events: none;
 }
 :lang(zh-CN) .reader-brand-name,
 :lang(zh-CN) .reader-brand-slogan {
