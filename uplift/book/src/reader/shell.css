@@ -1,8 +1,8 @@
 /*
  * The reader shell (5C; chrome restyled by 5M after the owner's reference): the book lies on a warm-grey desk,
  * pages are paper with running heads and folios, and one quiet bar at the bottom carries the book's
- * navigation — contents, previous, the lesson's number and title, next, contrast and reading level. No top
- * header and no form controls in the chrome. Legacy research and widget fixtures keep their own styles.
+ * navigation — contents, previous, the lesson's number and title, next, contrast and reading level.
+ * A localized corner wordmark identifies the book. Legacy fixtures keep their own styles.
  */
 .reader-shell {
   --reader-desk: #4a3324;

@@ -20,6 +20,8 @@ test("Chinese navigation retains both lessons and changing language keeps the mo
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/?glacier=cpu");
   await ready(page);
+  await expect(page.locator(".reader-brand-name")).toHaveText("Uplift");
+  await expect(page.locator(".reader-brand-slogan")).toHaveText("Turn a page. Watch a landscape grow.");
   await page.getByRole("radio", { name: /Shale/ }).check();
   await expect(page.locator(".gs-desk")).toHaveAttribute("data-live-rock", "shale");
   const glacier = await page.locator(".gs-desk").evaluate((desk) => ({
@@ -29,6 +31,9 @@ test("Chinese navigation retains both lessons and changing language keeps the mo
   }));
   const canvas = await page.locator(".gs-desk canvas").first().elementHandle();
   await chooseLanguage(page, "zh-CN");
+  await expect(page).toHaveTitle("一页山河");
+  await expect(page.locator(".reader-brand-name")).toHaveText("一页山河");
+  await expect(page.locator(".reader-brand-slogan")).toHaveText("翻开一页，看山河生长。");
   await expect(page.locator(".gs-page-text h1")).toContainText(/[\u3400-\u9fff]/);
   expect(await canvas!.evaluate((node) => node.isConnected)).toBe(true);
   await expect(page.locator(".gs-desk")).toHaveAttribute("data-run-id", glacier.run!);
@@ -48,6 +53,9 @@ test("Chinese navigation retains both lessons and changing language keeps the mo
   const stage = await page.locator(".ps-desk").getAttribute("data-stage");
   const platesCanvas = await page.locator(".ps-desk canvas").first().elementHandle();
   await chooseLanguage(page, "en");
+  await expect(page).toHaveTitle("Uplift");
+  await expect(page.locator(".reader-brand-name")).toHaveText("Uplift");
+  await expect(page.locator(".reader-brand-slogan")).toHaveText("Turn a page. Watch a landscape grow.");
   expect(await platesCanvas!.evaluate((node) => node.isConnected)).toBe(true);
   await expect(page.locator(".ps-desk")).toHaveAttribute("data-stage", stage!);
   await chooseLanguage(page, "zh-CN");

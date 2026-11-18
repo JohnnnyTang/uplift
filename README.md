@@ -1,12 +1,20 @@
-# Uplift
+# 一页山河 · Uplift
+
+**翻开一页，看山河生长。**
+
+Turn a page. Watch a landscape grow.
 
 **A geography book whose drawings come to life.** Ink illustrations lift off bounded paper pages into
 3D scenes readers can touch and explore. Each spread offers one small discovery, an optional question
 and answer flap, and a reason to turn the page. High-school and university readers explore the same
 model at different depths.
 
-Underneath the book is **Hachure**, the terrain and ink engine. Hachures are the short ink strokes old maps
+Underneath the book is **岩墨引擎 · Hachure**, the terrain and ink engine. Hachures are the short ink strokes old maps
 used to show slope, which is the look the engine draws.
+
+从笔下纹理，到眼前山川。
+
+From marks on paper to landscapes before you.
 
 The default book has two playable lessons: **From V to U**, a glacial process model,
 and **Where plates meet**, an authored illustration of continental plate boundaries.
@@ -21,6 +29,10 @@ of the 6G/6H presentation updates and the 6I/6J English–Simplified Chinese rea
 single-sheet page turn and scrollbar-flash fix on 2026-11-17. The language menu
 remembers your choice; changing language or turning pages preserves lesson state.
 See the [bilingual and page-turn evidence](docs/review/book-revision/bilingual-turns/README.md).
+The owner also authorized the localized **一页山河 / Uplift** and
+**岩墨引擎 / Hachure** identity update: a bold corner name, slogan beneath the
+camera controls and engine credit in Contents, all following the language menu.
+See the [branding evidence and handover](docs/review/book-revision/brand/README.md).
 This does not establish classroom validation or a broader hardware performance pass;
 the recorded limitations and human follow-ups remain. Start with
 the [two-lesson review packet](docs/review/book-revision/release/README.md) and

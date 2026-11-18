@@ -1,0 +1,52 @@
+{
+  "browser": "158.0.8127.18",
+  "renderer": "SwiftShader",
+  "layouts": [
+    {
+      "width": 1366,
+      "height": 900,
+      "brandRight": 168.484375,
+      "controlsLeft": 253,
+      "sloganY": 86.1875,
+      "deskY": 134.1875,
+      "contentsTop": 539.5625
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "brandRight": 166.34375,
+      "controlsLeft": 210,
+      "sloganY": 86.1875,
+      "deskY": 134.1875,
+      "contentsTop": 359.5625
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "brandRight": 159.9375,
+      "controlsLeft": 180,
+      "sloganY": 86.1875,
+      "deskY": 134.1875,
+      "contentsTop": 407.5625
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "brandRight": 390,
+      "controlsLeft": 12,
+      "sloganY": 271.1875,
+      "deskY": 326.1875,
+      "contentsTop": 447.5625
+    },
+    {
+      "width": 320,
+      "height": 640,
+      "brandRight": 320,
+      "controlsLeft": 12,
+      "sloganY": 289.375,
+      "deskY": 344.375,
+      "contentsTop": 243.5625
+    }
+  ],
+  "errors": []
+}

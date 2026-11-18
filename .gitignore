@@ -15,3 +15,7 @@ Thumbs.db
 # but ignore an in-repo location too in case someone uses one.
 .worktrees/
 .claude/worktrees/
+
+# Local development conversation drafts; do not publish with the book.
+/docs/product-development-prompts.md
+/docs/product-development-prompts.zh-CN.md

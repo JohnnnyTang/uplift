@@ -3757,3 +3757,64 @@ completed. Scope tests to the live article/accessibility tree and commit success
 navigation history before the decorative turn. Add a paused-sheet browser Back
 regression; preserve all state and science assertions. Full browser CI must pass
 before the authorized merge/release proceeds.
+
+## D-W6-6K — Bilingual book identity and reconstructed development prompts (2026-11-17)
+
+The owner chose **一页山河 / Uplift** for the book and **岩墨引擎 / Hachure**
+for the engine. Add the bilingual book slogan, “翻开一页，看山河生长。” /
+“Turn a page. Watch a landscape grow.”, in a compact masthead. Place the engine
+name and “从笔下纹理，到眼前山川。” / “From marks on paper to landscapes
+before you.” in the Contents colophon. Preserve English code/package names and
+the existing language switch. Names and slogans stay bilingual in either locale,
+with explicit language tags. Measure the masthead so the tilted scene continues
+to fit its viewport; let small screens and enlarged text reflow.
+
+This owner-requested session owns reader branding/shell integration, HTML metadata,
+README, the supplied product-development prompt document and Chinese companion,
+and its review note. It starts from merged main 940a155. The separate session
+worktree is under ignored .worktrees/ because the normal sibling worktree cannot
+be written inside the sandbox; the original checkout's edits are preserved.
+
+The owner's “simulated prompts” refer to docs/product-development-prompts.md,
+newly supplied in the original checkout, not the lesson's simulation instructions.
+Refine that reconstructed human conversation and write native Chinese, preserving
+its historical November 16 endpoint. A separately labelled November 17 branding
+epilogue records this request. The reconstruction is neither a transcript nor a
+current execution plan. No lesson science, model, solver, state or release claim
+changes in this session.
+
+### D-W6-6K follow-up — owner-directed placement and language switching
+
+The owner rejected the first simultaneous bilingual masthead. The final placement
+is the main name at the top left, and the slogan centered below the camera
+controls and above the book. Both names and slogans follow the existing language
+selector, showing one language at a time. Use heavier serif lettering with a
+restrained embossed ivory-on-walnut CSS shadow; remove the shadow in enhanced
+contrast and forced colours. No new animation. The engine credit stays in Contents.
+
+Minimal additional owned-path glue: both lesson scene constructors add the shared
+slogan; the common camera controls measure its height with their existing observer;
+UI translation keys and the existing bilingual-navigation regression cover the new
+copy. The earlier separate masthead-height observer is removed. This supersedes
+the simultaneous-language and masthead-layout choices in the initial 6K entry.
+
+### D-W6-6K follow-up — rewrite Chinese prompts in a native project-owner voice
+
+The owner requested another Chinese editorial pass because the previous version
+still sounded translated and formulaic. Rewrite all 65 messages from their intent,
+using natural Chinese phrasing for discussion, feedback and decisions. Preserve the
+12 historical phases, separate branding epilogue, scientific qualifications, exact
+references and technical constraints. English and application code are unchanged.
+Check structure, source/code references and meaning; runtime tests are not needed
+for this documentation-only follow-up.
+
+### D-W6-6K publication — keep prompt drafts local; publish the book update
+
+The owner explicitly directed that both simulated development-prompt documents be
+gitignored, and authorized committing/pushing the remaining changes, updating the
+release and publishing GitHub Pages. Preserve both prompt files on disk, remove
+Git tracking and public links, and consolidate the unpublished session commits so
+neither prompt file appears in the history sent to GitHub. Existing public history
+and release tags are unchanged. The release targets the merged, CI-checked commit;
+wait for Pages deployment and verify the public reader before declaring publication
+complete. Release-packet edits are minimal owner-authorized publication glue.

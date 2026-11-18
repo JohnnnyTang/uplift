@@ -1,5 +1,6 @@
 import { translate, getLanguage, onLanguageChange, refreshLanguage } from "../../i18n";
 import { writeText, textNode, writeMarkup, writeAttribute } from "../../i18n";
+import { createBookSlogan } from "../../reader/brand";
 /**
  * Lesson 2's production scene, _Where plates meet_ (session 7D): the spread on lesson 1's tilted book stage,
  * Fig. 2 as a textbook line drawing (the static fallback) that transitions into the naturally coloured block,
@@ -343,6 +344,7 @@ export async function mountPlatesScene(
     '<filter id="ps-sketch" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter>',
   );
   desk.append(sketch);
+  if (root.closest(".reader-shell")) root.append(createBookSlogan());
   root.append(desk);
 
   // The deeper level and the sources stay off the paper; their reading copies open in the upright panel.

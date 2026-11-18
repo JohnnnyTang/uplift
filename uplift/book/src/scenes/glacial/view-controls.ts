@@ -61,10 +61,16 @@ export function createViewControls(
   controls.append(reset, hint);
   host.prepend(controls);
 
-  // Reserve the toolbar's actual height, including wrapping and browser text zoom.
-  const measure = () => host.style.setProperty("--gs-controls-height", `${controls.offsetHeight + 24}px`);
+  // Reserve toolbar and book slogan height, including wrapping and language changes.
+  const slogan = host.querySelector<HTMLElement>(".reader-brand-slogan");
+  const measure = () =>
+    host.style.setProperty(
+      "--gs-controls-height",
+      `${controls.offsetHeight + (slogan?.offsetHeight ?? 0) + 24}px`,
+    );
   const observer = new ResizeObserver(measure);
   observer.observe(controls);
+  if (slogan) observer.observe(slogan);
   measure();
   const blocked = (target: EventTarget | null) =>
     target instanceof Element &&

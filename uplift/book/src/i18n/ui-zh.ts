@@ -1,5 +1,9 @@
 /** English source keys are stable message IDs; dynamic numbers remain caller supplied. */
 export const UI_ZH: Readonly<Record<string, string>> = {
+  Uplift: "一页山河",
+  Hachure: "岩墨引擎",
+  "Turn a page. Watch a landscape grow.": "翻开一页，看山河生长。",
+  "From marks on paper to landscapes before you.": "从笔下纹理，到眼前山川。",
   "Margin notes": "页边笔记",
   "Recorded time": "已记录时间",
   "Keep my runs": "保留我的实验",
