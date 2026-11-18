@@ -14,6 +14,7 @@ import { READER_SCENE_LIMIT } from "./contracts";
 import type { ReaderEntry, ReaderNavigation, ReaderShellController, ReaderTarget } from "./contracts";
 import "./shell.css";
 import { createPageTurnSnapshot, type PageTurnSnapshot } from "./page-turn";
+import { createBookBrand } from "./brand";
 
 export interface ReaderShellOptions {
   readonly initialLevel?: Level;
@@ -66,10 +67,12 @@ export async function createReaderShell(
   )
     throw new Error("The reader requires one or two uniquely named lessons");
   initializeLanguage();
+  document.title = translate("Uplift");
   let level: Level = options.initialLevel ?? "hs";
   const narrow = matchMedia("(max-width: 60rem)");
   const motion = matchMedia("(prefers-reduced-motion: reduce)");
   const root = node("div", undefined, "reader-shell");
+  const { masthead, colophon } = createBookBrand();
   // The app host already supplies the main landmark on both reader and research routes.
   const book = node("div", undefined, "reader-book");
   // The quiet bottom bar (5M, after the owner's reference): contents, previous, title, next, contrast, level.
@@ -83,7 +86,7 @@ export async function createReaderShell(
   contents.hidden = true;
   const contentsHeading = node("h2", "Contents", "reader-contents-heading");
   const contentsList = node("ol");
-  contents.append(contentsHeading, contentsList);
+  contents.append(contentsHeading, contentsList, colophon);
   const previous = iconButton("previous", "");
   const next = iconButton("next", "");
   const position = node("span", undefined, "reader-position");
@@ -131,7 +134,7 @@ export async function createReaderShell(
   live.setAttribute("aria-live", "polite");
   const research = node("button", "Research example", "reader-research");
   research.hidden = !options.onResearch;
-  root.append(book, nav, live);
+  root.append(masthead, book, nav, live);
   host.append(root);
   const scenes = new Map<string, ReaderSceneController>();
   let current: ReaderTarget = { spreadId: entries[0]!.spread.id, page: narrow.matches ? "text" : "spread" };
@@ -763,6 +766,7 @@ export async function createReaderShell(
   };
   document.addEventListener("pointerdown", outsideContents);
   const unsubscribeLanguage = onLanguageChange(() => {
+    document.title = translate("Uplift");
     languageSelect.value = getLanguage();
     active?.refresh();
     updateNavigation();

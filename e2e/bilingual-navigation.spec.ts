@@ -13,6 +13,43 @@ async function chooseLanguage(page: Page, locale: "en" | "zh-CN") {
   await expect(page.locator("html")).toHaveAttribute("lang", locale);
 }
 
+test("localized branding preserves the desktop book size and clears the camera controls", async ({
+  page,
+}) => {
+  for (const lesson of ["", "&spread=tectonics.plate-boundaries&page=spread"]) {
+    await page.goto(`/?glacier=cpu${lesson}`);
+    await ready(page);
+    for (const [width, height] of [
+      [1366, 768],
+      [1440, 900],
+    ]) {
+      await page.setViewportSize({ width, height });
+      for (const locale of ["en", "zh-CN"] as const) {
+        await chooseLanguage(page, locale);
+        await expect
+          .poll(
+            () =>
+              page.evaluate(() => {
+                const r = (s: string) => document.querySelector(s)!.getBoundingClientRect();
+                const controls = r(".gs-view-controls");
+                const slogan = r(".reader-brand-slogan");
+                const book = r(".gs-spread");
+                return (
+                  book.width > (innerWidth === 1366 ? 850 : 1050) &&
+                  slogan.top >= controls.bottom &&
+                  slogan.bottom <= book.top &&
+                  r(".reader-brand-name").right < controls.left &&
+                  document.documentElement.scrollHeight <= innerHeight
+                );
+              }),
+            { message: `${lesson || "glacier"}, ${width}×${height}, ${locale}` },
+          )
+          .toBe(true);
+      }
+    }
+  }
+});
+
 test("Chinese navigation retains both lessons and changing language keeps the mounted scene", async ({
   page,
 }) => {
@@ -20,6 +57,8 @@ test("Chinese navigation retains both lessons and changing language keeps the mo
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/?glacier=cpu");
   await ready(page);
+  await expect(page.locator(".reader-brand-name")).toHaveText("Uplift");
+  await expect(page.locator(".reader-brand-slogan")).toHaveText("Turn a page. Watch a landscape grow.");
   await page.getByRole("radio", { name: /Shale/ }).check();
   await expect(page.locator(".gs-desk")).toHaveAttribute("data-live-rock", "shale");
   const glacier = await page.locator(".gs-desk").evaluate((desk) => ({
@@ -29,6 +68,9 @@ test("Chinese navigation retains both lessons and changing language keeps the mo
   }));
   const canvas = await page.locator(".gs-desk canvas").first().elementHandle();
   await chooseLanguage(page, "zh-CN");
+  await expect(page).toHaveTitle("一页山河");
+  await expect(page.locator(".reader-brand-name")).toHaveText("一页山河");
+  await expect(page.locator(".reader-brand-slogan")).toHaveText("翻开一页，看山河生长。");
   await expect(page.locator(".gs-page-text h1")).toContainText(/[\u3400-\u9fff]/);
   expect(await canvas!.evaluate((node) => node.isConnected)).toBe(true);
   await expect(page.locator(".gs-desk")).toHaveAttribute("data-run-id", glacier.run!);
@@ -48,6 +90,9 @@ test("Chinese navigation retains both lessons and changing language keeps the mo
   const stage = await page.locator(".ps-desk").getAttribute("data-stage");
   const platesCanvas = await page.locator(".ps-desk canvas").first().elementHandle();
   await chooseLanguage(page, "en");
+  await expect(page).toHaveTitle("Uplift");
+  await expect(page.locator(".reader-brand-name")).toHaveText("Uplift");
+  await expect(page.locator(".reader-brand-slogan")).toHaveText("Turn a page. Watch a landscape grow.");
   expect(await platesCanvas!.evaluate((node) => node.isConnected)).toBe(true);
   await expect(page.locator(".ps-desk")).toHaveAttribute("data-stage", stage!);
   await chooseLanguage(page, "zh-CN");

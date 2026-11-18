@@ -1,5 +1,21 @@
 # 6C · Two-lesson scientific and product review packet
 
+## Owner update · localized book identity · 2026-11-17
+
+The owner requested publication of **一页山河 / Uplift** and **岩墨引擎 / Hachure**:
+a bold upper-left name, slogan between the camera controls and book, and a quieter
+engine credit in Contents. All brand copy follows the existing language selector.
+Restrained ivory relief lettering matches the walnut desk; enhanced contrast and
+forced colours remove the text shadow. The slogan uses existing headroom above
+the tilted book, preserving its accepted desktop size; flat pages keep normal flow.
+
+The owner explicitly authorized commit, push, release update and GitHub Pages
+publication. The reconstructed development-prompt documents stay local and are
+excluded from Git tracking and the publication history. See the
+[6K evidence and handover](../brand/README.md). Prior release tags are preserved;
+this update receives a new tag at the merged commit. Scientific models and lesson
+claims are unchanged, and no new classroom or hardware validation is claimed.
+
 ## Owner update · bilingual reading and page turns · 2026-11-17
 
 The owner requested English/Simplified Chinese switching and a single-sheet turn

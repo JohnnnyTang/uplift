@@ -61,10 +61,16 @@ export function createViewControls(
   controls.append(reset, hint);
   host.prepend(controls);
 
-  // Reserve the toolbar's actual height, including wrapping and browser text zoom.
-  const measure = () => host.style.setProperty("--gs-controls-height", `${controls.offsetHeight + 24}px`);
+  // The tilted desk's existing headroom holds the slogan without shrinking the book.
+  // Measure its height for the overlap; flat pages keep it in normal document flow.
+  const slogan = host.querySelector<HTMLElement>(".reader-brand-slogan");
+  const measure = () => {
+    host.style.setProperty("--gs-controls-height", `${controls.offsetHeight + 24}px`);
+    host.style.setProperty("--reader-slogan-height", `${slogan?.offsetHeight ?? 0}px`);
+  };
   const observer = new ResizeObserver(measure);
   observer.observe(controls);
+  if (slogan) observer.observe(slogan);
   measure();
   const blocked = (target: EventTarget | null) =>
     target instanceof Element &&
@@ -152,6 +158,7 @@ export function createViewControls(
       surface.removeEventListener("wheel", wheel);
       controls.remove();
       host.style.removeProperty("--gs-controls-height");
+      host.style.removeProperty("--reader-slogan-height");
     },
   };
 }

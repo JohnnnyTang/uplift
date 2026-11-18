@@ -1,5 +1,6 @@
 import { localizeUnits, translate, onLanguageChange, refreshLanguage } from "../../i18n";
 import { writeText, textNode, writeMarkup, writeAttribute } from "../../i18n";
+import { createBookSlogan } from "../../reader/brand";
 /**
  * The glacial scene (session 5K production scene, on the 5H book stage approved at R1; joined to the live
  * runtime and the 5L lesson by session 5M): the lesson spread on a desk, the book tilted in 3D, Fig. 1 as a
@@ -456,6 +457,7 @@ export async function mountGlacialScene(
   spread.append(textPage, figurePage);
   book.append(boards, spread);
   desk.append(book, sketchFilter());
+  if (o.embedded) root.append(createBookSlogan());
   root.append(desk);
 
   // The deeper level and the sources stay off the paper; their reading copies open in the upright panel.

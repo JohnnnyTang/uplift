@@ -1,0 +1,84 @@
+{
+  "browser": "158.0.8127.18",
+  "renderer": "SwiftShader",
+  "layouts": [
+    {
+      "width": 1366,
+      "height": 900,
+      "brandRight": 168.484375,
+      "controlsLeft": 253,
+      "sloganY": 86.1875,
+      "deskY": 86.1875,
+      "bookWidth": 1145.18115234375,
+      "contentsTop": 539.5625,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "brandRight": 168.484375,
+      "controlsLeft": 253,
+      "sloganY": 86.1875,
+      "deskY": 86.1875,
+      "bookWidth": 885.287353515625,
+      "contentsTop": 407.5625,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "brandRight": 170.34375,
+      "controlsLeft": 290,
+      "sloganY": 86.1875,
+      "deskY": 86.1875,
+      "bookWidth": 1134.94775390625,
+      "contentsTop": 539.5625,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "brandRight": 166.34375,
+      "controlsLeft": 210,
+      "sloganY": 86.1875,
+      "deskY": 86.1875,
+      "bookWidth": 804.98876953125,
+      "contentsTop": 359.5625,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "brandRight": 159.9375,
+      "controlsLeft": 180,
+      "sloganY": 86.1875,
+      "deskY": 86.1875,
+      "bookWidth": 857.9674072265625,
+      "contentsTop": 407.5625,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "brandRight": 366,
+      "controlsLeft": 12,
+      "sloganY": 271.1875,
+      "deskY": 326.1875,
+      "bookWidth": 370,
+      "contentsTop": 447.5625,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 320,
+      "height": 640,
+      "brandRight": 296,
+      "controlsLeft": 12,
+      "sloganY": 289.375,
+      "deskY": 344.375,
+      "bookWidth": 300,
+      "contentsTop": 243.5625,
+      "horizontalOverflow": false
+    }
+  ],
+  "errors": []
+}
