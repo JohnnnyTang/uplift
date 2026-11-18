@@ -3828,3 +3828,9 @@ keep normal flow. Preserve the PB1 thresholds and add coverage for both language
 and lessons at both acceptance viewports. No engine fit or scientific model changes.
 The overlapping decorative slogan passes pointer events through to the desk, so
 click-to-finish drawing and camera gestures continue to work in that headroom.
+
+### D-W6-6L — Rising Pages in the reader
+
+Use the approved full-colour Rising Pages symbol beside the existing localized
+title on the walnut desk. The symbol is decorative beside the readable book name.
+Use the kit's simplified favicon in SVG and multi-size ICO for both languages.
