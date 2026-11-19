@@ -6,6 +6,17 @@ const base = process.env.UPLIFT_BASE ?? "/";
 
 export default defineConfig({
   base,
+  plugins: [
+    {
+      name: "reader-default-language",
+      transformIndexHtml(html) {
+        if (process.env.UPLIFT_DEFAULT_LANGUAGE !== "zh-CN") return html;
+        return html
+          .replace('<html lang="en">', '<html lang="zh-CN">')
+          .replace("<title>Uplift</title>", "<title>一页山河</title>");
+      },
+    },
+  ],
   build: {
     target: "es2023",
   },

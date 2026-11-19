@@ -16,6 +16,14 @@ Thumbs.db
 .worktrees/
 .claude/worktrees/
 
-# Local development conversation drafts; do not publish with the book.
-/docs/product-development-prompts.md
-/docs/product-development-prompts.zh-CN.md
+# Local browser diagnostics
+/.claude/6h-hosted-diagnostics/
+/.playwright-mcp/
+/debug.log
+
+# Local competition materials, including documents, recordings, captions and production sources
+/deliverables/
+/recordings/
+
+# Simulated development prompts, including translations, drafts and exports
+product-development-prompts*

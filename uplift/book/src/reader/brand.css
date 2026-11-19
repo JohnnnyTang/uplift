@@ -7,8 +7,19 @@
   z-index: 2;
   top: 16px;
   left: clamp(20px, 2.5vw, 48px);
-  max-width: 160px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
   color: var(--reader-paper);
+}
+/* The adjacent localized title supplies the accessible name for this decorative mark. */
+.reader-brand::before {
+  content: "";
+  width: 44px;
+  aspect-ratio: 240 / 205;
+  flex: none;
+  background: url("./rising-pages.svg") center / contain no-repeat;
 }
 .reader-brand p,
 .reader-colophon p {
@@ -55,7 +66,7 @@
 }
 /* Keep the title clear of the toolbar at intermediate laptop widths. */
 .reader-shell .reader-stage-root .gs-view-controls {
-  width: min(860px, calc(100% - 360px));
+  width: min(860px, calc(100% - 440px));
 }
 .reader-colophon {
   margin-top: 0.7rem;
@@ -89,7 +100,6 @@
   .reader-brand {
     position: static;
     padding: 14px 24px 0;
-    max-width: none;
   }
   .reader-shell .reader-stage-root .gs-view-controls {
     width: calc(100% - 24px);

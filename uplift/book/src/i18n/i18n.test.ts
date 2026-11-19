@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   uValleyLesson,
   uValleyPage,
@@ -11,7 +11,14 @@ import {
 } from "@uplift/spreads";
 import { LESSON_ZH } from "./lesson-zh";
 import { UI_ZH } from "./ui-zh";
-import { getLanguage, localizeUnits, onLanguageChange, setLanguage, translate } from "./index";
+import {
+  getLanguage,
+  initializeLanguage,
+  localizeUnits,
+  onLanguageChange,
+  setLanguage,
+  translate,
+} from "./index";
 
 function levelCopy(value: unknown): string[] {
   if (!value || typeof value !== "object") return [];
@@ -27,7 +34,30 @@ function levelCopy(value: unknown): string[] {
   }
   return Object.values(object).flatMap(levelCopy);
 }
-afterEach(() => setLanguage("en"));
+afterEach(() => {
+  vi.unstubAllGlobals();
+  setLanguage("en");
+});
+
+describe("initial reader language", () => {
+  it.each([
+    ["zh-CN", null, "zh-CN"],
+    ["zh-CN", "en", "en"],
+    ["zh-CN", "invalid", "zh-CN"],
+    ["en", null, "en"],
+    ["en", "zh-CN", "zh-CN"],
+  ])("uses document language %s with saved preference %s → %s", (lang, saved, expected) => {
+    const documentElement = { lang };
+    vi.stubGlobal("document", { documentElement });
+    vi.stubGlobal("localStorage", { getItem: () => saved });
+
+    initializeLanguage();
+
+    expect(getLanguage()).toBe(expected);
+    expect(documentElement.lang).toBe(expected);
+  });
+});
+
 describe("two-lesson Chinese copy", () => {
   it("covers every authored level text, disclosure and complete reader markdown", () => {
     const copy = [

@@ -26,8 +26,10 @@ export function initializeLanguage(): void {
   } catch {
     /* Private browsing. */
   }
-  language = saved === "zh-CN" ? "zh-CN" : "en";
-  if (typeof document !== "undefined") document.documentElement.lang = language;
+  const root = typeof document === "undefined" ? undefined : document.documentElement;
+  const defaultLanguage = root?.lang === "zh-CN" ? "zh-CN" : "en";
+  language = saved === "en" || saved === "zh-CN" ? saved : defaultLanguage;
+  if (root) root.lang = language;
 }
 export function onLanguageChange(listener: () => void): () => void {
   listeners.add(listener);
