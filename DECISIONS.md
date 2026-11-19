@@ -3834,3 +3834,10 @@ click-to-finish drawing and camera gestures continue to work in that headroom.
 Use the approved full-colour Rising Pages symbol beside the existing localized
 title on the walnut desk. The symbol is decorative beside the readable book name.
 Use the kit's simplified favicon in SVG and multi-size ICO for both languages.
+
+### D-W6-6L publication — Simplified Chinese by default on GitHub Pages
+
+Publish Rising Pages with Simplified Chinese as the initial reader language on
+GitHub Pages. The Pages build supplies the default through the document language.
+An explicitly saved English or Simplified Chinese choice takes precedence.
+Local builds keep their English default for the existing reader checks.

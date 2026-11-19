@@ -32,6 +32,7 @@ jobs:
       - run: pnpm build
         env:
           UPLIFT_BASE: /${{ github.event.repository.name }}/
+          UPLIFT_DEFAULT_LANGUAGE: zh-CN
       - run: pnpm check:bundle
       - uses: actions/upload-pages-artifact@v4
         with:

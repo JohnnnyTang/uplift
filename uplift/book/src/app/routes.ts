@@ -10,6 +10,7 @@ import { createPlayableEntries } from "../scenes/entries";
 export async function mountApp(root: HTMLElement) {
   // Bounded review route (5H, R1 owner review): the glacial book stage on fixture or captured runs.
   if (new URLSearchParams(location.search).get("review") === "glacial-stage") {
+    root.lang = "en";
     const { mountGlacialStageReview } = await import("../scenes/glacial/review");
     return mountGlacialStageReview(root, location.search);
   }
