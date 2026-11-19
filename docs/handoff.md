@@ -1,7 +1,5 @@
 # Uplift — Project Handoff
 
-Oct 28, 2026 · @Frankie Miller
-
 ## How to use this handoff
 
 We are building a web-based interactive 3D geography book: bounded spreads where line-art diagrams lift off the page into simulations readers can manipulate. Engine foundations and an integrated research example exist; the current priority is correcting the reader experience. This document is the governing brief, amended by the owner's product clarification below. The book is called Uplift; the terrain and ink engine underneath is called Hachure.
